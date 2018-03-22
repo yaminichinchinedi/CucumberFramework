@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Test Enrollment"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="8.123">
+  <properties />
+  
+  
+            <testcase name="testHeaderLinks" time="8.123" classname="test.java.TestUPAEnrollment" />
+      
+</testsuite>

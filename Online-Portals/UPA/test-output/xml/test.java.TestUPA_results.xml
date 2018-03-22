@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="UPA cases"
+           tests="1"
+           failures="0"
+           errors="0"
+           skipped="0"
+           time="0.015">
+  <properties />
+  
+  
+            <testcase name="testingone" time="0.015" classname="test.java.TestUPA" />
+      
+</testsuite>
