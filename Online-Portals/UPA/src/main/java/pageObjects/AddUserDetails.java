@@ -1,7 +1,7 @@
 package main.java.pageObjects;
 
-import java.io.IOException;
-import java.util.ArrayList;
+//import java.io.IOException;
+//import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +69,10 @@ public class AddUserDetails {
 	
 	@FindBy(xpath="//span[contains(text(),'Status')]")
 	WebElement enrollmentStatus;
+
+
+	@FindBy(xpath="//span[contains(text(),'Status')]")
+	WebElement random;
 			
 	@FindBy(xpath ="//td[contains(text(),'Confirm Existing User')]")
 	WebElement exitingUserText;
