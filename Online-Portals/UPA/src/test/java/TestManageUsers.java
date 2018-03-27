@@ -96,7 +96,7 @@ public class TestManageUsers extends TestBase {
 			manageUser.changeAndSaveAccessLevel().changeAndCancelAccessLevel();				
          }
 		
-		@Test(priority=5,description="Verify Tin Grid Details")
+		@Test(priority=4,description="Verify Tin Grid Details")
 		public void testTinGridDetails() throws InterruptedException, IOException
 		 {
 			String userType="Provider";
@@ -113,4 +113,6 @@ public class TestManageUsers extends TestBase {
 			manageUser.verifyTinGridSorting();
 			manageUser.verifyManageUserUI();
          }	
+			
 }
+

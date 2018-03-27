@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class CopyDir{
+public  class  CopyDir{
        
        
        public static void main(String args []) {
+    	   System.out.println();
              
              File source = new File("C:\\jenkins\\workspace\\Automation Run\\Online-Portals\\UPA\target\\surefire-reports\\html");
            File dest = new File("\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058");

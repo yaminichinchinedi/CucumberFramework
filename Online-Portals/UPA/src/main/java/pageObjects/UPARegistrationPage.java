@@ -74,6 +74,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/benefitofeps.do";
 		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
+		Browser.wait(testConfig, 6);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	

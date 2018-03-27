@@ -81,6 +81,7 @@ public class ManageUsers extends HomePage {
 		}
 			catch(Exception e)
 		{
+				Browser.browserRefresh(testConfig);
 				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
 		}
 	}
@@ -230,12 +231,13 @@ public class ManageUsers extends HomePage {
 			System.out.println("in catch");
 			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
 		}
 	    
 	    LogTemp.Comment("Selected General successfully");
 	    
 	    Browser.waitForLoad(testConfig.driver);
-	    Browser.wait(testConfig, 3);
+	    Browser.wait(testConfig, 5);
 	    clickSave();
 	  
 	    //Get access level value from DB to verify it has been changed to General

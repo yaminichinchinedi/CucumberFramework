@@ -79,7 +79,11 @@ public class OptumIdLoginPage {
 	  id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
 	  password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
 	  
-	  Element.enterData(txtboxOptumID,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID");
+	  Element.enterData(txtboxOptumID,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID"); 
+	  if(txtboxOptumID.getText()==null)
+	  {
+		  Element.enterData(txtboxOptumID,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID");
+	  }
 	  Element.enterData(txtboxPwd,password, "Entered Optum ID password  as :" + " "+ password, "txtboxPwd");
 	  
 	  Element.click(btnSignIn, "Sign In");

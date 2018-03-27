@@ -181,7 +181,7 @@ public class HomePage extends LoginUPA {
 		Element.verifyElementPresent(searchRemittanceTab,"Search Remittance tab");
 		Element.verifyElementPresent(paymentDataFilesTab,"Payment Data Files Tab");
 		Element.verifyElementPresent(maintainEnrlTab, "Maintain Enrollment");
-		Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
+		//Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
 		Element.verifyElementPresent(myProfileTab, "My Profile tab");
 		Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");
 		Element.verifyElementPresent(lnkResources, "Resources link");
@@ -225,10 +225,10 @@ public class HomePage extends LoginUPA {
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
 		//Browser.wait(testConfig, 3);
-		Element.onMouseHover(testConfig, lnkResources, "Resources");
-		Element.click(contactUs, "Contact Us");
+		//Element.onMouseHover(testConfig, lnkResources, "Resources");
+		//Element.click(contactUs, "Contact Us");
 		//Browser.wait(testConfig, 3);
-		Browser.verifyURL(testConfig, expectedContactUsURL);
+		//Browser.verifyURL(testConfig, expectedContactUsURL);
 
 	}
 
