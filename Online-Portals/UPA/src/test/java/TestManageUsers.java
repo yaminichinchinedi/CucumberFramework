@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
 
 public class TestManageUsers extends TestBase {
 
-		@Test(priority=1,description="Verify details for New user.")
+		@Test(priority=5,description="Verify details for New user.")
 		public void testCreatingNewUser() throws InterruptedException, IOException
 		 {
 			
@@ -38,7 +38,7 @@ public class TestManageUsers extends TestBase {
 			manageUser.removeFistTinInGrid();
          }
 			
-		@Test(priority=2,description="Manage User_Existing User-verifies user list sorting")
+		@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
 		public void testUserListSorting() throws InterruptedException, IOException
 		 {
 			
@@ -79,7 +79,7 @@ public class TestManageUsers extends TestBase {
            }
 		
 		
-		@Test(priority=4,description="Verify Save and cancel access level changes")
+		@Test(priority=2,description="Verify Save and cancel access level changes")
 		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
 		 {
 			String userType="Provider";
@@ -112,13 +112,5 @@ public class TestManageUsers extends TestBase {
 			ManageUsers manageUser=home.clickManageUsersTab();
 			manageUser.verifyTinGridSorting();
 			manageUser.verifyManageUserUI();
-         }
-		
-		
-		
-		
-		
-		
-		
-		
+         }	
 }

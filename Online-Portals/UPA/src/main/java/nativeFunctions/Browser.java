@@ -403,32 +403,32 @@ public class Browser
 	{
 		try
 		{
-	//		int retries = 30;
+			int retries = 30;
 			Browser.waitForLoad(testConfig.driver);
 			String actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 			expectedURL = expectedURL.toLowerCase();
 			
-//			while (retries > 0)
-//			{
+			while (retries > 0)
+			{
 				if (actualURL.contains(expectedURL))
 				{
 					LogTemp.Pass("Browser URL", expectedURL,actualURL);
 					
 					// Verify that page stays on same page (no internal
 					// redirect)
-				//	Browser.wait(testConfig, 5);
-//					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
-//					if (!actualURL.contains(expectedURL))
-//					{
-//						LogTemp.Fail("Browser URL", expectedURL, actualURL);
-//						return false;
-//					}
+					Browser.wait(testConfig, 5);
+					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
+					if (!actualURL.contains(expectedURL))
+					{
+						LogTemp.Fail("Browser URL", expectedURL, actualURL);
+						return false;
+					}
 					
 					return true;
 				}
-//				actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
-		//		retries--;
-		//	}
+				actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
+				retries--;
+			}
 			LogTemp.Fail("Browser URL", expectedURL, actualURL);
 			return false;
 		}

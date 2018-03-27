@@ -330,6 +330,7 @@ import main.java.reporting.LogTemp;
 	
 	public static List<WebElement> findElements(TestBase testConfig,String locatorType,String locatorValue ) throws InterruptedException
 	{
+		Browser.waitForLoad(testConfig.driver);
 		int retry=4;
 		try
 		{

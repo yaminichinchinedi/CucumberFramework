@@ -76,7 +76,13 @@ public class ManageUsers extends HomePage {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(lnkUserList,"User List");		
+		try{
+			Element.verifyElementPresent(lnkUserList,"User List");	
+		}
+			catch(Exception e)
+		{
+				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
+		}
 	}
 	
 	public AddUserDetails addNewUser()
@@ -124,6 +130,9 @@ public class ManageUsers extends HomePage {
 	    
 	    //method removes all the elements of a single ArrayList 
 	    UsersListUI.clear();
+	    LogTemp.Comment("Cleared previous User List");
+	   
+	    
 	    UsersListUI=getListOfAllUsersFromUI(testConfig);
 	  
 	    //method reverses the elements of the given ArrayList in linear time i.e. gives descending order list
@@ -141,8 +150,9 @@ public class ManageUsers extends HomePage {
 	 */
 	
 	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig) throws InterruptedException
-	{
+	{  
 		//List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		
 		List <WebElement> userNames=Element.findElements(testConfig,"xpath", "//div[@id='flow']//tbody//a");
 	    ArrayList<String> UsersListUI=new ArrayList<String>();
 		for(WebElement userName:userNames)
@@ -195,7 +205,7 @@ public class ManageUsers extends HomePage {
 	 * which is fetched from DB
 	 */
 	
-	public ManageUsers changeAndSaveAccessLevel()
+	public ManageUsers changeAndSaveAccessLevel() throws InterruptedException
 	{
 		//Clicks on an active user displayed in User List 
 		clickActiveUserName();
@@ -205,8 +215,26 @@ public class ManageUsers extends HomePage {
 		testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
 
 		//Select Access Level as General for the above tin
+		LogTemp.Comment("Finding access Level dropdown again");
+		accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 		
-	    Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");
+		LogTemp.Comment("Finded dropdown succesfully by find elements");
+		LogTemp.Comment("Finding dropdown is select visible text now");
+		try{
+			System.out.println("in try");
+	    Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("in catch");
+			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+		}
+	    
+	    LogTemp.Comment("Selected General successfully");
+	    
+	    Browser.waitForLoad(testConfig.driver);
 	    Browser.wait(testConfig, 3);
 	    clickSave();
 	  
@@ -232,7 +260,7 @@ public class ManageUsers extends HomePage {
 }
 	
 	
-	public ManageUsers changeAndCancelAccessLevel()
+	public ManageUsers changeAndCancelAccessLevel() throws InterruptedException
 	{
 		 clickActiveUserName();
 		 
@@ -240,7 +268,12 @@ public class ManageUsers extends HomePage {
 		  testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
 		  LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+ accessLvlChangedTin.get(0).getText().toString());
 		
-		  accessLvls= testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+		  
+		  LogTemp.Comment("Finding access level by find elements");
+		  accessLvls=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+		  
+		  LogTemp.Comment("Finded dropdown successfully");
+		  //accessLvls= testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		  String initialAccessLvl=accessLvls.get(0).getAttribute("value");
 
 		 //Get the Access Level already selected for first Active tin displayed in Grid
@@ -387,7 +420,7 @@ public class ManageUsers extends HomePage {
     	Element.verifyElementPresent(btnCancel,"Cancel");
     	Element.verifyElementPresent(lnkNotYou,"Not you");
     	Element.click(lnkNotYou, "Not You");
-    	
+    	Browser.wait(testConfig, 10);
     	Browser.verifyURL(testConfig, "optumhealthfinancial.com");
     	
     }
