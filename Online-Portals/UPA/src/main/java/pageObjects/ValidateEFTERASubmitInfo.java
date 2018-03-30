@@ -42,13 +42,8 @@ public class ValidateEFTERASubmitInfo {
 	@FindBy(name ="btnSubmit")
 	WebElement btnSubmit;
 	
-	
-	
-	
-	
-	String pdfPath="C:\\Automation\\EPS Enrollment Instructions.pdf";
 
-	public ValidateEFTERASubmitInfo(main.java.nativeFunctions.TestBase testConfig) {
+	public ValidateEFTERASubmitInfo(TestBase testConfig) {
 		
 		String expected = "/validateEFTERASubmitInfo";
 		this.testConfig = testConfig;
@@ -58,7 +53,7 @@ public class ValidateEFTERASubmitInfo {
 		
 	public void uploadW9pdf() 
 	{   
-		Element.enterData(btnBrowse,pdfPath, "Path of pdf","btnBrowse");
+		Element.enterData(btnBrowse,testConfig.getRunTimeProperty("PdfPath"), "Path of pdf","btnBrowse");
 	}
 
 

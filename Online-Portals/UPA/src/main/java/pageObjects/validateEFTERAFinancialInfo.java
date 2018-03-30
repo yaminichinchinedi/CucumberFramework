@@ -23,6 +23,10 @@ public class validateEFTERAFinancialInfo {
 	@FindBy(name = "msgFile")
 	WebElement btnBrowse;
 	
+	@FindBy(name = "btnChange")
+	WebElement btnChange;
+	
+	
 	@FindBy(name = "acceptance")
 	WebElement chkAcceptanceBox;
 	
@@ -70,10 +74,8 @@ public class validateEFTERAFinancialInfo {
 		
 		
 		Element.click(rdoBankLetter, "Bank Letter radio button");
-		Browser.wait(testConfig, 10);
 		Browser.waitForLoad(testConfig.driver);
 		Element.enterData(btnBrowse,testConfig.getRunTimeProperty("PdfPath"), "Path of pdf","btnBrowse");
-		Browser.wait(testConfig, 3);
 		Element.click(chkAcceptanceBox, "Acceptance check box");
 		if(chkAcceptanceBox.isSelected())
 		{
@@ -94,7 +96,7 @@ public class validateEFTERAFinancialInfo {
 	
 	public void submitForm() 
 	{   
-		main.java.nativeFunctions.Element.click(btnSubmit, "Submit button");
+		Element.click(btnSubmit, "Submit button");
 	}
 	
 	public ValidateEFTERASubmitInfo fillUploadEFTERAFileFormAndSubmit()

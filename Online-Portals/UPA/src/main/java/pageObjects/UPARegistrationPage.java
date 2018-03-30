@@ -82,6 +82,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/HowToEnroll.do";
 		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
+		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -115,7 +116,7 @@ public class UPARegistrationPage{
 		clickAndVerifyHeaderHome();
 		Browser.wait(testConfig, 3);
 		clickAndVerifyHeaderBenefitsOfEPS();
-		Browser.wait(testConfig, 3);
+		Browser.wait(testConfig,6 );
 		clickAndVerifyHeaderHowToEnroll();
 		Browser.wait(testConfig, 3);
 		clickAndVerifyHeaderFAQs();
