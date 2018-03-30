@@ -20,24 +20,24 @@ public class UPARegistrationPage{
 	@FindBy(partialLinkText="Enroll Now")
 	private WebElement lnkEnrollNow;
 	
-	@FindBy(xpath="//nav[@class='standard-header__nav'] //a[contains(text(),'Home')]")
+	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'Home')]")
 	private WebElement lnkHeaderHome;
 	
 
-	@FindBy(xpath="//nav[@class='standard-header__nav'] //a[contains(text(),'Benefits of EPS')]")
+	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'Benefits of EPS')]")
 	private WebElement lnkHeaderBenefitsofEPS;
 
-	@FindBy(xpath="//nav[@class='standard-header__nav'] //a[contains(text(),'How to Enroll')]")
+	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'How to Enroll')]")
 	private WebElement lnkHeaderHowtoEnroll;
 	
 
-	@FindBy(xpath="//nav[@class='standard-header__nav'] //a[contains(text(),'FAQs')]")
+	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'FAQs')]")
 	private WebElement lnkHeaderFAQs;
 
 	@FindBy(css=".standard-header__logo.sprite--optum-logo")
 	private WebElement lnkOptumLogo;
 	
-	@FindBy(xpath="//a[contains(@class, 'button') and text() = 'ENROLL NOW']")
+	@FindBy(xpath="//a[contains(@class, 'button')andtext()='ENROLL NOW']")
 	private WebElement btnEnrollNow;
 	
 	
@@ -60,6 +60,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkOptumLogo,"Optum Logo at header");
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -67,6 +68,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkHeaderHome,"Header Home");
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -74,7 +76,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/benefitofeps.do";
 		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
-		Browser.wait(testConfig, 6);
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -82,7 +84,8 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/HowToEnroll.do";
 		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
-		Browser.wait(testConfig, 5);
+		Browser.waitForLoad(testConfig.driver);
+		System.out.println(Browser.getURL(testConfig));
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -90,6 +93,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/epsFaqs.do";
 		Element.click(lnkHeaderFAQs,"Header FAQs");
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 
@@ -112,14 +116,14 @@ public class UPARegistrationPage{
 	public void verifyAllHeaderLinks()
 	{
 		clickAndVerifyOptumLogo();
-		Browser.wait(testConfig, 3);
-		clickAndVerifyHeaderHome();
-		Browser.wait(testConfig, 3);
-		clickAndVerifyHeaderBenefitsOfEPS();
-		Browser.wait(testConfig,6 );
+		Browser.waitForLoad(testConfig.driver);
 		clickAndVerifyHeaderHowToEnroll();
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
+		clickAndVerifyHeaderBenefitsOfEPS();
+		Browser.waitForLoad(testConfig.driver);
 		clickAndVerifyHeaderFAQs();
+		clickAndVerifyHeaderHome();
+		Browser.waitForLoad(testConfig.driver);
 		
 	}
 		
