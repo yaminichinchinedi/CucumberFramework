@@ -22,7 +22,7 @@ public class CancelManageUser {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(btnYes,"User List");
+		Element.verifyElementPresent(btnYes,"Yes Button");
 	}
     
     public HomePage clickCancelYes()
