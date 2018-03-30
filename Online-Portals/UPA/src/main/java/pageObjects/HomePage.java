@@ -169,7 +169,7 @@ public class HomePage extends LoginUPA {
 		Element.click(CurrentNewsSection, "Click Archive Section tab");
 	}
 
-	public void VerifyAllTabsAreDisplayedAfterSelectingTin() {
+	public void VerifyAllTabsAreDisplayedAfterSelectingTin(String userType) {
 		// Select Tin from dropdown
 		selectTin();
 
@@ -181,11 +181,22 @@ public class HomePage extends LoginUPA {
 		Element.verifyElementPresent(searchRemittanceTab,"Search Remittance tab");
 		Element.verifyElementPresent(paymentDataFilesTab,"Payment Data Files Tab");
 		Element.verifyElementPresent(maintainEnrlTab, "Maintain Enrollment");
-		//Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
 		Element.verifyElementPresent(myProfileTab, "My Profile tab");
-		Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");
 		Element.verifyElementPresent(lnkResources, "Resources link");
+		if(userType.equalsIgnoreCase("Admin"))
+		{
+		   Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
+		   Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");
+		   
+		}
+		else if(userType.equalsIgnoreCase("Gen"))
+		{
+			Element.verifyElementNotPresent(manageUsersTab, "Manage Users tab");
+			Element.verifyElementNotPresent(BillingInfoTab, "Billing Info tab");
+		}
 	}
+	
+	
 
 	public void VerifyResourcesLinks() {
 		String expectedURLFAQs = "forms/OHFS_EPS_FAQs_040813.pdf";

@@ -60,7 +60,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkOptumLogo,"Optum Logo at header");
-		Browser.waitForLoad(testConfig.driver);
+		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -84,8 +84,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/HowToEnroll.do";
 		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
-		Browser.waitForLoad(testConfig.driver);
-		System.out.println(Browser.getURL(testConfig));
+		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -93,7 +92,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/epsFaqs.do";
 		Element.click(lnkHeaderFAQs,"Header FAQs");
-		Browser.waitForLoad(testConfig.driver);
+		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 
@@ -116,14 +115,11 @@ public class UPARegistrationPage{
 	public void verifyAllHeaderLinks()
 	{
 		clickAndVerifyOptumLogo();
-		Browser.waitForLoad(testConfig.driver);
 		clickAndVerifyHeaderHowToEnroll();
-		Browser.waitForLoad(testConfig.driver);
 		clickAndVerifyHeaderBenefitsOfEPS();
-		Browser.waitForLoad(testConfig.driver);
 		clickAndVerifyHeaderFAQs();
 		clickAndVerifyHeaderHome();
-		Browser.waitForLoad(testConfig.driver);
+		
 		
 	}
 		

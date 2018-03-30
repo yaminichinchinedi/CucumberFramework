@@ -25,28 +25,28 @@ public class TestUPAEnrollment extends TestBase {
 	 }
 	
 	
-//	@Test(priority=1,description="Tests a Successful AO type new enrollment")
-//	public void testSuccessfulAOProviderEnrollment() throws Exception{
-//		
-//		int excelRowNo=1;
-//		int noOfEnrollments=0; 
-//        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
-//        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
-//     
-//		   
-//	}
-//	
-//	@Test(priority=2,description="Tests a Successful AV type new enrollment")
-//	public void testSuccessfulAVProviderEnrollment() throws Exception{
-//		
-//	    int excelRowNo=3;
-//		int noOfEnrollments=0;   
-//        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
-//        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
-//       
-//	}
+	@Test(priority=1,description="Tests a Successful AO type new enrollment")
+	public void testSuccessfulAOProviderEnrollment() throws Exception{
+		
+		int excelRowNo=1;
+		int noOfEnrollments=0; 
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
+        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
+     
+		   
+	}
+	
+	@Test(priority=2,description="Tests a Successful AV type new enrollment")
+	public void testSuccessfulAVProviderEnrollment() throws Exception{
+		
+	    int excelRowNo=3;
+		int noOfEnrollments=0;   
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
+        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
+       
+	}
 
 	
 	

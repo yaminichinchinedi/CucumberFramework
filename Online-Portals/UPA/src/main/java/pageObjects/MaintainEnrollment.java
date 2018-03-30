@@ -92,18 +92,12 @@ public class MaintainEnrollment {
 		 int sqlRowNo=2;
          
 		// Verifies count of records displayed in view payments tab from DB
-		System.out.println(sqlRowNo);
-		 Map provBankAccount = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
-		
-		
+		Map provBankAccount = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
 		Helper.compareEquals(testConfig, "Bank Name", provBankAccount.get("BNK_NM").toString().trim(), txtBankName.getText().trim());
 		Helper.compareEquals(testConfig, "Bank Address", provBankAccount.get("ADR_TXT").toString().trim(), txtBankAddr.getText().trim());
 		Helper.compareEquals(testConfig, "Routing Transit Number", provBankAccount.get("RTE_TRNS_NBR").toString().trim(), txtRoutingNo.getText().trim());
-		
 		Helper.compareEquals(testConfig, "Account Number",provBankAccount.get("BNK_ACCT_NBR").toString().trim(),txtAccNo.getText().trim());
-		
 		Helper.compareEquals(testConfig, "ACH Type",provBankAccount.get("ACH_TYP_CD").toString().trim(),txtACHType.getText().trim());
-		
 		Helper.compareEquals(testConfig, "Account Type",provBankAccount.get("ACCT_TYP_ID").toString().trim(),convertAcctType(txtAccType.getText().trim()));
 		return new MaintainEnrollment(testConfig);
 	}

@@ -147,6 +147,30 @@ import main.java.reporting.LogTemp;
 		LogTemp.Fail(namOfElement +" is not present on the page" + e);
 			
 	}
+}
+		
+		//Verifies element is not present on the page
+	public static void verifyElementNotPresent(WebElement element,String namOfElement)
+		{
+		try
+		{
+			if(!element.isDisplayed())
+		
+		 {
+			String successMsg="Verified " + namOfElement + " is not present on the page";
+			LogTemp.Pass(successMsg);
+		 }
+		else 
+		{
+			String failureMsg=namOfElement + " is present on the page";
+			LogTemp.Fail(failureMsg);
+		}
+	}
+	catch(Exception e)
+	{
+		LogTemp.Fail(namOfElement +" is  present on the page" + e);
+			
+	}
 		
 	}
 	public static void verifyTextPresent(WebElement element,String expectedText)
