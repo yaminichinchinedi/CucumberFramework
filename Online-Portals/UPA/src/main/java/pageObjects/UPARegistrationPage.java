@@ -77,6 +77,7 @@ public class UPARegistrationPage{
 		String expectedURL="/benefitofeps.do";
 		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
 		Browser.waitForLoad(testConfig.driver);
+		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -116,8 +117,11 @@ public class UPARegistrationPage{
 	{
 		clickAndVerifyOptumLogo();
 		clickAndVerifyHeaderHowToEnroll();
+		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderBenefitsOfEPS();
+		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderFAQs();
+		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderHome();
 		
 		
