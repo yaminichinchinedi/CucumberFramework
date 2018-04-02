@@ -43,9 +43,6 @@ public class LogTemp
 		
 		Reporter.log(message);
 	
-		
-		
-		
 		//Don't know its use currently hence commenting
 		//testConfig.testLog = testConfig.testLog.concat(message);
 	}
@@ -120,6 +117,7 @@ public class LogTemp
 			if (testConfig.driver != null)
 			{
 				File dest = Browser.getScreenShotFile(testConfig);
+				System.out.println("destination is" + dest);
 				try {
 					Browser.captureScreenshot(testConfig);
 				} catch (IOException e) {

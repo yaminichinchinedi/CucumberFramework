@@ -85,10 +85,13 @@ public class TestBase {
 		if (!(ResultsDir == null || ResultsDir.isEmpty()))
 		{
 			putRunTimeProperty("ResultsDir", ResultsDir);
+			LogTemp.Comment("Result dir in if :" + ResultsDir );
 		}
 		else
 		{
 			String resultsDir = System.getProperty("user.dir");
+			
+			LogTemp.Comment("Result dir in else :" + resultsDir );
 			
 			putRunTimeProperty("ResultsDir", resultsDir);
 			

@@ -189,7 +189,8 @@ public class Browser
 		File dest = new File(testConfig.getRunTimeProperty("ResultsDir"));
 		
 		/*
-		 * Commenting out since, the current results folder will be passed by ant script and we do not need to calculate File resultsFolder = new File(System.getProperty("user.dir")+"//Results//" +
+		 * Commenting out since, the current results folder will be passed by ant script and we do not need to calculate
+		 *  File resultsFolder = new File(System.getProperty("user.dir")+"//Results//" +
 		 * Config.productName); File[] directories = resultsFolder.listFiles(new FilenameFilter() {
 		 * @Override public boolean accept(File dir, String name) { return dir.isDirectory(); } }); long lastMod = Long.MIN_VALUE; File dest = null; if(directories!=null) { for(File
 		 * directory:directories) { if (directory.lastModified() > lastMod) { dest = directory; lastMod = directory.lastModified(); } } }
@@ -352,7 +353,11 @@ public class Browser
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
 			// Save the screen shot in 'D: drive' with name "screenshot.png"
-			 screenShotName = new File("C:\\Automation\\upa-portal\\UPA\\Screenshot\\screenCapture"+timeStamp+".png");
+			 screenShotName = new File("C:\\jenkins\\workspace\\AutomationRun\\Online-Portals\\UPA\\Screenshot\\screenCapture"+timeStamp+".png");
+			 
+			 //screenShotName = new File("C:\\Automation\\upa-portal\\UPA\\Screenshot\\screenCapture"+timeStamp+".png");
+			 
+			 
 
 			// Copy captured screenshot in specified location
 			 FileUtils.copyFile(sourceFile , screenShotName);
