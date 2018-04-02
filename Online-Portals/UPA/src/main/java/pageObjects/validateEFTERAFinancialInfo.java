@@ -75,7 +75,7 @@ public class validateEFTERAFinancialInfo {
 		
 		Element.click(rdoBankLetter, "Bank Letter radio button");
 		Browser.waitForLoad(testConfig.driver);
-		Element.enterData(btnBrowse,testConfig.getRunTimeProperty("PdfPath"), "Path of pdf","btnBrowse");
+		Element.enterData(btnBrowse,testConfig.getRunTimeProperty("PdfPath"), "Path of pdf is :" + " " + testConfig.getRunTimeProperty("PdfPath"),"btnBrowse");
 		Element.click(chkAcceptanceBox, "Acceptance check box");
 		if(chkAcceptanceBox.isSelected())
 		{

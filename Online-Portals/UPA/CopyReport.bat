@@ -1,3 +1,4 @@
-cd C:\Utsav\TestAutomation\Online-Portals\UPA
+cd C:\jenkins\workspace\AutomationRun\Online-Portals\UPA
 javac CopyDir.java
-java -classpath C:\Utsav\TestAutomation\Online-Portals\UPA CopyDir
+java -classpath C:\jenkins\workspace\AutomationRun\Online-Portals\UPA CopyDir
+
