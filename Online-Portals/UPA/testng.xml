@@ -8,11 +8,11 @@
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		</listeners>
 	
-   <!--<test name="My Profile">	  
+   <test name="My Profile">	  
 		<classes>
 			<class name="test.java.TestMyProfileTab" />
 		</classes>	
-		</test>-->
+		</test>
 		
 		 <test name="Manage Users">	  
 		 <classes>
@@ -20,16 +20,16 @@
 		</classes>	
 		 </test>
 		 
-		 <!--<test name="Enrollment Flow">	  
+		<test name="Enrollment Flow">	  
 		 <classes>
 			<class name="test.java.TestUPAEnrollment" />
 		</classes>	
-		 </test> -->
+		 </test>
 		 
-		 <!-- <test name="Home Tab">	  
+		<test name="Home Tab">	  
 		 <classes>
 			<class name="test.java.TestUPAHomeTab" />
 		</classes>	
-		 </test> -->	
+		 </test>
 		 
 </suite>
