@@ -79,22 +79,22 @@ public class TestManageUsers extends TestBase {
            }
 		
 		
-		@Test(priority=2,description="Verify Save and cancel access level changes")
-		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
-		 {
-			String userType="Provider";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			manageUser.changeAndSaveAccessLevel().changeAndCancelAccessLevel();				
-         }
+//		@Test(priority=2,description="Verify Save and cancel access level changes")
+//		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
+//		 {
+//			String userType="Provider";
+//			String accessType="Admin";
+//			
+//			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//			LoginUPA loginPage=new LoginUPA(testConfig);
+//		    
+//			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
+//			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
+//			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+//			home.selectTin();
+//			ManageUsers manageUser=home.clickManageUsersTab();
+//			manageUser.changeAndSaveAccessLevel().changeAndCancelAccessLevel();				
+//         }
 		
 		@Test(priority=4,description="Verify Tin Grid Details")
 		public void testTinGridDetails() throws InterruptedException, IOException

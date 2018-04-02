@@ -353,12 +353,8 @@ public class Browser
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
 			// Save the screen shot in 'D: drive' with name "screenshot.png"
-			 screenShotName = new File("C:\\jenkins\\workspace\\AutomationRun\\Online-Portals\\UPA\\Screenshot\\screenCapture"+timeStamp+".png");
+			 screenShotName = new File("\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\Screenshot\\screenCapture"+timeStamp+".png");
 			 
-			 //screenShotName = new File("C:\\Automation\\upa-portal\\UPA\\Screenshot\\screenCapture"+timeStamp+".png");
-			 
-			 
-
 			// Copy captured screenshot in specified location
 			 FileUtils.copyFile(sourceFile , screenShotName);
 			 
