@@ -19,6 +19,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
 
 import main.java.Utils.CopyDir;
@@ -88,6 +89,7 @@ public class TestBase {
 		else
 		{
 			String resultsDir = System.getProperty("user.dir");
+			
 			putRunTimeProperty("ResultsDir", resultsDir);
 			
 		}
@@ -112,7 +114,7 @@ public class TestBase {
 		}
 		
 		
-		setDriver(runtimeProperties.getProperty("BrowserType"));
+	//	setDriver(runtimeProperties.getProperty("BrowserType"));
 		
 		testConfig=this;
 		LogTemp logger =new LogTemp(testConfig);
@@ -181,14 +183,14 @@ public class TestBase {
 	}
 
 	private static WebDriver initFirefoxDriver() {
-		System.out.println("Launching Firefox browser..");
+		LogTemp.Comment("Launching Firefox browser..");
 		System.setProperty("webdriver.gecko.driver",
 				"geckodriver.exe");
-		System.out.println("Gecko Property set");
+		LogTemp.Comment("Gecko Property set");
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
 		capabilities.setCapability("marionette", false);
-		System.out.println("All capabilities set");
+		LogTemp.Comment("All capabilities set");
 		WebDriver driver = new FirefoxDriver(capabilities);
 		driver.manage().window().maximize();
 		//driver.navigate().to(appURL);
@@ -286,6 +288,14 @@ public class TestBase {
 //		}
 //	}
 
+	
+	
+	@BeforeClass
+	public void tearUp()
+	{
+		setDriver(runtimeProperties.getProperty("BrowserType"));
+	}
+	
 	@AfterSuite
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
