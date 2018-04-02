@@ -26,4 +26,10 @@
 		</classes>	
 		 </test> 
 		 
+		  <test name="Home Tab">	  
+		 <classes>
+			<class name=" TestUPAHomeTab" />
+		</classes>	
+		 </test> 	
+		 
 </suite>
