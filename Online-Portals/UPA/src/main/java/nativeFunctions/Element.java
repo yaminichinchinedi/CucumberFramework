@@ -409,7 +409,7 @@ import main.java.reporting.LogTemp;
 		
 		catch (Exception e)
 		{
-			
+			LogTemp.Fail("exception" + e);
 			return null;
 		}
 		return null;
