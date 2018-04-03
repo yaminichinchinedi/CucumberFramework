@@ -286,7 +286,7 @@ import main.java.reporting.LogTemp;
 		
 		catch(Exception e)
 		{
-			LogTemp.Fail("Not found");
+			LogTemp.Fail("Unable to find selected item in dropdown due to" + '\n' + e);
 			return null;
 		}
 	}

@@ -345,6 +345,8 @@ public class Browser
 		
 		try
 		{
+				
+			LogTemp.Comment("In screenshot section");
 			// Return captured screenshot in File type
 			 File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 

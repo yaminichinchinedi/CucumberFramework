@@ -345,17 +345,24 @@ public class Browser
 		
 		try
 		{
+				
+			LogTemp.Comment("In screenshot section");
 			// Return captured screenshot in File type
 			 File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 
 			// Return a time stamp in format: http://YYYY.MM.DD-HH.MM.SS
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
+			LogTemp.Comment("Trying to save the screenshot");
 			// Save the screen shot in 'D: drive' with name "screenshot.png"
 			 screenShotName = new File("\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\Screenshot\\screenCapture"+timeStamp+".png");
 			 
+			 LogTemp.Comment("Screenshot saved");
+			 
+			 
 			// Copy captured screenshot in specified location
 			 FileUtils.copyFile(sourceFile , screenShotName);
+			 
 			 
 			 if(testConfig.driver !=null)
 			 {

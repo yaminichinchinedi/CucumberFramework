@@ -78,6 +78,9 @@ public class LogTemp
 		}
 				
 		Reporter.log(ReportMessage);
+		System.out.println(testConfig);
+		System.out.println(testConfig.driver);
+		System.out.println("driver before page info is :" + testConfig.driver);
 		PageInfo(testConfig);
 		
 		Assert.fail(message);
@@ -111,8 +114,13 @@ public class LogTemp
 	
 	private static void PageInfo(TestBase testConfig) 
 	{
+// 		testConfig.enableScreenshot = true;
+//		if (testConfig.enableScreenshot)
+//		{
 			if (testConfig.driver != null)
 			{
+				File dest = Browser.getScreenShotFile(testConfig);
+				System.out.println("destination is" + dest);
 				try 
 				{
 				  Browser.captureScreenshot(testConfig);
@@ -123,11 +131,13 @@ public class LogTemp
 					e.printStackTrace();
 				}
 			}
+			
 			else 
 			{
 				LogTemp.Comment("Driver is null in Page info method, so unable to take screenshot", "Red");
 			}
 		}
+	//}
 	
 	public static void Pass(String message)
 	{

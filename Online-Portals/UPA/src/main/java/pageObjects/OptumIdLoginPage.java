@@ -88,7 +88,7 @@ public class OptumIdLoginPage {
 	  
 	  Element.click(btnSignIn, "Sign In");
       Browser.waitForLoad(testConfig.driver);
-      Browser.wait(testConfig, 20);
+      Browser.wait(testConfig, 5);
       if (testConfig.driver.getPageSource().contains("Unrecognized")) 
     	  fillAns();
      return new HomePage(testConfig);

@@ -20,6 +20,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
 import main.java.Utils.CopyDir;
@@ -43,6 +44,7 @@ public class TestBase {
 	protected  TestBase testConfig;
 	public static String ResultsDir;
 	public Method testMethod;
+	int i=0;
 	
 	
 	
@@ -90,12 +92,10 @@ public class TestBase {
 		else
 		{
 			String resultsDir = System.getProperty("user.dir");
-			
-			LogTemp.Comment("Result dir in else :" + resultsDir );
-			
 			putRunTimeProperty("ResultsDir", resultsDir);
-			
 		}
+		
+		
 		//Getting Jenkins Parameter
 		System.out.println("Running on environment" + System.getProperty("env"));
 		System.setProperty("env","Stage2");
@@ -116,17 +116,12 @@ public class TestBase {
 			urlHeper("IMPL");		
 		}
 		
-		
-	//	setDriver(runtimeProperties.getProperty("BrowserType"));
-		
 		testConfig=this;
-		LogTemp logger =new LogTemp(testConfig);
 	}
 	
 	private void urlHeper(String env)
 	{
-		System.out.println("Running test suite " + System.getProperty("testSuite"));
-		//env="Stage";
+		LogTemp.Comment("Running test suite " + System.getProperty("testSuite"));
 		
 		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA"))
 		{
@@ -165,7 +160,6 @@ public class TestBase {
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
-			//driver.navigate().to(appURL);
 			break;
 		default:
 			System.out.println("browser : " + browserType
@@ -177,11 +171,10 @@ public class TestBase {
 	}
 
 	private static WebDriver initChromeDriver() {
-		System.out.println("Launching google chrome with new profile..");
+		LogTemp.Comment("Launching google chrome with new profile..");
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\p1058\\Downloads\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
-	//	driver.navigate().to(appURL);
 		return driver;
 	}
 
@@ -196,7 +189,6 @@ public class TestBase {
 		LogTemp.Comment("All capabilities set");
 		WebDriver driver = new FirefoxDriver(capabilities);
 		driver.manage().window().maximize();
-		//driver.navigate().to(appURL);
 		return driver;
 	}
 
@@ -280,41 +272,17 @@ public class TestBase {
 		runtimeProperties.put(key, value);
 	}
 
-	// @Parameters({ "browserType", "appURL" })
-//	@BeforeClass
-//	public void initializeTestBaseSetup(String browserType) {
-//		try {
-//			setDriver(browserType);
-//
-//		} catch (Exception e) {
-//			System.out.println("Error....." + e.getStackTrace());
-//		}
-//	}
-
 	
-	
-	@BeforeClass
+	@BeforeTest
 	public void tearUp()
 	{
 		setDriver(runtimeProperties.getProperty("BrowserType"));
+		LogTemp logger =new LogTemp(testConfig);
 	}
 	
-	@AfterSuite
+	@AfterTest
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
-	}
-
-//	@AfterSuite
-//	public void sendreport() throws FileNotFoundException, IOException {
-//		//SendMail.sendEmail();
-//		System.out.println("Close all browsers");
-//		//driver.quit();
-	//}
-	
-	
-	
-	
-	
-	
+	}	
 }
