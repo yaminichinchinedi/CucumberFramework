@@ -97,8 +97,8 @@ public class TestBase {
 		
 		
 		//Getting Jenkins Parameter
-		System.out.println("Running on environment" + System.getProperty("env"));
-		System.setProperty("env","Stage2");
+		
+		System.setProperty("env",System.getProperty("env"));
 		
 		if(System.getProperty("env")== null || System.getProperty("env").equals("Stage"))
 		{			
@@ -268,7 +268,6 @@ public class TestBase {
 	}
 
 	public void putRunTimeProperty(String key, String value) {
-		//String keyName = key.toLowerCase();
 		runtimeProperties.put(key, value);
 	}
 
@@ -278,6 +277,7 @@ public class TestBase {
 	{
 		setDriver(runtimeProperties.getProperty("BrowserType"));
 		LogTemp logger =new LogTemp(testConfig);
+		LogTemp.Comment("Running on environment" + System.getProperty("env"),"Maroon");
 	}
 	
 	@AfterTest

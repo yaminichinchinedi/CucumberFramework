@@ -90,8 +90,6 @@ public class DataBase
 		// Read the Query column of SQL sheet of Test data excel
 		
 		TestDataReader sqlData = testConfig.cacheTestDataReaderObject("SQL");
-		System.out.println(sqlData.GetData(sqlRow, "Query"));
-		System.out.println("s");
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
 		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
