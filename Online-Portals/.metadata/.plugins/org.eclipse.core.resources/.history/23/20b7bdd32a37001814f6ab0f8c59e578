@@ -21,16 +21,7 @@
 		</classes>	
 		</test>
 		
-		<test name="Enrollment Flow">
-		 <classes>
-			<class name="test.java.TestUPAEnrollment" />
-		</classes>	
-		 </test>
+		
 		 
-			  <test name="Home Tab">	  
-		 <classes>
-			<class name="test.java.TestUPAHomeTab" />
-		</classes>	
-		 </test>
 		 
 </suite>

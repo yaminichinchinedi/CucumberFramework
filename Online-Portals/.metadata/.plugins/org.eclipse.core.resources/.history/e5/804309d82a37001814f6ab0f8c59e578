@@ -27,10 +27,6 @@
 		</classes>	
 		 </test>
 		 
-			  <test name="Home Tab">	  
-		 <classes>
-			<class name="test.java.TestUPAHomeTab" />
-		</classes>	
-		 </test>
+			 
 		 
 </suite>
