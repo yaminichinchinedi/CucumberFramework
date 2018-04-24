@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="CSR Regression Suite" verbose="4" parallel="false">
+
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		</listeners>
+	
+		  <test name="CSR Manage Users">	  
+		 <classes>
+			<class name="test.java.TestCSRManageUsers" />
+		</classes>	
+		 </test>
+		 
+</suite>
