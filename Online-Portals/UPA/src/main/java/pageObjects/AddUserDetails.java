@@ -10,6 +10,7 @@ import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.LogTemp;
@@ -28,17 +29,21 @@ public class AddUserDetails {
 	@FindBy(name="lname")
 	WebElement lastName;
 	
-	@FindBy(name="phoneNum")
+	@FindBy(xpath="//input[not(contains(@type,'hidden')) and @name='phoneNum']")
 	WebElement phoneNum;
 	
-	@FindBy(name="phoneNum1")
+	@FindBy(xpath="//input[not(contains(@type,'hidden')) and @name='phoneNum1']")
 	WebElement phoneNum1;
 	
-	@FindBy(name="phoneNum2")
+	@FindBy(xpath="//input[not(contains(@type,'hidden')) and @name='phoneNum2']")
 	WebElement phoneNum2;
 	
 	@FindBy(name="email")
 	WebElement email;
+	
+	
+	@FindBy(name="addTincsr")
+	WebElement addTin;
 	
 	@FindBy(name="mdlName")
 	WebElement middleName;
@@ -60,6 +65,9 @@ public class AddUserDetails {
 	
 	@FindBy(xpath="//input[@value=' Save ']")
 	WebElement btnSave;
+	
+
+	
 	
 	@FindBy(xpath="//td[@class='subheadernormal'][2]")
 	WebElement txtUserType;
@@ -106,6 +114,11 @@ public class AddUserDetails {
 	
 	@FindBy(css=".rowDark>td>select")
 	WebElement drpDwnTinAccessLvl;
+	
+	
+	@FindBy(xpath="//div[@id='flow']//tbody//a")
+	List <WebElement> userNames;
+	
 
 	private TestBase testConfig;
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
@@ -121,10 +134,17 @@ public class AddUserDetails {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//String expected = "add/manageusersAddUser.do";
-		Element.verifyElementPresent(firstName, "First Name textbox");
+		//String expected = "addManageusersAddUser.do";
+		Element.expectedWait(firstName, testConfig, "First Name textbox", "First Name textbox");
+		//Element.verifyElementPresent(firstName, "First Name textbox");
 		//Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
 	}
+	
+	//Creating Default constructor
+	public AddUserDetails() 
+	 {	
+		//Element.verifyElementPresent(firstName, "First Name textbox");
+	 }
 
 	public AddUserDetails fillNewUserInfo()
 	{
@@ -133,6 +153,8 @@ public class AddUserDetails {
 		
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
+		
+		
 		Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
@@ -146,10 +168,19 @@ public class AddUserDetails {
 	{
 		//Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
 		Element.selectByIndex(drpDwnSelectTin, 1, "Select first tin");
+		Browser.wait(testConfig,2);
 		clickAddTin();
 		
 		return this;
 		
+	}
+	
+	public AddUserDetails addTinCSR()
+	{
+		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
+        
+		clickAddTin();
+		return this;
 	}
 	
 	public AddUserDetails clickAddTin()
@@ -160,20 +191,40 @@ public class AddUserDetails {
 	
 	public AddUserDetails selectTinAccessLvl(String accessLevel)
 	{
-		Element.selectByVisibleText(drpDwnTinAccessLvl, accessLevel, "Selected access Level as" + accessLevel);
-		return this;
+//		Element.selectByVisibleText(drpDwnTinAccessLvl, accessLevel, "Selected access Level as" + accessLevel);
+//		return this;
+		Browser.wait(testConfig, 4);
+		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+		 Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
+		 return this;
+	}
+	
+	
+	public AddUserDetails selectTinAccessLvlTemp(String accessLevel)
+	{
+//		Element.selectByVisibleText(drpDwnTinAccessLvl, accessLevel, "Selected access Level as" + accessLevel);
+//		return this;
+		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
+		 return this;
 	}
 	
 	public ManageUsers clickSave()
 	{
+		Browser.wait(testConfig,2);
 		Element.click(btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}
 	
-	public void verifyDetailsOfNewUser()
+	
+	
+	public ManageUsers verifyDetailsOfNewUser(String userType)
 	{
-		List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		int sqlRowNo=0;
+		Map portalUser=null;
+		
+		//List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		for(WebElement userName:userNames)
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
@@ -182,21 +233,36 @@ public class AddUserDetails {
 				      break;
 					}
 		}
-		int sqlRowNo=9;
 		
-	
-		//Verifies details are saved in DB
-		Map portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		
+		
+		if(userType.equalsIgnoreCase("BS"))
+		{
+			 sqlRowNo=13;
+		     portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		    
+		}
+		else if(userType.equalsIgnoreCase("PROV"))
+		{
+			sqlRowNo=9;
+			portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "User Type", (portalUser.get("PAY_PROC_ACPT_CD_VAL_DESC").toString()), txtUserType.getText());
+			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
+			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
+		}
+		
+		else if(userType.equalsIgnoreCase("PAY"))
+		{
+			sqlRowNo=13;
+		    portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		}
 	
 	    Helper.compareEquals(testConfig, "First name", portalUser.get("FST_NM").toString(), firstName.getAttribute("value").toString());
 	    Helper.compareEquals(testConfig, "Last name", portalUser.get("LST_NM").toString(), lastName.getAttribute("value").toString());
 	    Helper.compareEquals(testConfig, "Phone number", portalUser.get("TEL_NBR").toString(), phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
 	    Helper.compareEquals(testConfig, "Email address", portalUser.get("EMAIL_ADR_TXT").toString(), email.getAttribute("value").toString());
-	    Helper.compareEquals(testConfig, "User Type", (portalUser.get("PAY_PROC_ACPT_CD_VAL_DESC").toString()), txtUserType.getText());
-	    Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
+	    return new ManageUsers(testConfig);
 	    
-	    
-	    Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
 	}
 	
 	public String convertStatusType(String DBUserType)
@@ -332,5 +398,7 @@ public class AddUserDetails {
 		//verifyAssociatedTins();
 		
 	}
+	
+	
 	
 }

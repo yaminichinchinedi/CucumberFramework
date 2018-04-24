@@ -459,7 +459,7 @@ public class Browser
 			String oldWindow = testConfig.driver.getWindowHandle();
 			
 			if (testConfig.driver.getWindowHandles().size() < 2)
-			{
+ 			{
 				LogTemp.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
 			}
 			

@@ -331,7 +331,7 @@ import main.java.reporting.LogTemp;
 	public static void selectByVisibleText(WebElement element, String text, String description)
 	{
 			try{
-				LogTemp.Comment("Select" +  description + "from dropdown");
+				LogTemp.Comment("Select" + " " +  description + "from dropdown");
 			
 			
 			Select sel = new Select(element);
@@ -464,7 +464,7 @@ import main.java.reporting.LogTemp;
 		
 		catch (Exception e)
 		{
-			
+			LogTemp.Fail("Unable to find element with locator" + " " + locatorValue );
 			return null;
 		}
 		return null;

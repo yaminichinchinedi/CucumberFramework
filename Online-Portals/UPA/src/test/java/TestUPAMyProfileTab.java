@@ -18,11 +18,11 @@ import main.java.pageObjects.UPARegistrationPage;
 import org.testng.annotations.Test;
 
 
-public class TestMyProfileTab extends TestBase
+public class TestUPAMyProfileTab extends TestBase
  {
 
 
-	@Test(priority=1,description="My Profile_Page_Change Password Link")
+	@Test(priority=1,description="My Profile_Page_Change Password Link Yes, no functionality")
 	public void testChangePasswordLink() throws InterruptedException, IOException
 	 {
 		

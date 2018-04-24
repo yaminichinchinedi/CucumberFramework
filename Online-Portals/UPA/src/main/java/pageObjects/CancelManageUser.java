@@ -25,13 +25,13 @@ public class CancelManageUser {
 		Element.verifyElementPresent(btnYes,"Yes Button");
 	}
     
-    public HomePage clickCancelYes()
+    public HomePage clickYes()
 	{
 		Element.click(btnYes, "Yes button");
 		return new HomePage(testConfig);
 	}
 	
-	public void clickCancelNo()
+	public void clickNo()
 	{
 		Element.click(btnNo, "No button");
 	}

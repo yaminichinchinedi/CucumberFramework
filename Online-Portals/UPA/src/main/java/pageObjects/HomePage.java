@@ -53,9 +53,6 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(id = "tabMntnEnrl")
 	WebElement maintainEnrlTab;
-
-//	@FindBy(xpath = ".//*[@id='tabManageusers']")
-//	WebElement ManageUsersTab;
 	
 	@FindBy(id="tabManageusers")
 	WebElement manageUsersTab;
@@ -121,19 +118,16 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		String expected = "/validateCustomerLogin.do?unencripted=yes";
 		Element.expectedWait(txtWelcomeScreen, testConfig,"Welcome Screen Text is present on home page"," Welcome Screen Text");
-
-		// Element.verifyElementPresent(txtWelcomeScreen,"Welcome Screen Text is present on home page");
-
 	}
 	
 	//Default constructor
-	public HomePage() 
-	{
-		//PageFactory.initElements(testConfig.driver, this);
-	}
-
+	public HomePage() {}
+	
+    /*
+     * Function to verify UI 
+     * of Welcome Screen
+     */
 	public HomePage verifyWelcomeScreen() throws IOException {
 		int sqlRowNo = 7;
 		// Verifies count of records displayed in view payments tab from DB
@@ -149,6 +143,10 @@ public class HomePage extends LoginUPA {
 		return this;
 	}
 
+	/*
+	 * Verifies News section contains archive and current section
+	 * and the one clicked becomes active section
+	 */
 	public void verifyNewsSectionIsDisplayed() {
 		Browser.wait(testConfig, 5);
 		Element.expectedWait(txtNewsAndInfoHeading, testConfig,"News and Heading section", "News and Heading section");
@@ -223,23 +221,23 @@ public class HomePage extends LoginUPA {
 		Element.onMouseHover(testConfig, lnkResources, "Resources");
 		Element.click(help, "Help");
 		Browser.switchToNewWindow(testConfig,expectedURLHelp);
-		//Browser.wait(testConfig, 3);
-		//Browser.verifyURL(testConfig, expectedURLHelp);
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, expectedURLHelp);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
-		//Browser.wait(testConfig, 3);
+		Browser.wait(testConfig, 3);
 		Element.onMouseHover(testConfig, lnkResources, "Resources");
 		Element.click(userGuide, "User Guide");
 		Browser.switchToNewWindow(testConfig,expectedUserGuideURL);
-		//Browser.wait(testConfig, 3);
-		//Browser.verifyURL(testConfig, expectedUserGuideURL);
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, expectedUserGuideURL);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
-		//Browser.wait(testConfig, 3);
-		//Element.onMouseHover(testConfig, lnkResources, "Resources");
-		//Element.click(contactUs, "Contact Us");
-		//Browser.wait(testConfig, 3);
-		//Browser.verifyURL(testConfig, expectedContactUsURL);
+		Browser.wait(testConfig, 3);
+		Element.onMouseHover(testConfig, lnkResources, "Resources");
+		Element.click(contactUs, "Contact Us");
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, expectedContactUsURL);
 
 	}
 
@@ -260,8 +258,8 @@ public class HomePage extends LoginUPA {
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		LogTemp.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
-		LogTemp.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
+		LogTemp.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Maroon");
+		LogTemp.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Maroon");
 		
 		for (String tinNo : tinsListFromDB) {
 			if (newListFromUI.contains(tinNo)) {
@@ -310,7 +308,7 @@ public class HomePage extends LoginUPA {
 	public ManageUsers clickManageUsersTab() 
 	{
 		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
-		testConfig.driver.findElement(By.linkText("Manage Users"));
+//		testConfig.driver.findElement(By.linkText("Manage Users"));
 		Element.click(manageUsersTab, "Manage Users Tab");
 		return new ManageUsers(testConfig);
 

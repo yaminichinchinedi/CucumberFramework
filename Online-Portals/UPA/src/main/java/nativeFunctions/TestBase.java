@@ -84,54 +84,44 @@ public class TestBase {
 		
 		
 		
-		if (!(ResultsDir == null || ResultsDir.isEmpty()))
-		{
-			putRunTimeProperty("ResultsDir", ResultsDir);
-			LogTemp.Comment("Result dir in if :" + ResultsDir );
-		}
-		else
-		{
-			String resultsDir = System.getProperty("user.dir");
-			putRunTimeProperty("ResultsDir", resultsDir);
-		}
-		
-		
 		//Getting Jenkins Parameter
 		
-		System.setProperty("env",System.getProperty("env"));
-		
-		if(System.getProperty("env")== null || System.getProperty("env").equals("Stage"))
-		{			
-			urlHeper("Stage");
-			
+		if(System.getProperty("env") == null || System.getProperty("env").equals("Stage2"))
+		{
+			urlHeper("Stage2");
 		}
 		
-		else if(System.getProperty("env").equals("Stage2"))
+		
+		else if(System.getProperty("env").equals("Stage") )
 		{
-			urlHeper("Stage2");		
+			urlHeper("Stage");		
 		}
 		
 		else if(System.getProperty("env").equals("IMPL"))
 		{
 			urlHeper("IMPL");		
 		}
-		
+
 		testConfig=this;
 	}
 	
 	private void urlHeper(String env)
 	{
 		LogTemp.Comment("Running test suite " + System.getProperty("testSuite"));
+		System.setProperty("Database", env);
+		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
+		System.setProperty("env", env);
+		System.setProperty("testSuite", "CSR");
 		
 		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
-			System.setProperty("Database", env);
 		}
 			
 			else if (System.getProperty("testSuite").equals("CSR"))
 			{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
+				
 			}
 			else{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRImplURL_"+env));
@@ -144,6 +134,16 @@ public class TestBase {
 	}
 
 	private void setDriver(String browserType) {
+		try
+		{
+		if(System.getProperty("testSuite").equalsIgnoreCase("CSR"))
+			browserType="IE";
+		}
+		catch(Exception e)
+		{
+			LogTemp.Comment("Running UPA");
+		}
+		
 		switch (browserType) {
 		case "chrome":
 			driver = initChromeDriver();
@@ -155,7 +155,15 @@ public class TestBase {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
             caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
             caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-            caps.setCapability("requireWindowFocus", true);
+            caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+            caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true); 
+            caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+            caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+            
+            caps.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
+            caps.setCapability("disable-popup-blocking", true);
+            
+            
 		    System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
@@ -171,8 +179,8 @@ public class TestBase {
 	}
 
 	private static WebDriver initChromeDriver() {
-		LogTemp.Comment("Launching google chrome with new profile..");
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\p1058\\Downloads\\chromedriver.exe");
+		LogTemp.Comment("Launching google chrome..");
+		System.setProperty("webdriver.chrome.driver","C:\\ChromeDriver\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		return driver;
@@ -282,7 +290,7 @@ public class TestBase {
 	
 	@AfterTest
 	public void tearDown() {
-    Browser.closeBrowser(testConfig);
+    //Browser.closeBrowser(testConfig);
 		
 	}	
 }

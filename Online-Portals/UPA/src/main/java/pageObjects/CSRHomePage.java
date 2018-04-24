@@ -58,6 +58,9 @@ public class CSRHomePage {
 	WebElement addTin;
 	
 	
+	@FindBy(xpath="//td[contains(text(),'You are logged in to support : All Payers')]") 
+	WebElement txtloggedIn;
+	
 	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin;
 	
@@ -74,12 +77,20 @@ public class CSRHomePage {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		String expected = "/validateCustomerLogin.do?unencripted=yes";
-//		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
-		//Element.verifyElementPresent(txtWelcomeScreen,"Welcome Screen Text is present on home page");
+		String expected = "Welcome";
+		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getTitle());
+		Element.verifyElementPresent(txtloggedIn,"User is successfully logged in");
 		
 	}
 
+	
+	
+	public SearchTinPage clickManageUsersLink()
+	{
+		Element.click(lnkManageUsers, "Manage Users");
+		Browser.waitForLoad(testConfig.driver);
+		return new SearchTinPage(testConfig);
+	}
 	
 	public void addNewUser()
 	{
