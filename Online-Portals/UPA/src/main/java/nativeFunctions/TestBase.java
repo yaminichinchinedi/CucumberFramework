@@ -107,18 +107,18 @@ public class TestBase {
 	
 	private void urlHeper(String env)
 	{
-		LogTemp.Comment("Running test suite " + System.getProperty("testSuite"));
+		
+		//LogTemp.Comment("Running test suite " + System.getProperty("testSuite"));
 		System.setProperty("Database", env);
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
-		System.setProperty("testSuite", "CSR");
 		
-		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA"))
+		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA.xml"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
 		}
 			
-			else if (System.getProperty("testSuite").equals("CSR"))
+			else if (System.getProperty("testSuite").equals("CSR.xml"))
 			{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
 				

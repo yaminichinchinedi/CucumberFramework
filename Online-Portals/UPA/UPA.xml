@@ -35,9 +35,6 @@
 			<class name="test.java.TestCSRManageUsers" />
 		</classes>	
 		 </test>
-		
-		
-		 
 			  <test name="Home Tab">	  
 		 <classes>
 			<class name="test.java.TestUPAHomeTab" />
