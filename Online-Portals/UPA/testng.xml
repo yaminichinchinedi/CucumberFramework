@@ -9,28 +9,39 @@
 		</listeners>
 	
 		
-		 <test name="Manage Users">	  
+		 
+		 <test name="Enrollment Flow">
 		 <classes>
-			<class name="test.java.TestManageUsers" />
+			<class name="test.java.TestUPAEnrollment" />
 		</classes>	
 		 </test>
+		
 		 
-		  <test name="My Profile">	  
+		 
+		 
+		 <!-- <test name="My Profile">	  
 		<classes>
 			<class name="test.java.TestMyProfileTab" />
 		</classes>	
 		</test>
 		
-		<test name="Enrollment Flow">
+		<test name="Manage Users">	  
 		 <classes>
-			<class name="test.java.TestUPAEnrollment" />
+			<class name="test.java.TestUPAManageUsers" />
 		</classes>	
 		 </test>
+		  <test name="CSR Manage Users">	  
+		 <classes>
+			<class name="test.java.TestCSRManageUsers" />
+		</classes>	
+		 </test>
+		
+		
 		 
 			  <test name="Home Tab">	  
 		 <classes>
 			<class name="test.java.TestUPAHomeTab" />
 		</classes>	
-		 </test>
+		 </test>-->
 		 
 </suite>
