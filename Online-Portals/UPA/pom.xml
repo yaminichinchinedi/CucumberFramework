@@ -49,9 +49,9 @@
 						</property>
 					
 					
-					<suiteXmlFiles>
+				<!--	<suiteXmlFiles>
                     <suiteXmlFile>${env.TestSuite}.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+                    </suiteXmlFiles>-->
                     
 					<properties>
 					</properties>
