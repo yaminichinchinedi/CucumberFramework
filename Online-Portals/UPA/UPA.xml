@@ -16,15 +16,6 @@
 		</classes>	
 		 </test>
 		
-		 
-		 
-		 
-		 <!-- <test name="My Profile">	  
-		<classes>
-			<class name="test.java.TestMyProfileTab" />
-		</classes>	
-		</test>
-		
 		<test name="Manage Users">	  
 		 <classes>
 			<class name="test.java.TestUPAManageUsers" />
@@ -39,6 +30,6 @@
 		 <classes>
 			<class name="test.java.TestUPAHomeTab" />
 		</classes>	
-		 </test>-->
+		 </test>
 		 
 </suite>
