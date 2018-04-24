@@ -49,11 +49,12 @@
 						</property>
 					
 					
-				<!--	<suiteXmlFiles>
-                    <suiteXmlFile>${env.TestSuite}.xml</suiteXmlFile>
-                    </suiteXmlFiles>-->
+				<suiteXmlFiles>
+                    <suiteXmlFile>${suiteFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                     
 					<properties>
+					<suiteFile>${TestSuite}.xml</suiteFile>
 					</properties>
 					<systemPropertyVariables> <environment>${env.Env}</environment> 
 						<environment>${env.TestSuite}</environment> </systemPropertyVariables>
