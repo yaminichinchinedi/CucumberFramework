@@ -54,10 +54,12 @@
                     </suiteXmlFiles>
                     
 					<properties>
-					<suiteFile>${TestSuite}.xml</suiteFile>
+					<suiteFile>${env.TestSuite}.xml</suiteFile>
 					</properties>
-					<systemPropertyVariables> <environment>${env.Env}</environment> 
-						<environment>${env.TestSuite}</environment> </systemPropertyVariables>
+					<systemPropertyVariables> 
+					<environment>${env.Env}</environment> 
+					<environment>${env.TestSuite}</environment> 
+					</systemPropertyVariables>
 
 				</configuration>
 			</plugin>
