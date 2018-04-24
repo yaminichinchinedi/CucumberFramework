@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-<properties>
+<!--<properties>
   <suiteFile>${env.TestSuite}.xml</suiteFile>
-</properties>
+</properties>-->
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>MavenChk</groupId>
@@ -52,9 +52,9 @@
 						</property>
 					
 					
-				<suiteXmlFiles>
-                    <suiteXmlFile>${suiteFile}</suiteXmlFile>
-                    </suiteXmlFiles>
+			<!--	<suiteXmlFiles>
+                    <suiteXmlFile>${env.TestSuite}.xml</suiteXmlFile>
+                    </suiteXmlFiles>-->
                     
 					<systemPropertyVariables> 
 					<environment>${env.Env}</environment> 
