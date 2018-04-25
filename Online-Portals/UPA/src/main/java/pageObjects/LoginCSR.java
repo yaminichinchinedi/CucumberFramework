@@ -68,7 +68,6 @@ public class LoginCSR {
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
 	   LogTemp.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
-	
 	}
 	
 	//Default constructor
@@ -142,6 +141,7 @@ public class LoginCSR {
 	   Element.enterData(txtboxUserName, id, "Username entered","txtboxUserName");	
 	   Element.enterData(txtboxPwd, password, "Password entered","txtboxPwd");
 	   Element.click(btnLogin,"click Login button");
+	   Browser.wait(testConfig, 3);
 	   Browser.waitForLoad(testConfig.driver);
 	   return new CSRHomePage(testConfig);
 	}
