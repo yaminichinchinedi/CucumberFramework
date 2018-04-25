@@ -8,24 +8,12 @@
 		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		</listeners>
 	
-		
-		 
-		 <test name="Enrollment Flow">
-		 <classes>
-			<class name="test.java.TestUPAEnrollment" />
-		</classes>	
-		 </test>
-		
 		<test name="Manage Users">	  
 		 <classes>
 			<class name="test.java.TestUPAManageUsers" />
 		</classes>	
 		 </test>
-		  <test name="CSR Manage Users">	  
-		 <classes>
-			<class name="test.java.TestCSRManageUsers" />
-		</classes>	
-		 </test>
+		 
 			  <test name="Home Tab">	  
 		 <classes>
 			<class name="test.java.TestUPAHomeTab" />
