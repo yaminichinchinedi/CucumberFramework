@@ -44,7 +44,6 @@ public class TestBase {
 	protected  TestBase testConfig;
 	public static String ResultsDir;
 	public Method testMethod;
-	int i=0;
 	
 	
 	
@@ -108,11 +107,10 @@ public class TestBase {
 	private void urlHeper(String env)
 	{
 		
-		//LogTemp.Comment("Running test suite " + System.getProperty("testSuite"));
 		System.setProperty("Database", env);
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
-		
+        
 		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA.xml"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
@@ -136,7 +134,7 @@ public class TestBase {
 	private void setDriver(String browserType) {
 		try
 		{
-		if(System.getProperty("testSuite").equalsIgnoreCase("CSR"))
+		if(System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
 			browserType="IE";
 		}
 		catch(Exception e)
@@ -156,11 +154,11 @@ public class TestBase {
             caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
             caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
             caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-            caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true); 
+            //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true); 
             caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
             caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
             
-            caps.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
+           // caps.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
             caps.setCapability("disable-popup-blocking", true);
             
             
@@ -290,7 +288,7 @@ public class TestBase {
 	
 	@AfterTest
 	public void tearDown() {
-    //Browser.closeBrowser(testConfig);
+    Browser.closeBrowser(testConfig);
 		
 	}	
 }
