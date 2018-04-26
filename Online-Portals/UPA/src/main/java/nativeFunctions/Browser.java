@@ -71,7 +71,7 @@ public class Browser
 	}
 	
 	
-	public static void waitForLoad(WebDriver driver) throws InterruptedException 
+	public static void waitForLoad(WebDriver driver) 
 	{
 		try{
 			
