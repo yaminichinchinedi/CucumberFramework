@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPage searchPage=homePage.clickManageUsersLink();
 		ManageUsers manageUsers=searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().addTinCSR().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
-		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
+		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).doResetPassword().updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
 
       }
 
@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPage searchPage=homePage.clickManageUsersLink();
 		ManageUsers manageUsers=searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
-		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
+		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).doResetPassword().updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
 
       }
 	
@@ -59,7 +59,7 @@ import org.testng.annotations.Test;
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPage searchPage=homePage.clickManageUsersLink();
 		ManageUsers manageUsers=searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
-		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
+		manageUsers.verifyDetailsOfNewUser(userType).approveNewUserFromCSR(userType).doResetPassword().updateDemoInfo(userType).deleteAndVerifyUserIsDeleted();
 
       }
 

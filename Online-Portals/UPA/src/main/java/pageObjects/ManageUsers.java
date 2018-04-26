@@ -96,6 +96,12 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(name="Yes")
 	WebElement btnYes;
 	
+	@FindBy(xpath="//input[@value='Reset Password']")
+	WebElement btnResetPwd;
+	
+	@FindBy(xpath=".//*[contains(text(),' been reset')]")
+	WebElement txtResetPwd;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -264,6 +270,25 @@ public class ManageUsers extends AddUserDetails  {
 		  if(userName.getText().toString().toUpperCase().contains(activeUser))
 		   {
 				      Element.click(userName, "UserName: "+ " " +activeUser);
+				      break;
+		   }
+	     }
+		Browser.wait(testConfig,3);
+		return new ManageUsers(testConfig);
+	}
+	
+	/*
+	 * This function clicks the specified user by passing its username
+	 * to view its details on 
+	 * Manage user Page
+	 */
+	public ManageUsers clickSpecificUserName(String nameOfUser)
+	{
+		for(WebElement userName:userNames)
+		{ 
+		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
+		   {
+				      Element.click(userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }
@@ -731,11 +756,14 @@ public class ManageUsers extends AddUserDetails  {
 		Browser.wait(testConfig, 2);
 		return this;
 	}
+	
+	
 	public ManageUsers updateDemoInfo(String userType)
 	{
 		
 			
-		clickActiveUserName(userType);
+		//clickActiveUserName(userType);
+		clickSpecificUserName(getFirstLastName());
 		String userNameBeforeUpdation=getCSRUserName();
 		fillNewUserInfo();
 		Browser.wait(testConfig,2);
@@ -745,7 +773,30 @@ public class ManageUsers extends AddUserDetails  {
 		
 		//Verifying after updating demographic info, username remains same
 		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+		
+		
+		
 		return this;
+	}
+	
+	public ManageUsers doResetPassword()
+	{
+		clickSpecificUserName(getFirstLastName());
+		String expectedText="The password for "+ getCSRUserName() +" " +"has successfully been reset, and an email has been sent to the user.";
+	
+		Element.click(btnResetPwd, " Reset Password button");
+		Browser.wait(testConfig,2);
+		
+		Element.verifyTextPresent(txtResetPwd, expectedText);
+		return this;
+	}
+	
+	public String getFirstLastName()
+	{
+		int sqlRowNo=13;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		return portalUserData.get("FST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("LST_NM").toString().toUpperCase();
+		
 	}
 	
 }

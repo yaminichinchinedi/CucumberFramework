@@ -108,7 +108,7 @@ public class LoginCSR {
 		
 		while(i<9)
 		{
-			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question is :" + securityQues.get(i).findElement(By.tagName("select")).getText());
+			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question is :" );
 			Element.enterData(securityQues.get(j).findElement(By.tagName("input")), "EPS", "Answer is EPS", "Answer textbox");
 			i=i+2;
 			securityQuestionToBeSelected++;
