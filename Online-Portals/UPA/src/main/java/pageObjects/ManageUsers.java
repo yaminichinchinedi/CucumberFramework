@@ -238,7 +238,7 @@ public class ManageUsers extends AddUserDetails  {
         }
         else if(userType.equalsIgnoreCase("PAY"))
         {
-        	sqlRowNo=10;
+        	sqlRowNo=19;
         }
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -719,10 +719,13 @@ public class ManageUsers extends AddUserDetails  {
 	}
 	
 	
-	public ManageUsers approveNewUserFromCSR() throws InterruptedException
+	public ManageUsers approveNewUserFromCSR(String userType) throws InterruptedException
 	{
 		csrPage=new LoginCSR();
-		csrPage.getUserApproved(testConfig,getCSRUserName(), testConfig.getRunTimeProperty("tin"), testConfig.getRunTimeProperty("email"));
+		if(userType.equalsIgnoreCase("PAY"))
+		testConfig.putRunTimeProperty("tin",tinGridRows.get(2).findElements(By.tagName("td")).get(0).getText().toString());
+		System.out.println(testConfig.getRunTimeProperty("tin"));
+		csrPage.getUserApproved(testConfig,getCSRUserName(),testConfig.getRunTimeProperty("tin"), testConfig.getRunTimeProperty("email"));
 		return this;
 	}
 	public ManageUsers updateDemoInfo(String userType)
@@ -731,7 +734,10 @@ public class ManageUsers extends AddUserDetails  {
 			
 		clickActiveUserName(userType);
 		String userNameBeforeUpdation=getCSRUserName();
-		fillNewUserInfo().clickSave();
+		fillNewUserInfo();
+		Browser.wait(testConfig, 4);
+		clickSave();
+		Browser.waitForLoad(testConfig.driver);
 		verifyDetailsOfNewUser(userType);
 		
 		//Verifying after updating demographic info, username remains same

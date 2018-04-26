@@ -85,7 +85,12 @@ public class TestBase {
 		
 		//Getting Jenkins Parameter
 		
-		if(System.getProperty("env") == null || System.getProperty("env").equals("Stage2"))
+		if(System.getProperty("env") == null) 
+		  {
+			urlHeper(runtimeProperties.getProperty(("Env")));
+		  }
+		
+		else if (System.getProperty("env").equals("Stage2"))
 		{
 			urlHeper("Stage2");
 		}
@@ -100,7 +105,7 @@ public class TestBase {
 		{
 			urlHeper("IMPL");		
 		}
-
+        
 		testConfig=this;
 	}
 	
@@ -111,7 +116,13 @@ public class TestBase {
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
         
-		if(System.getProperty("testSuite") == null || System.getProperty("testSuite").equals("UPA.xml"))
+		if(System.getProperty("testSuite")==null)
+		{
+			
+			System.setProperty("URL", runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") +"URL_"+env));
+			
+		}
+		else if(System.getProperty("testSuite").equals("UPA.xml"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
 		}
@@ -122,7 +133,8 @@ public class TestBase {
 				
 			}
 			else{
-				System.setProperty("URL", runtimeProperties.getProperty("CSRImplURL_"+env));
+				
+				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
 			}
 		
 	}
@@ -132,14 +144,15 @@ public class TestBase {
 	}
 
 	private void setDriver(String browserType) {
+		
 		try
 		{
-		if(System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
+		if(runtimeProperties.getProperty("testSuite").equals("CSR") || System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
 			browserType="IE";
 		}
 		catch(Exception e)
 		{
-			LogTemp.Comment("Running UPA");
+			LogTemp.Comment("Running UPA" + '\n' + e);
 		}
 		
 		switch (browserType) {

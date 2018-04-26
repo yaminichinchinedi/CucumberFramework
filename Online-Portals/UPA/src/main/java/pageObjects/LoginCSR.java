@@ -129,7 +129,7 @@ public class LoginCSR {
 		
 		//Element.verifyElementPresent(FFdriver.findElement(by.), namOfElement);
 	
-		FFdriver.close();
+		FFdriver.quit();
 	}
 	
 	public CSRHomePage doLogin(String userType)
