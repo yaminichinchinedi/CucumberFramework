@@ -71,11 +71,9 @@ public class Browser
 	}
 	
 	
-	public static void waitForLoad(WebDriver driver) throws InterruptedException 
+	public static void waitForLoad(WebDriver driver)
 	{
-		try{
-			
-			ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() 
+		try{ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() 
 				{
 			public Boolean apply(WebDriver driver) {
 				return ((JavascriptExecutor) driver).executeScript(
@@ -87,7 +85,8 @@ public class Browser
 		}
 		catch(Exception e)
 		{
-			LogTemp.Fail("Javascript exception \n" + e);
+			Browser.wait(testConfig, 3);
+			LogTemp.Fail("Test Case Failure due to javascript exception" + e);
 		}
 	}
   
