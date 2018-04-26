@@ -211,6 +211,7 @@ public class AddUserDetails {
 	
 	public ManageUsers clickSave()
 	{
+		
 		Element.click(btnSave, "Save");
 		Browser.wait(testConfig,2);
 		return new ManageUsers(testConfig) ;
