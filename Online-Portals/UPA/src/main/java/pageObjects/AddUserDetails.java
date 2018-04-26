@@ -256,7 +256,8 @@ public class AddUserDetails {
 			sqlRowNo=13;
 		    portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		}
-	    Browser.waitForLoad(testConfig.driver);
+	   
+		Browser.wait(testConfig, 3);
 	    Helper.compareEquals(testConfig, "First name", portalUser.get("FST_NM").toString(), firstName.getAttribute("value").toString());
 	    Helper.compareEquals(testConfig, "Last name", portalUser.get("LST_NM").toString(), lastName.getAttribute("value").toString());
 	    Helper.compareEquals(testConfig, "Phone number", portalUser.get("TEL_NBR").toString(), phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());

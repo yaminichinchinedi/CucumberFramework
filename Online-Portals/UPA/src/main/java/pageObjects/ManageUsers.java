@@ -738,7 +738,7 @@ public class ManageUsers extends AddUserDetails  {
 		clickActiveUserName(userType);
 		String userNameBeforeUpdation=getCSRUserName();
 		fillNewUserInfo();
-		Browser.wait(testConfig, 4);
+		Browser.wait(testConfig,2);
 		clickSave();
 		Browser.waitForLoad(testConfig.driver);
 		verifyDetailsOfNewUser(userType);
