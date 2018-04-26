@@ -199,7 +199,8 @@ public class TestBase {
 
 	private static WebDriver initFirefoxDriver() {
 		LogTemp.Comment("Launching Firefox browser..");
-		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver",
+				"geckodriver.exe");
 		LogTemp.Comment("Gecko Property set");
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
@@ -256,7 +257,22 @@ public class TestBase {
 			}
 			return obj;
 		}
-
+		
+		
+		
+		
+		
+		
+//	 public TestDataReader getRefreshedTestDataReaderObject(String sheetName, String path) throws IOException
+//		{
+//			TestDataReader obj = new TestDataReader(this, sheetName, path);
+//			
+//			// cache for future use
+//			testDataReaderHashMap.put(path + sheetName, obj);
+//			obj = testDataReaderHashMap.get(path + sheetName);
+//			
+//			return obj;
+//		}
 	 
 	public String getRunTimeProperty(String key) {
 		String value = "";
