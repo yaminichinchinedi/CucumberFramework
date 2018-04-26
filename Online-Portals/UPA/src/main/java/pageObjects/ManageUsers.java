@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -724,8 +725,10 @@ public class ManageUsers extends AddUserDetails  {
 		csrPage=new LoginCSR();
 		if(userType.equalsIgnoreCase("PAY"))
 		testConfig.putRunTimeProperty("tin",tinGridRows.get(2).findElements(By.tagName("td")).get(0).getText().toString());
-		System.out.println(testConfig.getRunTimeProperty("tin"));
 		csrPage.getUserApproved(testConfig,getCSRUserName(),testConfig.getRunTimeProperty("tin"), testConfig.getRunTimeProperty("email"));
+		Browser.wait(testConfig, 2);
+		((JavascriptExecutor) testConfig.driver).executeScript("window.focus();");
+		Browser.wait(testConfig, 2);
 		return this;
 	}
 	public ManageUsers updateDemoInfo(String userType)

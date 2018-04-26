@@ -108,7 +108,7 @@ public class LoginCSR {
 		
 		while(i<9)
 		{
-			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question");
+			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question is :" + securityQues.get(i).findElement(By.tagName("select")).getText());
 			Element.enterData(securityQues.get(j).findElement(By.tagName("input")), "EPS", "Answer is EPS", "Answer textbox");
 			i=i+2;
 			securityQuestionToBeSelected++;
@@ -117,18 +117,14 @@ public class LoginCSR {
 		
 		Browser.wait(testConfig, 2);
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		
 		Browser.wait(testConfig, 2);
-		
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		Browser.wait(testConfig, 2);
 		FFdriver.findElement(By.name("acceptTerms")).click();
 		Browser.wait(testConfig, 2);
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		Browser.wait(testConfig, 2);
-		
 		//Element.verifyElementPresent(FFdriver.findElement(by.), namOfElement);
-	
 		FFdriver.quit();
 	}
 	
