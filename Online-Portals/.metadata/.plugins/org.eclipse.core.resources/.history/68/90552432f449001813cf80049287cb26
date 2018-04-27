@@ -187,6 +187,14 @@ public class AddUserDetails {
 		return this;
 	}
 	
+//	public AddUserDetails selectTinAccessLvl(String accessLevel)
+//	{
+//		 Browser.wait(testConfig, 4);
+//		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+//		 Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
+//		 return this;
+//	}
+	
 	
 	public AddUserDetails selectTinAccessLvl(String accessLevel)
 	{
@@ -229,14 +237,7 @@ public class AddUserDetails {
 		{
 			sqlRowNo=9;
 			portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			try
-			{
 			Helper.compareEquals(testConfig, "User Type", (portalUser.get("PAY_PROC_ACPT_CD_VAL_DESC").toString()), txtUserType.getText());
-			}
-			catch(Exception e)
-			{
-				Element.verifyElementPresent(txtUserType, "user type");
-			}
 			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
 			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
 		}
