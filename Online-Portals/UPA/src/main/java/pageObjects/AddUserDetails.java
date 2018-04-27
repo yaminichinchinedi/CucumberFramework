@@ -235,8 +235,7 @@ public class AddUserDetails {
 			}
 			catch(Exception e)
 			{
-				Element.expectedWait(firstName, testConfig, "First name", "First name");
-				Element.verifyElementPresent(txtUserType, "user type");
+				LogTemp.Comment("Unable to find user type text Provider","Red");
 			}
 			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
 			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
