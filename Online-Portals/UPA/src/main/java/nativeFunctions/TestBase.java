@@ -116,8 +116,6 @@ public class TestBase {
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
 		
-		
-		System.out.println("Running test Suite for: " + System.getProperty("testSuite"));
         LogTemp.Comment("Running test Suite for: " + System.getProperty("testSuite"), "Orange");
         
 		if(System.getProperty("testSuite")==null)
@@ -151,9 +149,10 @@ public class TestBase {
 		
 		try
 		{
-		if(runtimeProperties.getProperty("testSuite").equals("CSR") || System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
+		if(System.getProperty("testSuite").equalsIgnoreCase("CSR.xml") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
 			browserType="IE";
 		}
+
 		catch(Exception e)
 		{
 			LogTemp.Comment("Running UPA" );
