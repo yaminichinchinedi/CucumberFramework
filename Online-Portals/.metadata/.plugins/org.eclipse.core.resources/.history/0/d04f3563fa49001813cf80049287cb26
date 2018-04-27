@@ -21,6 +21,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginCSR {
 
@@ -80,11 +82,13 @@ public class LoginCSR {
 	{
 		
 		FirefoxDriver FFdriver=new FirefoxDriver();
+		WebDriverWait wait=new WebDriverWait(FFdriver, 10);
 		FFdriver.manage().window().maximize();
 		
 		//Navigating to URL in new tab
 		
 		FFdriver.navigate().to(System.getProperty("UserActiveURL"));
+		
 		
 		FFdriver.findElement(By.name("userName")).sendKeys(username);
 		LogTemp.Comment("Username is : " + username);
@@ -92,18 +96,15 @@ public class LoginCSR {
 		LogTemp.Comment("Tin no is : " + tinNo);
 		FFdriver.findElement(By.name("emailAddress")).sendKeys(emailAddr);
 		LogTemp.Comment("Email address is : " + emailAddr);
-		
-		FFdriver.findElement(By.name("btnSubmit")).click();
-		
-		Thread.sleep(5000);
-		FFdriver.findElement(By.name("password")).sendKeys("Test@123");
-		LogTemp.Comment("Entered Password as : " + "Test@123");
-		FFdriver.findElement(By.name("retypePassword")).sendKeys("Test@123");
-		LogTemp.Comment("Re Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		LogTemp.Comment("Clicked Continue button");
 		
-		Browser.wait(testConfig, 5);
+		wait.until(ExpectedConditions.visibilityOf(FFdriver.findElement(By.name("password"))));
+		FFdriver.findElement(By.name("password")).sendKeys("Test@123");
+		FFdriver.findElement(By.name("retypePassword")).sendKeys("Test@123");
+		FFdriver.findElement(By.name("btnSubmit")).click();
+
+		Thread.sleep(3000);
 		List <WebElement> securityQues=FFdriver.findElements(By.xpath(".//*[@id='signInForm']/table/tbody/tr[4]/td/table/tbody/tr"));
 		
 		int i=0,j=1;
@@ -111,32 +112,35 @@ public class LoginCSR {
 		
 		while(i<9)
 		{
-			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question with option value : " + securityQuestionToBeSelected );
+			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question with value :" +securityQuestionToBeSelected);
 			Element.enterData(securityQues.get(j).findElement(By.tagName("input")), "EPS", "Answer is EPS", "Answer textbox");
 			i=i+2;
 			securityQuestionToBeSelected++;
 			j=j+2;
 		}
 		
-		Browser.wait(testConfig, 2);
-		FFdriver.findElement(By.name("btnSubmit")).click();
-		
-		Browser.wait(testConfig, 2);
 		
 		FFdriver.findElement(By.name("btnSubmit")).click();
+		LogTemp.Comment("Clicked Continue button after selecting security questions");
 		
-		Browser.wait(testConfig, 2);
 		
-		LogTemp.Comment("Checking accept terms checkbox");
+		wait.until(ExpectedConditions.visibilityOf(FFdriver.findElement(By.name("firstName"))));
+		
+		FFdriver.findElement(By.name("btnSubmit")).click();
+		LogTemp.Comment("Clicked Continue on Personal information Page");
+		
+		wait.until(ExpectedConditions.visibilityOf(FFdriver.findElement(By.name("btnSubmit"))));
+		FFdriver.findElement(By.name("btnSubmit")).click();
+
+		wait.until(ExpectedConditions.visibilityOf(FFdriver.findElement(By.name("acceptTerms"))));
 		FFdriver.findElement(By.name("acceptTerms")).click();
+		LogTemp.Comment("Checked Accept terms checkbox");
 		
-		Browser.wait(testConfig, 2);
-		
-		LogTemp.Comment("Click Submit registration");
+		LogTemp.Comment("Click Submit registration button");
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		Browser.wait(testConfig, 2);
-		
+
 		FFdriver.quit();
+		LogTemp.Comment("Closed FF Browser as approval process is complete");
 	}
 	
 	public CSRHomePage doLogin(String userType)

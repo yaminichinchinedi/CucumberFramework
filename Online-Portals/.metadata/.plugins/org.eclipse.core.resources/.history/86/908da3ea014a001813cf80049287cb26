@@ -95,13 +95,11 @@ public class LoginCSR {
 		
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		
+		//FFdriver.manage().timeouts().wait(10);
 		Thread.sleep(5000);
 		FFdriver.findElement(By.name("password")).sendKeys("Test@123");
-		LogTemp.Comment("Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("retypePassword")).sendKeys("Test@123");
-		LogTemp.Comment("Re Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		LogTemp.Comment("Clicked Continue button");
 		
 		Browser.wait(testConfig, 5);
 		List <WebElement> securityQues=FFdriver.findElements(By.xpath(".//*[@id='signInForm']/table/tbody/tr[4]/td/table/tbody/tr"));
@@ -120,22 +118,14 @@ public class LoginCSR {
 		
 		Browser.wait(testConfig, 2);
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		
 		Browser.wait(testConfig, 2);
-		
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		
 		Browser.wait(testConfig, 2);
-		
-		LogTemp.Comment("Checking accept terms checkbox");
 		FFdriver.findElement(By.name("acceptTerms")).click();
-		
 		Browser.wait(testConfig, 2);
-		
-		LogTemp.Comment("Click Submit registration");
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		Browser.wait(testConfig, 2);
-		
+		//Element.verifyElementPresent(FFdriver.findElement(by.), namOfElement);
 		FFdriver.quit();
 	}
 	

@@ -235,7 +235,6 @@ public class AddUserDetails {
 			}
 			catch(Exception e)
 			{
-				Element.expectedWait(firstName, testConfig, "First name", "First name");
 				Element.verifyElementPresent(txtUserType, "user type");
 			}
 			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));

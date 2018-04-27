@@ -95,8 +95,8 @@ public class Browser
 	public static void wait(TestBase testConfig,int seconds)
 	{ 
 		try{
-		LogTemp.Comment("Waiting for" + " " +seconds + " " + "seconds" );
 		Thread.sleep(seconds * 1000);
+		LogTemp.Comment("Waiting for" + " " +seconds + " " + "seconds" );
 		}
 		catch(Exception e)
 		{

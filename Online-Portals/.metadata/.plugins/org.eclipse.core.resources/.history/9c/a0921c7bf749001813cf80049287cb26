@@ -89,21 +89,14 @@ public class LoginCSR {
 		FFdriver.findElement(By.name("userName")).sendKeys(username);
 		LogTemp.Comment("Username is : " + username);
 		FFdriver.findElement(By.name("tinNumber")).sendKeys(tinNo);
-		LogTemp.Comment("Tin no is : " + tinNo);
 		FFdriver.findElement(By.name("emailAddress")).sendKeys(emailAddr);
-		LogTemp.Comment("Email address is : " + emailAddr);
-		
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		
 		Thread.sleep(5000);
 		FFdriver.findElement(By.name("password")).sendKeys("Test@123");
-		LogTemp.Comment("Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("retypePassword")).sendKeys("Test@123");
-		LogTemp.Comment("Re Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		LogTemp.Comment("Clicked Continue button");
-		
-		Browser.wait(testConfig, 5);
+
 		List <WebElement> securityQues=FFdriver.findElements(By.xpath(".//*[@id='signInForm']/table/tbody/tr[4]/td/table/tbody/tr"));
 		
 		int i=0,j=1;
@@ -111,31 +104,23 @@ public class LoginCSR {
 		
 		while(i<9)
 		{
-			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question with option value : " + securityQuestionToBeSelected );
+			Element.selectByValue(securityQues.get(i).findElement(By.tagName("select")),Integer.toString(securityQuestionToBeSelected), "Selected security question with value :" +securityQuestionToBeSelected);
 			Element.enterData(securityQues.get(j).findElement(By.tagName("input")), "EPS", "Answer is EPS", "Answer textbox");
 			i=i+2;
 			securityQuestionToBeSelected++;
 			j=j+2;
 		}
 		
-		Browser.wait(testConfig, 2);
+		LogTemp.Comment("Click Continue");
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		
-		Browser.wait(testConfig, 2);
-		
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		
-		Browser.wait(testConfig, 2);
-		
-		LogTemp.Comment("Checking accept terms checkbox");
 		FFdriver.findElement(By.name("acceptTerms")).click();
 		
-		Browser.wait(testConfig, 2);
-		
-		LogTemp.Comment("Click Submit registration");
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		Browser.wait(testConfig, 2);
-		
+
+		//Element.verifyElementPresent(FFdriver.findElement(by.), namOfElement);
 		FFdriver.quit();
 	}
 	
