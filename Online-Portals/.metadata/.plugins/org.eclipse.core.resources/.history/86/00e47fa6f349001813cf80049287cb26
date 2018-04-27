@@ -70,6 +70,7 @@ public class AddUserDetails {
 	
 	//"//td[@class='subheadernormal'][2]")+ "//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	@FindBy(xpath="//td[contains(text(),'Provider')]")
+			
 	WebElement txtUserType;
 			
 	@FindBy(name="GridListResults[0].providerTinNumber")
