@@ -53,17 +53,17 @@
 						</property>
 						
 						<suiteXmlFiles>
-                    <suiteXmlFile>${suiteFile}</suiteXmlFile>
+                    <suiteXmlFile>${TestSuite}</suiteXmlFile>
                     </suiteXmlFiles>
 					
 					
 				
                     
-					<systemPropertyVariables> 
+				<!--	<systemPropertyVariables> 
 					<environment>${env.Env}</environment> 
 					<environment>${env.TestSuite}</environment> 
 			
-					</systemPropertyVariables>
+					</systemPropertyVariables>-->
 					
 
 				</configuration>
