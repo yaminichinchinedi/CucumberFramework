@@ -158,7 +158,7 @@ public class TestBase {
 		{
 			LogTemp.Comment("Running UPA" );
 		}
-		LogTemp.Comment("Browser on which test suite is running is : " +  browserType, "Orange");
+		
 		switch (browserType) {
 		case "chrome":
 			driver = initChromeDriver();

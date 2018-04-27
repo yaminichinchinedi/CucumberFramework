@@ -151,14 +151,14 @@ public class TestBase {
 		
 		try
 		{
-		if(runtimeProperties.getProperty("testSuite").equals("CSR") || System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
+		if(runtimeProperties.getProperty("testSuite").equals("CSR") || System.getProperty("TestSuite").equalsIgnoreCase("CSR.xml"))
 			browserType="IE";
 		}
 		catch(Exception e)
 		{
 			LogTemp.Comment("Running UPA" );
 		}
-		LogTemp.Comment("Browser on which test suite is running is : " +  browserType, "Orange");
+		
 		switch (browserType) {
 		case "chrome":
 			driver = initChromeDriver();

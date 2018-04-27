@@ -115,11 +115,8 @@ public class TestBase {
 		System.setProperty("Database", env);
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
-		
-		
 		System.out.println("Running test Suite for: " + System.getProperty("testSuite"));
         LogTemp.Comment("Running test Suite for: " + System.getProperty("testSuite"), "Orange");
-        
 		if(System.getProperty("testSuite")==null)
 		{
 			
@@ -131,7 +128,7 @@ public class TestBase {
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
 		}
 			
-			else if (System.getProperty("testSuite").equals("CSR.xml"))
+			else if (System.getProperty("TestSuite").equals("CSR.xml"))
 			{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
 				
@@ -151,14 +148,14 @@ public class TestBase {
 		
 		try
 		{
-		if(runtimeProperties.getProperty("testSuite").equals("CSR") || System.getProperty("testSuite").equalsIgnoreCase("CSR.xml"))
+		if(runtimeProperties.getProperty("TestSuite").equals("CSR") || System.getProperty("TestSuite").equalsIgnoreCase("CSR.xml"))
 			browserType="IE";
 		}
 		catch(Exception e)
 		{
 			LogTemp.Comment("Running UPA" );
 		}
-		LogTemp.Comment("Browser on which test suite is running is : " +  browserType, "Orange");
+		
 		switch (browserType) {
 		case "chrome":
 			driver = initChromeDriver();
