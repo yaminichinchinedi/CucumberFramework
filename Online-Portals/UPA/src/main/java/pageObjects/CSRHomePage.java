@@ -87,7 +87,6 @@ public class CSRHomePage {
 	public SearchTinPage clickManageUsersLink()
 	{
 		Element.click(lnkManageUsers, "Manage Users");
-		Browser.waitForLoad(testConfig.driver);
 		return new SearchTinPage(testConfig);
 	}
 	
