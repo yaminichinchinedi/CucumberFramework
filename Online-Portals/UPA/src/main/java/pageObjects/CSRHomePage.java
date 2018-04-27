@@ -78,9 +78,8 @@ public class CSRHomePage {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		String expected = "Welcome";
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getTitle());
-		Element.verifyElementPresent(txtloggedIn,"User is successfully logged in");
-		
+		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
+		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getTitle());	
 	}
 
 	
@@ -92,24 +91,4 @@ public class CSRHomePage {
 		return new SearchTinPage(testConfig);
 	}
 	
-	public void addNewUser()
-	{
-		Element.click(lnkManageUsers, "Click Manage Users");
-		Element.selectByValue(drpDownUserType, "PROV", "Select provider type");
-		Element.enterData(txtboxTinNo, "999776123","enter tin number","txtboxTinNo");
-		
-		Element.click(btnSearch, "click search button");
-		Element.click(btnAddUser, "click Add user button");
-		Element.enterData(txtboxFirstName,Helper.generateRandomAlphabetsString(5), "Entered first name","txtboxFirstName");
-		Element.enterData(txtboxLstName,Helper.generateRandomAlphabetsString(5), "Entered Last name","txtboxLstName");
-		Element.enterData(phoneNum,Long.toString(Helper.generateRandomNumber(3)), "Entered first 3 numbers","phoneNum");
-		Element.enterData(phoneNum1,Long.toString(Helper.generateRandomNumber(3)), "Entered second 3 numbers","phoneNum1");
-		Element.enterData(phoneNum2,Long.toString(Helper.generateRandomNumber(3)), "Entered last 4 digits","phoneNum2");
-		Element.enterData(addTin, "999776123", "Associate to tin","addTin");
-		Element.click(btnAddTin, "click add tin");
-		Element.selectByValue(drpDwnAccessLevel, "A", "select administrator");
-		Browser.wait(testConfig, 5);
-		Element.click(btnSaveUser, "Click save");
-		
-	}
 }

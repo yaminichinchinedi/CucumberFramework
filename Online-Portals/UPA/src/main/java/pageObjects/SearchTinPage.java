@@ -42,6 +42,7 @@ public class SearchTinPage {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		String expected = "viewProviderSearchTin.do";
+		Element.expectedWait(drpDownUserType, testConfig, "Dropdown for selecting user Type", "Dropdown for selecting user Type");
 		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
 		
 	}

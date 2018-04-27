@@ -112,7 +112,7 @@ public class ManageUsers extends AddUserDetails  {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		try{
-			Element.verifyElementPresent(lnkUserList,"User List");	
+			Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
 		}
 			catch(Exception e)
 		{
