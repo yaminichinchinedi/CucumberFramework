@@ -760,15 +760,11 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ManageUsers updateDemoInfo(String userType)
 	{
-		
-			
-		//clickActiveUserName(userType);
 		clickSpecificUserName(getFirstLastName());
 		String userNameBeforeUpdation=getCSRUserName();
 		fillNewUserInfo();
 		Browser.wait(testConfig,2);
 		clickSave();
-		Browser.waitForLoad(testConfig.driver);
 		verifyDetailsOfNewUser(userType);
 		
 		//Verifying after updating demographic info, username remains same

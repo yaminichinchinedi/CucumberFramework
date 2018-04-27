@@ -68,8 +68,8 @@ public class AddUserDetails {
 	
 
 	
-	
-	@FindBy(xpath="//td[@class='subheadernormal'][2]")
+	//"//td[@class='subheadernormal'][2]")
+	@FindBy(xpath="//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	WebElement txtUserType;
 			
 	@FindBy(name="GridListResults[0].providerTinNumber")
@@ -218,8 +218,6 @@ public class AddUserDetails {
 	{
 		int sqlRowNo=0;
 		Map portalUser=null;
-		
-		//List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		for(WebElement userName:userNames)
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
@@ -228,8 +226,6 @@ public class AddUserDetails {
 				      break;
 					}
 		}
-		
-		
 		
 		if(userType.equalsIgnoreCase("BS"))
 		{
