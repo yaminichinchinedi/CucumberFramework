@@ -75,7 +75,7 @@ public class OptumIdLoginPage {
 	
 	public HomePage loginWithOptumID(String userType,String accessType) throws InterruptedException,IOException
 	{
-		String env=System.getProperty("env");
+	  String env=testConfig.getRunTimeProperty("Env");
 	  id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
 	  password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
 	  

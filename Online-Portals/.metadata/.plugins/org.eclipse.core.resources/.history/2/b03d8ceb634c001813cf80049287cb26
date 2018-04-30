@@ -1,5 +1,5 @@
 Env=IMPL
-testSuite=UPA
+testSuite=CSR
 BrowserType=FF
 DataFilePath=DataFile.xlsx
 PdfPath=C:\\jenkins\\workspace\\AutomationRun\\Online-Portals\\UPA\\EPSEnrollmentInstructions.pdf
