@@ -117,7 +117,6 @@ public class TestBase {
 		System.setProperty("env", env);
 		
         LogTemp.Comment("Running test Suite for: " + System.getProperty("testSuite"), "Orange");
-        LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
         
 		if(System.getProperty("testSuite")==null)
 		{
