@@ -308,7 +308,6 @@ public class HomePage extends LoginUPA {
 	public ManageUsers clickManageUsersTab() 
 	{
 		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
-//		testConfig.driver.findElement(By.linkText("Manage Users"));
 		Element.click(manageUsersTab, "Manage Users Tab");
 		return new ManageUsers(testConfig);
 

@@ -564,8 +564,10 @@ public class ManageUsers extends AddUserDetails  {
 	public void verifyPayerUserDetailsAreReadOnly() throws InterruptedException
 	{
 		String expectedValue="true";
-		String getDisabledAttribute="disabled";
+		String getDisabledAttribute="readonly";
 		
+		try
+		{
 		Helper.compareEquals(testConfig, "First Name is Read only", expectedValue, firstName.getAttribute(getDisabledAttribute));
 		Helper.compareEquals(testConfig, "Last Name is Read only", expectedValue, lastName.getAttribute(getDisabledAttribute));
 		Helper.compareEquals(testConfig, "Middle Name is Read only", expectedValue, middleName.getAttribute(getDisabledAttribute));
@@ -574,6 +576,11 @@ public class ManageUsers extends AddUserDetails  {
 		Helper.compareEquals(testConfig, "Ph number field 3 is Read only", expectedValue, phoneNum2.getAttribute(getDisabledAttribute));
 		Helper.compareEquals(testConfig, "Ext is Read only", expectedValue, extension.getAttribute(getDisabledAttribute));
 		Helper.compareEquals(testConfig, "Email field is Read only", expectedValue, email.getAttribute(getDisabledAttribute));
+		}
+		catch(Exception e)
+		{
+			LogTemp.Fail("Exception occured : "+ e);
+		}
 		
 	}
 	
