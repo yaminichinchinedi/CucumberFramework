@@ -232,13 +232,13 @@ public class AddUserDetails {
 			try
 			{
 			Helper.compareEquals(testConfig, "User Type", (portalUser.get("PAY_PROC_ACPT_CD_VAL_DESC").toString()), txtUserType.getText());
+			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
+			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
 			}
 			catch(Exception e)
 			{
-				LogTemp.Comment("Unable to find user type text Provider","Red");
+				LogTemp.Fail("Exception occured : " + e);
 			}
-			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
-			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
 		}
 		
 		else if(userType.equalsIgnoreCase("PAY"))
