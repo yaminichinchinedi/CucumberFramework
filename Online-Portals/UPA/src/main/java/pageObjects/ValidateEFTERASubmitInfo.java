@@ -53,7 +53,7 @@ public class ValidateEFTERASubmitInfo {
 		
 	public void uploadW9pdf() 
 	{   
-		Element.enterData(btnBrowse,testConfig.getRunTimeProperty("PdfPath"), "Path of pdf is" + testConfig.getRunTimeProperty("PdfPath"),"btnBrowse");
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"path of pdf is : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 	}
 
 

@@ -17,7 +17,7 @@ public class UPARegistrationPage{
 	
 	//Declare Page objects and methods
 	
-	@FindBy(partialLinkText="Enroll Now")
+	@FindBy(partialLinkText="Enroll now")
 	private WebElement lnkEnrollNow;
 	
 	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'Home')]")
