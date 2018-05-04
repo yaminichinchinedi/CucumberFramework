@@ -54,9 +54,19 @@
 						</property>
 						
 						<suiteXmlFiles>
-                    <suiteXmlFile>testng.xml</suiteXmlFile>
+                    <suiteXmlFile>UPA.xml</suiteXmlFile>
                     </suiteXmlFiles>
 					
+					
+				
+                    
+						<!-- <systemPropertyVariables> 
+					<environment>${env.Env}</environment> 
+					<environment>${env.TestSuite}</environment> 
+			
+					</systemPropertyVariables>-->
+					
+
 				</configuration>
 			</plugin>
 		</plugins>

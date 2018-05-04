@@ -57,6 +57,16 @@
                     <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
 					
+					
+				
+                    
+						<!-- <systemPropertyVariables> 
+					<environment>${env.Env}</environment> 
+					<environment>${env.TestSuite}</environment> 
+			
+					</systemPropertyVariables>-->
+					
+
 				</configuration>
 			</plugin>
 		</plugins>
