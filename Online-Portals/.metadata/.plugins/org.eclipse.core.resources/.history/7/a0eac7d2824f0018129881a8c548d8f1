@@ -25,8 +25,8 @@ public class CreateTestNg {
 					static String filepath = "C:\\jenkins\\workspace\\AutomationRun\\Online-Portals\\UPA\\testng.xml";
 
 					public static void main(String argv[]) {
-						String testSuiteName=System.getProperty("testSuite");
-						String testClassName=System.getProperty("testModule");
+						String testSuiteName=System.getProperty("testSuite")
+						String testClassName="Manage Users";
 						
 						System.out.println(System.getProperty("user.dir"));
 						String[] testclasses=testClassName.split(",");
