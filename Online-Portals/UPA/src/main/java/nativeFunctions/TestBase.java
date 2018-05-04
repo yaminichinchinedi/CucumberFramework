@@ -127,12 +127,12 @@ public class TestBase {
 			LogTemp.Comment("Running test Suite for: " + runtimeProperties.getProperty("testSuite"));
 			
 		}
-		else if(System.getProperty("testSuite").equals("UPA"))
+		else if(System.getProperty("testSuite").equals("UPA_Regression"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
 		}
 			
-			else if (System.getProperty("testSuite").equals("CSR"))
+			else if (System.getProperty("testSuite").equals("CSR_Regression"))
 			{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
 				
@@ -152,7 +152,7 @@ public class TestBase {
 		
 		try
 		{
-		if(System.getProperty("testSuite").equalsIgnoreCase("CSR") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
+		if(System.getProperty("testSuite").equalsIgnoreCase("CSR_Regression") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
 			browserType="IE";
 		}
 
