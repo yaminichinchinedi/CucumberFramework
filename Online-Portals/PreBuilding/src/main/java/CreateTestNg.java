@@ -22,7 +22,7 @@ import org.w3c.dom.Element;
 
 public class CreateTestNg {
 
-					static String filepath = "C:\\jenkins\\workspace\\AutomationRun\\Online-Portals\\UPA\\testing.xml";
+					static String filepath = "C:\\jenkins\\workspace\\testingAutomation\\Online-Portals\\UPA\\testing.xml";
 
 					public static void main(String argv[]) {
 						String testSuiteName=System.getProperty("testSuite");
