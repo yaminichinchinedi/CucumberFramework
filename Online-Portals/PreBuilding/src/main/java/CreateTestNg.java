@@ -96,7 +96,7 @@ public class CreateTestNg {
 
 						Element Element3 = doc.createElement("listener");
 						attr = doc.createAttribute("class-name");
-						attr.setValue("org.uncommons.reportng.HTMLReporter");
+						attr.setValue("org.uncommons.reportng.JUnitXMLReporter");
 						Element3.setAttributeNode(attr);
 						Element1.appendChild(Element3);
 
@@ -123,7 +123,7 @@ public class CreateTestNg {
 							LinkedHashMap<String,ArrayList<String>> mapList ;
 							ArrayList<String> list;
 							try{				
-								File myFile = new File(System.getProperty("user.dir")+"\\Online-Portals\\PreBuilding\\TestCases.xlsx"); 
+								File myFile = new File(System.getProperty("user.dir")+"\\Online-Portals\\PreBuilding\\TestCases.xlsx");  
 								FileInputStream fis = new FileInputStream(myFile);
 								
 								
