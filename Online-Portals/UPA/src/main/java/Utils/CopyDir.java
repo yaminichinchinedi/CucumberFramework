@@ -12,7 +12,7 @@ public  class  CopyDir{
        
        public static void main(String args []) {
              
-             File source = new File("C:\\jenkins\\workspace\\\testingAutomation\\Online-Portals\\UPA\target\\surefire-reports\\html");
+             File source = new File("C:\\jenkins\\workspace\\testingAutomation\\Online-Portals\\UPA\target\\surefire-reports\\html");
            File dest = new File("\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058");
            
               try {
