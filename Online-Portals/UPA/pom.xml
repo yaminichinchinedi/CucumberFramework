@@ -54,7 +54,7 @@
 						</property>
 						
 						<suiteXmlFiles>
-                    <suiteXmlFile>testng.xml</suiteXmlFile>
+                    <suiteXmlFile>testing.xml</suiteXmlFile>
                     </suiteXmlFiles>
 					
 				</configuration>

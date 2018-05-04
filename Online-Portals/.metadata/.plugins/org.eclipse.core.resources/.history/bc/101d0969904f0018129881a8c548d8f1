@@ -123,7 +123,7 @@ public class CreateTestNg {
 							LinkedHashMap<String,ArrayList<String>> mapList ;
 							ArrayList<String> list;
 							try{				
-								File myFile = new File(System.getProperty("user.dir")+"\\Online-Portals\\PreBuilding\\TestCases.xlsx"); 
+								File myFile = new File("TestCases.xlsx"); 
 								FileInputStream fis = new FileInputStream(myFile);
 								
 								
