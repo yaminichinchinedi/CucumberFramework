@@ -88,6 +88,7 @@ public class TestBase {
 		if(System.getProperty("env") == null) 
 		  {
 			urlHeper(runtimeProperties.getProperty(("Env")));
+			
 		  }
 		
 		else if (System.getProperty("env").equals("Stage2"))
@@ -116,7 +117,6 @@ public class TestBase {
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
 		
-        LogTemp.Comment("Running test Suite for: " + System.getProperty("testSuite"), "Orange");
         LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
         
 		if(System.getProperty("testSuite")==null)
@@ -124,13 +124,15 @@ public class TestBase {
 			
 			System.setProperty("URL", runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") +"URL_"+env));
 			
+			LogTemp.Comment("Running test Suite for: " + runtimeProperties.getProperty("testSuite"));
+			
 		}
-		else if(System.getProperty("testSuite").equals("UPA.xml"))
+		else if(System.getProperty("testSuite").equals("UPA"))
 		{
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_"+env));
 		}
 			
-			else if (System.getProperty("testSuite").equals("CSR.xml"))
+			else if (System.getProperty("testSuite").equals("CSR"))
 			{
 				System.setProperty("URL", runtimeProperties.getProperty("CSRURL_"+env));
 				
@@ -150,13 +152,13 @@ public class TestBase {
 		
 		try
 		{
-		if(System.getProperty("testSuite").equalsIgnoreCase("CSR.xml") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
+		if(System.getProperty("testSuite").equalsIgnoreCase("CSR") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
 			browserType="IE";
 		}
 
 		catch(Exception e)
 		{
-			LogTemp.Comment("Running UPA" );
+			LogTemp.Comment("Exception occured as : " + e  );
 		}
 		LogTemp.Comment("Browser on which test suite is running is : " +  browserType, "Orange");
 		switch (browserType) {
