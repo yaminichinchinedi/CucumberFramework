@@ -25,8 +25,8 @@ public class CreateTestNg {
 					static String filepath = "C:\\FinalTest\\TestAutomation\\Online-Portals\\UPA\\testng.xml";
 
 					public static void main(String argv[]) {
-						String testSuiteName=System.getProperty("testSuite");
-						String testClassName=System.getProperty("testModule");
+						String testSuiteName="UPA_Regression";
+						String testClassName="Manage Users";
 						
 						String[] testclasses=testClassName.split(",");
 						
