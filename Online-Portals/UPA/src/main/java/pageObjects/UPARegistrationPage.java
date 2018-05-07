@@ -17,7 +17,10 @@ public class UPARegistrationPage{
 	
 	//Declare Page objects and methods
 	
-	@FindBy(partialLinkText="Enroll now")
+//	@FindBy(partialLinkText="Enroll Now")
+//	private WebElement lnkEnrollNow;
+	
+	@FindBy(xpath="//div[@class='margin-top margin-bottom']//a[contains(text(),'Enroll')]")
 	private WebElement lnkEnrollNow;
 	
 	@FindBy(xpath="//nav[@class='standard-header__nav']//a[contains(text(),'Home')]")
@@ -40,9 +43,6 @@ public class UPARegistrationPage{
 	@FindBy(xpath="//a[contains(@class, 'button')andtext()='ENROLL NOW']")
 	private WebElement btnEnrollNow;
 	
-	
-			
-	
 	private TestBase testConfig;
 	
 	
@@ -50,7 +50,7 @@ public class UPARegistrationPage{
 	{
 		this.testConfig=testConfig;		
 		testConfig.driver.navigate().to(System.getProperty("URL"));
-		LogTemp.Comment("Navigated to UPA");
+		LogTemp.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.wait(testConfig, 2);
 		

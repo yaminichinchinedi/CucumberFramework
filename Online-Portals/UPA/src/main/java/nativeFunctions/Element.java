@@ -98,9 +98,7 @@ import main.java.reporting.LogTemp;
 		
 		catch(ElementNotVisibleException e)
 		{
-			LogTemp.Warning("Element" + namOfElement+" is not visible at first go, trying again", testConfig);
-			Browser.browserRefresh(testConfig);
-			element.click();
+			LogTemp.Fail("Element" + namOfElement+" is not visible at first go, trying again");
 		}
 		
 		catch(NullPointerException e)
