@@ -51,7 +51,7 @@ public class TestUPAMyProfileTab extends TestBase
 	public void testChangePasswordValidations() throws InterruptedException, IOException
 	 {
 		
-		String userType="PROV";
+		String userType="Provider";
 		String accessType="Admin";
 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
