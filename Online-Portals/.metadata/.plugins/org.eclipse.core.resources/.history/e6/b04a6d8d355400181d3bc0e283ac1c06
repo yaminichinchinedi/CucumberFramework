@@ -158,7 +158,7 @@ public class TestBase {
 
 		catch(Exception e)
 		{
-			LogTemp.Comment("Starting execution .."  );
+			LogTemp.Comment("Exception occured as : " + e  );
 		}
 		LogTemp.Comment("Browser on which test suite is running is : " +  browserType, "Orange");
 		switch (browserType) {
