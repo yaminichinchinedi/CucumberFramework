@@ -83,23 +83,21 @@ public class EnrollmentTypePage {
 			{
 			case "AO":
 				Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
-				
-				//Element.verifyElementPresent(rdoAchOnly, "radio button ACH only payment type");
-				
 				Element.click(rdoAchOnly,"ACH only payment type");
-				if(!rdoAchOnly.isSelected())
-				{
+				if(!rdoAchOnly.isSelected()){
 					LogTemp.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
 					Element.click(rdoHealthcare, "Healthcare organization");
-				}
+					}
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "AO");
 				break;
 				
 			case "VO":	
 				Element.click(rdoVoOnly,"VCP only payment type");
 				Element.click(btnIAgree, "I agree button");
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
-				testConfig.putRunTimeProperty("ProviderType", "VO");
+				testConfig.putRunTimeProperty("enrollmentType", "VO");
+				
 				
 				break;
 				
@@ -107,10 +105,11 @@ public class EnrollmentTypePage {
 				Element.click(rdoAoVo,"ACH & VCP both payment type");
 				Element.click(btnIAgree, "I agree button");
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "AV");
 				break;
 				
 				default:
-					System.out.println("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);
+					LogTemp.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);
 				 
 			}
 		}

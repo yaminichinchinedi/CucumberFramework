@@ -11,7 +11,7 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
-public class FinancialInstitutionInfoPage {
+public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 
 	@FindBy(name = "finInstTinName")
 	WebElement finInstName;
@@ -65,15 +65,19 @@ public class FinancialInstitutionInfoPage {
 	WebElement txtSecurity;
 
 	private TestBase testConfig;
+	
 
-	public FinancialInstitutionInfoPage(TestBase testConfig) {
+	public FinancialInstitutionInfoPage(TestBase testConfig) 
+	{
+		super();
 		String expected = "/validateEFTERAProviderContact";
-		this.testConfig = testConfig;
+		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
 		Helper.compareContains(testConfig, "URL", expected,
 				testConfig.driver.getCurrentUrl());
 
 	}
+	
 
 	public validateEFTERAFinancialInfo clickContinue() {
 		Element.click(btnContinue, "Continue");

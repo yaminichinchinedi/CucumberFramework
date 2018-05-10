@@ -194,5 +194,52 @@ public class UPARegistrationPage{
 			   LogTemp.Fail("Exception occured while execution");
 		   }   
 	}
+	
+	
+	public void doCompleteVOEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
+	{
+		   int i=0;
+		   boolean result=true;
+		
+		   while(i<noOfEnrollments) 
+		    {
+		 	
+		    try 
+		     {
+		    	
+		        EnrollmentTypePage enrollmentTypePage = registrationPage.clickEnrollNow();
+		        ValidateEnrollmentTypePage validateEnrollmentType = enrollmentTypePage.enrollAs(excelRowNo).clickNext();
+		        ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+		        ProviderInformationEFTERAEnroll providerInfoPage = providerEnrollPage.clickContinue();
+		        ValidateEFTERAProviderInfo validateProvInfoPage = providerInfoPage.fillProviderInfo();
+		        validateProvInfoPage.fillFirstProviderInfo();
+		        validateProvInfoPage.fillSecondProviderInfo();
+		        FinancialInstitutionInfoPage financialInstPage = validateProvInfoPage.clickContinue();
+		        financialInstPage.checkAcceptanceBox().fillAuthorizedSignature().submitForm();
+		        ValidateEFTERASubmitInfo validatw9SubmitForm= new ValidateEFTERASubmitInfo(testConfig);
+		        ThankYouPage thankYouPage=validatw9SubmitForm.fillEnrollersInfo();
+		        thankYouPage.verifyEnrollmentInfoInDB();
+		       }
+		
+		     catch(Exception e)
+		      {	
+		    	 LogTemp.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
+		    	 result=false;
+			     
+		      }
+		    finally
+		    {
+		    i++;
+		    registrationPage=new UPARegistrationPage(testConfig);
+		    }
+		}
+		   
+		   LogTemp.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
+		   if(!result)
+		   {
+			   LogTemp.Fail("Exception occured while execution");
+		   }
+	}
+
 
 }

@@ -12,7 +12,7 @@ import main.java.reporting.LogTemp;
 
 public class validateEFTERAFinancialInfo {
 
-	private main.java.nativeFunctions.TestBase testConfig;
+	private TestBase testConfig;
 	
 	@FindBy(css="input[value='BL']")
 	WebElement rdoBankLetter;
@@ -54,11 +54,16 @@ public class validateEFTERAFinancialInfo {
 	
 
 
-	public validateEFTERAFinancialInfo(main.java.nativeFunctions.TestBase testConfig) {
+	public validateEFTERAFinancialInfo(TestBase testConfig) {
 		String expected = "/validateEFTERAFinancialInfo";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		main.java.Utils.Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+	}
+	
+	//Default Constructor
+	public validateEFTERAFinancialInfo() {
+		
 	}
 
 	
@@ -88,11 +93,26 @@ public class validateEFTERAFinancialInfo {
 		}
 	}
 	
-	public void fillAuthorizedSignature() 
+	public validateEFTERAFinancialInfo checkAcceptanceBox()
+	{
+		Element.click(chkAcceptanceBox, "Acceptance check box");
+		if(chkAcceptanceBox.isSelected())
+		{
+			LogTemp.Comment("Acceptance checkbox checked");
+		}
+		else
+		{
+			Element.click(chkAcceptanceBox, "Acceptance check box");
+		}	
+		return this;
+	}
+	
+	public validateEFTERAFinancialInfo fillAuthorizedSignature() 
 	{   
 		Element.enterData(firstName,Helper.generateRandomAlphabetsString(4).toLowerCase(), "Enter First Name in Authorized Signature section","firstName");
 		Element.enterData(lastName,Helper.generateRandomAlphabetsString(4).toLowerCase(), "Enter First Name in Authorized Signature section","lastName");
 		Element.enterData(title,Helper.generateRandomAlphabetsString(4).toLowerCase(), "Enter title","title");
+		return this;
 	}
 	
 	public void submitForm() 
