@@ -47,6 +47,17 @@ public class TestUPAEnrollment extends TestBase {
         registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
        
 	}
+	
+	@Test(priority=2,description="Tests a Successful VO type new enrollment")
+	public void testSuccessfulVOProviderEnrollment() throws Exception{
+		
+	    int excelRowNo=4;
+		int noOfEnrollments=0;   
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
+        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
+       
+	}
 
 	
 	
