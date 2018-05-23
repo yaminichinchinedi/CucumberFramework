@@ -7,7 +7,7 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -51,9 +51,10 @@ public class UPARegistrationPage{
 	{
 		this.testConfig=testConfig;		
 		testConfig.driver.navigate().to(System.getProperty("URL"));
-		LogTemp.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
+		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.wait(testConfig, 2);
+		//Browser.wait(testConfig, 10);
+		Browser.waitForLoad(testConfig.driver);
 		
 	}
 	
@@ -61,7 +62,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkOptumLogo,"Optum Logo at header");
-		Browser.wait(testConfig, 5);
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -78,7 +79,6 @@ public class UPARegistrationPage{
 		String expectedURL="/benefitofeps.do";
 		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
 		Browser.waitForLoad(testConfig.driver);
-		Browser.wait(testConfig, 5);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -86,7 +86,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/HowToEnroll.do";
 		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
-		Browser.wait(testConfig, 5);
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -118,11 +118,8 @@ public class UPARegistrationPage{
 	{
 		clickAndVerifyOptumLogo();
 		clickAndVerifyHeaderHowToEnroll();
-		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderBenefitsOfEPS();
-		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderFAQs();
-		Browser.wait(testConfig, 5);
 		clickAndVerifyHeaderHome();
 		
 		
@@ -180,7 +177,7 @@ public class UPARegistrationPage{
 		
 		     catch(Exception e)
 		      {	
-		    	 LogTemp.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
+		    	 Log.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
 		    	 result=false;
 		      }
 		    finally
@@ -189,9 +186,9 @@ public class UPARegistrationPage{
 		       registrationPage=new UPARegistrationPage(testConfig);
 		     }
 		}
-		   LogTemp.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
+		   Log.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
 		   if(!result){
-			   LogTemp.Fail("Exception occured while execution");
+			   Log.Fail("Exception occured while execution");
 		   }   
 	}
 

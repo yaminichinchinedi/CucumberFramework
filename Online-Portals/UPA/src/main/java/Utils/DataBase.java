@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 import main.java.nativeFunctions.TestBase;
 
 public class DataBase
@@ -92,7 +92,7 @@ public class DataBase
 		TestDataReader sqlData = testConfig.cacheTestDataReaderObject("SQL");
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, dbType);
 	}
 
@@ -123,7 +123,7 @@ public class DataBase
 		}
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		
 		
 		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
@@ -163,7 +163,7 @@ public class DataBase
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname);
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Offline);
 	}
 
@@ -189,7 +189,7 @@ public class DataBase
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname,path);
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Offline);
 	}
 
@@ -213,7 +213,7 @@ public class DataBase
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject("SQL");
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, rowNumber, dbType);
 	}
 
@@ -247,13 +247,13 @@ public class DataBase
 		}
 
 		if (null == resultSet)
-			LogTemp.Comment("No data was returned for this query");
+			Log.Comment("No data was returned for this query");
 
 		Date endDate = new Date();
 		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
 
 		if(timeDifference > 60)
-			LogTemp.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
+			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
 		//else
 		//testConfig.logComment("Time taken to run this query in seconds : " + timeDifference);
 
@@ -385,13 +385,13 @@ public class DataBase
 		}
 		catch (SQLException e)
 		{
-			LogTemp.Comment("Exception occured as :" + " " + e);
+			Log.Comment("Exception occured as :" + " " + e);
 		}
 		catch (NullPointerException ne) 
 		{
 			//testConfig.endExecutionOnfailure = true;
-			LogTemp.Comment("Exception occured as :" + " " + ne);
-			//LogTemp.Fail("<-----Unable to Create Connection With Database!! Please check your Internet----->");
+			Log.Comment("Exception occured as :" + " " + ne);
+			//Log.Fail("<-----Unable to Create Connection With Database!! Please check your Internet----->");
 		}
 		Map<String, String> resultMap = null;
 
@@ -425,7 +425,7 @@ public class DataBase
 		}
 		catch (NullPointerException ne) 
 		{
-			LogTemp.Comment("<----------------No Data returned by Query!! Please check---------------->");
+			Log.Comment("<----------------No Data returned by Query!! Please check---------------->");
 		}
 		finally
 		{
@@ -441,13 +441,13 @@ public class DataBase
 		}
 
 		if (null == resultMap)
-			LogTemp.Comment("No data was returned for this query");
+			Log.Comment("No data was returned for this query");
 
 		Date endDate = new Date();
 		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
 
 		if(timeDifference > 60)
-			LogTemp.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
+			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
 		//else
 		//testConfig.logComment("Time taken to run this query in seconds : " + timeDifference);
 
@@ -521,12 +521,12 @@ public class DataBase
 				}
 			}
 
-			//LogTemp.Comment("\nExecuting the update query - '" + updateQuery + "'", testConfig);
+			//Log.Comment("\nExecuting the update query - '" + updateQuery + "'", testConfig);
 			rows = stmt.executeUpdate(updateQuery);
 		}
 		catch (SQLException e)
 		{
-			//LogTemp.logException(e);
+			//Log.logException(e);
 		}
 		finally
 		{
@@ -538,18 +538,18 @@ public class DataBase
 				}
 				catch (SQLException e)
 				{
-					//LogTemp.logException(e);
+					//Log.logException(e);
 				}
 			}
 		}
 		if (0 == rows)
-			LogTemp.Comment("No rows were updated by this query");
+			Log.Comment("No rows were updated by this query");
 
 		Date endDate = new Date();
 		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
 
 		if(timeDifference > 60)
-			LogTemp.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
+			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
 		//else
 		//testConfig.logComment("Time taken to run this query in seconds : " + timeDifference);
 
@@ -569,7 +569,7 @@ public class DataBase
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname);
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, dbType);
 	}
 
@@ -593,28 +593,28 @@ public class DataBase
 			{
 			case Stage:
 				connectString = testConfig.getRunTimeProperty("StageDBConnectionString");
-				LogTemp.Comment("Connecting to Stage DB:-" + connectString);
+				Log.Comment("Connecting to Stage DB:-" + connectString);
 				userName = testConfig.getRunTimeProperty("StageDBUsername");
 				password = testConfig.getRunTimeProperty("StageDBPassword");
 				break;
 				
 			case Stage2:
 				connectString = testConfig.getRunTimeProperty("Stage2DBConnectionString");
-				LogTemp.Comment("Connecting to Stage 2 DB:-" + connectString);
+				Log.Comment("Connecting to Stage 2 DB:-" + connectString);
 				userName = testConfig.getRunTimeProperty("Stage2DBUsername");
 				password = testConfig.getRunTimeProperty("Stage2DBPassword");
 				break;
 				
 			case IMPL:
 				connectString = testConfig.getRunTimeProperty("IMPLConnectionString");
-				LogTemp.Comment("Connecting to IMPL DB:-" + connectString);
+				Log.Comment("Connecting to IMPL DB:-" + connectString);
 				userName = testConfig.getRunTimeProperty("IMPLDBUsername");
 				password = testConfig.getRunTimeProperty("IMPLDBPassword");
 				break;
 				
 			case PROD:
 				connectString = testConfig.getRunTimeProperty("ProdDBConnectionString");
-				LogTemp.Comment("Connecting to Stage DB:-" + connectString);
+				Log.Comment("Connecting to Stage DB:-" + connectString);
 				userName = testConfig.getRunTimeProperty("ProdDBUsername");
 				password = testConfig.getRunTimeProperty("ProdDBPassword");
 				break;
@@ -634,7 +634,7 @@ public class DataBase
 			catch (ClassNotFoundException e)
 			{
 				con = null;
-				LogTemp.Warning("Exception occured" + e, testConfig);
+				Log.Warning("Exception occured" + e, testConfig);
 			}		
 			
 			con = DriverManager.getConnection(connectString, userName, password);
@@ -642,10 +642,10 @@ public class DataBase
 					 if(con != null)
 					{
 						//if (testConfig.debugMode)
-							LogTemp.Comment("Connection succeeded");
+							Log.Comment("Connection succeeded");
 					}
 					else
-						LogTemp.Comment("Unable to establish connection");
+						Log.Comment("Unable to establish connection");
 				
 
 			
@@ -702,7 +702,7 @@ public class DataBase
 		}
 		catch(SQLException e)
 		{
-			LogTemp.Comment(e.getMessage());
+			Log.Comment(e.getMessage());
 		}
 
 		return list;
@@ -840,7 +840,7 @@ e	 */
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname,path);
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		LogTemp.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		return executeSelectQuery(testConfig, selectQuery, DatabaseType.Offline);
 	}
 	

@@ -6,7 +6,7 @@ import java.util.List;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -61,7 +61,7 @@ public class AprovalFlowCSR {
 		
 	   this.testConfig=testConfig;
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	   LogTemp.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
+	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
 	
 	}

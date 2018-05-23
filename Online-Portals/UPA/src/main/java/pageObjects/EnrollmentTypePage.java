@@ -6,7 +6,7 @@ import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,7 +75,7 @@ public class EnrollmentTypePage {
 			Element.click(rdoHealthcare, "Healthcare organization");
 			if(!rdoHealthcare.isSelected())
 			{
-				LogTemp.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
+				Log.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
 				Element.click(rdoHealthcare, "Healthcare organization");
 			}
 			String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
@@ -85,7 +85,7 @@ public class EnrollmentTypePage {
 				Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
 				Element.click(rdoAchOnly,"ACH only payment type");
 				if(!rdoAchOnly.isSelected()){
-					LogTemp.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
+					Log.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
 					Element.click(rdoHealthcare, "Healthcare organization");
 					}
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
@@ -109,7 +109,7 @@ public class EnrollmentTypePage {
 				break;
 				
 				default:
-					LogTemp.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);
+					Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);
 				 
 			}
 		}
@@ -120,7 +120,7 @@ public class EnrollmentTypePage {
 		}
 		else
 		{
-			LogTemp.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
+			Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
 		}
 		
 		return new EnrollmentTypePage(testConfig);

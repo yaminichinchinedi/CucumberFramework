@@ -44,7 +44,7 @@ public class LogTemp
 		Reporter.log(message);
 	
 		//Don't know its use currently hence commenting
-		//testConfig.testLog = testConfig.testLog.concat(message);
+		//testConfig.testLogTemp = testConfig.testLogTemp.concat(message);
 	}
 	
 	
@@ -83,7 +83,7 @@ public class LogTemp
 		Assert.fail(message);
 				
 				
-		//testConfig.testLog = testConfig.testLog.concat(message);
+		//testConfig.testLogTemp = testConfig.testLogTemp.concat(message);
 		
 		// Stop the execution if end execution flag is ON
 		//if (testConfig.endExecutionOnfailure)
@@ -98,8 +98,8 @@ public class LogTemp
 //		}
 //		catch (Exception e)
 //		{
-//			testConfig.logWarning("Unable to log page info:- " + ExceptionUtils.getStackTrace(e));
-//			//Commenting it to prevent exception being thrown in OnTestFailure method of test listener. Otherwise logs don't appear
+//			testConfig.LogTempWarning("Unable to LogTemp page info:- " + ExceptionUtils.getStackTrace(e));
+//			//Commenting it to prevent exception being thrown in OnTestFailure method of test listener. Otherwise LogTemps don't appear
 //			//throw e;
 //		}
 //	}
@@ -139,7 +139,7 @@ public class LogTemp
 		}
 		
 		Reporter.log(message);
-		//testConfig.testLog = testConfig.testLog.concat(message);
+		//testConfig.testLogTemp = testConfig.testLogTemp.concat(message);
 	}
 	
 	
@@ -153,7 +153,7 @@ public class LogTemp
 			message = "<font color='Orange'>" + message + "</font></br>";
 		}
 		Reporter.log(message);
-		testConfig.testLog = testConfig.testLog.concat(message);
+		
 	}
 
 

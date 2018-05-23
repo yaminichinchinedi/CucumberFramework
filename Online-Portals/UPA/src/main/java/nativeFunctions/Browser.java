@@ -22,7 +22,7 @@ import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
 import javax.imageio.stream.ImageOutputStream;
 
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -47,7 +47,7 @@ public class Browser
 	public static void browserRefresh(TestBase testConfig)
 	{
 		testConfig.driver.navigate().refresh();
-		LogTemp.Comment("Refreshing the browser...");
+		Log.Comment("Refreshing the browser...");
 		acceptAlert(testConfig);
 		wait(testConfig,3);
 	}
@@ -62,11 +62,11 @@ public class Browser
 	        Alert alert = testConfig.driver.switchTo().alert();
 	        alert.accept();
 	    } catch (NoAlertPresentException e) {
-	        LogTemp.Comment("No alert is present..continuing..");
+	        Log.Comment("No alert is present..continuing..");
 	    }
 	    
 	    catch (Exception e) {
-	        LogTemp.Comment("No alert is present..continuing..");
+	        Log.Comment("No alert is present..continuing..");
 	    }
 	}
 	
@@ -87,7 +87,7 @@ public class Browser
 		}
 		catch(Exception e)
 		{
-			LogTemp.Fail("Javascript exception \n" + e);
+			Log.Fail("Javascript exception \n" + e);
 		}
 	}
   
@@ -95,13 +95,13 @@ public class Browser
 	public static void wait(TestBase testConfig,int seconds)
 	{ 
 		try{
-		LogTemp.Comment("Waiting for" + " " +seconds + " " + "seconds" );
+		Log.Comment("Waiting for" + " " +seconds + " " + "seconds" );
 		Thread.sleep(seconds * 1000);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			LogTemp.Comment("Element not found");
+			Log.Comment("Element not found");
 		}
 	}
 	
@@ -111,13 +111,13 @@ public class Browser
 		{
 			if (testConfig.driver != null)
 			{
-				LogTemp.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+				Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				testConfig.driver.close();
 			}
 		}
 		catch (UnreachableBrowserException e)
 		{
-			LogTemp.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
+			Log.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
 			
 		}
 	}
@@ -127,7 +127,7 @@ public class Browser
 	{
 		
 		testConfig.driver.navigate().to(url);
-		LogTemp.Comment("Navigating to...");
+		Log.Comment("Navigating to...");
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class Browser
 		}
 		catch (UnreachableBrowserException e)
 		{
-			logger.logWarning(ExceptionUtils.getStackTrace(e));
+			logger.logWarning("Warning : " +e);
 		}
 	}
 	
@@ -238,7 +238,7 @@ public class Browser
 //				}
 //				catch (NullPointerException ne)
 //				{
-//					LogTemp.Comment("NullPointerException:Screenshot can't be taken. Probably browser is not reachable");
+//					Log.Comment("NullPointerException:Screenshot can't be taken. Probably browser is not reachable");
 //					//test case will end, setting this as null will prevent taking screenshot again in cleanup
 //					testConfig.driver = null;
 //				}
@@ -274,24 +274,24 @@ public class Browser
 ////					}
 ////				}
 //					if(testConfig.driver !=null)
-//						LogTemp.Comment("<B>Page URL</B>:- " + testConfig.driver.getCurrentUrl());
+//						Log.Comment("<B>Page URL</B>:- " + testConfig.driver.getCurrentUrl());
 //					else 
-//						LogTemp.Comment("Driver is NULL");
+//						Log.Comment("Driver is NULL");
 //				}
 //			
 //				//String href =  screenshot;
-//				//LogTemp.Comment("<B>Screenshot</B>:- <a href=" + href  +" target='_blank' >" + destination.getName() + "</a>");
+//				//Log.Comment("<B>Screenshot</B>:- <a href=" + href  +" target='_blank' >" + destination.getName() + "</a>");
 //			
 //		}
 //		catch (UnreachableBrowserException e)
 //		{
 //			testConfig.enableScreenshot = false;
-//			LogTemp.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
+//			Log.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
 //		}
 //		catch (Exception e)
 //		{
 //			testConfig.enableScreenshot = false;
-//			LogTemp.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
+//			Log.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
 //			
 //		}
 //	}
@@ -367,31 +367,31 @@ public class Browser
 			 if(testConfig.driver !=null)
 			 {
 				    Browser.waitForLoad(testConfig.driver);
-					LogTemp.Comment("<B>Page URL</B>:- " + testConfig.driver.getCurrentUrl());
+					Log.Comment("<B>Page URL</B>:- " + testConfig.driver.getCurrentUrl());
 			 }
 				else 
-					LogTemp.Comment("Driver is NULL");
+					Log.Comment("Driver is NULL");
 		
 			String href=screenShotName.getAbsolutePath();
-			LogTemp.Comment("<B>Screenshot</B>:- <a href=" + href + ">" + "screenshot" + "</a>");
+			Log.Comment("<B>Screenshot</B>:- <a href=" + href + ">" + "screenshot" + "</a>");
 			
 
 		}
 		
 		catch (NoSuchWindowException NoSuchWindowExp)
 		{
-			LogTemp.Comment("NoSuchWindowException:Screenshot can't be taken. Probably browser is not reachable");
+			Log.Comment("NoSuchWindowException:Screenshot can't be taken. Probably browser is not reachable");
 			//test case will end, setting this as null will prevent taking screenshot again in cleanup
 			testConfig.driver = null;
 		}
 		catch (WebDriverException webdriverExp)
 		{
-			LogTemp.Comment("Unable to take screenshot:- " + ExceptionUtils.getRootCauseStackTrace(webdriverExp));
+			Log.Comment("Unable to take screenshot:- " + ExceptionUtils.getRootCauseStackTrace(webdriverExp));
 		}
 		
 		catch (Exception unknownException)
 		{
-			LogTemp.Comment("Unable to take screenshot beacuse of exception as:- " + unknownException);
+			Log.Comment("Unable to take screenshot beacuse of exception as:- " + unknownException);
 		}
 		
 		
@@ -419,7 +419,7 @@ public class Browser
 			{
 				if (actualURL.contains(expectedURL))
 				{
-					LogTemp.Pass("Browser URL", expectedURL,actualURL);
+					Log.Pass("Browser URL", expectedURL,actualURL);
 					
 					// Verify that page stays on same page (no internal
 					// redirect)
@@ -427,7 +427,7 @@ public class Browser
 					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 					if (!actualURL.contains(expectedURL))
 					{
-						LogTemp.Fail("Browser URL", expectedURL, actualURL);
+						Log.Fail("Browser URL", expectedURL, actualURL);
 						return false;
 					}
 					
@@ -437,14 +437,14 @@ public class Browser
 				retries--;
 			}
 			
-			LogTemp.Comment("driver before fail methos is called" + testConfig.driver, "Red");
-			LogTemp.Fail("Browser URL", expectedURL, actualURL);
+			Log.Comment("driver before fail methos is called" + testConfig.driver, "Red");
+			Log.Fail("Browser URL", expectedURL, actualURL);
 			return false;
 		}
 		catch (UnreachableBrowserException e)
 		{
 			
-			LogTemp.Comment("Exception is" + e, "Maroon");
+			Log.Comment("Exception is" + e, "Maroon");
 			return false;
 		}
 	}
@@ -462,12 +462,12 @@ public class Browser
 	{
 		if (testConfig.driver != null)
 		{
-			LogTemp.Comment("Switching to the new window");
+			Log.Comment("Switching to the new window");
 			String oldWindow = testConfig.driver.getWindowHandle();
 			
 			if (testConfig.driver.getWindowHandles().size() < 2)
  			{
-				LogTemp.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
+				Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
 			}
 			
 			for (String winHandle : testConfig.driver.getWindowHandles())
@@ -475,7 +475,7 @@ public class Browser
 				if (!winHandle.equals(oldWindow))
 				{
 					testConfig.driver.switchTo().window(winHandle);
-					LogTemp.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
 			Browser.waitForLoad(testConfig.driver);
@@ -497,10 +497,10 @@ public class Browser
 	{
 		if (testConfig.driver != null)
 		{
-			LogTemp.Comment("Switching to the given window handle:- " + windowHandle);
+			Log.Comment("Switching to the given window handle:- " + windowHandle);
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
-			LogTemp.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 		}
 	}
 	
@@ -511,7 +511,7 @@ public class Browser
 		{
 			List<String> browserTabs = new ArrayList<String> (testConfig.driver.getWindowHandles());
 			testConfig.driver.switchTo().window(browserTabs .get(1));
-			LogTemp.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+			Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 		}
 		
 			

@@ -17,7 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
  public class Element {
 	
@@ -31,26 +31,26 @@ import main.java.reporting.LogTemp;
 		try{
 		element.clear();
 		element.sendKeys(data);		
-		LogTemp.Comment(description);
+		Log.Comment(description);
 		}
 		catch(NoSuchElementException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
 		}
 		
 		catch(ElementNotVisibleException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
 		}
 		
 		catch(StaleElementReferenceException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
 		}
 		
 		catch(NullPointerException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page and exception is: " + " " + e);
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page and exception is: " + " " + e);
 		}
 	}
 	
@@ -59,26 +59,26 @@ import main.java.reporting.LogTemp;
 		try{
 			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
 			 wait.until(ExpectedConditions.visibilityOf(element));
-			 LogTemp.Pass(namOfElement + "is present on page");
+			 Log.Pass(namOfElement + "is present on page");
 		}
 		catch(NoSuchElementException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
 		}
 		
 		catch (TimeoutException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +" "+ " " +  " is Not found on page and timeout happened" + '\n' + e);
+			Log.Fail("Element" + " " + "'"+namOfElement +" "+ " " +  " is Not found on page and timeout happened" + '\n' + e);
 		}
 		
 		catch(ElementNotVisibleException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
 		}
 		
 		catch(StaleElementReferenceException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
 		}
 	}
 	
@@ -88,23 +88,23 @@ import main.java.reporting.LogTemp;
 		try
 		{
 		  element.click();
-		  LogTemp.Comment("Clicked " + namOfElement);
+		  Log.Comment("Clicked " + namOfElement);
 		}
 		
 		catch(NoSuchElementException e)
 		{
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
 		}
 		
 		catch(ElementNotVisibleException e)
 		{
-			LogTemp.Fail("Element" + namOfElement+" is not visible at first go, trying again");
+			Log.Fail("Element" + namOfElement+" is not visible at first go, trying again");
 		}
 		
 		catch(NullPointerException e)
 		{
 			
-			LogTemp.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
 		}
 			
 	}
@@ -116,7 +116,7 @@ import main.java.reporting.LogTemp;
 	{
 		Actions action = new Actions(testConfig.driver);
 		action.moveToElement(element).build().perform();
-		LogTemp.Comment("Mouse Hovered over " + namOfElement);
+		Log.Comment("Mouse Hovered over " + namOfElement);
 			
 	}
 	
@@ -132,17 +132,17 @@ import main.java.reporting.LogTemp;
 		
 		 {
 			String successMsg="Verified " + namOfElement + " is present on the page";
-			LogTemp.Pass(successMsg);
+			Log.Pass(successMsg);
 		 }
 		else 
 		{
 			String failureMsg=namOfElement + " is not present on the page";
-			LogTemp.Fail(failureMsg);
+			Log.Fail(failureMsg);
 		}
 	}
 	catch(Exception e)
 	{
-		LogTemp.Fail(namOfElement +" is not present on the page" + e);
+		Log.Fail(namOfElement +" is not present on the page" + e);
 			
 	}
 }
@@ -156,17 +156,17 @@ import main.java.reporting.LogTemp;
 		
 		 {
 			String successMsg="Verified " + namOfElement + " is not present on the page";
-			LogTemp.Pass(successMsg);
+			Log.Pass(successMsg);
 		 }
 		else 
 		{
 			String failureMsg=namOfElement + " is present on the page";
-			LogTemp.Fail(failureMsg);
+			Log.Fail(failureMsg);
 		}
 	}
 	catch(Exception e)
 	{
-		LogTemp.Fail(namOfElement +" is  present on the page" + e);
+		Log.Fail(namOfElement +" is  present on the page" + e);
 			
 	}
 		
@@ -178,15 +178,15 @@ import main.java.reporting.LogTemp;
 			String actualText=element.getText().trim();
 		if(actualText.contains(expectedText))
 		{
-			LogTemp.Pass("Verified text is displayed as :" + " " + "'" + actualText + "'" );
+			Log.Pass("Verified text is displayed as :" + " " + "'" + actualText + "'" );
 		}
 		else 	
-			LogTemp.Fail("Actual and Expected text don't match" + " " + " " + "Actual text is:" + " "  + "'" +actualText + " " + "'" + "" + "Where As Expected Text was:" + " " + "'" + expectedText + "'");
+			Log.Fail("Actual and Expected text don't match" + " " + " " + "Actual text is:" + " "  + "'" +actualText + " " + "'" + "" + "Where As Expected Text was:" + " " + "'" + expectedText + "'");
 		}
 		catch(Exception e)
 		{
 			
-			LogTemp.Fail("Exception occured" + '\n' + e);			
+			Log.Fail("Exception occured" + '\n' + e);			
 		}
 		}
 	
@@ -198,12 +198,12 @@ import main.java.reporting.LogTemp;
 	{
 		try {
 			  findElement(locatorType, locatorValue);
-			  LogTemp.Fail(elementName + " " + " is present");
+			  Log.Fail(elementName + " " + " is present");
 		    }
 			
 		catch (Exception e) 
 		{
-			LogTemp.Pass(elementName + " " + "is not present");
+			Log.Pass(elementName + " " + "is not present");
 	    }
 			
 	}
@@ -214,12 +214,12 @@ import main.java.reporting.LogTemp;
 		if((element.isSelected()))
 		{
 			String successMsg = "Element" + namOfElement + "is checked";
-		    LogTemp.Pass(successMsg);
+		    Log.Pass(successMsg);
 		}
 		else 
 		{
 		    String failureMsg="Element" + namOfElement + "is not checked";
-		    LogTemp.Fail(failureMsg);
+		    Log.Fail(failureMsg);
 		}
 			
 	}
@@ -230,13 +230,13 @@ import main.java.reporting.LogTemp;
 		if(!(element.isSelected()))
 		{
 			String successMsg = "Element" + namOfElement + "is not checked";
-			LogTemp.Pass(successMsg);
+			Log.Pass(successMsg);
 		}
 			
 		else 
 		{
 		    String failureMsg="Element" + namOfElement + "is checked";
-		    LogTemp.Fail(failureMsg);
+		    Log.Fail(failureMsg);
 		}
 			
 	}
@@ -252,7 +252,7 @@ import main.java.reporting.LogTemp;
 	 */
 	public static List<String> getAllOptionsInSelect(TestBase testConfig, WebElement element)
 	{
-		LogTemp.Comment("Retrieve all the Options present for this specified Select WebElement");
+		Log.Comment("Retrieve all the Options present for this specified Select WebElement");
 		Select sel = new Select(element);
 		List<WebElement> elements = sel.getOptions();
 		List<String> options = new ArrayList<String>(elements.size());
@@ -284,7 +284,7 @@ import main.java.reporting.LogTemp;
 		
 		catch(Exception e)
 		{
-			LogTemp.Fail("Unable to find selected item in dropdown due to" + '\n' + e);
+			Log.Fail("Unable to find selected item in dropdown due to" + '\n' + e);
 			return null;
 		}
 	}
@@ -304,7 +304,7 @@ import main.java.reporting.LogTemp;
 	 */
 	public static void selectVisibleText(WebElement element, String value, String description)
 	{
-			LogTemp.Comment("Select the " + description + " dropdown text '" + value + "'");
+			Log.Comment("Select the " + description + " dropdown text '" + value + "'");
 			
 			Select sel = new Select(element);
 			sel.selectByVisibleText(value);
@@ -320,7 +320,7 @@ import main.java.reporting.LogTemp;
 	
 	public static void selectByIndex(WebElement element, int index, String description)
 	{
-			LogTemp.Comment("Select" +  description + "from dropdown");
+			Log.Comment("Select" +  description + "from dropdown");
 			
 			Select sel = new Select(element);
 			sel.selectByIndex(index);
@@ -329,7 +329,7 @@ import main.java.reporting.LogTemp;
 	public static void selectByVisibleText(WebElement element, String text, String description)
 	{
 			try{
-				LogTemp.Comment("Select" + " " +  description + "from dropdown");
+				Log.Comment("Select" + " " +  description);
 			
 			
 			Select sel = new Select(element);
@@ -337,13 +337,13 @@ import main.java.reporting.LogTemp;
 			}
 			catch (StaleElementReferenceException e)
 			{
-				LogTemp.Fail("Stale exception" + e);
+				Log.Fail("Stale exception" + e);
 			}
 	}
 	
 	public static void selectByValue(WebElement element, String text, String description)
 	{
-			LogTemp.Comment("Select" +  description + "from dropdown");
+			Log.Comment("Select" +  description + "from dropdown");
 			
 			Select sel = new Select(element);
 			sel.selectByValue(text);
@@ -386,7 +386,7 @@ import main.java.reporting.LogTemp;
 		{
 			while(retry>0)
 			{
-			LogTemp.Comment("Stale element reference exception. Trying again...");
+			Log.Comment("Stale element reference exception. Trying again...");
 			Browser.wait(testConfig, 2);
 			retry--;
 			findElements(testConfig,locatorType,locatorValue);
@@ -395,19 +395,19 @@ import main.java.reporting.LogTemp;
 		}
 		catch (NoSuchElementException e)
 		{
-			LogTemp.Comment("Could not find the element on page");
+			Log.Comment("Could not find the element on page");
 			return null;
 		}
 		
 		catch (NullPointerException e)
 		{
-			LogTemp.Fail("exception" + e);
+			Log.Fail("exception" + e);
 			return null;
 		}
 		
 		catch (Exception e)
 		{
-			LogTemp.Fail("exception" + e);
+			Log.Fail("exception" + e);
 			return null;
 		}
 		return null;
@@ -447,22 +447,22 @@ import main.java.reporting.LogTemp;
 		
 		catch (StaleElementReferenceException e1)
 		{
-			LogTemp.Comment("Stale element reference exception. Trying again...");
+			Log.Comment("Stale element reference exception. Trying again...");
 			
 			// retry
 			Browser.wait(testConfig, 3);
-			LogTemp.Comment("Retrying getting element");
+			Log.Comment("Retrying getting element");
 			findElement(locatorType,locatorValue);
 		}
 		catch (NoSuchElementException e)
 		{
-			LogTemp.Comment("Could not find the element on page");
+			Log.Comment("Could not find the element on page");
 			return null;
 		}
 		
 		catch (Exception e)
 		{
-			LogTemp.Fail("Unable to find element with locator" + " " + locatorValue );
+			Log.Fail("Unable to find element with locator" + " " + locatorValue );
 			return null;
 		}
 		return null;

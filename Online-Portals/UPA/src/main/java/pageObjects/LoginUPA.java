@@ -104,12 +104,12 @@ public class LoginUPA {
 		String env=System.getProperty("env");
         id=testConfig.runtimeProperties.getProperty("UPA_"+"ID_"+userType+"_"+accessType+"_"+env);
         password=testConfig.runtimeProperties.getProperty("UPA_"+"Pwd_"+userType+"_"+accessType+"_"+env);
-        Element.click(activateAccount, "Click Activate your account link on registartion page");
+        Element.click(activateAccount, "Activate your account link on registartion page");
 		
 		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
 		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
 		
-		Element.click(btnActivate, "Click Activate your account button");
+		Element.click(btnActivate, "Activate your account button");
 		//Element.click(btnLogin,"Login button");
 		setUserProperties();
 		
@@ -122,17 +122,26 @@ public class LoginUPA {
 		id=data.GetData(rowNo,"Username");
 		password=data.GetData(rowNo,"Password");
 		
+	    if(activateAccount.isDisplayed())
+	    	clickActivateAccount();
 		Element.enterData(txtboxUserName, id, "Correct Username entered as :"+" " + id, "txtboxUserName");	
 		Element.enterData(txtboxPwd, password, "Invalid Password entered :" + " " + password, "txtboxPwd");
-		Element.click(btnLogin,"Login button");
+		Element.click(btnActivate, "Click Activate your account button");
+		
+		//Element.click(btnLogin,"Login button");
 		
 		verifyLoginErrorMessage();
 		
 	}
 	
+	public void clickActivateAccount()
+	{
+		Element.click(activateAccount, "Click Activate your account link on registartion page");
+	}
+	
 	public void verifyLoginErrorMessage()
 	{
-		Element.verifyTextPresent(txtErrorMsg, "The Username or Password you entered is not valid.");
+		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
 	}
 	
 }

@@ -30,7 +30,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class ManageUsers extends AddUserDetails  {
 	
@@ -173,7 +173,7 @@ public class ManageUsers extends AddUserDetails  {
 	    
 	    //method removes all the elements of a single ArrayList 
 	    UsersListUI.clear();
-	    LogTemp.Comment("Cleared previous User List");
+	    Log.Comment("Cleared previous User List");
 	   
 	    
 	    UsersListUI=getListOfAllUsersFromUI(testConfig);
@@ -208,7 +208,7 @@ public class ManageUsers extends AddUserDetails  {
 	public void deleteAndVerifyUserIsDeleted() throws InterruptedException
 	{
 		ArrayList<String> UsersListUI=getListOfAllUsersFromUI(testConfig); 
-		LogTemp.Comment("Current User List before  deleting user is" + '\n'  + UsersListUI);
+		Log.Comment("Current User List before  deleting user is" + '\n'  + UsersListUI);
 		
 		//Delete the user
 		clickCSRDelete();
@@ -219,11 +219,11 @@ public class ManageUsers extends AddUserDetails  {
 		
 		if(!UsersListUI.contains(firstNameTxt))
 		{
-			LogTemp.Pass("User with first name : " + " " + "'" +firstNameTxt + "'" + "is deleted successfully");
+			Log.Pass("User with first name : " + " " + "'" +firstNameTxt + "'" + "is deleted successfully");
 		}
 		else 
-			LogTemp.Fail("User with first name : " + " " + "'" +firstNameTxt + "'" + "not deleted");
-		LogTemp.Comment("User List after deleting user is" + '\n'  + UsersListUI);
+			Log.Fail("User with first name : " + " " + "'" +firstNameTxt + "'" + "not deleted");
+		Log.Comment("User List after deleting user is" + '\n'  + UsersListUI);
 	}
 	
 	/*
@@ -251,7 +251,7 @@ public class ManageUsers extends AddUserDetails  {
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
 		String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
-		LogTemp.Comment("Active user returned is :" +" " + activeUser);
+		Log.Comment("Active user returned is :" +" " + activeUser);
 		return activeUser;
 
 	}
@@ -308,15 +308,15 @@ public class ManageUsers extends AddUserDetails  {
 		clickActiveUserName(userType);
 
 		//Get the tin number for which access level is to be changed
-		LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+ accessLvlChangedTin.get(0).getText().toString());
+		Log.Comment("Tin number for whom access level is to be changed is :" + " "+ accessLvlChangedTin.get(0).getText().toString());
 		
 		accessLvlChangedTin=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select/../preceding-sibling::td[2]");
 		testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
 
 		//Select Access Level as General for the above tin
-		LogTemp.Comment("Finding access Level dropdown again");
+		Log.Comment("Finding access Level dropdown again");
 		accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
-		LogTemp.Comment("Finded dropdown succesfully by find elements");
+		Log.Comment("Finded dropdown succesfully by find elements");
 
 		try{
 			Browser.wait(testConfig, 4);
@@ -367,13 +367,13 @@ public class ManageUsers extends AddUserDetails  {
 		 
 		  testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
 		  
-		  LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
+		  Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
 		
 		  
-		  LogTemp.Comment("Finding access level by find elements");
+		  Log.Comment("Finding access level by find elements");
 		  accessLvls=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 		  
-		  LogTemp.Comment("Finded dropdown successfully");
+		  Log.Comment("Finded dropdown successfully");
 		  
 		  String initialAccessLvl=accessLvls.get(0).getAttribute("value");
 
@@ -408,7 +408,7 @@ public class ManageUsers extends AddUserDetails  {
 		   
 		   accessLvls= testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		   String changedAccessLvl=accessLvls.get(0).getAttribute("value");
-		   LogTemp.Comment("After reselecting, the changed access level is : " + " " + changedAccessLvl );
+		   Log.Comment("After reselecting, the changed access level is : " + " " + changedAccessLvl );
 		   
 		   //Click Cancel and click No to get back on manage users page
 		   clickCancel().clickNo();
@@ -469,7 +469,7 @@ public class ManageUsers extends AddUserDetails  {
 		 Browser.wait(testConfig, 3);
 		 map.clear();
 		 map=getTinsListFromUI();
-		 LogTemp.Comment("After one click " +'\n'+map);
+		 Log.Comment("After one click " +'\n'+map);
 		 
 		 treeMap = new TreeMap<String, String>(map).descendingMap();
 		 verifytinsAreSorted(treeMap,map);
@@ -508,10 +508,10 @@ public class ManageUsers extends AddUserDetails  {
 	{
     if(!treeMap.toString().equals(map.toString()))
     {
-    	LogTemp.Fail("Ascending Sorted order for Tin", treeMap.toString(), map.toString());
+    	Log.Fail("Ascending Sorted order for Tin", treeMap.toString(), map.toString());
     }
     else
-    	LogTemp.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
+    	Log.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
 	}
 
 	public void verifyManageUserUI()
@@ -531,10 +531,10 @@ public class ManageUsers extends AddUserDetails  {
 		Element.click(chkRemoveTin, "Remove tin checkbox");
 		if(tinGridRows.size()>2)
 		{
-			LogTemp.Fail("Tin not removed");
+			Log.Fail("Tin not removed");
 		}
 		else
-		LogTemp.Pass("Tin removed");
+		Log.Pass("Tin removed");
 	}
 
 	
@@ -555,7 +555,7 @@ public class ManageUsers extends AddUserDetails  {
 		
 		catch(Exception e)
 		{
-			LogTemp.Fail("Failed due to an exception : " + e);
+			Log.Fail("Failed due to an exception : " + e);
 		}
 		
 	}
@@ -579,7 +579,7 @@ public class ManageUsers extends AddUserDetails  {
 		}
 		catch(Exception e)
 		{
-			LogTemp.Fail("Exception occured : "+ e);
+			Log.Fail("Exception occured : "+ e);
 		}
 		
 	}
@@ -591,22 +591,22 @@ public class ManageUsers extends AddUserDetails  {
 		
 
         //Get the tin number for which Email Notification is to be changed, we are taking first row here
-		LogTemp.Comment("Tin number for whom email notification is to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
+		Log.Comment("Tin number for whom email notification is to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
 		
 		//Getting email checkbox element
 		emailChkbox=findEmailCheckbox(userType);
 		
 		
-		LogTemp.Comment("Checking if email checkbox is checked or not...","Maroon");
+		Log.Comment("Checking if email checkbox is checked or not...","Maroon");
 		
 		//If email check box is already checked, Unchecking it and saving and then verifying it is unchecked now
 		
 		if(!(emailChkbox.getAttribute("checked")==null))
 		{
-			LogTemp.Comment("Email checkbox is already checked, so unschecking it to verify email notification is updated successfully","Maroon");
+			Log.Comment("Email checkbox is already checked, so unschecking it to verify email notification is updated successfully","Maroon");
 			emailChkbox.click();
 			clickSave();
-			LogTemp.Comment("Unchecked email checkbox successfully","Green");
+			Log.Comment("Unchecked email checkbox successfully","Green");
 
 			emailChkbox=findEmailCheckbox(userType);
 			
@@ -616,10 +616,10 @@ public class ManageUsers extends AddUserDetails  {
 		//If email check box is not checked, Checking it and saving and then verifying it is Checked now
 		else
 		{
-			LogTemp.Comment("Email checkbox is  Unchecked, so checking it","Maroon");
+			Log.Comment("Email checkbox is  Unchecked, so checking it","Maroon");
 			emailChkbox.click();
 			clickSave();
-			LogTemp.Comment("Checked email checbox successfully","Green");
+			Log.Comment("Checked email checbox successfully","Green");
 			emailChkbox=findEmailCheckbox(userType);
 			Helper.compareEquals(testConfig, "Email check box is in Checked state now and saved successfully ", "true", emailChkbox.getAttribute("checked"));
 		}
@@ -648,7 +648,7 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		if(!(rdoYes.getAttribute("checked")==null))
 		{
-			LogTemp.Comment("'Yes' is initially selected for Associate Billing Service Users to all Providers, hence clicking 'No' to verify successfull change");
+			Log.Comment("'Yes' is initially selected for Associate Billing Service Users to all Providers, hence clicking 'No' to verify successfull change");
 			Element.click(rdoNo, "Click Radio button 'No' for Associate Billing Service Users to all Providers");
 			clickSave();
 			Helper.compareEquals(testConfig, "Radio button 'No' is selected and saved successfuly", "true", rdoNo.getAttribute("checked").toString());
@@ -656,7 +656,7 @@ public class ManageUsers extends AddUserDetails  {
 		
 		else
 		{
-			LogTemp.Comment("'No' is initially selected for Associate Billing Service Users to all Providers, hence clicking 'Yes' to verify successfull change");
+			Log.Comment("'No' is initially selected for Associate Billing Service Users to all Providers, hence clicking 'Yes' to verify successfull change");
 			Element.click(rdoYes, "Click Radio button 'Yes' for Associate Billing Service Users to all Providers");
 			clickSave();
 			Helper.compareEquals(testConfig, "Radio button 'Yes' is selected and saved successfuly", "true", rdoYes.getAttribute("checked").toString());
@@ -674,7 +674,7 @@ public class ManageUsers extends AddUserDetails  {
 	   
         //Get the tin number for which Email Notification is to be changed, we are taking first row here
 	
-		LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
+		Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
 		
 		Element.selectByVisibleText(accessLvls.get(0), "General", "Select General in BS access Level dropdown");
 		clickSave();
@@ -712,7 +712,7 @@ public class ManageUsers extends AddUserDetails  {
 			sqlRowNo=12;
 			
 			testConfig.putRunTimeProperty("tinNo", tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
-			LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
+			Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
 			selectAccessLvl("General");
 			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			//Verifies UI and DB both are changed to General
@@ -730,7 +730,7 @@ public class ManageUsers extends AddUserDetails  {
 		{
 			sqlRowNo=14;
 			testConfig.putRunTimeProperty("tinNo", tinGridRows.get(2).findElements(By.tagName("td")).get(0).getText().toString());
-			LogTemp.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
+			Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
 			selectAccessLvl("General");
 			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			//Verifies UI and DB both are changed to General

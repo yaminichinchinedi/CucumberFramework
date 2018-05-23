@@ -11,7 +11,7 @@ import java.util.Set;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -66,7 +66,7 @@ public class LoginCSR {
 		
 	   this.testConfig=testConfig;
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	   LogTemp.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
+	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
 	}
 	
@@ -79,6 +79,8 @@ public class LoginCSR {
 	public void getUserApproved(TestBase testConfig,String username,String tinNo, String emailAddr) throws InterruptedException
 	{
 		
+		
+		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
 		FirefoxDriver FFdriver=new FirefoxDriver();
 		FFdriver.manage().window().maximize();
 		
@@ -87,21 +89,21 @@ public class LoginCSR {
 		FFdriver.navigate().to(System.getProperty("UserActiveURL"));
 		
 		FFdriver.findElement(By.name("userName")).sendKeys(username);
-		LogTemp.Comment("Username is : " + username);
+		Log.Comment("Username is : " + username);
 		FFdriver.findElement(By.name("tinNumber")).sendKeys(tinNo);
-		LogTemp.Comment("Tin no is : " + tinNo);
+		Log.Comment("Tin no is : " + tinNo);
 		FFdriver.findElement(By.name("emailAddress")).sendKeys(emailAddr);
-		LogTemp.Comment("Email address is : " + emailAddr);
+		Log.Comment("Email address is : " + emailAddr);
 		
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		
 		Thread.sleep(5000);
 		FFdriver.findElement(By.name("password")).sendKeys("Test@123");
-		LogTemp.Comment("Entered Password as : " + "Test@123");
+		Log.Comment("Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("retypePassword")).sendKeys("Test@123");
-		LogTemp.Comment("Re Entered Password as : " + "Test@123");
+		Log.Comment("Re Entered Password as : " + "Test@123");
 		FFdriver.findElement(By.name("btnSubmit")).click();
-		LogTemp.Comment("Clicked Continue button");
+		Log.Comment("Clicked Continue button");
 		
 		Browser.wait(testConfig, 5);
 		List <WebElement> securityQues=FFdriver.findElements(By.xpath(".//*[@id='signInForm']/table/tbody/tr[4]/td/table/tbody/tr"));
@@ -127,12 +129,12 @@ public class LoginCSR {
 		
 		Browser.wait(testConfig, 2);
 		
-		LogTemp.Comment("Checking accept terms checkbox");
+		Log.Comment("Checking accept terms checkbox");
 		FFdriver.findElement(By.name("acceptTerms")).click();
 		
 		Browser.wait(testConfig, 2);
 		
-		LogTemp.Comment("Click Submit registration");
+		Log.Comment("Click Submit registration");
 		FFdriver.findElement(By.name("btnSubmit")).click();
 		Browser.wait(testConfig, 2);
 		
@@ -145,8 +147,8 @@ public class LoginCSR {
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id", id);
-	   Element.enterData(txtboxUserName, id, "Username entered","txtboxUserName");	
-	   Element.enterData(txtboxPwd, password, "Password entered","txtboxPwd");
+	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");	
+	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.click(btnLogin,"click Login button");
 	   return new CSRHomePage(testConfig);
 	}

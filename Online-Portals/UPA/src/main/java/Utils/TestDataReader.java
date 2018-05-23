@@ -21,7 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class TestDataReader {
 	String filename;
@@ -38,9 +38,11 @@ public class TestDataReader {
 	}
 
 	//Overloaded constructor
-	public TestDataReader(TestBase testBaseSetup, String sheetName) throws IOException
+	public TestDataReader(TestBase testConfig, String sheetName) throws IOException
 	{
-		readFile(testBaseSetup, sheetName, testBaseSetup.getRunTimeProperty("DataFilePath"));
+		String dataFilePath=testConfig.getRunTimeProperty("DataFile");
+		testConfig.putRunTimeProperty("DataFilePath", System.getProperty("user.dir")+dataFilePath);
+		readFile(testConfig, sheetName, testConfig.getRunTimeProperty("DataFilePath"));
 	}
 	
 	//Overloaded constructor
@@ -97,7 +99,7 @@ public class TestDataReader {
 						data = GetData(rowNum, column);
 						String row = String.valueOf(rowNum);
 						testConfig.putRunTimeProperty("Row", row);
-						main.java.reporting.LogTemp.Pass(column + " contains the value " + value);
+						main.java.reporting.Log.Pass(column + " contains the value " + value);
 						break;
 					}
 				}
@@ -314,15 +316,15 @@ public class TestDataReader {
 			return value;
 	}
 
-	private void readFile(main.java.nativeFunctions.TestBase testBaseSetup, String sheetName,String path) throws IOException
+	private void readFile(TestBase testBaseSetup, String sheetName,String path) throws IOException
 	{
 		this.testConfig = testBaseSetup;
 		int index = path.lastIndexOf("//");
 		
 		if (index != -1)
-			main.java.reporting.LogTemp.Comment("Read:-'" + path.substring(path.lastIndexOf("//"))+ "', Sheet:- '" + sheetName + "'");
+			Log.Comment("Read:-'" + path.substring(path.lastIndexOf("//"))+ "', Sheet:- '" + sheetName + "'");
 		else
-			main.java.reporting.LogTemp.Comment("Read:-'" + path + "', Sheet:- '" + sheetName + "'");
+			Log.Comment("Read:-'" + path + "', Sheet:- '" + sheetName + "'");
 		
 		filename = path;
 		testData = new ArrayList<List<String>>();
@@ -364,16 +366,16 @@ public class TestDataReader {
 		HSSFCell cell = null;
 		int colNum = -1;
 		if (row <= 0)
-			main.java.reporting.LogTemp.Fail("Invalid row number:" + row);
+			main.java.reporting.Log.Fail("Invalid row number:" + row);
 		List<String> headerRow = testData.get(0);
 		for (int i = 0; i < headerRow.size(); i++) {
 			if (headerRow.get(i).equalsIgnoreCase(column)) {
 				try {
 					colNum = i;
 					if (colNum == -1)
-						main.java.reporting.LogTemp.Fail("Invalid column name:" + column);
+						main.java.reporting.Log.Fail("Invalid column name:" + column);
 				} catch (IndexOutOfBoundsException e) {
-					main.java.reporting.LogTemp.Fail(e.getMessage());
+					main.java.reporting.Log.Fail(e.getMessage());
 				}
 			}
 		}

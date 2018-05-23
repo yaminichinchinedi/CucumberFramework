@@ -13,7 +13,7 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -237,7 +237,7 @@ public class AddUserDetails {
 			}
 			catch(Exception e)
 			{
-				LogTemp.Fail("Exception occured : " + e);
+				Log.Fail("Exception occured : " + e);
 			}
 		}
 		
@@ -293,16 +293,16 @@ public class AddUserDetails {
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		LogTemp.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
-		LogTemp.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
+		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
+		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
 		
 		for (String tinNo : tinsListFromDB) {
 			if (newListFromUI.contains(tinNo)) {
-				LogTemp.Pass(tinNo + " :" + " " + "matches in both UI and DB");
+				Log.Pass(tinNo + " :" + " " + "matches in both UI and DB");
 			}
 
 			else {
-				LogTemp.Fail(tinNo + " :" + " " + "not present in DB");
+				Log.Fail(tinNo + " :" + " " + "not present in DB");
 				break;
 			}
 		}
@@ -359,11 +359,11 @@ public class AddUserDetails {
 		Element.enterData(middleName, firstNameTxt, "Enter Middle name as :" + " " + firstNameTxt, "Middle Name");
 		if(middleName.getAttribute("value").length()!=1)
 		{
-			LogTemp.Fail("Middle name allowing characters more than 1 which is" + middleName.getAttribute("value"));
+			Log.Fail("Middle name allowing characters more than 1 which is" + middleName.getAttribute("value"));
 		}
 		else
 		{
-			LogTemp.Pass("Middle name allowing only one character which is :" + " " + firstNameTxt.charAt(0) );
+			Log.Pass("Middle name allowing only one character which is :" + " " + firstNameTxt.charAt(0) );
 		}
 		
 		Element.click(btnSave, "Save button");

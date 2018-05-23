@@ -8,7 +8,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class validateEFTERAFinancialInfo {
 
@@ -85,7 +85,7 @@ public class validateEFTERAFinancialInfo {
 		Element.click(chkAcceptanceBox, "Acceptance check box");
 		if(chkAcceptanceBox.isSelected())
 		{
-			LogTemp.Comment("Acceptance checkbox checked");
+			Log.Comment("Acceptance checkbox checked");
 		}
 		else
 		{
@@ -98,7 +98,7 @@ public class validateEFTERAFinancialInfo {
 		Element.click(chkAcceptanceBox, "Acceptance check box");
 		if(chkAcceptanceBox.isSelected())
 		{
-			LogTemp.Comment("Acceptance checkbox checked");
+			Log.Comment("Acceptance checkbox checked");
 		}
 		else
 		{

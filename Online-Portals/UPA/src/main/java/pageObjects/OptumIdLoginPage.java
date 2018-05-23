@@ -6,7 +6,7 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -109,7 +109,7 @@ public class OptumIdLoginPage {
 		}
 
 		else {
-			LogTemp.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
+			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
 		}
 		if (!chkBoxRememberDevice.isSelected()) {
 			Element.click(chkBoxRememberDevice,

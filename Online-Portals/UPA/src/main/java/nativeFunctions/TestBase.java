@@ -15,10 +15,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
@@ -28,6 +30,7 @@ import main.java.Utils.CustomReporter;
 import main.java.Utils.Helper;
 import main.java.Utils.SendMail;
 import main.java.Utils.TestDataReader;
+import main.java.reporting.Log;
 import main.java.reporting.LogTemp;
 
 public class TestBase {
@@ -58,7 +61,7 @@ public class TestBase {
 
 		// Reading Config file
         
-		File file = new File("Config.properties");
+		File file = new File(System.getProperty("user.dir")+"\\ConfigFiles\\Config.properties");
 		FileInputStream fileInput = null;
 		testLog = "";
 		this.softAssert = new SoftAssert();
@@ -117,7 +120,7 @@ public class TestBase {
 		System.setProperty("UserActiveURL",runtimeProperties.getProperty("UPAURLActive_"+env));
 		System.setProperty("env", env);
 		
-        LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
+		LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
         
 		if(System.getProperty("testSuite")==null)
 		{
@@ -152,7 +155,7 @@ public class TestBase {
 		
 		try
 		{
-		if(System.getProperty("testSuite").equalsIgnoreCase("CSR_Regression") || runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite")).contains("CSR"))
+		if(runtimeProperties.getProperty("testSuite").contains("CSR") || System.getProperty("testSuite").equalsIgnoreCase("CSR_Regression") )
 			browserType="IE";
 		}
 
@@ -173,15 +176,16 @@ public class TestBase {
             caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
             caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
             caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-            //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, true); 
+            //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false); 
             caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
             caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
             
            // caps.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
             caps.setCapability("disable-popup-blocking", true);
             
-            
-		    System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
+            //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
+            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
+		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
@@ -205,7 +209,7 @@ public class TestBase {
 
 	private static WebDriver initFirefoxDriver() {
 		LogTemp.Comment("Launching Firefox browser..");
-		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
 		LogTemp.Comment("Gecko Property set");
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
@@ -281,12 +285,32 @@ public class TestBase {
 	}
 
 	
+	@BeforeSuite
+	public void setUpReportingConfig()
+	{
+		Log.setReportingConfig();
+		
+	}
+	
 	@BeforeTest
 	public void tearUp()
 	{
 		setDriver(runtimeProperties.getProperty("BrowserType"));
-		LogTemp logger =new LogTemp(testConfig);
-		LogTemp.Comment("Running on environment" + System.getProperty("env"),"Maroon");
+		LogTemp.Comment("Running on environment" + System.getProperty("env"));
+	}
+	
+	@BeforeMethod()	
+	public void setupTestMethod (Method method) 
+	{
+		String testCaseName=method.getName();
+		Log logger =new Log(testConfig,testCaseName);
+	}
+	
+	@AfterMethod()
+	public void endTest(ITestResult iTestResult)
+	{
+		String testCaseDesc=iTestResult.getMethod().getDescription();
+		Log.endTest(testCaseDesc);
 	}
 	
 	@AfterTest

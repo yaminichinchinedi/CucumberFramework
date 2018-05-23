@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+    <configuration>
+        <!-- report theme -->
+        <!-- standard, dark -->
+        <theme>dark</theme>
+    
+        <!-- document encoding -->
+        <!-- defaults to UTF-8 -->
+        <encoding>UTF-8</encoding>
+        
+        <!-- protocol for script and stylesheets -->
+        <!-- defaults to https -->
+        <protocol>https</protocol>
+        
+       
+          
+        
+        <!-- title of the document -->
+        <documentTitle>Automation Report</documentTitle>
+      
+       
+       <reportName>
+		 <![CDATA[
+                <img src='C:\Users\p1058\Desktop\Picture3.png'>
+            ]]>
+		</reportName>
+		
+		<!-- report name - displayed at top-nav -->
+		<reportHeadline>
+		 <![CDATA[
+                 <span style="width:100%;text-align:center;font-size:20px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AUTOMATION REPORT</b></span>
+            ]]>
+		</reportHeadline>
+     
+        
+        
+      
+        
+        <!-- location of charts in the test view -->
+        <!-- top, bottom -->
+        <testViewChartLocation>bottom</testViewChartLocation>
+        
+        <!-- custom javascript -->
+        <scripts>
+            <![CDATA[
+             $(document).ready(function()
+            {
+            $('.logo-container').css('display','none');
+            }); 
+            ]]>
+        </scripts>
+        
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+            .report-name>img {height:50%;width:60%;margin-top:1px;}
+            ]]>
+                     
+        </styles>
+    </configuration>
+</extentreports>

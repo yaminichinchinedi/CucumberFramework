@@ -8,7 +8,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class ValidateEFTERASubmitInfo {
 
@@ -68,7 +68,7 @@ public class ValidateEFTERASubmitInfo {
 		Element.click(chkSameAsAuthorized, "Same as authorized checkbox");
 		if(!chkSameAsAuthorized.isSelected())
 		{
-			LogTemp.Comment("Aceptance box was not checked at the first time, checking it again");
+			Log.Comment("Aceptance box was not checked at the first time, checking it again");
 			Element.click(chkSameAsAuthorized, "Same as authorized checkbox");
 		}
 		Element.enterData(enrollerTitle,Helper.generateRandomAlphabetsString(2), "Enter enroller's title","enrollerTitle");

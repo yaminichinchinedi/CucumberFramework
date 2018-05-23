@@ -10,7 +10,7 @@ import java.util.Map;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -118,7 +118,7 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtWelcomeScreen, testConfig,"Welcome Screen Text is present on home page"," Welcome Screen Text");
+		//Element.expectedWait(txtWelcomeScreen, testConfig,"Welcome Screen Text is present on home page"," Welcome Screen Text");
 	}
 	
 	//Default constructor
@@ -258,16 +258,16 @@ public class HomePage extends LoginUPA {
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		LogTemp.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Maroon");
-		LogTemp.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Maroon");
+		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Maroon");
+		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Maroon");
 		
 		for (String tinNo : tinsListFromDB) {
 			if (newListFromUI.contains(tinNo)) {
-				LogTemp.Pass(tinNo + " :" + " " + "matches in both UI and DB");
+				Log.Pass(tinNo + " :" + " " + "matches in both UI and DB");
 			}
 
 			else {
-				LogTemp.Fail(tinNo + " :" + " " + "not present in DB");
+				Log.Fail(tinNo + " :" + " " + "not present in DB");
 				break;
 			}
 		}
@@ -275,13 +275,12 @@ public class HomePage extends LoginUPA {
 
 	public HomePage selectTin() 
 	{
-		Browser.wait(testConfig, 3);
 		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown",  "Tin dropdown");
-		
 		Element.selectByIndex(drpDwnTin, 1, "Select Tin in dropdown");
-		Browser.wait(testConfig, 5);
+		Browser.waitForLoad(testConfig.driver);
+		
 		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
-		LogTemp.Comment("Selected tin number is" + tinNumber);
+		Log.Comment("Selected tin number is" + tinNumber);
 		String tin[]=tinNumber.split("-");
 		testConfig.putRunTimeProperty("tin", tin[0]);
 		return new HomePage(testConfig);

@@ -1,0 +1,22 @@
+<EpsPaymentsSearchRequest xmlns="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0" xmlns:ns2="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0" xmlns:ns1="http://enterprise.optum.com/schema/cim/common/Service_v1_0" xmlns:ns4="http://enterprise.optum.com/schema/cim/common/Common_v1_0" xmlns:ns3="http://enterprise.optum.com/schema/cim/common/Identifier_v1_0">
+   <ns1:SearchCriteria ns1:FromRecord="0" ns1:MaxResult="0" ns1:SortDirection="DESC" ns1:SortFieldNumber="12">
+      <ns1:ParameterMap>
+         <ns1:Entries>
+            <ns1:Key>TAX_IDENTIFIER_TYPE</ns1:Key>
+            <ns1:Value>ALL</ns1:Value>
+            <ns1:Comparator>Equals</ns1:Comparator>
+         </ns1:Entries>
+         <ns1:Entries>
+            <ns1:Key>PAYMENT_LEVEL_DETAIL</ns1:Key>
+            <ns1:Value>Y</ns1:Value>
+            <ns1:Comparator>Equals</ns1:Comparator>
+         </ns1:Entries>
+      </ns1:ParameterMap>
+   </ns1:SearchCriteria>
+   <ns3:TaxIdentifierNumber>109884928</ns3:TaxIdentifierNumber>
+   <ns2:UserRole>PROVIDER</ns2:UserRole>
+   <ns4:PaymentMadeOnDateRange>
+      <ns4:FromDate>2017-11-21</ns4:FromDate>
+      <ns4:ToDate>2018-02-21</ns4:ToDate>
+   </ns4:PaymentMadeOnDateRange>
+</EpsPaymentsSearchRequest>

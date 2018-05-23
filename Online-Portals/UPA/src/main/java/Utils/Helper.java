@@ -28,106 +28,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
-//import org.json.JSONException;
-//import org.json.JSONObject;
 
-//import Utils.Element.How;
-//import redis.clients.jedis.Jedis;
 
 public class Helper
 {
-//	//@Attachment(value = "CSV File:\"{2}\"", type = "text/csv")
-//	public static byte[] attachCsvFile(Config testConfig, String filePath, String fileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-//
-//	//@Attachment(value = "Excel File:\"{2}\"", type = "application/vnd.ms-excel")
-//	public static byte[] attachExcelFile(Config testConfig, String filePath, String excelFileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-//
-//	//@Attachment(value = "HTML File:\"{2}\"", type = "text/html")
-//	public static byte[] attachHtmlFile(Config testConfig, String filePath, String fileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-//
-//	//@Attachment(value = "Image:\"{2}\"", type = "img/png")
-//	public static byte[] attachImage(Config testConfig, String imgPath, String imageName)
-//	{
-//		return getByteArray(imgPath);
-//	}
-//
-//	//@Attachment(value = "JSON:\"{2}\"", type = "text/json")
-//	public static byte[] attachJsonFile(Config testConfig, String filePath, String fileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-//
-//	//@Attachment(value = "DB Screenshot", type = "text/html")
-//	public static String attachResultSet(Config testConfig, ResultSet rs)
-//	{
-//		return getHtmlFor(rs);
-//	}
-//
-//	//@Attachment(value = "DB Screenshot", type = "text/html")
-//	public static String attachResultSet(Config testConfig, ResultSet[] rsArray)
-//	{
-//		String htmlToBeAttached = "";
-//		for (ResultSet rs : rsArray)
-//		{
-//			htmlToBeAttached += getHtmlFor(rs);
-//		}
-//		return htmlToBeAttached;
-//	}
-//
-//	//@Attachment(value = "Text File:\"{2}\"", type = "text/plain")
-//	public static byte[] attachTextFile(Config testConfig, String filePath, String fileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-//
-//	//@Attachment(value = "XML File:\"{2}\"", type = "text/xml")
-//	public static byte[] attachXmlFile(Config testConfig, String filePath, String fileName)
-//	{
-//		return getByteArray(filePath);
-//	}
-
-	/**
-	 * Get the ConvenienceFee Calculation for the amount given
-	 * 
-	 * @param amount
-	 * @param convPercent
-	 * @param convFlatFee
-	 * @return
-	 */
-	public static String calculateConvenienceFee(String amount, String convPercent, String convFlatFee)
-	{
-
-		String amountWithConv = "";
-		double serviceTax = 0.1236;
-		double dAmount = Double.parseDouble(amount);
-		double dConVPercent = Double.parseDouble(convPercent);
-		double dConVFlatFee = Double.parseDouble(convFlatFee);
-		double dTotalConveninenceFee;
-		dTotalConveninenceFee = (dAmount * dConVPercent / 100) + dConVFlatFee;
-		dTotalConveninenceFee = dTotalConveninenceFee + (dTotalConveninenceFee * serviceTax);
-		amountWithConv = String.valueOf(dTotalConveninenceFee);
-		return amountWithConv;
-	}
-
+	
 	/**
 	 * Function to change the given date value from given old Date Format to
 	 * desired new Date Format.
@@ -200,12 +116,6 @@ public class Helper
 		return parsedDate;
 	}
 
-//	public static void takeScreenShot()
-//	{
-//		
-//	File srcFile=((driver).getAs
-//			
-//	}
 	/**
 	 * Function to change Date from 20/12/15 to 20-12-15
 	 * 
@@ -309,10 +219,10 @@ public class Helper
 		{
 			if(actual.contains(expected.trim()))
 			{
-		     LogTemp.Pass(what, expected, actual);	
+		     Log.Pass(what, expected, actual);	
 			}
 			else
-				LogTemp.Fail(what, expected, actual);
+				Log.Fail(what, expected, actual);
 		}
 		
 		else
@@ -362,17 +272,17 @@ public class Helper
 	{
 		if (expected == null & actual == null)
 		{
-			LogTemp.Pass(what,expected, actual);
+			Log.Pass(what,expected, actual);
 			return;
 		}
 		
 			if (!actual.equals(expected))
 			{
-				LogTemp.Fail(what, expected, actual);
+				Log.Fail(what, expected, actual);
 			}
 			else
 			{
-				LogTemp.Pass(what,expected, actual);
+				Log.Pass(what,expected, actual);
 			}
 		
 	}
@@ -1234,18 +1144,142 @@ public class Helper
 		return dateFormat.format(tomorrow);
 	}
 	
+	public static String[] getToAndFromDate(TestBase testConfig, String quickSearchFilter)
+	{   
+		int fromDateRowNo=20;
+		int toDateRowNo=27;
+		
+		String fromDate=null;
+		String toDate=null;
+		Map systemDate=null;
+		
+		try {
+		switch(quickSearchFilter)
+		{
+		case "Last 30 days" :
+		{
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		case "Last 60 days" :
+		{
+		   fromDateRowNo=21;
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		case "Last 90 days" :
+		{
+		   fromDateRowNo=22;
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		case "Last 4-6 months" :
+		{
+		   fromDateRowNo=23;
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   toDateRowNo=22;
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		case "Last 6-9 months" :
+		{
+		   fromDateRowNo=24;
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   toDateRowNo=25;
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		case "Last 9-13 months" :
+		{
+		   fromDateRowNo=26;
+		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
+		   fromDate=systemDate.get("DATE").toString();
+		   toDateRowNo=268;
+		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
+		   toDate=systemDate.get("DATE").toString();
+		   break;
+		}
+		
+		}
+		String date[]={fromDate,toDate};
+		return date;
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception Occured : " + e);
+			return null;
+		}
+		
+	}
+	
 	
 	public static String getDateBeforeOrAfterMonths(int month, String format)
 	{
-		Date tomorrow = new Date();
+		Date newDate = new Date();
+		System.out.println(newDate);
 		DateFormat dateFormat = new SimpleDateFormat(format);
+		dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));
 
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, month);
-		tomorrow = cal.getTime();
-
-		return dateFormat.format(tomorrow);
+		newDate = cal.getTime();
+        System.out.println(newDate);
+        System.out.println(dateFormat.format(newDate));
+		return dateFormat.format(newDate);
 	}
+	
+//	public static String getDateBeforeOrAfterMonths(int month, String format)
+//	{
+//	
+//	Calendar currentdate = Calendar.getInstance();
+//	String strdate = null;
+//	
+//	DateFormat formatter = new SimpleDateFormat(format);
+//	strdate = formatter.format(currentdate.getTime());
+//	System.out.println("strdate=>" + strdate);
+//	TimeZone obj = TimeZone.getTimeZone("CST");
+//
+//	formatter.setTimeZone(obj);
+//	strdate = formatter.format(currentdate.getTime());
+//	Date theResult=null;
+//	try {
+//		theResult = formatter.parse(strdate);
+//	} catch (ParseException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//
+//	System.out.println("The current time in India is  :: " +currentdate.getTime());
+//
+//	System.out.println("The date and time in :: " + obj.getDisplayName() + "is ::" + theResult);
+//	System.out.println("The date and time in :: " + obj.getDisplayName() + "is ::" + strdate);
+//	return theResult.toString();
+	//}
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * This utility method returns a future or past datetime after/before number of
 	 * seconds. 
@@ -2512,11 +2546,11 @@ public class Helper
 	{
 		if(expected.equals(actual))
 		{
-			LogTemp.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
+			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
 		}
 		
 		else 
-			LogTemp.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
 		
 	}
 
@@ -2524,11 +2558,11 @@ public class Helper
 		
 		if(expected.equals(actual))
 		{
-			LogTemp.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
+			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
 		}
 		
 		else 
-			LogTemp.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
 		}
 	
 //	public static void main(String []a) throws InterruptedException{
