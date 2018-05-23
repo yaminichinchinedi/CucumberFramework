@@ -47,12 +47,8 @@ public  class Log  {
 	}
 	
 	
-	public static void endTest(String testCaseDesc,ITestResult result)
+	public static void endTest(String testCaseDesc)
 	{
-		if(result.getStatus() == ITestResult.FAILURE) //1 for success
-		{
-			logger.log(LogStatus.FAIL, "Failure occured");
-		}
 		
 		logger.setDescription(testCaseDesc);
 		report.endTest(logger);
