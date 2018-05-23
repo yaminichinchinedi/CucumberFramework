@@ -47,8 +47,13 @@ public  class Log  {
 	}
 	
 	
-	public static void endTest(String testCaseDesc)
+	public static void endTest(String testCaseDesc,ITestResult result)
 	{
+		if(result.getStatus() == ITestResult.FAILURE) //1 for success
+		{
+			logger.log(LogStatus.FAIL, "Failure occured");
+		}
+		
 		logger.setDescription(testCaseDesc);
 		report.endTest(logger);
 		report.flush();
@@ -83,14 +88,7 @@ public  class Log  {
 			String ReportMessage="";
 			//For displaying in console
 			printToScreen(message);
-			
-			//For displaying message in Red color in HTML reports
-			if (!showInHtmlReport)
-			{
-				 ReportMessage = "<font color='Red'>" + "Failed" + "" + ":" + " " + message + "</font></br>";
-			}
 			PageInfo(testConfig,message);
-			
 			Assert.fail(message);
 					
 		}
@@ -124,7 +122,7 @@ public  class Log  {
 			
 				File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		        String dest = System.getProperty("user.dir") +"\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
+		        String dest = System.getProperty("user.dir") +"\\ExtentReports\\"+"ScreenShot"+timeStamp+".png";
 		        File destination = new File(dest);
 		        FileUtils.copyFile(sourceFile, destination);              
 		        return dest;
