@@ -30,7 +30,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.xml.sax.SAXException;
 
-public class paymentSummary{
+public class paymentSummary implements PaymentSummaryConstant {
 	
 	
 	@FindBy(id="periodId")
