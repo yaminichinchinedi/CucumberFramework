@@ -28,6 +28,7 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 	public EpsPaymentSearchRequestHelper()
 	{
 		super(connectionUrl);
+		System.out.println(xmlFilePath);
 	}
 	
 	@Override
