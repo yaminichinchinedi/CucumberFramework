@@ -36,7 +36,7 @@ UPA_OptumPwd_Gen_Admin_IMPL=Test@123
 UPA_ID_PROV_Admin_Stage2=USPROV7729
 UPA_Pwd_PROV_Admin_Stage2=Test_123
 UPA_OptumID_PROV_Admin_Stage2=provider5user
-UPA_OptumPwd_PROV_Admin_Stage2=Test_1234
+UPA_OptumPwd_PROV_Admin_Stage2=Test_123
 
 UPA_ID_PROV_Gen_Stage2=AUAUTO1563
 UPA_Pwd_PROV_Gen_Stage2=Test@123

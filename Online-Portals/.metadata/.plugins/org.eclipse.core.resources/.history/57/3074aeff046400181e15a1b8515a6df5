@@ -63,7 +63,6 @@ public class paymentSummary{
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
-	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	
 	public paymentSummary(TestBase testConfig)
 	{
@@ -287,11 +286,11 @@ public class paymentSummary{
 		{
 		  Helper.compareMaps(testConfig, "Payments Details Comparison from FISL and API : " + '\n',getPaymentNumbersFromFISL(), getPaymentNumberDetailsFromUI());			
 		  Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountFromUI());
-		  
+		  Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountDB());
 		}
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+
 
 }
 	
@@ -413,14 +412,13 @@ public class paymentSummary{
 	}
 	
 	
-	public String getRecordCountFromDB() {
+	private String getRecordCountDB() {
 		
-		//Verifies count of records from DB and FISL API
-		int sqlRowNo=4;
+		//Verifies count of records from DB and FISL API->Get query from Prashant and uncomment these lines
 		Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		return srchConsolTable.get("RECORD_COUNT").toString().trim();
+		Helper.compareEquals(testConfig,"Number of records in view payments", srchConsolTable.get("RECORD_COUNT").toString(), getRecordCountFromFISL());
 		
-	}	
+	}
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{

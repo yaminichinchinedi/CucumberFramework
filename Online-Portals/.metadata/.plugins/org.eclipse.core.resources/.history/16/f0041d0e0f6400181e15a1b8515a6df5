@@ -291,7 +291,7 @@ public class paymentSummary{
 		}
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+		 Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountFromDB());
 
 }
 	
@@ -420,7 +420,7 @@ public class paymentSummary{
 		Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		return srchConsolTable.get("RECORD_COUNT").toString().trim();
 		
-	}	
+	}
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
