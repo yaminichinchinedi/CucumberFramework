@@ -1,369 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="4" total="5" passed="1">
+<testng-results skipped="0" failed="1" ignored="2" total="3" passed="0">
   <reporter-output>
     <line>
-      <![CDATA[<font color='Black'>Navigated to UPA</font></br>]]>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage2</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Waiting for 2 seconds</font></br>]]>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Username entered as: USPROV7729</font></br>]]>
+      <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Password entered as : Test_123</font></br>]]>
+      <![CDATA[<font color='Orange'>Browser on which test suite is running is : FF</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Clicked Login button</font></br>]]>
+      <![CDATA[<font color='Black'>Launching Firefox browser..</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Green'>Sign in with optum id linkis present on page</font></br>]]>
+      <![CDATA[<font color='Black'>Gecko Property set</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Clicked Sign in with optum id</font></br>]]>
+      <![CDATA[<font color='Black'>All capabilities set</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Green'>Verified Optum id Textbox is present on the page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Entered Optum ID as: provider5user</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Entered Optum ID password  as : Test_123</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Sign In</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Waiting for 20 seconds</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'> Welcome Screen Textis present on page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Waiting for 3 seconds</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Tin dropdownis present on page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>SelectSelect Tin in dropdownfrom dropdown</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Waiting for 5 seconds</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Selected tin number is109884928 - Enrolled</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'> Welcome Screen Textis present on page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Manage Users tabis present on page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Manage Users Tab</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Verified User List is present on the page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Add User</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Verified First Name textbox is present on the page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter First Name as : SZD</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter Last Name as : SZD</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter Phone number in field 1 as: 983</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter Phone number in field 2 as: 983</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter Phone number in field 3 as: 3184</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Enter Email address as: ddd1521714500334@abc.com</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Re type email address as : ddd1521714500334@abc.com</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Verified First Name textbox is present on the page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>SelectSelect first tinfrom dropdown</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Add Tin/NPI</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>SelectSelected access Level asAdministratorfrom dropdown</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Save</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Verified User List is present on the page</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked UserName:  SZD</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Read:-'DataFile.xlsx', Sheet:- 'SQL'</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color=''>Executing the query - 'select * from OLE.PORTAL_USER p
- join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL
- join OLE.portal_user_tin pt 
-on p.PORTAL_USER_ID=pt.PORTAL_USER_ID
-where p.EMAIL_ADR_TXT='ddd1521714500334@abc.com' and pv.PAY_PROC_CD_DESC='User Type Code''</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Connecting to Stage 2 DB:-jdbc:db2://dbsps0164:50000/PPS2PS</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Connection succeeded</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  First name
-Expected was : SZD 
-Actual is : SZD</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  Last name
-Expected was : SZD 
-Actual is : SZD</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  Phone number
-Expected was : 9839833184 
-Actual is : 9839833184</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  Email address
-Expected was : ddd1521714500334@abc.com 
-Actual is : ddd1521714500334@abc.com</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  User Type
-Expected was : Provider 
-Actual is : Provider</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  Associated Tin Number
-Expected was : 109884928 
-Actual is : 109884928</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Passed comparison of  Status
-Expected was : Pending Registration 
-Actual is : Status:  Pending Registration</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Clicked Remove tin checkbox</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Green'>Tin removed</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Close the browser window with URL:- https://stage2-myservices.optumhealthpaymentservices.com/manageusersPrepTinGrid.do. And title as :- Manage User</font></br>]]>
+      <![CDATA[<font color='Black'>Running on environmentStage2</font></br>]]>
     </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="75733" started-at="2018-03-22T10:27:16Z" finished-at="2018-03-22T10:28:32Z">
+  <suite name="Default suite" duration-ms="104851" started-at="2018-05-30T09:45:33Z" finished-at="2018-05-30T09:47:18Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="75733" started-at="2018-03-22T10:27:16Z" finished-at="2018-03-22T10:28:32Z">
-      <class name="test.java.TestManageUsers">
-        <test-method status="PASS" signature="testCreatingNewUser()[pri:1, instance:test.java.TestManageUsers@341814d3]" name="testCreatingNewUser" duration-ms="75703" started-at="2018-03-22T15:57:16Z" description="Verify details for New user." finished-at="2018-03-22T15:58:32Z">
+    <test name="Default test" duration-ms="104851" started-at="2018-05-30T09:45:33Z" finished-at="2018-05-30T09:47:18Z">
+      <class name="test.java.TestViewPayments">
+        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:test.java.TestViewPayments@5bcab519]" name="setUpReportingConfig" is-config="true" duration-ms="335" started-at="2018-05-30T15:15:33Z" finished-at="2018-05-30T15:15:33Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpReportingConfig -->
+        <test-method status="PASS" signature="tearUp()[pri:0, instance:test.java.TestViewPayments@5bcab519]" name="tearUp" is-config="true" duration-ms="14449" started-at="2018-05-30T15:15:33Z" finished-at="2018-05-30T15:15:47Z">
           <reporter-output>
             <line>
-              <![CDATA[<font color='Black'>Navigated to UPA</font></br>]]>
+              <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Waiting for 2 seconds</font></br>]]>
+              <![CDATA[<font color='Orange'>Browser on which test suite is running is : FF</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Username entered as: USPROV7729</font></br>]]>
+              <![CDATA[<font color='Black'>Launching Firefox browser..</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Password entered as : Test_123</font></br>]]>
+              <![CDATA[<font color='Black'>Gecko Property set</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Clicked Login button</font></br>]]>
+              <![CDATA[<font color='Black'>All capabilities set</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Green'>Sign in with optum id linkis present on page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Sign in with optum id</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Verified Optum id Textbox is present on the page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Entered Optum ID as: provider5user</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Entered Optum ID password  as : Test_123</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Sign In</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Waiting for 20 seconds</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'> Welcome Screen Textis present on page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Waiting for 3 seconds</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Tin dropdownis present on page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>SelectSelect Tin in dropdownfrom dropdown</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Waiting for 5 seconds</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Selected tin number is109884928 - Enrolled</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'> Welcome Screen Textis present on page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Manage Users tabis present on page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Manage Users Tab</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Verified User List is present on the page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Add User</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Verified First Name textbox is present on the page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter First Name as : SZD</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter Last Name as : SZD</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter Phone number in field 1 as: 983</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter Phone number in field 2 as: 983</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter Phone number in field 3 as: 3184</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Enter Email address as: ddd1521714500334@abc.com</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Re type email address as : ddd1521714500334@abc.com</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Verified First Name textbox is present on the page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>SelectSelect first tinfrom dropdown</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Add Tin/NPI</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>SelectSelected access Level asAdministratorfrom dropdown</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Save</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Verified User List is present on the page</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked UserName:  SZD</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Read:-'DataFile.xlsx', Sheet:- 'SQL'</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color=''>Executing the query - 'select * from OLE.PORTAL_USER p
- join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL
- join OLE.portal_user_tin pt 
-on p.PORTAL_USER_ID=pt.PORTAL_USER_ID
-where p.EMAIL_ADR_TXT='ddd1521714500334@abc.com' and pv.PAY_PROC_CD_DESC='User Type Code''</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Connecting to Stage 2 DB:-jdbc:db2://dbsps0164:50000/PPS2PS</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Connection succeeded</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  First name
-Expected was : SZD 
-Actual is : SZD</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  Last name
-Expected was : SZD 
-Actual is : SZD</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  Phone number
-Expected was : 9839833184 
-Actual is : 9839833184</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  Email address
-Expected was : ddd1521714500334@abc.com 
-Actual is : ddd1521714500334@abc.com</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  User Type
-Expected was : Provider 
-Actual is : Provider</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  Associated Tin Number
-Expected was : 109884928 
-Actual is : 109884928</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Passed comparison of  Status
-Expected was : Pending Registration 
-Actual is : Status:  Pending Registration</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Clicked Remove tin checkbox</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Green'>Tin removed</font></br>]]>
+              <![CDATA[<font color='Black'>Running on environmentStage2</font></br>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- testCreatingNewUser -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestManageUsers@341814d3]" name="tearDown" is-config="true" duration-ms="37" started-at="2018-03-22T15:58:32Z" finished-at="2018-03-22T15:58:32Z">
+        </test-method> <!-- tearUp -->
+        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:test.java.TestViewPayments@5bcab519]" name="setupTestMethod" is-config="true" duration-ms="8" started-at="2018-05-30T15:15:47Z" finished-at="2018-05-30T15:15:48Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[void test.java.TestViewPayments.testRecordCountForShowALLFilter() throws java.io.IOException,java.lang.InterruptedException,javax.xml.bind.JAXBException,org.xml.sax.SAXException,javax.xml.parsers.ParserConfigurationException,java.text.ParseException]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
-            <line>
-              <![CDATA[<font color='Black'>Close the browser window with URL:- https://stage2-myservices.optumhealthpaymentservices.com/manageusersPrepTinGrid.do. And title as :- Manage User</font></br>]]>
-            </line>
+          </reporter-output>
+        </test-method> <!-- setupTestMethod -->
+        <test-method status="FAIL" signature="testRecordCountForShowALLFilter()[pri:5, instance:test.java.TestViewPayments@5bcab519]" name="testRecordCountForShowALLFilter" duration-ms="89578" started-at="2018-05-30T15:15:48Z" description="TS006_View Payments_Payments filter_Show All  &lt;br&gt;Validate correct payment information is displayed on selection of &#039;Show All&#039; from the  filter - Filter Payments" finished-at="2018-05-30T15:17:17Z">
+          <exception class="java.lang.NullPointerException">
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException
+	at main.java.pageObjects.paymentSummary.getDisplayPayerNameFromDB(paymentSummary.java:374)
+	at main.java.pageObjects.paymentSummary.getPaymentNumbersFromFISL(paymentSummary.java:348)
+	at main.java.pageObjects.paymentSummary.verifySearchResultsWithFilters(paymentSummary.java:287)
+	at test.java.TestViewPayments.testRecordCountForShowALLFilter(TestViewPayments.java:51)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRecordCountForShowALLFilter -->
+        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:test.java.TestViewPayments@5bcab519]" name="endTest" is-config="true" duration-ms="753" started-at="2018-05-30T15:17:17Z" finished-at="2018-05-30T15:17:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testRecordCountForShowALLFilter status=FAILURE method=TestViewPayments.testRecordCountForShowALLFilter()[pri:5, instance:test.java.TestViewPayments@5bcab519] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestViewPayments@5bcab519]" name="tearDown" is-config="true" duration-ms="36" started-at="2018-05-30T15:17:18Z" finished-at="2018-05-30T15:17:18Z">
+          <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- test.java.TestManageUsers -->
+      </class> <!-- test.java.TestViewPayments -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
