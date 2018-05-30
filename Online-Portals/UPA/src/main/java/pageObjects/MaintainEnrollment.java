@@ -74,10 +74,12 @@ public class MaintainEnrollment {
 		// Verifies count of records displayed in view payments tab from DB
 		Map portalUserTable = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
 		
+		String orgAddressFromDB=portalUserTable.get("ADR_TXT").toString().trim().replaceAll("\\s", "");
+		String orgAddrFromUI=orgAddress.getText().trim().replaceAll("\\s", "");
 		
 		Helper.compareEquals(testConfig, "Tin number", testConfig.getRunTimeProperty("tin").toString().trim(), txtTinNo.getText().trim());
 		Helper.compareEquals(testConfig, "Organization Name", portalUserTable.get("ORG_NM").toString().trim(), orgName.getText().trim());
-		Helper.compareEquals(testConfig, "Organization Address", portalUserTable.get("ADR_TXT").toString().trim(), orgAddress.getText().trim());
+		Helper.compareEquals(testConfig, "Organization Address", orgAddressFromDB,orgAddrFromUI);
 		Helper.compareEquals(testConfig, "Enrollment ID", portalUserTable.get("ENRL_ID_NBR").toString().trim(), txtEnrollmentID.getText().trim());
 		Helper.compareContains(testConfig, "Date of Enrollment",Helper.changeDateFormat(enrollmentDate.getText().toString(), "mm/dd/yyyy", "yyyy-mm-dd"),portalUserTable.get("ENRL_DTTM").toString().trim());
 		Helper.compareEquals(testConfig, "Enrollment Status",convertEnrollmentStatus(portalUserTable.get("ENRL_STS_CD").toString().trim()),enrollmentStatus.getText().trim());

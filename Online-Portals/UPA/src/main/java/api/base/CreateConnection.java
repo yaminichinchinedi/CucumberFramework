@@ -15,6 +15,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
+import main.java.reporting.Log;
 
 import org.xml.sax.SAXException;
 
@@ -26,12 +27,11 @@ public abstract class CreateConnection {
 		this.connectionUrl = connectionUrl;
 	}
 
-	public final Object postRequestGetResponse(Object pojoRequest)
-			throws IOException, SAXException, ParserConfigurationException,
-			JAXBException {
+	public final Object postRequestGetResponse(Object pojoRequest)throws IOException, SAXException, ParserConfigurationException,JAXBException {
 		String response = "";
 		String line;
 		URL conn = new URL(connectionUrl);
+		
 		// Opens connection with server
 		URLConnection UrlConn = conn.openConnection();
 		HttpURLConnection httpUrlConn = (HttpURLConnection) UrlConn;
@@ -42,35 +42,28 @@ public abstract class CreateConnection {
 		httpUrlConn.connect();
 
 		OutputStreamWriter ReqWriter = new OutputStreamWriter(
-				httpUrlConn.getOutputStream());
+		httpUrlConn.getOutputStream());
 		String requestXML = convertRequestPojoToXml(pojoRequest);
-		requestXML = requestXML
-				.replace(
-						"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>",
-						"").replace("null", "");
+		requestXML = requestXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>","").replace("null", "");
 		System.out.println("REQUEST :" + requestXML);
 		ReqWriter.write(requestXML);
 		ReqWriter.flush();
 
-		// Gets response of the request fired
-		BufferedReader ReplyReader = new BufferedReader(new InputStreamReader(
-				httpUrlConn.getInputStream()));
+		/** Gets response of the request fired*/
+		BufferedReader ReplyReader = new BufferedReader(new InputStreamReader(httpUrlConn.getInputStream()));
 
-		// printing response and writing it in api.xml
+		/** printing response and writing it in api.xml*/
 		System.out.println("RESPONSE :" + '\n');
 		while ((line = ReplyReader.readLine()) != null) {
 			System.out.println(line);
 			response = response + line;
 		}
-
 		ReplyReader.close();
 		httpUrlConn.disconnect();
-		return convertResponseXMLToPojo(response.replace(
-				"<?xml version='1.0' encoding='UTF-8'?>", "").replace("null",
-				""));
-
+		return convertResponseXMLToPojo(response.replace("<?xml version='1.0' encoding='UTF-8'?>", "").replace("null",""));
 	}
 
+	
 	abstract protected Object convertResponseXMLToPojo(String response)
 			throws JAXBException, IOException, SAXException,
 			ParserConfigurationException;

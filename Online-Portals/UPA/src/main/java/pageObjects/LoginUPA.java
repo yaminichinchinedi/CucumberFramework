@@ -65,8 +65,7 @@ public class LoginUPA {
 	//Deafult constructor
 	public LoginUPA() 
 	{
-		//this.testConfig=testConfig;
-		//PageFactory.initElements(testConfig.driver, this);
+		
 	}
 	
 	
@@ -83,37 +82,25 @@ public class LoginUPA {
 	}
 
 	
-//	public SplashPage3 doLogin(int rowNo) throws IOException
-//	{
-//		TestDataReader data=testConfig.cacheTestDataReaderObject("Login");
-//		id=data.GetData(rowNo,"Username");
-//		password=data.GetData(rowNo,"Password");
-//		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
-//		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
-//		Element.click(btnLogin,"Login button");
-//		setUserProperties();
-//		
-//	   return new SplashPage3(testConfig);
-//	}
-	
-	
 	public SplashPage3 doLogin(String userType,String accessType) throws IOException
 	{
-//		DataProvider dataProvider=new DataProvider();
-//		dataProvider.setUserCredentials(testConfig, userType, accessType);
 		String env=System.getProperty("env");
         id=testConfig.runtimeProperties.getProperty("UPA_"+"ID_"+userType+"_"+accessType+"_"+env);
         password=testConfig.runtimeProperties.getProperty("UPA_"+"Pwd_"+userType+"_"+accessType+"_"+env);
         Element.click(activateAccount, "Activate your account link on registartion page");
-		
+        
+        if(!txtboxUserName.isDisplayed())
+        {
+        	 Element.click(activateAccount, "Activate your account link on registartion page");
+        }
+    
+        Element.expectedWait(txtboxUserName, testConfig, "User Name", "User Name textbox");
 		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
 		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
-		
 		Element.click(btnActivate, "Activate your account button");
-		//Element.click(btnLogin,"Login button");
 		setUserProperties();
 		
-	   return new SplashPage3(testConfig);
+	    return new SplashPage3(testConfig);
 	}
 	
 	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException
@@ -126,9 +113,7 @@ public class LoginUPA {
 	    	clickActivateAccount();
 		Element.enterData(txtboxUserName, id, "Correct Username entered as :"+" " + id, "txtboxUserName");	
 		Element.enterData(txtboxPwd, password, "Invalid Password entered :" + " " + password, "txtboxPwd");
-		Element.click(btnActivate, "Click Activate your account button");
-		
-		//Element.click(btnLogin,"Login button");
+		Element.click(btnActivate, "Activate your account button");
 		
 		verifyLoginErrorMessage();
 		
@@ -136,7 +121,7 @@ public class LoginUPA {
 	
 	public void clickActivateAccount()
 	{
-		Element.click(activateAccount, "Click Activate your account link on registartion page");
+		Element.click(activateAccount, "Activate your account link on registartion page");
 	}
 	
 	public void verifyLoginErrorMessage()

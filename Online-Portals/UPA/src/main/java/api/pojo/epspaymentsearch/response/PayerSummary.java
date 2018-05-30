@@ -1,8 +1,11 @@
 package main.java.api.pojo.epspaymentsearch.response;
 
+import javax.xml.bind.annotation.XmlElement;
+
 public class PayerSummary
 {
-    private String Name;
+	@XmlElement(name = "Name", required = true)
+	private String Name;
 
     public String getName ()
     {

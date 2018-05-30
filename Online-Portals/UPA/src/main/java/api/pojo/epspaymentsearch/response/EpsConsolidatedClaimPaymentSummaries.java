@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 public class EpsConsolidatedClaimPaymentSummaries
 {
+	@XmlElement(name = "PayerSummary", required = true)
     private PayerSummary PayerSummary;
 
     @XmlElement(name = "PaymentTypeIndicator", required = true)
@@ -18,6 +19,7 @@ public class EpsConsolidatedClaimPaymentSummaries
     @XmlElement(name = "EpsPrimaryPayerIdentifier", required = true)
     private String EpsPrimaryPayerIdentifier;
 
+    @XmlElement(name = "PayeePaymentMethod", required = true)
     private PayeePaymentMethod PayeePaymentMethod;
 
     @XmlElement(name = "DisplayConsolidatedPaymentNumber", required = true)
@@ -44,7 +46,7 @@ public class EpsConsolidatedClaimPaymentSummaries
     @XmlElement(name = "EpsSecondaryPayerReferenceIdentifier", required = true)
     private String EpsSecondaryPayerReferenceIdentifier;
 
-   
+    @XmlElement(name = "PayerPaymentMethod", required = true)
     private PayerPaymentMethod PayerPaymentMethod;
 
     public PayerSummary getPayerSummary ()

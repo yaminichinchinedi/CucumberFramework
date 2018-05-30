@@ -1,9 +1,13 @@
 package main.java.api.pojo.epspaymentsearch.response;
 
+import javax.xml.bind.annotation.XmlElement;
+
 public class PaymentMethodCode
 {
-    private String Description;
+	@XmlElement(name = "Description", required = true)
+	private String Description;
 
+    @XmlElement(name = "Code", required = true)
     private String Code;
 
     public String getDescription ()

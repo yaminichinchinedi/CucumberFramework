@@ -32,6 +32,8 @@ public  class Log  {
 	private  static TestBase testConfig;
 	static boolean showInHtmlReport=false;
 	
+	//static boolean testAlreadyFailed=true;
+	
 	public Log(TestBase testConfig,String testCaseName)
 	{
 		logger=report.startTest(testCaseName);
@@ -47,12 +49,26 @@ public  class Log  {
 	}
 	
 	
-	public static void endTest(String testCaseDesc)
+	public static void endTest(String testCaseDesc,ITestResult result)
 	{
 		logger.setDescription(testCaseDesc);
+	    if(result.getStatus() == ITestResult.FAILURE) //1 for success
+		 {
+		  Log.Fail(result);
+		 }
 		report.endTest(logger);
 		report.flush();
 	}
+	
+	public static void Fail(ITestResult result) 
+	{
+		System.out.println(testConfig.getRunTimeProperty("AlreadyFailed"));
+		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
+		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
+
+	}
+	
+	
 	public static void Comment(String message,String color)
 	 {
 			/* syso to display message on
@@ -71,15 +87,16 @@ public  class Log  {
 	}
 		
 		
-		public static void Fail(String message) 
+	public static void Fail(String message) 
 		{
+		
 			failure(message);
 
 		}
 		
 		public static void failure(String message)
-		{	
-			
+		{
+			testConfig.putRunTimeProperty("AlreadyFailed","yes");
 			String ReportMessage="";
 			//For displaying in console
 			printToScreen(message);
@@ -96,7 +113,7 @@ public  class Log  {
 					try 
 					{
 					  String dest=captureScreenshot(testConfig);
-					  logger.log(LogStatus.FAIL, message  + logger.addScreenCapture(dest));
+					  logger.log(LogStatus.FAIL, message  +  logger.addScreenCapture(dest));
 					} 
 					catch (IOException e) 
 					{

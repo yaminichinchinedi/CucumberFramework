@@ -13,11 +13,6 @@ public class ResponseReturnStatus
 
     private String responseDetail;
     
-   
-    
-    
-    
-
     public String getRequestIdentifier ()
     {
         return requestIdentifier;

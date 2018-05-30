@@ -18,6 +18,9 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +28,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -122,10 +126,24 @@ public class Helper
 	 * @param date
 	 * @return
 	 */
+//	public static String changeDateFormatSeperator(String date)
+//	{
+//		String dateOnly = "";
+//		dateOnly = date.replaceAll("/", "-");
+//		return dateOnly;
+//	}
+	
+	
+	/**
+	 * Function to change Date from 20-12-15 to 20/12/15 
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public static String changeDateFormatSeperator(String date)
 	{
 		String dateOnly = "";
-		dateOnly = date.replaceAll("/", "-");
+		dateOnly = date.replaceAll("-", "/");
 		return dateOnly;
 	}
 
@@ -1057,36 +1075,8 @@ public class Helper
 		return randomNumber;
 	}
 
-	/**
-	 * This function generate Random Alphabets String and put it into
-	 * runTimeProperty
-	 * 
-	 * @param testConfig
-	 * @param length
-	 *            - Size of String
-	 * @param variableName
-	 *            - Name to be used in runTimeProperty
-	 */
-//	public static void generateRandomStringAndPutRunTime(Config testConfig, int length, String variableName)
-//	{
-//		String var = Helper.generateRandomAlphabetsString(length);
-//		//testConfig.putRunTimeProperty(variableName, var);
-//	}
 
-	private static byte[] getByteArray(String pathToFile)
-	{
-		Path path = Paths.get(pathToFile);
-		byte[] data = null;
-		try
-		{
-			data = Files.readAllBytes(path);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return data;
-	}
+
 
 	public static String getCurrentDate(String format)
 	{
@@ -1144,107 +1134,106 @@ public class Helper
 		return dateFormat.format(tomorrow);
 	}
 	
-	public static String[] getToAndFromDate(TestBase testConfig, String quickSearchFilter)
-	{   
-		int fromDateRowNo=20;
-		int toDateRowNo=27;
-		
-		String fromDate=null;
-		String toDate=null;
-		Map systemDate=null;
-		
-		try {
-		switch(quickSearchFilter)
-		{
-		case "Last 30 days" :
-		{
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		case "Last 60 days" :
-		{
-		   fromDateRowNo=21;
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		case "Last 90 days" :
-		{
-		   fromDateRowNo=22;
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		case "Last 4-6 months" :
-		{
-		   fromDateRowNo=23;
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   toDateRowNo=22;
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		case "Last 6-9 months" :
-		{
-		   fromDateRowNo=24;
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   toDateRowNo=25;
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		case "Last 9-13 months" :
-		{
-		   fromDateRowNo=26;
-		   systemDate = DataBase.executeSelectQuery(testConfig,fromDateRowNo, 1);
-		   fromDate=systemDate.get("DATE").toString();
-		   toDateRowNo=268;
-		   systemDate = DataBase.executeSelectQuery(testConfig,toDateRowNo, 1);
-		   toDate=systemDate.get("DATE").toString();
-		   break;
-		}
-		
-		}
-		String date[]={fromDate,toDate};
-		return date;
-		}
-		catch(Exception e)
-		{
-			Log.Fail("Exception Occured : " + e);
-			return null;
-		}
-		
-	}
 	
-	
-	public static String getDateBeforeOrAfterMonths(int month, String format)
-	{
-		Date newDate = new Date();
-		System.out.println(newDate);
-		DateFormat dateFormat = new SimpleDateFormat(format);
-		dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));
+	public static Map<String, String> getStartAndEndPeriod(String argPeriod) {
+		
+		Map<String, String> startAndEndDatesMap = new HashMap<String, String>();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentDate = getCurrentDate();
+		String[] periods = argPeriod.split("-");
+		int include91stAnd92ndDayInt = 0;
+		if(argPeriod.contains("4-6"))
+		{
+			include91stAnd92ndDayInt = 2;
+		}
 
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MONTH, month);
-		newDate = cal.getTime();
-        System.out.println(newDate);
-        System.out.println(dateFormat.format(newDate));
-		return dateFormat.format(newDate);
+		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0])+1);
+		Date fromDate = addMonths(currentDate, -Integer.parseInt(periods[1]));
+		Integer endPeriod = getNumberOfDays(toDate, currentDate)-include91stAnd92ndDayInt;
+		Integer startPeriod = getNumberOfDays(fromDate, currentDate);
+		
+		fromDate=getPreviousDate(startPeriod);
+		toDate=getPreviousDate(endPeriod);
+
+		startAndEndDatesMap.put("fromDate", dateFormat.format(fromDate).toString());
+		startAndEndDatesMap.put("toDate", dateFormat.format(toDate).toString());
+
+		return startAndEndDatesMap;
 	}
+
+
+
+/**
+* Gives number of days between two dates
+* @param argStart for Start Date
+* @param argEnd for End Date
+* @return number of Days between two dates
+*/
+public static int getNumberOfDays(Date argStart, Date argEnd)
+{
+if (argStart.getTime() > argEnd.getTime())
+{
+    Date tmp = argStart;
+    argStart = argEnd;
+    argEnd = tmp;
+}
+GregorianCalendar cal = new GregorianCalendar();
+cal.setTime(argStart);
+int counter;
+for (counter = 0; cal.getTime().before(argEnd); counter++)
+{
+    cal.add(Calendar.DAY_OF_MONTH, 1);
+}
+return counter;
+}
+
+
+
+/**
+* Gives the current date and time.
+* 
+* @return Date
+*/
+public static java.util.Date getCurrentDate()
+{
+java.util.Date date = new java.util.Date();
+Calendar cal = new GregorianCalendar();
+cal.setTime(date);
+return date;
+}
+
+public static Date addMonths(Date argStartDate, int argMonthsToAdd)
+{
+GregorianCalendar gc = new GregorianCalendar();
+gc.setTime(argStartDate);
+gc.add(Calendar.MONTH, argMonthsToAdd);
+return gc.getTime();
+}
+
+
+public static java.util.Date getPreviousDate(int noOfDays)
+{
+Calendar currentDate = Calendar.getInstance();
+Calendar previousDate = Calendar.getInstance();
+previousDate.set(
+    currentDate.get(Calendar.YEAR),
+    currentDate.get(Calendar.MONTH),
+    currentDate.get(Calendar.DATE) - noOfDays,
+    currentDate.get(Calendar.HOUR_OF_DAY),
+    currentDate.get(Calendar.MINUTE),
+    currentDate.get(Calendar.SECOND));
+return previousDate.getTime();
+}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	public static String getDateBeforeOrAfterMonths(int month, String format)
 //	{
@@ -2564,19 +2553,17 @@ public class Helper
 		else 
 			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
 		}
-	
-//	public static void main(String []a) throws InterruptedException{
-//		
-//		for(int i=0;i<10;i++){
-//			long l=getEpochTime();
-//			System.out.println(DataProvider.FIRSTPAGE_FIRSTNAME+l);
-//			System.out.println(DataProvider.FIRSTPAGE_LASTNAME+l);
-//			System.out.println(DataProvider.FIRSTPAGE_ADDRESSE+l);
-//			System.out.println(DataProvider.FIRSTPAGE_EMAILID+l+"@gmail.com");
-//			Thread.sleep(1);
-//			System.out.println("#######################################");
-//		}
-		
-		
-	//}
-}
+
+
+	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
+	{
+	   if(expected.equals(actual))
+			{
+				Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
+			}
+			
+			else 
+				Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+			}
+	}
+

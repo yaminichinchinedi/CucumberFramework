@@ -425,11 +425,6 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public void verifyTinGridSorting()
 	{		
-		
-		ArrayList<String> tinList= new ArrayList<String>();
-
-		//Map<String,String> map = new LinkedHashMap<String,String>();
-		
 		ArrayList<String> actualHeadersList=new ArrayList<String>();
 		ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","remove tin/npi"));
 	    List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
@@ -444,19 +439,20 @@ public class ManageUsers extends AddUserDetails  {
 		 actualHeadersList.remove(0);
 		 Helper.compareEquals(testConfig, "Grid Headers Comparison",expectedHeaderList, actualHeadersList);
 		 
-		 /*
+		 /**
 		  * Verify on page load Tins are 
 		  * sorted in Ascending order of Tin Values
 		  */
 		 Map<String,String> map=getTinsListFromUI();
 		 
-		 /*
+		 /**
 		  * Tree map sorts the fetched tins
 		  * from UI in ascending order
 		  */
 		 Map<String, String> treeMap = new TreeMap<String, String>(map);	
 		 
-		 /*Verifies tins displayed on UI
+		 /**
+		  * Verifies tins displayed on UI
 		  * are displayed in ascending tin number 
 		  */
 		 verifytinsAreSorted(treeMap,map);

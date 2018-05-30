@@ -59,11 +59,11 @@ import main.java.reporting.Log;
 		try{
 			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
 			 wait.until(ExpectedConditions.visibilityOf(element));
-			 Log.Pass(namOfElement + "is present on page");
+			 Log.Pass(namOfElement + " " + "is present on page");
 		}
 		catch(NoSuchElementException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
 		}
 		
 		catch (TimeoutException e)
@@ -73,12 +73,17 @@ import main.java.reporting.Log;
 		
 		catch(ElementNotVisibleException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
 		}
 		
 		catch(StaleElementReferenceException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+		}
+		
+		catch(Exception e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
 		}
 	}
 	
@@ -102,6 +107,12 @@ import main.java.reporting.Log;
 		}
 		
 		catch(NullPointerException e)
+		{
+			
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
+		catch(Exception e)
 		{
 			
 			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
@@ -227,7 +238,8 @@ import main.java.reporting.Log;
 	//Verifies element is not checked
 	public static void verifyElementNotChecked(WebElement element,String namOfElement)
 	{
-		if(!(element.isSelected()))
+		try
+		{ if(!(element.isSelected()))
 		{
 			String successMsg = "Element" + namOfElement + "is not checked";
 			Log.Pass(successMsg);
@@ -238,7 +250,11 @@ import main.java.reporting.Log;
 		    String failureMsg="Element" + namOfElement + "is checked";
 		    Log.Fail(failureMsg);
 		}
-			
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured as : " + e);
+		}
 	}
 	
 	/**
@@ -338,6 +354,11 @@ import main.java.reporting.Log;
 			catch (StaleElementReferenceException e)
 			{
 				Log.Fail("Stale exception" + e);
+			}
+			
+			catch (Exception e)
+			{
+				Log.Fail("Exception occured as : " + '\n' + e);
 			}
 	}
 	

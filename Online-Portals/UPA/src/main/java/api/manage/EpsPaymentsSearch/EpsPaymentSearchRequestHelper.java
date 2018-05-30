@@ -41,7 +41,7 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 	}
 	
 	
-	/*
+	/**
 	 * Reads the request XML and converts in into Java Objects
 	 * Set the contents of xml request like tin number,date etc
 	 * Now converts the Java object to 
@@ -60,7 +60,9 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		
 	}
 
-	/* Converts the Pojo request back to XML to get the response
+	/**
+	 * Converts the Pojo request 
+	 * back to XML to get the response
 	 * @arguments: Object of base pojo class 
 	 * i.e EPSPaymentsSerachRequest
 	 */

@@ -53,29 +53,10 @@ public class OptumIdLoginPage {
 		PageFactory.initElements(testConfig.driver, this);
 		Element.verifyElementPresent(txtboxOptumID, "Optum id Textbox");
 	}
-
-	//Will use if required later
-
-//	public HomePage loginWithOptumID(int rowNo) throws InterruptedException,IOException 
-//	{
-//		TestDataReader data = testConfig.cacheTestDataReaderObject("Login");
-//
-//		Element.enterData(txtboxOptumID, data.GetData(rowNo, "OptumID"),"Entered Optum ID as:" + " " + data.GetData(rowNo, "OptumID"),"txtboxOptumID");
-//		Element.enterData(txtboxPwd,data.GetData(rowNo, "OptumPwd"),"Entered Optum ID password as :" + " "+ data.GetData(rowNo, "OptumPwd"), "txtboxPwd");
-//		Element.click(btnSignIn, "Sign In");
-//		Browser.waitForLoad(testConfig.driver);
-//		Browser.wait(testConfig, 5);
-//		if (testConfig.driver.getPageSource().contains("Unrecognized")) {
-//			System.out.println("yesss");
-//			fillAns();
-//		}
-//		return new HomePage(testConfig);
-//	}
-//	
 	
 	public HomePage loginWithOptumID(String userType,String accessType) throws InterruptedException,IOException
 	{
-		String env=System.getProperty("env");
+	  String env=System.getProperty("env");
 	  id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
 	  password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
 	  
@@ -88,6 +69,7 @@ public class OptumIdLoginPage {
 	  
 	  Element.click(btnSignIn, "Sign In");
       Browser.waitForLoad(testConfig.driver);
+      
       Browser.wait(testConfig, 5);
       if (testConfig.driver.getPageSource().contains("Unrecognized")) 
     	  fillAns();
@@ -113,10 +95,10 @@ public class OptumIdLoginPage {
 		}
 		if (!chkBoxRememberDevice.isSelected()) {
 			Element.click(chkBoxRememberDevice,
-					"check Remeber my device checkbox");
+					"'Remember my device' checkbox");
 		}
 
-		Element.click(btnNext, "Click Next to submit answer");
+		Element.click(btnNext, "Next to submit answer");
 	}
 
 	private void fillFatherAns() {

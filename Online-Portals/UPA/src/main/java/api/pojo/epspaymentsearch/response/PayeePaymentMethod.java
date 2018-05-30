@@ -1,8 +1,11 @@
 package main.java.api.pojo.epspaymentsearch.response;
 
+import javax.xml.bind.annotation.XmlElement;
+
 public class PayeePaymentMethod
 {
-    private PaymentMethodCode PaymentMethodCode;
+	@XmlElement(name = "PaymentMethodCode", required = true)
+	private PaymentMethodCode PaymentMethodCode;
 
     public PaymentMethodCode getPaymentMethodCode ()
     {

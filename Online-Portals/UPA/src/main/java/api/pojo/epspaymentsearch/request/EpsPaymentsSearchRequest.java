@@ -1,9 +1,4 @@
 package main.java.api.pojo.epspaymentsearch.request;
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +14,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
 import main.java.api.pojo.epspaymentsearch.request.ServiceData;
 import main.java.api.pojo.epspaymentsearch.request.PaymentMadeOnDateRange;
-
-
-
-
-
 
 @XmlRootElement(name ="EpsPaymentsSearchRequest", namespace = "http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0")
 @XmlAccessorType(XmlAccessType.FIELD)

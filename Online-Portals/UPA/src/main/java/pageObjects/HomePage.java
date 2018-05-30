@@ -118,7 +118,8 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.expectedWait(txtWelcomeScreen, testConfig,"Welcome Screen Text is present on home page"," Welcome Screen Text");
+		//Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
+		Browser.wait(testConfig, 4);
 	}
 	
 	//Default constructor
@@ -213,30 +214,30 @@ public class HomePage extends LoginUPA {
 
 		Element.click(FAQs, "FAQs");
 		String oldWindow = Browser.switchToNewWindow(testConfig,expectedURLFAQs);
-		//Browser.wait(testConfig, 3);
-		//Browser.verifyURL(testConfig, expectedURLFAQs);
+		Browser.waitForLoad(testConfig.driver);
+		Browser.verifyURL(testConfig, expectedURLFAQs);
 		Browser.switchToParentWindow(testConfig, oldWindow);
-		//Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 
 		Element.onMouseHover(testConfig, lnkResources, "Resources");
 		Element.click(help, "Help");
 		Browser.switchToNewWindow(testConfig,expectedURLHelp);
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedURLHelp);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 		Element.onMouseHover(testConfig, lnkResources, "Resources");
 		Element.click(userGuide, "User Guide");
 		Browser.switchToNewWindow(testConfig,expectedUserGuideURL);
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedUserGuideURL);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 		Element.onMouseHover(testConfig, lnkResources, "Resources");
 		Element.click(contactUs, "Contact Us");
-		Browser.wait(testConfig, 3);
+		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedContactUsURL);
 
 	}
@@ -275,12 +276,18 @@ public class HomePage extends LoginUPA {
 
 	public HomePage selectTin() 
 	{
-		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown",  "Tin dropdown");
-		Element.selectByIndex(drpDwnTin, 1, "Select Tin in dropdown");
+		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
+		//Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
+		
+		Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
+		
 		Browser.waitForLoad(testConfig.driver);
 		
+		Browser.wait(testConfig,3);
+		testConfig.driver.findElement(By.id("taxIndNbrId"));
+		
 		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
-		Log.Comment("Selected tin number is" + tinNumber);
+		//Log.Comment("Selected tin number is : " + " " + tinNumber);
 		String tin[]=tinNumber.split("-");
 		testConfig.putRunTimeProperty("tin", tin[0]);
 		return new HomePage(testConfig);
@@ -288,17 +295,13 @@ public class HomePage extends LoginUPA {
 
 	public paymentSummary clickViewPaymentsTab() 
 	{
-
-		testConfig.driver.findElement(By.linkText("View Payments"));
-
+		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.click(viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
-
 	}
 	
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
 	{
-
 		Element.click(maintainEnrlTab, "Maintain Enrollment Tab");
 		return new MaintainEnrollment(testConfig);
 

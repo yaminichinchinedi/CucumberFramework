@@ -25,6 +25,8 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.asserts.SoftAssert;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 import main.java.Utils.CopyDir;
 import main.java.Utils.CustomReporter;
 import main.java.Utils.Helper;
@@ -302,6 +304,7 @@ public class TestBase {
 	@BeforeMethod()	
 	public void setupTestMethod (Method method) 
 	{
+		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		String testCaseName=method.getName();
 		Log logger =new Log(testConfig,testCaseName);
 	}
@@ -310,7 +313,7 @@ public class TestBase {
 	public void endTest(ITestResult iTestResult)
 	{
 		String testCaseDesc=iTestResult.getMethod().getDescription();
-		Log.endTest(testCaseDesc);
+		Log.endTest(testCaseDesc,iTestResult);
 	}
 	
 	@AfterTest
