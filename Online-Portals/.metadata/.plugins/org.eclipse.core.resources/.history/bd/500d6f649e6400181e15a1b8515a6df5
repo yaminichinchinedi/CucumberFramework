@@ -52,13 +52,9 @@ public  class Log  {
 	public static void endTest(String testCaseDesc,ITestResult result)
 	{
 		logger.setDescription(testCaseDesc);
-	    if(result.getStatus() == ITestResult.FAILURE) 
+	    if(result.getStatus() == ITestResult.FAILURE) //1 for success
 		 {
 		  Log.Fail(result);
-		 }
-	    else if(result.getStatus() == ITestResult.SKIP)
-		 {
-	    	Log.skipped(result);
 		 }
 		report.endTest(logger);
 		report.flush();
@@ -69,12 +65,6 @@ public  class Log  {
 		System.out.println(testConfig.getRunTimeProperty("AlreadyFailed"));
 		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
 		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
-
-	}
-	
-	public static void skipped(ITestResult result) 
-	{
-		logger.log(LogStatus.SKIP, result.getThrowable());
 
 	}
 	

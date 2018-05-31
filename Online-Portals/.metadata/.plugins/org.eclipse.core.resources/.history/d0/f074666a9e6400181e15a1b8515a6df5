@@ -58,7 +58,7 @@ public  class Log  {
 		 }
 	    else if(result.getStatus() == ITestResult.SKIP)
 		 {
-	    	Log.skipped(result);
+	    	
 		 }
 		report.endTest(logger);
 		report.flush();

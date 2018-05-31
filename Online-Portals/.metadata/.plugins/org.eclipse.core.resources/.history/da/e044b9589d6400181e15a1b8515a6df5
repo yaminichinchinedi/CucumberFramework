@@ -1,0 +1,18 @@
+<suite name="UPA_Regression" parallel="tests" thread-count="3">
+   <listeners>
+      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+      <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+   </listeners>
+   <test name="Home Tab">
+      <classes>
+         <class name="test.java.TestUPAHomeTab"/>
+      </classes>
+   </test>
+   
+   
+   <test name="Manage users">
+      <classes>
+         <class name="test.java.TestUPAManageUsers"/>
+      </classes>
+   </test>
+</suite>
