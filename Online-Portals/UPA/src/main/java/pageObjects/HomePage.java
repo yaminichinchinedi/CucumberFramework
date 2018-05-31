@@ -277,9 +277,9 @@ public class HomePage extends LoginUPA {
 	public HomePage selectTin() 
 	{
 		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-		//Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
+		Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
 		
-		Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
+		//Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
 		
 		Browser.waitForLoad(testConfig.driver);
 		
