@@ -63,6 +63,12 @@ public class CreateTestNg {
 						Attr attr = doc.createAttribute("name");
 						attr.setValue(value);
 						rootElement.setAttributeNode(attr);
+						attr = doc.createAttribute("parallel");
+						attr.setValue("tests");
+						rootElement.setAttributeNode(attr);
+						attr = doc.createAttribute("thread-count");
+						attr.setValue("2");
+						rootElement.setAttributeNode(attr);
 						return rootElement;
 					}
 
