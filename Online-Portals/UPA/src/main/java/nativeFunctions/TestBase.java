@@ -215,7 +215,7 @@ public class TestBase {
 		LogTemp.Comment("Gecko Property set");
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-		capabilities.setCapability("marionette", false);
+		capabilities.setCapability("marionette", true);
 		LogTemp.Comment("All capabilities set");
 		WebDriver driver = new FirefoxDriver(capabilities);
 		driver.manage().window().maximize();
