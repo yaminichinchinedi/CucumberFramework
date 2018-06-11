@@ -31,6 +31,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
+import main.java.reporting.LogTemp;
 
 public class ManageUsers extends AddUserDetails  {
 	
@@ -195,7 +196,6 @@ public class ManageUsers extends AddUserDetails  {
 	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig) throws InterruptedException
 	{  
 		//List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
-		
 		List <WebElement> userNames=Element.findElements(testConfig,"xpath", "//div[@id='flow']//tbody//a");
 	    ArrayList<String> UsersListUI=new ArrayList<String>();
 		for(WebElement userName:userNames)
@@ -545,7 +545,13 @@ public class ManageUsers extends AddUserDetails  {
 		Helper.compareEquals(testConfig, "Ph number field 1 is Read only", expectedValue, phoneNum.getAttribute("readonly"));
 		Helper.compareEquals(testConfig, "Ph number field 2 is Read only", expectedValue, phoneNum1.getAttribute("readonly"));
 		Helper.compareEquals(testConfig, "Ph number field 3 is Read only", expectedValue, phoneNum2.getAttribute("readonly"));
+		if(extension.isDisplayed())
+			try{
 		Helper.compareEquals(testConfig, "Ext is Read only", expectedValue, extension.getAttribute("readonly"));
+			}
+		catch (Exception e) {
+			LogTemp.Comment("Extension is empty");
+		}
 		Helper.compareEquals(testConfig, "Email field is Read only", expectedValue, email.getAttribute("readonly"));
 		}
 		
@@ -587,7 +593,7 @@ public class ManageUsers extends AddUserDetails  {
 		
 
         //Get the tin number for which Email Notification is to be changed, we are taking first row here
-		Log.Comment("Tin number for whom email notification is to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
+		Log.Comment("Tin number for whom email notification i	s to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
 		
 		//Getting email checkbox element
 		emailChkbox=findEmailCheckbox(userType);
