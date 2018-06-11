@@ -423,7 +423,7 @@ public class Browser
 					
 					// Verify that page stays on same page (no internal
 					// redirect)
-					//Browser.wait(testConfig, 5);
+					Browser.wait(testConfig, 5);
 					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 					if (!actualURL.contains(expectedURL))
 					{
