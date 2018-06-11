@@ -22,12 +22,12 @@ public class SplashPage3 {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.waitForLoad(testConfig.driver);
 		Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign in with optum id link", "Sign in with optum id link");
 	}
 	
 	public OptumIdLoginPage clickSignInWithOptumId()
 	{
+		Browser.wait(testConfig, 3);
 		Element.click(lnkSignInWithOptumId, "Sign in with optum id");
 		return new OptumIdLoginPage(testConfig);
 	}
