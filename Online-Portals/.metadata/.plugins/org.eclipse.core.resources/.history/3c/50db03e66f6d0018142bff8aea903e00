@@ -117,7 +117,7 @@ public class ManageUsers extends AddUserDetails  {
 		}
 			catch(Exception e)
 		{
-				//Browser.browserRefresh(testConfig);
+				Browser.browserRefresh(testConfig);
 				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
 		}
 	}
