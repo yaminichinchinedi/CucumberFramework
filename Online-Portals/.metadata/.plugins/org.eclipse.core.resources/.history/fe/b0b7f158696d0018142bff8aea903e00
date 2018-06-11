@@ -312,7 +312,7 @@ public class ManageUsers extends AddUserDetails  {
 		return new ManageUsers(testConfig);
 	}
 	
-	/**
+	/*
 	 * This function is used to change 
 	 * Access Level of an Active user 
 	 * which is fetched from DB
@@ -335,7 +335,7 @@ public class ManageUsers extends AddUserDetails  {
 		Log.Comment("Finded dropdown succesfully by find elements");
 
 		try{
-			Browser.wait(testConfig, 3);
+			Browser.wait(testConfig, 4);
 	    Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
 		}
 		
@@ -343,13 +343,13 @@ public class ManageUsers extends AddUserDetails  {
 		{
 			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
-			//Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
 		}
 	   
 	    
 	    Browser.waitForLoad(testConfig.driver);
+	   
 	    clickSave();
-	    Browser.wait(testConfig,3);
 	  
 	    //Get access level value from DB to verify it has been changed to General
 	    int sqlRowNo=11;
@@ -365,7 +365,7 @@ public class ManageUsers extends AddUserDetails  {
 	    //Select Access Level as Administrator
 	    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 	    clickSave();
-	    Browser.wait(testConfig,3);    
+	    
 	    //Get access level value from DB to verify it has been changed to Administrator
 	    portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	    Helper.compareEquals(testConfig, "Access Level", "A", portalUserData.get("ACCESS_LVL").toString());
