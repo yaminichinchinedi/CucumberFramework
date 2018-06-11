@@ -97,7 +97,7 @@ public class TestUPAManageUsers extends TestBase {
 		
 		
 		
-		@Test(priority=5,description="Verifing provider user details are read only on UPA")
+		@Test(priority=4,description="Verifing provider user details are read only on UPA")
 		public void testReadOnlyProviderUserDetails() throws InterruptedException, IOException
 		 {
 			String userType="PROV";
@@ -118,7 +118,7 @@ public class TestUPAManageUsers extends TestBase {
          }	
 		
 		
-		@Test(priority=6,description="Verifing provider user details are read only on UPA")
+		@Test(priority=4,description="Verifing provider user details are read only on UPA")
 		public void testReadOnlyBillingUserDetails() throws InterruptedException, IOException
 		 {
 			String userType="BS";
@@ -141,7 +141,7 @@ public class TestUPAManageUsers extends TestBase {
          }	
 
 		
-		@Test(priority=7,description="Verify details for New user.")
+		@Test(priority=5,description="Verify details for New user.")
 		public void testAddNewBSUser() throws InterruptedException, IOException
 		 {
 			
@@ -163,7 +163,7 @@ public class TestUPAManageUsers extends TestBase {
          }
 		
 
-		@Test(priority=8,description="Verifing provider user details are read only on UPA")
+		@Test(priority=4,description="Verifing provider user details are read only on UPA")
 		public void testReadOnlyPayerUserDetails() throws InterruptedException, IOException
 		 {
 			String userType="PAY";
@@ -184,7 +184,7 @@ public class TestUPAManageUsers extends TestBase {
 			
          }	
 		
-		@Test(priority=9,description="Verify details for New user.")
+		@Test(priority=5,description="Verify details for New user.")
 		public void testAddNewPayerUser() throws InterruptedException, IOException
 		 {
 			
@@ -206,7 +206,7 @@ public class TestUPAManageUsers extends TestBase {
          }
 		
 		
-		@Test(priority=10,description="Verify details for New user.")
+		@Test(priority=5,description="Verify details for New user.")
 		public void testAddNewProviderUser() throws InterruptedException, IOException
 		 {
 			
