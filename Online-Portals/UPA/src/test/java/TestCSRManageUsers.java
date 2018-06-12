@@ -14,15 +14,12 @@ import org.testng.annotations.Test;
 	public class TestCSRManageUsers extends TestBase {
 		
 
-	@Test(priority=5,description="Super user role verification")
+	@Test(priority=5,description="Super user role verification for CSR")
 	public void testSuperUserAddAndDeleteProvUser() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
 		String userType="PROV";	
-		String accessLevelOfNewUser="Administrator";
-		
-		
-					
+		String accessLevelOfNewUser="Administrator";		
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPage searchPage=homePage.clickManageUsersLink();
