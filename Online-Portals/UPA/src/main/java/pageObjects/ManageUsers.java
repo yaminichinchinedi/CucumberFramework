@@ -528,6 +528,7 @@ public class ManageUsers extends AddUserDetails  {
 
 	public void verifyManageUserUI()
     {
+		LogTemp.Comment("Verifying Resources Link");
     	Element.verifyElementPresent(btnAddUser,"Add user");
     	Element.verifyElementPresent(btnSave,"Save");
     	Element.verifyElementPresent(btnCancel,"Cancel");

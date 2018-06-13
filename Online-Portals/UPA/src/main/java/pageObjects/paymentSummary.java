@@ -74,7 +74,7 @@ public class paymentSummary{
 	}
 
 	/** Verifies the default selected 
-	 * filter dropdown values 
+	 * filter drop down values 
 	 * @return object of this page
 	 */
 	
@@ -137,7 +137,8 @@ public class paymentSummary{
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
-		Element.selectByVisibleText(drpDwnMarketType,MktTypeFilter,MktTypeFilter + " " +" from 'Market Type' dropdown");		
+		Element.selectByVisibleText(drpDwnMarketType,MktTypeFilter,MktTypeFilter + " " +" from 'Market Type' dropdown");	
+		//testConfig.putRunTimeProperty(, value);
 	}
 			
 	/**
@@ -196,7 +197,7 @@ public class paymentSummary{
 	 * @return Outer map
 	 */
 	
-	public Map<String,LinkedHashMap<String,String>> getPaymentNumberDetailsFromUI()
+	public Map<String,LinkedHashMap<String,String>> getPaymentDetailsFromUI()
 	{	   
 	   /**Gets headers List which will be key for following map*/
 		
@@ -218,9 +219,10 @@ public class paymentSummary{
 			innerMap.put("Amount", amount);
 			innerMap.remove("Redemption Date");
 			innerMap.remove("Payment Status / Trace Number");
+			innerMap.remove("Payer");
 			outerMap.put(paymentNo.get(i-1), innerMap);
 		  }
-		Log.Comment("Details from UI is : " +'\n' +outerMap);
+		//Log.Comment("Details from UI is : " +'\n' +outerMap);
 		return outerMap;
 	   
     }
@@ -272,9 +274,7 @@ public class paymentSummary{
 	
 	
 	public void verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	{
-		int sqlRowNo=5;
-		
+	{	
 		/**Select all filters*/
 		
 		setSearchFilters(filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter);
@@ -285,13 +285,13 @@ public class paymentSummary{
 		
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
 		{
-		  Helper.compareMaps(testConfig, "Payments Details Comparison from FISL and API : " + '\n',getPaymentNumbersFromFISL(), getPaymentNumberDetailsFromUI());			
+		  Helper.compareMaps(testConfig, "Payments Details Comparison from FISL and UI : " + "<br>",getPaymentDetailsFromFISL(), getPaymentDetailsFromUI());			
 		  Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountFromUI());
 		  
 		}
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+		// Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
 
 }
 	
@@ -311,7 +311,32 @@ public class paymentSummary{
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
-		setTaxIdentifierType(epsPaymentsSearchRequest);
+//		setTaxIdentifierType(epsPaymentsSearchRequest);
+		setMapEntryKey(epsPaymentsSearchRequest);
+		
+    	
+		/**Posting the modified request and getting response*/
+		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
+		
+		return searchResponse;
+	}
+	
+	/**
+	 * Getting response from EPSA
+	 * @return type object of search request
+	 */
+	
+	public Object getFISLResponse(String key,String value) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
+		
+		/**Creates POJO for Request.xml so that we can modify the elements*/
+		
+		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
+		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
+		setToAndFromDate(epsPaymentsSearchRequest);
+		setMapEntryKey(epsPaymentsSearchRequest);
+		
 		
     	
 		/**Posting the modified request and getting response*/
@@ -335,7 +360,7 @@ public class paymentSummary{
 		return responseFromFISL.getResponseReturnStatus().getTotalCount().trim(); 
 	}
 	
-	public Map<String, LinkedHashMap<String, String>> getPaymentNumbersFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
 
 		LinkedHashMap<String,String> innerMap;
@@ -347,17 +372,23 @@ public class paymentSummary{
 		{
 			innerMap=new LinkedHashMap<String, String>();
 			
-			innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-dd-mm", "dd-mm-yyyy")));
 			innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			innerMap.put("Proxy Number","");
-			innerMap.put("Amount","$"+payments[i].getTotalAmount());
+			if(payments[i].getTotalAmount().equalsIgnoreCase("0.0"))
+			{
+				innerMap.put("Amount","$"+"0.00");
+			}
+			else
+			{
+			innerMap.put("Amount","$"+payments[i].getTotalAmount());}
 			innerMap.put("Type",getDisplayPaymentMethod(payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode()));
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			outerMap.put(innerMap.get("Payment Number"), innerMap);
 		}
-		Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		//Log.Comment("Details from FISL is :"  + '\n' +outerMap);
 		return outerMap;
 	}
 	
@@ -365,7 +396,7 @@ public class paymentSummary{
 	 * Gets the payer name from DB
 	 * to be displayed on UI
 	 * @param payerName
-	 * @return display payername
+	 * @return display payer name
 	 */
 	
 	public String getDisplayPayerNameFromDB(String payerNameFromFISL)
@@ -373,7 +404,11 @@ public class paymentSummary{
 		int sqlRowNo=20;
 		testConfig.putRunTimeProperty("payerName", payerNameFromFISL);
 		Map payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		if(payerTable.get("PAYR_DSPL_NM").toString().trim() != null)
 		return payerTable.get("PAYR_DSPL_NM").toString().trim();	
+//		else
+//		sqlRowNo=20;
+//		payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	}
 	
 	/**
@@ -439,6 +474,13 @@ public class paymentSummary{
 	public EpsPaymentsSearchRequest setTaxIdentifierType(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("taxIdentifierType"));
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
+	public EpsPaymentsSearchRequest setMapEntryKey(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
 		return (EpsPaymentsSearchRequest) object;
 	}
 	

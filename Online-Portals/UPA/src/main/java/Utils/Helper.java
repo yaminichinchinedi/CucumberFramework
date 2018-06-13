@@ -1372,31 +1372,6 @@ return previousDate.getTime();
 		return dateFormat.format(date.getTime());
 	}
 
-	/**
-	 * @param WRpath
-	 *            is the file path from whose replica has to be created
-	 * @param WBwrite
-	 *            output file path
-	 * @return
-	 */
-	// Not in use anymore
-	/*
-	 * private static String createFileReplica(String WRpath, String WBwrite) {
-	 * String SSRead = "Sheet1" ; String SSwrite = "Sheet1" ; try{ String[][]
-	 * repwr = null; FileOutputStream fileout = new FileOutputStream(WBwrite);
-	 * HSSFWorkbook workbook = new HSSFWorkbook(); HSSFSheet worksheet =
-	 * workbook.createSheet(SSwrite); HSSFFont font = workbook.createFont();
-	 * repwr = FileHandler.replica(WRpath, SSRead); int rc =
-	 * FileHandler.getRowCount(WRpath, SSRead); for(int i=0; i<=rc; i++){ int cc
-	 * = FileHandler.colcount(WRpath, SSRead, i); HSSFRow row1 =
-	 * worksheet.createRow(i); for(int j=0; j<=cc; j++){ HSSFCell c1 =
-	 * row1.createCell(j); worksheet.setColumnWidth(j, 4200);
-	 * c1.setCellValue(repwr[i][j]); font.setFontName("Calibri"); HSSFCellStyle
-	 * cellStyle = workbook.createCellStyle(); cellStyle.setFont(font);
-	 * c1.setCellStyle(cellStyle); } } workbook.write(fileout); fileout.flush();
-	 * fileout.close(); } catch (FileNotFoundException e) { e.printStackTrace();
-	 * } catch (IOException e) { e.printStackTrace(); } return SSwrite; }
-	 */
 
 	public static String getFourWeekStartingDate(String format)
 	{
@@ -1610,16 +1585,9 @@ return previousDate.getTime();
 		if (input.contains("{$"))
 		{
 			int firstIndex = input.indexOf("{$");
-			
-		//	input.length();
-		
-			
 			int lastIndex=input.indexOf("}", firstIndex);
-			
 			String key = input.substring(firstIndex + 2, lastIndex);
-		
 			String value = testBaseSetup.getRunTimeProperty(key);
-
 			input = input.replace("{$" + key + "}", value);
 			return replaceArgumentsWithRunTimeProperties(testBaseSetup, input);
 		}
@@ -2559,11 +2527,11 @@ return previousDate.getTime();
 	{
 	   if(expected.equals(actual))
 			{
-				Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
+				Log.Pass("Passed" + " " + what + "" + "<br>" + "Actual is :" +" " + "<br>" + actual + " " + "<br>" + "Expected is :" +" " + "<br>" +expected );
 			}
 			
 			else 
-				Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+				Log.Fail(what + ":" + "" + "<br>" + "Actual is :" +" " + actual + "<br>" + "Expected is :" +" " +expected);
 			}
 	}
 

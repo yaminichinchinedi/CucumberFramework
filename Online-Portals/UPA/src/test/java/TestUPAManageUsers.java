@@ -17,6 +17,25 @@ import org.testng.annotations.Test;
 public class TestUPAManageUsers extends TestBase {
 
 	
+//	@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
+//	public void testUserListSorting() throws InterruptedException, IOException
+//	 {
+//		
+//		String userType="PROV";
+//		String accessType="Admin";
+//
+//		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//		LoginUPA loginPage=new LoginUPA(testConfig);
+//	    
+//		//Login with EPS credentials
+//		SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
+//		OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
+//		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+//		home.selectTin();
+//		ManageUsers manageUser=home.clickManageUsersTab();
+//		manageUser.doUserListSorting();
+//	}
+	
 	@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
 	public void testUserListSorting() throws InterruptedException, IOException
 	 {
@@ -25,35 +44,44 @@ public class TestUPAManageUsers extends TestBase {
 		String accessType="Admin";
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		LoginUPA loginPage=new LoginUPA(testConfig);
-	    
-		//Login with EPS credentials
-		SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-		OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.selectTin();
 		ManageUsers manageUser=home.clickManageUsersTab();
 		manageUser.doUserListSorting();
 	}
 	
+	@Test(priority=2,description="Verify Save and cancel access level changes")
+	public void testChangesInExistingActiveUser() throws InterruptedException, IOException
+	 {
+		String userType="PROV";
+		String accessType="Admin";
+		
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		home.selectTin();
+		ManageUsers manageUser=home.clickManageUsersTab();
+		manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
+     }
 		
 			
-		@Test(priority=2,description="Verify Save and cancel access level changes")
-		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
-		 {
-			String userType="PROV";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
-         }
+//	@Test(priority=2,description="Verify Save and cancel access level changes")
+//		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
+//		 {
+//			String userType="PROV";
+//			String accessType="Admin";
+//			
+//			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//			LoginUPA loginPage=new LoginUPA(testConfig);
+//		    
+//			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
+//			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
+//			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+//			home.selectTin();
+//			ManageUsers manageUser=home.clickManageUsersTab();
+//			manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
+//         }
 		
 		@Test(priority=3,description="Verify Tin Grid Details")
 		public void testTinGridDetails() throws InterruptedException, IOException

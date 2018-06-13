@@ -46,6 +46,9 @@ public class UPARegistrationPage{
 	private TestBase testConfig;
 	public ValidateEFTERASubmitInfo validatw9SubmitForm;
 	
+	@FindBy(linkText="SIGN IN WITH OPTUM ID")
+	WebElement lnkSignInWithOptumId;
+	
 	
 	public UPARegistrationPage(TestBase testConfig) 
 	{
@@ -110,6 +113,11 @@ public class UPARegistrationPage{
 		return new EnrollmentTypePage(testConfig);
 	}
 	
+	public OptumIdLoginPage clickSignInWithOptumId()
+	{
+		Element.click(lnkSignInWithOptumId, "Sign in with optum id button");
+		return new OptumIdLoginPage(testConfig);
+	}
 	
 	
 	

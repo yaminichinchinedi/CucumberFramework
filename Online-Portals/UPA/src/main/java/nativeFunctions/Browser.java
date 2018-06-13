@@ -423,7 +423,7 @@ public class Browser
 					
 					// Verify that page stays on same page (no internal
 					// redirect)
-					//Browser.wait(testConfig, 5);
+					Browser.wait(testConfig, 5);
 					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 					if (!actualURL.contains(expectedURL))
 					{
@@ -436,8 +436,6 @@ public class Browser
 				actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 				retries--;
 			}
-			
-			Log.Comment("driver before fail methos is called" + testConfig.driver, "Red");
 			Log.Fail("Browser URL", expectedURL, actualURL);
 			return false;
 		}

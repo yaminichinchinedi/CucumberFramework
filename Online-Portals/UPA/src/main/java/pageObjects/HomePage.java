@@ -118,8 +118,7 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
-		Browser.wait(testConfig, 4);
+		Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
 	}
 	
 	//Default constructor
@@ -278,16 +277,10 @@ public class HomePage extends LoginUPA {
 	{
 		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
 		Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
-		
-		//Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
-		
 		Browser.waitForLoad(testConfig.driver);
-		
-		Browser.wait(testConfig,3);
 		testConfig.driver.findElement(By.id("taxIndNbrId"));
-		
 		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
-		//Log.Comment("Selected tin number is : " + " " + tinNumber);
+		Log.Comment("Selected tin number is : " + " " + tinNumber);
 		String tin[]=tinNumber.split("-");
 		testConfig.putRunTimeProperty("tin", tin[0]);
 		return new HomePage(testConfig);

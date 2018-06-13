@@ -33,7 +33,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.19.1</version>
 				<configuration>
-					<forkCount>0</forkCount>
+					<forkCount>4</forkCount>
 					<fork>true</fork>
 					<reuseForks>true</reuseForks>
 					<useSystemClassLoader>false</useSystemClassLoader>
@@ -213,18 +213,20 @@
 		</dependency>
 
 
-
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		<dependency>
-			<groupId>com.relevantcodes</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>2.40.2</version>
-		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
+    <dependency>
+    <groupId>com.relevantcodes</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>2.41.2</version>
+    </dependency>
+
 
 
 		<dependency>
@@ -237,5 +239,14 @@
 			<artifactId>selenium-java</artifactId>
 			<version>3.4.0</version>
 		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/com.jcraft/jsch -->
+<dependency>
+    <groupId>com.jcraft</groupId>
+    <artifactId>jsch</artifactId>
+    <version>0.1.54</version>
+</dependency>
+		
 	</dependencies>
 </project>

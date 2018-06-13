@@ -134,6 +134,7 @@ public class AddUserDetails {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		testConfig.driver.findElement(By.name("fname"));
      	Element.expectedWait(firstName, testConfig, "First Name textbox", "First Name textbox");
 		
 	}

@@ -99,10 +99,13 @@ public class MyProfileChangePwd extends MyProfile{
     { 
     	
     	String pwd=testConfig.getRunTimeProperty("password");
-    	//Leave current password field blank
+    	
+    	/**Leave current password field blank*/
+    	
     	Element.enterData(txtBoxCurrentPwd,"","Enter Current Password as empty string", "Current Password");
     	
-    	//Enter valid password in new password fields
+    	/**Enter valid password in new password fields*/
+    	
     	Element.enterData(txtBoxNewPwd,pwd ,"Enter New Password as :"+" " + pwd, "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  pwd ,"Retype New Password as :"+" " + pwd, "Re type New Password");
     	
@@ -111,10 +114,11 @@ public class MyProfileChangePwd extends MyProfile{
     	
     	Element.verifyTextPresent(errorMsg, "Current Password: Invalid Data");
     	
-    	//Enter valid data in current password
+    	/** Enter valid data in current password */
     	Element.enterData(txtBoxCurrentPwd,pwd ,"Enter Current Password as :"+" " + pwd, "Current Password");
     	
-    	//Leave new password blank
+    	/**Leave new password blank */
+    	
     	Element.enterData(txtBoxNewPwd,"" ,"Enter New Password as empty string", "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  pwd ,"Retype New Password as :"+" " + pwd, "Re type New Password");
     	Element.click(btnSave, "Save button");
