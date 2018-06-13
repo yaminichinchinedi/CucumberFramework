@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 		
 
 
-	@Test(priority=5,description="Super user role verification")
+	@Test(priority=5,description="Super user role verification ..")
 
 	public void testSuperUserAddAndDeleteProvUser() throws InterruptedException, IOException, AWTException
 	 {
