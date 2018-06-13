@@ -16,28 +16,7 @@ import org.testng.annotations.Test;
 
 public class TestUPAManageUsers extends TestBase {
 
-	// TEST 123 AVNEET
-	
-//	@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
-//	public void testUserListSorting() throws InterruptedException, IOException
-//	 {
-//		
-//		String userType="PROV";
-//		String accessType="Admin";
-//
-//		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//		LoginUPA loginPage=new LoginUPA(testConfig);
-//	    
-//		//Login with EPS credentials
-//		SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-//		OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-//		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-//		home.selectTin();
-//		ManageUsers manageUser=home.clickManageUsersTab();
-//		manageUser.doUserListSorting();
-//	}
-	
-	@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
+	@Test(priority=1,description="Verifies user list sorting is working correctly on Manage Users Tab")
 	public void testUserListSorting() throws InterruptedException, IOException
 	 {
 		
@@ -50,9 +29,11 @@ public class TestUPAManageUsers extends TestBase {
 		home.selectTin();
 		ManageUsers manageUser=home.clickManageUsersTab();
 		manageUser.doUserListSorting();
+		home.logOutFromUPA();
 	}
 	
-	@Test(priority=2,description="Verify Save and cancel access level changes")
+	
+	@Test(priority=2,description="Verifies 'Save' & 'Cancel' button functionlity for 'Access level' changes for a tin associated with a Provider User")
 	public void testChangesInExistingActiveUser() throws InterruptedException, IOException
 	 {
 		String userType="PROV";
@@ -63,194 +44,154 @@ public class TestUPAManageUsers extends TestBase {
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.selectTin();
 		ManageUsers manageUser=home.clickManageUsersTab();
-		manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
+		manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);		
+		home.logOutFromUPA();
      }
 		
-			
-//	@Test(priority=2,description="Verify Save and cancel access level changes")
-//		public void testChangesInExistingActiveUser() throws InterruptedException, IOException
-//		 {
-//			String userType="PROV";
-//			String accessType="Admin";
-//			
-//			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//			LoginUPA loginPage=new LoginUPA(testConfig);
-//		    
-//			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-//			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-//			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-//			home.selectTin();
-//			ManageUsers manageUser=home.clickManageUsersTab();
-//			manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
-//         }
 		
-		@Test(priority=3,description="Verify Tin Grid Details")
-		public void testTinGridDetails() throws InterruptedException, IOException
-		 {
-			String userType="PROV";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			manageUser.verifyTinGridSorting();
-			manageUser.verifyManageUserUI();
-         }	
+	@Test(priority=3,description="Verifies Tin Grid Details in Manage Users Tab")
+	public void testTinGridDetails() throws InterruptedException, IOException
+	 {
+		 String userType="PROV";
+		 String accessType="Admin";
+		 
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 home.selectTin();
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 manageUser.verifyTinGridSorting();
+		 manageUser.verifyManageUserUI();
+		 home.logOutFromUPA();
+     }	
 
-		@Test(priority=4,description="Email_Add User_Manage User-Verifies error messages and associated tins with a user")
-		public void testAddNewUserValidations() throws InterruptedException, IOException
-		 {
+	
+	@Test(priority=4,description="Verifies error messages and associated tins with a user")
+	public void testNewUserValidations() throws InterruptedException, IOException
+	 {
 			
-			String userType="PROV";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			AddUserDetails addUserDetails=manageUser.clickAddNewUser();
-			addUserDetails.verifyErrorMessages();		
-           }
-		
-		@Test(priority=5,description="Verifing provider user details are read only on UPA")
-		public void testReadOnlyProviderUserDetails() throws InterruptedException, IOException
-		 {
-			String userType="PROV";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			
-			manageUser.verifyUserDetailsAreReadOnly();
-			manageUser.verifySuccessfulEmailNotificationChange(userType);
-			
-         }	
+		 String userType="PROV";
+		 String accessType="Admin";
+		 
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 home.selectTin();
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 AddUserDetails addUserDetails=manageUser.clickAddNewUser();
+		 addUserDetails.verifyErrorMessages();	
+		 home.logOutFromUPA();
+       }
+	
+	
+	@Test(priority=5,description="Verifies provider user details are read only on UPA")
+	public void testProvDetailsAreReadOnly() throws InterruptedException, IOException
+	  {
+		 String userType="PROV";
+		 String accessType="Admin";
+		 
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 home.selectTin();
+		 ManageUsers manageUser=home.clickManageUsersTab();	
+		 manageUser.verifyUserDetailsAreReadOnly();
+		 manageUser.verifySuccessfulEmailNotificationChange(userType);	
+		 home.logOutFromUPA();
+       }	
 		
 		
-		@Test(priority=6,description="Verifing provider user details are read only on UPA")
-		public void testReadOnlyBillingUserDetails() throws InterruptedException, IOException
-		 {
-			String userType="BS";
-			String accessType="Admin";
-			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			ManageUsers manageUser=home.clickManageUsersTab();
-			
-			manageUser.verifyUserDetailsAreReadOnly();
-			manageUser.verifySuccessfulEmailNotificationChange(userType);
-			manageUser.verifySuccessfulAssociateProvChange();
-			manageUser.verifyAccessLvlChange(userType);
-			
-			
-         }	
+	@Test(priority=6,description="Verifies Billing service User details are read only on UPA")
+	public void testBSDetailsAreReadOnly() throws InterruptedException, IOException
+	  {
+		 String userType="BS";
+		 String accessType="Admin";
+		 
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 ManageUsers manageUser=home.clickManageUsersTab();	
+		 manageUser.verifyUserDetailsAreReadOnly();
+		 manageUser.verifySuccessfulEmailNotificationChange(userType);
+		 manageUser.verifySuccessfulAssociateProvChange();
+		 manageUser.verifyAccessLvlChange(userType);
+		 home.logOutFromUPA();
+       }	
 
 		
-		@Test(priority=7,description="Verify details for New user.")
-		public void testAddNewBSUser() throws InterruptedException, IOException
-		 {
+	@Test(priority=7,description="Verifies details for New Billing Service user.")
+	public void testAddNewBSUser() throws InterruptedException, IOException
+	  {
+		 String userType="BS";
+		 String accessType="Admin";
 			
-			String userType="BS";
-			String accessType="Admin";
-			
-			String accessLevelOfNewUser="Administrator";
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			ManageUsers manageUser=home.clickManageUsersTab();
-			AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
-			addUserDetails.clickSave();
-			addUserDetails.verifyDetailsOfNewUser(userType);	
-			//manageUser.removeFistTinInGrid();
-         }
+		 String accessLevelOfNewUser="Administrator";
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
+		 addUserDetails.clickSave();
+		 addUserDetails.verifyDetailsOfNewUser(userType);	
+		 home.logOutFromUPA();
+		 //manageUser.removeFistTinInGrid();
+       }
 		
 
-		@Test(priority=8,description="Verifing provider user details are read only on UPA")
-		public void testReadOnlyPayerUserDetails() throws InterruptedException, IOException
-		 {
-			String userType="PAY";
-			String accessType="Admin";
+	@Test(priority=8,description="Verifies Payer user details are read only on UPA")
+	public void testPayerDetailsAreReadOnly() throws InterruptedException, IOException
+	  {
+		 String userType="PAY";
+		 String accessType="Admin";
 			
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			ManageUsers manageUser=home.clickManageUsersTab();
-			
-			manageUser.verifyPayerUserDetailsAreReadOnly();
-			
-			manageUser.verifyAccessLvlChange(userType);
-			
-			
-         }	
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 manageUser.verifyPayerUserDetailsAreReadOnly();
+		 manageUser.verifyAccessLvlChange(userType);	
+		 home.logOutFromUPA();
+       }	
 		
-		@Test(priority=9,description="Verify details for New user.")
-		public void testAddNewPayerUser() throws InterruptedException, IOException
-		 {
+	
+	@Test(priority=9,description="Verifies details for New Payer user.")
+	public void testAddNewPayerUser() throws InterruptedException, IOException
+	  {
+		 String userType="PAY";
+		 String accessType="Admin";
+		 String accessLevelOfNewUser="Administrator";
 			
-			String userType="PAY";
-			String accessType="Admin";
-			
-			String accessLevelOfNewUser="Administrator";
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			ManageUsers manageUser=home.clickManageUsersTab();
-			AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
-			addUserDetails.clickSave();
-			addUserDetails.verifyDetailsOfNewUser(userType);	
-			//manageUser.removeFistTinInGrid();
-         }
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
+		 addUserDetails.clickSave();
+		 addUserDetails.verifyDetailsOfNewUser(userType);
+		 home.logOutFromUPA();
+		//manageUser.removeFistTinInGrid();
+      }
 		
 		
-		@Test(priority=10,description="Verify details for New user.")
-		public void testAddNewProviderUser() throws InterruptedException, IOException
-		 {
+	@Test(priority=10,description="Verifies details for New Provider user.")
+	public void testAddNewProviderUser() throws InterruptedException, IOException
+	  {
 			
-			String userType="PROV";
-			String accessType="Admin";
+		 String userType="PROV";
+		 String accessType="Admin";
+		 String accessLevelOfNewUser="Administrator";
 			
-			String accessLevelOfNewUser="Administrator";
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			LoginUPA loginPage=new LoginUPA(testConfig);
-		    
-			SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-			OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.selectTin();
-			ManageUsers manageUser=home.clickManageUsersTab();
-			AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
-			addUserDetails.clickSave();
-			addUserDetails.verifyDetailsOfNewUser(userType);	
-			manageUser.removeFistTinInGrid();
-         }
+		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		 home.selectTin();
+		 ManageUsers manageUser=home.clickManageUsersTab();
+		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+		 addUserDetails.clickSave();
+		 addUserDetails.verifyDetailsOfNewUser(userType);	
+		 manageUser.removeFistTinInGrid();
+		 home.logOutFromUPA();
+      }
 		
 }
 
