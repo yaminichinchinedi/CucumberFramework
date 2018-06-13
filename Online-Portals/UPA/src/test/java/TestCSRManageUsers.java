@@ -14,7 +14,9 @@ import org.testng.annotations.Test;
 	public class TestCSRManageUsers extends TestBase {
 		
 
-	@Test(priority=5,description="Super user role verification")
+
+	@Test(priority=5,description="Super user role verification ..")
+
 	public void testSuperUserAddAndDeleteProvUser() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
