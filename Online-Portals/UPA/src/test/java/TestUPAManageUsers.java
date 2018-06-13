@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 
 public class TestUPAManageUsers extends TestBase {
 
+	// TEST 123 AVNEET
 	
 //	@Test(priority=1,description="Manage User_Existing User-verifies user list sorting")
 //	public void testUserListSorting() throws InterruptedException, IOException
@@ -83,7 +84,7 @@ public class TestUPAManageUsers extends TestBase {
 //			manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);				
 //         }
 		
-		@Test(priority=3,description="Verify Tin Grid -- test123--Details")
+		@Test(priority=3,description="Verify Tin Grid Details")
 		public void testTinGridDetails() throws InterruptedException, IOException
 		 {
 			String userType="PROV";
