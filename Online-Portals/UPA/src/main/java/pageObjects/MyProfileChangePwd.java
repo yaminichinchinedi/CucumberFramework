@@ -5,6 +5,7 @@ import java.util.List;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.LogTemp;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -62,6 +63,7 @@ public class MyProfileChangePwd extends MyProfile{
     {   
     	clickCancel();
     	Element.click(btnYes, "Yes button");
+    	Browser.wait(testConfig, 2);
     	Browser.verifyURL(testConfig, "returnmyprofile.do");
     	return this;
     }
@@ -70,6 +72,7 @@ public class MyProfileChangePwd extends MyProfile{
     {
     	clickCancel();
     	Element.click(btnNo, "No button");
+    	Browser.wait(testConfig, 2);
     	Browser.verifyURL(testConfig, "returnchangepwdpage.do");
     	return this;
     }
@@ -85,10 +88,10 @@ public class MyProfileChangePwd extends MyProfile{
     public MyProfile savePwd()
     { 
     	
-    	String pwd=testConfig.getRunTimeProperty("password");
-    	Element.enterData(txtBoxCurrentPwd,pwd ,"Enter Current Password as :"+" " + pwd, "Current Password");
-    	Element.enterData(txtBoxNewPwd, pwd ,"Enter New Password as :"+" " + pwd, "New Password");
-    	Element.enterData(txtBoxRetypeNewPwd,  pwd ,"Retype New Password as :"+" " + pwd, "Re type New Password");
+    	String currentPwd="Test@1234";
+    	Element.enterData(txtBoxCurrentPwd,currentPwd ,"Enter Current Password as :"+" " + currentPwd, "Current Password");
+    	Element.enterData(txtBoxNewPwd, currentPwd ,"Enter New Password as :"+" " + currentPwd, "New Password");
+    	Element.enterData(txtBoxRetypeNewPwd,  currentPwd ,"Retype New Password as :"+" " + currentPwd, "Re type New Password");
     	Element.click(btnSave, "Save button");
     	
     	return new MyProfile(testConfig);
@@ -98,7 +101,7 @@ public class MyProfileChangePwd extends MyProfile{
     public MyProfileChangePwd verifyChangePwdValidations()
     { 
     	
-    	String pwd=testConfig.getRunTimeProperty("password");
+    	String pwd="Test@1234";
     	
     	/**Leave current password field blank*/
     	
@@ -143,6 +146,7 @@ public class MyProfileChangePwd extends MyProfile{
     public void verifyPwdGuideLines()
     {
     	List<WebElement> pwdGuideLines=pwdGuide.findElements(By.tagName("li"));
+    	LogTemp.Comment("Verifying password guidelines..");
     	Element.verifyTextPresent(pwdGuideLines.get(0), "be between 8 and 25 characters");
     	Element.verifyTextPresent(pwdGuideLines.get(1), "include at least one upper-case character, one lower-case character and one number");
     	Element.verifyTextPresent(pwdGuideLines.get(2), "be case-sensitive");

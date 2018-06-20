@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 public class TestUPAMyProfileTab extends TestBase
  {
 
-	@Test(priority=1,description="Verifies Password guidelines text" + "<br>" + "Verifies user is able to change his password successfully." + "<br" + "Verifies yes/no functinality while changing password")
+	@Test(priority=1,description="My Profile_Page_Change Password Link Yes, no functionality")
 	public void testChangePasswordLink() throws InterruptedException, IOException
 	 {
 		String userType="PROV";
