@@ -3,7 +3,10 @@ package main.java.pageObjects;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
+import main.java.reporting.LogTemp;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -39,8 +42,17 @@ public class MyProfile {
 	}
 	
 	public MyProfileChangePwd clickChangePwd()
-	{
-		Element.click(lnkChangePwd, "Change Password Link");
+	{ 
+	 try
+	  {
+		Browser.wait(testConfig, 2);
+	    testConfig.driver.findElement(By.linkText("Change Password")).click();
+	    Log.Comment("Clicked Change Password" );
+	  }
+	 catch(Exception e)
+	  {
+		LogTemp.Fail("Could not click on Change password link due to exception : " + e);
+	  }
 		return new MyProfileChangePwd(testConfig);
 	}
 	

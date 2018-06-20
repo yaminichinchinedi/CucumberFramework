@@ -108,12 +108,15 @@ import main.java.reporting.LogTemp;
 	public static void click(WebElement element,String namOfElement,int expectedWait)
 	{
 		try{
-	
+	     
 	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
 	     WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(element));
 	     element1.click();
+	     Log.Comment("Clicked " + namOfElement);
+	     
 		}
 		catch(Exception e){
+			Log.Fail("Could not click on " + namOfElement+ " due to exception : " + e);
 			
 		}
 	}
@@ -189,7 +192,7 @@ import main.java.reporting.LogTemp;
 	}
 	catch(Exception e)
 	{
-		Log.Fail(namOfElement +" is not present on the page" + e);
+		Log.Fail(namOfElement +" is not present on the page and exception is :" + "<br>" + e);
 			
 	}
 }
@@ -519,7 +522,8 @@ import main.java.reporting.LogTemp;
 		
 		catch (Exception e)
 		{
-			Log.Fail("Unable to find element with locator" + " " + locatorValue );
+			Log.Fail("Unable to find element with locator " +  locatorValue + " due to exception : " + e);
+					
 			return null;
 		}
 		return null;
