@@ -119,23 +119,23 @@ public class TestUPAManageUsers extends TestBase {
 //       }	
 //
 //		
-	@Test(priority=7,description="Verifies details for New Billing Service user.")
-	public void testAddNewBSUser() throws InterruptedException, IOException
-	  {
-		 String userType="BS";
-		 String accessType="Admin";
-			
-		 String accessLevelOfNewUser="Administrator";
-		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		 ManageUsers manageUser=home.clickManageUsersTab();
-		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
-		 addUserDetails.clickSave();
-		 addUserDetails.verifyDetailsOfNewUser(userType);	
-		 home.logOutFromUPA();
-		 //manageUser.removeFistTinInGrid();
-       }
+//	@Test(priority=7,description="Verifies details for New Billing Service user.")
+//	public void testAddNewBSUser() throws InterruptedException, IOException
+//	  {
+//		 String userType="BS";
+//		 String accessType="Admin";
+//			
+//		 String accessLevelOfNewUser="Administrator";
+//		 UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//		 OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+//		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+//		 ManageUsers manageUser=home.clickManageUsersTab();
+//		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
+//		 addUserDetails.clickSave();
+//		 addUserDetails.verifyDetailsOfNewUser(userType);	
+//		 home.logOutFromUPA();
+//		 //manageUser.removeFistTinInGrid();
+//       }
 		
 
 	@Test(priority=8,description="Verifies Payer user details are read only on UPA")

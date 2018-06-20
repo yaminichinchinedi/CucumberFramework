@@ -66,7 +66,6 @@ public  class Log  {
 	
 	public static void Fail(ITestResult result) 
 	{
-		System.out.println(testConfig.getRunTimeProperty("AlreadyFailed"));
 		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
 		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
 

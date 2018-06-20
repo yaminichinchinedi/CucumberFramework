@@ -316,7 +316,7 @@ public class HomePage extends LoginUPA {
 	}
 
 	public LoginUPA logOutFromUPA() {
-		Element.click(lnkLogOut, "Log out");
+		Element.click(lnkLogOut, "Log out",5);
 		return new LoginUPA(testConfig);
 	}
 

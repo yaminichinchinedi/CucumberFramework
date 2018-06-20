@@ -17,35 +17,46 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.sun.mail.iap.Argument;
+
 import main.java.reporting.Log;
+import main.java.reporting.LogTemp;
 
  public class Element {
 	
-	 //creating object of Log class to use its methods
-	
 	 public static TestBase testConfig;
 	 
-	//Enters data in web element
+	/**Enters data in web element
+	 * @Argument-WebElement,data to be entered, 
+	 * description and name of element
+	 */
 	public static void enterData(WebElement element,String data, String description,String namOfElement)
 	{
 		try{
 		element.clear();
+		}
+		catch(Exception e)
+		{
+			LogTemp.Comment("Can not clear the element" + " " + namOfElement,"directly entering data");
+		}
+		try
+		{
 		element.sendKeys(data);		
 		Log.Comment(description);
 		}
 		catch(NoSuchElementException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
 		}
 		
 		catch(ElementNotVisibleException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
 		}
 		
 		catch(StaleElementReferenceException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page"+ '\n' + e);
 		}
 		
 		catch(NullPointerException e)
@@ -87,7 +98,32 @@ import main.java.reporting.Log;
 		}
 	}
 	
-	//Clicks the web element
+	/**
+	 * Waits till an element becomes interactive to be clicked
+	 * and then clicks it
+	 * @param element
+	 * @param namOfElement
+	 * @param expectedWait
+	 */
+	public static void click(WebElement element,String namOfElement,int expectedWait)
+	{
+		try{
+	
+	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
+	     WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(element));
+	     element1.click();
+		}
+		catch(Exception e){
+			
+		}
+	}
+	
+	
+	/**
+	 * Performs Click action on specified element
+	 * @param element
+	 * @param namOfElement
+	 */
 	public static void click(WebElement element,String namOfElement)
 	{
 		try

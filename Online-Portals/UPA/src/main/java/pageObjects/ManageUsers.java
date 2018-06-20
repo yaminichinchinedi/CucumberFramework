@@ -534,7 +534,8 @@ public class ManageUsers extends AddUserDetails  {
     	Element.verifyElementPresent(btnCancel,"Cancel");
     	Element.verifyElementPresent(lnkNotYou,"Not you");
     	Element.click(lnkNotYou, "Not You");
-    	Browser.waitForLoad(testConfig.driver);;
+    	Browser.waitForLoad(testConfig.driver);
+    	Browser.wait(testConfig,5);
     	Browser.verifyURL(testConfig, "optumhealthfinancial.com");
     	
     }

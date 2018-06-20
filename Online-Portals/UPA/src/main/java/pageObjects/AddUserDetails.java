@@ -150,15 +150,21 @@ public class AddUserDetails {
 		
 		testConfig.putRunTimeProperty("email", userEmailAdr);
 		
+		Browser.wait(testConfig, 2);
+		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		
+		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
 		
-		
-		Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+	    
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
+		
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
-		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
-		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		
 		return new AddUserDetails(testConfig);
 		
 	}
@@ -371,8 +377,8 @@ public class AddUserDetails {
 		
 		Element.verifyTextPresent(errorPhone, "Invalid Phone Number");
 		
-		//VErify Duplicate email is not allowed
-		
+		//Verify Duplicate email is not allowed
+		Browser.wait(testConfig, 2);
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
 		Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
