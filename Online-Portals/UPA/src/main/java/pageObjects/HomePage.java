@@ -276,7 +276,10 @@ public class HomePage extends LoginUPA {
 	public HomePage selectTin() 
 	{
 		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-		Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
+		//Element.selectByIndex(drpDwnTin, 1, " First Tin from dropdown");
+		
+		Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
+		
 		Browser.waitForLoad(testConfig.driver);
 		testConfig.driver.findElement(By.id("taxIndNbrId"));
 		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
@@ -316,7 +319,7 @@ public class HomePage extends LoginUPA {
 	}
 
 	public LoginUPA logOutFromUPA() {
-		Element.click(lnkLogOut, "Log out",5);
+		Element.click(lnkLogOut, "Log out");
 		return new LoginUPA(testConfig);
 	}
 
