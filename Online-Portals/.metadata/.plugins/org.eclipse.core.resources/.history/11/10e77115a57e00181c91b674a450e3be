@@ -41,6 +41,9 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
+
+//	@FindBy(id = "tabPayer")
+//	WebElement viewPaymentsTab;
 	
 	@FindBy(linkText="View Payments")
 	WebElement viewPaymentsTab;
@@ -292,6 +295,7 @@ public class HomePage extends LoginUPA {
 	{
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.click(viewPaymentsTab, "View Payments Tab");
+		//Element.click(viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
 	}
 	

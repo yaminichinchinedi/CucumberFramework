@@ -41,6 +41,9 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
+
+//	@FindBy(id = "tabPayer")
+//	WebElement viewPaymentsTab;
 	
 	@FindBy(linkText="View Payments")
 	WebElement viewPaymentsTab;
@@ -276,6 +279,7 @@ public class HomePage extends LoginUPA {
 	public HomePage selectTin() 
 	{
 		int sqlRow=23;
+		
 		Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
 		Browser.waitForLoad(testConfig.driver);
@@ -292,6 +296,7 @@ public class HomePage extends LoginUPA {
 	{
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.click(viewPaymentsTab, "View Payments Tab");
+		//Element.click(viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
 	}
 	

@@ -41,6 +41,9 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
+
+//	@FindBy(id = "tabPayer")
+//	WebElement viewPaymentsTab;
 	
 	@FindBy(linkText="View Payments")
 	WebElement viewPaymentsTab;

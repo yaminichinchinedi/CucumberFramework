@@ -41,6 +41,9 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
+
+//	@FindBy(id = "tabPayer")
+//	WebElement viewPaymentsTab;
 	
 	@FindBy(linkText="View Payments")
 	WebElement viewPaymentsTab;
@@ -276,10 +279,21 @@ public class HomePage extends LoginUPA {
 	public HomePage selectTin() 
 	{
 		int sqlRow=23;
+		
 		Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+//		Element.selectByIndex(drpDwnTin,Integer.valueOf(provDetails.get("PROV_TIN_NBR").toString()), " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+		
+		//Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+		Element.selectByVisibleText(drpDwnTin,"942958258 - Enrolled", " Selected Tin is : "  + "942958258 - Enrolled");
+		
 		Browser.waitForLoad(testConfig.driver);
 		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
+	
+		
+	//	Element.selectByIndex(drpDwnTin, 2, " First Tin from dropdown");
+		
+		
+//		Browser.wait(testConfig,2);
 		testConfig.driver.findElement(By.id("taxIndNbrId"));
 		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
 		Log.Comment("Selected tin number is : " + " " + tinNumber);
@@ -292,6 +306,7 @@ public class HomePage extends LoginUPA {
 	{
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.click(viewPaymentsTab, "View Payments Tab");
+		//Element.click(viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
 	}
 	

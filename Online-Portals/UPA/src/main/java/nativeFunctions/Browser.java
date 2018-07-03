@@ -411,7 +411,8 @@ public class Browser
 		try
 		{
 			int retries = 30;
-			Browser.waitForLoad(testConfig.driver);
+			Browser.wait(testConfig,3);
+			//Browser.waitForLoad(testConfig.driver);
 			String actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 			expectedURL = expectedURL.toLowerCase();
 			
@@ -421,9 +422,8 @@ public class Browser
 				{
 					Log.Pass("Browser URL", expectedURL,actualURL);
 					
-					// Verify that page stays on same page (no internal
-					// redirect)
-					Browser.wait(testConfig, 5);
+					// Verify that page stays on same page (no internal redirect)
+					
 					actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 					if (!actualURL.contains(expectedURL))
 					{
@@ -457,22 +457,26 @@ public class Browser
 	 *         later
 	 */
 	public static String switchToNewWindow(TestBase testConfig,String expectedURLHelp)
-	{
+	{  
 		if (testConfig.driver != null)
 		{
 			Log.Comment("Switching to the new window");
+			Browser.wait(testConfig, 2);
 			String oldWindow = testConfig.driver.getWindowHandle();
 			
-			if (testConfig.driver.getWindowHandles().size() < 2)
- 			{
-				Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
-			}
+			  
+			  if (testConfig.driver.getWindowHandles().size() < 2)
+ 			  {
+				  Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
+			  }
 			
+			  
 			for (String winHandle : testConfig.driver.getWindowHandles())
 			{
 				if (!winHandle.equals(oldWindow))
 				{
 					testConfig.driver.switchTo().window(winHandle);
+					Browser.wait(testConfig, 2);
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
@@ -481,6 +485,26 @@ public class Browser
 			return oldWindow;
 		}
 		return null;
+	}
+	
+	
+	public static int getNoOfWindowHandles(TestBase testConfig)
+	{
+		return testConfig.driver.getWindowHandles().size();
+	}
+	
+	
+	public static void waitTillSpecificPageIsLoaded(TestBase testConfig,String pageTitle)
+	{
+		try{
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.titleContains(pageTitle));
+			 Log.Pass("Page is loaded with title : " + " " +pageTitle) ;
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Page could not be loaded , because of exception : " + e);
+		}
 	}
 	
 	/**
@@ -499,6 +523,15 @@ public class Browser
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
 			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+		}
+	}
+	
+	public static void switchToDefaultContent(TestBase testConfig)
+	{
+		if (testConfig.driver != null)
+		{
+			Log.Comment("Switching to the default window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+			testConfig.driver.switchTo().defaultContent();
 		}
 	}
 	
