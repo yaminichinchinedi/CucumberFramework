@@ -61,24 +61,24 @@ public class Helper
 	 *            -> is the format which we get after converting ex: dd MMM yy
 	 * @return
 	 */
-//	public static String changeDateFormat(Config testConfig, String date, String oldDateFomat, String newDateFomat)
-//	{
-//
-//		String desiredDate = "";
-//		SimpleDateFormat dateFormat = new SimpleDateFormat(newDateFomat);
-//		SimpleDateFormat oldFormat = new SimpleDateFormat(oldDateFomat);
-//
-//		try
-//		{
-//			desiredDate = dateFormat.format(oldFormat.parse(date)).toString();
-//
-//		}
-//		catch (ParseException e)
-//		{
-//			testConfig.logComment(e.getMessage());
-//		}
-//		return desiredDate;
-//	}
+	public static String changeDateFormat(TestBase testConfig, String date, String oldDateFomat, String newDateFomat)
+	{
+
+		String desiredDate = "";
+		SimpleDateFormat dateFormat = new SimpleDateFormat(newDateFomat);
+		SimpleDateFormat oldFormat = new SimpleDateFormat(oldDateFomat);
+
+		try
+		{
+			desiredDate = dateFormat.format(oldFormat.parse(date)).toString();
+
+		}
+		catch (ParseException e)
+		{
+			Log.Comment(e.getMessage());
+		}
+		return desiredDate;
+	}
 
 	public static String changeDateFormat(String oldDateString)
 	{
@@ -96,6 +96,14 @@ public class Helper
 		}
 		sdf.applyPattern(NEW_FORMAT);
 		return sdf.format(d);
+	}
+	
+	
+	public static String changeDateFormat(Date date)
+	{
+		SimpleDateFormat  formatter = new SimpleDateFormat("dd/MM/yyyy");  
+		String strDate = formatter.format(date);  
+	    return strDate;
 	}
 
 	/**
@@ -120,20 +128,34 @@ public class Helper
 		return parsedDate;
 	}
 
+	
 	/**
-	 * Function to change Date from 20/12/15 to 20-12-15
+	 * Method used to convert a string "dd/mm/yyyy" to Date formatdd/mm/yyyy
 	 * 
 	 * @param date
-	 * @return
-	 */
-//	public static String changeDateFormatSeperator(String date)
-//	{
-//		String dateOnly = "";
-//		dateOnly = date.replaceAll("/", "-");
-//		return dateOnly;
-//	}
+	 *            which needs to be converted ex: "26/11/2014"
+	 *            */
+   public static Date changeStringToDate(String dateInString) throws ParseException
+	{
+	    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = formatter.parse(dateInString);
+	    return date;
+   }
 	
-	
+	/**
+	 * Method used to convert a Date dd/mm/yyyy to String "dd/mm/yyyy"
+	 * 
+	 * @param date
+	 *            which needs to be converted ex: 26/11/2014
+	 *            */
+  public static String changeDateToString(Date date) throws ParseException
+	{
+	    return date.toString();
+  }
+   
+   
+   
+   
 	/**
 	 * Function to change Date from 20-12-15 to 20/12/15 
 	 * 
@@ -255,30 +277,30 @@ public class Helper
 	 * @param expected
 	 * @param actual
 	 */
-//	public static <T> void compareEquals(Config testConfig, String what, T expected, T actual)
-//	{
-//		if (expected == null & actual == null)
-//		{
-//			testConfig.logPass(what, actual);
-//			return;
-//		}
-//
-//		if (actual != null)
-//		{
-//			if (!actual.equals(expected))
-//			{
-//				testConfig.logFail(what, expected, actual);
-//			}
-//			else
-//			{
-//				testConfig.logPass(what, actual);
-//			}
-//		}
-//		else
-//		{
-//			testConfig.logFail(what, expected, actual);
-//		}
-//	}
+	public static <T> void compareEquals(TestBase testConfig, String what, T expected, T actual)
+	{
+		if (expected == null & actual == null)
+		{
+			Log.Pass(testConfig, what, expected, actual);
+			return;
+		}
+
+		if (actual != null)
+		{
+			if (!actual.equals(expected))
+			{
+				Log.Fail(testConfig, what, expected, actual);
+			}
+			else
+			{
+				Log.Pass(testConfig,what,expected, actual);
+			}
+		}
+		else
+		{
+			Log.Fail(testConfig,what,expected, actual);
+		}
+	}
 	
 	/** Compare two string and log as warning if strings are not same
 	 * @param testConfig
@@ -1230,45 +1252,6 @@ return previousDate.getTime();
 	
 	
 	
-	
-	
-	
-	
-	
-//	public static String getDateBeforeOrAfterMonths(int month, String format)
-//	{
-//	
-//	Calendar currentdate = Calendar.getInstance();
-//	String strdate = null;
-//	
-//	DateFormat formatter = new SimpleDateFormat(format);
-//	strdate = formatter.format(currentdate.getTime());
-//	System.out.println("strdate=>" + strdate);
-//	TimeZone obj = TimeZone.getTimeZone("CST");
-//
-//	formatter.setTimeZone(obj);
-//	strdate = formatter.format(currentdate.getTime());
-//	Date theResult=null;
-//	try {
-//		theResult = formatter.parse(strdate);
-//	} catch (ParseException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//
-//	System.out.println("The current time in India is  :: " +currentdate.getTime());
-//
-//	System.out.println("The date and time in :: " + obj.getDisplayName() + "is ::" + theResult);
-//	System.out.println("The date and time in :: " + obj.getDisplayName() + "is ::" + strdate);
-//	return theResult.toString();
-	//}
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * This utility method returns a future or past datetime after/before number of
 	 * seconds. 
@@ -1371,8 +1354,20 @@ return previousDate.getTime();
 		DateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date.getTime());
 	}
+	
+	
+//	public static String getCurrentMonth(int dd, int mm, int yyyy, String format)
+//	{
+//		Calendar cal = Calendar.getInstance();
+//		cal.g
+//		date.add(Calendar.DAY_OF_YEAR, -1);
+//		DateFormat dateFormat = new SimpleDateFormat(format);
+//		return dateFormat.format(date.getTime());
+//	}
+//
 
-
+	
+	
 	public static String getFourWeekStartingDate(String format)
 	{
 		Calendar cal = Calendar.getInstance();
@@ -2533,5 +2528,7 @@ return previousDate.getTime();
 			else 
 				Log.Fail(what + ":" + "" + "<br>" + "Actual is :" +" " + actual + "<br>" + "Expected is :" +" " +expected);
 			}
+
+	
 	}
 

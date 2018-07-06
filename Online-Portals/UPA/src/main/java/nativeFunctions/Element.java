@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.relevantcodes.extentreports.converters.TestConverter;
 import com.sun.mail.iap.Argument;
 
 import main.java.reporting.Log;
@@ -98,6 +99,7 @@ import main.java.reporting.LogTemp;
 		}
 	}
 	
+	
 	/**
 	 * Waits till an element becomes interactive to be clicked
 	 * and then clicks it
@@ -112,6 +114,9 @@ import main.java.reporting.LogTemp;
 	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
 	     WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(element));
 	     element1.click();
+	     
+	  //   WebElement ele=wait.until(ExpectedConditions.invisibilityOf(element1))
+	     
 	     Log.Comment("Clicked " + namOfElement);
 	     
 		}
@@ -120,6 +125,26 @@ import main.java.reporting.LogTemp;
 			
 		}
 	}
+	
+	
+//	public static void verifyInvisibleText(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
+//	{
+//	     
+//	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
+//	     String a=wait.until(ExpectedConditions.invisibilityOf(element)).toString();
+//	     System.out.println("text in modal is" + a);	
+//	}
+//	
+	
+	public static void verifyInvisibleText(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
+	{
+	     
+	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
+	   //  wait.until(ExpectedConditions.visibilityOf(element).toString();
+	     //System.out.println("text in modal is" + a);	
+	}
+	
+	
 	
 	
 	/**
@@ -137,12 +162,12 @@ import main.java.reporting.LogTemp;
 		
 		catch(NoSuchElementException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page");
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
 		}
 		
 		catch(ElementNotVisibleException e)
 		{
-			Log.Fail("Element" + namOfElement+" is not visible at first go, trying again");
+			Log.Fail("Element" + namOfElement+" is not visible at first go and exception is: " + '\n' + e);
 		}
 		
 		catch(NullPointerException e)
@@ -162,12 +187,21 @@ import main.java.reporting.LogTemp;
 	
 	
 	
+//	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
+//	{
+//		Actions action = new Actions(testConfig.driver);
+//		action.moveToElement(element).build().perform();
+//		Log.Comment("Mouse Hovered over " + namOfElement);	
+//	}
+	
+	
 	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
-		Actions action = new Actions(testConfig.driver);
-		action.moveToElement(element).build().perform();
+		
+		Actions builder = new Actions (testConfig.driver);							
+        builder.clickAndHold().moveToElement(element);					
+        builder.moveToElement(element).build().perform(); 
 		Log.Comment("Mouse Hovered over " + namOfElement);
-			
 	}
 	
 	
@@ -197,7 +231,7 @@ import main.java.reporting.LogTemp;
 	}
 }
 		
-		//Verifies element is not present on the page
+	//Verifies element is not present on the page
 	public static void verifyElementNotPresent(WebElement element,String namOfElement)
 		{
 		try
@@ -244,10 +278,10 @@ import main.java.reporting.LogTemp;
 	
 	
 	//Verifies element is not present on the page 
-	public static void verifyElementNotPresent(String locatorType,String locatorValue,String elementName)
+	public static void verifyElementNotPresent(TestBase testConfig,String locatorType,String locatorValue,String elementName)
 	{
 		try {
-			  findElement(locatorType, locatorValue);
+			  findElement(testConfig,locatorType, locatorValue);
 			  Log.Fail(elementName + " " + " is present");
 		    }
 			
@@ -410,7 +444,7 @@ import main.java.reporting.LogTemp;
 	}
 	
 	
-	public static List<WebElement> findElements(TestBase testConfig,String locatorType,String locatorValue ) throws InterruptedException
+	public static List<WebElement> findElements(TestBase testConfig,String locatorType,String locatorValue )
 	{
 		Browser.waitForLoad(testConfig.driver);
 		int retry=4;
@@ -455,26 +489,26 @@ import main.java.reporting.LogTemp;
 		}
 		catch (NoSuchElementException e)
 		{
-			Log.Comment("Could not find the element on page");
+			Log.Comment("Could not find the element on page and exception is : " + '\n' + e);
 			return null;
 		}
 		
 		catch (NullPointerException e)
 		{
-			Log.Fail("exception" + e);
+			Log.Fail("Exception Occured" + e);
 			return null;
 		}
 		
 		catch (Exception e)
 		{
-			Log.Fail("exception" + e);
+			Log.Fail("Exception Occured" + e);
 			return null;
 		}
 		return null;
 		
 	}
 	
-	public static WebElement findElement(String locatorType,String locatorValue ) throws InterruptedException
+	public static WebElement findElement(TestBase testConfig,String locatorType,String locatorValue )
 	{
 		
 		try
@@ -505,18 +539,18 @@ import main.java.reporting.LogTemp;
 		
 	    }
 		
-		catch (StaleElementReferenceException e1)
+		catch (StaleElementReferenceException e)
 		{
 			Log.Comment("Stale element reference exception. Trying again...");
 			
 			// retry
 			Browser.wait(testConfig, 3);
 			Log.Comment("Retrying getting element");
-			findElement(locatorType,locatorValue);
+			findElement(testConfig,locatorType,locatorValue);
 		}
 		catch (NoSuchElementException e)
 		{
-			Log.Comment("Could not find the element on page");
+			Log.Comment("Could not find the element on page  due to exception : " + e);
 			return null;
 		}
 		
