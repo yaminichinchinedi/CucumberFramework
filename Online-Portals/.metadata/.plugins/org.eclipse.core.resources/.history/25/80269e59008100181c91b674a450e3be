@@ -307,7 +307,7 @@ public class paymentSummary{
 		 }
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+//		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
      }
 	
 
