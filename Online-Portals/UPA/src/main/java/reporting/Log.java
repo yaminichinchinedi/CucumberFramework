@@ -11,6 +11,7 @@ import main.java.nativeFunctions.TestBase;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -185,6 +186,21 @@ public  class Log  {
 			
 		}
 
+	
+	
+	public static void Fail (TestBase testConfig, String what, Object expected, Object actual)
+	{
+		
+		Fail("Failed comparison of"+ " " + what + '\n' +"Expected was :" + " " +  expected + " " + '\n' + "Actual is :" + " " + actual);
+		
+	}
+	
+	public static void Pass (TestBase testConfig, String what, Object expected, Object actual)
+	{
+		
+		Pass("Passed comparison of"+ " " + what + '\n' +"Expected was :" + " " +  expected + " " + '\n' + "Actual is :" + " " + actual);
+		
+	}
 
 	public void logWarning(String message) {
 		logger.log(LogStatus.WARNING, message);
