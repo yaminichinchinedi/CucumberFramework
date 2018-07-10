@@ -21,7 +21,7 @@ public class DataBase
 {
 	public enum DatabaseType
 	{
-		IMPL(6),Stage(6), PROD(6),Stage2(6), Offline(6);
+		IMPL(6),Stage(6), PROD(6),Stage2(6);
 
 	public final int values;
 
@@ -74,7 +74,7 @@ public class DataBase
 	}
 
 	/**
-	 * Executes the select db query for OFFLINE db and returns complete
+	 * Executes the select db query and returns complete
 	 * Resultset
 	 * 
 	 * @param Config
@@ -97,7 +97,7 @@ public class DataBase
 	}
 
 	/**
-	 * Executes the select db query for OFFLINE db, and saves the result in
+	 * Executes the select db query , and saves the result in
 	 * Config.runtimeProperties as well as returns Map
 	 * 
 	 * @param Config
@@ -143,55 +143,6 @@ public class DataBase
 }
 
 
-	/**
-	 * Pick query from Given Sheet and Executes the select db query for OFFLINE db, and returns Map of response data. 
-	 * 
-	 * @param Config
-	 *            test config instance
-	 * @param sqlRow
-	 *            row number of the 'Query' column of 'SQL' sheet of Test data
-	 *            excel having the query to be executed
-	 * @param rowNumber
-	 *            row number to be returned (use 1 for first row and -1 for last
-	 *            row)
-	 * @param sheetname will be combination of filename and sheetname separated by dot (i.e : filename.sheetname )          
-	 * @return Map containing key:value pairs of specified row
-	 */
-	public static Map<String, String> executeSelectQuery(TestBase testConfig, int sqlRow, int rowNumber,String sheetname)
-	{
-		// Read the Query column of given sheet of Test data excel
-		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname);
-		String selectQuery = sqlData.GetData(sqlRow, "Query");
-		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
-		return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Offline);
-	}
-
-	/**
-	 * Pick query from Given Sheet and Executes the select db query for OFFLINE db, and returns Map of response data. 
-	 * 
-	 * @param Config
-	 *            test config instance
-	 * @param sqlRow
-	 *            row number of the 'Query' column of 'SQL' sheet of Test data
-	 *            excel having the query to be executed
-	 * @param rowNumber
-	 *            row number to be returned (use 1 for first row and -1 for last
-	 *            row)
-	 * @param sheetname will be combination of filename and sheet name separated by dot (i.e : filename.sheetname ) 
-	 * @param  path will be path for sheet containing Queries      
-	 * @return Map containing key:value pairs of specified row
-	 */
-	public static Map<String, String> executeSelectQuery(TestBase testConfig, int sqlRow, int rowNumber,String sheetname,String path)
-	{
-
-		// Read the Query column of given sheet of Test data excel
-		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname,path);
-		String selectQuery = sqlData.GetData(sqlRow, "Query");
-		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
-		return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Offline);
-	}
 
 	/**
 	 * Executes the select db query, and saves the result in
@@ -448,8 +399,8 @@ public class DataBase
 
 		if(timeDifference > 60)
 			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
-		//else
-		//testConfig.logComment("Time taken to run this query in seconds : " + timeDifference);
+		else
+			Log.Comment("Time taken to run this query in seconds : " + timeDifference);
 
 		return resultMap;
 	}
@@ -526,7 +477,7 @@ public class DataBase
 		}
 		catch (SQLException e)
 		{
-			//Log.logException(e);
+			Log.Comment("Exception is " +e);
 		}
 		finally
 		{
@@ -538,7 +489,7 @@ public class DataBase
 				}
 				catch (SQLException e)
 				{
-					//Log.logException(e);
+					Log.Comment("Exception is " +e);
 				}
 			}
 		}
@@ -550,8 +501,8 @@ public class DataBase
 
 		if(timeDifference > 60)
 			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
-		//else
-		//testConfig.logComment("Time taken to run this query in seconds : " + timeDifference);
+		else
+			Log.Comment("Time taken to run this query in seconds : " + timeDifference);
 
 		return rows;
 	}
@@ -745,43 +696,6 @@ public class DataBase
 		return resultSet;
 	}
 
-	/**
-	 * This method is used to run a query on a Postgres DB with given connection string, username and password.
-	 * @param query
-	 * @param connectString
-	 * @param userName
-	 * @param password
-	 * @return
-	 */
-	public static ResultSet executePostgresQueryWithoutClosingConnection(String query, String connectionString, String username, String password)
-	{
-		Date startDate = new Date();
-		Statement stmt = null;
-		ResultSet resultSet = null;
-		try
-		{
-			Class.forName("org.postgresql.Driver");
-			connection = DriverManager.getConnection(connectionString, username, password);
-			stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-			resultSet = stmt.executeQuery(query);
-		}
-		catch (SQLException | ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		} 
-
-		if (null == resultSet)
-			System.out.println("No data was returned for this query");
-
-		Date endDate = new Date();
-		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
-
-		if(timeDifference > 60)
-			System.out.println("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
-		else
-			System.out.println("Time taken to run this query in seconds : " + timeDifference);
-		return resultSet;
-	}
 	
 	/**
 e	 */
@@ -817,31 +731,4 @@ e	 */
 
 		return executeUpdateQuery(testConfig, insertQuery, dbType);
 	}
-	
-	/**
-	 * Pick query from Given Sheet and Executes the select db query for OFFLINE db, and returns Map of response data. 
-	 * 
-	 * @param Config
-	 *            test config instance
-	 * @param sqlRow
-	 *            row number of the 'Query' column of 'SQL' sheet of Test data
-	 *            excel having the query to be executed
-	 * @param rowNumber
-	 *            row number to be returned (use 1 for first row and -1 for last
-	 *            row)
-	 * @param sheetname will be combination of filename and sheet name separated by dot (i.e : filename.sheetname ) 
-	 * @param  path will be path for sheet containing Queries      
-	 * @return Resultset
-	 */
-	public static ResultSet executeSelectQuery(TestBase testConfig, int sqlRow,String sheetname,String path)
-	{
-
-		// Read the Query column of given sheet of Test data excel
-		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject(sheetname,path);
-		String selectQuery = sqlData.GetData(sqlRow, "Query");
-		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
-		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
-		return executeSelectQuery(testConfig, selectQuery, DatabaseType.Offline);
-	}
-	
 }

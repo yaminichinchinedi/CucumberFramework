@@ -29,11 +29,11 @@ public class TestDataReader {
 	private FileInputStream fis = null;
 	String path;
 	private String sheetName;
-	private main.java.nativeFunctions.TestBase testConfig;
+	private TestBase testConfig;
 	private ArrayList<List<String>> testData;
 
 	// constructor
-	public TestDataReader(main.java.nativeFunctions.TestBase testBaseSetup) {
+	public TestDataReader(TestBase testBaseSetup) {
 		this.testConfig = testBaseSetup;
 	}
 
@@ -154,26 +154,6 @@ public class TestDataReader {
 		return correspondingColumnValue;
 	}
 
-	/**
-	 * Returns the Excel sheet data value. It will get the current environment
-	 * and read the value in column 'column-<environment>', if it blank then it
-	 * will return value in 'column' (returns {skip} if the excel value is
-	 * blank, which means no operation)
-	 * 
-	 * @param row
-	 *            Excel Row number to read
-	 * @param column
-	 *            Excel column name to read
-	 * @return The value read
-	 */
-//	public String GetCurrentEnvironmentData(int row, String column) {
-//		String env = testConfig.getRunTimeProperty("Environment");
-//		String value = GetData(row, column + "-" + env);
-//		if (value.equalsIgnoreCase("{skip}")) {
-//			value = GetData(row, column);
-//		}
-//		return value;
-//	}
 
 	/**
 	 * Returns the Excel sheet data value (returns {skip} if the excel value is
@@ -207,34 +187,6 @@ public class TestDataReader {
 			}
 		}
 		data = data.trim();
-		
-//		if (data.equals(""))
-//		{
-//			data = "{skip}";
-//			return data;
-//		} 
-//		else 
-//			{
-//			 if (data.contains("{empty}"))
-//				data = data.replace("{empty}", "");
-//			if (data.contains("{space}"))
-//				data = data.replace("{space}", " ");
-//			while (data.contains("{random"))
-//			{
-//				int start = data.indexOf("Num:") + 4;
-//				int end = data.indexOf("}");
-//				int length = Integer.parseInt(data.substring(start, end));
-//				if (data.contains("{randomAlphaNum:" + length + "}"))
-//					data = data.replace("{randomAlphaNum:" + length + "}",
-//							Helper.generateRandomAlphaNumericString(length));
-//				if (data.contains("{randomAlphabetsNum:" + length + "}"))
-//					data = data.replace("{randomAlphabetsNum:" + length + "}",
-//							Helper.generateRandomAlphabetsString(length));
-//				if (data.contains("{randomNum:" + length + "}"))
-//					data = data.replace("{randomNum:" + length + "}",
-//							Long.toString(Helper.generateRandomNumber(length)));
-//			}
-// }
 		return data;
 			}
 
@@ -344,17 +296,7 @@ public class TestDataReader {
 					testData.add(data);
 				}
 				this.sheetName = sheetName;
-			 
-//			//testConfig.logException(e);
-//		} catch (IOException e) {
-//			//testConfig.logException(e);
-//		} finally {
-//			if (fis != null) {
-//				try {
-//					fis.close();
-//				} catch (IOException e) {
-//					//testConfig.logException(e);
-//				}
+
 			}
 	
 
@@ -366,7 +308,7 @@ public class TestDataReader {
 		HSSFCell cell = null;
 		int colNum = -1;
 		if (row <= 0)
-			main.java.reporting.Log.Fail("Invalid row number:" + row);
+			Log.Fail("Invalid row number:" + row);
 		List<String> headerRow = testData.get(0);
 		for (int i = 0; i < headerRow.size(); i++) {
 			if (headerRow.get(i).equalsIgnoreCase(column)) {

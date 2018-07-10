@@ -31,8 +31,7 @@ public class TestProviderViewPayments extends TestBase {
 	    String filterPayments="Show All";
 		String quickSearchFilter="";
 		
-		
-		testConfig.putRunTimeProperty("key", "taxIdentifierType");
+		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "ALL");	
 		
 		
@@ -43,7 +42,7 @@ public class TestProviderViewPayments extends TestBase {
 		
 		//By default gets data for 30 days
 		
-		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().verifyDefaultSearchResultCount();
+		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab();//.verifyDefaultSearchResultCount();
 		
 	    quickSearchFilter="Last 60 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
@@ -70,7 +69,7 @@ public class TestProviderViewPayments extends TestBase {
         String archiveFilter="Show All";
         String quickSearchFilter="Last 30 days";
         
-        testConfig.putRunTimeProperty("key", "taxIdentifierType");
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "NPI");		
 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -86,14 +85,14 @@ public class TestProviderViewPayments extends TestBase {
         quickSearchFilter="Last 90 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
          
-//        quickSearchFilter="Last 4-6 months";
-//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
-//         
-//        quickSearchFilter="Last 6-9 months";
-//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
-//         
-//        quickSearchFilter="Last 9-13 months";
-//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+        quickSearchFilter="Last 4-6 months";
+        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+         
+        quickSearchFilter="Last 6-9 months";
+        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+         
+        quickSearchFilter="Last 9-13 months";
+        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
      }	
    
    
@@ -105,7 +104,7 @@ public class TestProviderViewPayments extends TestBase {
         String archiveFilter="Show All";
         String quickSearchFilter="Last 30 days";
         
-        testConfig.putRunTimeProperty("key", "taxIdentifierType");
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "TIN");		
 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -132,24 +131,6 @@ public class TestProviderViewPayments extends TestBase {
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
   }	
 
-
-   
-   
-   @Test(priority=4,description="TS003_View Payments_chronological order of payments" + "<br>" + "Validate Payment date sorting for both ascending and descending")
-   void testPaymentDateSorting() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-   {   
-	    String quickSearchFilter="Last 60 days";
-	    String archiveFilter="Show All";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
-        paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
-        paymentSummaryPage.verifyPaymentDateSorting("Desc");
-        paymentSummaryPage.verifyPaymentDateSorting("Asc");    
-   }
-   
-   
    @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
    void testArchivedPaymentsFilterActiveOnly() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
@@ -254,6 +235,19 @@ public class TestProviderViewPayments extends TestBase {
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
   }
 
+   @Test(priority=4,description="TS003_View Payments_chronological order of payments" + "<br>" + "Validate Payment date sorting for both ascending and descending")
+   void testPaymentDateSorting() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   {   
+	    String quickSearchFilter="Last 60 days";
+	    String archiveFilter="Show All";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.selectTin();
+        paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
+        paymentSummaryPage.verifyPaymentDateSorting("Desc");
+        paymentSummaryPage.verifyPaymentDateSorting("Asc");    
+   }
 }
 
 			

@@ -25,7 +25,7 @@ public class TestUPAEnrollment extends TestBase {
 	 }
 	
 	
-	@Test(priority=1,description="Tests a Successful AO type new enrollment")
+	@Test(priority=1,description="Verifies Successful AO type new enrollment with all details saved in DB")
 	public void testSuccessfulAOProviderEnrollment() throws Exception{
 		
 		int excelRowNo=1;
@@ -37,7 +37,7 @@ public class TestUPAEnrollment extends TestBase {
 		   
 	}
 	
-	@Test(priority=2,description="Tests a Successful AV type new enrollment")
+	@Test(priority=2,description="Verifies Successful AV type new enrollment")
 	public void testSuccessfulAVProviderEnrollment() throws Exception{
 		
 	    int excelRowNo=3;
@@ -48,7 +48,7 @@ public class TestUPAEnrollment extends TestBase {
        
 	}
 	
-	@Test(priority=2,description="Tests a Successful VO type new enrollment")
+	@Test(priority=2,description="Verifies Successful VO type new enrollment")
 	public void testSuccessfulVOProviderEnrollment() throws Exception{
 		
 	    int excelRowNo=4;

@@ -22,9 +22,7 @@ import org.testng.annotations.Test;
 		String loginUserType="Super";
 		String userType="PROV";	
 		String accessLevelOfNewUser="Administrator";
-		
-		
-					
+	
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPage searchPage=homePage.clickManageUsersLink();

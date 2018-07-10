@@ -20,62 +20,57 @@ public class TestUPAHomeTab extends TestBase {
 	
 	@Test(priority=5,description="Verifies functionality for Resources Links for Admin User")
 	 void testUPALoginAdminResourcesLink() throws IOException, InterruptedException 
-  {
-	   String userType="PROV";
-	   String accessType="Admin";
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
-       SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-	   OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   home.VerifyResourcesLinks();
-	   home.logOutFromUPA();     
-  }
+     {
+		String userType="PROV";
+		String accessType="Admin";
+
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.VerifyResourcesLinks();
+	    home.logOutFromUPA();     
+     }
 	
 	
 	@Test(priority=5,description="Verifies functionality for Resources Links for General User")
 	 void testUPALoginGeneralResourcesLink() throws IOException, InterruptedException 
- {
-	   String userType="PROV";
-	   String accessType="Gen";
-	   
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
-       SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-	   OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   home.VerifyResourcesLinks();
-	   home.logOutFromUPA(); 
- }
+     {
+		String userType="PROV";
+		String accessType="Gen";
+
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.VerifyResourcesLinks();
+	    home.logOutFromUPA(); 
+     }
 	
 	@Test(priority=6,description="Verifies News and info section after provider is logged in for Admin users")
 	 void testUPAAdminHomeNewsAndInformation() throws InterruptedException, IOException 
      {
-	   String userType="PROV";
-	   String accessType="Admin";
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
-       SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-	   OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   home.verifyWelcomeScreen();
-	   home.verifyNewsSectionIsDisplayed();
-	   home.VerifyAllTabsAreDisplayedAfterSelectingTin(accessType);
+		String userType="PROV";
+		String accessType="Admin";
+
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.verifyWelcomeScreen();
+	    home.verifyNewsSectionIsDisplayed();
+	    home.VerifyAllTabsAreDisplayedAfterSelectingTin(accessType);
      }
 	
 	@Test(priority=6,description="Verifies News and info section after provider is logged in for General users")
 	 void testUPAGeneralHomeNewsAndInformation() throws InterruptedException, IOException 
      {
-	   String userType="PROV";
-	   String accessType="Gen";
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
-       SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-	   OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   home.verifyWelcomeScreen();
-	   home.verifyNewsSectionIsDisplayed();
-	   home.VerifyAllTabsAreDisplayedAfterSelectingTin(accessType);
+		String userType="PROV";
+		String accessType="Admin";
+
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.verifyWelcomeScreen();
+	    home.verifyNewsSectionIsDisplayed();
+	    home.VerifyAllTabsAreDisplayedAfterSelectingTin(accessType);
      }
 	
 	
@@ -97,16 +92,15 @@ public class TestUPAHomeTab extends TestBase {
 	@Test(priority=7,description="Verifies Provider_TIN_Selection_Dropdown for Admin")
 	 void testUPAAdminTinDropdown() throws IOException, InterruptedException, ParseException 
     {   
-	   String userType="PROV";
-	   String accessType="Admin";
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
-	   SplashPage3 splashPage3=loginPage.doLogin(userType,accessType);
-	   OptumIdLoginPage optumIDLoginPage=splashPage3.clickSignInWithOptumId();
-	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   home.verifyWelcomeScreen().verifyAssociatedTins();
-	   home.selectTin();
-	   home.clickMaintainEnrollmentTab().verifyOrgBankAccountInfo().verifyOrgInfoOfSelectedTin();	 
+		String userType="PROV";
+		String accessType="Admin";
+
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.verifyWelcomeScreen().verifyAssociatedTins();
+	    home.selectTin();
+	    home.clickMaintainEnrollmentTab().verifyOrgBankAccountInfo().verifyOrgInfoOfSelectedTin();	 
 	  }
 	
 	/*
