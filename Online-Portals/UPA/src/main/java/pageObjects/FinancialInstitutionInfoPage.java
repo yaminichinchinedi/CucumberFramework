@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -70,12 +71,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	public FinancialInstitutionInfoPage(TestBase testConfig) 
 	{
 		super();
-		String expected = "/validateEFTERAProviderContact";
+		String expectedURL = "/validateEFTERAProviderContact";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected,
-				testConfig.driver.getCurrentUrl());
-
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 

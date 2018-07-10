@@ -3,6 +3,7 @@ package main.java.api.pojo.epspaymentsearch.request;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
@@ -47,7 +48,7 @@ import main.java.api.pojo.epsPaymentDetailRequest.request.EpsPaymentDetailReques
 })
 public class SearchByCriteriaRequest {
 
- @XmlElement(name = "SearchCriteria", required = true)
+ @XmlElement(name = "SearchCriteria",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true)
  protected SearchCriteria searchCriteria;
 
  /**

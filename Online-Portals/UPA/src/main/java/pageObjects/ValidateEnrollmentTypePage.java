@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -18,15 +19,15 @@ public class ValidateEnrollmentTypePage {
 	
 	public ValidateEnrollmentTypePage(TestBase testConfig)
 	{   
-		String expected="/validateEnrollmentType.do";
+		String expectedURL="/validateEnrollmentType.do";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected, testConfig.driver.getCurrentUrl());
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	public ProviderEFTERAEnrollPage clickContinue()
 	{
-		Element.click(btnContinue, "Continue");
+		Element.click(btnContinue, "Continue on validate enrollment type page");
 		return new ProviderEFTERAEnrollPage(testConfig) ;
 	}
 

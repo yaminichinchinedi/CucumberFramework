@@ -55,10 +55,11 @@ public class validateEFTERAFinancialInfo {
 
 
 	public validateEFTERAFinancialInfo(TestBase testConfig) {
-		String expected = "/validateEFTERAFinancialInfo";
+		String expectedURL = "/validateEFTERAFinancialInfo";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+		Browser.verifyURL(testConfig, expectedURL);
+		//Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
 	}
 	
 	//Default Constructor
@@ -80,8 +81,8 @@ public class validateEFTERAFinancialInfo {
 		
 		Element.click(rdoBankLetter, "Bank Letter radio button");
 		Browser.waitForLoad(testConfig.driver);
-		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"path of pdf is : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
-		
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		Browser.wait(testConfig,2);
 		Element.click(chkAcceptanceBox, "Acceptance check box");
 		if(chkAcceptanceBox.isSelected())
 		{
@@ -95,13 +96,14 @@ public class validateEFTERAFinancialInfo {
 	
 	public validateEFTERAFinancialInfo checkAcceptanceBox()
 	{
-		Element.click(chkAcceptanceBox, "Acceptance check box");
+		Element.click(chkAcceptanceBox, "Acceptance check box",3);
 		if(chkAcceptanceBox.isSelected())
 		{
 			Log.Comment("Acceptance checkbox checked");
 		}
 		else
 		{
+			Log.Warning("Could not check Acceptance check box for the first time, trying again..", testConfig);
 			Element.click(chkAcceptanceBox, "Acceptance check box");
 		}	
 		return this;

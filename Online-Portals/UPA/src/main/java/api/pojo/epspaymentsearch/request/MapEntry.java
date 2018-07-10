@@ -22,15 +22,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 })
 public class MapEntry {
 
- @XmlElement(name = "Key", required = true)
+ @XmlElement(name = "Key", namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0",required = true)
  @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
  @XmlSchemaType(name = "normalizedString")
  protected String key;
- @XmlElement(name = "Value", required = true)
+ 
+ @XmlElement(name = "Value",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true)
  @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
  @XmlSchemaType(name = "normalizedString")
  protected String value;
- @XmlElement(name = "Comparator", required = true, defaultValue = "Equals")
+ @XmlElement(name = "Comparator",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true, defaultValue = "Equals")
  protected ComparatorEnum comparator;
 
  /**

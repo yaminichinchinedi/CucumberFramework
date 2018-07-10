@@ -92,32 +92,25 @@ public class ValidateEFTERAProviderInfo {
 
 	public ValidateEFTERAProviderInfo(TestBase testConfig)
 	{   
-		String expected="/validateEFTERAProviderInfo";
+		String expectedURL="/validateEFTERAProviderInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected, testConfig.driver.getCurrentUrl());
-
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	public void fillPhoneNumber(String PrvoiderType)
 	{
-		
 		String expectedText="Enrollment & Account Security Reminder - To help support the security of your account, use of a business issued e-mail domain is required for enrollment and account access.";
 		Element.verifyTextPresent(txtSecurityNormal, expectedText);
-		
-		
 		switch(PrvoiderType)
 		{
 		case "Provider1":
 		 {
 			String phNo = Long.toString(Helper.generateRandomNumber(3));
 			String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
-			Element.enterData(firstProvPhField1, phNo,
-					"Entered first three digits of phone number","firstProvPhField1");
-			Element.enterData(firstProvPhField2, phNo,
-					"Entered second three digits of phone number","firstProvPhField2");
-			Element.enterData(firstProvPhField3, phNoLstField,
-					"Entered last four digits of phone number","firstProvPhField3");
+			Element.enterData(firstProvPhField1, phNo,"Entered first three digits of phone number","firstProvPhField1");
+			Element.enterData(firstProvPhField2, phNo,"Entered second three digits of phone number","firstProvPhField2");
+			Element.enterData(firstProvPhField3, phNoLstField,"Entered last four digits of phone number","firstProvPhField3");
 		   break;
 		 }
 		case "Provider2":
@@ -137,10 +130,8 @@ public class ValidateEFTERAProviderInfo {
 	{
 		String firstProvFName=Helper.generateRandomAlphabetsString(5);
 		String firstProvLName=Helper.generateRandomAlphabetsString(5);
-		
 		String firstProvEmailAdr=Helper.getUniqueEmailId();
 		
-		Browser.wait(testConfig, 1);
 		Element.enterData(firstProvFirstName, firstProvFName,"Enter First name of first provider","firstProvFirstName");
 		Element.enterData(firstProvLastName, firstProvLName,"Enter Last name of first provider","firstProvLastName");
 		fillPhoneNumber("Provider1");

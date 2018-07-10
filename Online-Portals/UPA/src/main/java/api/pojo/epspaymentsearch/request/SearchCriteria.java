@@ -2,16 +2,17 @@ package main.java.api.pojo.epspaymentsearch.request;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlAccessType;
 
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SearchCriteria", propOrder = {
-    "parameterMap"})
+@XmlType(name = "SearchCriteria", propOrder = {"parameterMap"})
 
 public class SearchCriteria extends ConstrainedSearch
 {
-	 @XmlElement(name = "ParameterMap", required = true)
+	 @XmlElement(name = "ParameterMap",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true)
 	    protected ParameterMap parameterMap;
 
 	    /**

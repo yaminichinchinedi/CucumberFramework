@@ -58,10 +58,10 @@ public class ProviderInformationEFTERAEnroll {
 	public ValidateEFTERAProviderInfo validateProvInfo;
 
 	public ProviderInformationEFTERAEnroll(TestBase testConfig) {
-		String expected = "/providerInformationEFTERAEnroll";
+		String expectedURL = "/providerInformationEFTERAEnroll";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+		Browser.verifyURL(testConfig, expectedURL);
 		
 	
 	}

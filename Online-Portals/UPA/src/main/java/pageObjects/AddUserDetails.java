@@ -147,24 +147,15 @@ public class AddUserDetails {
 
 	public AddUserDetails fillNewUserInfo()
 	{
-		
-		testConfig.putRunTimeProperty("email", userEmailAdr);
-		
+		testConfig.putRunTimeProperty("email", userEmailAdr);		
 		Browser.wait(testConfig, 2);
 		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
-		
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
-		
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
-		
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
-		
 	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
-	    
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
-		
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
-		
 		return new AddUserDetails(testConfig);
 		
 	}
@@ -175,7 +166,6 @@ public class AddUserDetails {
 		Element.selectByIndex(drpDwnSelectTin, 1, "Select first tin");
 		Browser.wait(testConfig,2);
 		clickAddTin();
-		
 		return this;
 		
 	}
@@ -183,7 +173,13 @@ public class AddUserDetails {
 	public AddUserDetails addTinCSR()
 	{
 		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
-        
+		clickAddTin();
+		return this;
+	}
+	
+	public AddUserDetails addTinCSR(String tinNo)
+	{
+		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
 		clickAddTin();
 		return this;
 	}
@@ -222,6 +218,7 @@ public class AddUserDetails {
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
 				      Element.click(userName, "UserName: "+ " " +firstNameTxt);
+				      Browser.wait(testConfig, 2);
 				      break;
 					}
 		}

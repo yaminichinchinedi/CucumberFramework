@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ParameterMap
 {
-	@XmlElement(name = "Entries", required = true)
+	@XmlElement(name = "Entries",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true)
     protected List<MapEntry> entries;
 	
 	

@@ -124,28 +124,7 @@ import main.java.reporting.LogTemp;
 			Log.Fail("Could not click on " + namOfElement+ " due to exception : " + e);
 			
 		}
-	}
-	
-	
-//	public static void verifyInvisibleText(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
-//	{
-//	     
-//	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
-//	     String a=wait.until(ExpectedConditions.invisibilityOf(element)).toString();
-//	     System.out.println("text in modal is" + a);	
-//	}
-//	
-	
-	public static void verifyInvisibleText(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
-	{
-	     
-	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
-	   //  wait.until(ExpectedConditions.visibilityOf(element).toString();
-	     //System.out.println("text in modal is" + a);	
-	}
-	
-	
-	
+	}	
 	
 	/**
 	 * Performs Click action on specified element

@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -21,10 +22,10 @@ public class ProviderEFTERAEnrollPage {
 
 	public ProviderEFTERAEnrollPage(TestBase testConfig)
  {
-		String expected = "/providerEFTERAEnroll.do";
+		String expectedURL = "/providerEFTERAEnroll.do";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+		Browser.verifyURL(testConfig, expectedURL);
 	    Element.verifyElementPresent(lnkEpsPdf,"Pdf link");
 	}
 	

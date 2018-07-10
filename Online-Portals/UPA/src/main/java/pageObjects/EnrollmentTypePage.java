@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -16,7 +17,6 @@ public class EnrollmentTypePage {
 	
 	@FindBy(xpath="//span[contains(text(),'Choose Your Enrollment Type')]")
 	WebElement txtEnrollmentType;
-	
 	
 	@FindBy(xpath=".//*[@id='org1']/td[1]/input")
 	WebElement rdoHealthcareOrg;
@@ -36,9 +36,9 @@ public class EnrollmentTypePage {
 	
 	@FindBy(xpath="//input[@value='AO']")
 	WebElement rdoAchOnly;
-	
-	@FindBy(xpath="//input[@value='AV']")
-	WebElement rdoAoVo;
+
+	@FindBy(xpath=".//*[@id='enrollmentType2']/td/input")
+	WebElement rdoAV;
 	
 	@FindBy(name="tin")
 	WebElement txtBoxTin;
@@ -61,28 +61,27 @@ public class EnrollmentTypePage {
 	//Selecting Health care organization and going to validate enrollment page
 	
 	public EnrollmentTypePage enrollAs(int excelRowNo) throws IOException
-	{
-		
+	 {
 		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
-		
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
-		
 		testConfig.putRunTimeProperty("tin", tinNumber);
-		
-		
+	
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
-		{
-			Element.click(rdoHealthcare, "Healthcare organization");
+		 {
+		   Element.click(rdoHealthcare, "Healthcare organization");
+		   
 			if(!rdoHealthcare.isSelected())
-			{
+			 {
 				Log.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
 				Element.click(rdoHealthcare, "Healthcare organization");
-			}
+			 }
+			
+			Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
+			
 			String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 			switch (enrollmentPaymentType)
-			{
-			case "AO":
-				Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
+			 {
+			   case "AO":
 				Element.click(rdoAchOnly,"ACH only payment type");
 				if(!rdoAchOnly.isSelected()){
 					Log.Warning("Healthcare radio button was not selected at first go, trying again", testConfig);
@@ -92,36 +91,29 @@ public class EnrollmentTypePage {
 				testConfig.putRunTimeProperty("enrollmentType", "AO");
 				break;
 				
-			case "VO":	
+			  case "VO":	
 				Element.click(rdoVoOnly,"VCP only payment type");
 				Element.click(btnIAgree, "I agree button");
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "VO");
-				
-				
 				break;
 				
-			case "AV":	
-				Element.click(rdoAoVo,"ACH & VCP both payment type");
+			  case "AV":	
+				Element.click(rdoAV,"ACH & VCP both payment type");
 				Element.click(btnIAgree, "I agree button");
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "AV");
 				break;
 				
 				default:
-					Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);
-				 
+				Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				 
 			}
 		}
 		else if(data.GetData(excelRowNo, "EnrollmentTypeOrg").trim().equalsIgnoreCase("BS"))
-		{
-			Element.click(rdoBillingService, "Billing Service");
-			
-		}
+		Element.click(rdoBillingService, "Billing Service");
 		else
-		{
-			Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
-		}
+		Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
+		
 		
 		return new EnrollmentTypePage(testConfig);
 	}

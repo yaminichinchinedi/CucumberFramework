@@ -52,9 +52,6 @@ public class Browser
 		wait(testConfig,3);
 	}
 	
-	
-
-
 	public static void  acceptAlert(TestBase testConfig) {
 	    try {
 	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
@@ -194,15 +191,6 @@ public class Browser
 	private static File getScreenShotDirectory(TestBase testConfig)
 	{
 		File dest = new File(testConfig.getRunTimeProperty("ResultsDir"));
-		
-		/*
-		 * Commenting out since, the current results folder will be passed by ant script and we do not need to calculate
-		 *  File resultsFolder = new File(System.getProperty("user.dir")+"//Results//" +
-		 * Config.productName); File[] directories = resultsFolder.listFiles(new FilenameFilter() {
-		 * @Override public boolean accept(File dir, String name) { return dir.isDirectory(); } }); long lastMod = Long.MIN_VALUE; File dest = null; if(directories!=null) { for(File
-		 * directory:directories) { if (directory.lastModified() > lastMod) { dest = directory; lastMod = directory.lastModified(); } } }
-		 */
-		
 		return dest;
 	}
 	private static String getScreenshotFileName(Method testMethod)

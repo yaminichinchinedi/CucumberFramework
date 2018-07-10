@@ -45,10 +45,10 @@ public class ValidateEFTERASubmitInfo {
 
 	public ValidateEFTERASubmitInfo(TestBase testConfig) {
 		
-		String expected = "/validateEFTERASubmitInfo";
+		String expectedURL = "/validateEFTERASubmitInfo";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 		
 	public void uploadW9pdf() 

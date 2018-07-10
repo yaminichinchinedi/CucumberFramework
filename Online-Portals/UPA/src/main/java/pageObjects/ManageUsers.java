@@ -195,28 +195,25 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig) throws InterruptedException
 	{  
-		 ArrayList<String> UsersListUI=new ArrayList<String>();
-		try
-		{
-			List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
-		}
-		catch(Exception e)
-		{
-			System.out.println("Finding user List again");
+		List <WebElement> userNames=null;
+		ArrayList<String> UsersListUI=new ArrayList<String>();
+		try{
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		catch(Exception e){
 			LogTemp.Comment("Finding user List again");
-			List <WebElement> userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
-		}
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
 	   
 		try{
 		for(WebElement userName:userNames)
-		{ 
-		   UsersListUI.add(userName.getText().toString().toUpperCase());	
-		}
+		 { 
+			UsersListUI.add(userName.getText().toString().toUpperCase());	
+		 }
 		}
 		catch(Exception e)
 		{
-			System.out.println("Exceotion is here");
-			LogTemp.Comment("Exceotion is heren");
+			LogTemp.Comment("Exception occured : " +  e);
 		}
 		return UsersListUI;			
 	}
@@ -272,7 +269,7 @@ public class ManageUsers extends AddUserDetails  {
 
 	}
 	
-	/*
+	/**
 	 * This function clicks the active user 
 	 * to view its details on 
 	 * Manage user Page
@@ -285,15 +282,17 @@ public class ManageUsers extends AddUserDetails  {
 		{ 
 		  if(userName.getText().toString().toUpperCase().contains(activeUser))
 		   {
-				      Element.click(userName, "UserName: "+ " " +activeUser);
-				      break;
+			  Element.click(userName, "UserName: "+ " " +activeUser);
+			  break;
 		   }
 	     }
 		Browser.wait(testConfig,3);
 		return new ManageUsers(testConfig);
 	}
 	
-	/*
+	
+	
+	/**
 	 * This function clicks the specified user by passing its username
 	 * to view its details on 
 	 * Manage user Page
@@ -374,37 +373,24 @@ public class ManageUsers extends AddUserDetails  {
 	
 	
 	public ManageUsers changeAndCancelAccessLevel(String userType) throws InterruptedException
-	{
+	{    
+		 int sqlRowNo=11;
 		 clickActiveUserName(userType);
-		 
 		 accessLvlChangedTin=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select/../preceding-sibling::td[2]");
 		 
-		//Get the tin number for which access level is to be changed
-		 
-		  testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
-		  
-		  Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
-		
-		  
-		  Log.Comment("Finding access level by find elements");
-		  accessLvls=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
-		  
-		  Log.Comment("Finded dropdown successfully");
-		  
-		  String initialAccessLvl=accessLvls.get(0).getAttribute("value");
+	       //Get the tin number for which access level is to be changed
+		   testConfig.putRunTimeProperty("tinNo",accessLvlChangedTin.get(0).getText().toString());
+		   Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
+		   accessLvls=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select"); 
+		   String initialAccessLvl=accessLvls.get(0).getAttribute("value");
 
-		 //Get the Access Level already selected for first Active tin displayed in Grid
-		  if(initialAccessLvl!="G")
-		  {
-			  Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");  
-		  }
-		  else
-			 Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
+		   //Get the Access Level already selected for first Active tin displayed in Grid
+		   if(initialAccessLvl!="G")
+		   Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");  
+		   else
+		   Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 		  
-		   //Verify after clicking on YEs button, user is redirected to home page
 		   HomePage home=clickCancel().clickYes();
-		   
-		   int sqlRowNo=11;
 		   Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		   
 		   //Verify Changes are not saved when Yes is clicked on Manage Users Page
@@ -413,14 +399,12 @@ public class ManageUsers extends AddUserDetails  {
 		   
 		   //MAking changes again to access level 
 		   home.clickManageUsersTab().clickActiveUserName(userType);
-		   
 		   accessLvls= testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+		   
 		   if(initialAccessLvl!="G")
-			  {
-				  Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");  
-			  }
-			  else
-				 Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
+		    Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");  
+		   else
+		    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 		   
 		   accessLvls= testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		   String changedAccessLvl=accessLvls.get(0).getAttribute("value");
@@ -434,17 +418,16 @@ public class ManageUsers extends AddUserDetails  {
 		   
 		   //Verifying the changed access level is still visible on manage users page
 		   Helper.compareEquals(testConfig, "Access Level ", changedAccessLvl, accessLvls.get(0).getAttribute("value"));
-		   return this;
-			
+		   return this;	
 	}
 	
 	
 	public void verifyTinGridSorting()
 	{		
-		ArrayList<String> actualHeadersList=new ArrayList<String>();
-		ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","remove tin/npi"));
-	    List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-		List<WebElement> tinGridRowHeader=tinGridRows.get(0).findElements(By.xpath("//th"));
+		 ArrayList<String> actualHeadersList=new ArrayList<String>();
+		 ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","remove tin/npi"));
+	     List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		 List<WebElement> tinGridRowHeader=tinGridRows.get(0).findElements(By.xpath("//th"));
 
 		
 		 //Getting Headers of Tin Grid in a list 
@@ -511,7 +494,8 @@ public class ManageUsers extends AddUserDetails  {
 		   return map;
 	}
 	
-	/*Verifying tins are appearing in sorted order
+	/**
+	 * Verifying tins are appearing in sorted order
 	 * here, tree map contains the sorted tin number with provider value 
 	 * and map contains the order in which tins
 	 * and provider number are appearing on UI
@@ -526,6 +510,7 @@ public class ManageUsers extends AddUserDetails  {
     	Log.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
 	}
 
+	
 	public void verifyManageUserUI()
     {
 		LogTemp.Comment("Verifying Resources Link");
@@ -544,9 +529,7 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		Element.click(chkRemoveTin, "Remove tin checkbox");
 		if(tinGridRows.size()>2)
-		{
-			Log.Fail("Tin not removed");
-		}
+		Log.Fail("Tin not removed");
 		else
 		Log.Pass("Tin removed");
 	}
@@ -800,12 +783,7 @@ public class ManageUsers extends AddUserDetails  {
 		Browser.wait(testConfig,2);
 		clickSave();
 		verifyDetailsOfNewUser(userType);
-		
-		//Verifying after updating demographic info, username remains same
 		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
-		
-		
-		
 		return this;
 	}
 	
@@ -813,10 +791,8 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		clickSpecificUserName(getFirstLastName());
 		String expectedText="The password for "+ getCSRUserName() +" " +"has successfully been reset, and an email has been sent to the user.";
-	
 		Element.click(btnResetPwd, " Reset Password button");
 		Browser.wait(testConfig,2);
-		
 		Element.verifyTextPresent(txtResetPwd, expectedText);
 		return this;
 	}
