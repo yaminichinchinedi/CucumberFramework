@@ -164,6 +164,16 @@ import main.java.reporting.LogTemp;
 	}
 	
 	
+	
+	
+//	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
+//	{
+//		Actions action = new Actions(testConfig.driver);
+//		action.moveToElement(element).build().perform();
+//		Log.Comment("Mouse Hovered over " + namOfElement);	
+//	}
+	
+	
 	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
 		
