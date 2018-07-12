@@ -142,6 +142,30 @@ public class DataBase
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
 
+	
+	public static int executeInsertQuery(TestBase testConfig, int sqlRow)
+	{
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String insertQuery = sqlData.GetData(sqlRow, "Query");
+		DatabaseType dbType=null;
+		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
+			dbType=DatabaseType.Stage;
+			else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
+			dbType=DatabaseType.Stage2;
+	        else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
+	        dbType=DatabaseType.PROD;
+	        else
+	    	dbType=DatabaseType.IMPL; 
+
+		return executeUpdateQuery(testConfig, insertQuery, dbType);
+	}
 
 
 	/**
@@ -456,7 +480,6 @@ public class DataBase
 	public static int executeUpdateQuery(TestBase testConfig, String updateQuery, DatabaseType dbType)
 	{
 		Date startDate = new Date();
-
 		Statement stmt = null;
 		int rows = 0;
 		try
@@ -472,7 +495,7 @@ public class DataBase
 				}
 			}
 
-			//Log.Comment("\nExecuting the update query - '" + updateQuery + "'", testConfig);
+			Log.Comment("\nExecuting the update query - '" + updateQuery + "'", testConfig);
 			rows = stmt.executeUpdate(updateQuery);
 		}
 		catch (SQLException e)
@@ -494,7 +517,9 @@ public class DataBase
 			}
 		}
 		if (0 == rows)
-			Log.Comment("No rows were updated by this query");
+		Log.Comment("No rows were updated by this query");
+		else
+		Log.Comment("No. of rows  updated by this query :" + rows);
 
 		Date endDate = new Date();
 		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
@@ -731,4 +756,8 @@ e	 */
 
 		return executeUpdateQuery(testConfig, insertQuery, dbType);
 	}
+	
+	
+	
+	
 }
