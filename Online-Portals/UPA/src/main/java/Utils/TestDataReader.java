@@ -33,8 +33,8 @@ public class TestDataReader {
 	private ArrayList<List<String>> testData;
 
 	// constructor
-	public TestDataReader(TestBase testBaseSetup) {
-		this.testConfig = testBaseSetup;
+	public TestDataReader(TestBase testConfig) {
+		this.testConfig = testConfig;
 	}
 
 	//Overloaded constructor

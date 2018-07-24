@@ -250,9 +250,9 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    
-   //Change its description
+
    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
-   void testEpraGeneration() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   void testFailedPayment() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	 {
 	    String quickSearchFilter="Last 90 days";
 	    String archiveFilter="Show All";

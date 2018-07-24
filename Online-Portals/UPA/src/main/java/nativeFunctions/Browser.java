@@ -27,6 +27,7 @@ import main.java.reporting.Log;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchWindowException;
@@ -34,6 +35,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -49,7 +51,37 @@ public class Browser
 		testConfig.driver.navigate().refresh();
 		Log.Comment("Refreshing the browser...");
 		acceptAlert(testConfig);
+		waitForLoad(testConfig.driver);
 		wait(testConfig,3);
+	}
+	
+	public static void scrollToBottom(TestBase testConfig)
+	{
+		try{
+			JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		wait(testConfig, 2);
+		Log.Pass("Scrolled to bottom of the page");
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while scrolling : "  + e);
+		}
+	}
+	
+	public static void scrollTillAnElement(TestBase testConfig,WebElement element,String description)
+	{
+		try{
+		JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		js.executeScript("arguments[0].scrollIntoView(true);", element);
+		wait(testConfig, 2);
+		Log.Pass("Scrolled till " + description);
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while scrolling : "  + e);
+		}
 	}
 	
 	public static void  acceptAlert(TestBase testConfig) {
@@ -464,12 +496,39 @@ public class Browser
 				if (!winHandle.equals(oldWindow))
 				{
 					testConfig.driver.switchTo().window(winHandle);
+					Log.Comment("Switched to new window..");
 					Browser.wait(testConfig, 2);
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
 			Browser.waitForLoad(testConfig.driver);
 			Browser.verifyURL(testConfig, expectedURLHelp);
+			return oldWindow;
+		}
+		return null;
+	}
+	
+	
+	public static String switchToNewWindow(TestBase testConfig)
+	{  
+		if (testConfig.driver != null)
+		{
+			Log.Comment("Switching to the new window");
+			Browser.wait(testConfig, 2);
+			String oldWindow = testConfig.driver.getWindowHandle();
+		    if (testConfig.driver.getWindowHandles().size() < 2)  
+			Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
+			 
+			for (String winHandle : testConfig.driver.getWindowHandles())
+			{
+				if (!winHandle.equals(oldWindow))
+				{
+					testConfig.driver.switchTo().window(winHandle);
+					Browser.wait(testConfig, 2);
+					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+				}
+			}
+			Browser.waitForLoad(testConfig.driver);
 			return oldWindow;
 		}
 		return null;

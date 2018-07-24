@@ -23,10 +23,10 @@ public class DataBase
 	{
 		IMPL(6),Stage(6), PROD(6),Stage2(6);
 
-	public final int values;
-
-		DatabaseType(final int value){
-			this.values = value;
+	  public final int values;
+	  
+	  DatabaseType(final int value){
+	  this.values = value;
 		}
 	};
 
@@ -85,7 +85,7 @@ public class DataBase
 	 * @return ResultSet -- Complete Result which is fetched is returned
 	 * @throws IOException 
 	 */
-	public static ResultSet executeSelectQuery( TestBase testConfig, int sqlRow, DatabaseType dbType) throws IOException
+	public static ResultSet executeSelectQuery(TestBase testConfig, int sqlRow, DatabaseType dbType) throws IOException
 	{
 		// Read the Query column of SQL sheet of Test data excel
 		
@@ -142,6 +142,13 @@ public class DataBase
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
 
+	/**
+	 * Executes insert query in DB
+	 * @param testConfig 	test config instance
+	 * @param sqlRow 		row number of sql query in excel
+	 * @param dbType		type of DB
+	 * @return
+	 */
 	
 	public static int executeInsertQuery(TestBase testConfig, int sqlRow)
 	{
@@ -155,6 +162,13 @@ public class DataBase
 		}
 		String insertQuery = sqlData.GetData(sqlRow, "Query");
 		DatabaseType dbType=null;
+		dbType=getDatabaseType();
+		return executeUpdateQuery(testConfig, insertQuery, dbType);
+	}
+	
+	public static DatabaseType getDatabaseType()
+	{
+		DatabaseType dbType=null;
 		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
 			dbType=DatabaseType.Stage;
 			else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
@@ -163,8 +177,7 @@ public class DataBase
 	        dbType=DatabaseType.PROD;
 	        else
 	    	dbType=DatabaseType.IMPL; 
-
-		return executeUpdateQuery(testConfig, insertQuery, dbType);
+		return dbType;
 	}
 
 
@@ -594,15 +607,11 @@ public class DataBase
 				userName = testConfig.getRunTimeProperty("ProdDBUsername");
 				password = testConfig.getRunTimeProperty("ProdDBPassword");
 				break;
-				
-				
 			
 			default:
 				break;
 			}
-					//userName = testConfig.getRunTimeProperty("DBConnectionUsername");
-					//password = testConfig.getRunTimeProperty("DBConnectionPassword");
-
+					
 			try
 			{
 				Class.forName(testConfig.getRunTimeProperty("DBConnectionDriver"));
@@ -614,42 +623,46 @@ public class DataBase
 			}		
 			
 			con = DriverManager.getConnection(connectString, userName, password);
-					
-					 if(con != null)
-					{
-						//if (testConfig.debugMode)
-							Log.Comment("Connection succeeded");
-					}
-					else
-						Log.Comment("Unable to establish connection");
-				
-
+			if(con != null)
+			Log.Comment("Connection succeeded");
+			else
+			Log.Comment("Unable to establish connection");
 			
 		}
 		catch (SQLException e)
 		{
-			//testConfig.logException(e);
+			Log.Comment("Exception occured : " + e);
 		}
 
 		testConfig.connection = con;
 		return testConfig.connection;
 	}
+	
 	/**
-	 * Executes detele query in DB
+	 * Executes delete query in DB
 	 * @param testConfig : test config instance
 	 * @param sqlRow : row number of sql query in excel
 	 * @param dbType : type of DB
 	 * @return 
 	 */
-	public static int executeDeleteQuery(TestBase testConfig, int sqlRow, DatabaseType dbType)
+	public static int executeDeleteQuery(TestBase testConfig, int sqlRow)
 	{		
 		// Read the Query column of SQL sheet of Test data excel
-		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject("SQL");
+		DatabaseType dbType=null;
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String deleteQuery = sqlData.GetData(sqlRow, "Query");
-
+		dbType=getDatabaseType();
 		return executeUpdateQuery(testConfig, deleteQuery, dbType);
 	}
-
+	
+	
 	/**
 	 * This method converts resultset to list
 	 * 
@@ -715,15 +728,12 @@ public class DataBase
 		double timeDifference = (endDate.getTime() - startDate.getTime()) / 1000.00;
 
 		if(timeDifference > 60)
-			System.out.println("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
+			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
 		else
-			System.out.println("Time taken to run this query in seconds : " + timeDifference);
+			Log.Comment("Time taken to run this query in seconds : " + timeDifference);
 		return resultSet;
 	}
 
-	
-	/**
-e	 */
 	public static void closeDatabaseConnection()
 	{
 		if(connection != null)
@@ -740,24 +750,5 @@ e	 */
 			}
 		}
 	}
-
-	/**
-	 * Executes insert query in DB
-	 * @param testConfig 	test config instance
-	 * @param sqlRow 		row number of sql query in excel
-	 * @param dbType		type of DB
-	 * @return
-	 */
-	public static int executeInsertQuery(TestBase testConfig, int sqlRow, DatabaseType dbType)
-	{
-		// Read the Query column of SQL sheet of Test data excel
-		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject("SQL");
-		String insertQuery = sqlData.GetData(sqlRow, "Query");
-
-		return executeUpdateQuery(testConfig, insertQuery, dbType);
-	}
-	
-	
-	
 	
 }
