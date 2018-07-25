@@ -69,9 +69,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(id="taxIndNbrId")
 	WebElement drpDwnTin;
 	
-	@FindBy(id="tabHome")
-	WebElement homeTab;
-	
 	@FindBy(xpath="//td[contains(text(),'Record Count')]")
 	WebElement recordCount;
 	
@@ -90,7 +87,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public paymentSummary(TestBase testConfig)
 	{
-		super(testConfig);
+		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
@@ -98,29 +95,33 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 
 	
 	
-	public void selectTin(String tin)
+	
+	public void getDisplayConsolNoNotInEPRAStatus()
 	{
-		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-		tin=tin+" - Enrolled";
-		if(!(tinList.contains(tin)))
-		 {
-		   HomePage homePage=new HomePage(testConfig,homeTab,"Home tab");
-		   Element.selectByVisibleText(drpDwnTin,tin, " Selected Tin is : "  + tin);
-		   homePage.clickViewPaymentsTab();
-		 }
+		int sqlRow=26;
+		Map displayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		testConfig.putRunTimeProperty("displayConsNo",displayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
+		System.out.println(testConfig.getRunTimeProperty("displayConsNo"));	
 	}
 	
+	public void getTinForConsolNo()
+	{
+		int getTinForDisplayConNoQuery=27;
+		getDisplayConsolNoNotInEPRAStatus();
+		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, getTinForDisplayConNoQuery, 1);
+		System.out.println(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
+		System.out.println(tinForDisplayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
+		System.out.println(tinForDisplayConsNo.get("SETL_DT").toString());
+	}
 	public void clickEpraPDFLink()
 	{
-		String tin=getTinForPaymentNo_NotInEPRAStatus();
-		selectTin(tin);
-		
+		  
 		for(int i=1;i<searchResultRows.size();i++)
 		 {
 			String displayConsNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			displayConsNo=displayConsNo.replace("\n", "");
 		
-			if(displayConsNo.contains(getPaymentNo_NotInEPRAStatus()))
+			if(displayConsNo.contains("4554257"))
 			 {	
 				
 				WebElement lnkEpraPdf = searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("a")).get(1);

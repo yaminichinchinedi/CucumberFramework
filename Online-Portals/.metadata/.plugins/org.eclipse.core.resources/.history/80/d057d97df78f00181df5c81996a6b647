@@ -5,17 +5,18 @@ import java.util.Map;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.HomePage;
 import main.java.pageObjects.paymentSummary;
 
 public class ViewPaymentsDataProvider {
 	
 	private TestBase testConfig;
 	
-	public ViewPaymentsDataProvider(TestBase testConfig) {
+	public ViewPaymentsDataProvider() {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		
+
 	}
 
    /**
@@ -59,8 +60,8 @@ public class ViewPaymentsDataProvider {
 	 */
 	public String associateTinWithUser(String tin) 
 	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
+		int sqlRowNo=26;
+		int insertQueryRowNo=25;
 		int isTinAssociated;
 		
 		testConfig.putRunTimeProperty("tin", tin);

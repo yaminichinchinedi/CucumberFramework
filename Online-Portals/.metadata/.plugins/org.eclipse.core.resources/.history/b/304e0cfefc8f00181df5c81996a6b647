@@ -100,13 +100,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public void selectTin(String tin)
 	{
-		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-		tin=tin+" - Enrolled";
-		if(!(tinList.contains(tin)))
+		List <String> tinList=Element.getAllOptionsInSelect(testConfig, drpDwnTin);
+		if(!(tinList.contains(tin+"- Enrolled")))
 		 {
 		   HomePage homePage=new HomePage(testConfig,homeTab,"Home tab");
-		   Element.selectByVisibleText(drpDwnTin,tin, " Selected Tin is : "  + tin);
-		   homePage.clickViewPaymentsTab();
+		   Element.selectByVisibleText(drpDwnTin,tin+"- Enrolled", " Selected Tin is : "  + tin);
 		 }
 	}
 	

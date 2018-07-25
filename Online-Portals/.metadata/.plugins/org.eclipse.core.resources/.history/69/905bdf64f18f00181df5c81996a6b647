@@ -2,20 +2,16 @@ package main.java.Utils;
 
 import java.util.Map;
 
-import org.openqa.selenium.support.PageFactory;
-
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.HomePage;
 import main.java.pageObjects.paymentSummary;
 
-public class ViewPaymentsDataProvider {
+public class ViewPaymentsDataProvider extends paymentSummary {
 	
 	private TestBase testConfig;
 	
 	public ViewPaymentsDataProvider(TestBase testConfig) {
-		
-		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+		super(testConfig);
+
 	}
 
    /**
@@ -57,35 +53,35 @@ public class ViewPaymentsDataProvider {
 	 * if in case its not associated it fires an insert query
 	 * to get it associated 	
 	 */
-	public String associateTinWithUser(String tin) 
+	public void associateTinWithUser() 
 	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
+		int sqlRowNo=26;
+		int insertQueryRowNo=25;
 		int isTinAssociated;
-		
-		testConfig.putRunTimeProperty("tin", tin);
 		
 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
-		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);	
-		return tin;
+		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+		 		
 	}
 	
-	public String getPaymentNo_NotInEPRAStatus()
+	public void getPaymentNo_NotInEPRAStatus()
 	{
 		int sqlRow=26;
 		Map displayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		testConfig.putRunTimeProperty("paymentNo",displayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
-		return testConfig.getRunTimeProperty("paymentNo");
+		testConfig.putRunTimeProperty("displayConsNo",displayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
+		System.out.println(testConfig.getRunTimeProperty("displayConsNo"));	
 	}
 	
-	public String getTinForPaymentNo_NotInEPRAStatus()
+	public void getTinForConsolNo(String )
 	{
-		int sqlRow=27;
-		getPaymentNo_NotInEPRAStatus();
-		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
+		int getTinForDisplayConNoQuery=27;
+		getDisplayConsolNoNotInEPRAStatus();
+		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, getTinForDisplayConNoQuery, 1);
+		System.out.println(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
+		System.out.println(tinForDisplayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
+		System.out.println(tinForDisplayConsNo.get("SETL_DT").toString());
 	}
 	
 	

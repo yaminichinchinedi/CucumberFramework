@@ -68,7 +68,9 @@ public class ViewPaymentsDataProvider {
 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
+		
 		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);	
+		
 		return tin;
 	}
 	

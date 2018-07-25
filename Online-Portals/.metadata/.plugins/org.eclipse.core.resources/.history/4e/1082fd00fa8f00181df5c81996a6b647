@@ -96,18 +96,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
 	}
 
-	
-	
 	public void selectTin(String tin)
 	{
-		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-		tin=tin+" - Enrolled";
-		if(!(tinList.contains(tin)))
-		 {
-		   HomePage homePage=new HomePage(testConfig,homeTab,"Home tab");
-		   Element.selectByVisibleText(drpDwnTin,tin, " Selected Tin is : "  + tin);
-		   homePage.clickViewPaymentsTab();
-		 }
+		HomePage homePage=new HomePage();
+		homePage.clickViewPaymentsTab()
+		Element.selectByVisibleText(drpDwnTin,tin+"- Enrolled", " Selected Tin is : "  + "942958258 - Enrolled");
 	}
 	
 	public void clickEpraPDFLink()

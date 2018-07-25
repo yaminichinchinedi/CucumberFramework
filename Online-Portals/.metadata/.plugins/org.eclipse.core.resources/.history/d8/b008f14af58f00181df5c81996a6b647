@@ -2,20 +2,16 @@ package main.java.Utils;
 
 import java.util.Map;
 
-import org.openqa.selenium.support.PageFactory;
-
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.HomePage;
 import main.java.pageObjects.paymentSummary;
 
 public class ViewPaymentsDataProvider {
 	
 	private TestBase testConfig;
 	
-	public ViewPaymentsDataProvider(TestBase testConfig) {
+	public ViewPaymentsDataProvider() {
 		
-		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+
 	}
 
    /**
@@ -59,8 +55,8 @@ public class ViewPaymentsDataProvider {
 	 */
 	public String associateTinWithUser(String tin) 
 	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
+		int sqlRowNo=26;
+		int insertQueryRowNo=25;
 		int isTinAssociated;
 		
 		testConfig.putRunTimeProperty("tin", tin);
@@ -69,7 +65,7 @@ public class ViewPaymentsDataProvider {
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
 		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);	
-		return tin;
+		return null;
 	}
 	
 	public String getPaymentNo_NotInEPRAStatus()
@@ -80,11 +76,11 @@ public class ViewPaymentsDataProvider {
 		return testConfig.getRunTimeProperty("paymentNo");
 	}
 	
-	public String getTinForPaymentNo_NotInEPRAStatus()
+	public String getTinForPaymentNo(String paymentNo)
 	{
-		int sqlRow=27;
-		getPaymentNo_NotInEPRAStatus();
-		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		int getTinForDisplayConNoQuery=27;
+		paymentNo=getPaymentNo_NotInEPRAStatus();
+		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, getTinForDisplayConNoQuery, 1);
 		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
 	}
 	

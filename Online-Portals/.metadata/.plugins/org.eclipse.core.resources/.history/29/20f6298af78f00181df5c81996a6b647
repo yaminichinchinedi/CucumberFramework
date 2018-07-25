@@ -69,9 +69,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(id="taxIndNbrId")
 	WebElement drpDwnTin;
 	
-	@FindBy(id="tabHome")
-	WebElement homeTab;
-	
 	@FindBy(xpath="//td[contains(text(),'Record Count')]")
 	WebElement recordCount;
 	
@@ -96,18 +93,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
 	}
 
-	
-	
 	public void selectTin(String tin)
 	{
-		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-		tin=tin+" - Enrolled";
-		if(!(tinList.contains(tin)))
-		 {
-		   HomePage homePage=new HomePage(testConfig,homeTab,"Home tab");
-		   Element.selectByVisibleText(drpDwnTin,tin, " Selected Tin is : "  + tin);
-		   homePage.clickViewPaymentsTab();
-		 }
+		Browser.browserRefresh(testConfig);
+		Browser.wait(testConfig, 3);
+		
+		Element.selectByVisibleText(drpDwnTin,"942958258 - Enrolled", " Selected Tin is : "  + "942958258 - Enrolled");
+
 	}
 	
 	public void clickEpraPDFLink()

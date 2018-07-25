@@ -2,10 +2,7 @@ package main.java.Utils;
 
 import java.util.Map;
 
-import org.openqa.selenium.support.PageFactory;
-
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.HomePage;
 import main.java.pageObjects.paymentSummary;
 
 public class ViewPaymentsDataProvider {
@@ -13,9 +10,8 @@ public class ViewPaymentsDataProvider {
 	private TestBase testConfig;
 	
 	public ViewPaymentsDataProvider(TestBase testConfig) {
-		
-		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+		super(testConfig);
+
 	}
 
    /**
@@ -57,10 +53,10 @@ public class ViewPaymentsDataProvider {
 	 * if in case its not associated it fires an insert query
 	 * to get it associated 	
 	 */
-	public String associateTinWithUser(String tin) 
+	public void associateTinWithUser(String tin) 
 	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
+		int sqlRowNo=26;
+		int insertQueryRowNo=25;
 		int isTinAssociated;
 		
 		testConfig.putRunTimeProperty("tin", tin);
@@ -68,8 +64,7 @@ public class ViewPaymentsDataProvider {
 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
-		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);	
-		return tin;
+		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);	 		
 	}
 	
 	public String getPaymentNo_NotInEPRAStatus()
@@ -80,12 +75,12 @@ public class ViewPaymentsDataProvider {
 		return testConfig.getRunTimeProperty("paymentNo");
 	}
 	
-	public String getTinForPaymentNo_NotInEPRAStatus()
+	public void getTinForPaymentNo(String paymentNo)
 	{
-		int sqlRow=27;
-		getPaymentNo_NotInEPRAStatus();
-		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
+		int getTinForDisplayConNoQuery=27;
+		paymentNo=getPaymentNo_NotInEPRAStatus();
+		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, getTinForDisplayConNoQuery, 1);
+		associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
 	}
 	
 	
