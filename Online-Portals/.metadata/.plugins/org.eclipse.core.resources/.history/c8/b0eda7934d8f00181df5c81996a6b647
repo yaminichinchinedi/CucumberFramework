@@ -1,0 +1,65 @@
+package main.java.Utils;
+
+import java.util.Map;
+
+import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.paymentSummary;
+
+public class ViewPaymentsDataProvider extends paymentSummary {
+	
+	private TestBase testConfig;
+	
+	public ViewPaymentsDataProvider(TestBase testConfig) {
+		super(testConfig);
+
+	}
+
+/**
+ * This function is basically
+ * for preparing the data in 
+ * this case we are preparing a tin
+ * that has some payments of type @param typeOfPayment
+ * like it gets the tin that has some failed payments etc
+ * @param typeOfPayment
+ * @return tin
+ */
+	public String getTinForSpecificTypeOfPayment(String typeOfPayment)
+	{
+		int sqlRowNo=0;
+ 		switch(typeOfPayment) 
+ 		 {
+ 		    case "failedPayment": 
+ 			sqlRowNo=23;
+ 		 	break;
+ 		
+ 		    case "PayerFilter":
+ 			sqlRowNo=27;
+ 			break;
+ 			
+ 		    case "remitPayment":
+ 			sqlRowNo=23; 
+ 			break;
+ 		
+ 		}
+ 		
+ 		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+ 		return tinNumbers.get("PROV_TAX_ID_NBR").toString();
+ 	}
+
+		 	
+	public void associateTinWithUser() 
+	{ 		
+		int sqlRowNo=26;
+		int insertQueryRowNo=25;
+		int isTinAssociated;
+		
+		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+		if(isTinAssociated == 0) 
+		DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+		 		
+	}
+	
+	
+	
+}

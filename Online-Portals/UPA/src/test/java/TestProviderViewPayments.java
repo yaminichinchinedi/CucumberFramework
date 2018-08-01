@@ -254,15 +254,53 @@ public class TestProviderViewPayments extends TestBase {
    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
    void testEpraGeneration() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	 {
-	    String quickSearchFilter="Last 90 days";
-	    String archiveFilter="Show All";
+	    String paymentType="nonEpraPayment";
+	    
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
-        paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
+	    home.selectTin(paymentType);
+        paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setQuickSearchFilter(paymentType);
         paymentSummaryPage.clickEpraPDFLink(); 	
 	 }
+   
+   
+   @Test(priority=5,description="TS025_View Payments_Failed payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Failed Payments")
+   void testFailedPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	{
+	   String paymentType="failedPayment";
+	   
+	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	   home.selectTin(paymentType);
+       paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setQuickSearchFilter(paymentType);
+       paymentSummaryPage.verifyFailedPaymentPopUp();  
+	}
+   
+   
+   @Test(priority=5,description="TS025_View Payments_Failed payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Failed Payments")
+   void testRemitPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	{
+	   String paymentType="remitPayment";
+	   
+	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	   home.selectTin(paymentType);
+       paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setQuickSearchFilter(paymentType);
+       paymentSummaryPage.verifyRemitPaymentPopUp();  
+	}
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
 }
 
 			

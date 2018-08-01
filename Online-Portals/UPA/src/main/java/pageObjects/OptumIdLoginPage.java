@@ -1,6 +1,8 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
@@ -45,82 +47,90 @@ public class OptumIdLoginPage {
 	@FindBy(xpath = "//div[@class='authQuestionTitle']")
 	WebElement txtUnrecognizedDevice;
 
-	private TestBase testConfig;
 	String id, password;
+	String env=System.getProperty("env");
+	Map<String,String> loggedInUserDetails=new HashMap<String, String>();
+	
+	private TestBase testConfig;
+	
 
 	public OptumIdLoginPage(TestBase testConfig) {
+		
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.verifyElementPresent(txtboxOptumID, "Optum id Textbox");
 	}
 	
-	public void setUserProperties()
-	{
+	
+	public void setUserProperties() {
+		
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 	}
 	
-	public HomePage loginWithOptumID(String userType,String accessType) throws InterruptedException,IOException
+
+   public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
 	{
-	  String env=System.getProperty("env");
-	  id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
-	  password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
-	  setUserProperties();
+		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
+		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
+		loggedInUserDetails.put("id", id);
+		loggedInUserDetails.put("password", password);
+		setUserProperties();
+		
+		return loggedInUserDetails;
+	}
+	
+	public HomePage loginWithOptumID(String userType,String accessType) 
+	{
+		Map <String,String> details=new HashMap<String,String>();
+		
+		details=getDetailOfUserToBeLoggedIn(userType, accessType);
+		
+	    Element.enterData(txtboxOptumID,details.get("id"), "Entered Optum ID as:" + " " +details.get("id"), "txtboxOptumID"); 
+	    Element.enterData(txtboxPwd,details.get("password"), "Entered Optum ID password  as :" + " "+ details.get("password"), "txtboxPwd");
+	    Element.click(btnSignIn, "Sign In");
 	  
-	  Element.enterData(txtboxOptumID,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID"); 
-	  if(txtboxOptumID.getText()==null)
-	  {
-		  Element.enterData(txtboxOptumID,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID");
-	  }
-	  Element.enterData(txtboxPwd,password, "Entered Optum ID password  as :" + " "+ password, "txtboxPwd");
-	  
-	  Element.click(btnSignIn, "Sign In");
-      Browser.waitForLoad(testConfig.driver);
-      
-      Browser.wait(testConfig, 5);
-      for(int i=0;i<2;i++){
-      if (testConfig.driver.getPageSource().contains("Unrecognized")) 
+        for(int i=0;i<2;i++){
+        if (testConfig.driver.getPageSource().contains("Unrecognized")) 
     	  fillAns();
-      }
+        }
+        
      return new HomePage(testConfig);
    }
 
 
 	public void fillAns() {
-		if (securityQuestion.getText().contains("color")) {
+		
+		if (securityQuestion.getText().contains("color")) 
 			fillColorAns();
-		} else if (securityQuestion.getText().contains("sports team")) {
+		
+		else if (securityQuestion.getText().contains("sports team")) 
 			fillSportsAns();
-		}
 
-		else if (securityQuestion.getText().contains("best friend")) {
+		else if (securityQuestion.getText().contains("best friend")) 
 			fillBestFriendAns();
-		} else if (securityQuestion.getText().contains("father's")) {
+		
+		else if (securityQuestion.getText().contains("father")) 
 			fillFatherAns();
-		}
 
-		else {
+		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
-		}
-		if (!chkBoxRememberDevice.isSelected()) {
-			Element.click(chkBoxRememberDevice,
-					"'Remember my device' checkbox");
-		}
-
+	
+		if (!chkBoxRememberDevice.isSelected())
+			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+		
 		Element.click(btnNext, "Next to submit answer");
 	}
 
+	
 	private void fillFatherAns() {
-		Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
-
+	 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
-		{
 			Element.enterData(txtboxSecurityAns, "Priyanka","Entered 'Sahil' as Best Friend's Name","txtboxSecurityAns");
 			// Element.enterData(txtboxSecurityAns, "test",
 			// "Entered 'test' as Best Friend's Name", "txtboxSecurityAns");
-		}
 	}
 
 	private void fillSportsAns() {
@@ -131,8 +141,7 @@ public class OptumIdLoginPage {
 	public void fillColorAns() {
 		// Element.enterData(txtboxSecurityAns, "testing",
 		// "Entered 'testing' as Favorite Color answer","txtboxSecurityAns");
-		Element.enterData(txtboxSecurityAns, "Green",
-				"Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+		Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
 	}
 
 }

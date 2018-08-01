@@ -377,9 +377,8 @@ public class DataBase
 		}
 		catch (NullPointerException ne) 
 		{
-			//testConfig.endExecutionOnfailure = true;
 			Log.Comment("Exception occured as :" + " " + ne);
-			//Log.Fail("<-----Unable to Create Connection With Database!! Please check your Internet----->");
+			Log.Fail("<-----Unable to Create Connection With Database!! Please check your Internet----->");
 		}
 		Map<String, String> resultMap = null;
 
@@ -436,8 +435,8 @@ public class DataBase
 
 		if(timeDifference > 60)
 			Log.Comment("<B>Time taken to run this query in minutes : " + timeDifference/60 + "</B>");
-		else
-			Log.Comment("Time taken to run this query in seconds : " + timeDifference);
+//		else
+//			Log.Comment("Time taken to run this query in seconds : " + timeDifference);
 
 		return resultMap;
 	}

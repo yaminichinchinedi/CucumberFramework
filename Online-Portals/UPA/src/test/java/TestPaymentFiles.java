@@ -19,13 +19,14 @@ public class TestPaymentFiles extends TestBase {
 		
 		String userType="PROV";
 		String accessType="Admin";
-		String date="29/06/2017";
+		String date="19/08/2018";
+		String date1="21/08/2018";
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.selectTin();
-		PaymentDataFiles paymentDataFiles=home.clickPaymentDataFilesTab().clickFromDateIcon().setDate(date).clickToDateIcon().setDate(date);
+		PaymentDataFiles paymentDataFiles=home.clickPaymentDataFilesTab().clickFromDateIcon().setDate(date).clickToDateIcon().setDate(date1);
 		paymentDataFiles.clickSubmit();
 		
 		

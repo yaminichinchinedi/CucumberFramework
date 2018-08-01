@@ -24,6 +24,7 @@ import sqlj.runtime.profile.ref.IterConvertProfile.IterConvertStatement;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.Utils.ViewPaymentsDataProvider;
 
 public class HomePage extends LoginUPA {
 
@@ -38,6 +39,9 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(xpath = ".//*[@id='tabmenu']/li[2]")
 	WebElement ArchiveSection;
+	
+	@FindBy(id="tabHome")
+	WebElement homeTab;
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
@@ -113,6 +117,9 @@ public class HomePage extends LoginUPA {
 	WebElement txtCreateDownload;
 
 	private paymentSummary paymentSummaryPage;
+	
+	private ViewPaymentsDataProvider dataProvider;
+	
 
 	public HomePage(TestBase testConfig) {
 		super(testConfig);
@@ -123,6 +130,7 @@ public class HomePage extends LoginUPA {
 	
 	//Default constructor
 	public HomePage() {}
+	
 	
     /*
      * Function to verify UI 
@@ -273,20 +281,52 @@ public class HomePage extends LoginUPA {
 		}
 	}
 
-	public HomePage selectTin() 
-	{
-		int sqlRow=23;
-		Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-		Browser.waitForLoad(testConfig.driver);
-		Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-		testConfig.driver.findElement(By.id("taxIndNbrId"));
-		String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
-		Log.Comment("Selected tin number is : " + " " + tinNumber);
-		String tin[]=tinNumber.split("-");
-		testConfig.putRunTimeProperty("tin", tin[0]);
-		return new HomePage(testConfig);
-	}
+	
+		public HomePage selectTin() 
+		{
+			int sqlRow=23;
+			
+			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+//			Element.selectByVisibleText(drpDwnTin,"942958258 - Enrolled", " Selected Tin is : "  + "942958258 - Enrolled");
+			
+			Browser.waitForLoad(testConfig.driver);
+			Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
+		
+			Element.findElement(testConfig, "id", "taxIndNbrId");
+			
+			Browser.wait(testConfig, 3);
+			
+			String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
+			Log.Comment("Selected tin number is : " + " " + tinNumber);
+			String tin[]=tinNumber.split("-");
+			testConfig.putRunTimeProperty("tin", tin[0]);
+			return new HomePage(testConfig);
+		}
+		
+		
+		public HomePage selectTin(String paymentType) 
+		 {
+			dataProvider=new ViewPaymentsDataProvider(testConfig);
+			
+			String tin=dataProvider.getTinForPaymentType(paymentType);
+			dataProvider.associateTinWithUser(tin);
+			
+			List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
+			tin=tin+" - Enrolled";
+			
+			if((!tinList.contains(tin))){
+			   Element.click(homeTab, "home Tab");
+			   Browser.waitForLoad(testConfig.driver);
+			   Browser.wait(testConfig, 3);
+			   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
+			 }
+			
+			Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
+			Browser.waitForLoad(testConfig.driver);
+			return this;
+		}
+	
 
 	public paymentSummary clickViewPaymentsTab() 
 	{

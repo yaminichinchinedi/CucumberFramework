@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
@@ -32,7 +33,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.xml.sax.SAXException;
 
-public class paymentSummary{
+import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
+
+public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
 	@FindBy(xpath="//a[contains(text(),'PDF')]")
@@ -66,6 +69,9 @@ public class paymentSummary{
 	@FindBy(id="taxIndNbrId")
 	WebElement drpDwnTin;
 	
+	@FindBy(id="tabHome")
+	WebElement homeTab;
+	
 	@FindBy(xpath="//td[contains(text(),'Record Count')]")
 	WebElement recordCount;
 	
@@ -84,47 +90,195 @@ public class paymentSummary{
 	
 	public paymentSummary(TestBase testConfig)
 	{
-		
+		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
 	}
+	
+	
+	/**
+	 * Sets quick search date range filter
+	 * for the passed tin
+	 * @param tin
+	 * @return payment sumary page
+	 */
+	public paymentSummary setQuickSearchFilter(String paymentType)
+	{
+		String setlDate=null;
+		
+		if(paymentType.equalsIgnoreCase("nonEpraPayment"))
+		   setlDate=testConfig.getRunTimeProperty("setlDate");
+		else
+			setlDate=getPaymentNoDetails(paymentType).get("setlDate");
 
+		String filterToBeSelected=getQuickSearchFilterCriteria(setlDate);
+		
+		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
+		Browser.waitForLoad(testConfig.driver);
+		Element.expectedWait(drpDwnTin, testConfig, "Tin Dropdown", "Tin Dropdown");
+		return this;
+	}
 	
 	
 	public void clickEpraPDFLink()
 	{
-	   for(int i=1;i<searchResultRows.size();i++)
-		 {
-			String displayConsNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-			displayConsNo=displayConsNo.replace("\n", "");
+		String actualPaymntNo="";
+		String expectedPaymntNo=testConfig.getRunTimeProperty("paymentNo");
 		
-			if(displayConsNo.contains("4443070"))
-			 {	
-				
-				WebElement lnkEpraPdf = searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("a")).get(1);
-				Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + displayConsNo);
-				Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + displayConsNo);
+		int totalNoOfPages=getNumberOfPages();
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    	    if(testConfig.driver.getPageSource().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+			      actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+			      actualPaymntNo=actualPaymntNo.replace("\n", "");
+			
+			      if(actualPaymntNo.contains(expectedPaymntNo))
+			       {	
+				     WebElement lnkEpraPdf = searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("a")).get(1);
+				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
 					
-				String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
-				Browser.switchToParentWindow(testConfig,oldWindow);
-				Browser.browserRefresh(testConfig);
+				     String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
+				     Browser.switchToParentWindow(testConfig,oldWindow);
+				     Browser.browserRefresh(testConfig);
 				
-				WebElement txtEpraPDf=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("span")).get(1);
-				Element.expectedWait(txtEpraPDf, testConfig, "PDF Text for Epra", "PDF Text for Epra");
-				Browser.scrollTillAnElement(testConfig, txtEpraPDf, "Epra PDF text is found for Display Consolidated No. :" + displayConsNo);
-				Browser.wait(testConfig, 2);
+				     WebElement txtEpraPDf=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("span")).get(1);
+				     Element.expectedWait(txtEpraPDf, testConfig, "PDF Text for Epra", "PDF Text for Epra");
+				     Browser.scrollTillAnElement(testConfig, txtEpraPDf, "Epra PDF text is found for Display Consolidated No. :" + actualPaymntNo);
+				     Browser.wait(testConfig, 2);
 				
-		        Element.onMouseHover(testConfig, txtEpraPDf, "Hover mouse over PDF link that has become text now");	            
-		        WebElement popUp=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1);
-    	        Helper.compareEquals(testConfig, "Hover message on PDF", "ePRA in process, please wait for completion", popUp.getAttribute("title"));
-		        
-    	        break;
-    	           
-				}
-		    }			
-	}
+		             Element.onMouseHover(testConfig, txtEpraPDf, "Hover mouse over PDF link that has become text now");	            
+		             WebElement popUp=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1);
+    	             Helper.compareEquals(testConfig, "Hover message on PDF", "ePRA in process, please wait for completion", popUp.getAttribute("title"));
+    	             break;   
+				   }
+		       }
+		     }
+    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
+				 int pageToBeClicked=pageNo+1;
+				 Log.Comment("Non ePRA payment not found on page number " + pageNo);
+				 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				 Log.Comment("Clicked Page number : " + pageToBeClicked);
+				 Browser.waitForLoad(testConfig.driver);
+			     }
+   	    
+			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
+				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+			       Element.click(lnkNextPage,"Next Link");
+			       Browser.waitForLoad(testConfig.driver);
+			       Browser.wait(testConfig,3);
+			       
+			    }
+			  else
+			     Log.Warning("Could not find nonEpra payment on any of the pages, please execute test case manually", testConfig);
+		    }
+    }
 	
+	
+	/**
+	 * Finds if a failed Payment is displayed 
+	 * on payment summary page
+	 * if yes, hovers mouse over 'Failed Payment' text
+	 * and verifies that a pop appears and 
+	 * verifies in it
+	 */
+    public void verifyFailedPaymentPopUp() 
+     {	
+    	String paymentStatus="";
+    	int totalNoOfPages=getNumberOfPages();
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    	    if(testConfig.driver.getPageSource().contains("Failed")) 
+		     {
+			   for(int i=1;i<searchResultRows.size();i++)
+			    {	
+				  paymentStatus=searchResultRows.get(i).findElements(By.tagName("td")).get(7).getText();
+				  paymentStatus=paymentStatus.replace("\n", "");
+				  if(paymentStatus.equals("Failed")) 
+				    {
+				      Element.onMouseHover(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(7), "Failed Payment with payment number : " + searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText());
+				      //add for text verification in pop up
+				      break;
+				    }
+			    } 
+		     }
+			  
+    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
+				 int pageToBeClicked=pageNo+1;
+				 Log.Comment("Failed payment not found on page number " + pageNo);
+				 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				 Log.Comment("Clicked Page number : " + pageToBeClicked);
+				 Browser.waitForLoad(testConfig.driver);
+			     }
+    	    
+			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
+				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+			       Element.click(lnkNextPage,"Next Link");
+			       Browser.waitForLoad(testConfig.driver);
+			       Browser.wait(testConfig,3);
+			       
+			    }
+			  else
+			     Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
+		    }
+     }
+	      
+	
+    
+    public void verifyRemitPaymentPopUp()
+    {	
+    	String paymentType="remitPayment";
+    	String expectedPaymntNo=getPaymentNoDetails(paymentType).get("paymentNo");
+    	String actualPaymntNo="";
+    	
+    	int totalNoOfPages=getNumberOfPages();
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    		if (testConfig.driver.getPageSource().contains(expectedPaymntNo)) {
+    			
+    			for(int i=1;i<searchResultRows.size();i++)
+    			  {
+    				actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText(); // fetching payment number from UI
+    				actualPaymntNo=actualPaymntNo.replace("\n", "");
+    				   if(actualPaymntNo.equals(expectedPaymntNo)) {
+    					Element.onMouseHover(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(3), "Remit Payment with payment number : " + actualPaymntNo);
+    					 //add for text verification in pop up
+    					break;
+    			      }
+    		       }
+		     }
+			  
+    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
+				 int pageToBeClicked=pageNo+1;
+				 Log.Comment("Remit payment " +actualPaymntNo + " not found on page number " + pageNo);
+				 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				 Log.Comment("Clicked Page number : " + pageToBeClicked);
+				 Browser.waitForLoad(testConfig.driver);
+				 Browser.wait(testConfig,2);
+			     }
+    	    
+			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
+				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+			       Element.click(lnkNextPage,"Next Link");
+			       Browser.waitForLoad(testConfig.driver);
+			    }
+			  else
+			     Log.Warning("Could not find Remit payment with number" + expectedPaymntNo + ", please execute test case manually", testConfig);
+		    }
+     }
+    		   	
+
+    
 	public String getDisplayConsolidatedNumberFromUI(int rowNo)
 	{
 		return searchResultRows.get(rowNo).findElements(By.tagName("td")).get(3).getText();
@@ -147,7 +301,9 @@ public class paymentSummary{
 		
 		//Verify all options are displayed in Quick search Filter dropdown
 		List <String> quickSearchOptions=Element.getAllOptionsInSelect(testConfig, drpDwnQuickSearch);
+		
 		String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+		
 		for (String option:quickSearchOptions){
 			Helper.compareEquals(testConfig, "dropdown option" + " " + i,expectedOptions[i], option);
 			i++;
