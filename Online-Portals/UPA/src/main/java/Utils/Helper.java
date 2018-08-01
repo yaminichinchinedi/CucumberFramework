@@ -408,6 +408,35 @@ public class Helper
 		
 		return diffDays;
 	}
+	
+	/**
+	 * Method is used to calculate difference in days between passed and current date
+	 * as parameters
+	 * 
+	 * @param date
+	 *            1
+	 * @return difference between 2 dates in hours
+	 */
+	public static long dateTimeDifferenceInDaysFromCurrentDate(String date1)
+	{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date d1 = null;
+		Date d2 = null;
+		try
+		{
+			d1 = format.parse(date1);
+			d2 = format.parse(getCurrentDate("yyyy-MM-dd"));
+		}
+		catch (ParseException e)
+		{
+
+		}
+		// in milliseconds
+		long diff = (d2.getTime() - d1.getTime());
+		long diffDays = diff / (24 * 60 * 60 * 1000);
+		
+		return diffDays;
+	}
 
 	/**
 	 * Method is used to calculate difference in hrs between 2 Date Time passed

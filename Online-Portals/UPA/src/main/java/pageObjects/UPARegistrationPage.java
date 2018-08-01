@@ -54,6 +54,7 @@ public class UPARegistrationPage{
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
+		Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
 		
 	}
 	
@@ -114,7 +115,6 @@ public class UPARegistrationPage{
 	
 	public OptumIdLoginPage clickSignInWithOptumId()
 	{
-		Browser.wait(testConfig,3);
 		Element.click(lnkSignInWithOptumId, "Sign in with optum id button");
 		return new OptumIdLoginPage(testConfig);
 	}

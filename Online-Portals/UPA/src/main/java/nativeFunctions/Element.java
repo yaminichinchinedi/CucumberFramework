@@ -90,7 +90,9 @@ import main.java.reporting.LogTemp;
 		
 		catch(StaleElementReferenceException e)
 		{
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.visibilityOf(element));
+			 //Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
 		}
 		
 		catch(Exception e)
@@ -114,9 +116,6 @@ import main.java.reporting.LogTemp;
 	     WebDriverWait wait = new WebDriverWait(testConfig.driver,expectedWait);
 	     WebElement element1 = wait.until(ExpectedConditions.elementToBeClickable(element));
 	     element1.click();
-	     
-	  //   WebElement ele=wait.until(ExpectedConditions.invisibilityOf(element1))
-	     
 	     Log.Comment("Clicked " + namOfElement);
 	     
 		}
@@ -133,11 +132,10 @@ import main.java.reporting.LogTemp;
 	 */
 	public static void click(WebElement element,String namOfElement)
 	{
-		try
-		{
+		try{
 		  element.click();
 		  Log.Comment("Clicked " + namOfElement);
-		}
+		 }
 		
 		catch(NoSuchElementException e)
 		{
@@ -157,8 +155,7 @@ import main.java.reporting.LogTemp;
 		
 		catch(Exception e)
 		{
-			
-			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
 		}
 			
 	}
@@ -324,27 +321,32 @@ import main.java.reporting.LogTemp;
 	
 	public static String getFirstSelectedOption(TestBase testConfig, WebElement element,String textOrValue)
 	{
-		try{
-			String FirstSelectedOption=null;
+	  try{
+		   
+		   String FirstSelectedOption=null;
+		   
+		   Select sel = new Select(element);
+		   
+		   if(textOrValue.contains("text"))
+		    FirstSelectedOption=sel.getFirstSelectedOption().getText();
 		
-		Select sel = new Select(element);
-		if(textOrValue.contains("text"))
-		{
-		 FirstSelectedOption=sel.getFirstSelectedOption().getText();
-		}
-		else if (textOrValue.contains("value"))
-		{
-			FirstSelectedOption=sel.getFirstSelectedOption().getAttribute("value");
-		}
+		   else if (textOrValue.contains("value"))
+		    FirstSelectedOption=sel.getFirstSelectedOption().getAttribute("value");
 		
-		return FirstSelectedOption;
-		}
+		   return FirstSelectedOption;
+		 }
 		
-		catch(Exception e)
-		{
+	  catch(StaleElementReferenceException e){
+			Log.Fail("Unable to find selected item in dropdown due to stale element exception" + '\n' + e);
+			return null;
+		}
+	  
+		catch(Exception e){
 			Log.Fail("Unable to find selected item in dropdown due to" + '\n' + e);
 			return null;
 		}
+	  
+	  
 	}
 	
 	/**
@@ -387,11 +389,10 @@ import main.java.reporting.LogTemp;
 	public static void selectByVisibleText(WebElement element, String text, String description)
 	{
 			try{
-				Log.Comment("Select" + " " +  description);
-			
-			
+
 			Select sel = new Select(element);
 			sel.selectByVisibleText(text);
+			Log.Comment("Selected" + " " +  description);
 			}
 			catch (StaleElementReferenceException e)
 			{
@@ -407,7 +408,6 @@ import main.java.reporting.LogTemp;
 	public static void selectByValue(WebElement element, String text, String description)
 	{
 			Log.Comment("Select" +  description + "from dropdown");
-			
 			Select sel = new Select(element);
 			sel.selectByValue(text);
 	}
