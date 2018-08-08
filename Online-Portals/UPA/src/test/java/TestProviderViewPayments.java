@@ -296,7 +296,7 @@ public class TestProviderViewPayments extends TestBase {
    @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments")
    void testZeroDollarACHPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
-	   String paymentType="ACH";
+	   String paymentType="ACH"; 
 	    
 	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 	   testConfig.putRunTimeProperty("value", "ALL");	

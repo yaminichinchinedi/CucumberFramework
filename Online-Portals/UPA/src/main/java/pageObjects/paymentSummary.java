@@ -90,7 +90,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	
 	public paymentSummary(TestBase testConfig)
-	{
+	{ 
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
