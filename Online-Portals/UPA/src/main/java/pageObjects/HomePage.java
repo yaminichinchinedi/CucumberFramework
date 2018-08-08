@@ -115,8 +115,6 @@ public class HomePage extends LoginUPA {
 
 	@FindBy(xpath = "//td[contains(text(),'Create and download bundled daily 835 files, Payer PRA, and ePRAs in one easily retrievable zip file.')]")
 	WebElement txtCreateDownload;
-	
-
 
 	private paymentSummary paymentSummaryPage;
 	
@@ -337,7 +335,6 @@ public class HomePage extends LoginUPA {
 		return new paymentSummary(testConfig);
 	}
 	
-
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
 	{
 		Element.click(maintainEnrlTab, "Maintain Enrollment Tab");
