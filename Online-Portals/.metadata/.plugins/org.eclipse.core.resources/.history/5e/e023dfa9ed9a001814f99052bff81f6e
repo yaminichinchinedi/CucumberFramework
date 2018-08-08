@@ -100,16 +100,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		try{
 		if(txtBoxPayerTin.isDisplayed())
 			Log.Comment("Payer TinSearch box is displayed on the page");	
+		}
 		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
-		}
-		catch(Exception e)
-		{
-			Log.Warning("Exception occured " + e , testConfig);
-		}
 		
 	}
 	
