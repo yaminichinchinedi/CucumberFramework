@@ -1,5 +1,6 @@
 package test.java;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -261,7 +262,7 @@ public class TestProviderViewPayments extends TestBase {
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	    home.selectTin(paymentType);
         paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().setQuickSearchFilter(paymentType);
-        paymentSummaryPage.clickEpraPDFLink(); 	
+        paymentSummaryPage.clickEpraPDFLink(); 	 
 	 }
    
    
@@ -292,14 +293,37 @@ public class TestProviderViewPayments extends TestBase {
        paymentSummaryPage.verifyRemitPaymentPopUp();  
 	}
    
+   @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments")
+   void testZeroDollarACHPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   {
+	   String paymentType="ACH"; 
+	    
+	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+	   testConfig.putRunTimeProperty("value", "ALL");	
+	   
+	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+       OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
+	   home.selectTin(paymentType);
+	   paymentSummary paymentSummaryPage = home.clickViewPaymentsTab();	   
+	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
+   }
    
-   
-   
-   
-   
-   
-   
-   
+   @Test(priority=5,description="TS015_View Payments_Zero Dollar VCP Payments")
+   void testZeroDollarVCPPayments() throws InterruptedException, IOException, JAXBException, SAXException, ParserConfigurationException, ParseException 
+   {
+	   String paymentType="VCP";
+	   
+	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+	   testConfig.putRunTimeProperty("value", "ALL");	
+	   
+	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
+	   home.selectTin(paymentType);
+	   paymentSummary paymentSummaryPage = home.clickViewPaymentsTab();	   
+	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);	
+   }
    
 }
 

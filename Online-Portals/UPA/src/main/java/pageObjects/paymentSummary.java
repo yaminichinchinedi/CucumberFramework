@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(linkText="Payment Date")
 	WebElement lnkPaymentDate;
 	
+	@FindBy(name = "payerProvTin")
+	WebElement txtBoxPayerTin;
+
+	@FindBy(name = "btnSearch")
+	WebElement btnSearch;
+	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
@@ -93,7 +100,17 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		try{
+		if(txtBoxPayerTin.isDisplayed())
+			Log.Comment("Payer TinSearch box is displayed on the page");	
+		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		}
+		catch(Exception e)
+		{
+			Log.Warning("Exception occured " + e , testConfig);
+		}
+		
 	}
 	
 	
@@ -350,6 +367,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
+		getQuickSearchDates(quickSearchFilter);
+		
 		Element.selectByVisibleText(drpDwnMarketType,MktTypeFilter,MktTypeFilter + " " +" from 'Market Type' dropdown");	
 		Browser.wait(testConfig,3);
 		return this;
@@ -499,7 +518,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{	
 		setSearchFilters(filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter);
 		
-		getQuickSearchDates(quickSearchFilter);
+//		getQuickSearchDates(quickSearchFilter);
 		
 		//Verifies Record count displayed on UI is same as we get from FISL
 		
@@ -601,13 +620,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	public String getDisplayPaymentMethod(String paymentMethodTypefromFISL)
 	{
-		if (paymentMethodTypefromFISL.equalsIgnoreCase("NON") || paymentMethodTypefromFISL.equalsIgnoreCase("ACH"))
-		{
+		if (paymentMethodTypefromFISL==null || paymentMethodTypefromFISL.equalsIgnoreCase("NON") || paymentMethodTypefromFISL.equalsIgnoreCase("ACH"))
 			return "ACH";
-		}
 		
-		else
-			return "Unidentified";
+		else if(paymentMethodTypefromFISL.equalsIgnoreCase("VCP"))
+			return "VCP";
+			
+		return "Unidentified";
 			
 	}
 	
@@ -695,7 +714,106 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Helper.compareEquals(testConfig, "Payment Date Order", expectedPaymentDateList, datesListFromUI);
 		 
 	}
+	
+	/**
+	 * 
+	 * @param expectedPaymentType
+	 * @throws JAXBException
+	 * @throws IOException
+	 * @throws SAXException
+	 * @throws ParserConfigurationException
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	public void verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException, InterruptedException, ParseException
+	{	
+		int sqlRowNo = 0;
+		String expectedPaymentAmount = "$0.00";
+		String archiveFilter = "Show All";
+		
+	    ArrayList<String> paymentDetailsFromUI = new ArrayList<String>();
+	 	ArrayList<String> paymentDetailsFromFISL = new ArrayList<String>();
+	    
+        if(expectedPaymentType.equalsIgnoreCase("ACH"))
+			sqlRowNo = 33;
+        
+        else if(expectedPaymentType.equalsIgnoreCase("VCP"))
+			sqlRowNo = 34;		
 
+        Map zeroDollarPayments = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+        int dateDiff = Integer.parseInt(zeroDollarPayments.get("DATE_DIFF").toString());
+        String dateToValidate = Helper.getDateBeforeOrAfterDays(-dateDiff,"yyyy-MM-dd");
+        setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, archiveFilter);        
+        
+		//FISL Response
+		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
+		
+		int totalNoOfPages=getNumberOfPages();
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 { 
+    		if(testConfig.driver.getPageSource().contains("$0.00")) 
+		     {
+    			for(int i=1; i<searchResultRows.size(); i++)
+    			  {			
+    				   String paymentAmountUI = searchResultRows.get(i).findElements(By.tagName("td")).get(5).getText();			  
+    				   paymentAmountUI = paymentAmountUI.replace("\n", "");			   
+    				   String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();	
+    				   paymentTypeUI = paymentTypeUI.replace("\n", "");
+    				   String statusUI = searchResultRows.get(i).findElements(By.tagName("td")).get(7).getText();	
+    				   statusUI = statusUI.replace("\n", "");	
+    				   if(paymentAmountUI.equalsIgnoreCase(expectedPaymentAmount) && paymentTypeUI.equalsIgnoreCase(expectedPaymentType)){
+    					   Helper.compareEquals(testConfig, "Payment Amount from Query and UI : ",  expectedPaymentAmount, paymentAmountUI);
+    					   Helper.compareEquals(testConfig, "Payment Type from Query and UI : ", expectedPaymentType, paymentTypeUI);				   
+    					   paymentDetailsFromUI.add(paymentAmountUI);
+    					   paymentDetailsFromUI.add(paymentTypeUI);			   
+    					   
+    					 //Payment Details Comparison of UI and FISL
+    		    			for(int j=0; j<payments.length; j++)
+    		    			{
+    		    				String paymentAmountFISL = "$"+payments[j].getTotalAmount();
+    		    				
+    		    				String paymentTypeFISL = getDisplayPaymentMethod(payments[j].getEpsPaymentStatusCode().getPaymentMode());
+    		    				
+    		    				if(paymentTypeFISL.equalsIgnoreCase(expectedPaymentType) && paymentAmountFISL.equalsIgnoreCase(expectedPaymentAmount)){
+    		    					paymentDetailsFromFISL.add(paymentAmountFISL);
+    		    					paymentDetailsFromFISL.add(paymentTypeFISL);
+    		    					break;
+    		    				}			
+    		    			}		
+    		    			Helper.compareEquals(testConfig, "Payment Details Comparison of UI and FISL: ",  paymentDetailsFromUI, paymentDetailsFromFISL);    					   
+    				   }			   
+    			  }
+		     }
+    		else if(pageNo%10!=0 && pageNo<totalNoOfPages){   
+    			int pageToBeClicked=pageNo+1;
+				Log.Comment("Failed payment not found on page number " + pageNo);
+				Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				Log.Comment("Clicked Page number : " + pageToBeClicked);
+				Browser.waitForLoad(testConfig.driver);
+    		}
+    		else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
+    			Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+			    Element.click(lnkNextPage,"Next Link");
+			    Browser.waitForLoad(testConfig.driver);
+			    Browser.wait(testConfig,3);
+    		}
+    		else
+			     Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
+    		
+		 }		
+	}	
+	
+	
+	public paymentSummary payerTin(){
+		Element.enterData(txtBoxPayerTin, "411804774","Entered TIN", "Payer Tin");
+		Element.click(btnSearch, "Search Button");
+		return this;
+	}
+	
+	
 	/**
 	 * Getting response from EPSA
 	 * @return type object of search request
