@@ -85,32 +85,16 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(linkText="Payment Date")
 	WebElement lnkPaymentDate;
 	
-	@FindBy(name = "payerProvTin")
-	WebElement txtBoxPayerTin;
-
-	@FindBy(name = "btnSearch")
-	WebElement btnSearch;
-	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	
 	public paymentSummary(TestBase testConfig)
-	{
+	{ 
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		try{
-		if(txtBoxPayerTin.isDisplayed())
-			Log.Comment("Payer TinSearch box is displayed on the page");	
-		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
-		}
-		catch(Exception e)
-		{
-			Log.Warning("Exception occured " + e , testConfig);
-		}
-		
 	}
 	
 	
@@ -518,8 +502,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{	
 		setSearchFilters(filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter);
 		
-//		getQuickSearchDates(quickSearchFilter);
-		
 		//Verifies Record count displayed on UI is same as we get from FISL
 		
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
@@ -805,14 +787,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     		
 		 }		
 	}	
-	
-	
-	public paymentSummary payerTin(){
-		Element.enterData(txtBoxPayerTin, "411804774","Entered TIN", "Payer Tin");
-		Element.click(btnSearch, "Search Button");
-		return this;
-	}
-	
 	
 	/**
 	 * Getting response from EPSA
