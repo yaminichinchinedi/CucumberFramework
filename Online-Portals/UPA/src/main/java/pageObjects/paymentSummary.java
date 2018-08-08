@@ -85,16 +85,32 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(linkText="Payment Date")
 	WebElement lnkPaymentDate;
 	
+	@FindBy(name = "payerProvTin")
+	WebElement txtBoxPayerTin;
+
+	@FindBy(name = "btnSearch")
+	WebElement btnSearch;
+	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	
 	public paymentSummary(TestBase testConfig)
-	{ 
+	{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		try{
+		if(txtBoxPayerTin.isDisplayed())
+			Log.Comment("Payer TinSearch box is displayed on the page");	
+		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		}
+		catch(Exception e)
+		{
+			Log.Warning("Exception occured " + e , testConfig);
+		}
+		
 	}
 	
 	
@@ -513,7 +529,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		 }
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-		 //Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
      }
 	
 
@@ -604,7 +620,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	public String getDisplayPaymentMethod(String paymentMethodTypefromFISL)
 	{
-		System.out.println("payment type from fisl" + paymentMethodTypefromFISL);
 		if (paymentMethodTypefromFISL==null || paymentMethodTypefromFISL.equalsIgnoreCase("NON") || paymentMethodTypefromFISL.equalsIgnoreCase("ACH"))
 			return "ACH";
 		
@@ -733,7 +748,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		//FISL Response
 		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
 		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
-		System.out.println("payments.length: "+payments.length);
 		
 		int totalNoOfPages=getNumberOfPages();
     	Log.Comment("Total No. of pages are :" + totalNoOfPages);
@@ -759,11 +773,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     					 //Payment Details Comparison of UI and FISL
     		    			for(int j=0; j<payments.length; j++)
     		    			{
-    		    				System.out.println(payments[j].getDisplayConsolidatedPaymentNumber());
     		    				String paymentAmountFISL = "$"+payments[j].getTotalAmount();
     		    				
     		    				String paymentTypeFISL = getDisplayPaymentMethod(payments[j].getEpsPaymentStatusCode().getPaymentMode());
-    		    				System.out.println("paymentTypeFISL: "+paymentTypeFISL);
     		    				
     		    				if(paymentTypeFISL.equalsIgnoreCase(expectedPaymentType) && paymentAmountFISL.equalsIgnoreCase(expectedPaymentAmount)){
     		    					paymentDetailsFromFISL.add(paymentAmountFISL);
@@ -793,6 +805,14 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     		
 		 }		
 	}	
+	
+	
+	public paymentSummary payerTin(){
+		Element.enterData(txtBoxPayerTin, "411804774","Entered TIN", "Payer Tin");
+		Element.click(btnSearch, "Search Button");
+		return this;
+	}
+	
 	
 	/**
 	 * Getting response from EPSA
