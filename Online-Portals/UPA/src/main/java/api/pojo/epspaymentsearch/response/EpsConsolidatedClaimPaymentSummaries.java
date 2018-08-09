@@ -1,6 +1,6 @@
 package main.java.api.pojo.epspaymentsearch.response;
 
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElement;   
 
 public class EpsConsolidatedClaimPaymentSummaries
 {
@@ -31,8 +31,11 @@ public class EpsConsolidatedClaimPaymentSummaries
     @XmlElement(name = "PaymentMadeOn", required = true)
     private String PaymentMadeOn;
 
+//    @XmlElement(name = "EpsPaymentStatusCode", required = true)
+//    private String EpsPaymentStatusCode;
+    
     @XmlElement(name = "EpsPaymentStatusCode", required = true)
-    private String EpsPaymentStatusCode;
+    private EpsPaymentStatusCode EpsPaymentStatusCode;
 
     @XmlElement(name = "TotalAmount", required = true)
     private String TotalAmount;
@@ -139,12 +142,15 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.PaymentMadeOn = PaymentMadeOn;
     }
 
-    public String getEpsPaymentStatusCode ()
+     
+    
+    
+    public EpsPaymentStatusCode getEpsPaymentStatusCode ()
     {
-        return EpsPaymentStatusCode;
+    	return EpsPaymentStatusCode ;
     }
 
-    public void setEpsPaymentStatusCode (String EpsPaymentStatusCode)
+    public void setEpsPaymentStatusCode (EpsPaymentStatusCode EpsPaymentStatusCode)
     {
         this.EpsPaymentStatusCode = EpsPaymentStatusCode;
     }
