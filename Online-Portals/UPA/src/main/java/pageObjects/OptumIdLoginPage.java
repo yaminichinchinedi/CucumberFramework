@@ -89,10 +89,18 @@ public class OptumIdLoginPage {
 	    Element.enterData(txtboxOptumID,details.get("id"), "Entered Optum ID as:" + " " +details.get("id"), "txtboxOptumID"); 
 	    Element.enterData(txtboxPwd,details.get("password"), "Entered Optum ID password  as :" + " "+ details.get("password"), "txtboxPwd");
 	    Element.click(btnSignIn, "Sign In");
-	  
-        for(int i=0;i<2;i++){
-        if (testConfig.driver.getPageSource().contains("Unrecognized")) 
+	    Browser.waitForLoad(testConfig.driver);
+	    Browser.wait(testConfig, 3);
+        for(int i=0;i<2;i++)
+        {
+           securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+           if(securityQuestion!=null)
+           {
+//        if (testConfig.driver.getPageSource().contains("Unrecognized")) 
     	  fillAns();
+           break;
+           }
+           
         }
         
      return new HomePage(testConfig);
