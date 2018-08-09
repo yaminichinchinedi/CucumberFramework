@@ -519,6 +519,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	   for (int i=0;i<10;i++)
 	   {
 	     String header=searchResultRows.get(0).findElements(By.tagName("th")).get(i).getText();
+	     if(header.equals("Original Payment Date"))
+	    	 header="Payment Date";
 	     headerList.add(header);
 		}
 	return (ArrayList<String>) headerList;

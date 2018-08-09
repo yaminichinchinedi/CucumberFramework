@@ -30,13 +30,13 @@ public class SearchTinPageViewPayments extends TestBase{
 	  Element.verifyElementPresent(txtboxTinNo, "Enter Tin Text Box is present");
     }
 	
-	public SearchTinPageViewPayments EnterTin(String tin)
+	public SearchTinPageViewPayments enterTin(String tin)
     {
       Element.enterData(txtboxTinNo, tin, "Enter Tin to proceed for View Payments", "Tin Textbox"); //need to fill tin here
-      return new SearchTinPageViewPayments(testConfig);
+      return this;
     }
 	
-	public paymentSummary searchButton()
+	public paymentSummary clickSearchBtn()
     {
       Element.click(btnSubmit, "Search Button");
       return new paymentSummary(testConfig);

@@ -36,8 +36,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();		
-		srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 		paymentSummaryPage.setQuickSearchFilter(paymentType).verifyFailedPaymentPopUp();
       }
 	
@@ -54,8 +54,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-		srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 		paymentSummaryPage.setQuickSearchFilter(paymentType).verifyRemitPaymentPopUp();
       }
 	
@@ -72,8 +72,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-		srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 
 		paymentSummaryPage.setPayerFilter();
 		paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
@@ -98,8 +98,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-		srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 		
 		quickSearchFilter="Last 60 days";
 		paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
@@ -124,8 +124,8 @@ public class TestCSRViewPayments extends TestBase{
 	    LoginCSR loginPage=new LoginCSR(testConfig);
 	 	CSRHomePage homePage=loginPage.doLogin(loginUserType);
  		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
- 		srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton(); 		
+ 		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn(); 		
 
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter); 	
 	         
@@ -163,8 +163,8 @@ public class TestCSRViewPayments extends TestBase{
 	   	LoginCSR loginPage=new LoginCSR(testConfig);
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   	srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();	   	
+	   	srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();	   	
       
 	   	paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter); 	
 	      
@@ -200,8 +200,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   	srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+	   	srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments); 	
       
@@ -236,8 +236,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   	srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+	   	srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
 		
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments); 	
       
@@ -273,8 +273,8 @@ public class TestCSRViewPayments extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   	srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();     
+	   	srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();     
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments); 	
       
         quickSearchFilter="Last 60 days";
@@ -304,8 +304,8 @@ public class TestCSRViewPayments extends TestBase{
 	    LoginCSR loginPage=new LoginCSR(testConfig);
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   	srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
+	   	srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
         paymentSummaryPage.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter).verifyPaymentDateSorting("Desc");
    }
    
@@ -321,8 +321,8 @@ public class TestCSRViewPayments extends TestBase{
 	   LoginCSR loginPage=new LoginCSR(testConfig);
 	   CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-	   paymentSummary paymentSummaryPage = srchTinPage.searchButton();	   	   
+	   srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+	   paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();	   	   
 	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
    }
    
@@ -338,8 +338,51 @@ public class TestCSRViewPayments extends TestBase{
 	   LoginCSR loginPage=new LoginCSR(testConfig);
 	   CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
-	   srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
-	   paymentSummary paymentSummaryPage = srchTinPage.searchButton();paymentSummaryPage.verifyZeroDollarPayments(paymentType);	
+	   srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+	   paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();paymentSummaryPage.verifyZeroDollarPayments(paymentType);	
+   }
+   
+   @Test(priority=5,description="TS012_View Payments_Market Type filter_Medical_Dental etc" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type")
+   void testSpecificMarketTypeFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   {
+      
+	   	String loginUserType="Super";
+	   	String filterPayments="Show All";
+        String mktTypeFilter="Medical";
+        String quickSearchFilter="Last 30 days";
+        String paymentType="generalPayment";
+        
+        
+        testConfig.putRunTimeProperty("key", "MARKET_TYPE");
+		testConfig.putRunTimeProperty("value", "M");
+		
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
+		srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
+        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, mktTypeFilter); 	
+   }
+      
+   
+   @Test(priority=5,description="TS013_View Payments_Market Type filter_Show All" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-ALL from the  filter - Market Type")
+   void testALLMarketTypeFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   {
+      
+	   String loginUserType="Super"; 
+	   String filterPayments="Show All";
+       String quickSearchFilter="Last 30 days";
+       String paymentType="generalPayment";
+        
+       testConfig.putRunTimeProperty("key", "MARKET_TYPE");
+       testConfig.putRunTimeProperty("value", "ALL");
+       
+       LoginCSR loginPage=new LoginCSR(testConfig);
+       CSRHomePage homePage=loginPage.doLogin(loginUserType);
+       SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
+       srchTinPage.enterTin(srchTinPage.getTin(paymentType));
+       paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
+       paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments); 	
    }
 
 }

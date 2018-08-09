@@ -59,11 +59,7 @@ public String getTinForPaymentType(String paymentType)
  	 		  break;
  		   }
  		   
- 		  case "generalPayment":
- 	 			sqlRowNo=33; 
- 	 			break;
- 	 			
- 		 case "ACH":
+ 		  case "ACH":
  		     sqlRowNo=35; 
  		      break;
  		       
