@@ -3,6 +3,7 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -100,17 +101,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		try{
-//		if(txtBoxPayerTin.isDisplayed())
-//			Log.Comment("Payer TinSearch box is displayed on the page");	
-//		else
+
+		txtBoxPayerTin=Element.findElement(testConfig, "name", "payerProvTin");
+		if(txtBoxPayerTin!=null)
+		Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
+		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
-		
-//		catch(Exception e)
-//		{
-//			Log.Warning("Exception occured " + e , testConfig);
-//		}
-//		
+
 	}
 	
 	
@@ -138,10 +135,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
-	public void clickEpraPDFLink()
+	public paymentSummary clickEpraPDFLink()
 	{
 		String actualPaymntNo="";
-		String expectedPaymntNo=testConfig.getRunTimeProperty("paymentNo");
+		String expectedPaymntNo=testConfig.getRunTimeProperty("displayPaymentNo");
+		WebElement popUp=null;
 		
 		int totalNoOfPages=getNumberOfPages();
     	Log.Comment("Total No. of pages are :" + totalNoOfPages);
@@ -170,9 +168,14 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 				     Browser.scrollTillAnElement(testConfig, txtEpraPDf, "Epra PDF text is found for Display Consolidated No. :" + actualPaymntNo);
 				     Browser.wait(testConfig, 2);
 				
-		             Element.onMouseHover(testConfig, txtEpraPDf, "Hover mouse over PDF link that has become text now");	            
-		             WebElement popUp=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1);
+		             Element.onMouseHover(testConfig, txtEpraPDf, "Hover mouse over PDF link that has become text now");	        
+		             try{
+		             popUp=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1);}
+		             catch(Exception e){
+		            	 Element.expectedWait(searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1), testConfig, "hover pop up", "hover pop up");
+		             }
     	             Helper.compareEquals(testConfig, "Hover message on PDF", "ePRA in process, please wait for completion", popUp.getAttribute("title"));
+    	            
     	             break;   
 				   }
 		       }
@@ -195,7 +198,19 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			  else
 			     Log.Warning("Could not find nonEpra payment on any of the pages, please execute test case manually", testConfig);
 		    }
+		return this;
     }
+	
+	
+	public paymentSummary verifyEpraStatus(String expectedStatus) 
+	 {
+		int sqlRowNo=34;
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+		return this;
+		
+	 } 
+
 	
 	
 	/**
@@ -470,10 +485,14 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			    {   
 				   int pageToBeClicked=pageNo+1;
 				   WebElement pageLink= Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]");
+				   if(pageLink!=null)
+					   pageLink.click();
+				   else
 				   Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
-				  // Browser.wait(testConfig,3);
 				   Log.Comment("Clicked Page number : " + pageToBeClicked);
-				   Element.expectedWait(pageLink, testConfig, "pageLink" + pageToBeClicked +1, "pageToBeClicked" + pageToBeClicked + 1);
+				   Browser.wait(testConfig, 3);
+//				   int nextPage=pageToBeClicked + 1;
+//				   Element.expectedWait(pageLink, testConfig, "pageLink" + nextPage, "pageToBeClicked" + nextPage);
 			     }
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
@@ -517,11 +536,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public void verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{	
 		setSearchFilters(filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter);
-		
-//		getQuickSearchDates(quickSearchFilter);
-		
-		//Verifies Record count displayed on UI is same as we get from FISL
-		
+
+		//Verifies Record count displayed on UI is same as we get from FISL		
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
 		 {
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountFromUI());
@@ -632,9 +648,18 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public String getRecordCountFromDB()
 	{
-		int sqlRowNo=4;
-		Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		return srchConsolTable.get("RECORD_COUNT").toString().trim();	
+		//int sqlRowNo=4;
+		int totalRecord=0;
+		List<String> schemas=Arrays.asList("PP001","PP002","PP002","PP003","PP004","PP005");
+		int sqlRowNo=34;
+		for(String schema:schemas)
+		{
+			testConfig.putRunTimeProperty("schema", schema);
+			Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			totalRecord=totalRecord+Integer.parseInt(srchConsolTable.get("RECORD_COUNT").toString().trim());
+		}
+		
+		return String.valueOf(totalRecord);	
 	}	
 	
 
@@ -704,15 +729,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			  datesListFromUI.add(dates);
 	        }
 		}
-			
 		for(Date date:actualPaymentDates)
         {		
 		  String dates=Helper.changeDateFormat(date);
 		  expectedPaymentDateList.add(dates);
         }
-		
-		Helper.compareEquals(testConfig, "Payment Date Order", expectedPaymentDateList, datesListFromUI);
-		 
+		Helper.compareEquals(testConfig, "Payment Date Order", expectedPaymentDateList, datesListFromUI); 
 	}
 	
 	/**
@@ -735,10 +757,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 	ArrayList<String> paymentDetailsFromFISL = new ArrayList<String>();
 	    
         if(expectedPaymentType.equalsIgnoreCase("ACH"))
-			sqlRowNo = 33;
+			sqlRowNo = 35;
         
         else if(expectedPaymentType.equalsIgnoreCase("VCP"))
-			sqlRowNo = 34;		
+			sqlRowNo = 36;		
 
         Map zeroDollarPayments = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
         int dateDiff = Integer.parseInt(zeroDollarPayments.get("DATE_DIFF").toString());

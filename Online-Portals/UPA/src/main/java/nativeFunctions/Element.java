@@ -519,7 +519,7 @@ import main.java.reporting.LogTemp;
 		}
 		catch (NoSuchElementException e)
 		{
-			Log.Comment("Could not find the element on page  due to exception : " + e);
+			Log.Comment("Could not find the element on page with locator value : " +locatorValue );
 			return null;
 		}
 		
