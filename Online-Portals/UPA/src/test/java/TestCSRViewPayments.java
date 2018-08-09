@@ -308,5 +308,38 @@ public class TestCSRViewPayments extends TestBase{
 		paymentSummary paymentSummaryPage = srchTinPage.searchButton();
         paymentSummaryPage.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter).verifyPaymentDateSorting("Desc");
    }
+   
+   @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments")
+   void testZeroDollarACHPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   {
+	   String paymentType="ACH"; 
+	   String loginUserType="Super";
+	    
+	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+	   testConfig.putRunTimeProperty("value", "ALL");	
+	   
+	   LoginCSR loginPage=new LoginCSR(testConfig);
+	   CSRHomePage homePage=loginPage.doLogin(loginUserType);
+	   SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
+	   srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
+	   paymentSummary paymentSummaryPage = srchTinPage.searchButton();	   	   
+	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
+   }
+   
+   @Test(priority=5,description="TS015_View Payments_Zero Dollar VCP Payments")
+   void testZeroDollarVCPPayments() throws InterruptedException, IOException, JAXBException, SAXException, ParserConfigurationException, ParseException 
+   {
+	   String paymentType="VCP";
+	   String loginUserType="Super";
+	   
+	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+	   testConfig.putRunTimeProperty("value", "ALL");	
+	   
+	   LoginCSR loginPage=new LoginCSR(testConfig);
+	   CSRHomePage homePage=loginPage.doLogin(loginUserType);
+	   SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink();
+	   srchTinPage.EnterTin(srchTinPage.getTin(paymentType));
+	   paymentSummary paymentSummaryPage = srchTinPage.searchButton();paymentSummaryPage.verifyZeroDollarPayments(paymentType);	
+   }
 
 }
