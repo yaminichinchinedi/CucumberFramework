@@ -45,8 +45,12 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		    case "remitPayment":
- 			sqlRowNo=29; 
+ 			sqlRowNo=35; 
  			break;
+ 			
+ 		    case "generalPayment":
+ 	 		sqlRowNo=37; 
+ 	 		break;
  			
  		   case "nonEpraPayment":
  		   { 
@@ -62,6 +66,7 @@ public String getTinForPaymentType(String paymentType)
  		Log.Comment("Getting tin for  " + paymentType);
  		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
  		Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
+ 		testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
  		return tinNumbers.get("PROV_TAX_ID_NBR").toString();
  	}
 
@@ -115,7 +120,7 @@ public String getTinForPaymentType(String paymentType)
  		 	break;
  			
  		    case "remitPayment":
- 			sqlRowNo=32; 
+ 			sqlRowNo=36; 
  			break;
  			
  		    case "nonEpraPayment":
