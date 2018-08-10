@@ -15,10 +15,10 @@ public class SearchTinPageViewPayments extends TestBase{
 	
 	private ViewPaymentsDataProvider dataProvider;
 	
-	@FindBy(xpath=".//*[@id='navigateToProviderForm']/table/tbody/tr[2]/td/table[1]/tbody/tr/td[2]/input")
+	@FindBy(name="providerTIN")
 	public WebElement txtboxTinNo;
 	
-	@FindBy(xpath=".//*[@id='navigateToProviderForm']/table/tbody/tr[2]/td/table[2]/tbody/tr/td[2]/input")
+	@FindBy(name="btnSubmit")
 	public WebElement btnSubmit;
 	
 	//private TestBase testConfig;
@@ -30,9 +30,9 @@ public class SearchTinPageViewPayments extends TestBase{
 	  Element.verifyElementPresent(txtboxTinNo, "Enter Tin Text Box is present");
     }
 	
-	public SearchTinPageViewPayments enterTin(String tin)
+	public SearchTinPageViewPayments enterTin(String paymentType)
     {
-      Element.enterData(txtboxTinNo, tin, "Enter Tin to proceed for View Payments", "Tin Textbox"); //need to fill tin here
+      Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
       return this;
     }
 	
