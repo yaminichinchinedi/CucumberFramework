@@ -101,11 +101,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+
 		txtBoxPayerTin=Element.findElement(testConfig, "name", "payerProvTin");
 		if(txtBoxPayerTin!=null)
 		Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
 		else
 		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+
 	}
 	
 	
@@ -128,7 +130,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		
 		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
-		Element.expectedWait(drpDwnTin, testConfig, "Tin Dropdown", "Tin Dropdown");
+		Element.expectedWait(drpDwnQuickSearch, testConfig, "Quick Search Filter", "Quick Search Filter");
 		return this;
 	}
 	
@@ -517,6 +519,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	   for (int i=0;i<10;i++)
 	   {
 	     String header=searchResultRows.get(0).findElements(By.tagName("th")).get(i).getText();
+	     if(header.equals("Original Payment Date"))
+	    	 header="Payment Date";
 	     headerList.add(header);
 		}
 	return (ArrayList<String>) headerList;
