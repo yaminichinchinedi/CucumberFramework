@@ -21,6 +21,9 @@ public class CSRHomePage {
 	@FindBy(linkText="Manage Users")
 	WebElement lnkManageUsers;
 	
+    @FindBy(linkText="View Payments")
+    WebElement lnkViewPayments;
+	
 	@FindBy(id="userTypeSelection")
 	WebElement drpDownUserType;
 	
@@ -89,5 +92,12 @@ public class CSRHomePage {
 		Element.click(lnkManageUsers, "Manage Users");
 		return new SearchTinPage(testConfig);
 	}
+	
+    public SearchTinPageViewPayments clickViewPaymentsLink()
+    {
+           Element.click(lnkViewPayments, "View Payments");
+           return new SearchTinPageViewPayments(testConfig);
+    }
+
 	
 }
