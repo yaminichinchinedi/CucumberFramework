@@ -162,8 +162,7 @@ public class AddUserDetails {
 	
 	public AddUserDetails selectAndAddTin()
 	{
-		//Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
-		Element.selectByIndex(drpDwnSelectTin, 1, "Select first tin");
+	    Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
 		Browser.wait(testConfig,2);
 		clickAddTin();
 		return this;
@@ -353,6 +352,8 @@ public class AddUserDetails {
 		Element.verifyTextPresent(errorExtension, "Invalid Extension");
 		Element.verifyTextPresent(errorEmail, "Invalid Email Address");
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Retype Email Address");
+		
+		Browser.wait(testConfig, 2);
 		
 		//Verify phone number field Allows 10 digits (Mandatory) 
 		

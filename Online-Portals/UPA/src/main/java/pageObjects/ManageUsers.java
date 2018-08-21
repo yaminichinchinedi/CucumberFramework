@@ -521,7 +521,7 @@ public class ManageUsers extends AddUserDetails  {
     	Element.click(lnkNotYou, "Not You");
     	Browser.waitForLoad(testConfig.driver);
     	Browser.wait(testConfig,5);
-    	Browser.verifyURL(testConfig, "optumhealthfinancial.com");
+    	Browser.verifyURL(testConfig, "optumbank.com");
     	
     }
 	
@@ -594,7 +594,7 @@ public class ManageUsers extends AddUserDetails  {
 		
 
         //Get the tin number for which Email Notification is to be changed, we are taking first row here
-		Log.Comment("Tin number for whom email notification i	s to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
+		Log.Comment("Tin number for whom email notification is to be changed is :" + " "+ tinGridRows.get(1).findElements(By.tagName("td")).get(0).getText().toString());
 		
 		//Getting email checkbox element
 		emailChkbox=findEmailCheckbox(userType);
@@ -620,7 +620,8 @@ public class ManageUsers extends AddUserDetails  {
 		else
 		{
 			Log.Comment("Email checkbox is  Unchecked, so checking it","Maroon");
-			emailChkbox.click();
+			Element.expectedWait(emailChkbox, testConfig,"email checkbox", "email checkbox");
+			Element.click(emailChkbox, "email checkbox");
 			clickSave();
 			Log.Comment("Checked email checbox successfully","Green");
 			emailChkbox=findEmailCheckbox(userType);

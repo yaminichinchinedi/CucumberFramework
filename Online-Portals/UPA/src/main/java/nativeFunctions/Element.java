@@ -109,7 +109,7 @@ import main.java.reporting.LogTemp;
 	 * @param namOfElement
 	 * @param expectedWait
 	 */
-	public static void click(WebElement element,String namOfElement,int expectedWait)
+	public static void click(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
 	{
 		try{
 	     

@@ -10,6 +10,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -91,17 +92,24 @@ public class OptumIdLoginPage {
 	    Element.click(btnSignIn, "Sign In");
 	    Browser.waitForLoad(testConfig.driver);
 	    Browser.wait(testConfig, 3);
-        for(int i=0;i<2;i++)
-        {
-           securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
-           if(securityQuestion!=null)
+	    
+	    WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+	    if(welcomeTxt!=null)
+	    	Log.Comment("Security Question not present");
+	    else
+	    {
+          for(int i=0;i<2;i++)
            {
-//        if (testConfig.driver.getPageSource().contains("Unrecognized")) 
-    	  fillAns();
-           break;
+             securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+             if(securityQuestion!=null)
+             { 
+    	       fillAns();
+               break;
+             }
            }
+	    }
            
-        }
+
         
      return new HomePage(testConfig);
    }
@@ -112,7 +120,7 @@ public class OptumIdLoginPage {
 		if (securityQuestion.getText().contains("color")) 
 			fillColorAns();
 		
-		else if (securityQuestion.getText().contains("sports team")) 
+		else if (securityQuestion.getText().contains("sports")) 
 			fillSportsAns();
 
 		else if (securityQuestion.getText().contains("best friend")) 
@@ -136,9 +144,7 @@ public class OptumIdLoginPage {
 	}
 
 	private void fillBestFriendAns() {
-			Element.enterData(txtboxSecurityAns, "Priyanka","Entered 'Sahil' as Best Friend's Name","txtboxSecurityAns");
-			// Element.enterData(txtboxSecurityAns, "test",
-			// "Entered 'test' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'test' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {
@@ -147,8 +153,6 @@ public class OptumIdLoginPage {
 	}
 
 	public void fillColorAns() {
-		// Element.enterData(txtboxSecurityAns, "testing",
-		// "Entered 'testing' as Favorite Color answer","txtboxSecurityAns");
 		Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
 	}
 
