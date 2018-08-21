@@ -348,7 +348,7 @@ public class TestProviderViewPayments extends TestBase {
        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
 	   home.selectTin(paymentType);
-	   paymentSummary paymentSummaryPage = home.clickViewPaymentsTab();	   
+	   paymentSummary paymentSummaryPage = home.clickViewPaymentsTab();	  
 	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
    }
    

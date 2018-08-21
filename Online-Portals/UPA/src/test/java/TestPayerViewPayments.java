@@ -29,6 +29,7 @@ public class TestPayerViewPayments extends TestBase {
    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
    void testPaymentDetailsForShowALLFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	 {
+	   // Avneet
 	    String filterPayments="Show All";
 		String quickSearchFilter="";
 		
@@ -45,7 +46,7 @@ public class TestPayerViewPayments extends TestBase {
 		//By default gets data for 30 days
 		
 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().verifyDefaultSearchResultCount();
-		
+		 
 	    quickSearchFilter="Last 60 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
         

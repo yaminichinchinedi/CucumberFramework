@@ -30,7 +30,7 @@ public class ViewPaymentsDataProvider {
    * like it gets the tin that has some failed payments etc
    * @param typeOfPayment
    * @return tin
-  */
+  */ 
 public String getTinForPaymentType(String paymentType)
 	{
 		int sqlRowNo=0;
@@ -132,15 +132,24 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		    case "nonEpraPayment":
- 	 			sqlRowNo=26; 
- 	 			break;
+ 	 		sqlRowNo=26; 
+ 	 		break;
+ 	 		
+ 		    case "ACH":
+ 		    sqlRowNo=35; 
+ 	 		break;
+ 	 			
+ 		    case "VCP":
+ 	 		sqlRowNo=36; 
+ 	 		break;
+ 	 		
  	 		default:
  	 			Log.Comment("No SQL Row defined");
  
  		}
 		
 		Map displayConsNo=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-		
+
 		if(displayConsNo.get("DSPL_CONSL_PAY_NBR").toString()!=null)
 		 {
 		   dateDiff=Integer.parseInt(displayConsNo.get("DATE_DIFF").toString());
@@ -195,8 +204,7 @@ public String getTinForPaymentType(String paymentType)
 		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
 	}
-	
-	
+		
 	
 	public String getQuickSearchFilterCriteria(String settlDate)
 	{
