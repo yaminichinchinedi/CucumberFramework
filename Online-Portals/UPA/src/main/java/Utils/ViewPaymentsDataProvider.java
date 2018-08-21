@@ -49,11 +49,11 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		    case "ACH":
- 	 	    sqlRowNo=33; 
+ 	 	    sqlRowNo=35; 
  	        break;
  	      
  		    case "VCP":
- 	 	    sqlRowNo=34; 
+ 	 	    sqlRowNo=36; 
  	 	    break;
  	 	   
  		   case "nonEpraPayment":
@@ -131,11 +131,11 @@ public String getTinForPaymentType(String paymentType)
  	 		break;
  	 		
  		    case "ACH":
- 		    sqlRowNo=33; 
+ 		    sqlRowNo=35; 
  	 		break;
  	 			
  		    case "VCP":
- 	 		sqlRowNo=34; 
+ 	 		sqlRowNo=36; 
  	 		break;
  	 		
  	 		default:
@@ -199,8 +199,7 @@ public String getTinForPaymentType(String paymentType)
 		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
 	}
-	
-	
+		
 	
 	public String getQuickSearchFilterCriteria(String settlDate)
 	{
