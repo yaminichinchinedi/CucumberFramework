@@ -96,7 +96,7 @@ public class validateEFTERAFinancialInfo {
 	
 	public validateEFTERAFinancialInfo checkAcceptanceBox()
 	{
-		Element.click(chkAcceptanceBox, "Acceptance check box",3);
+		Element.click(testConfig,chkAcceptanceBox, "Acceptance check box",3);
 		if(chkAcceptanceBox.isSelected())
 		{
 			Log.Comment("Acceptance checkbox checked");

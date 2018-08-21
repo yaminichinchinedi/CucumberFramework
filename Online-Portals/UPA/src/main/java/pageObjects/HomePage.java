@@ -288,19 +288,11 @@ public class HomePage extends LoginUPA {
 			
 			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 			Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-//			Element.selectByVisibleText(drpDwnTin,"942958258 - Enrolled", " Selected Tin is : "  + "942958258 - Enrolled");
 			
 			Browser.waitForLoad(testConfig.driver);
 			Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-		
-			Element.findElement(testConfig, "id", "taxIndNbrId");
-			
-			Browser.wait(testConfig, 3);
-			
-			String tinNumber = Element.getFirstSelectedOption(testConfig,drpDwnTin, "text");
-			Log.Comment("Selected tin number is : " + " " + tinNumber);
-			String tin[]=tinNumber.split("-");
-			testConfig.putRunTimeProperty("tin", tin[0]);
+			Log.Comment("Selected tin number is : " + " " + provDetails.get("PROV_TIN_NBR").toString());
+			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
 			return new HomePage(testConfig);
 		}
 		
@@ -367,7 +359,7 @@ public class HomePage extends LoginUPA {
 	}
 
 	public LoginUPA logOutFromUPA() {
-		Element.click(lnkLogOut, "Log out");
+		Element.click(testConfig,lnkLogOut, "Log out",2);
 		return new LoginUPA(testConfig);
 	}
 
