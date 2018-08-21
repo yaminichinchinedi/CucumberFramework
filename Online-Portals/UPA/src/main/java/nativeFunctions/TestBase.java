@@ -28,7 +28,6 @@ import org.testng.asserts.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
 
 import main.java.Utils.CopyDir;
-import main.java.Utils.CustomReporter;
 import main.java.Utils.Helper;
 import main.java.Utils.SendMail;
 import main.java.Utils.TestDataReader;
