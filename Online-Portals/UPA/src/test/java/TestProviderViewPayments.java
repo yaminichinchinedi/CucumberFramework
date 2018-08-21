@@ -54,17 +54,17 @@ public class TestProviderViewPayments extends TestBase {
 		
 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab();//.verifyDefaultSearchResultCount();
 		
-	    quickSearchFilter="Last 60 days";
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
-
-        quickSearchFilter="Last 90 days";
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
- 
+//	    quickSearchFilter="Last 60 days";
+//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
+//
+//        quickSearchFilter="Last 90 days";
+//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
+// 
         quickSearchFilter="Last 6-9 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
-         
-        quickSearchFilter="Last 9-13 months";
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
+//         
+//        quickSearchFilter="Last 9-13 months";
+//        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
         
       //  quickSearchFilter="Last 4-6 months";
 //      paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
