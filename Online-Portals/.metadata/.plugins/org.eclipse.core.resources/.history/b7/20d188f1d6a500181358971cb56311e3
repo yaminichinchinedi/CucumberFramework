@@ -381,10 +381,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
-		
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
-       
-		if(checkArchiveFilter!=null)
+        if(checkArchiveFilter!=null)
         {
         	Element.selectByVisibleText(drpDwnArchiveFilter,Archivefilter, Archivefilter + " " +" from 'Archive payments' dropdown");
         	Browser.waitForLoad(testConfig.driver);

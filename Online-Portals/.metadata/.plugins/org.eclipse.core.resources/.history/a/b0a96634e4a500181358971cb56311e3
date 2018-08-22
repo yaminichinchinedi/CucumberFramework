@@ -64,14 +64,12 @@ UPA_OptumID_PROV_Admin_Stage=userTest808
 UPA_OptumPwd_PROV_Admin_Stage=Test_1234
 
 
+
+UPA_ID_PROV_Gen_Stage=AUAUTO5896
+UPA_Pwd_PROV_Gen_Stage=Test@12345
+
 UPA_OptumID_PROV_Gen_Stage=testAuto11
 UPA_OptumPwd_PROV_Gen_Stage=Test@123
-
-
-#UPA_ID_PROV_Gen_Stage=AUAUTO5896
-#UPA_Pwd_PROV_Gen_Stage=Test@12345
-
-
 
 UPA_ID_BS_Admin_Stage=AUBILL5903 
 UPA_Pwd_BS_Admin_Stage=Test@123
