@@ -353,7 +353,6 @@ public class HomePage extends LoginUPA {
 	
 	public MyProfile clickMyProfileTab() 
 	{
-		Element.expectedWait(myProfileTab, testConfig, "My Profile tab","My Profile tab");
 		Element.click(myProfileTab, "My Profile Tab");
 		return new MyProfile(testConfig);
 

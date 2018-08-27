@@ -62,7 +62,6 @@ public class TestUPAManageUsers extends TestBase {
 		 ManageUsers manageUser=home.clickManageUsersTab();
 		 manageUser.verifyTinGridSorting();
 		 manageUser.verifyManageUserUI();
-		 home.logOutFromUPA();
      }	
 
 	
@@ -96,7 +95,7 @@ public class TestUPAManageUsers extends TestBase {
 		 home.selectTin();
 		 ManageUsers manageUser=home.clickManageUsersTab();	
 		 manageUser.verifyUserDetailsAreReadOnly();
-		 manageUser.verifySuccessfulEmailNotificationChange(userType);	
+//		 manageUser.verifySuccessfulEmailNotificationChange(userType);	
 		 home.logOutFromUPA();
        }	
 		
@@ -133,7 +132,6 @@ public class TestUPAManageUsers extends TestBase {
 		 AddUserDetails addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
 		 addUserDetails.clickSave();
 		 addUserDetails.verifyDetailsOfNewUser(userType);	
-		 home.logOutFromUPA();
 		 //manageUser.removeFistTinInGrid();
        }
 		

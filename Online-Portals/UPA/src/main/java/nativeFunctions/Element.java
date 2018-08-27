@@ -109,7 +109,7 @@ import main.java.reporting.LogTemp;
 	 * @param namOfElement
 	 * @param expectedWait
 	 */
-	public static void click(WebElement element,String namOfElement,int expectedWait)
+	public static void click(TestBase testConfig,WebElement element,String namOfElement,int expectedWait)
 	{
 		try{
 	     
@@ -519,7 +519,7 @@ import main.java.reporting.LogTemp;
 		}
 		catch (NoSuchElementException e)
 		{
-			Log.Comment("Could not find the element on page  due to exception : " + e);
+			Log.Comment("Could not find the element on page with locator value : " +locatorValue );
 			return null;
 		}
 		
