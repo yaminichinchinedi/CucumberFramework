@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.TestDataReader;
 import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
@@ -98,6 +99,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[4]")
 	WebElement payNo;
 	
+	@FindBy(name="billingProvTin")
+	WebElement txtBoxBSTin;
+	
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
@@ -110,10 +114,21 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		PageFactory.initElements(testConfig.driver, this);
 
 		txtBoxPayerTin=Element.findElement(testConfig, "name", "payerProvTin");
+		
+		txtBoxBSTin=Element.findElement(testConfig, "name", "billingProvTin");
+		
 		if(txtBoxPayerTin!=null)
-		Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
+		{
+			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
+		}
+		else if(txtBoxBSTin !=null)
+		{
+			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
+		}
 		else
-		Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		{
+			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		}
 
 	}
 	
@@ -866,8 +881,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Element.click(btnSearch, "Search Button");
 		return this;
 	}
-	
-	
+
 	/**
 	 * Getting response from EPSA
 	 * @return type object of search request
@@ -937,6 +951,18 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	return (EpsPaymentsSearchRequest) object;
 	}
 
+	
+	
+	//Methods related to BS User
+
+	public paymentSummary bsTin(String providerTIN) {
+
+		testConfig.putRunTimeProperty("tin", providerTIN);
+		Element.enterData(txtBoxBSTin, providerTIN,"Entered TIN", "Provider Tin");
+		Element.click(btnSearch, "Search Button");
+		return this;
+	}
+	
 }
 
 

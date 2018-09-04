@@ -3,6 +3,7 @@ package main.java.Utils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -543,6 +544,12 @@ public class DataBase
 
 		return rows;
 	}
+	
+	
+
+	
+	
+	
 	/**
 	 * Execute Query From Given Sheet
 	 * @param testConfig
@@ -749,5 +756,167 @@ public class DataBase
 			}
 		}
 	}
+	
+	
+	
+	
+	
+
+	/**
+	 * Executes the update db query
+	 * 
+	 * @param Config
+	 *            test config instance
+	 * @param dbType
+	 *            the type of database
+	 * @param updateStatement
+	 *            query to be executed
+	 * @param values
+	 *            prepared statement values
+	 * @return number of rows affected
+	 */
+	public static int executeUpdatePreparedStatement(TestBase testConfig, int sqlRow, Object[] values)
+	{
+		String updateStatement = getQuery(testConfig, sqlRow);
+		PreparedStatement stmt = null;
+		int rows = 0;
+		try
+		{	
+			Log.Comment("\nExecuting the update query - '" + updateStatement + "'", testConfig);
+			stmt = setPreparedStatementValues(testConfig, updateStatement, values);
+			rows = stmt.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			Log.Comment("Exception is " +e);
+		}
+		finally
+		{
+			if (stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch (SQLException e)
+				{
+					Log.Comment("Exception is " +e);
+				}
+			}
+		}
+		
+		if (0 == rows)
+			Log.Comment("No rows were updated by this query");
+		else
+			Log.Comment("No. of rows  updated by this query :" + rows);
+
+		return rows;
+	}
+
+	/**
+	 * Executes the select query
+	 * 
+	 * @param Config
+	 *            test config instance
+	 * @param dbType
+	 *            the type of database
+	 * @param updateStatement
+	 *            query to be executed
+	 * @param values
+	 *            prepared statement values
+	 * @return number of rows affected
+	 */
+	public static List<HashMap<String, String>> executeSelectPreparedStatement(TestBase testConfig, int sqlRow, Object[] values)
+	{
+		String selectQuery = getQuery(testConfig, sqlRow);
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+		List<HashMap<String, String>> finalResult =null;
+		try
+		{	
+			Log.Comment("\nExecuting the select query - '" + selectQuery + "'", testConfig);
+			stmt = setPreparedStatementValues(testConfig, selectQuery, values);
+			result = stmt.executeQuery();
+			finalResult = convertResultSetToList(null, result);
+		}
+		catch (SQLException e)
+		{
+			Log.Comment("Exception is " +e);
+		}
+		finally
+		{
+			if (stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch (SQLException e)
+				{
+					Log.Comment("Exception is " +e);
+				}
+			}
+		}
+		
+		if (result == null)
+			Log.Comment("No rows were returned by this query");
+		else
+			Log.Comment("Rows have been returned by this query" );
+
+		return finalResult;
+	}
+	
+	
+	public static PreparedStatement setPreparedStatementValues(TestBase testConfig, String updateStatement, Object[] values)
+	 {
+		 Connection con = null;
+		 PreparedStatement stmt= null;
+		 try
+		 {
+			 DatabaseType dbType = getDatabaseType();
+			 con = getConnection(testConfig, dbType);
+			 stmt= con.prepareStatement(updateStatement);
+			 if(values != null)
+			 {
+				 for(int index =0; index < values.length; index++)
+				 {
+					 if( values[index] instanceof Integer )
+					 {
+						 stmt.setInt(index+1, (int)values[index] );
+					 }
+					 else if(values[index] instanceof String )
+					 {
+						stmt.setString(index+1, (String)values[index]); 
+					 }
+					 else if(values[index] instanceof Double )
+					 {
+							stmt.setDouble(index+1, (double)values[index]);
+					 }
+				 }
+			 }
+		 }
+		 catch(Exception ex)
+		 {
+			 Log.Comment("Exception generated while preparing Prepared Statement " +ex);
+		 }
+		 return stmt;
+	 }
+
+
+	public static String getQuery(TestBase testConfig, int sqlRow)
+	{
+		TestDataReader sqlData = null;
+		try 
+		{
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		String query = sqlData.GetData(sqlRow, "Query");
+		return query;
+	}
+	
 	
 }
