@@ -90,7 +90,6 @@ public class UPARegistrationPage{
 		Element.expectedWait(lnkHeaderHowtoEnroll, testConfig, "Header How to Enroll", "Header How to Enroll");
 		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
 		Browser.wait(testConfig, 5);
-		Element.expectedWait(lnkHeaderFAQs, testConfig, "Header FAQs", "Header FAQs");
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
