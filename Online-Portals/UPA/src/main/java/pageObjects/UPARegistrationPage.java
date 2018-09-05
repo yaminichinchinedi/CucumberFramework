@@ -77,26 +77,27 @@ public class UPARegistrationPage{
 	
 	public void clickAndVerifyHeaderBenefitsOfEPS()
 	{
-		String expectedURL="/benefitofeps.do";
+		String expectedURL="Benefits of EPS";
 		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
-		Browser.waitForLoad(testConfig.driver);
-		Browser.verifyURL(testConfig, expectedURL);
-		//Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
+		Browser.waitTillSpecificPageIsLoaded(testConfig, expectedURL);
+		expectedURL="benefitofeps.do";
+		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderHowToEnroll()
 	{
-		String expectedURL="/HowToEnroll.do";
+		String expectedURL="How To Enroll";
 		Element.expectedWait(lnkHeaderHowtoEnroll, testConfig, "Header How to Enroll", "Header How to Enroll");
-		Element.click(lnkHeaderHowtoEnroll,"Header How to Enroll");
-		Browser.wait(testConfig, 5);
-		Element.expectedWait(lnkHeaderFAQs, testConfig, "Header FAQs", "Header FAQs");
+		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
+		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
+		expectedURL=expectedURL.replace(" " , "");
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderFAQs()
 	{
 		String expectedURL="/epsFaqs.do";
+		System.out.println("faq" + testConfig.driver.getTitle());
 		Element.click(lnkHeaderFAQs,"Header FAQs");
 		Browser.wait(testConfig, 2);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
