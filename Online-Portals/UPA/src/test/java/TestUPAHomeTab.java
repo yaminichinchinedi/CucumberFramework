@@ -57,6 +57,7 @@ public class TestUPAHomeTab extends TestBase {
 	    home.verifyWelcomeScreen();
 	    home.verifyNewsSectionIsDisplayed();
 	    home.VerifyAllTabsAreDisplayedAfterSelectingTin(accessType);
+	    home.logOutFromUPA();
      }
 	
 	@Test(priority=6,description="Verifies News and info section after provider is logged in for General users")
@@ -79,14 +80,14 @@ public class TestUPAHomeTab extends TestBase {
      {   
 	   int excelRowNo=4;
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   LoginUPA loginPage=new LoginUPA(testConfig);
+	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   
 	   //Correct UserName and incorrect Password
-       loginPage.doInvalidLoginAndVerifyValidation(excelRowNo);  
+	   optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo);  
       
        excelRowNo=5;
        //Incorrect username and correct Password
-       loginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
+       optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
       }
 	
 	@Test(priority=7,description="Verifies Provider_TIN_Selection_Dropdown for Admin")
