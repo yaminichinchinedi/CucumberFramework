@@ -47,6 +47,9 @@ public class OptumIdLoginPage {
 
 	@FindBy(xpath = "//div[@class='authQuestionTitle']")
 	WebElement txtUnrecognizedDevice;
+	
+	 @FindBy(xpath="//div[@class='oui-pmsg-error-body']")
+	 WebElement txtErrorMsg;
 
 	String id, password;
 	String env=System.getProperty("env");
@@ -156,4 +159,25 @@ public class OptumIdLoginPage {
 		Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
 	}
 
+	
+	
+	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException
+	{
+		TestDataReader data=testConfig.cacheTestDataReaderObject("Login");
+		id=data.GetData(rowNo,"Username");
+		password=data.GetData(rowNo,"Password");
+		
+	    
+		Element.enterData(txtboxOptumID, id, " Optum ID entered as :"+" " + id, "txtboxOptumID");	
+		Element.enterData(txtboxPwd, password, " Password entered :" + " " + password, "txtboxPwd");
+		Element.click(btnSignIn, "Sign In button");
+		
+		verifyLoginErrorMessage();
+		
+	}
+	
+	public void verifyLoginErrorMessage()
+	{
+		Element.verifyTextPresent(txtErrorMsg, "The Optum ID or password that you entered is incorrect.");
+	}
 }
