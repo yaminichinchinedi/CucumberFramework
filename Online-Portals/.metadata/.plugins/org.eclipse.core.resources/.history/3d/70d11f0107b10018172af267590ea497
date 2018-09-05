@@ -175,19 +175,6 @@ import main.java.reporting.LogTemp;
 			
 	}
 	
-	public static void clickByJS(TestBase testConfig,WebElement element,String namOfElement)
-	{
-		try{
-			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
-		      js.executeScript("arguments[0].click();", element);
-		  Log.Pass("Clicked " + namOfElement);
-		 }
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
-		}
-	}
-	
 	
 	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
@@ -198,17 +185,17 @@ import main.java.reporting.LogTemp;
 		Log.Comment("Mouse Hovered over " + namOfElement);
 	}
 	
-	public static void mouseHoverByJS(TestBase testConfig,WebElement element,String namOfElement)
+	public static void mouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
 		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
-		     js.executeScript(mouseOverScript,element);
-		     Log.Pass("Mouse hovered over " + namOfElement);
+		     js.executeScript(mouseOverScript);
+		     Log.Pass("Scrolled to bottom of the page");
 		}
 		catch(Exception e)
 		{
-			Log.Fail("Exception occured while hovering over " + namOfElement + '\n'+ e);
+			Log.Fail("Exception occured while hovering over " + namOfElement   + e);
 		}
 			
 		

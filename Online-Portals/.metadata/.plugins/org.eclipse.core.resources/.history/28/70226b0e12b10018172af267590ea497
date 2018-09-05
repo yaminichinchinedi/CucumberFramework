@@ -180,7 +180,7 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
-		  Log.Pass("Clicked " + namOfElement);
+		  Log.Comment("Clicked " + namOfElement);
 		 }
 		catch(Exception e)
 		{

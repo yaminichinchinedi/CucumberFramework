@@ -175,19 +175,6 @@ import main.java.reporting.LogTemp;
 			
 	}
 	
-	public static void clickByJS(TestBase testConfig,WebElement element,String namOfElement)
-	{
-		try{
-			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
-		      js.executeScript("arguments[0].click();", element);
-		  Log.Pass("Clicked " + namOfElement);
-		 }
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
-		}
-	}
-	
 	
 	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
@@ -203,7 +190,7 @@ import main.java.reporting.LogTemp;
 		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
-		     js.executeScript(mouseOverScript,element);
+		     js.executeScript(mouseOverScript);
 		     Log.Pass("Mouse hovered over " + namOfElement);
 		}
 		catch(Exception e)

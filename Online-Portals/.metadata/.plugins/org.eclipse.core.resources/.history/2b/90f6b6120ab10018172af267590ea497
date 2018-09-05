@@ -501,7 +501,7 @@ public class Browser
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
-//			Browser.waitForLoad(testConfig.driver);
+			Browser.waitForLoad(testConfig.driver);
 			Browser.verifyURL(testConfig, expectedURLHelp);
 			return oldWindow;
 		}
@@ -569,7 +569,7 @@ public class Browser
 			Log.Comment("Switching to the given window handle:- " + windowHandle);
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
-			Log.Comment("Switched to Parent window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 		}
 	}
 	

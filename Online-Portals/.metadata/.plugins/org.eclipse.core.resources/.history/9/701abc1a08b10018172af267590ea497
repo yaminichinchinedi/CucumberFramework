@@ -88,7 +88,6 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="How To Enroll";
 		Element.findElement(testConfig, "linkText","How to Enroll");
-		Element.expectedWait(lnkHeaderHowtoEnroll, testConfig, "How to enroll","How to enroll");
 		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
 		expectedURL=expectedURL.replace(" " , "");
