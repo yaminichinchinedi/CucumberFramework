@@ -144,13 +144,10 @@ public  class Log  {
 		{
 				File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		        String dest=System.getProperty("user.dir")+"\\ExtentReports\\localScreenShots\\"+"ScreenShot"+timeStamp+".png";
-		        File destination = new File(dest);
-		        FileUtils.copyFile(sourceFile, destination); 
 		        
-//		        dest = "\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
-//		        destination = new File(dest);
-//		        FileUtils.copyFile(sourceFile, destination);              
+		        String dest = "\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
+		        File destination = new File(dest);
+		        FileUtils.copyFile(sourceFile, destination);              
 		        return dest;
 		}
 				
