@@ -315,9 +315,9 @@ public class TestBase {
 		Log.endTest(testCaseDesc,iTestResult);
 	}
 	
-	@AfterTest
+	/*@AfterTest
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
-	}	
+	}	*/
 }

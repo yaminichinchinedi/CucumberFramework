@@ -66,6 +66,18 @@ public String getTinForPaymentType(String paymentType)
  		 case "VCP":
  		     sqlRowNo=36; 
  		     break;
+ 		     
+ 		 case "byElectronicPaymentNumber":
+ 			sqlRowNo=39;
+ 			 break;
+ 			 
+ 		 case "byCheckNumber":
+ 			 sqlRowNo=39;
+ 			 break;
+ 			 
+ 		 case "byDateOfService":
+ 			 sqlRowNo=41;
+ 			 break;
  		   
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");

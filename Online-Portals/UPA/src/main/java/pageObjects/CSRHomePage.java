@@ -72,7 +72,10 @@ public class CSRHomePage {
 	
 	
 	@FindBy(xpath="//input[@value='Save']")
-	WebElement btnSaveUser;  
+	WebElement btnSaveUser;
+	
+	@FindBy(linkText="Search Remittance")
+    WebElement lnkSearchRemittance;
 	
 	
 	CSRHomePage(TestBase testConfig) 
@@ -97,6 +100,12 @@ public class CSRHomePage {
     {
            Element.click(lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
+    }
+    
+    public SearchTinPageSearchRemittance clickSearchRemittanceLink()
+    {
+           Element.click(lnkSearchRemittance, "Search Remittance");
+           return new SearchTinPageSearchRemittance(testConfig);
     }
 
 	
