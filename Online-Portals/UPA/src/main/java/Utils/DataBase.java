@@ -834,7 +834,7 @@ public class DataBase
 		List<HashMap<String, String>> finalResult =null;
 		try
 		{	
-			Log.Comment("\nExecuting the select query - '" + selectQuery + "'", testConfig);
+			Log.Comment("Executing the select query - '" + selectQuery + "'", testConfig);
 			stmt = setPreparedStatementValues(testConfig, selectQuery, values);
 			result = stmt.executeQuery();
 			finalResult = convertResultSetToList(null, result);
@@ -873,6 +873,8 @@ public class DataBase
 		 PreparedStatement stmt= null;
 		 try
 		 {
+
+			 Log.Comment("Creating the prepared statements for the query being executed '" + updateStatement + "'", testConfig);
 			 DatabaseType dbType = getDatabaseType();
 			 con = getConnection(testConfig, dbType);
 			 stmt= con.prepareStatement(updateStatement);
@@ -892,6 +894,10 @@ public class DataBase
 					 {
 							stmt.setDouble(index+1, (double)values[index]);
 					 }
+					 else if(values[index] instanceof Boolean )
+					 {
+						 stmt.setBoolean(index+1, (boolean)values[index]);
+					 }
 				 }
 			 }
 		 }
@@ -908,6 +914,7 @@ public class DataBase
 		TestDataReader sqlData = null;
 		try 
 		{
+			Log.Comment("Retrieving the query to be executed ", testConfig);
 			sqlData = testConfig.cacheTestDataReaderObject("SQL");
 		} 
 		catch (Exception e) 
