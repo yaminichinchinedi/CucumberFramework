@@ -21,7 +21,7 @@ import org.xml.sax.SAXException;
  * @author schandy
  *
  */
-public class TestBSAdminViewPayments extends TestBase {
+public class TestBSViewPayments extends TestBase {
 
 	Boolean tinAssociated = false;
 	Boolean tinAssociationExisted = false;
