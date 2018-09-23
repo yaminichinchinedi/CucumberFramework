@@ -7,6 +7,7 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -71,6 +72,7 @@ import main.java.reporting.LogTemp;
 		try{
 			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
 			 wait.until(ExpectedConditions.visibilityOf(element));
+			 
 			 Log.Pass(namOfElement + " " + "is present on page");
 		}
 		catch(NoSuchElementException e)
@@ -98,6 +100,19 @@ import main.java.reporting.LogTemp;
 		catch(Exception e)
 		{
 			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
+		}
+	}
+	
+	public static void waitTillURlLoads(TestBase testConfig,String url)
+	{
+		try{
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.urlToBe(url));
+			 Log.Pass(url + " " + "is loaded");
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured" + e);
 		}
 	}
 	
@@ -160,6 +175,19 @@ import main.java.reporting.LogTemp;
 			
 	}
 	
+	public static void clickByJS(TestBase testConfig,WebElement element,String namOfElement)
+	{
+		try{
+			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		      js.executeScript("arguments[0].click();", element);
+		  Log.Pass("Clicked " + namOfElement);
+		 }
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
+		}
+	}
+	
 	
 	public static void onMouseHover(TestBase testConfig,WebElement element,String namOfElement)
 	{
@@ -168,6 +196,22 @@ import main.java.reporting.LogTemp;
         builder.clickAndHold().moveToElement(element);					
         builder.moveToElement(element).build().perform(); 
 		Log.Comment("Mouse Hovered over " + namOfElement);
+	}
+	
+	public static void mouseHoverByJS(TestBase testConfig,WebElement element,String namOfElement)
+	{
+		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+		try{
+			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		     js.executeScript(mouseOverScript,element);
+		     Log.Pass("Mouse hovered over " + namOfElement);
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while hovering over " + namOfElement + '\n'+ e);
+		}
+			
+		
 	}
 	
 	

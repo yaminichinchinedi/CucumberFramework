@@ -225,24 +225,29 @@ public class HomePage extends LoginUPA {
 		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedURLFAQs);
 		Browser.switchToParentWindow(testConfig, oldWindow);
+//		Browser.waitForLoad(testConfig.driver);
 
 		Element.mouseHoverByJS(testConfig, lnkResources, "Resources");
 		Element.click(help, "Help");
 		Browser.switchToNewWindow(testConfig,expectedURLHelp);
+//		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedURLHelp);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
+//		Browser.waitForLoad(testConfig.driver);
 		Element.mouseHoverByJS(testConfig, lnkResources, "Resources");
 		Element.click(userGuide, "User Guide");
 		Browser.switchToNewWindow(testConfig,expectedUserGuideURL);
+//		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedUserGuideURL);
 
 		Browser.switchToParentWindow(testConfig, oldWindow);
+//		Browser.waitForLoad(testConfig.driver);
 		Element.mouseHoverByJS(testConfig, lnkResources, "Resources");
 		Element.click(contactUs, "Contact Us");
+//		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedContactUsURL);
-		
-		Browser.browserRefresh(testConfig);
+		Browser.switchToParentWindow(testConfig, oldWindow);
 		
 //		Element.verifyElementPresent(lnkLogOut, "Log out");
 
@@ -323,8 +328,6 @@ public class HomePage extends LoginUPA {
 	{
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.click(viewPaymentsTab, "View Payments Tab");
-		Browser.waitForLoad(testConfig.driver);
-		Browser.wait(testConfig, 2);
 		return new paymentSummary(testConfig);
 	}
 	
@@ -361,8 +364,7 @@ public class HomePage extends LoginUPA {
 	}
 
 	public LoginUPA logOutFromUPA() {
-		Element.clickByJS(testConfig,lnkLogOut, "Log out");
-//		Element.click(lnkLogOut, "Log out");
+		Element.click(testConfig,lnkLogOut, "Log out",2);
 		return new LoginUPA(testConfig);
 	}
 

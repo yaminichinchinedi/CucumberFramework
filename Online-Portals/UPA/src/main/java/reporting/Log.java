@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 
@@ -45,6 +46,7 @@ public  class Log  {
 	@SuppressWarnings("deprecation")
 	public static void setReportingConfig()
 	{
+		
 		report= new ExtentReports(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html", true);
 		report.loadConfig(new File (System.getProperty("user.dir")+"\\ExtentReports\\extent-config.xml"));
 	}
@@ -140,10 +142,9 @@ public  class Log  {
 		
 		public static String captureScreenshot(TestBase testConfig) throws IOException
 		{
-			
-			
 				File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		        
 		        String dest = "\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
 		        File destination = new File(dest);
 		        FileUtils.copyFile(sourceFile, destination);              

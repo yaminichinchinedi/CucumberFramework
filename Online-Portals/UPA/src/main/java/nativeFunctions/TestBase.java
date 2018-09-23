@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
@@ -205,14 +206,34 @@ public class TestBase {
 	}
 
 	private static WebDriver initFirefoxDriver() {
+		
 		LogTemp.Comment("Launching Firefox browser..");
-		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
-		LogTemp.Comment("Gecko Property set");
+		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
+		
+		FirefoxProfile profile = new FirefoxProfile();
+		
+		profile.setPreference("browser.download.dir", "C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads");
+		profile.setPreference("browser.download.folderList", 2);
+ 
+	
+		//Set Preference to not show file download confirmation dialogue using MIME types Of different file extension types.
+		
+		 
+		profile.setPreference( "browser.download.manager.showWhenStarting", false );
+
+//		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");
+		//needed for pdf download
+//		profile.setPreference("pdfjs.disabled", true);
+		profile.setPreference("browser.download.useDownloadDir", "false"); 
+		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+		
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-		capabilities.setCapability("marionette", true);
-		LogTemp.Comment("All capabilities set");
+		capabilities.setCapability("marionette", true); 
+		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
+		
 		WebDriver driver = new FirefoxDriver(capabilities);
+		
 		driver.manage().window().maximize();
 		return driver;
 	}
@@ -302,6 +323,7 @@ public class TestBase {
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		String testCaseName=method.getName();
 		Log logger =new Log(testConfig,testCaseName);
+		
 	}
 	
 	@AfterMethod()
@@ -315,9 +337,9 @@ public class TestBase {
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
-	}
+	}	
 	
-
+	
 	@BeforeClass()
 	public void init()
 	{
@@ -340,4 +362,13 @@ public class TestBase {
 	{
 	}
 	
+	
+	public void purgeDirectory(File dir)
+	{
+	    for (File file: dir.listFiles()) {
+	        if (file.isDirectory()) purgeDirectory(file);
+	        file.delete();
+	    }
+	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
+	}
 }
