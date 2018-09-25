@@ -562,14 +562,27 @@ public class Browser
 	 * @param windowHandle
 	 *            Name of the window to be switched to
 	 */
+//	public static void switchToParentWindow(TestBase testConfig, String windowHandle)
+//	{
+//		if (testConfig.driver != null)
+//		{
+//			Log.Comment("Switching to the given window handle:- " + windowHandle);
+////			testConfig.driver.close();
+//			testConfig.driver.switchTo().window(windowHandle);
+//			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+//		}
+//	}
+	
 	public static void switchToParentWindow(TestBase testConfig, String windowHandle)
 	{
 		if (testConfig.driver != null)
 		{
 			Log.Comment("Switching to the given window handle:- " + windowHandle);
+			System.out.println("No.of window handles are :" + testConfig.driver.getWindowHandles().size());
+			if(getNoOfWindowHandles(testConfig)>1)
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
-			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+			Log.Comment("Switched to Parent window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 		}
 	}
 	

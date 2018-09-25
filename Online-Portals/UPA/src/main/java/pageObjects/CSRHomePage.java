@@ -104,7 +104,7 @@ public class CSRHomePage {
     
     public SearchTinPageSearchRemittance clickSearchRemittanceLink()
     {
-           Element.click(lnkSearchRemittance, "Search Remittance");
+           Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance");
            return new SearchTinPageSearchRemittance(testConfig);
     }
 

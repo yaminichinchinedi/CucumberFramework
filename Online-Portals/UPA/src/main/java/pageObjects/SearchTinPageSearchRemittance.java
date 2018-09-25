@@ -38,7 +38,7 @@ public class SearchTinPageSearchRemittance extends TestBase{
 	
 	public SearchRemittanceSearchCriteria clickSearchBtn()
     {
-      Element.click(btnSubmit, "Search Button");
+      Element.clickByJS(testConfig,btnSubmit, "Search Button");
       return new SearchRemittanceSearchCriteria(testConfig);
     }
 	

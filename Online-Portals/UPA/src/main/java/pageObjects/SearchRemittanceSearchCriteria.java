@@ -89,7 +89,7 @@ public class SearchRemittanceSearchCriteria {
 		    	data=dataProvider(criteriaType);
 		    	ePaymentNumber=data.get("DSPL_CONSL_PAY_NBR").toString();
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
-		    	Element.click(paymentNumber, "Selecting Filter Criteria");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");
 		    	Element.enterData(paymentNumber, ePaymentNumber, "Filling Electronic payment number", "payment number");
 		    	clickSearchBtn();
 		    	break;
@@ -151,7 +151,7 @@ public class SearchRemittanceSearchCriteria {
 	}
 	
 	public void clickSearchBtn() {
-		Element.click(btnSearchRemittance, "Search Remittance Button");		
+		Element.clickByJS(testConfig,btnSearchRemittance, "Search Remittance Button");		
 	}
 	
 	public Map<String, String> dataProvider(String criteriaType) {
@@ -187,14 +187,13 @@ public class SearchRemittanceSearchCriteria {
 			
 		String oldWindow=Browser.switchToNewWindow(testConfig, "/calendar.html");
 		selectDate(testConfig,date);
-	    System.out.println(Browser.getNoOfWindowHandles(testConfig));
 		Browser.switchToParentWindow(testConfig,oldWindow);
+
 		return this;
 	}
 	
 	public SearchRemittanceSearchCriteria clickFromDateIcon(String criteriaType)
 	{
-		
 		switch(criteriaType) {
 		case "byDateOfService":
 	    {	    	
@@ -213,11 +212,14 @@ public class SearchRemittanceSearchCriteria {
 		}
 		
 		
+		Element.clickByJS(testConfig, dosFrom, "From date calendar");
+		Browser.wait(testConfig, 2);
 		return this;
 	}
 	
 	public SearchRemittanceSearchCriteria clickToDateIcon(String criteriaType)
 	{
+
 		switch(criteriaType) {
 		case "byDateOfService":
 	    {	    	
@@ -235,6 +237,9 @@ public class SearchRemittanceSearchCriteria {
 		}
 		
 		
+		Element.clickByJS(testConfig,dosTo, "To date calendar");
+		Browser.wait(testConfig, 2);
+
 		return this;
 	}
 	
@@ -257,16 +262,16 @@ public class SearchRemittanceSearchCriteria {
 	    if (currYr > reqYr){
 	        for (int i=0;i<(currYr-reqYr);i++){
 	            //decrease year
-	        	Element.click(btnPreviousYear, "Previous Year button to go back one year..year is now : " + String.valueOf(currYr-(i+1)));
-	        	Browser.wait(testConfig,1);
+	        	Element.clickByJS(testConfig,btnPreviousYear, "Previous Year button to go back one year..year is now : " + String.valueOf(currYr-(i+1)));
+	        	Browser.wait(testConfig,3);
 	        	monthAndYearInCal=monthYearInCal.getText().split(" ");
 	        	Helper.compareEquals(testConfig, "Selected Year", monthAndYearInCal[1], String.valueOf(currYr-(i+1)));
 	        }   
 	    } else if (currYr < reqYr){
 	        for (int j=0;j<(reqYr-currYr);j++){
 	            //increase year
-	        	Element.click(btnNxtYear, "Next Year button to go ahead one year..year is now : " + String.valueOf(currYr+(j+1)));
-	        	Browser.wait(testConfig, 2);
+	        	Element.clickByJS(testConfig,btnNxtYear, "Next Year button to go ahead one year..year is now : " + String.valueOf(currYr+(j+1)));
+	        	Browser.wait(testConfig,3);
 	        	monthAndYearInCal=monthYearInCal.getText().split(" ");
 	        	Helper.compareEquals(testConfig, "Selected Year", monthAndYearInCal[1], String.valueOf(currYr+(j+1)));
 	        }
@@ -276,20 +281,21 @@ public class SearchRemittanceSearchCriteria {
 	    if (currMonth > reqMonth){
 	        for (int i=0;i<(currMonth-reqMonth);i++){
 	            //decrease month
-	        	Element.click(btnPreviousMonth, "Previous month button to go back one month..month is now : " + String.valueOf(currMonth-(i+1)));
-	        	Browser.wait(testConfig, 2);
+	        	Element.clickByJS(testConfig,btnPreviousMonth, "Previous month button to go back one month..month is now : " + String.valueOf(currMonth-(i+1)));
+	        	Browser.wait(testConfig,3);
 	        	
 	        }
 	    } else if (currMonth < reqMonth){
 	        for (int j=0;j<(reqMonth-currMonth);j++){
 	            // increase month
-	        	Element.click(btnNextMonth, "Next month to go ahead one month..month is now : " + String.valueOf(currMonth+(j+1)));
+	        	Element.clickByJS(testConfig,btnNextMonth, "Next month to go ahead one month..month is now : " + String.valueOf(currMonth+(j+1)));
 	        	Browser.wait(testConfig, 2);
 	        }
 	    }
 	    monthAndYearInCal=monthYearInCal.getText().split(" ");
 	    Log.Comment("Date to be selected is : " +  testConfig.driver.findElement(By.xpath("//a//font[contains(text()," + "'" + date + "'"+ ")"+ " " + "and @color='#000000']")).getText() + monthAndYearInCal[0] + monthAndYearInCal[1] );
-	    testConfig.driver.findElement(By.xpath("//a//font[contains(text()," + "'" + date + "'"+ ")"+ " " + "and @color='#000000']")).click();	
+	    WebElement dateToBeClicked=Element.findElement(testConfig, "xpath", "//a//font[contains(text()," + "'" + date + "'"+ ")"+ " " + "and @color='#000000']");
+	    Element.clickByJS(testConfig, dateToBeClicked, "date to be clicked");
 	    return this;
 	}
 	
