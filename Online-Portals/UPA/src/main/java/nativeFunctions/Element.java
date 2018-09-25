@@ -7,6 +7,7 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -158,6 +159,20 @@ import main.java.reporting.LogTemp;
 			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
 		}
 			
+	}
+	
+	public static void clickByJS(TestBase testConfig,WebElement element,String namOfElement)
+	{
+		try{
+			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		      js.executeScript("arguments[0].click();", element);
+		      Browser.wait(testConfig,2);
+		  Log.Pass("Clicked " + namOfElement);
+		 }
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
+		}
 	}
 	
 	

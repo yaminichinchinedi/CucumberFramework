@@ -149,7 +149,7 @@ public class LoginCSR {
 		testConfig.putRunTimeProperty("id", id);
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");	
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.click(btnLogin,"click Login button");
+	   Element.clickByJS(testConfig,btnLogin,"click Login button");
 	   return new CSRHomePage(testConfig);
 	}
 }

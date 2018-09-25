@@ -58,9 +58,6 @@ public class TestCSRSearchRemittance extends TestBase {
 	public void testEpraByDateOfService() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String loginUserType="Super";
-		String userType="PROV";	
-		String accessLevelOfNewUser="Administrator";	
-		String filterPayments="Show All";
 		String criteriaType="byDateOfService";
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
