@@ -195,10 +195,8 @@ public class TestBase {
             caps.setCapability("disable-popup-blocking", true);
             
             //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
-            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-//            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
-//		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
+            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
+		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();

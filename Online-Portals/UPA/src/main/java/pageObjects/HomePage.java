@@ -3,28 +3,22 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import sqlj.runtime.profile.ref.IterConvertProfile.IterConvertStatement;
-import main.java.Utils.DataBase;
-import main.java.Utils.Helper;
-import main.java.Utils.TestDataReader;
-import main.java.Utils.ViewPaymentsDataProvider;
+import org.seleniumhq.jetty9.server.session.DatabaseAdaptor;
 
 public class HomePage extends LoginUPA {
 
@@ -116,7 +110,10 @@ public class HomePage extends LoginUPA {
 	@FindBy(xpath = "//td[contains(text(),'Create and download bundled daily 835 files, Payer PRA, and ePRAs in one easily retrievable zip file.')]")
 	WebElement txtCreateDownload;
 
-	private paymentSummary paymentSummaryPage;
+
+	
+	
+//	private paymentSummary paymentSummaryPage;
 	
 	private ViewPaymentsDataProvider dataProvider;
 	
@@ -132,14 +129,17 @@ public class HomePage extends LoginUPA {
 	public HomePage() {}
 	
 	
-    /*
-     * Function to verify UI 
+    /**
+     * Verifies UI
      * of Welcome Screen
      */
+	
 	public HomePage verifyWelcomeScreen() throws IOException {
+	
 		int sqlRowNo = 7;
-		// Verifies count of records displayed in view payments tab from DB
+		
 		Map portalUserTable = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
+		
 		Helper.compareEquals(testConfig, "Welcome <FN><LN>", "Welcome," + " "+ portalUserTable.get("FST_NM").toString() + " "+ portalUserTable.get("LST_NM").toString(),txtWelcomeUserName.getText());
 
 		Element.verifyElementPresent(optumLogo, "Optum Logo");
@@ -148,23 +148,25 @@ public class HomePage extends LoginUPA {
 		Element.verifyElementPresent(txtReconcile, "3rd heading:" + " "+ txtReconcile.getText());
 		Element.verifyElementPresent(txtCreateDownload, "4th heading :" + " "+ txtCreateDownload.getText());
 		Element.verifyElementPresent(txtEPSFreedom, "Main Heading :" + " "+ txtEPSFreedom.getText());
+		
 		return this;
 	}
 
-	/*
-	 * Verifies News section contains archive and current section
-	 * and the one clicked becomes active section
+	/**
+	 * Verifies News section
+	 * contains archive and current section
+	 * and the one clicked 
+	 * becomes active section
 	 */
+	
 	public void verifyNewsSectionIsDisplayed() {
-		Browser.wait(testConfig, 5);
+		
 		Element.expectedWait(txtNewsAndInfoHeading, testConfig,"News and Heading section", "News and Heading section");
 		Element.verifyElementPresent(txtNewsAndInfoHeading,"News and Information Heading Section");
-		Browser.wait(testConfig, 2);
 		Element.verifyElementPresent(CurrentNewsSection,"Current News Section is displayed on home page");
 		Element.verifyElementPresent(ArchiveSection,"Archive Section is displayed on home page");
 
 		Helper.compareEquals(testConfig, "class", "inactiveclass",ArchiveSection.getAttribute("class"));
-
 		Helper.compareEquals(testConfig, "class", "activeclass",CurrentNewsSection.getAttribute("class"));
 
 		Element.click(ArchiveSection, "Click Archive Section tab");
@@ -175,11 +177,9 @@ public class HomePage extends LoginUPA {
 		Element.click(CurrentNewsSection, "Click Archive Section tab");
 	}
 
-	public void VerifyAllTabsAreDisplayedAfterSelectingTin(String userType) {
-		// Select Tin from dropdown
-		selectTin();
-
-		verifyNewsSectionIsDisplayed();
+	public void VerifyAllTabsAreDisplayedAfterSelectingTin(String userType) 
+	{
+		selectTin().verifyNewsSectionIsDisplayed();
 
 		// Verify all tabs are displayed after tin is selected
 
@@ -189,11 +189,11 @@ public class HomePage extends LoginUPA {
 		Element.verifyElementPresent(maintainEnrlTab, "Maintain Enrollment");
 		Element.verifyElementPresent(myProfileTab, "My Profile tab");
 		Element.verifyElementPresent(lnkResources, "Resources link");
+
 		if(userType.equalsIgnoreCase("Admin"))
 		{
 		   Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
-		   Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");
-		   
+		   Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");   
 		}
 		else if(userType.equalsIgnoreCase("Gen"))
 		{
@@ -204,7 +204,8 @@ public class HomePage extends LoginUPA {
 	
 	
 
-	public void VerifyResourcesLinks() {
+	public void VerifyResourcesLinks() 
+	{
 		String expectedURLFAQs = "forms/OHFS_EPS_FAQs_040813.pdf";
 		String expectedURLHelp = "/forms/Help.pdf";
 		String expectedUserGuideURL = "/userguide/Optum_EPS_UserGuide_Provider_022014.pdf";
@@ -242,37 +243,37 @@ public class HomePage extends LoginUPA {
 		Element.click(contactUs, "Contact Us");
 		Browser.verifyURL(testConfig, expectedContactUsURL);
 		
-		Browser.browserRefresh(testConfig);
-		
-//		Element.verifyElementPresent(lnkLogOut, "Log out");
-
 	}
 
 	public void verifyAssociatedTins() throws IOException
 	{
 		int sqlRowNo = 8;
+		
 		ArrayList<String> tinsListFromDB = new ArrayList<String>();
 		List<String> tinsListFromUI = new ArrayList<String>();
-
 		HashMap<Integer, HashMap<String, String>> associatedTins = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
 		for (int i = 1; i <= associatedTins.size(); i++) {
 			tinsListFromDB.add(associatedTins.get(i).get("PROV_TIN_NBR"));
 		}
+		
 		tinsListFromUI = Element.getAllOptionsInSelect(testConfig, drpDwnTin);
-		List<String> newListFromUI = new ArrayList<String>();
-		for (String tinNo : tinsListFromUI) {
+	    List<String> newListFromUI = new ArrayList<String>();
+		
+	    for (String tinNo : tinsListFromUI) {
 			String tin[] = tinNo.split("-");
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Maroon");
-		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Maroon");
+	   
+		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI);
+		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB);
 		
-		for (String tinNo : tinsListFromDB) {
-			if (newListFromUI.contains(tinNo)) {
-				Log.Pass(tinNo + " :" + " " + "matches in both UI and DB");
-			}
-
+		for (String tinNo : tinsListFromDB) 
+		{
+		  if (newListFromUI.contains(tinNo))
+		      Log.Pass(tinNo + " :" + " " + "matches in both UI and DB");
+			
 			else {
 				Log.Fail(tinNo + " :" + " " + "not present in DB");
 				break;
@@ -281,8 +282,8 @@ public class HomePage extends LoginUPA {
 	}
 
 	
-		public HomePage selectTin() 
-		{
+	public HomePage selectTin() 
+	 {
 			int sqlRow=23;
 			
 			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -293,10 +294,10 @@ public class HomePage extends LoginUPA {
 			Log.Comment("Selected tin number is : " + " " + provDetails.get("PROV_TIN_NBR").toString());
 			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
 			return new HomePage(testConfig);
-		}
+	}
 		
 		
-		public HomePage selectTin(String paymentType) 
+	public HomePage selectTin(String paymentType) 
 		 {
 			dataProvider=new ViewPaymentsDataProvider(testConfig);
 			
@@ -360,8 +361,17 @@ public class HomePage extends LoginUPA {
 
 	public LoginUPA logOutFromUPA() {
 		Element.clickByJS(testConfig,lnkLogOut, "Log out");
-//		Element.click(lnkLogOut, "Log out");
 		return new LoginUPA(testConfig);
 	}
+	
+	
+	public void logOutAndReLogin(TestBase testConfig)
+	{
+		Element.clickByJS(testConfig,lnkLogOut, "Log out");
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    optumIDLoginPage.fillCredsAndSignIn("", "");
+	}
+	
 
 }

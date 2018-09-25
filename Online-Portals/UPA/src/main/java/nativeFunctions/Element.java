@@ -1,6 +1,8 @@
 package main.java.nativeFunctions;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
@@ -117,6 +119,20 @@ import main.java.reporting.LogTemp;
 	}
 	
 	
+	public static void waitTillTextAppears(WebElement element,String text,TestBase testConfig)
+	{
+		try{
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+			 
+			 Log.Pass(text + " " + "is present on page");
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while waiting for the text"+ "'" + text + "'" + " to be present " + e);
+		}
+	}
+	
 	/**
 	 * Waits till an element becomes interactive to be clicked
 	 * and then clicks it
@@ -180,6 +196,7 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
+		      Browser.waitForLoad(testConfig.driver);
 		  Log.Pass("Clicked " + namOfElement);
 		 }
 		catch(Exception e)
@@ -575,6 +592,13 @@ import main.java.reporting.LogTemp;
 		}
 		return null;
 	}
+	
+	public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
+	{
+	   JavascriptExecutor executor = (JavascriptExecutor)testConfig.driver;
+	   Map attributes=(Map) executor.executeScript("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;", element);
+	   return attributes;   
+    }
 	
 	
 	
