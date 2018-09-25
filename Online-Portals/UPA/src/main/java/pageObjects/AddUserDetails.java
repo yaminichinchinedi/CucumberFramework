@@ -148,8 +148,7 @@ public class AddUserDetails {
 	public AddUserDetails fillNewUserInfo()
 	{
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
-		Element.expectedWait(email, testConfig, "email text box", "email text box");
-		
+		Browser.wait(testConfig, 2);
 		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
@@ -179,22 +178,14 @@ public class AddUserDetails {
 	
 	public AddUserDetails addTinCSR(String tinNo)
 	{
-		Element.enterData(addTin,tinNo, "Associate to tin","addTin");
+		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
 		clickAddTin();
 		return this;
 	}
 	
-	public String  addTinCSR(int sqlNo)
-	{
-		Map tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
-		Element.enterData(addTin,tinNo.get("PROV_TIN_NBR").toString(), "Enter tin number : " + tinNo.get("PROV_TIN_NBR").toString() ,"add Tin");
-		clickAddTin();
-		return tinNo.get("PROV_TIN_NBR").toString();
-	}
-	
 	public AddUserDetails clickAddTin()
 	{
-		Element.clickByJS(testConfig,btnAddTin_NPI, "Add Tin/NPI");
+		Element.click(btnAddTin_NPI, "Add Tin/NPI");
 		return this;
 	}
 	
@@ -210,7 +201,7 @@ public class AddUserDetails {
 	public ManageUsers clickSave()
 	{
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		Element.clickByJS(testConfig,btnSave, "Save");
+		Element.click(btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}
@@ -225,7 +216,7 @@ public class AddUserDetails {
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +firstNameTxt);
+				      Element.click(userName, "UserName: "+ " " +firstNameTxt);
 				      Browser.wait(testConfig, 2);
 				      break;
 					}
@@ -403,8 +394,6 @@ public class AddUserDetails {
 		//verifyAssociatedTins();
 		
 	}
-	
-	
 	
 	
 	

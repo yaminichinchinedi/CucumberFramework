@@ -6,13 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +29,6 @@ import org.testng.asserts.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
 
 import main.java.Utils.CopyDir;
-import main.java.Utils.DataBase;
-import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.Utils.SendMail;
 import main.java.Utils.TestDataReader;
@@ -57,7 +49,6 @@ public class TestBase {
 	protected  TestBase testConfig;
 	public static String ResultsDir;
 	public Method testMethod;
-	private static HashMap<String,HashMap<String, String>> loginCredentials;
 	
 	
 	
@@ -87,7 +78,7 @@ public class TestBase {
 			e.printStackTrace();
 		}
 		runtimeProperties = new Properties();
-		
+
 		// load properties file
 		try {
 			runtimeProperties.load(fileInput);
@@ -197,8 +188,6 @@ public class TestBase {
             //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
             System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
 		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-//            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
-//		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
@@ -248,11 +237,10 @@ public class TestBase {
 		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
 		
 		WebDriver driver = new FirefoxDriver(capabilities);
+		
 		driver.manage().window().maximize();
 		return driver;
 	}
-	
-	
 
 	 public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
 	 {
@@ -339,7 +327,6 @@ public class TestBase {
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		String testCaseName=method.getName();
 		Log logger =new Log(testConfig,testCaseName);
-		fetchAppCredentials();
 		
 	}
 	
@@ -354,45 +341,6 @@ public class TestBase {
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
-	}
-	
-
-	public void fetchAppCredentials()
-	{
-		String query="Select * from eps_automation.config;";
-		loginCredentials = new HashMap<String,HashMap<String, String>>();
-		try
-		{
-			ResultSet rs= DataBase.testExecuteSelectQuery(testConfig, query, DatabaseType.Automation);
-			ResultSetMetaData md = rs.getMetaData();
-			int columns = md.getColumnCount();
-
-			while (rs.next())
-			{
-				HashMap<String, String> row = new HashMap<String, String>(columns);
-				String key=rs.getString("AppName")+rs.getString("UserType")+rs.getString("AccessType")+rs.getString("Env");
-				row.put("USERNAME", rs.getString("Username"));
-				row.putIfAbsent("PASSWORD", rs.getString("Pwd"));
-				loginCredentials.put(key, row);
-			}
-		}
-		catch(Exception e)
-		{
-			Log.Comment(e.getMessage());
-		}
-
-	}
-	public String getUsername(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	}
-	public String getPassword(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
 	}
 	
 	public void purgeDirectory(File dir)

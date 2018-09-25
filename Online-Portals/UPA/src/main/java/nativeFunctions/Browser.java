@@ -567,7 +567,6 @@ public class Browser
 		if (testConfig.driver != null)
 		{
 			Log.Comment("Switching to the given window handle:- " + windowHandle);
-			if(getNoOfWindowHandles(testConfig)>1)
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
 			Log.Comment("Switched to Parent window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());

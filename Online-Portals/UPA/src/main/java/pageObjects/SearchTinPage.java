@@ -1,6 +1,5 @@
 package main.java.pageObjects;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,13 +8,10 @@ import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.sun.jna.platform.unix.X11.XClientMessageEvent.Data;
 
 public class SearchTinPage {
 	
@@ -27,6 +23,10 @@ public class SearchTinPage {
 	
 	@FindBy(id="payerdropdown")
 	WebElement drpDownPayer;
+	
+//	@FindBy(id="taxNumber")
+//	WebElement txtboxTinNo;
+	
 	
 	@FindBy(xpath="//input[contains(@id,'taxNumber')]")
 	List <WebElement> txtboxTinNo;
@@ -47,10 +47,9 @@ public class SearchTinPage {
 		
 	}
 	
-	public SearchTinPage selectUserType(String userType)
+	public void selectUserType(String userType)
 	{
-		Element.selectByValue(drpDownUserType,userType, "User type as :" + " " + userType + " ");
-		return this;
+		Element.selectByValue(drpDownUserType,userType, "Select User type as :" + " " + userType);
 	}
 	
 	public ManageUsers doSearch(String userType)
@@ -68,7 +67,7 @@ public class SearchTinPage {
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
-			   Element.clickByJS(testConfig,btnSearch.get(0),"Clicked search button");
+			   Element.click(btnSearch.get(0), "Clicked search button");
 			   break;
 		   }
 		   
@@ -78,7 +77,7 @@ public class SearchTinPage {
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
-			   Element.clickByJS(testConfig,btnSearch.get(2),"Clicked search button");
+			   Element.click(btnSearch.get(2), "Clicked search button");
 			   break;
 		   }
 		   
@@ -88,7 +87,7 @@ public class SearchTinPage {
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
 			   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
-			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			   Element.click(btnSearch.get(1), "Clicked search button");
 			   break;
 		   }
 		   
@@ -99,59 +98,5 @@ public class SearchTinPage {
 		testConfig.putRunTimeProperty("tin", tin);
 		return new ManageUsers(testConfig);
 	}
-	
-	
-	
-	public String enterTin(String typeOfTin)
-	{
-		List<String> userAndTinDetails=getTinAndUserDetails(typeOfTin);
-		Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
-		testConfig.putRunTimeProperty("username", userAndTinDetails.get(1));
-		return userAndTinDetails.get(0);
-	}
-	
-	
-	public List<String> getTinAndUserDetails(String typeOfTin)
-	{
-		Map tinDetails=null;
-		int sqlRow;
-		List<String> userAndTinDetails=new ArrayList<String>();
-		switch(typeOfTin)
-		{
-		   case "tinWithOneActiveAdmin" :
-		   {
-			  sqlRow=45;
-			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
-			  Log.Comment("Fetched a tin that has only One Active Admin and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
-			  break;
-		    }
-		   
-		   case "tinWithMoreThanOneActiveAdmin" :
-		   {
-			  sqlRow=46;
-			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
-			  Log.Comment("Fetched a tin that has only 2 Active Admins and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
-			  break;
-		    }
-			  
-		   default :
-			   Log.Comment("No Search criteria defined");
-		   
-		}
-		
-		userAndTinDetails.add(tinDetails.get("PROV_TIN_NBR").toString());
-		userAndTinDetails.add(tinDetails.get("LST_NM").toString().toUpperCase() + "," +" " + tinDetails.get("FST_NM").toString().toUpperCase());
-		return userAndTinDetails;
-	}
-	
-	
-	
-	
-	public ManageUsers clickSearch()
-	{
-		Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
-		return new ManageUsers(testConfig);
-	}
-	
 	
 }
