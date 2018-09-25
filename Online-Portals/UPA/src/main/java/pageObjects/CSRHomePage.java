@@ -89,7 +89,7 @@ public class CSRHomePage {
 	
 	public SearchTinPage clickManageUsersLink()
 	{
-		Element.click(lnkManageUsers, "Manage Users");
+		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 		return new SearchTinPage(testConfig);
 	}
 	

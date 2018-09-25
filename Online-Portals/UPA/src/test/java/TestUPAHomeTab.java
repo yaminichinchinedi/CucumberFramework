@@ -2,7 +2,9 @@ package test.java;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Map;
 
+import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.HomePage;
@@ -19,7 +21,7 @@ public class TestUPAHomeTab extends TestBase {
 	
 	
 	@Test(priority=5,description="Verifies functionality for Resources Links for Admin User")
-	 void testUPALoginAdminResourcesLink() throws IOException, InterruptedException 
+	public void testUPALoginAdminResourcesLink() throws IOException, InterruptedException 
      {
 		String userType="PROV";
 		String accessType="Admin";
@@ -31,9 +33,8 @@ public class TestUPAHomeTab extends TestBase {
 	    home.logOutFromUPA();     
      }
 	
-	
 	@Test(priority=5,description="Verifies functionality for Resources Links for General User")
-	 void testUPALoginGeneralResourcesLink() throws IOException, InterruptedException 
+	public void testUPALoginGeneralResourcesLink() throws IOException, InterruptedException 
      {
 		String userType="PROV";
 		String accessType="Gen";
@@ -45,8 +46,10 @@ public class TestUPAHomeTab extends TestBase {
 	    home.logOutFromUPA(); 
      }
 	
+	
+	
 	@Test(priority=6,description="Verifies News and info section after provider is logged in for Admin users")
-	 void testUPAAdminHomeNewsAndInformation() throws InterruptedException, IOException 
+	public void testUPAAdminHomeNewsAndInformation() throws InterruptedException, IOException 
      {
 		String userType="PROV";
 		String accessType="Admin";
@@ -60,8 +63,10 @@ public class TestUPAHomeTab extends TestBase {
 	    home.logOutFromUPA();
      }
 	
+	
+	
 	@Test(priority=6,description="Verifies News and info section after provider is logged in for General users")
-	 void testUPAGeneralHomeNewsAndInformation() throws InterruptedException, IOException 
+	public void testUPAGeneralHomeNewsAndInformation() throws InterruptedException, IOException 
      {
 		String userType="PROV";
 		String accessType="Admin";
@@ -75,8 +80,27 @@ public class TestUPAHomeTab extends TestBase {
      }
 	
 	
+	
+	@Test(priority=7,description="Verifies Terms and conditions")
+	public void testTermAndConditions() throws IOException 
+     {   
+	    String userType="PROV";
+		String accessType="Admin";
+	    
+		testConfig.putRunTimeProperty("userType", userType);
+		testConfig.putRunTimeProperty("accessType", accessType);
+		
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    
+	    optumIDLoginPage.fillCredsAndSignIn("","").verifyTermsConditionsPage();
+	   
+     }
+	
+	
+	
 	@Test(priority=7,description="Verifies Login validations negative scenarios")
-	 void testUPALoginValidations() throws IOException 
+	public void testUPALoginValidations() throws IOException 
      {   
 	   int excelRowNo=4;
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -90,8 +114,10 @@ public class TestUPAHomeTab extends TestBase {
        optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
       }
 	
+	
+	
 	@Test(priority=7,description="Verifies Provider_TIN_Selection_Dropdown for Admin")
-	 void testUPAAdminTinDropdown() throws IOException, InterruptedException, ParseException 
+	public void testUPAAdminTinDropdown() throws IOException, InterruptedException, ParseException 
     {   
 		String userType="PROV";
 		String accessType="Admin";
@@ -103,6 +129,9 @@ public class TestUPAHomeTab extends TestBase {
 	    home.selectTin();
 	    home.clickMaintainEnrollmentTab().verifyOrgBankAccountInfo().verifyOrgInfoOfSelectedTin();	 
 	  }
+	
+	
+	
 	
 	/*
 	 * Ask Prashant about General functionality, he is not able to see bank info

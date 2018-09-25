@@ -195,10 +195,8 @@ public class TestBase {
             caps.setCapability("disable-popup-blocking", true);
             
             //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
-            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-//            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
-//		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
+            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
+		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
@@ -220,7 +218,40 @@ public class TestBase {
 		return driver;
 	}
 
-	private static WebDriver initFirefoxDriver() {
+//	private static WebDriver initFirefoxDriver() {
+//		
+//		LogTemp.Comment("Launching Firefox browser..");
+//		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
+//		
+//		FirefoxProfile profile = new FirefoxProfile();
+//		
+//		profile.setPreference("browser.download.dir", "C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads");
+//		profile.setPreference("browser.download.folderList", 2);
+// 
+//	
+//		//Set Preference to not show file download confirmation dialogue using MIME types Of different file extension types.
+//		
+//		 
+//		profile.setPreference( "browser.download.manager.showWhenStarting", false );
+//
+////		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");
+//		//needed for pdf download
+////		profile.setPreference("pdfjs.disabled", true);
+//		profile.setPreference("browser.download.useDownloadDir", "false"); 
+//		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+//		
+//		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+//		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+//		capabilities.setCapability("marionette", true); 
+//		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
+//		
+//		WebDriver driver = new FirefoxDriver(capabilities);
+//		driver.manage().window().maximize();
+//		return driver;
+//	}
+	
+	
+private static WebDriver initFirefoxDriver() {
 		
 		LogTemp.Comment("Launching Firefox browser..");
 		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
@@ -251,8 +282,6 @@ public class TestBase {
 		driver.manage().window().maximize();
 		return driver;
 	}
-	
-	
 
 	 public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
 	 {

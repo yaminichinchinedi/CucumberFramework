@@ -62,14 +62,14 @@ public class ThankYouPage {
 		 }
 	}
 	
-	public void verifyPDF() throws InvalidPasswordException, IOException
-	{
-		String filePath="C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads";
-		testConfig.purgeDirectory(new File(filePath));
-		Element.click(lnkPrintPdf, "Print PDF Link");
-		
-		String pdfText=Helper.readPDF(filePath);
-		if(pdfText.contains("Routing Transit Number: 107005319"))
-			Log.Pass("PDF contains the correct routing number");
-	}
+//	public void verifyPDF() throws InvalidPasswordException, IOException
+//	{
+//		String filePath="C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads";
+//		testConfig.purgeDirectory(new File(filePath));
+//		Element.click(lnkPrintPdf, "Print PDF Link");
+//		
+//		String pdfText=Helper.readPDF(filePath);
+//		if(pdfText.contains("Routing Transit Number: 107005319"))
+//			Log.Pass("PDF contains the correct routing number");
+//	}
 }
