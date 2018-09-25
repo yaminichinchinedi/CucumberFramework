@@ -197,23 +197,22 @@ public class SearchRemittanceSearchCriteria {
 		switch(criteriaType) {
 		case "byDateOfService":
 	    {	    	
-	    	Element.click(dosFrom, "From date calendar");
+	    	Element.clickByJS(testConfig, dosFrom, "From date calendar");
+			Browser.wait(testConfig, 2);
 	    	break;		    	
 	    }
 	    
 		case "byDateOfPayment":
 	    {
-	    	Element.click(dopFrom, "From Date of Payment");
-	    	
+	    	Element.clickByJS(testConfig, dopFrom, "From date calendar");
+			Browser.wait(testConfig, 2);
+	    	break;
 	    }
 	
 	    default:
 	    	Log.Comment("Criteria Type " + criteriaType + " not found");
 		}
 		
-		
-		Element.clickByJS(testConfig, dosFrom, "From date calendar");
-		Browser.wait(testConfig, 2);
 		return this;
 	}
 	
@@ -223,13 +222,15 @@ public class SearchRemittanceSearchCriteria {
 		switch(criteriaType) {
 		case "byDateOfService":
 	    {	    	
-	    	Element.click(dosTo, "To date calendar");
+	    	Element.clickByJS(testConfig,dosTo, "To date calendar");
+			Browser.wait(testConfig, 2);
 	    	break;		    	
 	    }
 	    
 		case "byDateOfPayment":
 	    {
-	    	Element.click(dopTo, "To Date of Payment");	    	
+	    	Element.clickByJS(testConfig,dopTo, "To date calendar");
+			Browser.wait(testConfig, 2);	    	
 	    }
 	
 	    default:
@@ -237,9 +238,6 @@ public class SearchRemittanceSearchCriteria {
 		}
 		
 		
-		Element.clickByJS(testConfig,dosTo, "To date calendar");
-		Browser.wait(testConfig, 2);
-
 		return this;
 	}
 	
