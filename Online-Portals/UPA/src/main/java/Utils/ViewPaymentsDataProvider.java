@@ -78,6 +78,10 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDateOfService":
  			 sqlRowNo=41;
  			 break;
+ 			 
+ 		 case "byDateOfPayment":
+			 sqlRowNo=41;
+			 break;
  		   
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");

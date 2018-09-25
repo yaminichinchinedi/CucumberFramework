@@ -112,7 +112,7 @@ public class SearchRemittanceSearchCriteria {
 		    	String toDateDos = Helper.getCurrentDate("dd/MM/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"dd/MM/yyyy");
 		    	System.out.println(toDateDos+":"+fromDateDos);
-		    	clickFromDateIcon().setDate(fromDateDos).clickToDateIcon().setDate(toDateDos).clickSearchBtn();
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType).clickSearchBtn();
 		    	/*Date date = new Date();
 		    	Calendar cal = Calendar.getInstance();
 		    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -132,6 +132,16 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.click(checkNumber, "Selecting Filter Criteria");
 		    	Element.enterData(checkNumber, ePaymentNumber, "Filling Check payment number", "payment number");
 		    	clickSearchBtn();*/
+		    	break;		    	
+		    }
+		    
+		    case "byDateOfPayment":
+		    {
+		    	
+		    	String toDateDos = Helper.getCurrentDate("dd/MM/yyyy");
+		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"dd/MM/yyyy");
+		    	System.out.println(toDateDos+":"+fromDateDos);
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType).clickSearchBtn();
 		    	break;		    	
 		    }
 		
@@ -166,13 +176,13 @@ public class SearchRemittanceSearchCriteria {
 		return data;
 	}
 	
-	public SearchRemittanceSearchCriteria setDate(String date)
+	public SearchRemittanceSearchCriteria setDate(String date, String criteriaType)
 	{
 		for(int i =0;i<3;i++){
 			if(!(Browser.getNoOfWindowHandles(testConfig)<2))
 				break;
 			else
-				clickFromDateIcon();
+				clickFromDateIcon(criteriaType);			   
 		}
 			
 		String oldWindow=Browser.switchToNewWindow(testConfig, "/calendar.html");
@@ -182,15 +192,49 @@ public class SearchRemittanceSearchCriteria {
 		return this;
 	}
 	
-	public SearchRemittanceSearchCriteria clickFromDateIcon()
+	public SearchRemittanceSearchCriteria clickFromDateIcon(String criteriaType)
 	{
-		Element.click(dosFrom, "From date calendar");
+		
+		switch(criteriaType) {
+		case "byDateOfService":
+	    {	    	
+	    	Element.click(dosFrom, "From date calendar");
+	    	break;		    	
+	    }
+	    
+		case "byDateOfPayment":
+	    {
+	    	Element.click(dopFrom, "From Date of Payment");
+	    	
+	    }
+	
+	    default:
+	    	Log.Comment("Criteria Type " + criteriaType + " not found");
+		}
+		
+		
 		return this;
 	}
 	
-	public SearchRemittanceSearchCriteria clickToDateIcon()
+	public SearchRemittanceSearchCriteria clickToDateIcon(String criteriaType)
 	{
-		Element.click(dosTo, "To date calendar");
+		switch(criteriaType) {
+		case "byDateOfService":
+	    {	    	
+	    	Element.click(dosTo, "To date calendar");
+	    	break;		    	
+	    }
+	    
+		case "byDateOfPayment":
+	    {
+	    	Element.click(dopTo, "To Date of Payment");	    	
+	    }
+	
+	    default:
+	    	Log.Comment("Criteria Type " + criteriaType + " not found");
+		}
+		
+		
 		return this;
 	}
 	
