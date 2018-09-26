@@ -85,14 +85,26 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.fillSearchCriteria(criteriaType);		
      }
 	
+	//Need to optimize query used to getch a/c no and setl_dt for this test case
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByDateOfPaymentAndAcntNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String loginUserType="Super";
-		String userType="PROV";	
-		String accessLevelOfNewUser="Administrator";	
-		String filterPayments="Show All";
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDateOfPaymentAndAcntNo";
+					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndSubscriberId";
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);

@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,6 +72,27 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(xpath = "//table//table//table//tr//font")
 	WebElement monthYearInCal;
 	
+	@FindBy(id="payerIdSelection")
+	WebElement payer;
+	
+	@FindBy(id="ClaimAccountNum")
+	WebElement accountNo;
+	
+	@FindBy(id="subscriberIDText")
+	WebElement subscriberID;
+	
+	@FindBy(id="npiIDText")
+	WebElement NPI;
+	
+	@FindBy(id="claimNumberID")
+	WebElement claimNumber;
+	
+	@FindBy(id="zeroPaymentID")
+	WebElement zeroPaymentClaims;
+	
+	@FindBy(id="allMarketTypeId")
+	WebElement allMarketType;
+	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
 		this.testConfig=testConfig;
@@ -109,40 +131,72 @@ public class SearchRemittanceSearchCriteria {
 		    case "byDateOfService":
 		    {
 		    	
-		    	String toDateDos = Helper.getCurrentDate("dd/MM/yyyy");
-		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"dd/MM/yyyy");
+		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
+		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
 		    	System.out.println(toDateDos+":"+fromDateDos);
-		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType).clickSearchBtn();
-		    	/*Date date = new Date();
-		    	Calendar cal = Calendar.getInstance();
-		    	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		    	String toDateDos =  dateFormat.format(date);
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
 		    	
-				cal.add(Calendar.DAY_OF_MONTH, -30);
-				date = cal.getTime();
-				
-				String fromDateDos=dateFormat.format(date);
-
-		    	/* if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getCurrentDate("yyyy-MM-dd")) < 0) 
-		    			filterCriteria="Last 30 days"; 
-		    	
-		    	/*data=dataProvider(criteriaType);
-		    	ePaymentNumber=data.get("UCONSL_PAY_NBR").toString();
-		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Select payment number type");
-		    	Element.click(checkNumber, "Selecting Filter Criteria");
-		    	Element.enterData(checkNumber, ePaymentNumber, "Filling Check payment number", "payment number");
-		    	clickSearchBtn();*/
 		    	break;		    	
 		    }
 		    
 		    case "byDateOfPayment":
 		    {
 		    	
-		    	String toDateDos = Helper.getCurrentDate("dd/MM/yyyy");
-		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"dd/MM/yyyy");
+		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
+		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
 		    	System.out.println(toDateDos+":"+fromDateDos);
-		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType).clickSearchBtn();
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
 		    	break;		    	
+		    }
+		    
+		    case "byDateOfPaymentAndAcntNo":
+		    {
+		    	int sqlRow = 42;
+		    	String date = null;
+		    	String acntNo;
+		    	Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
+		    	try {
+		    		System.out.println(srchData.get("SETL_DT").toString());
+					date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					System.out.println(date);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.enterData(accountNo, acntNo, "Filling patient account no: "+acntNo, "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	break;
+		    }
+		    
+		    case "byDateOfPaymentAndSubscriberId":
+		    {
+		    	int sqlRow = 43;
+		    	String date = null;
+		    	String sbscrId;
+		    	Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	sbscrId=srchData.get("SBSCR_ID").toString();
+		    	try {
+		    		System.out.println(srchData.get("SETL_DT").toString());
+					date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					System.out.println(date);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	break;
 		    }
 		
 		    default:
@@ -208,6 +262,20 @@ public class SearchRemittanceSearchCriteria {
 			Browser.wait(testConfig, 2);
 	    	break;
 	    }
+	    
+		case "byDateOfPaymentAndAcntNo":
+		{
+			Element.clickByJS(testConfig, dopFrom, "From date calendar");
+			Browser.wait(testConfig, 2);
+	    	break;
+		}
+		
+		case "byDateOfPaymentAndSubscriberId":
+		{
+			Element.clickByJS(testConfig, dopFrom, "From date calendar");
+			Browser.wait(testConfig, 2);
+	    	break;
+		}
 	
 	    default:
 	    	Log.Comment("Criteria Type " + criteriaType + " not found");
@@ -232,6 +300,20 @@ public class SearchRemittanceSearchCriteria {
 	    	Element.clickByJS(testConfig,dopTo, "To date calendar");
 			Browser.wait(testConfig, 2);	    	
 	    }
+	    
+		case "byDateOfPaymentAndAcntNo":
+		{
+			Element.clickByJS(testConfig, dopTo, "From date calendar");
+			Browser.wait(testConfig, 2);
+	    	break;
+		}
+		
+		case "byDateOfPaymentAndSubscriberId":
+		{
+			Element.clickByJS(testConfig, dopTo, "From date calendar");
+			Browser.wait(testConfig, 2);
+	    	break;
+		}
 	
 	    default:
 	    	Log.Comment("Criteria Type " + criteriaType + " not found");
@@ -243,13 +325,13 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittanceSearchCriteria selectDate(TestBase testConfig, String requiredDate)
 	{
-	    String curr[] = Helper.getCurrentDate("dd/MM/yyyy").split("/");
+	    String curr[] = Helper.getCurrentDate("MM/dd/yyyy").split("/");
 	    String req[] = requiredDate.split("/");
 
 //	    int currDate = Integer.parseInt(curr[0]);
-	    int reqDate = Integer.parseInt(req[0]);
-	    int currMonth = Integer.parseInt(curr[1]);
-	    int reqMonth = Integer.parseInt(req[1]);
+	    int reqDate = Integer.parseInt(req[1]);
+	    int currMonth = Integer.parseInt(curr[0]);
+	    int reqMonth = Integer.parseInt(req[0]);
 	    int currYr = Integer.parseInt(curr[2]);
 	    int reqYr = Integer.parseInt(req[2]);
 	    String date=String.valueOf(reqDate);
