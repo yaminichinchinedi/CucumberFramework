@@ -68,6 +68,7 @@ public class LoginCSR {
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
 	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
+       Element.expectedWait(txtboxUserName, testConfig, "Username text box", "Username text box");
 	}
 	
 	//Default constructor
@@ -146,10 +147,14 @@ public class LoginCSR {
 	   String env=System.getProperty("env");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
-		testConfig.putRunTimeProperty("id", id);
+       Log.Comment("PRoperties are set");
+       
+	   testConfig.putRunTimeProperty("id", id);
+	   Browser.scrollTillAnElement(testConfig, txtboxUserName, "Username textbox");
+	   
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");	
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.click(btnLogin,"click Login button");
+	   Element.clickByJS(testConfig,btnLogin,"click Login button");
 	   return new CSRHomePage(testConfig);
 	}
 }
