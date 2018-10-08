@@ -72,4 +72,43 @@ public abstract class CreateConnection {
 
 	abstract protected String convertRequestPojoToXml(Object object)
 			throws JAXBException;
+	
+	
+
+	public String postRequestGetStringResponse(Object pojoRequest)throws IOException, SAXException, ParserConfigurationException,JAXBException {
+		String response = "";
+		String line;
+		URL conn = new URL(connectionUrl);
+		
+		// Opens connection with server
+		URLConnection UrlConn = conn.openConnection();
+		HttpURLConnection httpUrlConn = (HttpURLConnection) UrlConn;
+
+		httpUrlConn.setDoOutput(true);
+		httpUrlConn.setRequestMethod("POST");
+		httpUrlConn.setRequestProperty("Content-Type", "application/xml");
+		httpUrlConn.connect();
+
+		OutputStreamWriter ReqWriter = new OutputStreamWriter(
+		httpUrlConn.getOutputStream());
+		String requestXML = convertRequestPojoToXml(pojoRequest);
+		requestXML = requestXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>","").replace("null", "");
+		System.out.println("REQUEST :" + requestXML);
+		ReqWriter.write(requestXML);
+		ReqWriter.flush();
+
+		/** Gets response of the request fired*/
+		BufferedReader ReplyReader = new BufferedReader(new InputStreamReader(httpUrlConn.getInputStream()));
+
+		/** printing response and writing it in api.xml*/
+		System.out.println("RESPONSE :" + '\n');
+		while ((line = ReplyReader.readLine()) != null) {
+			System.out.println(line);
+			response = response + line;
+		}
+		ReplyReader.close();
+		httpUrlConn.disconnect();
+		return response;
+	}
+
 }

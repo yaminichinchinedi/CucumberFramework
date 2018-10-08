@@ -23,8 +23,8 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -37,8 +37,8 @@ import com.relevantcodes.extentreports.LogStatus;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
+
 import main.java.Utils.Helper;
-import main.java.Utils.SendMail;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
 import main.java.reporting.LogTemp;
@@ -254,7 +254,7 @@ public class TestBase {
 	
 	
 
-	 public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
+	public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
 	 {
 		 if (testDataReaderHashMap.get(sheetName) == null)
 		 {
@@ -264,28 +264,28 @@ public class TestBase {
 		 return testDataReaderHashMap.get(sheetName);
 	 }
 
-		private void cacheTestDataReaderObject(String sheetName, String path)
+	private void cacheTestDataReaderObject(String sheetName, String path)
+	{
+		if (testDataReaderHashMap.get(path + sheetName) == null)
 		{
-			if (testDataReaderHashMap.get(path + sheetName) == null)
-			{
-				testDataReaderObj = new TestDataReader(this);
-				testDataReaderHashMap.put(path + sheetName, testDataReaderObj);
-			}
+			testDataReaderObj = new TestDataReader(this);
+			testDataReaderHashMap.put(path + sheetName, testDataReaderObj);
 		}
-	 
-		public TestDataReader getCachedTestDataReaderObject(String sheetName)
+	}
+ 
+	public TestDataReader getCachedTestDataReaderObject(String sheetName)
+	{	
+		String path = getRunTimeProperty("DataFilePath");
+		if(sheetName.contains("."))
 		{	
-			String path = getRunTimeProperty("DataFilePath");
-			if(sheetName.contains("."))
-			{	
-				path=System.getProperty("user.dir")+getRunTimeProperty(sheetName.split("\\.")[0]);
-				sheetName=sheetName.split("\\.")[1];
-				
-			}
-			return getCachedTestDataReaderObject(sheetName, path);
+			path=System.getProperty("user.dir")+getRunTimeProperty(sheetName.split("\\.")[0]);
+			sheetName=sheetName.split("\\.")[1];
+			
 		}
-		
-		public TestDataReader getCachedTestDataReaderObject(String sheetName, String path)
+		return getCachedTestDataReaderObject(sheetName, path);
+	}
+	
+	public TestDataReader getCachedTestDataReaderObject(String sheetName, String path)
 		{
 			TestDataReader obj = testDataReaderHashMap.get(path + sheetName);
 			// Object is not in the cache
@@ -354,8 +354,33 @@ public class TestBase {
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
+	}	
+	
+	
+	@BeforeClass()
+	public void init()
+	{
+
+		Log logger =new Log(testConfig,"BeforeClass");
+		initializeData();
 	}
 	
+
+	public void initializeData()
+	{
+	}
+
+	@AfterClass()
+	public void deinit()
+	{
+		deinitializeData();
+	}
+	
+	public void deinitializeData()
+	{
+	}
+	
+
 
 	public void fetchAppCredentials()
 	{
@@ -394,6 +419,7 @@ public class TestBase {
 		}
 		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
 	}
+
 	
 	public void purgeDirectory(File dir)
 	{
