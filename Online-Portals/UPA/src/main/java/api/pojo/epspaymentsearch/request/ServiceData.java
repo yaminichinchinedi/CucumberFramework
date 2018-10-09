@@ -44,6 +44,7 @@ public class ServiceData {
 
     @XmlElement(name = "ApplicationIdentifier", required = true)
     protected String applicationIdentifier;
+    
     @XmlElement(name = "Version")
     protected String version;
 

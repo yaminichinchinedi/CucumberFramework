@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.LoginCSR;
+import main.java.pageObjects.SearchRemittance;
 import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.pageObjects.SearchTinPageSearchRemittance;
 import main.java.pageObjects.SearchTinPageViewPayments;
@@ -82,7 +83,8 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
 		srchTinPage.enterTin(criteriaType);
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+		SearchRemittance srchRemit = srchCriteriaPage.fillSearchCriteria(criteriaType);
+		srchRemit.verifySearchResults();
      }
 	
 	//Need to optimize query used to getch a/c no and setl_dt for this test case
@@ -106,6 +108,72 @@ public class TestCSRSearchRemittance extends TestBase {
 		String loginUserType="Super";
 		String criteriaType="byDateOfPaymentAndSubscriberId";
 					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndNpi";
+					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndClmNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndClmNo";
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndPtntNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndPtntNm";
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndZeroPmntClms() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndZeroPmntClms";
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
+		srchTinPage.enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.fillSearchCriteria(criteriaType);		
+     }
+	
+	@Test(priority=5,description="TS005_Search by Check Number only")
+	public void testEpraByDateOfPaymentAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDateOfPaymentAndMarketType";
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		

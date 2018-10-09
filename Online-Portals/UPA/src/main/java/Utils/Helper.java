@@ -861,6 +861,36 @@ return previousDate.getTime();
 		return sdf.format(c.getTime()); // dt is now the new date
 
 	}
+	
+	public static String getDateBeforeOrAfterDays(int days, String OLD_FORMAT, String NEW_FORMAT, String date)
+	{
+
+		String newDateString = null;
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		Date d = null;
+		try
+		{
+			d = sdf.parse(date);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		sdf.applyPattern(NEW_FORMAT);
+		newDateString = sdf.format(d);
+		Calendar c = Calendar.getInstance();
+		try
+		{
+			c.setTime(sdf.parse(newDateString));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, days); // number of days to add
+		return sdf.format(c.getTime()); // dt is now the new date
+
+	}
 
 	public static String getDateBeforeOrAfterYears(int years, String format)
 	{

@@ -90,6 +90,22 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDateOfPaymentAndSubscriberId":
  			 sqlRowNo=41;
  			 break;
+ 			 
+ 		 case "byDateOfPaymentAndNpi":
+ 			 sqlRowNo=41;
+ 			 break;
+ 			 
+ 		 case "byDateOfPaymentAndClmNo":
+ 			 sqlRowNo=41;
+ 			 break;
+ 			 
+ 		 case "byDateOfPaymentAndPtntNm":
+ 			 sqlRowNo=41;
+ 			 break;
+ 			 
+ 		 case "byDateOfPaymentAndZeroPmntClms":
+ 			 sqlRowNo=47;
+ 			 break;
  		   
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
