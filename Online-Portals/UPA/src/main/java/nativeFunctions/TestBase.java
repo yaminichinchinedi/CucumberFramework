@@ -361,7 +361,7 @@ public class TestBase {
 	public void init()
 	{
 
-		Log logger =new Log(testConfig,"BeforeClass");
+//		Log logger =new Log(testConfig,"BeforeClass");
 		initializeData();
 	}
 	
