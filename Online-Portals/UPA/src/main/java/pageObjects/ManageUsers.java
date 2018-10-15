@@ -485,7 +485,8 @@ public class ManageUsers extends AddUserDetails  {
 	 */
 	public Map<String,String> getTinsListFromUI()
 	{
-		   List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		   List<WebElement> tinGridRows =Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+				  
 		   ArrayList<String> tinList= new ArrayList<String>();
 		   Map<String,String> map = new LinkedHashMap<String,String>();
 		   for(int i=1;i<tinGridRows.size();i++)
@@ -513,10 +514,10 @@ public class ManageUsers extends AddUserDetails  {
 	{
     if(!treeMap.toString().equals(map.toString()))
     {
-    	Log.Fail("Ascending Sorted order for Tin", treeMap.toString(), map.toString());
+    	Log.Fail("Sorted order for Tin", treeMap.toString(), map.toString());
     }
     else
-    	Log.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
+    	Log.Pass("Sorted order for Tin", treeMap.toString(), map.toString());	
 	}
 
 	
