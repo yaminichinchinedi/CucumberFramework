@@ -469,9 +469,11 @@ public class ManageUsers extends AddUserDetails  {
 		 
 		 Element.click(lnkTinInGrid, "Tin link");
 		 Browser.wait(testConfig, 3);
+		 Log.Comment("After one click " +'\n'+map);
+		 Element.click(lnkTinInGrid, "Tin link");
 		 map.clear();
 		 map=getTinsListFromUI();
-		 Log.Comment("After one click " +'\n'+map);
+		 Log.Comment("After second click " +'\n'+map);
 		 
 		 treeMap = new TreeMap<String, String>(map).descendingMap();
 		 verifytinsAreSorted(treeMap,map);
