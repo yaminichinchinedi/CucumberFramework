@@ -74,7 +74,7 @@ public class OptumIdLoginPage {
 		
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(txtboxOptumID, "Optum id Textbox");
+		Element.expectedWait(txtboxOptumID, testConfig, "Optum id Textbox", "Optum id Textbox");
 	}
 	
 	
@@ -214,6 +214,7 @@ public class OptumIdLoginPage {
 		}
 	
 		Element.enterData(txtboxOptumID, id, " Optum ID entered as :"+" " + id, "txtboxOptumID");	
+		Element.expectedWait(txtboxPwd, testConfig, "Password text box", "Password text box");
 		Element.enterData(txtboxPwd, password, " Password entered :" + " " + password, "txtboxPwd");
 		Element.click(btnSignIn, "Sign In button");
 		Browser.waitForLoad(testConfig.driver);
