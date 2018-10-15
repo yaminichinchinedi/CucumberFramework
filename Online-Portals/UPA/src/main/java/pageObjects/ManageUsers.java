@@ -335,20 +335,24 @@ public class ManageUsers extends AddUserDetails  {
 
 		try{
 			Browser.wait(testConfig, 3);
-	    Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			List<WebElement> accessLvlDrp=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.expectedWait(accessLvlDrp.get(0), testConfig, "Access level tin dropdown", "Access level tin dropdown");
+	    Element.selectByVisibleText(accessLvlDrp.get(0), "General", "Select General as access level");
 		}
 		
 		catch(Exception e)
 		{
-			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
-			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
-			//Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");
+		
 		}
 	   
 	    
 	    Browser.waitForLoad(testConfig.driver);
 	    clickSave();
 	    Browser.wait(testConfig,3);
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
 	  
 	    //Get access level value from DB to verify it has been changed to General
 	    int sqlRowNo=11;
@@ -359,12 +363,15 @@ public class ManageUsers extends AddUserDetails  {
 	    
 	    
 	    //Changing user to Admin 
-	    accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 	    
 	    //Select Access Level as Administrator
 	    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 	    clickSave();
-	    Browser.wait(testConfig,3);    
+	    Browser.wait(testConfig,3); 
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
+	    
 	    //Get access level value from DB to verify it has been changed to Administrator
 	    portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	    Helper.compareEquals(testConfig, "Access Level", "A", portalUserData.get("ACCESS_LVL").toString());

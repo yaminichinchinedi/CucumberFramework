@@ -107,10 +107,14 @@ public class OptumIdLoginPage {
 	    
 	    WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
 	    
+	    divTermsAndConditions= Element.findElement(testConfig, "xpath","//div[@class='pguide']");
+	    
+	    
 	    if(welcomeTxt!=null)
 	      Log.Comment("Security Question not present");
 	    
-	    else if(divTermsAndConditions.isDisplayed())
+	    
+	    else if(divTermsAndConditions!=null)
 	    {
 	    	Element.click(chkBoxTerms, "Terms & Conditions check box");
 		    Element.click(btnSubmit, "Submit button");
@@ -121,6 +125,7 @@ public class OptumIdLoginPage {
          for(int i=0;i<2;i++)
           {
             securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+            Element.expectedWait(securityQuestion, testConfig, "securityQuestion", "securityQuestion");
             if(securityQuestion!=null)
             { 
    	       fillAns();
@@ -145,6 +150,9 @@ public class OptumIdLoginPage {
 		
 		else if (securityQuestion.getText().contains("father")) 
 			fillFatherAns();
+		
+		else if (securityQuestion.getText().contains("nickname")) 
+			fillNicknameAns();
 
 		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
@@ -156,6 +164,12 @@ public class OptumIdLoginPage {
 	}
 
 	
+	private void fillNicknameAns() {
+		 Element.enterData(txtboxSecurityAns, "Sunny","Entered 'Sunny' as Nick  Name", "txtboxSecurityAns");
+		
+	}
+
+
 	private void fillFatherAns() {
 	 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
 	}
@@ -170,7 +184,10 @@ public class OptumIdLoginPage {
 	}
 
 	public void fillColorAns() {
-		Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+		if(id.equals("AVUHCPAYSTG1"))
+			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
+		else
+			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
 	}
 
 	
