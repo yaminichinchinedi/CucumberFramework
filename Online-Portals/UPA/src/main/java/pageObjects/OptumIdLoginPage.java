@@ -153,6 +153,9 @@ public class OptumIdLoginPage {
 		
 		else if (securityQuestion.getText().contains("nickname")) 
 			fillNicknameAns();
+		
+		else if (securityQuestion.getText().contains("state of your birth")) 
+			fillStateOfBirthAns();
 
 		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
@@ -165,13 +168,21 @@ public class OptumIdLoginPage {
 
 	
 	private void fillNicknameAns() {
-		 Element.enterData(txtboxSecurityAns, "Sunny","Entered 'Sunny' as Nick  Name", "txtboxSecurityAns");
+		 Element.enterData(txtboxSecurityAns, "Ginni","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
+	}
+	
+	private void fillStateOfBirthAns() {
+		 Element.enterData(txtboxSecurityAns, "Faridabad","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
 		
 	}
 
 
 	private void fillFatherAns() {
-	 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+		if(id.equals("TestPayerStage"))
+	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
+		else
+			 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
