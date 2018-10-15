@@ -471,6 +471,7 @@ public class ManageUsers extends AddUserDetails  {
 		 Browser.wait(testConfig, 3);
 		 Log.Comment("After one click " +'\n'+map);
 		 Element.click(lnkTinInGrid, "Tin link");
+		 Browser.wait(testConfig, 3);
 		 map.clear();
 		 map=getTinsListFromUI();
 		 Log.Comment("After second click " +'\n'+map);

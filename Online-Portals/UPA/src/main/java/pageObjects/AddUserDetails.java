@@ -353,7 +353,7 @@ public class AddUserDetails {
 		Element.enterData(email, firstNameTxt, "Enter Email address as:" + " " +firstNameTxt,"email");
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		selectAndAddTin();
-		Element.click(btnSave, "Save button");
+		Element.clickByJS(testConfig,btnSave, "Save button");
 		
 		Element.verifyTextPresent(errorFname, "Invalid First Name");
 		Element.verifyTextPresent(errorLname, "Invalid Last Name");
