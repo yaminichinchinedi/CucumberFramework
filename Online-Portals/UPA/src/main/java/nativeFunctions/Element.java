@@ -1,6 +1,7 @@
 package main.java.nativeFunctions;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
@@ -548,6 +549,12 @@ import main.java.reporting.LogTemp;
 	}
 	
 	
-	
+	public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
+    {
+       JavascriptExecutor executor = (JavascriptExecutor)testConfig.driver;
+       Map attributes=(Map) executor.executeScript("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;", element);
+       return attributes;   
+ }
+
 
 }

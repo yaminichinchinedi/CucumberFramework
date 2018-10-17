@@ -327,6 +327,14 @@ public class HomePage extends LoginUPA {
 		return new paymentSummary(testConfig);
 	}
 	
+	//amit
+	public SearchRemittanceSearchCriteria clickSearchRemittanceTab()
+	{
+		Element.expectedWait(searchRemittanceTab, testConfig, "View Payments Tab", "View Payments Tab");
+		Element.click(searchRemittanceTab, "Search Remittance Tab");
+		return new SearchRemittanceSearchCriteria(testConfig);
+	}
+	
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
 	{
 		Element.click(maintainEnrlTab, "Maintain Enrollment Tab");

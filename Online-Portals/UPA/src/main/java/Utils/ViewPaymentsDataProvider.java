@@ -107,6 +107,18 @@ public String getTinForPaymentType(String paymentType)
  			 sqlRowNo=47;
  			 break;
  		   
+ 		case "byElectronicPmt":
+ 			sqlRowNo=48;
+ 			break;
+ 			
+ 		case "byCheckPmt":
+ 			sqlRowNo=50;
+ 			break;
+ 			
+ 		 case "byElectronicPaymentforStatus":
+ 			sqlRowNo=52;
+ 			break;
+ 			
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
