@@ -924,6 +924,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
+	public EpsPaymentsSearchRequest setServiceData(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
+		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
 	
 	/**
 	  * For example, to add a new item, do as follows:

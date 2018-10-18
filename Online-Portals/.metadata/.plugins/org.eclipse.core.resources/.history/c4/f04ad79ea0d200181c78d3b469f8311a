@@ -882,6 +882,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
+		setServiceData(epsPaymentsSearchRequest);
 		
 		/**Posting the modified request and getting response*/
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
@@ -921,6 +922,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
+	public EpsPaymentsSearchRequest setServiceData(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
+		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
