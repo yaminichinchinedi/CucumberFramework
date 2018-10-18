@@ -2024,36 +2024,25 @@ return previousDate.getTime();
 	public static void compareEquals(TestBase testConfig, String what,ArrayList<String> expected, ArrayList<String> actual) 
 	{
 		if(expected.equals(actual))
-		{
-			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
-		}
-		
+			Log.Pass("Passed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 		else 
-			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
-		
+			Log.Fail("Failed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
 	}
 
 	public static void compareEquals(TestBase testConfig, String what,Map<String, String> expected, Map<String, String> actual) {
-		
 		if(expected.equals(actual))
-		{
-			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
-		}
-		
+			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 		else 
-			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+			Log.Fail(what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
 		}
 
 
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
 	{
 	   if(expected.equals(actual))
-			{
-				Log.Pass("Passed" + " " + what + "" + "<br>" + "Actual is :" +" " + "<br>" + actual + " " + "<br>" + "Expected is :" +" " + "<br>" +expected );
-			}
-			
+			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 			else 
-				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Actual is :" +" " + actual + "<br>" + "Expected is :" +" " +expected);
+				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
 			}
 
 	

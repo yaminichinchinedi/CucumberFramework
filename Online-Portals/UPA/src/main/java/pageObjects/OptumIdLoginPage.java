@@ -165,8 +165,11 @@ public class OptumIdLoginPage {
 	}
 
 	private void fillSportsAns() {
-	//	Element.enterData(txtboxSecurityAns, "tester","Entered 'tester' as Favorite Sports team", "txtboxSecurityAns");
-		Element.enterData(txtboxSecurityAns, "india","Entered 'tester' as Favorite Sports team", "txtboxSecurityAns");
+		if(testConfig.getRunTimeProperty("id").equals("PayerAuto"))
+			Element.enterData(txtboxSecurityAns, "tester","Entered 'tester' as Favorite Sports team", "txtboxSecurityAns");
+		else
+		Element.enterData(txtboxSecurityAns, "india","Entered 'india' as Favorite Sports team", "txtboxSecurityAns");
+		
 	}
 
 	public void fillColorAns() {

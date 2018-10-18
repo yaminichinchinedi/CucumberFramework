@@ -124,8 +124,11 @@ import main.java.reporting.LogTemp;
 		try{
 			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
 			 wait.until(ExpectedConditions.textToBePresentInElement(element, text));
-			 
 			 Log.Pass(text + " " + "is present on page");
+		}
+		catch (TimeoutException e)
+		{
+			Log.Fail("Text" + " " + "'"+text +" "+ " " +  " is Not found on page and timeout happened" + '\n' + e);
 		}
 		catch(Exception e)
 		{

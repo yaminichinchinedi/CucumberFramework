@@ -106,16 +106,15 @@ public  class Log  {
 
 		}
 		
-		public static void failure(String message)
-		{
+    public static void failure(String message)
+	 {
 			testConfig.putRunTimeProperty("AlreadyFailed","yes");
-			String ReportMessage="";
 			//For displaying in console
 			printToScreen(message);
 			PageInfo(testConfig,message);
 			Assert.fail(message);
 					
-		}
+	 }
 		
 		
 		private static void PageInfo(TestBase testConfig,String message) 

@@ -72,7 +72,6 @@ public class UPARegistrationPage{
 		Element.click(lnkHeaderHome,"Header Home");
 		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedURL);
-		//Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderBenefitsOfEPS()

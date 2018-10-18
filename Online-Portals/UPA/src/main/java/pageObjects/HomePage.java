@@ -285,13 +285,10 @@ public class HomePage extends LoginUPA {
 	public HomePage selectTin() 
 	 {
 			int sqlRow=23;
-			
 			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 			Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-			
 			Browser.waitForLoad(testConfig.driver);
 			Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-			Log.Comment("Selected tin number is : " + " " + provDetails.get("PROV_TIN_NBR").toString());
 			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
 			return new HomePage(testConfig);
 	}
@@ -354,7 +351,7 @@ public class HomePage extends LoginUPA {
 	public MyProfile clickMyProfileTab() 
 	{
 		Element.expectedWait(myProfileTab, testConfig, "My Profile tab","My Profile tab");
-		Element.click(myProfileTab, "My Profile Tab");
+		Element.clickByJS(testConfig,myProfileTab, "My Profile Tab");
 		return new MyProfile(testConfig);
 
 	}

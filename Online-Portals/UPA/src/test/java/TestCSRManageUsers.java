@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 //      }
 	
 	
-	@Test(priority=5,description="Super user role verification ..")
+	@Test(priority=2,description="Super user role verification ..")
 	public void testSuperUserAddAndDeleteProvUser() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
@@ -80,7 +80,7 @@ import org.testng.annotations.Test;
 //
 //      }
 	
-	@Test(priority=5,description="Super user role verification")
+	@Test(priority=1,description="Super user role verification")
 	public void testSuperUserAddAndDeleteBillingUser() throws InterruptedException, IOException
 	 {
 		String loginUserType="Super";
@@ -111,7 +111,7 @@ import org.testng.annotations.Test;
 //
 //      }
 	
-	@Test(priority=5,description="Super user role verification")
+	@Test(priority=3,description="Super user role verification")
 	public void testSuperUserAddAndDeletePayerUser() throws InterruptedException, IOException
 	 {
 		String loginUserType="Super";
@@ -127,7 +127,7 @@ import org.testng.annotations.Test;
       }
 
 	
-	@Test(priority=5,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled")
+	@Test(priority=4,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled")
 	public void testDisabledGridForActiveAdmin() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
@@ -157,7 +157,7 @@ import org.testng.annotations.Test;
 		manageUsers.editEmailWithExistingAdress().verifyDisabledItemsForTin(tinNo,disabledValue);
       }
 	
-	@Test(priority=5,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled after modifying the First name of user with both valid and invalid data")
+	@Test(priority=6,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled after modifying the First name of user with both valid and invalid data")
 	public void testDisabledGridOnFirstNameChange() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
@@ -173,7 +173,7 @@ import org.testng.annotations.Test;
 		manageUsers.editFirstName("abc%()").verifyDisabledItemsForTin(tinNo,disabledValue);
       }
 	
-	@Test(priority=5,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled after modifying the Last name of user with both valid and invalid data")
+	@Test(priority=7,description="Verifies if a tin has only one active admin , access level dropdown, email check box & remove tin/npi checkbox is disabled after modifying the Last name of user with both valid and invalid data")
 	public void testDisabledGridOnLastNameChange() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
@@ -190,7 +190,7 @@ import org.testng.annotations.Test;
       }
 	
 	
-	@Test(priority=5,description="Verifies if a tin has more than one active admin , access level dropdown, email check box & remove tin/npi checkbox is enabled")
+	@Test(priority=8,description="Verifies if a tin has more than one active admin , access level dropdown, email check box & remove tin/npi checkbox is enabled")
 	public void testEnabledGridForMoreThanOneActiveAdmin() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";
@@ -205,7 +205,7 @@ import org.testng.annotations.Test;
 		
       }
 	
-	@Test(priority=5,description=" 1. Verifies access level,email and npi/tin checkbox remains disabled for a user who is the only active admin for a tin when gets associated with another new tin" + "<br>" + "2. Verifies if the new tin is removed then also these items access level etc remains disabled for the only active admin tin")
+	@Test(priority=9,description=" 1. Verifies access level,email and npi/tin checkbox remains disabled for a user who is the only active admin for a tin when gets associated with another new tin" + "<br>" + "2. Verifies if the new tin is removed then also these items access level etc remains disabled for the only active admin tin")
 	public void testDisabledGridOnOtherTinGridChange() throws InterruptedException, IOException, AWTException
 	 {
 		String loginUserType="Super";

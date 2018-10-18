@@ -295,18 +295,21 @@ public class AddUserDetails {
 		List<String> tinsListFromUI = new ArrayList<String>();
 
 		HashMap<Integer, HashMap<String, String>> associatedTins = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
 		for (int i = 1; i <= associatedTins.size(); i++) {
 			tinsListFromDB.add(associatedTins.get(i).get("PROV_TIN_NBR"));
 		}
+		
 		tinsListFromUI = Element.getAllOptionsInSelect(testConfig, drpDwnSelectTin);
+		
 		List<String> newListFromUI = new ArrayList<String>();
 		for (String tinNo : tinsListFromUI) {
 			String tin[] = tinNo.split("-");
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
-		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
+		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI);
+		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB);
 		
 		for (String tinNo : tinsListFromDB) {
 			if (newListFromUI.contains(tinNo)) {
@@ -319,6 +322,7 @@ public class AddUserDetails {
 			}
 		}
 	}
+	
 	public void verifyErrorMessages() throws IOException
 	{
 
@@ -400,7 +404,7 @@ public class AddUserDetails {
 		String expString="Confirm Existing User";
 		Element.verifyTextPresent(exitingUserText,expString);
 		
-		//verifyAssociatedTins();
+		verifyAssociatedTins();
 		
 	}
 	

@@ -223,7 +223,7 @@ public class TestBase {
 	private static WebDriver initFirefoxDriver() {
 		
 		LogTemp.Comment("Launching Firefox browser..");
-		System.setProperty("webdriver.gecko.driver","geckodriver.exe");
+		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
 		
 		FirefoxProfile profile = new FirefoxProfile();
 		
