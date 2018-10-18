@@ -335,20 +335,24 @@ public class ManageUsers extends AddUserDetails  {
 
 		try{
 			Browser.wait(testConfig, 3);
-	    Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			List<WebElement> accessLvlDrp=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.expectedWait(accessLvlDrp.get(0), testConfig, "Access level tin dropdown", "Access level tin dropdown");
+	    Element.selectByVisibleText(accessLvlDrp.get(0), "General", "Select General as access level");
 		}
 		
 		catch(Exception e)
 		{
-			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
-			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
-			//Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");
+		
 		}
 	   
 	    
 	    Browser.waitForLoad(testConfig.driver);
 	    clickSave();
 	    Browser.wait(testConfig,3);
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
 	  
 	    //Get access level value from DB to verify it has been changed to General
 	    int sqlRowNo=11;
@@ -359,12 +363,15 @@ public class ManageUsers extends AddUserDetails  {
 	    
 	    
 	    //Changing user to Admin 
-	    accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 	    
 	    //Select Access Level as Administrator
 	    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 	    clickSave();
-	    Browser.wait(testConfig,3);    
+	    Browser.wait(testConfig,3); 
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
+	    
 	    //Get access level value from DB to verify it has been changed to Administrator
 	    portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	    Helper.compareEquals(testConfig, "Access Level", "A", portalUserData.get("ACCESS_LVL").toString());
@@ -462,9 +469,12 @@ public class ManageUsers extends AddUserDetails  {
 		 
 		 Element.click(lnkTinInGrid, "Tin link");
 		 Browser.wait(testConfig, 3);
+		 Log.Comment("After one click " +'\n'+map);
+		 Element.click(lnkTinInGrid, "Tin link");
+		 Browser.wait(testConfig, 3);
 		 map.clear();
 		 map=getTinsListFromUI();
-		 Log.Comment("After one click " +'\n'+map);
+		 Log.Comment("After second click " +'\n'+map);
 		 
 		 treeMap = new TreeMap<String, String>(map).descendingMap();
 		 verifytinsAreSorted(treeMap,map);
@@ -476,7 +486,8 @@ public class ManageUsers extends AddUserDetails  {
 	 */
 	public Map<String,String> getTinsListFromUI()
 	{
-		   List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		   List<WebElement> tinGridRows =Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+				  
 		   ArrayList<String> tinList= new ArrayList<String>();
 		   Map<String,String> map = new LinkedHashMap<String,String>();
 		   for(int i=1;i<tinGridRows.size();i++)
@@ -504,10 +515,10 @@ public class ManageUsers extends AddUserDetails  {
 	{
     if(!treeMap.toString().equals(map.toString()))
     {
-    	Log.Fail("Ascending Sorted order for Tin", treeMap.toString(), map.toString());
+    	Log.Fail("Sorted order for Tin", treeMap.toString(), map.toString());
     }
     else
-    	Log.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
+    	Log.Pass("Sorted order for Tin", treeMap.toString(), map.toString());	
 	}
 
 	
