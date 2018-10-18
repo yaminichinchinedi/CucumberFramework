@@ -2022,11 +2022,12 @@ return previousDate.getTime();
 	}
 
 	public static void compareEquals(TestBase testConfig, String what,ArrayList<String> expected, ArrayList<String> actual) 
-	{
+	{ 
+		separateListValues(expected,";");
 		if(expected.equals(actual))
-			Log.Pass("Passed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
+			Log.Pass("Passed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + separateListValues(expected,";") + '\n' + "Actual is :" +" " +separateListValues(actual,";") );
 		else 
-			Log.Fail("Failed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
+			Log.Fail("Failed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + separateListValues(expected,";") + '\n' + "Actual is :" +" " +separateListValues(actual,";"));
 	}
 
 	public static void compareEquals(TestBase testConfig, String what,Map<String, String> expected, Map<String, String> actual) {
@@ -2043,8 +2044,15 @@ return previousDate.getTime();
 			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 			else 
 				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
-			}
+	}
 
+	public static String separateListValues(List<String> list,String separator)
+	{
+		StringBuilder listOfString=new StringBuilder();
+		for(String string:list)
+			listOfString.append(StringUtils.join(string,"; "));
+		return listOfString.toString();
+	}
 	
 	}
 

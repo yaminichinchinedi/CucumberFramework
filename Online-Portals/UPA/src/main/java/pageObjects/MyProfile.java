@@ -216,12 +216,11 @@ public class MyProfile {
 		
 		//Enter invalid chars and click Save
 		Log.Comment("Scenario : Enter invalid chars in first,last,phone,extension field");
+		
 		fillInvalidUserDetails();
 		Element.click(btnSave, "Save button");
 		
-
 	    //Verify error messages when mandatory fields are invalid
-	  
 		if(userType.equals("PAY"))
 		{
 			Element.waitTillTextAppears(errorFname, "First Name: Invalid Data",testConfig);
