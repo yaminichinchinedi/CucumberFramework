@@ -402,10 +402,7 @@ public class AddUserDetails {
 		selectTinAccessLvl(accessLevel);
 		Element.click(btnSave, "Save button");
 		String expString="Confirm Existing User";
-		Element.verifyTextPresent(exitingUserText,expString);
-		
-		verifyAssociatedTins();
-		
+		Element.verifyTextPresent(exitingUserText,expString);	
 	}
 	
 	

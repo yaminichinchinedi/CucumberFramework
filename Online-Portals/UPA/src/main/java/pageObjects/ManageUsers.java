@@ -112,13 +112,8 @@ public class ManageUsers extends AddUserDetails  {
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		try{
-			Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
-//		}
-//			catch(Exception e)
-//		{
-//				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
-//		}
+		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
+
 	}
 	
 	public AddUserDetails clickAddNewUser()
@@ -130,6 +125,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ManageUsers clickSave()
 	{
+		btnSave=Element.findElement(testConfig, "xpath", "//input[contains(@value,'Save')]");
 		Element.clickByJS(testConfig,btnSave, "Save Button");
 		return new ManageUsers(testConfig);
 	}
