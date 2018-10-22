@@ -118,7 +118,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public AddUserDetails clickAddNewUser()
 	{
-		Element.clickByJS(testConfig,btnAddUser, "Add User");
+		Element.click(btnAddUser, "Add User");
 		return new AddUserDetails(testConfig);
 	}
 
@@ -126,7 +126,7 @@ public class ManageUsers extends AddUserDetails  {
 	public ManageUsers clickSave()
 	{
 		btnSave=Element.findElement(testConfig, "xpath", "//input[contains(@value,'Save')]");
-		Element.clickByJS(testConfig,btnSave, "Save Button");
+		Element.click(btnSave, "Save Button");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -138,8 +138,8 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ManageUsers clickCSRDelete()
 	{
-		Element.clickByJS(testConfig,btnDelete, "Delete Button");
-		Element.clickByJS(testConfig,btnYes, "Yes button");
+		Element.click(btnDelete, "Delete Button");
+		Element.click(btnYes, "Yes button");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -299,7 +299,7 @@ public class ManageUsers extends AddUserDetails  {
 		{ 
 		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
 		   {
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
+				      Element.click(userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }
