@@ -210,7 +210,7 @@ public class AddUserDetails {
 	public ManageUsers clickSave()
 	{
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		Element.clickByJS(testConfig,btnSave, "Save");
+		Element.click(btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}
