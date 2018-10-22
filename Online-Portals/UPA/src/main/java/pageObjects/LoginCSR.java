@@ -153,7 +153,7 @@ public class LoginCSR {
        Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, userType));
 		
 	   fillCredsAndSignIn(details.get("id"), details.get("password"));
-	   Element.clickByJS(testConfig,btnLogin,"click Login button");
+	   Element.click(btnLogin,"click Login button");
 	   return new CSRHomePage(testConfig);
 	}
 	

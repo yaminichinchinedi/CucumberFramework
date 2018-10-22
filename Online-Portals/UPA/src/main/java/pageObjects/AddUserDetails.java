@@ -194,7 +194,7 @@ public class AddUserDetails {
 	
 	public AddUserDetails clickAddTin()
 	{
-		Element.clickByJS(testConfig,btnAddTin_NPI, "Add Tin/NPI");
+		Element.click(btnAddTin_NPI, "Add Tin/NPI");
 		return this;
 	}
 	
@@ -225,7 +225,7 @@ public class AddUserDetails {
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +firstNameTxt);
+				      Element.click(userName, "UserName: "+ " " +firstNameTxt);
 				      Browser.wait(testConfig, 2);
 				      break;
 					}
