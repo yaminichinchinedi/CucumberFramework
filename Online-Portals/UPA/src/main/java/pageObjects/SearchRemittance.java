@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -23,10 +24,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.xml.sax.SAXException;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
+import main.java.api.pojo.*;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -103,47 +106,111 @@ public class SearchRemittance extends TestBase {
 	
 	
 	
-	public void verifySearchResults() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void verifySearchResults(String requestType) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
 		System.out.println("Inside Verify Search Results");
 		//Verifies Record count displayed on UI is same as we get from FISL		
-		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
+		if(!getRecordCountFromFISL(requestType).equalsIgnoreCase("0"))
 		 {
-			System.out.println("Inside IF");
 			
-			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(),getRecordCountFromUI());
+			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(requestType),getRecordCountFromUI());
+			
 			//Helper.compareMaps(testConfig, "Payments Details Comparison from FISL and UI : " + "<br>",getPaymentDetailsFromFISL(), getPaymentDetailsFromUI());			  
 		 }
 		else
-		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
-//		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
+		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(requestType),getRecordCountFromDB(requestType));
      }
 	
-	public String getRecordCountFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public String getRecordCountFromFISL(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		EpsPaymentsSummarySearchResponse responseFromFISL=(EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsPaymentsSummarySearchResponse responseFromFISL=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		return responseFromFISL.getResponseReturnStatus().getTotalCount().trim(); 
 	}
 	
-	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	/*public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-		/**Creates POJO for Request.xml so that we can modify the elements*/
+		*//**Creates POJO for Request.xml so that we can modify the elements*//*
 		
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
-		/**Posting the modified request and getting response*/
+		*//**Posting the modified request and getting response*//*
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
 		return searchResponse;
-	}
+	}*/
 	
-	public Object createRequest() throws JAXBException
+/*	public Object createRequest() throws JAXBException
 	{
 	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 	   return epsPaymentsSearchRequest;
+	}
+*/	
+	public Object createRequest(String requestType) throws JAXBException
+	{
+	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(requestType);
+	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
+	   return epsPaymentsSearchRequest;
+	}
+
+	public EpsPaymentsSearchRequest setServiceData(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		System.out.println(testConfig.getRunTimeProperty("appIdentifier"));
+		System.out.println(testConfig.getRunTimeProperty("version"));
+//		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier(testConfig.getRunTimeProperty("appIdentifier"));
+//		((EpsPaymentsSearchRequest) object).getServiceData().setVersion(testConfig.getRunTimeProperty("version"));
+		
+		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
+		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
+		
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
+	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+	EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(requestType); //need to pass type of Request here
+	/**Creates POJO for Request.xml so that we can modify the elements*/
+
+	EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest(requestType);
+	epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
+	if(requestType=="byDateOfService") {
+		setToAndFromDateDOS(epsPaymentsSearchRequest);
+	}else {
+		setToAndFromDate(epsPaymentsSearchRequest);
+	}
+	setMapEntryKey(epsPaymentsSearchRequest);
+	setServiceData(epsPaymentsSearchRequest);
+
+	/**Posting the modified request and getting response*/
+	EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
+	return searchResponse;
+	}
+	
+	public EpsPaymentsSearchRequest setToAndFromDate(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		System.out.println("From date is" + testConfig.getRunTimeProperty("fromDate"));
+		
+		System.out.println("To date is" + testConfig.getRunTimeProperty("toDate"));
+		
+		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
+		
+		
+		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
+	public EpsPaymentsSearchRequest setToAndFromDateDOS(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		System.out.println(testConfig.getRunTimeProperty("fromDate"));
+		System.out.println(testConfig.getRunTimeProperty("toDate"));
+		
+		((EpsPaymentsSearchRequest) object).getClaimServiceDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
+		((EpsPaymentsSearchRequest) object).getClaimServiceDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
+		
+		return (EpsPaymentsSearchRequest) object;
 	}
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
@@ -153,14 +220,7 @@ public class SearchRemittance extends TestBase {
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
-	public EpsPaymentsSearchRequest setToAndFromDate(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
-	{
-		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
-		System.out.println(testConfig.getRunTimeProperty("toDate"));
-		System.out.println(testConfig.getRunTimeProperty("fromDate"));
-		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
-		return (EpsPaymentsSearchRequest) object;
-	}
+	
 	
 	
 	public EpsPaymentsSearchRequest setTaxIdentifierType(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
@@ -173,8 +233,15 @@ public class SearchRemittance extends TestBase {
 	{
 		System.out.println(testConfig.getRunTimeProperty("key"));
 		System.out.println(testConfig.getRunTimeProperty("value"));
+		System.out.println(testConfig.getRunTimeProperty("key1"));
+		System.out.println(testConfig.getRunTimeProperty("value1"));
+		
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setKey(testConfig.getRunTimeProperty("key1"));
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setValue(testConfig.getRunTimeProperty("value1"));
+		
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
@@ -194,6 +261,32 @@ public class SearchRemittance extends TestBase {
 	    
 	}
 	
+	public String getRecordCountFromDB(String requestType)
+	{
+		//int sqlRowNo=4;
+		int totalRecord=0;
+		List<String> schemas=Arrays.asList("PP001");
+		int sqlRowNo=34;
+		
+		switch (requestType) {
+		case "byDateOfService":
+			sqlRowNo=48;
+			break;
+		default:
+			sqlRowNo=34;
+			break;
+		}
+		
+		for(String schema:schemas)
+		{
+			testConfig.putRunTimeProperty("schema", schema);
+			Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			totalRecord=totalRecord+Integer.parseInt(srchConsolTable.get("RECORD_COUNT").toString().trim());
+		}
+		
+		return String.valueOf(totalRecord);	
+	}
+	
 	//amit
 	public int getColumnNo(String colName)
 	{
@@ -201,8 +294,8 @@ public class SearchRemittance extends TestBase {
 		int colSize=divSearchResults.get(0).findElements(By.tagName("td")).size();
 		for(int i=0;i<colSize;i++)
 		{
-			String test=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
-			if(test.equals(colName))
+			String actualColName=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
+			if(actualColName.contains(colName))
 			{
 				colNumber=i;
 				break;
@@ -404,44 +497,65 @@ public class SearchRemittance extends TestBase {
 		
 		}
 	}
-	public void verifyStatusFromUI(int rowNo,int colNoOfTypeColumn,int colNoOfStatusColumn)
+	
+	public void verifyPaymentStatus(String type)
 	{
-		String typeCode=divSearchResults.get(rowNo).findElements(By.tagName("td")).get(colNoOfTypeColumn).getText().toString();
-		String statusCode=divSearchResults.get(rowNo).findElements(By.tagName("td")).get(colNoOfStatusColumn).getText().toString();
-		System.out.println("Type code from UI is: "+typeCode);
-		System.out.println("Status code from UI is: "+statusCode);
+		String expectedStatus=getStatus(type);
+		int rowNo=1,ACHflag=0,CHKflag=0,NONflag=0;
+		if(divSearchResults.size()!=0){
+			for(rowNo=2;rowNo<divSearchResults.size();rowNo++)
+			 {
+			   if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(10).getText().toString().equals("ACH") && ACHflag==0)
+				 {
+				   Helper.compareContains(testConfig, "Verify Status Code", "Successful ACH", divSearchResults.get(rowNo).findElements(By.tagName("td")).get(11).getText());
+				   ACHflag=1;
+				 }	
+			   else if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(10).getText().toString().equals("CHK") && CHKflag==0)
+			   {
+				   Helper.compareContains(testConfig, "Verify Status Code", "Successful CHK", divSearchResults.get(rowNo).findElements(By.tagName("td")).get(11).getText());
+				   CHKflag=1;
+			   }
+			   else if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(10).getText().toString().equals("NON") && NONflag==0)
+			   {
+				   Helper.compareContains(testConfig, "Verify Status Code", "N/A", divSearchResults.get(rowNo).findElements(By.tagName("td")).get(11).getText());
+				   NONflag=1;
+			   }
+	          }
+		}
+		else	
+		{
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+		   if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(6).getText().equals(type))
+			   Helper.compareContains(testConfig, "Verify Status Code", expectedStatus, divSearchResults.get(rowNo).findElements(By.tagName("td")).get(13).getText());	
+        }		
+		 
+	  }
+
+	
+	
+	public String getStatus(String typeCode)
+	{
 		switch(typeCode)
 		{
 			case "ACH":
-				Helper.compareContains(testConfig, "Verify Status Code", "Successful ACH", statusCode);
-				break;
+				return "Successful ACH";			
 			case "CHK":
-				Helper.compareContains(testConfig, "Verify Status Code", "Successful CHK", statusCode);
-				break;
+				return "Successful CHK";				
 			case "VCP":
-				Helper.compareContains(testConfig, "Verify Status Code", testConfig.getRunTimeProperty("typeDescription"), statusCode);
-				break;
+				if(testConfig.getRunTimeProperty("paymentMethCode").equals("NON") && testConfig.getRunTimeProperty("paymentStatusTypeID")!=null)
+					return "N/A";
+				else 
+					return  testConfig.getRunTimeProperty("typeDescription");
 			case "NON":
-				Helper.compareContains(testConfig, "Verify Status Code", "N/A", statusCode);
-				break;
+			case "DD":
+				return "N/A";
 			default:
-				Log.Comment("Invalid Payment Type");
+				Log.Comment("Invalid Payment Type");			
+				return "Unidentified typeCode";
 		}
 	}
-	public void verifyTypePmtStatus(String type,String status, String criteriaType)
-	{
-
-		divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr"); //.//*[@id='searchRemittanceResultsForm']//tr[7]//tr[2]/td[13]/span
-		int noOfRows=divSearchResults.size();
-		System.out.println("No of rows are: "+noOfRows);
-		int colNoOfTypeColumn=getColumnNo(type);
-		int colNoOfStatusColumn=getColumnNo(status);		
-		if(criteriaType.equals("byElectronicPaymentforStatus"))
-			verifyStatusFromUI(1, colNoOfTypeColumn, colNoOfStatusColumn);
-		else	
-			for(int i=2;i<noOfRows;i++)
-				verifyStatusFromUI(i, colNoOfTypeColumn, colNoOfStatusColumn);
-	}
+	
+	
 	public void verifyreturnedReasonDisplayed(String criteriaType,String portalName)
 	{
 		switch(portalName)

@@ -4,37 +4,11 @@ package main.java.api.pojo.epspaymentsearch.request;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
-/**
- * The set of attributes used to debug the service
- * 			
- * 
- * <p>Java class for ServiceData complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
- * <pre>
- * &lt;complexType name="ServiceData">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="ApplicationIdentifier" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="Version" minOccurs="0">
- *           &lt;simpleType>
- *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *             &lt;/restriction>
- *           &lt;/simpleType>
- *         &lt;/element>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
- * </pre>
- * 
- * 
- */
+@XmlRootElement(name="ServiceData",namespace="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ServiceData", propOrder = {
     "applicationIdentifier",
@@ -42,12 +16,13 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class ServiceData {
 
-    @XmlElement(name = "ApplicationIdentifier", required = true)
+    @XmlElement(name = "ApplicationIdentifier",namespace="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0", required = true)
     protected String applicationIdentifier;
-    
-    @XmlElement(name = "Version")
+   
+    @XmlElement(name = "Version",namespace="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0",required = true)
     protected String version;
 
+    
     /**
      * Gets the value of the applicationIdentifier property.
      * 

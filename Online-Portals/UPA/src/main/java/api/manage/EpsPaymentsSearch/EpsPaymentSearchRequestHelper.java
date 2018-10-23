@@ -26,11 +26,25 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 	
 	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";
 			
-	static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
+	//static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
 	
-	public EpsPaymentSearchRequestHelper()
+	String xmlFilePath; 
+	
+	public EpsPaymentSearchRequestHelper(String requestType)
 	{
 		super(connectionUrl);
+		switch (requestType) {
+        case "byDateOfPayment":
+               xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
+               break;
+        case "byDateOfService":
+               xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\RequestSearchRemitDOS.xml";
+               break;
+        default:
+               System.out.println("No Request exists for given input");
+               break;
+        }
+
 	}
 	
 	@Override

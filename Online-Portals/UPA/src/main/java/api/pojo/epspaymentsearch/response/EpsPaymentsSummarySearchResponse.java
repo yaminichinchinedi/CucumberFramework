@@ -13,8 +13,7 @@ public class EpsPaymentsSummarySearchResponse
 	
     ResponseReturnStatus ResponseReturnStatus;
     ResponseReturnCode ResponseReturnCode;
-    private EpsConsolidatedClaimPaymentSummaries[] EpsConsolidatedClaimPaymentSummaries;
-    
+    private EpsConsolidatedClaimPaymentSummaries[] EpsConsolidatedClaimPaymentSummaries;    
  
     public ResponseReturnStatus getResponseReturnStatus ()
 	 {

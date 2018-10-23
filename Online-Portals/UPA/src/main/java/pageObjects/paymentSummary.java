@@ -875,7 +875,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
+		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper("byDateOfService");
 		/**Creates POJO for Request.xml so that we can modify the elements*/
 		
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
@@ -890,7 +890,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 
 	public Object createRequest() throws JAXBException
 	{
-	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
+	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper("byDateOfService");
 	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 	   return epsPaymentsSearchRequest;
 	}
@@ -920,6 +920,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setKey(testConfig.getRunTimeProperty("PatientLName"));
+		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setValue(testConfig.getRunTimeProperty("value"));
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
