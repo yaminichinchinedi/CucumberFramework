@@ -1,5 +1,6 @@
 package main.java.nativeFunctions;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -73,6 +75,7 @@ import main.java.reporting.LogTemp;
 		try{
 			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
 			 wait.until(ExpectedConditions.visibilityOf(element));
+			 
 			 Log.Pass(namOfElement + " " + "is present on page");
 		}
 		catch(NoSuchElementException e)
@@ -103,6 +106,36 @@ import main.java.reporting.LogTemp;
 		}
 	}
 	
+	public static void waitTillURlLoads(TestBase testConfig,String url)
+	{
+		try{
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.urlToBe(url));
+			 Log.Pass(url + " " + "is loaded");
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured" + e);
+		}
+	}
+	
+	
+	public static void waitTillTextAppears(WebElement element,String text,TestBase testConfig)
+	{
+		try{
+			 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+			 wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+			 Log.Pass(text + " " + "is present on page");
+		}
+		catch (TimeoutException e)
+		{
+			Log.Fail("Text" + " " + "'"+text +" "+ " " +  " is Not found on page and timeout happened" + '\n' + e);
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while waiting for the text"+ "'" + text + "'" + " to be present " + e);
+		}
+	}
 	
 	/**
 	 * Waits till an element becomes interactive to be clicked
@@ -167,12 +200,36 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
-		      Browser.wait(testConfig,2);
-		  Log.Pass("Clicked " + namOfElement);
+     Browser.waitForLoad(testConfig.driver);
+		      Log.Pass("Clicked " + namOfElement);
 		 }
+		
+		catch(JavascriptException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
+		catch(NoSuchElementException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
+		catch(ElementNotVisibleException e)
+		{
+			Log.Fail("Element" + namOfElement+" is not visible at first go and exception is: " + '\n' + e);
+		}
+		
+		catch(NullPointerException e)
+		{
+			
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
 		catch(Exception e)
 		{
-			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
+			Log.Comment("Unable to click " + namOfElement);
+			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
+
 		}
 	}
 	
@@ -184,6 +241,22 @@ import main.java.reporting.LogTemp;
         builder.clickAndHold().moveToElement(element);					
         builder.moveToElement(element).build().perform(); 
 		Log.Comment("Mouse Hovered over " + namOfElement);
+	}
+	
+	public static void mouseHoverByJS(TestBase testConfig,WebElement element,String namOfElement)
+	{
+		String mouseOverScript = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+		try{
+			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
+		     js.executeScript(mouseOverScript,element);
+		     Log.Pass("Mouse hovered over " + namOfElement);
+		}
+		catch(Exception e)
+		{
+			Log.Fail("Exception occured while hovering over " + namOfElement + '\n'+ e);
+		}
+			
+		
 	}
 	
 	
@@ -547,6 +620,13 @@ import main.java.reporting.LogTemp;
 		}
 		return null;
 	}
+	
+	public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
+	{
+	   JavascriptExecutor executor = (JavascriptExecutor)testConfig.driver;
+	   Map attributes=(Map) executor.executeScript("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;", element);
+	   return attributes;   
+    }
 	
 	
 	public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)

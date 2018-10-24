@@ -501,7 +501,7 @@ public class Browser
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
-			Browser.waitForLoad(testConfig.driver);
+//			Browser.waitForLoad(testConfig.driver);
 			Browser.verifyURL(testConfig, expectedURLHelp);
 			return oldWindow;
 		}
@@ -578,7 +578,7 @@ public class Browser
 		if (testConfig.driver != null)
 		{
 			Log.Comment("Switching to the given window handle:- " + windowHandle);
-			System.out.println("No.of window handles are :" + testConfig.driver.getWindowHandles().size());
+
 			if(getNoOfWindowHandles(testConfig)>1)
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);
