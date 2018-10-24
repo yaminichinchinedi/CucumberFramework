@@ -122,6 +122,9 @@ public String getTinForPaymentType(String paymentType)
  		 case "DD":
  			 sqlRowNo=54;
  			 break;
+ 		 case "ReoriginatedACH":
+ 			 sqlRowNo=56;
+ 			 break;
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		

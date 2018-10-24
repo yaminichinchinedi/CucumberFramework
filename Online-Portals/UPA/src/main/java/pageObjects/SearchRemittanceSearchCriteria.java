@@ -195,7 +195,11 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
-		    	
+		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", sbscrId);
+		    	date=Helper.changeDateFormat(date,"mm/dd/yyyy" , "yyyy-mm-dd");
+		    	testConfig.putRunTimeProperty("fromDate",date );
+		    	testConfig.putRunTimeProperty("toDate", date);
 		    	break;
 		    }
 		    
@@ -244,16 +248,18 @@ public class SearchRemittanceSearchCriteria {
 		    {
 		    	int sqlRow = 46;
 		    	String date = null;
+		    	date="10/03/2018";
 		    	String fstNm, lstNm;
-		    	Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	fstNm=srchData.get("PTNT_FST_NM").toString();
-		    	lstNm=srchData.get("PTNT_LST_NM").toString();
-		    	try {
-					date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	//Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	fstNm="STAR";//srchData.get("PTNT_FST_NM").toString();
+		    	lstNm="BUTRON";//srchData.get("PTNT_LST_NM").toString();
+		    	/*try {
+					//date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					date="10/03/2018";
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
+				}*/
 		    	Element.enterData(patientFirstName, fstNm, "Filling First Name: "+fstNm, "First Name");
 		    	Element.enterData(patientLastName, lstNm, "Filling Last Name: "+lstNm, "Last Name");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
@@ -286,6 +292,15 @@ public class SearchRemittanceSearchCriteria {
 		return clickSearchBtn();
 	}
 	
+	public SearchRemittance searchByElectronicPaymentToVerifyPaymentStatusforACH(String criteriaType)
+	{
+		data=dataProvider(criteriaType);
+    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+    	Element.enterData(paymentNumber, data.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		return clickSearchBtn();
+	}
 	
 	public SearchRemittance searchByElectronicPaymentToVerifyPaymentStatusforVCP(String criteriaType)
 	{
@@ -319,6 +334,15 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
     	testConfig.putRunTimeProperty("returnedReason",data.get("RET_REASON_CD").toString());
 		return clickSearchBtn();
+	}
+	
+	public SearchRemittanceSearchCriteria getPaymentStatusFromDB(String criteriaType)
+	{
+		data=dataProvider(criteriaType);
+		testConfig.putRunTimeProperty("typeDescription",data.get("TYP_DESC").toString());
+		testConfig.putRunTimeProperty("paymentMethCode",data.get("PAY_METH_CD").toString());
+    	testConfig.putRunTimeProperty("paymentStatusTypeID",data.get("PAY_STS_TYP_ID").toString());
+		return this;
 	}
 	
 	public SearchRemittance searchByCheckNumberToVerifyReturnedReason(String criteriaType)
@@ -359,6 +383,9 @@ public class SearchRemittanceSearchCriteria {
 			case "DD":
 				sqlRowNo=55;
 				break;
+			case "ReoriginatedACH":
+			sqlRowNo=57;
+			break;
 		}
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);		
 		return data;

@@ -201,14 +201,23 @@ public class TestCSRSearchRemittance extends TestBase {
 			String requestType="byDateOfPayment";
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
-			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);;		
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
 			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);//append a function to verify correct claim information
-			
-			//verifyPatientDataFromFISL
+			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
 	     }
 		
-		@Test(priority=5,description="TS026_Type And Payment Status")
+		@Test(priority=5,description="TS025_Search by Subscriber ID_Tricare Payer Messages")
+		public void testSearchBySubscriberIDTricarePayer() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String criteriaType="byDateOfPaymentAndSubscriberId"; 	
+			String requestType="byDateOfPayment";
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);;		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
+	     }
+		/*@Test(priority=5,description="TS026_Type And Payment Status")
 		public void testTypeAndPaymentStatus() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
 			String criteriaType="byDateOfPayment";
@@ -218,10 +227,34 @@ public class TestCSRSearchRemittance extends TestBase {
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
 			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 			srchCriteriaPage.doSearch(criteriaType).verifyPaymentStatus("ACH");
+	     }*/
+		
+		@Test(priority=5,description="TS026_Type And Payment Status")
+		public void testTypeAndPaymentStatusByElectronicPaymentForACH() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String tinType="ReoriginatedACH"; 		
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			testConfig.putRunTimeProperty("type","ACH");
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	     }
+		
+		@Test(priority=5,description="TS026_Type And Payment Status") //no data coming
+		public void testTypeAndPaymentStatusByElectronicPaymentForCHK() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String tinType="ReoriginatedACH"; 		
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			testConfig.putRunTimeProperty("type","CHK");
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("CHK");
 	     }
 		
 		@Test(priority=5,description="TS026_Type And Payment Status")
-		public void testTypeAndPaymentStatusByElectronicPayment() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		public void testTypeAndPaymentStatusByElectronicPaymentForVCP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
 			String criteriaType="byElectronicPaymentforStatus";
 			String tinType="byElectronicPaymentforStatus";
@@ -258,6 +291,47 @@ public class TestCSRSearchRemittance extends TestBase {
 			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 			srchCriteriaPage.searchByElectronicPaymentToVerifyPaymentStatusforDD(criteriaType).verifyPaymentStatus("DD");
 	     }
+		
+		@Test(priority=5,description="TS026_Type And Payment Status")
+		public void testTypeAndPaymentStatusForACH() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String criteriaType="byDateOfPayment";
+			String tinType="ReoriginatedACH";
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			testConfig.putRunTimeProperty("type","ACH");
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.doSearch(criteriaType).verifyPaymentStatus("ACH");
+	     }
+		
+		@Test(priority=5,description="TS026_Type And Payment Status")
+		public void testTypeAndPaymentStatusForVCP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String criteriaType="byDateOfPayment";
+			String tinType="byElectronicPaymentforStatus";
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			testConfig.putRunTimeProperty("type","VCP");
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.getPaymentStatusFromDB(tinType).doSearch(criteriaType).verifyPaymentStatus("VCP");
+	     }
+		
+		@Test(priority=5,description="TS026_Type And Payment Status")
+		public void testTypeAndPaymentStatusForNON() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String criteriaType="byDateOfPayment";
+			String tinType="byElectronicPaymentforStatus";
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			testConfig.putRunTimeProperty("type","NON");
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);		
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.getPaymentStatusFromDB(tinType).doSearch(criteriaType).verifyPaymentStatus("NON");
+	     }
+		
+		
 		
 		@Test(priority=5,description="TS027_Returned Reason")
 		public void testReturnedReasonByElectronicNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException

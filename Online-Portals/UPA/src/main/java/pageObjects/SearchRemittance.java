@@ -501,7 +501,7 @@ public class SearchRemittance extends TestBase {
 	public void verifyPaymentStatus(String type)
 	{
 		String expectedStatus=getStatus(type);
-		int rowNo=1,ACHflag=0,CHKflag=0,NONflag=0;
+		int rowNo=1,ACHflag=0,CHKflag=0,NONflag=0,VCPflag=0;
 		if(divSearchResults.size()!=0){
 			for(rowNo=2;rowNo<divSearchResults.size();rowNo++)
 			 {
@@ -518,6 +518,11 @@ public class SearchRemittance extends TestBase {
 			   else if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(10).getText().toString().equals("NON") && NONflag==0)
 			   {
 				   Helper.compareContains(testConfig, "Verify Status Code", "N/A", divSearchResults.get(rowNo).findElements(By.tagName("td")).get(11).getText());
+				   NONflag=1;
+			   }
+			   else if(divSearchResults.get(rowNo).findElements(By.tagName("td")).get(10).getText().toString().equals("VCP") && NONflag==0)
+			   {
+				   Helper.compareContains(testConfig, "Verify Status Code", expectedStatus, divSearchResults.get(rowNo).findElements(By.tagName("td")).get(11).getText());
 				   NONflag=1;
 			   }
 	          }
