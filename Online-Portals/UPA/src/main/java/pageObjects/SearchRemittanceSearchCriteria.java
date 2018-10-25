@@ -140,7 +140,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
-		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
+		    	clickFromDateIcon(criteriaType).setDate("07/03/2017", criteriaType).clickToDateIcon(criteriaType).setDate("07/31/2017", criteriaType);
 		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;		    	
 		    }
@@ -248,18 +248,16 @@ public class SearchRemittanceSearchCriteria {
 		    {
 		    	int sqlRow = 46;
 		    	String date = null;
-		    	date="10/03/2018";
 		    	String fstNm, lstNm;
-		    	//Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	fstNm="STAR";//srchData.get("PTNT_FST_NM").toString();
-		    	lstNm="BUTRON";//srchData.get("PTNT_LST_NM").toString();
-		    	/*try {
-					//date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-					date="10/03/2018";
+		    	Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	fstNm=srchData.get("PTNT_FST_NM").toString();
+		    	lstNm=srchData.get("PTNT_LST_NM").toString();
+		    	try {
+					date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");					
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}*/
+				}
 		    	Element.enterData(patientFirstName, fstNm, "Filling First Name: "+fstNm, "First Name");
 		    	Element.enterData(patientLastName, lstNm, "Filling Last Name: "+lstNm, "Last Name");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
@@ -271,6 +269,8 @@ public class SearchRemittanceSearchCriteria {
 		    	date=Helper.changeDateFormat(date,"mm/dd/yyyy" , "yyyy-mm-dd");
 		    	testConfig.putRunTimeProperty("fromDate",date );
 		    	testConfig.putRunTimeProperty("toDate", date);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;		    	
 		    }
 		    
@@ -479,7 +479,8 @@ public class SearchRemittanceSearchCriteria {
 
 		switch(criteriaType) {
 		case "byDateOfService":
-	    {	    	
+	    {	  
+	    	Element.expectedWait(dopTo, testConfig, "Calendar Present", "calendar");
 	    	Element.clickByJS(testConfig,dosTo, "To date calendar");
 			Browser.wait(testConfig, 2);
 	    	break;		    	

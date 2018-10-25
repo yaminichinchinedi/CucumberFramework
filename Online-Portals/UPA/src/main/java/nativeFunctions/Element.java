@@ -200,7 +200,7 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
-     Browser.waitForLoad(testConfig.driver);
+//              Browser.waitForLoad(testConfig.driver);
 		      Log.Pass("Clicked " + namOfElement);
 		 }
 		
@@ -629,12 +629,12 @@ import main.java.reporting.LogTemp;
     }
 	
 	
-	public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
+	/*public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
     {
        JavascriptExecutor executor = (JavascriptExecutor)testConfig.driver;
        Map attributes=(Map) executor.executeScript("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;", element);
        return attributes;   
- }
+ }*/
 
 
 }

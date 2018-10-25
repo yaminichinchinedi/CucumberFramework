@@ -160,11 +160,11 @@ public class SearchRemittance extends TestBase {
 	{
 		System.out.println(testConfig.getRunTimeProperty("appIdentifier"));
 		System.out.println(testConfig.getRunTimeProperty("version"));
-//		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier(testConfig.getRunTimeProperty("appIdentifier"));
-//		((EpsPaymentsSearchRequest) object).getServiceData().setVersion(testConfig.getRunTimeProperty("version"));
+		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier(testConfig.getRunTimeProperty("appIdentifier"));
+		((EpsPaymentsSearchRequest) object).getServiceData().setVersion(testConfig.getRunTimeProperty("version"));
 		
-		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
-		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
+//		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
+//		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
 		
 		return (EpsPaymentsSearchRequest) object;
 	}

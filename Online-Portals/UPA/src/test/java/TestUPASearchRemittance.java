@@ -1,5 +1,6 @@
 package test.java;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -7,9 +8,13 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.HomePage;
+import main.java.pageObjects.LoginCSR;
 import main.java.pageObjects.OptumIdLoginPage;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchRemittanceSearchCriteria;
+import main.java.pageObjects.SearchTinPageSearchRemittance;
 import main.java.pageObjects.UPARegistrationPage;
 import main.java.pageObjects.paymentSummary;
 
@@ -28,7 +33,29 @@ public class TestUPASearchRemittance extends TestBase{
 		    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		    home.selectTin().clickSearchRemittanceTab().verifyErrorMsgs();
 	   }
-		
+	   
+	   @Test(priority=5,description="TS024_Search by Patient Name_Tricare Payer Messages")
+	   public void testSearchByPatientNameTricarePayer() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	   {
+			String criteriaType="byDateOfPaymentAndPtntNm"; 	
+			String requestType="byDateOfPayment";
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	   }
+	   
+	   @Test(priority=5,description="TS025_Search by Subscriber ID_Tricare Payer Messages")
+	   public void testSearchBySubscriberIDTricarePayer() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	   {
+			String criteriaType="byDateOfPaymentAndSubscriberId"; 	
+			String requestType="byDateOfPayment";
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	   }
+	   
 	   @Test(priority=5,description="TS027_Returned Reason")
 		void testByReturnedReason() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	    {
@@ -38,6 +65,16 @@ public class TestUPASearchRemittance extends TestBase{
 		    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyreturnedReasonDisplayed(criteriaType,"UPA");
 	    }
+	   
+	   @Test(priority=5,description="TS026_Type And Payment Status")
+		public void testTypeAndPaymentStatusByElectronicPaymentForACH() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		 {
+			String tinType="ReoriginatedACH"; 		
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		    home.selectTin().clickSearchRemittanceTab().searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	     }
 	   
 		@Test(priority=5,description="TS036_Sorting on Payer Name")
 		void testSortByPayerName() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   

@@ -6,25 +6,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -35,10 +28,8 @@ import org.testng.asserts.SoftAssert;
 import com.relevantcodes.extentreports.LogStatus;
 
 import main.java.Utils.CopyDir;
-import main.java.Utils.DataBase;
-import main.java.Utils.DataBase.DatabaseType;
-
 import main.java.Utils.Helper;
+import main.java.Utils.SendMail;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
 import main.java.reporting.LogTemp;
@@ -57,7 +48,6 @@ public class TestBase {
 	protected  TestBase testConfig;
 	public static String ResultsDir;
 	public Method testMethod;
-	private static HashMap<String,HashMap<String, String>> loginCredentials;
 	
 	
 	
@@ -87,7 +77,7 @@ public class TestBase {
 			e.printStackTrace();
 		}
 		runtimeProperties = new Properties();
-		
+
 		// load properties file
 		try {
 			runtimeProperties.load(fileInput);
@@ -197,8 +187,6 @@ public class TestBase {
             //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
             System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
 		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-//            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
-//		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
@@ -221,40 +209,19 @@ public class TestBase {
 	}
 
 	private static WebDriver initFirefoxDriver() {
-		
 		LogTemp.Comment("Launching Firefox browser..");
 		System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
-		
-		FirefoxProfile profile = new FirefoxProfile();
-		
-		profile.setPreference("browser.download.dir", "C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads");
-		profile.setPreference("browser.download.folderList", 2);
- 
-	
-		//Set Preference to not show file download confirmation dialogue using MIME types Of different file extension types.
-		
-		 
-		profile.setPreference( "browser.download.manager.showWhenStarting", false );
-
-//		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");
-		//needed for pdf download
-//		profile.setPreference("pdfjs.disabled", true);
-		profile.setPreference("browser.download.useDownloadDir", "false"); 
-		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
-		
+		LogTemp.Comment("Gecko Property set");
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
-		capabilities.setCapability("marionette", true); 
-		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
-		
+		capabilities.setCapability("marionette", true);
+		LogTemp.Comment("All capabilities set");
 		WebDriver driver = new FirefoxDriver(capabilities);
 		driver.manage().window().maximize();
 		return driver;
 	}
-	
-	
 
-	public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
+	 public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException
 	 {
 		 if (testDataReaderHashMap.get(sheetName) == null)
 		 {
@@ -264,28 +231,28 @@ public class TestBase {
 		 return testDataReaderHashMap.get(sheetName);
 	 }
 
-	private void cacheTestDataReaderObject(String sheetName, String path)
-	{
-		if (testDataReaderHashMap.get(path + sheetName) == null)
+		private void cacheTestDataReaderObject(String sheetName, String path)
 		{
-			testDataReaderObj = new TestDataReader(this);
-			testDataReaderHashMap.put(path + sheetName, testDataReaderObj);
+			if (testDataReaderHashMap.get(path + sheetName) == null)
+			{
+				testDataReaderObj = new TestDataReader(this);
+				testDataReaderHashMap.put(path + sheetName, testDataReaderObj);
+			}
 		}
-	}
- 
-	public TestDataReader getCachedTestDataReaderObject(String sheetName)
-	{	
-		String path = getRunTimeProperty("DataFilePath");
-		if(sheetName.contains("."))
+	 
+		public TestDataReader getCachedTestDataReaderObject(String sheetName)
 		{	
-			path=System.getProperty("user.dir")+getRunTimeProperty(sheetName.split("\\.")[0]);
-			sheetName=sheetName.split("\\.")[1];
-			
+			String path = getRunTimeProperty("DataFilePath");
+			if(sheetName.contains("."))
+			{	
+				path=System.getProperty("user.dir")+getRunTimeProperty(sheetName.split("\\.")[0]);
+				sheetName=sheetName.split("\\.")[1];
+				
+			}
+			return getCachedTestDataReaderObject(sheetName, path);
 		}
-		return getCachedTestDataReaderObject(sheetName, path);
-	}
-	
-	public TestDataReader getCachedTestDataReaderObject(String sheetName, String path)
+		
+		public TestDataReader getCachedTestDataReaderObject(String sheetName, String path)
 		{
 			TestDataReader obj = testDataReaderHashMap.get(path + sheetName);
 			// Object is not in the cache
@@ -339,8 +306,6 @@ public class TestBase {
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		String testCaseName=method.getName();
 		Log logger =new Log(testConfig,testCaseName);
-		fetchAppCredentials();
-		
 	}
 	
 	@AfterMethod()
@@ -354,83 +319,5 @@ public class TestBase {
 	public void tearDown() {
     Browser.closeBrowser(testConfig);
 		
-
 	}	*/
-
-		
-	
-	
-	@BeforeClass()
-	public void init()
-	{
-
-//		Log logger =new Log(testConfig,"BeforeClass");
-		initializeData();
-	}
-	
-
-	public void initializeData()
-	{
-	}
-
-	@AfterClass()
-	public void deinit()
-	{
-		deinitializeData();
-	}
-	
-	public void deinitializeData()
-	{
-	}
-	
-
-
-	public void fetchAppCredentials()
-	{
-		String query="Select * from eps_automation.config;";
-		loginCredentials = new HashMap<String,HashMap<String, String>>();
-		try
-		{
-			ResultSet rs= DataBase.testExecuteSelectQuery(testConfig, query, DatabaseType.Automation);
-			ResultSetMetaData md = rs.getMetaData();
-			int columns = md.getColumnCount();
-
-			while (rs.next())
-			{
-				HashMap<String, String> row = new HashMap<String, String>(columns);
-				String key=rs.getString("AppName")+rs.getString("UserType")+rs.getString("AccessType")+rs.getString("Env");
-				row.put("USERNAME", rs.getString("Username"));
-				row.putIfAbsent("PASSWORD", rs.getString("Pwd"));
-				loginCredentials.put(key, row);
-			}
-		}
-		catch(Exception e)
-		{
-			Log.Comment(e.getMessage());
-		}
-
-	}
-	public String getUsername(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	}
-	public String getPassword(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
-	}
-
-	
-	public void purgeDirectory(File dir)
-	{
-	    for (File file: dir.listFiles()) {
-	        if (file.isDirectory()) purgeDirectory(file);
-	        file.delete();
-	    }
-	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
-	}
->>>>>>> master
 }

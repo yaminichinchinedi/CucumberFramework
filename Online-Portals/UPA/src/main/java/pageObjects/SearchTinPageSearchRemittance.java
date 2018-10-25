@@ -32,8 +32,7 @@ public class SearchTinPageSearchRemittance extends TestBase{
 	
 	public SearchTinPageSearchRemittance enterTin(String paymentType)
     {
-      Element.enterData(txtboxTinNo,"043397450" /*getTin(paymentType)*/, "Enter Tin to proceed for View Payments", "Tin Textbox");
-      testConfig.putRunTimeProperty("tin", "043397450");
+      Element.enterData(txtboxTinNo, /*paymentType*/getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
       return this;
     }
 	
