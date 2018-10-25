@@ -9,6 +9,7 @@ import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -200,11 +201,34 @@ import main.java.reporting.LogTemp;
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
 		      Browser.waitForLoad(testConfig.driver);
-		  Log.Pass("Clicked " + namOfElement);
+		      Log.Pass("Clicked " + namOfElement);
 		 }
+		
+		catch(JavascriptException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
+		catch(NoSuchElementException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
+		catch(ElementNotVisibleException e)
+		{
+			Log.Fail("Element" + namOfElement+" is not visible at first go and exception is: " + '\n' + e);
+		}
+		
+		catch(NullPointerException e)
+		{
+			
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page and exception is: " + '\n' + e);
+		}
+		
 		catch(Exception e)
 		{
-			Log.Fail("Exception occured while clicking on " + namOfElement + '\n' + e);
+			Log.Comment("Unable to click " + namOfElement);
+			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
 		}
 	}
 	

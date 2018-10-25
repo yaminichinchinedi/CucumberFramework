@@ -79,7 +79,7 @@ public class SearchTinPage {
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
-			   Element.clickByJS(testConfig,btnSearch.get(2),"Clicked search button");
+			   Element.click(btnSearch.get(2),"Clicked search button");
 			   break;
 		   }
 		   

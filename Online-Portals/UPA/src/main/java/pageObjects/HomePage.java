@@ -334,7 +334,7 @@ public class HomePage extends LoginUPA {
 	public ManageUsers clickManageUsersTab() 
 	{
 		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
-		Element.click(manageUsersTab, "Manage Users Tab");
+		Element.clickByJS(testConfig,manageUsersTab, "Manage Users Tab");
 		return new ManageUsers(testConfig);
 
 	}

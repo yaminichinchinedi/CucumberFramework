@@ -113,25 +113,21 @@ public class ManageUsers extends AddUserDetails  {
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		try{
-			Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
-//		}
-//			catch(Exception e)
-//		{
-//				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
-//		}
+		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
+
 	}
 	
 	public AddUserDetails clickAddNewUser()
 	{
-		Element.clickByJS(testConfig,btnAddUser, "Add User");
+		Element.click(btnAddUser, "Add User");
 		return new AddUserDetails(testConfig);
 	}
 
 	
 	public ManageUsers clickSave()
 	{
-		Element.clickByJS(testConfig,btnSave, "Save Button");
+		btnSave=Element.findElement(testConfig, "xpath", "//input[contains(@value,'Save')]");
+		Element.click(btnSave, "Save Button");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -143,8 +139,8 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ManageUsers clickCSRDelete()
 	{
-		Element.clickByJS(testConfig,btnDelete, "Delete Button");
-		Element.clickByJS(testConfig,btnYes, "Yes button");
+		Element.click(btnDelete, "Delete Button");
+		Element.click(btnYes, "Yes button");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -307,7 +303,7 @@ public class ManageUsers extends AddUserDetails  {
 		{ 
 		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
 		   {
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
+				      Element.click(userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }

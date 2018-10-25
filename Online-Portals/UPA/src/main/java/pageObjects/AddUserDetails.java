@@ -194,7 +194,7 @@ public class AddUserDetails {
 	
 	public AddUserDetails clickAddTin()
 	{
-		Element.clickByJS(testConfig,btnAddTin_NPI, "Add Tin/NPI");
+		Element.click(btnAddTin_NPI, "Add Tin/NPI");
 		return this;
 	}
 	
@@ -210,7 +210,7 @@ public class AddUserDetails {
 	public ManageUsers clickSave()
 	{
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		Element.clickByJS(testConfig,btnSave, "Save");
+		Element.click(btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}
@@ -225,7 +225,7 @@ public class AddUserDetails {
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +firstNameTxt);
+				      Element.click(userName, "UserName: "+ " " +firstNameTxt);
 				      Browser.wait(testConfig, 2);
 				      break;
 					}
@@ -402,10 +402,7 @@ public class AddUserDetails {
 		selectTinAccessLvl(accessLevel);
 		Element.click(btnSave, "Save button");
 		String expString="Confirm Existing User";
-		Element.verifyTextPresent(exitingUserText,expString);
-		
-		verifyAssociatedTins();
-		
+		Element.verifyTextPresent(exitingUserText,expString);	
 	}
 	
 	
