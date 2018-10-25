@@ -76,25 +76,22 @@ public class TestBSViewPayments extends TestBase {
 	 * @throws ParseException
 	 */
 	@Test(priority = 1, description = "TS002, TS006 and TS023_View Payments_Payments filter_Show All " + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
-	void testPaymentDetailsForShowALLFilterAdmin() throws IOException, InterruptedException, JAXBException, SAXException,
-			ParserConfigurationException, ParseException {
-		
-		String associatedTin = billingServiceData.assignedTins.get("AllDays").get("PROV_TAX_ID_NBR");		
-		if (associatedTin.equals("")) 
-		{
-			Log.Fail("Did not find a TIN to test this test case. Please test this test case manually.");
-		} 
-		else 
-		{
-			Log.Comment("Testing the test case with the TIN : "+associatedTin);
-			String archivePayments = "Show All";
-			testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-			testConfig.putRunTimeProperty("value", "ALL");
-			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-			OptumIdLoginPage optumIDLoginPage = registrationPage.clickSignInWithOptumId();
-			HomePage home = optumIDLoginPage.loginWithOptumID(userType, accessType);
-			paymentSummary paymentSummaryPage = home.clickViewPaymentsTab().bsTin(associatedTin);
-			paymentSummaryPage.newVerifySearchResultsWithFilters(null, null, archivePayments, null, false);
+	void testAdminShowALLFilter() throws IOException, InterruptedException, JAXBException, SAXException,ParserConfigurationException, ParseException 
+	{
+	  String associatedTin = billingServiceData.assignedTins.get("AllDays").get("PROV_TAX_ID_NBR");		
+	  if (associatedTin.equals("")) 
+		 Log.Warning("Did not find a TIN to test this test case. Please test this test case manually.",testConfig);
+	else 
+	  {
+		Log.Comment("Testing the test case with the TIN : "+associatedTin);
+		String archivePayments = "Show All";
+		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+		testConfig.putRunTimeProperty("value", "ALL");
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		OptumIdLoginPage optumIDLoginPage = registrationPage.clickSignInWithOptumId();
+		HomePage home = optumIDLoginPage.loginWithOptumID(userType, accessType);
+		paymentSummary paymentSummaryPage = home.clickViewPaymentsTab().bsTin(associatedTin);
+		paymentSummaryPage.newVerifySearchResultsWithFilters(null, null, archivePayments, null, false);
 		}
 	}
 	
@@ -109,8 +106,8 @@ public class TestBSViewPayments extends TestBase {
 	 * @throws ParseException
 	 */
 	@Test(priority = 1, description = "TS002, TS006 and TS023_General_View Payments_Payments filter_Show All " + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
-	void testPaymentDetailsForShowALLFilterGeneral() throws IOException, InterruptedException, JAXBException, SAXException,
-			ParserConfigurationException, ParseException {
+	void testGenShowALLFilter() throws IOException, InterruptedException, JAXBException, SAXException,ParserConfigurationException, ParseException 
+	{
 		
 		String associatedTin = billingServiceData.assignedTins.get("AllDays").get("PROV_TAX_ID_NBR");		
 		if (associatedTin.equals("")) 

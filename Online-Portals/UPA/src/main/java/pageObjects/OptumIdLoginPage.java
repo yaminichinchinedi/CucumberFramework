@@ -228,8 +228,6 @@ public class OptumIdLoginPage {
 		}
 	
 		Element.enterData(txtboxOptumID, id, " Optum ID entered as :"+" " + id, "txtboxOptumID");	
-		Element.expectedWait(txtboxPwd, testConfig, "Password text box", "Password text box");
-		Log.Comment("Password is " + password);
 		Element.enterData(txtboxPwd, password, " Password entered :" + " " + password, "txtboxPwd");
 		Element.click(btnSignIn, "Sign In button");
 		Browser.waitForLoad(testConfig.driver);

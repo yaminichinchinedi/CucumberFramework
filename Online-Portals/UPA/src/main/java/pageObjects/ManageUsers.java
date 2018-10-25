@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -246,26 +247,29 @@ public class ManageUsers extends AddUserDetails  {
 	public String getActiveUser(String userType)
 	{
         int sqlRowNo=10;
+        String result="";
         
         if(userType.equalsIgnoreCase("PROV"))
-        {
         	sqlRowNo=10;
-        }
         else if(userType.equalsIgnoreCase("BS"))
-        {
         	sqlRowNo=18;
-        }
         else if(userType.equalsIgnoreCase("PAY"))
-        {
         	sqlRowNo=19;
-        }
+        
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
-		String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
-		Log.Comment("Active user returned is :" +" " + activeUser);
-		return activeUser;
-
+		
+		  if(null == enrolledProvider)
+			Log.Fail("No active user available in Database for " + testConfig.getRunTimeProperty("tin") + '\n' + "Please execute the test case manually");
+		
+		 else
+		 {
+		   testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
+		   String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
+		   Log.Comment("Active user returned is :" +" " + activeUser);
+		   result= activeUser;
+		 }
+		return result;
 	}
 	
 	/**
@@ -285,7 +289,7 @@ public class ManageUsers extends AddUserDetails  {
 			  break;
 		   }
 	     }
-		Browser.wait(testConfig,3);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -307,7 +311,7 @@ public class ManageUsers extends AddUserDetails  {
 				      break;
 		   }
 	     }
-		Browser.wait(testConfig,3);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -334,23 +338,21 @@ public class ManageUsers extends AddUserDetails  {
 		Log.Comment("Finded dropdown succesfully by find elements");
 
 		try{
-			Browser.wait(testConfig, 3);
 			List<WebElement> accessLvlDrp=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 			Element.expectedWait(accessLvlDrp.get(0), testConfig, "Access level tin dropdown", "Access level tin dropdown");
-	    Element.selectByVisibleText(accessLvlDrp.get(0), "General", "Select General as access level");
+	        Element.selectByVisibleText(accessLvlDrp.get(0), "General", "Select General as access level");
 		}
 		
 		catch(Exception e)
 		{
 			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 			Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");
-		
 		}
 	   
-	    
 	    Browser.waitForLoad(testConfig.driver);
 	    clickSave();
-	    Browser.wait(testConfig,3);
+	    Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+	 
 	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
 	  

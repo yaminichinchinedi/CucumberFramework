@@ -11,7 +11,7 @@ import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
-public class SearchTinPageViewPayments extends TestBase{
+public class SearchTinPageViewPayments{
 	
 	private ViewPaymentsDataProvider dataProvider;
 	
@@ -21,7 +21,7 @@ public class SearchTinPageViewPayments extends TestBase{
 	@FindBy(name="btnSubmit")
 	public WebElement btnSubmit;
 	
-	//private TestBase testConfig;
+	private TestBase testConfig;
 	
 	public SearchTinPageViewPayments(TestBase testConfig)
     {
@@ -38,7 +38,7 @@ public class SearchTinPageViewPayments extends TestBase{
 	
 	public paymentSummary clickSearchBtn()
     {
-      Element.click(btnSubmit, "Search Button");
+      Element.clickByJS(testConfig,btnSubmit, "Search Button");
       return new paymentSummary(testConfig);
     }
 	

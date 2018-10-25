@@ -10,23 +10,31 @@ import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +44,7 @@ import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.testng.Assert;
 
 
 public class Helper
@@ -2064,7 +2073,40 @@ return previousDate.getTime();
 		catch (Exception e) {
 			Log.Comment("Exception" + e);
 		}
-	}
+		}
+		
+		
+		
+//		for (String key : expectedKeys) {
+//	    	 if(expected.get(key).keySet() != null)
+//	    	 {
+//	    	   Set<String> internalKeys=expected.get(key).keySet();
+//	    	    for (String internalKey : internalKeys) 
+//	    		  {
+//	    	    	for (String actualKey : actualKeys) 
+//	    	    	 {
+//	    	    		Set<String> internalActualKeys=actual.get(actualKey).keySet();
+//	    	    		 for (String internalActualKey : internalActualKeys) 
+//	   	    		     {
+//	    	    	       if((expected.get(key).get(internalKey).equals(actual.get(key).get(internalActualKey))))
+//	    	    	       {
+//	    	    		   System.out.println(expected.get(key).get(internalKey));
+//	    	    		   System.out.println(actual.get(key).get(internalActualKey));
+//	    	    		    System.out.println("True"); 
+//	    	    	   }
+//	    		  }
+//	    	 }
+//	    	 }
+//	    	 }
+//		}
+
+	
+	
+			
+//			else 
+//				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
+	
+
 	
 	public static String separateListValues(List<String> list,String separator)
 	{

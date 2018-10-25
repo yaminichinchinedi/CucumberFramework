@@ -22,6 +22,7 @@ import org.testng.Assert;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -115,6 +116,13 @@ public  class Log  {
 			Assert.fail(message);
 					
 	 }
+    
+    public static void Softfailure(String message)
+	 {
+			SoftAssert softAsert=new SoftAssert();
+			softAsert.fail(message);
+						
+	 }
 		
 		
 		private static void PageInfo(TestBase testConfig,String message) 
@@ -123,6 +131,7 @@ public  class Log  {
 				{
 					try 
 					{
+					  Browser.wait(testConfig, 3);
 					  String dest=captureScreenshot(testConfig);
 					  logger.log(LogStatus.FAIL, message  +  logger.addScreenCapture(dest));
 					} 
@@ -171,6 +180,14 @@ public  class Log  {
 			printToScreen(message);
 			logger.log(LogStatus.WARNING, message);
 			testConfig.testLog = testConfig.testLog.concat(message);
+		}
+		
+		public static void FailWarning(String message, TestBase testConfig)
+		{  
+			printToScreen(message);
+			logger.log(LogStatus.WARNING, message);
+			testConfig.testLog = testConfig.testLog.concat(message);
+			Softfailure(message);
 		}
 
 

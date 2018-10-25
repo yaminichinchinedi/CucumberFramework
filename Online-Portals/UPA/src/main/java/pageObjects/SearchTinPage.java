@@ -36,7 +36,8 @@ public class SearchTinPage {
 	List <WebElement> btnSearch;
 
 	private TestBase testConfig;
-	SearchTinPage(TestBase testConfig) 
+	
+    public SearchTinPage(TestBase testConfig) 
 	{
 		
 		this.testConfig=testConfig;

@@ -320,9 +320,7 @@ public class HomePage extends LoginUPA {
 	public paymentSummary clickViewPaymentsTab() 
 	{
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
-		Element.click(viewPaymentsTab, "View Payments Tab");
-		Browser.waitForLoad(testConfig.driver);
-		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig,viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
 	}
 	
