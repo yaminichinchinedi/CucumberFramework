@@ -186,26 +186,17 @@ public class TestBase {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
             caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
             caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-            caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-            //caps.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false); 
+            caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
             caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
             caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-            
-           // caps.setCapability("IntroduceInstabilityByIgnoringProtectedModeSettings",true);
             caps.setCapability("disable-popup-blocking", true);
-            
-            //System.setProperty("webdriver.ie.driver","IEDriverServer.exe");
-            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
 		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-//            System.out.println("ie property : "  + System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
-//		    System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\driver\\IEDriverServerQA.exe");
 		    
 		 	driver = new InternetExplorerDriver(caps);
 			driver.manage().window().maximize();
 			break;
 		default:
-			System.out.println("browser : " + browserType
-					+ " is invalid, Launching Firefox as browser of choice..");
+			Log.Comment("browser : " + browserType+ " is invalid, Launching Firefox as browser of choice..");
 			driver = initFirefoxDriver();
 		}
 		driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
