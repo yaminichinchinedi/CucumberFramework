@@ -362,13 +362,13 @@ public class HomePage extends LoginUPA {
 	}
 	
 	
-	public void logOutAndReLogin(TestBase testConfig)
-	{
-		Element.clickByJS(testConfig,lnkLogOut, "Log out");
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    optumIDLoginPage.fillCredsAndSignIn("", "");
-	}
+//	public void logOutAndReLogin(TestBase testConfig)
+//	{
+//		Element.clickByJS(testConfig,lnkLogOut, "Log out");
+//		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+//	    optumIDLoginPage.fillCredsAndSignIn("", "");
+//	}
 	
 
 }

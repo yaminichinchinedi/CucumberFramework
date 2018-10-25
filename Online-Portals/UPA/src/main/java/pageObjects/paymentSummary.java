@@ -42,9 +42,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.xml.sax.SAXException;
 
-import com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentsservice_v1_0.EpsConsolidatedClaimPaymentSummary;
 
-import javafx.beans.binding.When.BooleanConditionBuilder;
 
 
 public class paymentSummary extends ViewPaymentsDataProvider{
