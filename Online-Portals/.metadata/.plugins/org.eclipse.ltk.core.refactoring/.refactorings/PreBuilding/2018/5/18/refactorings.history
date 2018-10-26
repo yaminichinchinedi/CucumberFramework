@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;PreBuilding/pom.xml&apos; to &apos;po.xml&apos;" description="Rename resource &apos;pom.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="pom.xml" name="po.xml" stamp="1525427248694" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;PreBuilding/po.xml&apos; to &apos;pom.xml&apos;" description="Rename resource &apos;po.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="po.xml" name="pom.xml" stamp="1525427298675" updateReferences="true"/>
-</session>
