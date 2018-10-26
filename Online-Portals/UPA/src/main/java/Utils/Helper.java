@@ -10,29 +10,23 @@ import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.TimeZone;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +36,6 @@ import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.testng.Assert;
 
 
 public class Helper
@@ -835,36 +828,6 @@ return previousDate.getTime();
 	{
 
 		String OLD_FORMAT = "dd/MM/yyyy";
-		String newDateString = null;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-		Date d = null;
-		try
-		{
-			d = sdf.parse(date);
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		sdf.applyPattern(NEW_FORMAT);
-		newDateString = sdf.format(d);
-		Calendar c = Calendar.getInstance();
-		try
-		{
-			c.setTime(sdf.parse(newDateString));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		c.add(Calendar.DATE, days); // number of days to add
-		return sdf.format(c.getTime()); // dt is now the new date
-
-	}
-	
-	public static String getDateBeforeOrAfterDays(int days, String OLD_FORMAT, String NEW_FORMAT, String date)
-	{
-
 		String newDateString = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
 		Date d = null;
@@ -2052,40 +2015,64 @@ return previousDate.getTime();
 	}
 
 	public static void compareEquals(TestBase testConfig, String what,ArrayList<String> expected, ArrayList<String> actual) 
-	{
+	{ 
+		separateListValues(expected,";");
 		if(expected.equals(actual))
-		{
-			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
-		}
-		
+			Log.Pass("Passed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + separateListValues(expected,";") + '\n' + "Actual is :" +" " +separateListValues(actual,";") );
 		else 
-			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
-		
+			Log.Fail("Failed comparison of" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + separateListValues(expected,";") + '\n' + "Actual is :" +" " +separateListValues(actual,";"));
 	}
 
 	public static void compareEquals(TestBase testConfig, String what,Map<String, String> expected, Map<String, String> actual) {
-		
 		if(expected.equals(actual))
-		{
-			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected );
-		}
-		
+			Log.Pass("Passed" + " " + what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 		else 
-			Log.Fail(what + ":" + "" + '\n' + "Actual is :" +" " + actual + '\n' + "Expected is :" +" " +expected);
+			Log.Fail(what + ":" + "" + '\n' + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
 		}
 
 
+//	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
+//	{
+//	   if(expected.equals(actual))
+//			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
+//			else 
+//				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
+//	}
+	
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
 	{
-	   if(expected.equals(actual))
-			{
-				Log.Pass("Passed" + " " + what + "" + "<br>" + "Actual is :" +" " + "<br>" + actual + " " + "<br>" + "Expected is :" +" " + "<br>" +expected );
-			}
-			
-			else 
-				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Actual is :" +" " + actual + "<br>" + "Expected is :" +" " +expected);
-			}
-
+		try{
+		Set<String> expectedKeys = expected.keySet();	
+		for (String key : expectedKeys) 
+		{
+	    	 if(expected.get(key).keySet() != null)
+	    	  {
+	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
+	    		 { 
+	    			 System.out.println("Actual equals expectd");
+	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
+	    		     {
+	    	    	 if(expected.get(key).get(expectedInternalKey).equals(actual.get(key).get(expectedInternalKey)))
+	    	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+	    	    	   else
+	    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+	    		      }
+	    		  }
+	    	  }
+		}
+	}	 
+		catch (Exception e) {
+			Log.Comment("Exception" + e);
+		}
+	}
+	
+	public static String separateListValues(List<String> list,String separator)
+	{
+		StringBuilder listOfString=new StringBuilder();
+		for(String string:list)
+			listOfString.append(StringUtils.join(string,"; "));
+		return listOfString.toString();
+	}
 	
 	}
 

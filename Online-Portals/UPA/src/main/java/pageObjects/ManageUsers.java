@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -60,7 +61,7 @@ public class ManageUsers extends AddUserDetails  {
 	WebElement chkRemoveTin;
 	
 	
-	@FindBy(css="input[value=' Save ']")
+	@FindBy(xpath="//input[contains(@value,'Save')]")
 	WebElement btnSave;
 	
 	@FindBy(xpath="//input[@value='Delete User']")
@@ -112,14 +113,8 @@ public class ManageUsers extends AddUserDetails  {
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		try{
-			Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
-		}
-			catch(Exception e)
-		{
-				//Browser.browserRefresh(testConfig);
-				Element.verifyElementPresent(testConfig.driver.findElement(By.linkText("User List")),"User List");
-		}
+		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
+
 	}
 	
 	public AddUserDetails clickAddNewUser()
@@ -131,6 +126,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public ManageUsers clickSave()
 	{
+		btnSave=Element.findElement(testConfig, "xpath", "//input[contains(@value,'Save')]");
 		Element.click(btnSave, "Save Button");
 		return new ManageUsers(testConfig);
 	}
@@ -247,26 +243,29 @@ public class ManageUsers extends AddUserDetails  {
 	public String getActiveUser(String userType)
 	{
         int sqlRowNo=10;
+        String result="";
         
         if(userType.equalsIgnoreCase("PROV"))
-        {
         	sqlRowNo=10;
-        }
         else if(userType.equalsIgnoreCase("BS"))
-        {
         	sqlRowNo=18;
-        }
         else if(userType.equalsIgnoreCase("PAY"))
-        {
         	sqlRowNo=19;
-        }
+        
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
-		String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
-		Log.Comment("Active user returned is :" +" " + activeUser);
-		return activeUser;
-
+		
+		  if(null == enrolledProvider)
+			Log.Fail("No active user available in Database for " + testConfig.getRunTimeProperty("tin") + '\n' + "Please execute the test case manually");
+		
+		 else
+		 {
+		   testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
+		   String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
+		   Log.Comment("Active user returned is :" +" " + activeUser);
+		   result= activeUser;
+		 }
+		return result;
 	}
 	
 	/**
@@ -286,14 +285,15 @@ public class ManageUsers extends AddUserDetails  {
 			  break;
 		   }
 	     }
-		Browser.wait(testConfig,3);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
 	
 	
 	/**
-	 * This function clicks the specified user by passing its username
+	 * This function clicks the specified user by 
+	 * passing its username
 	 * to view its details on 
 	 * Manage user Page
 	 */
@@ -307,7 +307,7 @@ public class ManageUsers extends AddUserDetails  {
 				      break;
 		   }
 	     }
-		Browser.wait(testConfig,3);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -334,21 +334,23 @@ public class ManageUsers extends AddUserDetails  {
 		Log.Comment("Finded dropdown succesfully by find elements");
 
 		try{
-			Browser.wait(testConfig, 3);
-	    Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			List<WebElement> accessLvlDrp=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.expectedWait(accessLvlDrp.get(0), testConfig, "Access level tin dropdown", "Access level tin dropdown");
+	        Element.selectByVisibleText(accessLvlDrp.get(0), "General", "Select General as access level");
 		}
 		
 		catch(Exception e)
 		{
-			accessLvls =Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
-			Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
-			//Element.selectByVisibleText(testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select")).get(0), "General", "Select General as access level");
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");
 		}
 	   
-	    
 	    Browser.waitForLoad(testConfig.driver);
 	    clickSave();
-	    Browser.wait(testConfig,3);
+	    Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+	 
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
 	  
 	    //Get access level value from DB to verify it has been changed to General
 	    int sqlRowNo=11;
@@ -359,12 +361,15 @@ public class ManageUsers extends AddUserDetails  {
 	    
 	    
 	    //Changing user to Admin 
-	    accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 	    
 	    //Select Access Level as Administrator
 	    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level");
 	    clickSave();
-	    Browser.wait(testConfig,3);    
+	    Browser.wait(testConfig,3); 
+	    accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+	    Element.expectedWait(accessLvls.get(0), testConfig, "Access level dropdown", "Access level dropdown");
+	    
 	    //Get access level value from DB to verify it has been changed to Administrator
 	    portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	    Helper.compareEquals(testConfig, "Access Level", "A", portalUserData.get("ACCESS_LVL").toString());
@@ -462,9 +467,12 @@ public class ManageUsers extends AddUserDetails  {
 		 
 		 Element.click(lnkTinInGrid, "Tin link");
 		 Browser.wait(testConfig, 3);
+		 Log.Comment("After one click " +'\n'+map);
+		 Element.click(lnkTinInGrid, "Tin link");
+		 Browser.wait(testConfig, 3);
 		 map.clear();
 		 map=getTinsListFromUI();
-		 Log.Comment("After one click " +'\n'+map);
+		 Log.Comment("After second click " +'\n'+map);
 		 
 		 treeMap = new TreeMap<String, String>(map).descendingMap();
 		 verifytinsAreSorted(treeMap,map);
@@ -476,7 +484,8 @@ public class ManageUsers extends AddUserDetails  {
 	 */
 	public Map<String,String> getTinsListFromUI()
 	{
-		   List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		   List<WebElement> tinGridRows =Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+				  
 		   ArrayList<String> tinList= new ArrayList<String>();
 		   Map<String,String> map = new LinkedHashMap<String,String>();
 		   for(int i=1;i<tinGridRows.size();i++)
@@ -504,10 +513,10 @@ public class ManageUsers extends AddUserDetails  {
 	{
     if(!treeMap.toString().equals(map.toString()))
     {
-    	Log.Fail("Ascending Sorted order for Tin", treeMap.toString(), map.toString());
+    	Log.Fail("Sorted order for Tin", treeMap.toString(), map.toString());
     }
     else
-    	Log.Pass("Ascending Sorted order for Tin", treeMap.toString(), map.toString());	
+    	Log.Pass("Sorted order for Tin", treeMap.toString(), map.toString());	
 	}
 
 	
@@ -750,11 +759,59 @@ public class ManageUsers extends AddUserDetails  {
 	}
 	
 	
-	public void selectAccessLvl(String accessLevel)
+	public ManageUsers selectAccessLvl(String accessLevel)
 	{
 		Element.selectByVisibleText(accessLvls.get(0), accessLevel, "Select General in BS access Level dropdown");
 		clickSave();
+		return this;
 	}
+	
+	
+	/**
+	 * Select access level for a particular tin
+	 * @param accessLevel
+	 * @param tin
+	 * @return manage user page
+	 */
+	public ManageUsers selectAccessLvl(String accessLevel,String tin)
+	{
+	   List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+	   
+	   for(int i=0;i<tinGridRows.size();i++)
+	   {
+	      String tinNo=tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+		  if(tinNo.equals(tin))    
+		  {
+		    Element.selectByVisibleText(tinGridRows.get(i).findElements(By.tagName("td")).get(2).findElement(By.tagName("select")), accessLevel, "Select" +accessLevel + "from access Level dropdown");
+		    break;
+		  }
+	   }
+	
+	 return this;
+	}
+	
+	/**
+	 * Removes a particular tin row from the grid
+	 * @param tin- tin row to be removed
+	 * @return
+	 */
+	public ManageUsers removeTinNpi(String tin)
+	{
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+		   
+		   for(int i=0;i<tinGridRows.size();i++)
+		   {
+		      String tinNo=tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			  if(tinNo.equals(tin))     
+			  {
+			  Element.clickByJS(testConfig,tinGridRows.get(i).findElements(By.tagName("td")).get(6).findElement(By.tagName("input")), "Remove tin/npi checkbox for tin number :" + tin);
+			  break;
+			  }
+		   }
+		   
+	 return this;
+	}
+	
 	
 	public String getCSRUserName()
 	{
@@ -781,7 +838,7 @@ public class ManageUsers extends AddUserDetails  {
 		clickSpecificUserName(getFirstLastName());
 		String userNameBeforeUpdation=getCSRUserName();
 		fillNewUserInfo();
-		Browser.wait(testConfig,2);
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
 		clickSave();
 		verifyDetailsOfNewUser(userType);
 		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
@@ -792,9 +849,9 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		clickSpecificUserName(getFirstLastName());
 		String expectedText="The password for "+ getCSRUserName() +" " +"has successfully been reset, and an email has been sent to the user.";
-		Element.click(btnResetPwd, " Reset Password button");
-		Browser.wait(testConfig,2);
-		Element.verifyTextPresent(txtResetPwd, expectedText);
+		Element.clickByJS(testConfig,btnResetPwd, " Reset Password button");
+		Element.waitTillTextAppears(txtResetPwd, expectedText, testConfig);
+		
 		return this;
 	}
 	
@@ -806,5 +863,76 @@ public class ManageUsers extends AddUserDetails  {
 		
 	}
 	
+	/**
+	 * Verifies if access level, email checkbox and tin/npi 
+	 * are either enabled or disabled
+	 * @param expectedTinNo and value of disable attribute
+	 * which can be either true or false
+	 * true- item is disabled
+	 * false- it is enabled
+	 * @return
+	 */
+	public ManageUsers verifyDisabledItemsForTin(String expectedTinNo ,String expectedValue )
+	{
+	    List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+	    for(int i=0;i<tinGridRows.size();i++)
+		 {
+		    String tinNo=tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if(tinNo.equals(expectedTinNo))
+			 {    
+			   Map attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(2).findElement(By.tagName("select")), "Access Level Attributes");
+			  
+			   if(attMap.get("disabled").equals(expectedValue))
+				   Log.Pass("Access Level Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   else
+				   Log.Fail("Access Level Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   
+			   attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(5).findElement(By.tagName("input")), "Email Checkbox");
+			   
+			   if(attMap.get("disabled").equals(expectedValue))
+				   Log.Pass("Email Checkbox Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   else
+				   Log.Fail("Email Checkbox Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   
+			   attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(6).findElement(By.tagName("input")), "Tin/Npi Checkbox");
+			   
+			   if(attMap.get("disabled").equals(expectedValue))
+				   Log.Pass("Remove Tin/Npi Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   else
+				   Log.Fail("Remove Tin/Npi Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
+			   
+			 }	
+
+		 }
+	     return this;
+	}
+	
+	
+	public ManageUsers editEmailWithExistingAdress()
+	{
+		int sqlRowNo=6;
+		Map enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		
+		String newEmail=enrolledProviderTable.get("EMAIL_ADR_TXT").toString().toLowerCase().trim();
+		Log.Comment("Current Email is : " +email.getText());
+		Element.enterData(email,newEmail, "Enter new email address as : " + newEmail, "email address");
+		Element.enterData(verifyEmail,newEmail, "Re Verify new  email address as : " + newEmail, "email address");
+		clickSave();
+		return this;
+	}
+	
+	public ManageUsers editFirstName(String newName)
+	{
+		Element.enterData(firstName,newName,"Enter new first name as : " + newName,"first name");
+		clickSave();
+		return this;
+	}
+	
+	public ManageUsers editLastName(String newName)
+	{
+		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
+		clickSave();
+		return this;
+	}
 }
 

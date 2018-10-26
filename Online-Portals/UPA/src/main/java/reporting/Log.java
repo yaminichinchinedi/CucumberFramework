@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 
@@ -21,6 +22,7 @@ import org.testng.Assert;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -45,6 +47,7 @@ public  class Log  {
 	@SuppressWarnings("deprecation")
 	public static void setReportingConfig()
 	{
+		
 		report= new ExtentReports(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html", true);
 		report.loadConfig(new File (System.getProperty("user.dir")+"\\ExtentReports\\extent-config.xml"));
 	}
@@ -104,16 +107,22 @@ public  class Log  {
 
 		}
 		
-		public static void failure(String message)
-		{
+    public static void failure(String message)
+	 {
 			testConfig.putRunTimeProperty("AlreadyFailed","yes");
-			String ReportMessage="";
 			//For displaying in console
 			printToScreen(message);
 			PageInfo(testConfig,message);
 			Assert.fail(message);
 					
-		}
+	 }
+    
+    public static void Softfailure(String message)
+	 {
+			SoftAssert softAsert=new SoftAssert();
+			softAsert.fail(message);
+						
+	 }
 		
 		
 		private static void PageInfo(TestBase testConfig,String message) 
@@ -122,6 +131,7 @@ public  class Log  {
 				{
 					try 
 					{
+					  Browser.wait(testConfig, 3);
 					  String dest=captureScreenshot(testConfig);
 					  logger.log(LogStatus.FAIL, message  +  logger.addScreenCapture(dest));
 					} 
@@ -140,10 +150,9 @@ public  class Log  {
 		
 		public static String captureScreenshot(TestBase testConfig) throws IOException
 		{
-			
-			
 				File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		        
 		        String dest = "\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
 		        File destination = new File(dest);
 		        FileUtils.copyFile(sourceFile, destination);              
@@ -171,6 +180,14 @@ public  class Log  {
 			printToScreen(message);
 			logger.log(LogStatus.WARNING, message);
 			testConfig.testLog = testConfig.testLog.concat(message);
+		}
+		
+		public static void FailWarning(String message, TestBase testConfig)
+		{  
+			printToScreen(message);
+			logger.log(LogStatus.WARNING, message);
+			testConfig.testLog = testConfig.testLog.concat(message);
+			Softfailure(message);
 		}
 
 

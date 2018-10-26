@@ -66,7 +66,6 @@ public class PaymentSummaryFislService {
 			}
 
 		} catch (JAXBException e) {
-			System.out.println(e.getMessage());
 			throw new Exception("Exception occurred while toObject : " + e.getMessage());
 		}
 
