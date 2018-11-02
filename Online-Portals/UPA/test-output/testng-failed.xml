@@ -3,12 +3,18 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="test.java.TestMyProfileTab">
+      <class name="test.java.TestProviderViewPayments">
         <methods>
+          <include name="testPaymentDetailsWithShowALLFilter"/>
+          <include name="setupTestMethod"/>
+          <include name="endTest"/>
           <include name="tearDown"/>
-          <include name="testChangePasswordValidations"/>
+          <include name="init"/>
+          <include name="tearUp"/>
+          <include name="setUpReportingConfig"/>
+          <include name="deinit"/>
         </methods>
-      </class> <!-- test.java.TestMyProfileTab -->
+      </class> <!-- test.java.TestProviderViewPayments -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
