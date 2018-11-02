@@ -21,30 +21,25 @@ import main.java.pageObjects.paymentSummary;
 
 public class TestCSRSearchRemittance extends TestBase {
 	String loginUserType="Super";
+	
 	@Test(priority=5,description="TS004_Search by Electronic Payment Number only")
 	public void testEpraByPaymentNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String loginUserType="Super";
-		String userType="PROV";	
-		String accessLevelOfNewUser="Administrator";	
-		String filterPayments="Show All";
-		String criteriaType="byElectronicPaymentNumber";
+		String criteriaType="byElectronicPaymentNo";
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
 		srchTinPage.enterTin(criteriaType);
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType);		
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
       }
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByCheckNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String loginUserType="Super";
-		String userType="PROV";	
-		String accessLevelOfNewUser="Administrator";	
-		String filterPayments="Show All";
 		String criteriaType="byCheckNumber";
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);

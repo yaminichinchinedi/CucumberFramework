@@ -21,6 +21,12 @@ public class ViewPaymentsDataProvider {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
+	
+	//Default Constructor
+    public ViewPaymentsDataProvider() {
+		
+	}
+
 
    /**
    * This function is basically
@@ -67,7 +73,7 @@ public String getTinForPaymentType(String paymentType)
  		     sqlRowNo=36; 
  		     break;
  		     
- 		 case "byElectronicPaymentNumber":
+ 		 case "byElectronicPaymentNo":
  			sqlRowNo=39;
  			 break;
  			 

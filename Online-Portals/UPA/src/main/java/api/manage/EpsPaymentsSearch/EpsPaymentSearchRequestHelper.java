@@ -22,30 +22,14 @@ import org.xml.sax.SAXException;
 
 public class EpsPaymentSearchRequestHelper extends CreateConnection
 {
-	// "http://apsrs3771:8080/api/finance/providers/payments/v1/search";
-	
-	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";
-			
-	//static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
-	
-	String xmlFilePath; 
-	
-	public EpsPaymentSearchRequestHelper(String requestType)
+	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";	
+	static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
+	 
+	public EpsPaymentSearchRequestHelper()
 	{
 		super(connectionUrl);
-		switch (requestType) {
-        case "byDateOfPayment":
-               xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
-               break;
-        case "byDateOfService":
-               xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\RequestSearchRemitDOS.xml";
-               break;
-        default:
-               System.out.println("No Request exists for given input");
-               break;
-        }
+    }
 
-	}
 	
 	@Override
 	public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException
@@ -54,7 +38,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller(); 
 		EpsPaymentsSummarySearchResponse searchResponse= (EpsPaymentsSummarySearchResponse) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));  
         return searchResponse;		
-
 	}
 	
 	
@@ -73,8 +56,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		EpsPaymentsSearchRequest requestXML= (EpsPaymentsSearchRequest) jaxbUnmarshaller.unmarshal(new File(xmlFilePath));
 		return requestXML;
-		
-		
 	}
 
 	/**

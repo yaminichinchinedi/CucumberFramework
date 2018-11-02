@@ -129,7 +129,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
 	
-	private TestBase testConfig;
+	public TestBase testConfig;
+	
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	PaymentSummaryFislService service = null;
@@ -139,9 +140,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		
-		service = new PaymentSummaryFislService();
-		
 		txtBoxPayerTin=Element.findElement(testConfig, "name", "payerProvTin");
 		txtBoxBSTin=Element.findElement(testConfig, "name", "billingProvTin");
 		
@@ -151,6 +149,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
 		else
 			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+	}
+	
+	public paymentSummary(TestBase testConfig,boolean state)
+	{
+		this.testConfig=testConfig;
 	}
 	
 	
@@ -925,8 +928,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 		
 		/**Creates POJO for Request.xml so that we can modify the elements*/
-		
-//		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
@@ -935,14 +936,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
 		return searchResponse;
 	}
-	
-
-//	public Object createRequest() throws JAXBException
-//	{
-//	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-//	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
-//	   return epsPaymentsSearchRequest;
-//	}
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
@@ -966,8 +959,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public EpsPaymentsSearchRequest setMapEntryKey(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
+		if(testConfig.getRunTimeProperty("key")!=null){
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		}
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
