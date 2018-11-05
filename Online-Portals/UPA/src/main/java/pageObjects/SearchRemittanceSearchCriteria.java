@@ -275,6 +275,152 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	break;		    	
 		    }
+		    
+		    case "byDateOfServiceAndAcntNo":
+		    {
+		    	int sqlRow = 49;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String acntNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
+		    	try {
+		    		dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    		dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.enterData(accountNo, acntNo, "Filling patient account no: "+acntNo, "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString() );
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+		    	testConfig.putRunTimeProperty("value", acntNo);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDateOfServiceAndSubscriberId":
+		    {
+		    	int sqlRow = 50;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String sbscrId;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	sbscrId=srchData.get("SBSCR_ID").toString();
+		    	try {
+		    		System.out.println(srchData.get("CLM_STRT_DT").toString()+":"+srchData.get("CLM_END_DT").toString());
+					dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					System.out.println(dosFrom+":"+dosTo);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", sbscrId);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDateOfServiceAndNpi":
+		    {
+		    	int sqlRow = 51;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String npiNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	npiNo=srchData.get("PROV_NPI_NBR").toString();
+		    	try {
+		    		dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.click(NPI, "NPI");
+		    	Element.enterData(NPI, npiNo, "Filling NPI No: "+npiNo, "NPI");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", npiNo);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDateOfServiceAndClmNo":
+		    {
+		    	int sqlRow = 52;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String clmNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	clmNo=srchData.get("CLM_NBR").toString();
+		    	try {
+		    		dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	Element.enterData(claimNumber, clmNo, "Filling claim no: "+clmNo, "Claim Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", clmNo);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDateOfServiceAndZeroPmntClms":
+		    {
+		    	int sqlRow = 52;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	try {
+		    		dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Exception occured");
+					e.printStackTrace();
+				}
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	clickSearchBtn();
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
+		    	testConfig.putRunTimeProperty("value", "Y");
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;		    	
+		    }
 		      
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
