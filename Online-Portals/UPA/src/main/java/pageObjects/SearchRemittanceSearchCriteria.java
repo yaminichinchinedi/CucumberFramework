@@ -155,7 +155,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOP":
+		    case "byDateOfPayment":
 		    {
 		    	String toDate = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDate = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
@@ -168,7 +168,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOPAndAcntNo":
+		    case "byDateOfPaymentAndAcntNo":
 		    {
 		    	int sqlRow = 42;
 		    	String acntNo;
@@ -188,7 +188,7 @@ public class SearchRemittanceSearchCriteria {
 		    }
 		    
 		    
-		    case "byDOP&SubscriberID":
+		    case "byDateOfPaymentAndSubscriberID":
 		    {
 		    	int sqlRow = 43;
 		    	String sbscrId;
@@ -207,7 +207,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;
 		    }
 		    
-		    case "byDOPAndNpi":
+		    case "byDateOfPaymentAndNpi":
 		    {
 		    	int sqlRow = 44;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -219,7 +219,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;
 		    }
 		    
-		    case "byDOPAndClmNo":
+		    case "byDateOfPaymentAndClmNo":
 		    {
 		    	int sqlRow = 45;
 		    	String clmNo;
@@ -237,7 +237,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOP&PatientName":
+		    case "byDateOfPaymentAndPatientName":
 		    {
 		    	int sqlRow = 46;
 		    	String fstNm, lstNm;
@@ -265,7 +265,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOPAndZeroPmntClms":
+		    case "byDateOfPaymentAndZeroPmntClms":
 		    {
 		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
