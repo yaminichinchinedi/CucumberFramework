@@ -33,7 +33,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
 		srchTinPage.enterTin(criteriaType);
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
       }
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")

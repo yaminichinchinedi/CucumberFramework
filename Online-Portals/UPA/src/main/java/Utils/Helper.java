@@ -2059,6 +2059,10 @@ return previousDate.getTime();
 	    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    		      }
 	    		  }
+	    		 else
+	    		 {
+	    			 Log.Fail("Expected and actual Key dows not match " + '\n' + "Expected Key set was : " + expected.get(key).keySet() + "whereas Actual keyset is :" + actual.get(key).keySet() );
+	    		 }
 	    	  }
 		}
 	}	 

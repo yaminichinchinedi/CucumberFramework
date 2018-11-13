@@ -36,6 +36,7 @@ import main.java.reporting.Log;
 import main.java.reporting.LogTemp;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -127,6 +128,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id=\"paymentsummaryform\"]/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[1]/th[13]/a")
 	WebElement lnkArchive;
 	
+	public SearchRemittance searchRemittance;
 	
 	
 	public TestBase testConfig;
@@ -497,16 +499,21 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	public String getRecordCountFromUI()
 	{
-		try
-		{
+		 try{ 
 			String recordCountElement[]=recordCount.getText().split(":");
 			return recordCountElement[recordCountElement.length-1].trim();
-		}
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured : " + e);
-			return null;
-		}
+		 }
+	    catch(NoSuchElementException e)	{
+	    	searchRemittance=new SearchRemittance(testConfig);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+			return String.valueOf(searchRemittance.divSearchResults.size());
+	    }
+		catch(Exception e){
+				Log.Fail("Exception occured : " + e);
+				return null;
+			}
+
+			
 	    
 	}
 	

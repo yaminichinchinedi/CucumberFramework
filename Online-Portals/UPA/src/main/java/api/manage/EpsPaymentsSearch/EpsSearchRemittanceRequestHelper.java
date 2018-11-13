@@ -21,6 +21,9 @@ import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
 import main.java.reporting.Log;
 
+
+
+//For Search Remittance Data 
 public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 		
 	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";	

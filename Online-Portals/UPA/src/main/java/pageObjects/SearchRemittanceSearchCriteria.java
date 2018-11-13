@@ -127,12 +127,8 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.enterData(paymentNumber, data.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
 		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", data.get("DSPL_CONSL_PAY_NBR").toString());
-		    	String toDate = Helper.getCurrentDate("MM/dd/yyyy");
-		    	toDate=toDate.replace("\\|", "-");
-		    	System.out.println(toDate);
-		    	String fromDate = Helper.getDateBeforeOrAfterYears(-2,"MM/dd/yyyy");
-		    	testConfig.putRunTimeProperty("fromDate", Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"));
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	break;
 		    }
 		    

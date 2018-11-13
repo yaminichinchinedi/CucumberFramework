@@ -53,7 +53,7 @@ public class SearchRemittance extends paymentSummary {
 	
 	//amit
 	@FindBy(xpath = "//div[@id='SearchHeader']//table//tr") 
-	List<WebElement> divSearchResults;
+	public List<WebElement> divSearchResults;
 
 	@FindBy(id = "SearchCriteriaVal")
 	WebElement divSearchCriteria;
@@ -114,6 +114,7 @@ public class SearchRemittance extends paymentSummary {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+		
 	}
 	
 	
@@ -124,8 +125,8 @@ public class SearchRemittance extends paymentSummary {
 		
 		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 		{
-			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
-			Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromUI());			  
+//			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromCSRUI());			  
 		 }
 		else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
@@ -593,11 +594,14 @@ public class SearchRemittance extends paymentSummary {
 	   if(totalNoOfPages>2)
 		 totalNoOfPages=1;
 		   
+	   if(divSearchResults.size()==0)
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 	   
 	   Log.Comment("Fetching all payments From UI..");
 	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
+		   
 			for(int i=2;i<divSearchResults.size();i++)
 		    {
 			   innerMap=new LinkedHashMap<String,String>();
@@ -642,6 +646,93 @@ public class SearchRemittance extends paymentSummary {
 	   
     }
 	
+	
+	
+	public Map<String,LinkedHashMap<String,String>> getPaymentDetailsFromCSRUI()
+	{	   
+	   /**Gets headers List which will be key for following map*/
+		
+	   LinkedHashMap<String,String> innerMap;
+	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	   ArrayList<String> headers=getHeadersFromResultTable();
+	   
+	   int totalNoOfPages=getNumberOfPages();
+	   
+	   if(totalNoOfPages>2)
+		 totalNoOfPages=1;
+		   
+	   if(divSearchResults.size()==0)
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	   
+	   Log.Comment("Fetching all payments From UI..");
+	   
+	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+		   
+			for(int i=1;i<divSearchResults.size();i++)
+		    {
+			   innerMap=new LinkedHashMap<String,String>();
+			   
+			   for(int j=0;j<headers.size();j++)
+			    {	
+			     String details=divSearchResults.get(i).findElements(By.tagName("td")).get(j).getText();
+			     details=details.replace("\n", "");
+			     
+			     System.out.println(headers.get(j));
+			     
+			     if(headers.get(j).equals("Payment Status/Trace Number"))
+			    	 innerMap.put(headers.get(j), divSearchResults.get(i).findElements(By.tagName("td")).get(13).getText());
+			     else if(headers.get(j).equals("Market Type"))
+			    	 innerMap.put(headers.get(j),divSearchResults.get(i).findElements(By.tagName("td")).get(15).getText());
+			     else
+			     innerMap.put(headers.get(j), details);	
+			    }
+			  
+			   if(innerMap.get("Claim Amount")!=null)
+			   {
+			   String amount=innerMap.get("Claim Amount").replace(",", "");
+			   innerMap.put("Claim Amount", amount);
+			   }
+			   else 
+			   {
+				   String amount=innerMap.get("Amount").replace(",", "");
+				   innerMap.put("Amount", amount); 
+			   }
+			   innerMap.remove("Redemption Date");
+			   innerMap.remove("Payment Status/Trace Number");
+			   innerMap.remove("Proxy Number");
+			   innerMap.remove("Payer"); 
+			   innerMap.remove("835 / EPRA");
+			   innerMap.remove("Payer PRA");
+			   innerMap.remove("Returned Reason");
+			   innerMap.remove("Archive");
+			   outerMap.put(divSearchResults.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+		    }
+			  
+			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			    {   
+				   int pageToBeClicked=pageNo+1;
+				   WebElement pageLink= Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]");
+				   if(pageLink!=null)
+					   pageLink.click();
+				   else
+				   Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				   Log.Comment("Clicked Page number : " + pageToBeClicked);
+				   Browser.wait(testConfig, 3);
+			     }
+			  else if(pageNo%10==0 && totalNoOfPages!=2)
+				 {
+				       Browser.wait(testConfig,1);
+					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+			           Element.click(lnkNextPage,"Next Link");
+			           Browser.wait(testConfig,3);
+			           pageNo++;
+			     }
+		 }
+		Log.Comment("Details from UI is : " +'\n' +outerMap);
+		return outerMap;
+	   
+    }
 	/**
 	 * Get Headers List till Market Type
 	 * to store them as key in map
@@ -680,27 +771,48 @@ public class SearchRemittance extends paymentSummary {
 			
 			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
 			patientName=patientName.replace("null", "").trim();
-			innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-dd-mm", "dd-mm-yyyy")));
-		    if(payments[i].getNationalProviderIdentifier()!=null)
+
+			
+			if(payments[i].getClaimDate()!=null)
+			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			else 
+			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
+		  
+			if(payments[i].getNationalProviderIdentifier()!=null)
 		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
 			else 
 			innerMap.put("NPI",""); 
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
-			innerMap.put("Patient Name",patientName);
+//			if(patientName!="")
+//			innerMap.put("Patient Name",patientName);
+			if(payments[i].getSubscriberIdentifier()!=null)
 			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
-			innerMap.put("Account Number","0");
-			innerMap.put("Claim #",payments[i].getClaimIdentifier());
 			
-			if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
-			innerMap.put("Claim Amount","$"+"0.00");
-			else
-			{
+//			innerMap.put("Account Number","0");
+			
+			if(payments[i].getClaimIdentifier()!=null)
+			 {
+			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
+			
+			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   innerMap.put("Claim Amount","$"+"0.00");
+			   else
+			  {
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
 			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
 			    innerMap.put("Claim Amount","$"+ amount);
+			  }
 			}
+			else
+			{
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    innerMap.put("Amount","$"+ amount);
+			}
+				
+				
  			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
- 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
+// 			innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			outerMap.put(innerMap.get("Payment Number"), innerMap);
 		 }
