@@ -112,6 +112,26 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDateOfPaymentAndZeroPmntClms":
  			 sqlRowNo=47;
  			 break;
+ 			 
+ 		case "byDateOfServiceAndAcntNo":
+			 sqlRowNo=41;
+			 break;
+			 
+		case "byDateOfServiceAndSubscriberId":
+			sqlRowNo=41;
+			break;
+			
+		case "byDateOfServiceAndNpi":
+			sqlRowNo=41;
+			break;
+			
+		case "byDateOfServiceAndClmNo":
+			sqlRowNo=41;
+			break;
+			
+		case "byDateOfServiceAndZeroPmntClms":
+			sqlRowNo=47;
+			break;
  		   
  		case "byElectronicPmt":
  			sqlRowNo=48;
