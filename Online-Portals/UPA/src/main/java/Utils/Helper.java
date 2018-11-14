@@ -678,6 +678,7 @@ public class Helper
 	}
 	
 	
+	
 	public static Map<String, String> getStartAndEndPeriod(String argPeriod) {
 		
 		Map<String, String> startAndEndDatesMap = new HashMap<String, String>();
@@ -2040,16 +2041,16 @@ return previousDate.getTime();
 //	}
 	
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
-	{
+	{	
 		try{
 		Set<String> expectedKeys = expected.keySet();	
 		for (String key : expectedKeys) 
 		{
+			Log.Comment('\n' + "Comparing results for Payment Number :" + " " + key + '\n');
 	    	 if(expected.get(key).keySet() != null)
 	    	  {
 	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
 	    		 { 
-	    			 System.out.println("Actual equals expectd");
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
 	    	    	 if(expected.get(key).get(expectedInternalKey).equals(actual.get(key).get(expectedInternalKey)))
@@ -2058,13 +2059,18 @@ return previousDate.getTime();
 	    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    		      }
 	    		  }
+	    		 else
+	    		 {
+	    			 Log.Fail("Expected and actual Key dows not match " + '\n' + "Expected Key set was : " + expected.get(key).keySet() + "whereas Actual keyset is :" + actual.get(key).keySet() );
+	    		 }
 	    	  }
 		}
 	}	 
 		catch (Exception e) {
-			Log.Comment("Exception" + e);
+			Log.Fail("Unable to compare maps due to Exception " +'\n' + e );
 		}
 	}
+		
 	
 	public static String separateListValues(List<String> list,String separator)
 	{
@@ -2074,36 +2080,37 @@ return previousDate.getTime();
 		return listOfString.toString();
 	}
 	
-	
 	public static String getDateBeforeOrAfterDays(int days, String OLD_FORMAT, String NEW_FORMAT, String date)
 	{
 
-		String newDateString = null;
-		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-		Date d = null;
-		try
-		{
-			d = sdf.parse(date);
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		sdf.applyPattern(NEW_FORMAT);
-		newDateString = sdf.format(d);
-		Calendar c = Calendar.getInstance();
-		try
-		{
-			c.setTime(sdf.parse(newDateString));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		c.add(Calendar.DATE, days); // number of days to add
-		return sdf.format(c.getTime()); // dt is now the new date
+	String newDateString = null;
+	SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+	Date d = null;
+	try
+	{
+	d = sdf.parse(date);
+	}
+	catch (ParseException e)
+	{
+	e.printStackTrace();
+	}
+	sdf.applyPattern(NEW_FORMAT);
+	newDateString = sdf.format(d);
+	Calendar c = Calendar.getInstance();
+	try
+	{
+	c.setTime(sdf.parse(newDateString));
+	}
+	catch (ParseException e)
+	{
+	e.printStackTrace();
+	}
+	c.add(Calendar.DATE, days); // number of days to add
+	return sdf.format(c.getTime()); // dt is now the new date
 
 	}
 	
 }
+	
+
 
