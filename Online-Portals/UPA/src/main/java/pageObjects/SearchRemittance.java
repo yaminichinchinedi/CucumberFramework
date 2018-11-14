@@ -31,11 +31,14 @@ import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
 import main.java.api.pojo.*;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class SearchRemittance extends TestBase {
+
+public class SearchRemittance {
+	
 	
 	@FindBy(xpath="//td[@class='errors']")
 	WebElement errorMsg;
@@ -94,7 +97,11 @@ public class SearchRemittance extends TestBase {
 	
 	@FindBy(linkText = "Archive")
 	WebElement lnkArchive;
-
+	
+	@FindBy(id = "saveArchive")
+	WebElement btnSaveArchive;
+	private TestBase testConfig;
+	static int flag=0;
 	public SearchRemittance(TestBase testConfig)
 	{
 		this.testConfig=testConfig;
@@ -151,7 +158,7 @@ public class SearchRemittance extends TestBase {
 */	
 	public Object createRequest(String requestType) throws JAXBException
 	{
-	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(requestType);
+	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 	   return epsPaymentsSearchRequest;
 	}
@@ -171,7 +178,7 @@ public class SearchRemittance extends TestBase {
 	
 	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-	EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(requestType); //need to pass type of Request here
+	EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(); //need to pass type of Request here
 	/**Creates POJO for Request.xml so that we can modify the elements*/
 
 	EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest(requestType);
@@ -291,7 +298,9 @@ public class SearchRemittance extends TestBase {
 	public int getColumnNo(String colName)
 	{
 		int colNumber=0;
+		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int colSize=divSearchResults.get(0).findElements(By.tagName("td")).size();
+		
 		for(int i=0;i<colSize;i++)
 		{
 			String actualColName=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
@@ -310,13 +319,29 @@ public class SearchRemittance extends TestBase {
 		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int noOfRows = divSearchResults.size();
 		int colNumber=getColumnNo(colName);
+		boolean p=true;
 		
 		if(colName.equals("Archive"))
 			for (int i=2; i<noOfRows; i++) 
 			{
+				p=true;
+				divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 				Map attMap=Element.getAllAttributes(testConfig, divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")), "Access Level Attributes");
 				String result=(String)attMap.get("CHECKED");
-				list.add(result);
+				if(result==null)
+					result=attMap.containsKey("checked")?"true":"false";
+				if(result.equals("false") && flag==0)
+				{
+					p=false;
+					divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")).click();
+					Browser.wait(testConfig, 1);
+					btnSaveArchive.click();
+					Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+					i=1;
+				}
+				flag=1;
+				if(p)
+					list.add(result);
 			}
 		else
 			for (int i=2; i<noOfRows; i++)
@@ -374,9 +399,11 @@ public class SearchRemittance extends TestBase {
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
 					listString = getColumnValueS(colName);
+					System.out.println(listString);
 					Collections.sort(listString);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+					Browser.wait(testConfig, 3);
 					actualListString = getColumnValueS(colName);					
 					Helper.compareEquals(testConfig, colName, listString, actualListString);
 
@@ -385,6 +412,7 @@ public class SearchRemittance extends TestBase {
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString.clear();
+					Browser.wait(testConfig, 3);
 					actualListString = getColumnValueS(colName);
 					Helper.compareEquals(testConfig, colName, listString, actualListString);
 					break;
@@ -392,10 +420,12 @@ public class SearchRemittance extends TestBase {
 		case "NPI":
 					List<Long> listInteger = new ArrayList<Long>();
 					List<Long> actualListInteger = new ArrayList<Long>();
+					Browser.wait(testConfig, 3);
 					listInteger = getColumnValueI(colName);
 					Collections.sort(listInteger);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");					
+					Browser.wait(testConfig, 3);
 					actualListInteger = getColumnValueI(colName);
 					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
 					Helper.compareEquals(testConfig, colName, listInteger,	actualListInteger);
@@ -404,6 +434,7 @@ public class SearchRemittance extends TestBase {
 					Collections.sort(listInteger, Collections.reverseOrder());
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+					Browser.wait(testConfig, 3);
 					actualListInteger = getColumnValueI(colName);
 					Helper.compareEquals(testConfig, colName, listInteger, actualListInteger);
 					break;
@@ -411,10 +442,12 @@ public class SearchRemittance extends TestBase {
 		case "Claim Amount":
 					List<Double> listDouble = new ArrayList<Double>();
 					List<Double> actualListDouble = new ArrayList<Double>();
+					Browser.wait(testConfig, 3);
 					listDouble = getColumnValueD(colName);
 					Collections.sort(listDouble);
 					Element.clickByJS(testConfig, lnkClaimAmount, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+					Browser.wait(testConfig, 3);
 					actualListDouble = getColumnValueD(colName);
 					Helper.compareEquals(testConfig, colName, listDouble,actualListDouble);
 
@@ -422,6 +455,7 @@ public class SearchRemittance extends TestBase {
 					Collections.sort(listDouble, Collections.reverseOrder());
 					Element.clickByJS(testConfig, lnkClaimAmount,colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+					Browser.wait(testConfig, 3);
 					actualListDouble = getColumnValueD(colName);					
 					Helper.compareEquals(testConfig, colName, listDouble, actualListDouble);
 					break;
@@ -442,16 +476,21 @@ public class SearchRemittance extends TestBase {
 					});
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+				Browser.wait(testConfig, 3);
 				actualListString = getColumnValueS(colName);
 				Helper.compareEquals(testConfig, colName, listString,actualListString);
 				
 				// now sorting in descending order		
+				
 				Collections.reverse(listString);
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
-				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+				Browser.wait(testConfig, 3);
+				actualListString.clear();
 				actualListString = getColumnValueS(colName);
 				Helper.compareEquals(testConfig, colName, listString,actualListString);
 				break;
+			default:
+				Log.Comment("Invalid Sorting Criteria");
 		}
 	}
 

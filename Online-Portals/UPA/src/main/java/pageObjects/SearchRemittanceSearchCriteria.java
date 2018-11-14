@@ -100,8 +100,27 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(id="allMarketTypeId")
 	WebElement allMarketType;
 	
-	@FindBy(xpath = ".//*[@id='errorswarning']//table//tr")
-	List<WebElement> errorMsg;
+	@FindBy(xpath = "//font[contains(text(),'Start Date')]")
+	WebElement strtDateErrorMsg;
+	
+	@FindBy(xpath = "//font[contains(text(),'End Date')]")
+	WebElement endDateErrorMsg;
+	
+	@FindBy(xpath = "//font[contains(text(),'Date(s) of Service')]")
+	WebElement DOSErrorMsg;
+	
+	@FindBy(xpath = "//font[contains(text(),'Date(s) of Payment')]")
+	WebElement POSErrorMsg;
+	
+	@FindBy(name="taxIdNbr")
+	WebElement txtboxTinNo;
+	
+	@FindBy(xpath=".//*[@class='Subheaderbold']//input[2]")
+	WebElement btnSearch;
+	//font[contains(text(),'Date(s) of Service')]
+	
+//	.//*[@id='errorswarning']//table//tr
+	
 	
 	Map data;
 	
@@ -109,6 +128,7 @@ public class SearchRemittanceSearchCriteria {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+//		Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
 	}
 	
 	public SearchRemittance doSearch(String criteriaType) throws ParseException {
@@ -130,7 +150,7 @@ public class SearchRemittanceSearchCriteria {
 		    {
 		    	data=dataProvider(criteriaType);
 		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Select payment number type");
-		    	Element.click(checkNumber, "Selecting Filter Criteria");
+		    	Element.clickByJS(testConfig, checkNumber, "Selecting Filter Criteria");
 		    	Element.enterData(checkNumber, data.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");		    	
 		    	break;		    	
 		    }
@@ -140,7 +160,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
-		    	clickFromDateIcon(criteriaType).setDate("07/03/2017", criteriaType).clickToDateIcon(criteriaType).setDate("07/31/2017", criteriaType);
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
 		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;		    	
 		    }
@@ -154,7 +174,7 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
 		    	testConfig.putRunTimeProperty("value", "ALL");		    	
 		    	clickFromDateIcon(criteriaType).setDate(fromDate, criteriaType).clickToDateIcon(criteriaType).setDate(toDate, criteriaType);
-		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
 		    	break;		    	
 		    }
 		    
@@ -246,7 +266,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDateOfPaymentAndPtntNm":
 		    {
-		    	int sqlRow = 46;
+		    	int sqlRow = 51;
 		    	String date = null;
 		    	String fstNm, lstNm;
 		    	Map srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -609,29 +629,40 @@ public class SearchRemittanceSearchCriteria {
 		
 		public void verifyErrorMsgs()
 		{
-			String expectedMsg="Start Date should not be earlier than the rolling 13 months.";
 			
-	    	//by date of Payment before 14 month
-	    	clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-470,"MM/dd/yyyy"), "byDateOfPayment");
+			//by date of Payment for date range more than 30 days
+			String expectedMsg="Date(s) of Payment date range must be 30 days or less";
+	    	clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfPayment");
 	    	selectPayer("UnitedHealthcare");
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
-	    	
+	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,POSErrorMsg.getText());
+			
 	    	//now by date of service for date range more than 30 days
 	    	expectedMsg="Date(s) of Service date range must be 30 days or less";
 	    	clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfService");
 	    	selectPayer("UnitedHealthcare");
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
+	    	Element.expectedWait(DOSErrorMsg, testConfig, "Date of Service Error message" , "Date of Service Error message");
+	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,DOSErrorMsg.getText());
 	    	
-	    	//by date of Payment for date range more than 30 days
-	    	expectedMsg="Date(s) of Payment date range must be 30 days or less";
-	    	clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfPayment");
-	    	selectPayer("UnitedHealthcare");	
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
+	    	//by date of Payment before 14 month
+	    	expectedMsg="Start Date should not be earlier than the rolling 13 months.";
+			clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-470,"MM/dd/yyyy"), "byDateOfPayment");
+	    	selectPayer("UnitedHealthcare");
+	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,strtDateErrorMsg.getText());
 	    	
-	    	
+	    	expectedMsg="End Date should not be earlier than the rolling 13 months.";
+	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,endDateErrorMsg.getText());
+
 	    	//now by date of service before 14 month    	
 	    	clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService");
 	    	Element.selectByVisibleText(payer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
 	    	clickSearchBtn();
 		}
+		public SearchRemittanceSearchCriteria selectTin()
+		{
+			Element.enterData(txtboxTinNo, "351588869"/*getTin(paymentType)*/, "Enter Tin to proceed for View Payments", "Tin Textbox");
+			Element.click(btnSearch, "Search button Clicked");
+			return this;
+		}
+		
+		
 }
