@@ -28,10 +28,8 @@ public class TestCSRSearchRemittance extends TestBase {
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
-		srchTinPage.enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySearchResults(criteriaType);	
       }
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
@@ -47,6 +45,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
       }
+	
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByDateOfService() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException

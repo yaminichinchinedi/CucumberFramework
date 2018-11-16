@@ -110,8 +110,7 @@ public class SearchRemittance extends paymentSummary {
 
 	public SearchRemittance(TestBase testConfig)
 	{
-		super();
-//		super(testConfig,true);
+		super(testConfig,true);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
@@ -861,9 +860,7 @@ public class SearchRemittance extends paymentSummary {
 			
 			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
 			patientName=patientName.replace("null", "").trim();
-			System.out.println("Patient name is " + patientName);
 
-			
 			if(payments[i].getClaimDate()!=null)
 			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
 			else 
