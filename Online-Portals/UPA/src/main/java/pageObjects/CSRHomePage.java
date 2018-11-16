@@ -98,7 +98,7 @@ public class CSRHomePage {
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
     {
-           Element.click(lnkViewPayments, "View Payments");
+           Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
     }
     

@@ -154,6 +154,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
+	public paymentSummary() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * Sets quick search date range filter
 	 * for the passed tin

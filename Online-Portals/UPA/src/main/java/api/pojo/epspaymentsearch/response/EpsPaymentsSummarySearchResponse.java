@@ -31,35 +31,4 @@ public class EpsPaymentsSummarySearchResponse
         return EpsConsolidatedClaimPaymentSummaries;
     }
   
-  
-  
-  
- 
-	
 }
-
-	
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-//	(namespace:uri="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/"
-//			+ "\EpsPaymentMaintenanceService_v1_0" | EpsConsolidatedClaimPaymentSummaries?)*
-//	
-//	
-//
-//}
-//"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0" xmlns:ns0=
-//		"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0" 
-//		xmlns:ns2="http://enterprise.optum.com/schema/cim/common/Identifier_v1_0" 
-//		xmlns:ns3="http://enterprise.optum.com/schema/cim/common/Payment_v1_0" 
-//		xmlns:ns4="http://enterprise.optum.com/schema/cim/common/Common_v1_0" 
-//		xmlns:ns5="http://enterprise.optum.com/schema/cim/common/Code_v1_0" 
-//		xmlns:ns8="http://enterprise.optum.com/schema/cim/common/Payer_v1_0">
-

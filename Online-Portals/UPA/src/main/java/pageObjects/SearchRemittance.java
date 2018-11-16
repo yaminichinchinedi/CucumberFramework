@@ -1,17 +1,21 @@
 package main.java.pageObjects;
 
+import groovy.transform.AutoClone;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,18 +31,19 @@ import org.xml.sax.SAXException;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
+import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
 import main.java.api.pojo.*;
+import main.java.api.pojo.epspaymentsearch.response.EpsConsolidatedClaimPaymentSummaries;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
+import main.java.reporting.LogTemp;
 
-
-public class SearchRemittance {
-	
+public class SearchRemittance extends paymentSummary {
 	
 	@FindBy(xpath="//td[@class='errors']")
 	WebElement errorMsg;
@@ -47,8 +52,8 @@ public class SearchRemittance {
 	WebElement recordCount;
 	
 	//amit
-	@FindBy(xpath = "//div[@id='SearchHeader']//table//tr") // .//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table
-	List<WebElement> divSearchResults;
+	@FindBy(xpath = "//div[@id='SearchHeader']//table//tr") 
+	public List<WebElement> divSearchResults;
 
 	@FindBy(id = "SearchCriteriaVal")
 	WebElement divSearchCriteria;
@@ -56,7 +61,7 @@ public class SearchRemittance {
 	@FindBy(xpath ="//input[@value='Print Search Results']")
 	WebElement btnPrinttSearchResult;
 
-	@FindBy(linkText = "Next Page") //xpath =".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[1]"
+	@FindBy(linkText = "Next Page") 
 	WebElement lnkNextPage;
 	
 	@FindBy(linkText = "Last Page") 
@@ -98,153 +103,115 @@ public class SearchRemittance {
 	@FindBy(linkText = "Archive")
 	WebElement lnkArchive;
 	
-	@FindBy(id = "saveArchive")
-	WebElement btnSaveArchive;
+	@FindBy(xpath="//tr[@class='columnHeaderText']")
+	List<WebElement> searchResultsHeaderRow;
+	
 	private TestBase testConfig;
-	static int flag=0;
+
 	public SearchRemittance(TestBase testConfig)
 	{
+		super();
+//		super(testConfig,true);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		
-		//amit
 		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+		
 	}
-	
 	
 	
 	public void verifySearchResults(String requestType) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		System.out.println("Inside Verify Search Results");
-		//Verifies Record count displayed on UI is same as we get from FISL		
-		if(!getRecordCountFromFISL(requestType).equalsIgnoreCase("0"))
+		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
+		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
+		
+		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
-			
-			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",getRecordCountFromFISL(requestType),getRecordCountFromUI());
-			
-			//Helper.compareMaps(testConfig, "Payments Details Comparison from FISL and UI : " + "<br>",getPaymentDetailsFromFISL(), getPaymentDetailsFromUI());			  
-		 }
-		else
+		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
+		   {
+			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromUI());	
+		  }
+		  else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
-		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(requestType),getRecordCountFromDB(requestType));
+//		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
+		}
+		else 
+			verifyPaymentDetailsForCSR(requestType,searchResponse);
      }
 	
-	public String getRecordCountFromFISL(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
-	{
-		EpsPaymentsSummarySearchResponse responseFromFISL=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
-		return responseFromFISL.getResponseReturnStatus().getTotalCount().trim(); 
-	}
 	
-	/*public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public void verifyPaymentDetailsForCSR(String requestType,EpsPaymentsSummarySearchResponse searchResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
-		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-		*//**Creates POJO for Request.xml so that we can modify the elements*//*
+		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
+		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
+		  Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISLForCSR(searchResponse), getPaymentDetailsFromCSRUI());	
+		else
+		  Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
+		 
+		//Queries to be modified by Abhinav
+		//Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
 		
-		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
-		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
-		setToAndFromDate(epsPaymentsSearchRequest);
-		setMapEntryKey(epsPaymentsSearchRequest);
-		*//**Posting the modified request and getting response*//*
-		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
-		return searchResponse;
-	}*/
-	
-/*	public Object createRequest() throws JAXBException
-	{
-	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
-	   return epsPaymentsSearchRequest;
 	}
-*/	
+	
+	
 	public Object createRequest(String requestType) throws JAXBException
 	{
-	   EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-	   EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
-	   return epsPaymentsSearchRequest;
+		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
+	    EpsPaymentsSearchRequest epsSearchRemittanceSearchRequest=epsSearchRemittanceRequestHelper.createRequestPojo();
+	   return epsSearchRemittanceSearchRequest;
 	}
 
 	public EpsPaymentsSearchRequest setServiceData(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		System.out.println(testConfig.getRunTimeProperty("appIdentifier"));
-		System.out.println(testConfig.getRunTimeProperty("version"));
-		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier(testConfig.getRunTimeProperty("appIdentifier"));
-		((EpsPaymentsSearchRequest) object).getServiceData().setVersion(testConfig.getRunTimeProperty("version"));
-		
-//		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
-//		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
+		((EpsPaymentsSearchRequest) object).getServiceData().setApplicationIdentifier("EPS");
+		((EpsPaymentsSearchRequest) object).getServiceData().setVersion("1.0");
 		
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
 	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-	EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper(); //need to pass type of Request here
-	/**Creates POJO for Request.xml so that we can modify the elements*/
+		/**Creates POJO for Request.xml so that we can modify the elements*/
+		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
+		EpsPaymentsSearchRequest epsSearchRemittanceSearchRequest=epsSearchRemittanceRequestHelper.createRequestPojo();
+		
+		/**set the request data*/
+		epsSearchRemittanceSearchRequest=setTinNumber(epsSearchRemittanceSearchRequest);
+		
+		if(requestType.equals("byDOP&PatientName")||requestType.equals("byElectronicPaymentNo"))
+			setMapEntryKey2(epsSearchRemittanceSearchRequest);
+		
+	    setMapEntryKey(epsSearchRemittanceSearchRequest);
+	    setServiceData(epsSearchRemittanceSearchRequest);
+	    if(requestType=="byDOS") 
+			setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
+		else
+			setToAndFromDate(epsSearchRemittanceSearchRequest);
 
-	EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest(requestType);
-	epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
-	if(requestType=="byDateOfService") {
-		setToAndFromDateDOS(epsPaymentsSearchRequest);
-	}else {
-		setToAndFromDate(epsPaymentsSearchRequest);
-	}
-	setMapEntryKey(epsPaymentsSearchRequest);
-	setServiceData(epsPaymentsSearchRequest);
-
-	/**Posting the modified request and getting response*/
-	EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
-	return searchResponse;
+	    /**Posting the modified request and getting response*/
+	    EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
+	    return searchResponse;
 	}
 	
-	public EpsPaymentsSearchRequest setToAndFromDate(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
-	{
-		System.out.println("From date is" + testConfig.getRunTimeProperty("fromDate"));
-		
-		System.out.println("To date is" + testConfig.getRunTimeProperty("toDate"));
-		
-		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
-		
-		
-		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
-		return (EpsPaymentsSearchRequest) object;
-	}
 	
 	public EpsPaymentsSearchRequest setToAndFromDateDOS(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		System.out.println(testConfig.getRunTimeProperty("fromDate"));
-		System.out.println(testConfig.getRunTimeProperty("toDate"));
-		
 		((EpsPaymentsSearchRequest) object).getClaimServiceDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
-		((EpsPaymentsSearchRequest) object).getClaimServiceDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
-		
+		((EpsPaymentsSearchRequest) object).getClaimServiceDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));	
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
-	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public EpsPaymentsSearchRequest setMapEntryKey1(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		System.out.println(testConfig.getRunTimeProperty("tin"));
-	   ((EpsPaymentsSearchRequest) object).setTaxIdentifierNumber(testConfig.getRunTimeProperty("tin").trim());	
-		return (EpsPaymentsSearchRequest) object;
-	}
-	
-	
-	
-	
-	public EpsPaymentsSearchRequest setTaxIdentifierType(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
-	{
-		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("taxIdentifierType"));
-		return (EpsPaymentsSearchRequest) object;
-	}
-	
-	public EpsPaymentsSearchRequest setMapEntryKey(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
-	{
-		System.out.println(testConfig.getRunTimeProperty("key"));
-		System.out.println(testConfig.getRunTimeProperty("value"));
-		System.out.println(testConfig.getRunTimeProperty("key1"));
-		System.out.println(testConfig.getRunTimeProperty("value1"));
-		
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+
+		return (EpsPaymentsSearchRequest) object;
+	}
+	
+	
+	public EpsPaymentsSearchRequest setMapEntryKey2(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
 		
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setKey(testConfig.getRunTimeProperty("key1"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setValue(testConfig.getRunTimeProperty("value1"));
@@ -252,25 +219,8 @@ public class SearchRemittance {
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
-	public String getRecordCountFromUI()
-	{
-		try
-		{
-			String recordCountElement[]=recordCount.getText().split(":");
-			return recordCountElement[recordCountElement.length-1].trim();
-		}
-		
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured : " + e);
-			return null;
-		}
-	    
-	}
-	
 	public String getRecordCountFromDB(String requestType)
 	{
-		//int sqlRowNo=4;
 		int totalRecord=0;
 		List<String> schemas=Arrays.asList("PP001");
 		int sqlRowNo=34;
@@ -294,13 +244,16 @@ public class SearchRemittance {
 		return String.valueOf(totalRecord);	
 	}
 	
-	//amit
+	
+	/**
+	 * @author- amit
+	 * @param colName
+	 * @return
+	 */
 	public int getColumnNo(String colName)
 	{
 		int colNumber=0;
-		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int colSize=divSearchResults.get(0).findElements(By.tagName("td")).size();
-		
 		for(int i=0;i<colSize;i++)
 		{
 			String actualColName=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
@@ -319,29 +272,13 @@ public class SearchRemittance {
 		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int noOfRows = divSearchResults.size();
 		int colNumber=getColumnNo(colName);
-		boolean p=true;
 		
 		if(colName.equals("Archive"))
 			for (int i=2; i<noOfRows; i++) 
 			{
-				p=true;
-				divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 				Map attMap=Element.getAllAttributes(testConfig, divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")), "Access Level Attributes");
 				String result=(String)attMap.get("CHECKED");
-				if(result==null)
-					result=attMap.containsKey("checked")?"true":"false";
-				if(result.equals("false") && flag==0)
-				{
-					p=false;
-					divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")).click();
-					Browser.wait(testConfig, 1);
-					btnSaveArchive.click();
-					Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
-					i=1;
-				}
-				flag=1;
-				if(p)
-					list.add(result);
+				list.add(result);
 			}
 		else
 			for (int i=2; i<noOfRows; i++)
@@ -399,11 +336,9 @@ public class SearchRemittance {
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
 					listString = getColumnValueS(colName);
-					System.out.println(listString);
 					Collections.sort(listString);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					Browser.wait(testConfig, 3);
 					actualListString = getColumnValueS(colName);					
 					Helper.compareEquals(testConfig, colName, listString, actualListString);
 
@@ -412,7 +347,6 @@ public class SearchRemittance {
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString.clear();
-					Browser.wait(testConfig, 3);
 					actualListString = getColumnValueS(colName);
 					Helper.compareEquals(testConfig, colName, listString, actualListString);
 					break;
@@ -420,12 +354,10 @@ public class SearchRemittance {
 		case "NPI":
 					List<Long> listInteger = new ArrayList<Long>();
 					List<Long> actualListInteger = new ArrayList<Long>();
-					Browser.wait(testConfig, 3);
 					listInteger = getColumnValueI(colName);
 					Collections.sort(listInteger);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");					
-					Browser.wait(testConfig, 3);
 					actualListInteger = getColumnValueI(colName);
 					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
 					Helper.compareEquals(testConfig, colName, listInteger,	actualListInteger);
@@ -434,7 +366,6 @@ public class SearchRemittance {
 					Collections.sort(listInteger, Collections.reverseOrder());
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					Browser.wait(testConfig, 3);
 					actualListInteger = getColumnValueI(colName);
 					Helper.compareEquals(testConfig, colName, listInteger, actualListInteger);
 					break;
@@ -442,12 +373,10 @@ public class SearchRemittance {
 		case "Claim Amount":
 					List<Double> listDouble = new ArrayList<Double>();
 					List<Double> actualListDouble = new ArrayList<Double>();
-					Browser.wait(testConfig, 3);
 					listDouble = getColumnValueD(colName);
 					Collections.sort(listDouble);
 					Element.clickByJS(testConfig, lnkClaimAmount, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					Browser.wait(testConfig, 3);
 					actualListDouble = getColumnValueD(colName);
 					Helper.compareEquals(testConfig, colName, listDouble,actualListDouble);
 
@@ -455,7 +384,6 @@ public class SearchRemittance {
 					Collections.sort(listDouble, Collections.reverseOrder());
 					Element.clickByJS(testConfig, lnkClaimAmount,colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					Browser.wait(testConfig, 3);
 					actualListDouble = getColumnValueD(colName);					
 					Helper.compareEquals(testConfig, colName, listDouble, actualListDouble);
 					break;
@@ -476,21 +404,16 @@ public class SearchRemittance {
 					});
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-				Browser.wait(testConfig, 3);
 				actualListString = getColumnValueS(colName);
 				Helper.compareEquals(testConfig, colName, listString,actualListString);
 				
 				// now sorting in descending order		
-				
 				Collections.reverse(listString);
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
-				Browser.wait(testConfig, 3);
-				actualListString.clear();
+				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 				actualListString = getColumnValueS(colName);
 				Helper.compareEquals(testConfig, colName, listString,actualListString);
 				break;
-			default:
-				Log.Comment("Invalid Sorting Criteria");
 		}
 	}
 
@@ -602,6 +525,7 @@ public class SearchRemittance {
 	
 	public void verifyreturnedReasonDisplayed(String criteriaType,String portalName)
 	{
+		System.out.println(System.getProperty("testSuite"));
 		switch(portalName)
 		{
 			case "CSR":
@@ -668,6 +592,326 @@ public class SearchRemittance {
 			Element.clickByJS(testConfig, lnkLastPage, "Last Page");
 		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
 	}
+	
+	
+	/**
+	 * This function creates an outer map 
+	 * with Key as payment number
+	 * and  Value as another hash map i.e. inner map
+	 * that contains all the details for key 
+	 * like payer name, amount etc
+	 * @return Outer map
+	 */	
+	public Map<String,LinkedHashMap<String,String>> getPaymentDetailsFromUI()
+	{	   
+	   /**Gets headers List which will be key for following map*/
+		
+	   LinkedHashMap<String,String> innerMap;
+	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	   ArrayList<String> headers=getHeadersFromResultTable();
+	   
+	   int totalNoOfPages=getNumberOfPages();
+	   
+	   if(totalNoOfPages>2)
+		 totalNoOfPages=1;
+		   
+	   if(divSearchResults.size()==0)
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	   
+	   Log.Comment("Fetching all payments From UI..");
+	   
+	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+		   
+			for(int i=2;i<divSearchResults.size();i++)
+		    {
+			   innerMap=new LinkedHashMap<String,String>();
+			   
+			   for(int j=0;j<headers.size();j++)
+			    {	
+			     String details=divSearchResults.get(i).findElements(By.tagName("td")).get(j).getText();
+			     details=details.replace("\n", "");
+			     innerMap.put(headers.get(j), details);										
+			    }
+			  
+			   String amount=innerMap.get("Claim Amount").replace(",", "");
+			   innerMap.put("Claim Amount", amount);
+			   innerMap.remove("Redemption Date");
+			   innerMap.remove("Proxy Number");
+			   innerMap.remove("Payer");
+			   outerMap.put(divSearchResults.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+		    }
+			  
+			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			    {   
+				   int pageToBeClicked=pageNo+1;
+				   WebElement pageLink= Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]");
+				   if(pageLink!=null)
+					   pageLink.click();
+				   else
+				   Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				   Log.Comment("Clicked Page number : " + pageToBeClicked);
+				   Browser.wait(testConfig, 3);
+			     }
+			  else if(pageNo%10==0 && totalNoOfPages!=2)
+				 {
+				       Browser.wait(testConfig,1);
+					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+			           Element.click(lnkNextPage,"Next Link");
+			           Browser.wait(testConfig,3);
+			           pageNo++;
+			     }
+		 }
+		Log.Comment("Details from UI is : " +'\n' +outerMap);
+		return outerMap;
+	   
+    }
+	
+	
+	
+	public Map<String,LinkedHashMap<String,String>> getPaymentDetailsFromCSRUI()
+	{	   
+	   /**Gets headers List which will be key for following map*/
+		
+	   LinkedHashMap<String,String> innerMap;
+	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	   ArrayList<String> headers=getHeadersFromResultTable();
+	   
+	   int totalNoOfPages=getNumberOfPages();
+	   
+	   if(totalNoOfPages>2)
+		 totalNoOfPages=1;
+		   
+	   if(divSearchResults.size()==0)
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	   
+	   Log.Comment("Fetching all payments From UI..");
+	   
+	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+		   
+			for(int i=1;i<divSearchResults.size();i++)
+		    {
+			   innerMap=new LinkedHashMap<String,String>();
+			   
+			   for(int j=0;j<headers.size();j++)
+			    {	
+			     String details=divSearchResults.get(i).findElements(By.tagName("td")).get(j).getText();
+			     details=details.replace("\n", "");
+			     
+			     if(headers.get(j).equals("Payment Status/Trace Number"))
+			    	 innerMap.put(headers.get(j), divSearchResults.get(i).findElements(By.tagName("td")).get(13).getText());
+			     else if(headers.get(j).equals("Market Type"))
+			    	 innerMap.put(headers.get(j),divSearchResults.get(i).findElements(By.tagName("td")).get(15).getText());
+			     else
+			     innerMap.put(headers.get(j), details);	
+			    }
+			  
+			   if(innerMap.get("Claim Amount")!=null)
+			   {
+			   String amount=innerMap.get("Claim Amount").replace(",", "");
+			   innerMap.put("Claim Amount", amount);
+			   }
+			   else 
+			   {
+				   String amount=innerMap.get("Amount").replace(",", "");
+				   innerMap.put("Amount", amount); 
+			   }
+			   innerMap.remove("Redemption Date");
+			   innerMap.remove("Payment Status/Trace Number");
+			   innerMap.remove("Proxy Number");
+			   innerMap.remove("Payer"); 
+			   innerMap.remove("835 / EPRA");
+			   innerMap.remove("Payer PRA");
+			   innerMap.remove("Returned Reason");
+			   innerMap.remove("Archive");
+			   outerMap.put(divSearchResults.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+		    }
+			  
+			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			    {   
+				   int pageToBeClicked=pageNo+1;
+				   WebElement pageLink= Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]");
+				   if(pageLink!=null)
+					   pageLink.click();
+				   else
+				   Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				   Log.Comment("Clicked Page number : " + pageToBeClicked);
+				   Browser.wait(testConfig, 3);
+			     }
+			  else if(pageNo%10==0 && totalNoOfPages!=2)
+				 {
+				       Browser.wait(testConfig,1);
+					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+			           Element.click(lnkNextPage,"Next Link");
+			           Browser.wait(testConfig,3);
+			           pageNo++;
+			     }
+		 }
+		Log.Comment("Details from UI is : " +'\n' +outerMap);
+		return outerMap;
+	   
+    }
+	/**
+	 * Get Headers List till Market Type
+	 * to store them as key in map
+	 * @return HeaderList
+	 */
+	public ArrayList<String> getHeadersFromResultTable()
+	{
+	   List <String> headerList=new ArrayList<String>();
+	   for (int i=0;i<14;i++)
+	   {
+	     String header=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).get(i).getText();
+	     headerList.add(header);
+		}
+	return (ArrayList<String>) headerList;
+	   
+    }
+	
+	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISL(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	{
+		int totalPayments;
+		LinkedHashMap<String,String> innerMap;
+		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+		
+	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+			 totalPayments=30;
+		  else
+			totalPayments=payments.length;
+			
+		  for(int i=0;i<totalPayments;i++)
+		  {
+			 
+			innerMap=new LinkedHashMap<String, String>();
+			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			
+			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
+			patientName=patientName.replace("null", "").trim();
 
+			
+			if(payments[i].getClaimDate()!=null)
+			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			else 
+			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
+		  
+			if(payments[i].getNationalProviderIdentifier()!=null)
+		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
+			else 
+			innerMap.put("NPI",""); 
+			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
+			if(patientName!="")
+			innerMap.put("Patient Name",patientName);
+			if(payments[i].getSubscriberIdentifier()!=null)
+			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
+			
+			innerMap.put("Account Number","0");
+			
+			if(payments[i].getClaimIdentifier()!=null)
+			 {
+			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
+			
+			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   innerMap.put("Claim Amount","$"+"0.00");
+			   else
+			  {
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    innerMap.put("Claim Amount","$"+ amount);
+			  }
+			}
+			else
+			{
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    innerMap.put("Amount","$"+ amount);
+			}
+				
+				
+ 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+ 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
+			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			outerMap.put(innerMap.get("Payment Number"), innerMap);
+		 }
+		  
+		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 return outerMap;
+	}
+	
+	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISLForCSR(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	{
+		int totalPayments;
+		LinkedHashMap<String,String> innerMap;
+		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+		
+	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+			 totalPayments=30;
+		  else
+			totalPayments=payments.length;
+			
+		  for(int i=0;i<totalPayments;i++)
+		  {
+			 
+			innerMap=new LinkedHashMap<String, String>();
+			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			
+			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
+			patientName=patientName.replace("null", "").trim();
+			System.out.println("Patient name is " + patientName);
+
+			
+			if(payments[i].getClaimDate()!=null)
+			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			else 
+			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
+		  
+			if(payments[i].getNationalProviderIdentifier()!=null)
+		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
+			else 
+			innerMap.put("NPI",""); 
+			
+			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
+			
+//			if(patientName!="")
+//			innerMap.put("Patient Name",patientName);
+			
+			if(payments[i].getSubscriberIdentifier()!=null)
+			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
+			
+			
+			if(payments[i].getClaimIdentifier()!=null)
+			 {
+			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
+			
+			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   innerMap.put("Claim Amount","$"+"0.00");
+			   else
+			  {
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    innerMap.put("Claim Amount","$"+ amount);
+			  }
+			}
+			else
+			{
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    innerMap.put("Amount","$"+ amount);
+			}
+				
+				
+ 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+// 			innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			outerMap.put(innerMap.get("Payment Number"), innerMap);
+		 }
+		  
+		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 return outerMap;
+	}
 
 }

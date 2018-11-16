@@ -32,7 +32,7 @@ public class SearchTinPageSearchRemittance extends TestBase{
 	
 	public SearchTinPageSearchRemittance enterTin(String paymentType)
     {
-      Element.enterData(txtboxTinNo, /*paymentType*/getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
+      Element.enterData(txtboxTinNo,getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
       return this;
     }
 	

@@ -21,6 +21,12 @@ public class ViewPaymentsDataProvider {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
+	
+	//Default Constructor
+    public ViewPaymentsDataProvider() {
+		
+	}
+
 
    /**
    * This function is basically
@@ -67,45 +73,32 @@ public String getTinForPaymentType(String paymentType)
  		     sqlRowNo=36; 
  		     break;
  		     
- 		 case "byElectronicPaymentNumber":
+ 		 case "byElectronicPaymentNo":
  			sqlRowNo=39;
  			 break;
  			 
- 		 case "byCheckNumber":
+ 		 case "byCheckNo":
  			 sqlRowNo=39;
  			 break;
  			 
- 		 case "byDateOfService":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPayment":
-			 sqlRowNo=41;
-			 break;
-			 
+ 		 case "byDOS":
+ 		 case "byDOP":
  		 case "byDateOfPaymentAndAcntNo":
+ 		 case "byDateOfPaymentAndSubscriberId":
+ 		 case "byDateOfPaymentAndNpi":
+ 		 case "byDOSAndAccountNo":
+ 		 case "byDOSAndSubscriberId":
+ 		 case "byDOSAndNpi":
+ 		 case "byDOSAndClaimNo":
+ 		 case "byDOPAndClaimNo":
+ 		 case "byDOPAndPtntNm":
 			 sqlRowNo=41;
 			 break;
-			 
- 		 case "byDateOfPaymentAndSubscriberId":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndNpi":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndClmNo":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndPtntNm":
- 			 sqlRowNo=41;
- 			 break;
- 			 
+ 			
  		 case "byDateOfPaymentAndZeroPmntClms":
- 			 sqlRowNo=47;
- 			 break;
+		 case "byDOSAndZeroPaymentClaims":
+			sqlRowNo=47;
+			break;
  		   
  		case "byElectronicPmt":
  			sqlRowNo=48;
