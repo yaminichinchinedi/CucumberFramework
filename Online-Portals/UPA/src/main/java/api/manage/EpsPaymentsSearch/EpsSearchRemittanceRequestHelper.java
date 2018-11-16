@@ -37,7 +37,7 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	        case "byDOP":
 	               xmlFilePath=xmlFilePath +"\\Request.xml";
 	               break;
-	        case "byDateOfService":
+	        case "byDOS":
 	               xmlFilePath=xmlFilePath +"\\RequestSearchRemitDOS.xml";
 	               break;
 	        case "byDOP&PatientName":
@@ -47,8 +47,11 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	               xmlFilePath=xmlFilePath+"\\DOP&SubscriberIDRequest.xml";
 	               break;
 	        case "byElectronicPaymentNo":
-	              xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\DOP&ElectronicPaymentNoRequest.xml";
+	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
                   break;
+	        case "byCheckNo":
+	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
+                break;
 	        
 	        default:
 	               Log.Comment("No Request exists for given input");

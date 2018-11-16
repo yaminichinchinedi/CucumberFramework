@@ -123,15 +123,34 @@ public class SearchRemittance extends paymentSummary {
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
 		
-		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
-		{
-//			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
-			Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromCSRUI());			  
-		 }
-		else
+		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
+		 {
+		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
+		   {
+			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromUI());	
+		  }
+		  else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
+		}
+		else 
+			verifyPaymentDetailsForCSR(requestType,searchResponse);
      }
+	
+	
+	public void verifyPaymentDetailsForCSR(String requestType,EpsPaymentsSummarySearchResponse searchResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	{
+		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
+		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
+		  Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISLForCSR(searchResponse), getPaymentDetailsFromCSRUI());	
+		else
+		  Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
+		 
+		//Queries to be modified by Abhinav
+		//Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
+		
+	}
 	
 	
 	public Object createRequest(String requestType) throws JAXBException
@@ -163,7 +182,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	    setMapEntryKey(epsSearchRemittanceSearchRequest);
 	    setServiceData(epsSearchRemittanceSearchRequest);
-	    if(requestType=="byDateOfService") 
+	    if(requestType=="byDOS") 
 			setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
 		else
 			setToAndFromDate(epsSearchRemittanceSearchRequest);
@@ -505,6 +524,7 @@ public class SearchRemittance extends paymentSummary {
 	
 	public void verifyreturnedReasonDisplayed(String criteriaType,String portalName)
 	{
+		System.out.println(System.getProperty("testSuite"));
 		switch(portalName)
 		{
 			case "CSR":
@@ -678,8 +698,6 @@ public class SearchRemittance extends paymentSummary {
 			     String details=divSearchResults.get(i).findElements(By.tagName("td")).get(j).getText();
 			     details=details.replace("\n", "");
 			     
-			     System.out.println(headers.get(j));
-			     
 			     if(headers.get(j).equals("Payment Status/Trace Number"))
 			    	 innerMap.put(headers.get(j), divSearchResults.get(i).findElements(By.tagName("td")).get(13).getText());
 			     else if(headers.get(j).equals("Market Type"))
@@ -783,12 +801,86 @@ public class SearchRemittance extends paymentSummary {
 			else 
 			innerMap.put("NPI",""); 
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
-//			if(patientName!="")
-//			innerMap.put("Patient Name",patientName);
+			if(patientName!="")
+			innerMap.put("Patient Name",patientName);
 			if(payments[i].getSubscriberIdentifier()!=null)
 			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
 			
-//			innerMap.put("Account Number","0");
+			innerMap.put("Account Number","0");
+			
+			if(payments[i].getClaimIdentifier()!=null)
+			 {
+			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
+			
+			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   innerMap.put("Claim Amount","$"+"0.00");
+			   else
+			  {
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    innerMap.put("Claim Amount","$"+ amount);
+			  }
+			}
+			else
+			{
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    innerMap.put("Amount","$"+ amount);
+			}
+				
+				
+ 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+ 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
+			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			outerMap.put(innerMap.get("Payment Number"), innerMap);
+		 }
+		  
+		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 return outerMap;
+	}
+	
+	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISLForCSR(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	{
+		int totalPayments;
+		LinkedHashMap<String,String> innerMap;
+		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+		
+	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+			 totalPayments=30;
+		  else
+			totalPayments=payments.length;
+			
+		  for(int i=0;i<totalPayments;i++)
+		  {
+			 
+			innerMap=new LinkedHashMap<String, String>();
+			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			
+			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
+			patientName=patientName.replace("null", "").trim();
+			System.out.println("Patient name is " + patientName);
+
+			
+			if(payments[i].getClaimDate()!=null)
+			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			else 
+			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
+		  
+			if(payments[i].getNationalProviderIdentifier()!=null)
+		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
+			else 
+			innerMap.put("NPI",""); 
+			
+			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
+			
+//			if(patientName!="")
+//			innerMap.put("Patient Name",patientName);
+			
+			if(payments[i].getSubscriberIdentifier()!=null)
+			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
+			
 			
 			if(payments[i].getClaimIdentifier()!=null)
 			 {

@@ -77,59 +77,26 @@ public String getTinForPaymentType(String paymentType)
  			sqlRowNo=39;
  			 break;
  			 
- 		 case "byCheckNumber":
+ 		 case "byCheckNo":
  			 sqlRowNo=39;
  			 break;
  			 
- 		 case "byDateOfService":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPayment":
-			 sqlRowNo=41;
-			 break;
-			 
+ 		 case "byDOS":
+ 		 case "byDOP":
  		 case "byDateOfPaymentAndAcntNo":
-			 sqlRowNo=41;
-			 break;
-			 
  		 case "byDateOfPaymentAndSubscriberId":
- 			 sqlRowNo=41;
- 			 break;
- 			 
  		 case "byDateOfPaymentAndNpi":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndClmNo":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndPtntNm":
- 			 sqlRowNo=41;
- 			 break;
- 			 
- 		 case "byDateOfPaymentAndZeroPmntClms":
- 			 sqlRowNo=47;
- 			 break;
- 			 
- 		case "byDateOfServiceAndAcntNo":
+ 		 case "byDOSAndAccountNo":
+ 		 case "byDOSAndSubscriberId":
+ 		 case "byDOSAndNpi":
+ 		 case "byDOSAndClaimNo":
+ 		 case "byDOPAndClaimNo":
+ 		 case "byDOPAndPtntNm":
 			 sqlRowNo=41;
 			 break;
-			 
-		case "byDateOfServiceAndSubscriberId":
-			sqlRowNo=41;
-			break;
-			
-		case "byDateOfServiceAndNpi":
-			sqlRowNo=41;
-			break;
-			
-		case "byDateOfServiceAndClmNo":
-			sqlRowNo=41;
-			break;
-			
-		case "byDateOfServiceAndZeroPmntClms":
+ 			
+ 		 case "byDateOfPaymentAndZeroPmntClms":
+		 case "byDOSAndZeroPaymentClaims":
 			sqlRowNo=47;
 			break;
  		   

@@ -1,5 +1,5 @@
 <EpsPaymentsSearchRequest xmlns="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0" xmlns:ns1="http://enterprise.optum.com/schema/cim/common/Service_v1_0" xmlns:ns2="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0" xmlns:ns3="http://enterprise.optum.com/schema/cim/common/Identifier_v1_0" xmlns:ns4="http://enterprise.optum.com/schema/cim/common/Common_v1_0">
-<ns1:SearchCriteria ns1:FromRecord="0" ns1:MaxResult="0" ns1:SortDirection="ASC" ns1:SortFieldNumber="5">
+<ns1:SearchCriteria ns1:FromRecord="0" ns1:MaxResult="0" ns1:SortDirection="ASC" ns1:SortFieldNumber="12">
 <ns1:ParameterMap>
 <ns1:Entries>
 <ns1:Key>MARKET_TYPE</ns1:Key>
