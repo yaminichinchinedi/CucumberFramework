@@ -11,7 +11,7 @@ import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
-public class SearchTinPageSearchRemittance extends TestBase{
+public class SearchTinPageSearchRemittance {
 	
 	private ViewPaymentsDataProvider dataProvider;
 	
@@ -21,7 +21,7 @@ public class SearchTinPageSearchRemittance extends TestBase{
 	@FindBy(name="btnSubmit")
 	public WebElement btnSubmit;
 	
-	//private TestBase testConfig;
+	private TestBase testConfig;
 	
 	public SearchTinPageSearchRemittance(TestBase testConfig)
     {
