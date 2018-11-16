@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -625,37 +626,59 @@ public class SearchRemittanceSearchCriteria {
 	
 	//amit
 	
-		public SearchRemittanceSearchCriteria selectPayer(String payerName){
-			Element.selectByVisibleText(payer, payerName, "Payer selected on search remittance search criteria page is : " + payerName);
-			Element.clickByJS(testConfig,btnSearchRemittance, "Search Remittance Button");
-	    	return this;
-		}
+    public SearchRemittanceSearchCriteria selectPayer(String payerName)
+	 {
+		 Element.selectByVisibleText(payer, payerName, "Payer selected on search remittance search criteria page is : " + payerName);
+		 Element.clickByJS(testConfig,btnSearchRemittance, "Search Remittance Button");
+	    return this;
+	 }
 		
-		public void verifyErrorMsgs()
-		{
-			String expectedMsg="Start Date should not be earlier than the rolling 13 months.";
-			
-	    	//by date of Payment before 14 month
-	    	clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-470,"MM/dd/yyyy"), "byDOP");
-	    	selectPayer("UnitedHealthcare");
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
-	    	
-	    	//now by date of service for date range more than 30 days
-	    	expectedMsg="Date(s) of Service date range must be 30 days or less";
-	    	clickFromDateIcon("DOS").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "DOS").clickToDateIcon("DOS").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "DOS");
-	    	selectPayer("UnitedHealthcare");
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
-	    	
-	    	//by date of Payment for date range more than 30 days
-	    	expectedMsg="Date(s) of Payment date range must be 30 days or less";
-	    	clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDOP");
-	    	selectPayer("UnitedHealthcare");	
-	    	Helper.compareEquals(testConfig, "Error Message",expectedMsg,errorMsg.get(1).findElements(By.tagName("font")).get(0).getText());
-	    	
-	    	
-	    	//now by date of service before 14 month    	
-	    	clickFromDateIcon("DOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "DOS").clickToDateIcon("DOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "DOS");
-	    	Element.selectByVisibleText(payer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
-	    	clickSearchBtn();
-		}
+    public void verifyErrorMsgs()
+    {
+           
+           //by date of Payment for date range more than 30 days
+           String expectedMsg="Date(s) of Payment date range must be 30 days or less";
+         clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfPayment");
+     selectPayer("UnitedHealthcare");
+     Helper.compareEquals(testConfig, "Error Message",expectedMsg,POSErrorMsg.getText());
+           
+     //now by date of service for date range more than 30 days
+     expectedMsg="Date(s) of Service date range must be 30 days or less";
+         clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfService");
+     selectPayer("UnitedHealthcare");
+     Element.expectedWait(DOSErrorMsg, testConfig, "Date of Service Error message" , "Date of Service Error message");
+     Helper.compareEquals(testConfig, "Error Message",expectedMsg,DOSErrorMsg.getText());
+     
+     //by date of Payment before 14 month
+     expectedMsg="Start Date should not be earlier than the rolling 13 months.";
+           clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-470,"MM/dd/yyyy"), "byDateOfPayment");
+     selectPayer("UnitedHealthcare");
+     Helper.compareEquals(testConfig, "Error Message",expectedMsg,strtDateErrorMsg.getText());
+     
+     expectedMsg="End Date should not be earlier than the rolling 13 months.";
+     Helper.compareEquals(testConfig, "Error Message",expectedMsg,endDateErrorMsg.getText());
+
+     //now by date of service before 14 month      
+         clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService");
+     Element.selectByVisibleText(payer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
+     clickSearchBtn();
+    }
+    
+    //Review to be done by- Priyanka 
+    public SearchRemittanceSearchCriteria selectTin(String paymentType)
+    {
+           Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed", "Tin Textbox");
+           Element.click(btnSearch, "Search button Clicked");
+           return this;
+    }
+    
+    private ViewPaymentsDataProvider dataProvider;
+    public String getTin(String paymentType)
+    {
+           int sqlRowNo=59;
+           int insertQueryRowNo=58;
+           dataProvider=new ViewPaymentsDataProvider(testConfig);
+           return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
+    }
+
 }

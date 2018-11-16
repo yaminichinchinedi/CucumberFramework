@@ -157,6 +157,25 @@ public String getTinForPaymentType(String paymentType)
 		return tin;
 	}
 	
+	//amit - to be reviewed
+	public String associateTinWithUser(String tin, int sqlRowNo,int insertQueryRowNo)
+	{
+			int isTinAssociated;
+
+			testConfig.putRunTimeProperty("tin", tin);
+
+			Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+			if(isTinAssociated == 0) 
+			{
+			   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+			   Log.Comment("Associated tin " + tin + "With Logged in user");
+			}
+			else
+			Log.Comment("Tin No " + tin + " is already associated with logged in user");
+			return tin;
+			}
+	
 	
 	/**
 	 * Gets display consol Number

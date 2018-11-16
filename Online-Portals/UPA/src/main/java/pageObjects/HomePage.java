@@ -362,6 +362,13 @@ public class HomePage extends LoginUPA {
 	}
 	
 	
+	public SearchRemittanceSearchCriteria clickSearchRemittanceTab()
+	{
+	Element.expectedWait(searchRemittanceTab, testConfig, "Search Remittance Tab", "Search Remittance Tab");
+	Element.clickByJS(testConfig,searchRemittanceTab, "Search Remittance Tab");
+	return new SearchRemittanceSearchCriteria(testConfig);
+	}
+	
 //	public void logOutAndReLogin(TestBase testConfig)
 //	{
 //		Element.clickByJS(testConfig,lnkLogOut, "Log out");
