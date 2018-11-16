@@ -664,7 +664,7 @@ public class SearchRemittanceSearchCriteria {
      clickSearchBtn();
     }
     
-    //Review to be done by- Priyanka 
+    //Review to be done by- Priyanka (for amit)
     public SearchRemittanceSearchCriteria selectTin(String paymentType)
     {
            Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed", "Tin Textbox");
