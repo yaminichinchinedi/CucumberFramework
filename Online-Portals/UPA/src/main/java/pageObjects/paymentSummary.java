@@ -154,8 +154,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
-	public paymentSummary() {
-		// TODO Auto-generated constructor stub
+	public paymentSummary(TestBase testConfig,boolean value) {
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
 	}
 
 
@@ -951,6 +952,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
+		System.out.println(testConfig.getRunTimeProperty("tin"));
 	   ((EpsPaymentsSearchRequest) object).setTaxIdentifierNumber(testConfig.getRunTimeProperty("tin").trim());	
 		return (EpsPaymentsSearchRequest) object;
 	}

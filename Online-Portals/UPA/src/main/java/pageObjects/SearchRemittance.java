@@ -110,8 +110,8 @@ public class SearchRemittance extends paymentSummary {
 
 	public SearchRemittance(TestBase testConfig)
 	{
-		super();
-//		super(testConfig,true);
+		
+		super(testConfig,true);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
@@ -175,6 +175,8 @@ public class SearchRemittance extends paymentSummary {
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
 		EpsPaymentsSearchRequest epsSearchRemittanceSearchRequest=epsSearchRemittanceRequestHelper.createRequestPojo();
 		
+		System.out.println("Tin is"+testConfig.getRunTimeProperty("tin"));
+
 		/**set the request data*/
 		epsSearchRemittanceSearchRequest=setTinNumber(epsSearchRemittanceSearchRequest);
 		
@@ -321,7 +323,7 @@ public class SearchRemittance extends paymentSummary {
 		return list;
 	}
 
-	public void verifySortingOrder(WebElement lnkName, String colName) 
+	public void verifySortingOrder(WebElement lnkName, String colName,String criteriaType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException 
 	{	
 		switch(colName)
 		{
@@ -335,7 +337,8 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
-					listString = getColumnValueS(colName);
+//					listString = getColumnValueS(colName);
+					listString=verifyTEST(criteriaType, colName);
 					Collections.sort(listString);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
@@ -354,7 +357,8 @@ public class SearchRemittance extends paymentSummary {
 		case "NPI":
 					List<Long> listInteger = new ArrayList<Long>();
 					List<Long> actualListInteger = new ArrayList<Long>();
-					listInteger = getColumnValueI(colName);
+					listString = verifyTEST(criteriaType, colName);
+					listInteger=convertFromStringToInteger(listString);
 					Collections.sort(listInteger);
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");					
@@ -373,7 +377,8 @@ public class SearchRemittance extends paymentSummary {
 		case "Claim Amount":
 					List<Double> listDouble = new ArrayList<Double>();
 					List<Double> actualListDouble = new ArrayList<Double>();
-					listDouble = getColumnValueD(colName);
+					listString=verifyTEST(criteriaType, colName);
+					listDouble = convertFromStringToDouble(listString);
 					Collections.sort(listDouble);
 					Element.clickByJS(testConfig, lnkClaimAmount, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
@@ -417,41 +422,66 @@ public class SearchRemittance extends paymentSummary {
 		}
 	}
 
-	public void verifySorting(String colName){
+	public List<Double> convertFromStringToDouble(List<String> listString) {
+		List<Double> l = new ArrayList<Double>();
+		for(String s : listString)
+			l.add(Double.parseDouble(s));
+		return l;
+	}
+
+
+	public List<Long> convertFromStringToInteger(List<String> listString) {
+		List<Long> l = new ArrayList<Long>();
+		for(String s : listString)
+			l.add(Long.parseLong(s));
+		return l;
+	}
+
+
+	public List<String> verifyTEST(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	{
+		List<String> l= new ArrayList<String>();
+		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
+		l=getDetailsFromFISL(searchResponse,colName);
+		System.out.println("List of details got from FISL is: "+l);
+		return l;
+	}
+	
+	public void verifySorting(String criteriaType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
 		switch(colName)
 		{
 		case "Payer":
-			verifySortingOrder(lnkPayerName,colName);
+			verifySortingOrder(lnkPayerName,colName,criteriaType);
 			break;
 		case "Claim Date":
-			verifySortingOrder(lnkClaimDate, colName);
+			verifySortingOrder(lnkClaimDate, colName,criteriaType);	
 			break;
 		case "NPI":
-			verifySortingOrder(lnkNPI,"NPI");
+			verifySortingOrder(lnkNPI,"NPI",criteriaType);
 			break;
 		case "Payment Number":
-			verifySortingOrder(lnkPaymentNumber,colName);
+			verifySortingOrder(lnkPaymentNumber,colName,criteriaType);
 			break;
 		case "Patient Name":
-			verifySortingOrder(lnkPatientName,colName);
+			verifySortingOrder(lnkPatientName,colName,criteriaType);
 			break;
 		case "Subscriber ID":
-			verifySortingOrder(lnkSubscriberId,colName);
+			verifySortingOrder(lnkSubscriberId,colName,criteriaType);
 			break;
 		case "Account Number":
-			verifySortingOrder(lnkAccountNumber,colName);
+			verifySortingOrder(lnkAccountNumber,colName,criteriaType);
 			break;
 		case "Claim #":
-			verifySortingOrder(lnkClaimHash,colName);
+			verifySortingOrder(lnkClaimHash,colName,criteriaType);
 			break;
 		case "Claim Amount":
-			verifySortingOrder(lnkClaimAmount, colName);
+			verifySortingOrder(lnkClaimAmount, colName,criteriaType);
 			break;
 		case "Archive":
-			verifySortingOrder(lnkArchive,colName);
+			verifySortingOrder(lnkArchive,colName,criteriaType);
 			break;
 		case "Market Type":
-			verifySortingOrder(lnkMarketType,colName);
+			verifySortingOrder(lnkMarketType,colName,criteriaType);
 			break;		
 		default:
 			Log.Comment("No such Column present on page");
@@ -914,4 +944,139 @@ public class SearchRemittance extends paymentSummary {
 		 return outerMap;
 	}
 
+	public List<String> getDetailsFromFISL(Object FISLResponse,String colName) throws ParseException
+	{
+		List<String> list= new ArrayList<String>();
+		int totalPayments;
+		LinkedHashMap<String,String> innerMap;
+		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+	
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+		
+//	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+//			 totalPayments=30;
+//		  else
+			totalPayments=payments.length;
+			
+			
+		switch(colName)
+		{
+		case "Payer":
+			for(int i=0;i<totalPayments;i++)
+				list.add(getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			break;
+		case "Claim Date":
+			for(int i=0;i<totalPayments;i++)
+				if(payments[i].getClaimDate()!=null)
+					list.add(Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			break;
+		case "NPI":
+			for(int i=0;i<totalPayments;i++)
+				if(payments[i].getNationalProviderIdentifier()!=null)
+				    list.add(payments[i].getNationalProviderIdentifier());
+			break;
+		case "Payment No.":
+			for(int i=0;i<totalPayments;i++)
+				list.add(payments[i].getDisplayConsolidatedPaymentNumber());
+			break;
+		case "Subscriber ID":
+			for(int i=0;i<totalPayments;i++)
+				if(payments[i].getSubscriberIdentifier()!=null)
+					list.add(payments[i].getSubscriberIdentifier());
+			break;
+		case "Patient Name":
+			for(int i=0;i<totalPayments;i++)
+			{
+				String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
+				patientName=patientName.replace("null", "").trim();
+				if(patientName!="")
+					list.add(patientName);
+			}
+			break;
+		case "Account Number":
+			for(int i=0;i<totalPayments;i++)
+			{
+				list.add(payments[i].getPatientAccountNumber());	
+			}
+			break;
+		case "Claim #":
+			for(int i=0;i<totalPayments;i++)
+				if(payments[i].getClaimDate()!=null)
+					list.add(Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			break;
+		case "Claim Amount":
+			for(int i=0;i<totalPayments;i++)
+				if(payments[i].getClaimIdentifier()!=null && payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+					   list.add("$"+"0.00");
+					   else
+					  {
+						DecimalFormat decimalFormat = new DecimalFormat("0.00");
+					    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+					    list.add("$"+ amount);
+					  }
+			break;
+		case "Market Type":
+			for(int i=0;i<totalPayments;i++)
+				list.add(getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			break;
+		}
+//		  for(int i=0;i<totalPayments;i++)
+//		  {
+//			 
+//			innerMap=new LinkedHashMap<String, String>();
+//			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+//			
+//			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
+//			patientName=patientName.replace("null", "").trim();
+//
+//			
+//			if(payments[i].getClaimDate()!=null)
+//			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+//			else 
+//			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
+//		  
+//			if(payments[i].getNationalProviderIdentifier()!=null)
+//		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
+//			else 
+//			innerMap.put("NPI",""); 
+//			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
+//			if(patientName!="")
+//			innerMap.put("Patient Name",patientName);
+//			if(payments[i].getSubscriberIdentifier()!=null)
+//			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
+//			
+//			innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+//			
+//			if(payments[i].getClaimIdentifier()!=null)
+//			 {
+//			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
+//			
+//			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+//			   innerMap.put("Claim Amount","$"+"0.00");
+//			   else
+//			  {
+//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+//			    innerMap.put("Claim Amount","$"+ amount);
+//			  }
+//			}
+//			else
+//			{
+//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+//			    innerMap.put("Amount","$"+ amount);
+//			}
+//				
+//				
+// 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+// 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
+//			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+//			outerMap.put(innerMap.get("Payment Number"), innerMap);
+//		 }
+//		  
+//		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 
+		return list;
+	}
+	
 }
