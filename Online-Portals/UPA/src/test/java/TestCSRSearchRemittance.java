@@ -28,10 +28,8 @@ public class TestCSRSearchRemittance extends TestBase {
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink();		
-		srchTinPage.enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySearchResults(criteriaType);	
       }
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
@@ -47,6 +45,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
       }
+	
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByDateOfService() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
@@ -449,7 +448,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Payer");;
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Payer",criteriaType);;
 	     }
 		
 		@Test(priority=5,description="TS037_Sorting on Claim Date")
@@ -459,7 +458,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim Date");
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim Date",criteriaType);
 	     }
 		
 		@Test(priority=5,description="TS038_Sorting on NPI")
@@ -469,7 +468,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("NPI");
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("NPI",criteriaType);
 	     }
 		
 		@Test(priority=5,description="TS039_Sorting on Patient Name")
@@ -479,7 +478,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Patient Name");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Patient Name",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS040_Sorting on Subscriber Id")
@@ -489,7 +488,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Subscriber ID");
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Subscriber ID",criteriaType);
 	     }
 		
 		@Test(priority=5,description="TS041_Sorting on Account Number")
@@ -499,7 +498,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Account Number");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Account Number",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS042_Sorting on Claim #")
@@ -509,7 +508,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim #");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim #",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS043_Sorting on Claim Amount")
@@ -519,7 +518,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim Amount");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Claim Amount",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS044_Sorting on Market Type")
@@ -529,7 +528,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Market Type");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Market Type",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS045_Sorting on Archive")
@@ -539,7 +538,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Archive");	
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Archive",criteriaType);	
 	     }
 		
 		@Test(priority=5,description="TS047_Sorting on Payment Number")
@@ -549,7 +548,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Payment Number");
+			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifySorting("Payment Number",criteriaType);
 		 }
 		@Test(priority=5,description="TS049_Pagination of Search Results")
 		public void testPaginationOfSearchResults() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException

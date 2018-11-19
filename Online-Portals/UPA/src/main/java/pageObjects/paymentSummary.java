@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -127,6 +128,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id=\"paymentsummaryform\"]/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[1]/th[13]/a")
 	WebElement lnkArchive;
 	
+	public SearchRemittance searchRemittance;
 	
 	
 	private TestBase testConfig;
@@ -154,7 +156,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
-	public paymentSummary(TestBase testConfig,boolean value) {
+
+	public paymentSummary(TestBase testConfig,boolean flag) {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
@@ -500,17 +503,19 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	public String getRecordCountFromUI()
 	{
-		try
-		{
+		 try{ 
 			String recordCountElement[]=recordCount.getText().split(":");
 			return recordCountElement[recordCountElement.length-1].trim();
-		}
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured : " + e);
-			return null;
-		}
-	    
+		 }
+	    catch(org.openqa.selenium.NoSuchElementException e)	{
+	    	searchRemittance=new SearchRemittance(testConfig);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+			return String.valueOf(searchRemittance.divSearchResults.size());
+	    }
+		catch(Exception e){
+				Log.Fail("Exception occured : " + e);
+				return null;
+			}  
 	}
 	
 	/**
@@ -973,8 +978,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public EpsPaymentsSearchRequest setMapEntryKey(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
-		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		if(testConfig.getRunTimeProperty("key")!=null){
+			((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
+			((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+			}
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
