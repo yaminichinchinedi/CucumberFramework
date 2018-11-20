@@ -67,6 +67,14 @@ public String getTinForPaymentType(String paymentType)
  		     sqlRowNo=36; 
  		     break;
  		   
+ 		case "generalPaymentForTIN":
+			sqlRowNo=51; 
+			break;
+
+		case "generalPaymentForNPI":
+			sqlRowNo=52; 
+			break;
+			
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
