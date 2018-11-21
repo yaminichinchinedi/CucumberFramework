@@ -20,193 +20,195 @@ import main.java.pageObjects.paymentSummary;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-public class TestProvUPASearchRemittance extends TestBase{
- 
-	String userType="PROV";
+
+public class TestSubPayerSearchRemittance extends TestBase {
+	 
+	String userType="SUBPAYER";
 	String accessType="Admin";
     
 	@Test(priority=5,description="TS002_Search by Date of Payment")
-	public void testEpraByDateOfPayment() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPayment";						
+		String criteriaType="byDOP";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
-	@Test(priority=5,description="TS003_Search by Date of Service")
-	public void testEpraByDateOfService() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	@Test(priority=5,description="TS003_Search by Date of service")
+	public void testEprabyDOS() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfService";						
+		String criteriaType="byDOS";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS004_Search by Electronic Payment Number only")
 	public void testEpraByPaymentNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
 		String criteriaType="byElectronicPaymentNumber";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	 }
-	
+
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByCheckNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
 		String criteriaType="byCheckNumber";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	 }
 	
-	@Test(priority=5,description="TS006_Search by DOP and Acnt No")
-	public void testEpraByDateOfPaymentAndAcntNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	@Test(priority=5,description="TS006_Search by DOP and Acnt Number")
+	public void testEprabyDOPAndAcntNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndAcntNo";						
+		String criteriaType="byDOPAndAcntNo";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
-	@Test(priority=5,description="TS007_Search by DOP and Sybscriber ID")
-	public void testEpraByDateOfPaymentAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	@Test(priority=5,description="TS007_Search by DOP and SuSUBPAYERcriber ID")
+	public void testEprabyDOPAndSuSUBPAYERcriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndSubscriberId";						
+		String criteriaType="byDOPAndSuSUBPAYERcriberId";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS008_Search by DOP and NPI")
-	public void testEpraByDateOfPaymentAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOPAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndNpi";						
+		String criteriaType="byDOPAndNpi";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS009_Search by DOP and Claim Number")
-	public void testEpraByDateOfPaymentAndClmNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOPAndClmNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndClmNo";						
+		String criteriaType="byDOPAndClmNo";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
-	@Test(priority=5,description="TS010_Search by DOP abd Patient Name")
-	public void testEpraByDateOfPaymentAndPtntNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	@Test(priority=5,description="TS010_Search by DOP and Patient Name")
+	public void testEprabyDOPAndPtntNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndPtntNm";						
+		String criteriaType="byDOPAndPtntNm";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS011_Search by DOP and Zero Payment Claims")
-	public void testEpraByDateOfPaymentAndZeroPmntClms() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOPAndZeroPmntClms() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
 			
-		String criteriaType="byDateOfPaymentAndZeroPmntClms";						
+		String criteriaType="byDOPAndZeroPmntClms";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS012_Search by DOP and Market Type")
-	public void testEpraByDateOfPaymentAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOPAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Admin";
-			
-		String criteriaType="byDateOfPaymentAndMarketType";						
+		String criteriaType="byDOPAndMarketType";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
    @Test(priority=5,description="TS023_Error Messages")
    public void testByErrorMsgs() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
+	    String criteriaType="byDOP"; 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().verifyErrorMsgs();
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).verifyErrorMsgs();
    }
    
    @Test(priority=5,description="TS024_Search by Patient Name_Tricare Payer Messages")
    public void testSearchByPatientNameTricarePayer() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-		String criteriaType="byDateOfPaymentAndPtntNm"; 	
-		String requestType="byDateOfPayment";
+		String criteriaType="byDOPAndPtntNm"; 	
+		String requestType="byDOP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySearchResults(requestType);
    }
    
    @Test(priority=5,description="TS025_Search by Subscriber ID_Tricare Payer Messages")
    public void testSearchBySubscriberIDTricarePayer() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-		String criteriaType="byDateOfPaymentAndSubscriberId"; 	
-		String requestType="byDateOfPayment";
+		String criteriaType="byDOPAndSuSUBPAYERcriberId"; 	
+		String requestType="byDOP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySearchResults(requestType);
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
    public void testTypeAndPaymentStatusByElectronicPaymentForACH() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
+	    String criteriaType="byDOP";
 		String tinType="ReoriginatedACH"; 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
@@ -217,359 +219,362 @@ public class TestProvUPASearchRemittance extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
+	   // home.selectTin();
 	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
 		
    }
    
    @Test(priority=5,description="TS027_Returned Reason")
    public void testByReturnedReason() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyreturnedReasonDisplayed(criteriaType,"UPA");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifyreturnedReasonDisplayed(criteriaType,"UPA");
    }
    
 	@Test(priority=5,description="TS036_Sorting on Payer Name")
 	public void testSortByPayerName() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payer");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Payer");
     }
 	
 	@Test(priority=5,description="TS037_Sorting on Claim Date")
 	public void testSortByClaimDate() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
     }
 	
 	@Test(priority=5,description="TS038_Sorting on NPI")
 	public void testSortByNPI() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"NPI");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"NPI");
     }
 	
 	@Test(priority=5,description="TS039_Sorting on Patient Name")
 	public void testSortByPatientName() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
     }
 	
 	@Test(priority=5,description="TS040_Sorting on Subscriber Id")
 	public void testSortBySubscriberId() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Subscriber ID");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"SuSUBPAYERcriber ID");
     }
 	
 	@Test(priority=5,description="TS041_Sorting on Account Number")
 	public void testSortByAccountNumber() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
     }
 	
 	@Test(priority=5,description="TS042_Sorting on Claim #")
 	public void testSortByClaimHash() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
     }
 	
 	@Test(priority=5,description="TS043_Sorting on Claim Amount")
 	public void testSortByClaimAmount() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
     }
 	
 	@Test(priority=5,description="TS044_Sorting on Market Type")
 	public void testSortByMarketType() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
     }
 	
 	@Test(priority=5,description="TS045_Sorting on Archive")
 	public void testSortByArchive() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Archive");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Archive");
     }
 	
 	@Test(priority=5,description="TS047_Sorting on Payment Number")
 	public void testSortByPaymentNumber() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
     }
 	
 	@Test(priority=5,description="TS049_Pagination of Search Results")
 	public void testPaginationOfSearchResults() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyPagination();
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifyPagination();
+	    //010179500 //21-03-2018
    }
 	
 	
 	
-	//Test cases for PROVIDER GENERAL
+	//Test cases for SUBPAYERIDER GENERAL
 	
 	
 	@Test(priority=5,description="TS002_Search by Date of Payment")
-	public void testEpraByDateOfPaymentForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPayment";						
+		String criteriaType="byDOP";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS003_Search by Date fo Service")
-	public void testEpraByDateOfServiceForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEprabyDOSForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfService";						
+		String criteriaType="byDOS";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);				
 	}
 	
 	@Test(priority=5,description="TS004_Search by Electronic Payment Number Only")
-	public void testEpraByPaymentNumberForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByPaymentNumberForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
 		String criteriaType="byElectronicPaymentNumber";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	 }
 	
 	@Test(priority=5,description="TS005_Search by Check Number only")
-	public void testEpraByCheckNumberForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByCheckNumberForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
 		String criteriaType="byCheckNumber";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	 }
 	
 	@Test(priority=5,description="TS006_Search by DOP and Acnt Number")
-	public void testEpraByDateOfPaymentAndAcntNoForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndAcntNoForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndAcntNo";						
+		String criteriaType="byDOPAndAcntNo";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS007_Search by DOP and Subscriber ID")
-	public void testEpraByDateOfPaymentAndSubscriberIdForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndSubscriberIdForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndSubscriberId";						
+		String criteriaType="byDOPAndSubscriberId";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS008_Search by DOP and NPI")
-	public void testEpraByDateOfPaymentAndNpiForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndNpiForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndNpi";						
+		String criteriaType="byDOPAndNpi";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS009_Search by DOP and Claim Number")
-	public void testEpraByDateOfPaymentAndClmNoForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndClmNoForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndClmNo";						
+		String criteriaType="byDOPAndClmNo";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS010_Search by DOP and Patient Name ")
-	public void testEpraByDateOfPaymentAndPtntNmForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndPtntNmForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndPtntNm";						
+		String criteriaType="byDOPAndPtntNm";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS011_Search by DOP and Zero Payment claims")
-	public void testEpraByDateOfPaymentAndZeroPmntClmsForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndZeroPmntClmsForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndZeroPmntClms";						
+		String criteriaType="byDOPAndZeroPmntClms";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
 	@Test(priority=5,description="TS012_Search by DOP and Market Type")
-	public void testEpraByDateOfPaymentAndMarketTypeForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public void testEpraByDateOfPaymentAndMarketTypeForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 			
-		String criteriaType="byDateOfPaymentAndMarketType";						
+		String criteriaType="byDOPAndMarketType";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType);		
 	}
 	
    @Test(priority=5,description="TS023_Error Messages")
-   public void testByErrorMsgsForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   public void testByErrorMsgsForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
-	    String userType="PROV";
+	    String userType="SUBPAYER";
 		String accessType="Gen";
+		String criteriaType="byDOP"; 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().verifyErrorMsgs();
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).verifyErrorMsgs();
    }
    
    @Test(priority=5,description="TS024_Search by Patient Name_Tricare Payer Messages")
-   public void testSearchByPatientNameTricarePayerForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   public void testSearchByPatientNameTricarePayerForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-	    String userType="PROV";
+	    String userType="SUBPAYER";
 		String accessType="Gen";
-		String criteriaType="byDateOfPaymentAndPtntNm"; 	
-		String requestType="byDateOfPayment";
+		String criteriaType="byDOPAndPtntNm"; 	
+		String requestType="byDOP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySearchResults(requestType);
    }
    
-   @Test(priority=5,description="TS025_Search by Subscriber ID_Tricare Payer Messages")
-   public void testSearchBySubscriberIDTricarePayerForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   @Test(priority=5,description="TS025_Search by SuSUBPAYERcriber ID_Tricare Payer Messages")
+   public void testSearchBySuSUBPAYERcriberIDTricarePayerForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-	    String userType="PROV";
+	    String userType="SUBPAYER";
 		String accessType="Gen";
-		String criteriaType="byDateOfPaymentAndSubscriberId"; 	
-		String requestType="byDateOfPayment";
+		String criteriaType="byDOPAndSuSUBPAYERcriberId"; 	
+		String requestType="byDOP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySearchResults(requestType);
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
-   public void testTypeAndPaymentStatusByElectronicPaymentForACHForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   public void testTypeAndPaymentStatusByElectronicPaymentForACHForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-	    String userType="PROV";
+	    String userType="SUBPAYER";
 		String accessType="Gen";
+		String criteriaType="byDOP";
 		String tinType="ReoriginatedACH"; 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
-   public void testTypeAndPaymentStatusByElectronicPaymentForVCPForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   public void testTypeAndPaymentStatusByElectronicPaymentForVCPForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-	    String userType="PROV";
+	    String userType="SUBPAYER";
 		String accessType="Gen";
 		String criteriaType="byElectronicPaymentforStatus";
 		String tinType="byElectronicPaymentforStatus";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
+	   // home.selectTin();
 	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
 		
    }
 	
 	@Test(priority=5,description="TS027_Returned Reason")
-   public void testByReturnedReasonForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+   public void testByReturnedReasonForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 		
 		String criteriaType="byDateOfPayment";
@@ -580,147 +585,148 @@ public class TestProvUPASearchRemittance extends TestBase{
    }
 
 	@Test(priority=5,description="TS036_Sorting on Payer Name")
-	public void testSortByPayerNameForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	public void testSortByPayerNameForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payer");
-    }
-	
-	@Test(priority=5,description="TS037_Sorting on Claim Date")
-	public void testSortByClaimDateForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
-    }
-	
-	@Test(priority=5,description="TS038_Sorting on NPI")
-	public void testSortByNPIForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"NPI");
-    }
-	
-	@Test(priority=5,description="TS039_Sorting on Patient Name")
-	public void testSortByPatientNameForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
-    }
-	
-	@Test(priority=5,description="TS040_Sorting on Subscriber Id")
-	public void testSortBySubscriberIdForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Subscriber ID");
-    }
-	
-	@Test(priority=5,description="TS041_Sorting on Account Number")
-	public void testSortByAccountNumberForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
-    }
-	
-	@Test(priority=5,description="TS042_Sorting on Claim #")
-	public void testSortByClaimHashForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
-    }
-	
-	@Test(priority=5,description="TS043_Sorting on Claim Amount")
-	public void testSortByClaimAmountForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
-    }
-	
-	@Test(priority=5,description="TS044_Sorting on Market Type")
-	public void testSortByMarketTypeForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
-    }
-	
-	@Test(priority=5,description="TS045_Sorting on Archive")
-	public void testSortByArchiveForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-	{
-		String userType="PROV";
-		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Archive");
-    }
-	
-	@Test(priority=5,description="TS047_Sorting on Payment Number")
-	public void testSortByPaymentNumberForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-	{
-		String userType="PROV";
+		String userType="SUBPAYER";
 		String accessType="Gen";
 		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Payer");
     }
 	
-	@Test(priority=5,description="TS049_Pagination of Search Results")
-	public void testPaginationOfSearchResultsForProvGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-	{
-		String userType="PROV";
+	@Test(priority=5,description="TS037_Sorting on Claim Date")
+	public void testSortByClaimDateForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
 		String accessType="Gen";
-		String criteriaType="byDateOfPayment";
+		String criteriaType="byDOP";
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyPagination();
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
+    }
+	
+	@Test(priority=5,description="TS038_Sorting on NPI")
+	public void testSortByNPIForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"NPI");
+    }
+	
+	@Test(priority=5,description="TS039_Sorting on Patient Name")
+	public void testSortByPatientNameForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
+    }
+	
+	@Test(priority=5,description="TS040_Sorting on Subscriber Id")
+	public void testSortBySubscriberIdForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Subscriber ID");
+    }
+	
+	@Test(priority=5,description="TS041_Sorting on Account Number")
+	public void testSortByAccountNumberForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
+    }
+	
+	@Test(priority=5,description="TS042_Sorting on Claim #")
+	public void testSortByClaimHashForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
+    }
+	
+	@Test(priority=5,description="TS043_Sorting on Claim Amount")
+	public void testSortByClaimAmountForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
+    }
+	
+	@Test(priority=5,description="TS044_Sorting on Market Type")
+	public void testSortByMarketTypeForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
+    }
+	
+	@Test(priority=5,description="TS045_Sorting on Archive")
+	public void testSortByArchiveForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	{
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Archive");
+    }
+	
+	@Test(priority=5,description="TS047_Sorting on Payment Number")
+	public void testSortByPaymentNumberForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	{
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
+    }
+	
+	@Test(priority=5,description="TS049_Pagination of Search Results")
+	public void testPaginationOfSearchResultsForSUBPAYERGen() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+	{
+		String userType="SUBPAYER";
+		String accessType="Gen";
+		String criteriaType="byDOP";
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+	    home.clickSearchRemittanceTab().selectTin(criteriaType).doSearch(criteriaType).verifyPagination();
+	    
    }
 }
 

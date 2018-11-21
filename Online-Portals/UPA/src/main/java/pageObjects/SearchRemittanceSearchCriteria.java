@@ -124,7 +124,9 @@ public class SearchRemittanceSearchCriteria {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
+		WebElement check=Element.findElement(testConfig, "name", "taxIdNbr");
+		if(check==null)
+			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
 	}
 	
 	public SearchRemittance doSearch(String criteriaType) throws ParseException {
@@ -171,15 +173,46 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOP":
 		    {
-		    	String toDate = Helper.getCurrentDate("MM/dd/yyyy");
-		    	String fromDate = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
-		    	testConfig.putRunTimeProperty("fromDate", fromDate);
-		    	testConfig.putRunTimeProperty("toDate", toDate);
+		    	int sqlRow = 42;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	System.out.println("Date fetched from DB is: "+date);
+//		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "dd/MM/yyyy");
+//		    	String toDate =Helper.getDateBeforeOrAfterDays(1,"MM/dd/yyyy",date); //Helper.getCurrentDate("MM/dd/yyyy");
+//		    	String fromDate = Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy",date);
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
+		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+//		    	toDate=Helper.changeDateFormat(toDate, "mm/dd/yyyy", "yyyy-mm-dd");
+//		    	System.out.println("new from date is: "+fromDate);
+//		    	System.out.println("new to date is: "+toDate);
+		    	testConfig.putRunTimeProperty("fromDate",date);
+		    	testConfig.putRunTimeProperty("toDate",date);
 		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
 		    	testConfig.putRunTimeProperty("value", "ALL");		    	
-		    	clickFromDateIcon(criteriaType).setDate(fromDate, criteriaType).clickToDateIcon(criteriaType).setDate(toDate, criteriaType);
-		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
-		    	break;		    	
+		    	
+		    	break;	
+		    	
+
+
+//		    	int sqlRow = 42;
+//		    	date = null;
+//		    	String sbscrId;
+//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//
+//		    	try {
+//		    		date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+//		    		testConfig.putRunTimeProperty("fromDate", date);
+//		    		testConfig.putRunTimeProperty("toDate", date);
+//		    		testConfig.putRunTimeProperty("key", "MARKET_TYPE");
+//		    		testConfig.putRunTimeProperty("value", "ALL"); 
+//		    	} catch (ParseException e) {
+//		    		// TODO Auto-generated catch block
+//		    		e.printStackTrace();
+//		    	}
+//		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);      
+//		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");      
+//		    	break;
 		    }
 		    
 		    case "byDOPAndAcntNo":
@@ -515,7 +548,7 @@ public class SearchRemittanceSearchCriteria {
 				sqlRowNo=55;
 				break;
 			case "ReoriginatedACH":
-			sqlRowNo=57;
+				sqlRowNo=57;
 			break;
 		}
 		
@@ -675,8 +708,8 @@ public class SearchRemittanceSearchCriteria {
     private ViewPaymentsDataProvider dataProvider;
     public String getTin(String paymentType)
     {
-           int sqlRowNo=59;
-           int insertQueryRowNo=58;
+           int sqlRowNo=62;
+           int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
            return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
     }

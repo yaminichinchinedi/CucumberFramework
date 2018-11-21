@@ -324,6 +324,7 @@ public class SearchRemittance extends paymentSummary {
 
 	public void verifySortingOrder(WebElement lnkName, String colName,String criteriaType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException 
 	{	
+		System.out.println("Inside verifySortingOrder");
 		switch(colName)
 		{
 		case "Payer":
@@ -447,8 +448,10 @@ public class SearchRemittance extends paymentSummary {
 	}
 	
 	public void verifySorting(String criteriaType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+		System.out.println("Inside verifySorting");
 		switch(colName)
 		{
+		
 		case "Payer":
 			verifySortingOrder(lnkPayerName,colName,criteriaType);
 			break;
@@ -950,6 +953,7 @@ public class SearchRemittance extends paymentSummary {
 	
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
 		
+	    System.out.println("Details received from FISL is: "+payments);
 //	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
 //			 totalPayments=30;
 //		  else
@@ -992,9 +996,7 @@ public class SearchRemittance extends paymentSummary {
 			break;
 		case "Account Number":
 			for(int i=0;i<totalPayments;i++)
-			{
 				list.add(payments[i].getPatientAccountNumber());	
-			}
 			break;
 		case "Claim #":
 			for(int i=0;i<totalPayments;i++)
@@ -1005,12 +1007,12 @@ public class SearchRemittance extends paymentSummary {
 			for(int i=0;i<totalPayments;i++)
 				if(payments[i].getClaimIdentifier()!=null && payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
 					   list.add("$"+"0.00");
-					   else
-					  {
-						DecimalFormat decimalFormat = new DecimalFormat("0.00");
-					    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
-					    list.add("$"+ amount);
-					  }
+			   else
+			  {
+				DecimalFormat decimalFormat = new DecimalFormat("0.00");
+			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    list.add("$"+ amount);
+			  }
 			break;
 		case "Market Type":
 			for(int i=0;i<totalPayments;i++)
