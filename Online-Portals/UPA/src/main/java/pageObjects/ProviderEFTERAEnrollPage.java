@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
 
-public class ProviderEFTERAEnrollPage {
+public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
 	
 	@FindBy(name="btnSubmit")
 	WebElement btnContinue;
@@ -21,12 +21,12 @@ public class ProviderEFTERAEnrollPage {
 	private TestBase testConfig;
 
 	public ProviderEFTERAEnrollPage(TestBase testConfig)
- {
+    {
+		super(testConfig);
 		String expectedURL = "/providerEFTERAEnroll.do";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
-	    Element.verifyElementPresent(lnkEpsPdf,"Pdf link");
 	}
 	
 	public ProviderInformationEFTERAEnroll clickContinue() 

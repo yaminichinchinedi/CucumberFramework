@@ -55,7 +55,6 @@ public class UPARegistrationPage{
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
 		Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-		
 	}
 	
 	public void clickAndVerifyOptumLogo()
@@ -104,16 +103,16 @@ public class UPARegistrationPage{
 	}
 
 		
-	public EnrollmentTypePage clickEnrollNow()
+	public BeginEnrollment clickEnrollNow()
 	{
 		Element.click(lnkEnrollNow,"Enroll Now");
-		return new EnrollmentTypePage(testConfig);
+		return new BeginEnrollment(testConfig);
 	}
 	
-	public EnrollmentTypePage clickbtnEnrollNow()
+	public BeginEnrollment clickbtnEnrollNow()
 	{
 		Element.click(btnEnrollNow,"Enroll Now");
-		return new EnrollmentTypePage(testConfig);
+		return new BeginEnrollment(testConfig);
 	}
 	
 	public OptumIdLoginPage clickSignInWithOptumId()
@@ -152,55 +151,58 @@ public class UPARegistrationPage{
 	}
 	
 		
-	public void doCompleteEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
-	{
-		   int i=0;
-		   boolean result=true;
-		   while(i<noOfEnrollments) 
-		   {
-		 	 try 
-		      {
-		    	EnrollmentTypePage enrollmentTypePage = registrationPage.clickEnrollNow();
-		        ValidateEnrollmentTypePage validateEnrollmentType = enrollmentTypePage.enrollAs(excelRowNo).clickNext();
-		        ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
-		        ProviderInformationEFTERAEnroll providerInfoPage = providerEnrollPage.clickContinue();
-		        ValidateEFTERAProviderInfo validateProvInfoPage = providerInfoPage.fillProviderInfo();
-		        validateProvInfoPage.fillFirstProviderInfo();
-		        validateProvInfoPage.fillSecondProviderInfo();
-		        FinancialInstitutionInfoPage financialInstPage = validateProvInfoPage.clickContinue();
-		       
-		        if(!testConfig.getRunTimeProperty("enrollmentType").equalsIgnoreCase("VO"))
-		        {
-		         	financialInstPage.fillFinancialInstInfo();
-			        validateEFTERAFinancialInfo validateFinancialInfoPage = financialInstPage.clickContinue();
-			        validatw9SubmitForm = validateFinancialInfoPage.fillUploadEFTERAFileFormAndSubmit();
-		        }
-		        else
-		        {
-		        	financialInstPage.checkAcceptanceBox().fillAuthorizedSignature().submitForm();
-			        validatw9SubmitForm= new ValidateEFTERASubmitInfo(testConfig);
-		        }
-		        
-		        ThankYouPage thankYouPage = validatw9SubmitForm.fillEnrollersInfo();
-//		        thankYouPage.verifyPDF();
-		        thankYouPage.verifyEnrollmentInfoInDB();
-		       }
-		
-		     catch(Exception e)
-		      {	
-		    	 Log.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
-		    	 result=false;
-		      }
-		    finally
-		     {
-		       i++;
-		       registrationPage=new UPARegistrationPage(testConfig);
-		     }
-		}
-		   Log.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
-		   if(!result){
-			   Log.Fail("Exception occured while execution");
-		   }   
-	}
+//	public void doCompleteEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
+//	{
+//		   int i=0;
+//		   boolean result=true;
+//		   while(i<noOfEnrollments) 
+//		   {
+//		 	 try 
+//		      {
+//		    	BeginEnrollment enrollmentTypePage = registrationPage.clickEnrollNow();
+//		    	enrollmentTypePage=enrollmentTypePage.selectHowYouHeard("");
+//		    	
+//		    	
+//		        ValidateEnrollmentTypePage validateEnrollmentType = enrollmentTypePage.enrollAs(excelRowNo).clickNext();
+//		        ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+//		        ProviderInformationEFTERAEnroll providerInfoPage = providerEnrollPage.clickContinue();
+//		        ValidateEFTERAProviderInfo validateProvInfoPage = providerInfoPage.fillProviderInfo();
+//		        validateProvInfoPage.fillFirstProviderInfo();
+//		        validateProvInfoPage.fillSecondProviderInfo();
+//		        FinancialInstitutionInfoPage financialInstPage = validateProvInfoPage.clickContinue();
+//		       
+//		        if(!testConfig.getRunTimeProperty("enrollmentType").equalsIgnoreCase("VO"))
+//		        {
+//		         	financialInstPage.fillFinancialInstInfo();
+//			        validateEFTERAFinancialInfo validateFinancialInfoPage = financialInstPage.clickContinue();
+//			        validatw9SubmitForm = validateFinancialInfoPage.fillUploadEFTERAFileFormAndSubmit();
+//		        }
+//		        else
+//		        {
+//		        	financialInstPage.checkAcceptanceBox().fillAuthorizedSignature().submitForm();
+//			        validatw9SubmitForm= new ValidateEFTERASubmitInfo(testConfig);
+//		        }
+//		        
+//		        ThankYouPage thankYouPage = validatw9SubmitForm.fillEnrollersInfo();
+////		        thankYouPage.verifyPDF();
+//		        thankYouPage.verifyEnrollmentInfoInDB();
+//		       }
+//		
+//		     catch(Exception e)
+//		      {	
+//		    	 Log.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
+//		    	 result=false;
+//		      }
+//		    finally
+//		     {
+//		       i++;
+//		       registrationPage=new UPARegistrationPage(testConfig);
+//		     }
+//		}
+//		   Log.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
+//		   if(!result){
+//			   Log.Fail("Exception occured while execution");
+//		   }   
+//	}
 
 }

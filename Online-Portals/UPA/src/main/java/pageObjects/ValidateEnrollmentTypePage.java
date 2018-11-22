@@ -12,7 +12,7 @@ import main.java.Utils.Helper;
 
 public class ValidateEnrollmentTypePage {
 	
-	@FindBy(name="btnSubmit")
+	@FindBy(linkText="Continue")
 	WebElement btnContinue;
 
 	private TestBase testConfig;

@@ -12,6 +12,9 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+//This page was in earlier phase but does not appear now, hence keeping it for inheriting purpose
+
+
 public class ProviderInformationEFTERAEnroll {
 
 	@FindBy(name = "providerName")
@@ -29,7 +32,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "zip1")
 	WebElement zipCode1;
 
-	@FindBy(xpath = "//input[@name='provType'][1]")
+	@FindBy(xpath = "//input[@id='14']//following-sibling::label")
 	WebElement rdoHospital;
 
 	@FindBy(xpath = "//input[@name='provType'][2]")
@@ -40,14 +43,11 @@ public class ProviderInformationEFTERAEnroll {
 
 	@FindBy(xpath = ".//*[@id='mktid']//input[1]")
 	WebElement chkBehaviouralHealth;
-	
-//	@FindBy(xpath = ".//*[@id='mktid']//input[4]")
-//	WebElement chkOther;
-	
-	@FindBy(xpath = "//input[@value='103']")
+
+	@FindBy(xpath = "//input[@id='103']//following-sibling::label")
 	WebElement chkOther;
 
-	@FindBy(name = "btnSubmit")
+	@FindBy(linkText = "Continue")
 	WebElement btnContinue;
 	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
@@ -58,44 +58,31 @@ public class ProviderInformationEFTERAEnroll {
 	public ValidateEFTERAProviderInfo validateProvInfo;
 
 	public ProviderInformationEFTERAEnroll(TestBase testConfig) {
-		String expectedURL = "/providerInformationEFTERAEnroll";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
-		
-	
 	}
 
-	public ValidateEFTERAProviderInfo fillProviderInfo() throws IOException {
+	public ValidateEFTERAProviderInfo fillProviderOrgInfo() throws IOException {
 		int rowNo=1;
-		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
-		
+		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		//Element.verifyTextPresent(txtSecurity, expectedText);
 		
 		String provName = Helper.generateRandomAlphabetsString(5);
-		Element.enterData(providerName, provName, "Enter provider name","providerName");
+		Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
 		
 		String streetName = Helper.generateRandomAlphabetsString(5);
-		Element.enterData(street, streetName, "Enter street name","street");
-			
-		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name","city");
-		
+		Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
+		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
 		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
-		
 		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
-		Browser.wait(testConfig, 5);
-		Element.click(rdoHospital, "Hospital/Facility radio button");
-		//Element.click(chkBehaviouralHealth, "Behavioual Health checkbox");
-		Browser.wait(testConfig, 5);
-		Element.click(chkOther, "Other sub checkbox");
-		Browser.wait(testConfig, 5);
-		if(!chkOther.isSelected())
-		{
-			Element.click(chkOther, "Other sub checkbox");
-		}
-		Element.verifyElementIsChecked(chkOther, "other checkbox");
+		Element.expectedWait(rdoHospital, testConfig, "Hospital/Facility radio button", "Hospital/Facility radio button");
 		
+		Element.click(rdoHospital, "Hospital/Facility radio button");
+		
+		//Element.click(chkBehaviouralHealth, "Behavioual Health checkbox");
+		
+		Element.click(chkOther, "Other sub checkbox");
 		Element.click(btnContinue, "Continue button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 

@@ -22,7 +22,7 @@ public class DataBase
 {
 	public enum DatabaseType
 	{
-		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5);
+		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test(6);
 
 	  public final int values;
 	  
@@ -148,6 +148,10 @@ public class DataBase
          else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
          {
 	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+       }
+         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
+         {
+	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test);
        }
     else
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
@@ -334,6 +338,10 @@ public class DataBase
          else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
          {
 	   return executeSelectQuery(testConfig,DatabaseType.PROD,sqlRow);
+       }
+         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
+         {
+	   return executeSelectQuery(testConfig,DatabaseType.Test,sqlRow);
        }
     else
 	return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
@@ -637,6 +645,13 @@ public class DataBase
 				Log.Comment("Connecting to Stage DB:-" + connectString);
 				userName = testConfig.getRunTimeProperty("ProdDBUsername");
 				password = testConfig.getRunTimeProperty("ProdDBPassword");
+				break;
+				
+			case Test:
+				connectString = testConfig.getRunTimeProperty("TestDBConnectionString");
+				Log.Comment("Connecting to Test DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("TestDBUsername");
+				password = testConfig.getRunTimeProperty("TestDBPassword");
 				break;
 				
 			case Automation:
