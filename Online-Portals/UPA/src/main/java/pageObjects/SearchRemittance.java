@@ -267,7 +267,7 @@ public class SearchRemittance extends paymentSummary {
 		return colNumber;
 	}
 	
-	public List<String> getColumnValueS(String colName) 
+	public List<String> getColumnValue(String colName) 
 	{	
 		List<String> list = new ArrayList<String>();
 		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
@@ -296,7 +296,7 @@ public class SearchRemittance extends paymentSummary {
 		return list;
 	}
 
-	public List<Long> getColumnValueI(String colName) {
+	/*public List<Long> getColumnValueI(String colName) {
 		Element.findElement(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int noOfRows = divSearchResults.size();
 		int colNumber=getColumnNo(colName);
@@ -320,10 +320,13 @@ public class SearchRemittance extends paymentSummary {
 			list.add(BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 		}		
 		return list;
-	}
+	}*/
 
 	public void verifySortingOrder(WebElement lnkName, String colName,String criteriaType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException 
 	{	
+		List<String> newList=new ArrayList<String>();
+		List<Long> newIntegerList=new ArrayList<Long>();
+		List<Double> newDoubleList=new ArrayList<Double>();
 		System.out.println("Inside verifySortingOrder");
 		switch(colName)
 		{
@@ -337,21 +340,23 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
-//					listString = getColumnValueS(colName);
 					listString=verifyTEST(criteriaType, colName);
 					Collections.sort(listString);
+					newList.addAll((listString.subList(0,30)));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListString = getColumnValueS(colName);					
-					Helper.compareEquals(testConfig, colName, listString, actualListString);
+					actualListString = getColumnValue(colName);					
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
 
 					// now sorting in descending order
 					Collections.sort(listString, Collections.reverseOrder());
+					newList.addAll(listString.subList(0, 30));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString.clear();
-					actualListString = getColumnValueS(colName);
-					Helper.compareEquals(testConfig, colName, listString, actualListString);
+					actualListString = getColumnValue(colName);
+					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
 					break;
 					
 		case "NPI":
@@ -360,18 +365,21 @@ public class SearchRemittance extends paymentSummary {
 					listString = verifyTEST(criteriaType, colName);
 					listInteger=convertFromStringToInteger(listString);
 					Collections.sort(listInteger);
+					newIntegerList.addAll((listInteger.subList(0,30)));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");					
-					actualListInteger = getColumnValueI(colName);
-					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
-					Helper.compareEquals(testConfig, colName, listInteger,	actualListInteger);
+					listString = getColumnValue(colName);
+					actualListInteger=convertFromStringToInteger(listString);
+					Helper.compareEquals(testConfig, colName, newIntegerList,	actualListInteger);
 
 					// now sorting in descending order
 					Collections.sort(listInteger, Collections.reverseOrder());
+					newIntegerList.addAll((listInteger.subList(0,30)));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListInteger = getColumnValueI(colName);
-					Helper.compareEquals(testConfig, colName, listInteger, actualListInteger);
+					listString = getColumnValue(colName);
+					actualListInteger=convertFromStringToInteger(listString);
+					Helper.compareEquals(testConfig, colName, newIntegerList, actualListInteger);
 					break;
 						
 		case "Claim Amount":
@@ -380,21 +388,25 @@ public class SearchRemittance extends paymentSummary {
 					listString=verifyTEST(criteriaType, colName);
 					listDouble = convertFromStringToDouble(listString);
 					Collections.sort(listDouble);
+					newDoubleList.addAll((listDouble.subList(0,30)));
 					Element.clickByJS(testConfig, lnkClaimAmount, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListDouble = getColumnValueD(colName);
-					Helper.compareEquals(testConfig, colName, listDouble,actualListDouble);
+					listString=getColumnValue(colName);
+					actualListDouble = convertFromStringToDouble(listString);
+					Helper.compareEquals(testConfig, colName, newDoubleList,actualListDouble);
 
 					// now sorting in descending order
 					Collections.sort(listDouble, Collections.reverseOrder());
+					newDoubleList.addAll((listDouble.subList(0,30)));
 					Element.clickByJS(testConfig, lnkClaimAmount,colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListDouble = getColumnValueD(colName);					
-					Helper.compareEquals(testConfig, colName, listDouble, actualListDouble);
+					listString=getColumnValue(colName);
+					actualListDouble = convertFromStringToDouble(listString);					
+					Helper.compareEquals(testConfig, colName, newDoubleList, actualListDouble);
 					break;
 					
 		case "Claim Date":
-				listString = getColumnValueS(colName);
+				listString = verifyTEST(criteriaType, colName);
 				Collections.sort(listString, new Comparator<String>()
 					{
 						DateFormat f = new SimpleDateFormat("MM/dd/yyyy");
@@ -407,17 +419,19 @@ public class SearchRemittance extends paymentSummary {
 							}
 						}
 					});
+				newList.addAll(listString.subList(0, 30));
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-				actualListString = getColumnValueS(colName);
-				Helper.compareEquals(testConfig, colName, listString,actualListString);
+				actualListString = getColumnValue(colName);
+				Helper.compareEquals(testConfig, colName, newList,actualListString);
 				
 				// now sorting in descending order		
 				Collections.reverse(listString);
+				newList.addAll(listString.subList(0, 30));
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-				actualListString = getColumnValueS(colName);
-				Helper.compareEquals(testConfig, colName, listString,actualListString);
+				actualListString = getColumnValue(colName);
+				Helper.compareEquals(testConfig, colName, newList,actualListString);
 				break;
 		}
 	}
@@ -425,7 +439,11 @@ public class SearchRemittance extends paymentSummary {
 	public List<Double> convertFromStringToDouble(List<String> listString) {
 		List<Double> l = new ArrayList<Double>();
 		for(String s : listString)
-			l.add(Double.parseDouble(s));
+		{
+			double amount = Double.parseDouble(s.substring(1, s.length()).replace(",", ""));
+			l.add(BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+			
+		}
 		return l;
 	}
 
@@ -448,10 +466,8 @@ public class SearchRemittance extends paymentSummary {
 	}
 	
 	public void verifySorting(String criteriaType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
-		System.out.println("Inside verifySorting");
 		switch(colName)
-		{
-		
+		{		
 		case "Payer":
 			verifySortingOrder(lnkPayerName,colName,criteriaType);
 			break;
@@ -951,18 +967,9 @@ public class SearchRemittance extends paymentSummary {
 	{
 		List<String> list= new ArrayList<String>();
 		int totalPayments;
-		LinkedHashMap<String,String> innerMap;
-		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
-	
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+		totalPayments=payments.length;
 		
-	    System.out.println("Details received from FISL is: "+payments);
-//	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
-//			 totalPayments=30;
-//		  else
-			totalPayments=payments.length;
-			
-			
 		switch(colName)
 		{
 		case "Payer":
@@ -1021,63 +1028,7 @@ public class SearchRemittance extends paymentSummary {
 			for(int i=0;i<totalPayments;i++)
 				list.add(getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			break;
-		}
-//		  for(int i=0;i<totalPayments;i++)
-//		  {
-//			 
-//			innerMap=new LinkedHashMap<String, String>();
-//			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
-//			
-//			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
-//			patientName=patientName.replace("null", "").trim();
-//
-//			
-//			if(payments[i].getClaimDate()!=null)
-//			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
-//			else 
-//			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
-//		  
-//			if(payments[i].getNationalProviderIdentifier()!=null)
-//		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
-//			else 
-//			innerMap.put("NPI",""); 
-//			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
-//			if(patientName!="")
-//			innerMap.put("Patient Name",patientName);
-//			if(payments[i].getSubscriberIdentifier()!=null)
-//			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
-//			
-//			innerMap.put("Account Number",payments[i].getPatientAccountNumber());
-//			
-//			if(payments[i].getClaimIdentifier()!=null)
-//			 {
-//			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
-//			
-//			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
-//			   innerMap.put("Claim Amount","$"+"0.00");
-//			   else
-//			  {
-//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
-//			    innerMap.put("Claim Amount","$"+ amount);
-//			  }
-//			}
-//			else
-//			{
-//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
-//			    innerMap.put("Amount","$"+ amount);
-//			}
-//				
-//				
-// 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
-// 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
-//			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
-//			outerMap.put(innerMap.get("Payment Number"), innerMap);
-//		 }
-//		  
-//		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
-		 
+		}		 
 		return list;
 	}
 	

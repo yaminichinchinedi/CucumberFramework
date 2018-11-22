@@ -181,7 +181,7 @@ public class SearchRemittanceSearchCriteria {
 //		    	String toDate =Helper.getDateBeforeOrAfterDays(1,"MM/dd/yyyy",date); //Helper.getCurrentDate("MM/dd/yyyy");
 //		    	String fromDate = Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy",date);
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
 //		    	toDate=Helper.changeDateFormat(toDate, "mm/dd/yyyy", "yyyy-mm-dd");
 //		    	System.out.println("new from date is: "+fromDate);
@@ -235,7 +235,7 @@ public class SearchRemittanceSearchCriteria {
 		    }
 		    
 		    
-		    case "byDOSAndSubscriberId":
+		    case "byDOPAndSubscriberId":
 		    {
 		    	int sqlRow = 43;
 		    	String sbscrId;
@@ -698,18 +698,21 @@ public class SearchRemittanceSearchCriteria {
     }
     
     //Review to be done by- Priyanka (for amit)
-    public SearchRemittanceSearchCriteria selectTin(String paymentType)
+    public SearchRemittanceSearchCriteria selectTin(String paymentType,String userType)
     {
-           Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed", "Tin Textbox");
+           Element.enterData(txtboxTinNo, getTin(paymentType,userType), "Enter Tin to proceed", "Tin Textbox");
            Element.click(btnSearch, "Search button Clicked");
            return this;
     }
     
-    public String getTin(String paymentType)
+    public String getTin(String paymentType,String userType)
     {
            int sqlRowNo=62;
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
+           if(userType=="SUBPAYER")
+        	   return dataProvider.getTinForPaymentType(paymentType);
+           else
            return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
     }
 
