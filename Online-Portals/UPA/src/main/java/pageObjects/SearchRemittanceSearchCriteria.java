@@ -176,43 +176,15 @@ public class SearchRemittanceSearchCriteria {
 		    	int sqlRow = 42;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-		    	System.out.println("Date fetched from DB is: "+date);
-//		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "dd/MM/yyyy");
-//		    	String toDate =Helper.getDateBeforeOrAfterDays(1,"MM/dd/yyyy",date); //Helper.getCurrentDate("MM/dd/yyyy");
-//		    	String fromDate = Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy",date);
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
-//		    	toDate=Helper.changeDateFormat(toDate, "mm/dd/yyyy", "yyyy-mm-dd");
-//		    	System.out.println("new from date is: "+fromDate);
-//		    	System.out.println("new to date is: "+toDate);
 		    	testConfig.putRunTimeProperty("fromDate",date);
 		    	testConfig.putRunTimeProperty("toDate",date);
 		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
 		    	testConfig.putRunTimeProperty("value", "ALL");		    	
 		    	
 		    	break;	
-		    	
-
-
-//		    	int sqlRow = 42;
-//		    	date = null;
-//		    	String sbscrId;
-//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-//
-//		    	try {
-//		    		date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-//		    		testConfig.putRunTimeProperty("fromDate", date);
-//		    		testConfig.putRunTimeProperty("toDate", date);
-//		    		testConfig.putRunTimeProperty("key", "MARKET_TYPE");
-//		    		testConfig.putRunTimeProperty("value", "ALL"); 
-//		    	} catch (ParseException e) {
-//		    		// TODO Auto-generated catch block
-//		    		e.printStackTrace();
-//		    	}
-//		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);      
-//		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");      
-//		    	break;
 		    }
 		    
 		    case "byDOPAndAcntNo":

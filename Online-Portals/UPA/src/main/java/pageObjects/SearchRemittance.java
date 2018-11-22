@@ -254,8 +254,9 @@ public class SearchRemittance extends paymentSummary {
 	public int getColumnNo(String colName)
 	{
 		int colNumber=0;
-		int colSize=divSearchResults.get(0).findElements(By.tagName("td")).size();
-		for(int i=0;i<colSize;i++)
+		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
+		int noOfColumns=divSearchResults.get(0).findElements(By.tagName("td")).size();
+		for(int i=0;i<noOfColumns;i++)
 		{
 			String actualColName=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
 			if(actualColName.contains(colName))
@@ -270,6 +271,7 @@ public class SearchRemittance extends paymentSummary {
 	public List<String> getColumnValueS(String colName) 
 	{	
 		List<String> list = new ArrayList<String>();
+		
 		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int noOfRows = divSearchResults.size();
 		int colNumber=getColumnNo(colName);
@@ -284,7 +286,15 @@ public class SearchRemittance extends paymentSummary {
 		else
 			for (int i=2; i<noOfRows; i++)
 			{
-				String result = divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText().toString();
+				String result="";
+				try{
+					result=divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText();
+				}
+				catch(Exception e)
+				{
+					divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
+					result = divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText();
+				}
 				switch(result)
 				{
 					case "":
@@ -324,7 +334,6 @@ public class SearchRemittance extends paymentSummary {
 
 	public void verifySortingOrder(WebElement lnkName, String colName,String criteriaType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException 
 	{	
-		System.out.println("Inside verifySortingOrder");
 		switch(colName)
 		{
 		case "Payer":
@@ -337,21 +346,29 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
-//					listString = getColumnValueS(colName);
+					
 					listString=verifyTEST(criteriaType, colName);
+					
+					
 					Collections.sort(listString);
+					List<String> newList = new ArrayList<>(listString.subList(0,30));
+					System.out.println(newList);
+					
 					Element.clickByJS(testConfig, lnkName, colName);
+					Browser.wait(testConfig, 2);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString = getColumnValueS(colName);					
-					Helper.compareEquals(testConfig, colName, listString, actualListString);
+					
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
 
 					// now sorting in descending order
 					Collections.sort(listString, Collections.reverseOrder());
+					newList.addAll(listString.subList(0, 30));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString.clear();
 					actualListString = getColumnValueS(colName);
-					Helper.compareEquals(testConfig, colName, listString, actualListString);
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
 					break;
 					
 		case "NPI":
@@ -443,7 +460,6 @@ public class SearchRemittance extends paymentSummary {
 		List<String> l= new ArrayList<String>();
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		l=getDetailsFromFISL(searchResponse,colName);
-		System.out.println("List of details got from FISL is: "+l);
 		return l;
 	}
 	
@@ -951,16 +967,11 @@ public class SearchRemittance extends paymentSummary {
 	{
 		List<String> list= new ArrayList<String>();
 		int totalPayments;
-		LinkedHashMap<String,String> innerMap;
-		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+	    
+		totalPayments=payments.length;
 		
-	    System.out.println("Details received from FISL is: "+payments);
-//	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
-//			 totalPayments=30;
-//		  else
-			totalPayments=payments.length;
 			
 			
 		switch(colName)
@@ -991,8 +1002,8 @@ public class SearchRemittance extends paymentSummary {
 		case "Patient Name":
 			for(int i=0;i<totalPayments;i++)
 			{
-				String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
-				patientName=patientName.replace("null", "").trim();
+				String patientName=payments[i].getPatientFirstName()+ " " +payments[i].getPatientMiddleName()+ " " +payments[i].getPatientLastName();
+				patientName=patientName.replace("null ", "").trim();
 				if(patientName!="")
 					list.add(patientName);
 			}
@@ -1022,62 +1033,6 @@ public class SearchRemittance extends paymentSummary {
 				list.add(getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			break;
 		}
-//		  for(int i=0;i<totalPayments;i++)
-//		  {
-//			 
-//			innerMap=new LinkedHashMap<String, String>();
-//			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
-//			
-//			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
-//			patientName=patientName.replace("null", "").trim();
-//
-//			
-//			if(payments[i].getClaimDate()!=null)
-//			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
-//			else 
-//			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
-//		  
-//			if(payments[i].getNationalProviderIdentifier()!=null)
-//		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
-//			else 
-//			innerMap.put("NPI",""); 
-//			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
-//			if(patientName!="")
-//			innerMap.put("Patient Name",patientName);
-//			if(payments[i].getSubscriberIdentifier()!=null)
-//			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
-//			
-//			innerMap.put("Account Number",payments[i].getPatientAccountNumber());
-//			
-//			if(payments[i].getClaimIdentifier()!=null)
-//			 {
-//			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
-//			
-//			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
-//			   innerMap.put("Claim Amount","$"+"0.00");
-//			   else
-//			  {
-//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
-//			    innerMap.put("Claim Amount","$"+ amount);
-//			  }
-//			}
-//			else
-//			{
-//				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-//			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
-//			    innerMap.put("Amount","$"+ amount);
-//			}
-//				
-//				
-// 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
-// 			innerMap.put("Payment Status / Trace Number",payments[i].getPaymentStatusCode().getDescription());
-//			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
-//			outerMap.put(innerMap.get("Payment Number"), innerMap);
-//		 }
-//		  
-//		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
-		 
 		return list;
 	}
 	
