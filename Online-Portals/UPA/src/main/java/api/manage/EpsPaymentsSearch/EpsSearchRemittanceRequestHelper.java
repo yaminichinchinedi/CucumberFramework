@@ -35,7 +35,7 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 			
 			switch (requestType) {
 	        case "byDOP":
-	               xmlFilePath=xmlFilePath +"\\Request.xml";
+	               xmlFilePath=xmlFilePath +"\\DOP.xml";
 	               break;
 	        case "byDOS":
 	               xmlFilePath=xmlFilePath +"\\RequestSearchRemitDOS.xml";
