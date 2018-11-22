@@ -617,12 +617,15 @@ public class SearchRemittance extends paymentSummary {
 	public void verifyPagination()
 	{
 		if(divSearchResults.size()>30)
-			Element.clickByJS(testConfig, lnkNextPage, "Next Page");
-		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
-		Element.clickByJS(testConfig, lnkFirstPage, "First Page");
-		if(divSearchResults.size()>30)
+		{
 			Element.clickByJS(testConfig, lnkLastPage, "Last Page");
-		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+			Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+			Element.clickByJS(testConfig, lnkFirstPage, "First Page");
+			Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+		}
+		else
+			System.out.println("Rows less than 30");
+		
 	}
 	
 	

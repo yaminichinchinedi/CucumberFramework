@@ -31,7 +31,7 @@ import main.java.reporting.Log;
 public class SearchRemittanceSearchCriteria {
 	
 	private TestBase testConfig;
-	
+	private ViewPaymentsDataProvider dataProvider;
 	@FindBy(id="checkNumberInputId")
 	WebElement checkNumber;
 	
@@ -705,7 +705,6 @@ public class SearchRemittanceSearchCriteria {
            return this;
     }
     
-    private ViewPaymentsDataProvider dataProvider;
     public String getTin(String paymentType)
     {
            int sqlRowNo=62;

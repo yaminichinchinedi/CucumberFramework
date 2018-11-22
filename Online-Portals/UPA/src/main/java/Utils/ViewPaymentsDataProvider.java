@@ -83,10 +83,10 @@ public String getTinForPaymentType(String paymentType)
  			 
  		 case "byDOS":
  		 case "byDOP":
- 		 case "byDateOfPaymentAndAcntNo":
- 		 case "byDateOfPaymentAndSubscriberId":
- 		 case "byDateOfPaymentAndNpi":
- 		 case "byDOSAndAccountNo":
+ 		 case "byDOPAndAcntNo":
+ 		 case "byDOPAndSubscriberId":
+ 		 case "byDOPAndNpi":
+ 		 case "byDOSAndAcntNo":
  		 case "byDOSAndSubscriberId":
  		 case "byDOSAndNpi":
  		 case "byDOSAndClaimNo":
