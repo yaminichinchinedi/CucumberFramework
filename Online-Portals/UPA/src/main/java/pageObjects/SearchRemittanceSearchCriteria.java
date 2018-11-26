@@ -154,7 +154,8 @@ public class SearchRemittanceSearchCriteria {
 		    	data=dataProvider(criteriaType);
 		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Select payment number type");
 		    	Element.click(checkNumber, "Selecting Filter Criteria");
-		    	Element.enterData(checkNumber, data.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");		    	
+		    	Element.enterData(checkNumber, data.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");	
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;		    	
 		    }
 		    
@@ -207,7 +208,7 @@ public class SearchRemittanceSearchCriteria {
 		    }
 		    
 		    
-		    case "byDOSAndSubscriberId":
+		    case "byDOPAndSubscriberId":
 		    {
 		    	int sqlRow = 43;
 		    	String sbscrId;
@@ -670,18 +671,21 @@ public class SearchRemittanceSearchCriteria {
     }
     
     //Review to be done by- Priyanka (for amit)
-    public SearchRemittanceSearchCriteria selectTin(String paymentType)
+    public SearchRemittanceSearchCriteria selectTin(String paymentType,String userType)
     {
-           Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed", "Tin Textbox");
+           Element.enterData(txtboxTinNo, getTin(paymentType,userType), "Enter Tin to proceed", "Tin Textbox");
            Element.click(btnSearch, "Search button Clicked");
            return this;
     }
     
-    public String getTin(String paymentType)
+    public String getTin(String paymentType,String userType)
     {
            int sqlRowNo=62;
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
+           if(userType=="SUBPAYER")
+        	   return dataProvider.getTinForPaymentType(paymentType);
+           else
            return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
     }
 
