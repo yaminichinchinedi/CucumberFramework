@@ -48,6 +48,9 @@ public class SearchRemittance extends paymentSummary {
 	@FindBy(xpath="//td[@class='errors']")
 	WebElement errorMsg;
 	
+	@FindBy(xpath="//td[contains(text(),'No records')]")
+	WebElement CSRErrorMsg;
+	
 	@FindBy(xpath="//td[contains(text(),'Record Count')]")
 	WebElement recordCount;
 	
@@ -145,7 +148,7 @@ public class SearchRemittance extends paymentSummary {
 		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 		  Helper.compareMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISLForCSR(searchResponse), getPaymentDetailsFromCSRUI());	
 		else
-		  Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
+		  Element.verifyTextPresent(CSRErrorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
 		 
 		//Queries to be modified by Abhinav
 		//Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
@@ -254,8 +257,9 @@ public class SearchRemittance extends paymentSummary {
 	public int getColumnNo(String colName)
 	{
 		int colNumber=0;
-		int colSize=divSearchResults.get(0).findElements(By.tagName("td")).size();
-		for(int i=0;i<colSize;i++)
+		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
+		int noOfColumns=divSearchResults.get(0).findElements(By.tagName("td")).size();
+		for(int i=0;i<noOfColumns;i++)
 		{
 			String actualColName=divSearchResults.get(0).findElements(By.tagName("td")).get(i).getText().toString();
 			if(actualColName.contains(colName))
@@ -284,7 +288,16 @@ public class SearchRemittance extends paymentSummary {
 		else
 			for (int i=2; i<noOfRows; i++)
 			{
-				String result = divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText().toString();
+				String result="";
+				try
+				{
+					result = divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText();
+				}
+				catch(Exception e)
+				{
+					divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");	
+					result = divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).getText();
+				}
 				switch(result)
 				{
 					case "":
