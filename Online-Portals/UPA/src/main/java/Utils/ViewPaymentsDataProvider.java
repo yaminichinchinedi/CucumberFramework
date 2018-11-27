@@ -86,7 +86,7 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndAcntNo":
  		 case "byDOPAndSubscriberId":
  		 case "byDOPAndNpi":
- 		 case "byDOSAndAcntNo":
+ 		 
  		 case "byDOSAndSubscriberId":
  		 case "byDOSAndNpi":
  		 case "byDOSAndClaimNo":
@@ -94,7 +94,9 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndPtntNm":
 			 sqlRowNo=41;
 			 break;
- 			
+ 		 case "byDOSAndAccountNo":
+ 			sqlRowNo=58;
+ 			 
  		 case "byDateOfPaymentAndZeroPmntClms":
 		 case "byDOSAndZeroPaymentClaims":
 			sqlRowNo=47;

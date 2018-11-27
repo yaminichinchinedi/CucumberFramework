@@ -154,7 +154,8 @@ public class SearchRemittanceSearchCriteria {
 		    	data=dataProvider(criteriaType);
 		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Select payment number type");
 		    	Element.click(checkNumber, "Selecting Filter Criteria");
-		    	Element.enterData(checkNumber, data.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");		    	
+		    	Element.enterData(checkNumber, data.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");	
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;		    	
 		    }
 		    
@@ -176,23 +177,15 @@ public class SearchRemittanceSearchCriteria {
 		    	int sqlRow = 42;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-		    	System.out.println("Date fetched from DB is: "+date);
-//		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "dd/MM/yyyy");
-//		    	String toDate =Helper.getDateBeforeOrAfterDays(1,"MM/dd/yyyy",date); //Helper.getCurrentDate("MM/dd/yyyy");
-//		    	String fromDate = Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy",date);
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
-//		    	toDate=Helper.changeDateFormat(toDate, "mm/dd/yyyy", "yyyy-mm-dd");
-//		    	System.out.println("new from date is: "+fromDate);
-//		    	System.out.println("new to date is: "+toDate);
 		    	testConfig.putRunTimeProperty("fromDate",date);
 		    	testConfig.putRunTimeProperty("toDate",date);
 		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
 		    	testConfig.putRunTimeProperty("value", "ALL");		    	
 		    	
 		    	break;	
-		    	
 		    }
 		    
 		    case "byDOPAndAcntNo":
