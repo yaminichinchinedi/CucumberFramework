@@ -106,8 +106,12 @@ public class SearchRemittance extends paymentSummary {
 	@FindBy(xpath="//tr[@class='columnHeaderText']")
 	List<WebElement> searchResultsHeaderRow;
 	
+	@FindBy(id = "saveArchive")
+	WebElement btnSaveArchive;
+	
 	private TestBase testConfig;
-
+	static int flag=0;
+	List<ArrayList<String>> listOfPatients=new ArrayList<ArrayList<String>>();
 	public SearchRemittance(TestBase testConfig)
 	{
 		super(testConfig,true);
@@ -273,13 +277,28 @@ public class SearchRemittance extends paymentSummary {
 		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 		int noOfRows = divSearchResults.size();
 		int colNumber=getColumnNo(colName);
-		
+		boolean p=true;
 		if(colName.equals("Archive"))
 			for (int i=2; i<noOfRows; i++) 
 			{
+				p=true;
+				divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
 				Map attMap=Element.getAllAttributes(testConfig, divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")), "Access Level Attributes");
 				String result=(String)attMap.get("CHECKED");
-				list.add(result);
+				if(result==null)
+					result=attMap.containsKey("checked")?"true":"false";
+				if(result.equals("false") && flag==0)
+				{
+					p=false;
+					divSearchResults.get(i).findElements(By.tagName("td")).get(colNumber).findElement(By.tagName("input")).click();
+					Browser.wait(testConfig, 1);
+					btnSaveArchive.click();
+					Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+					i=1;
+				}
+				flag=1;
+				if(p)
+					list.add(result);
 			}
 		else
 			for (int i=2; i<noOfRows; i++)
@@ -327,12 +346,11 @@ public class SearchRemittance extends paymentSummary {
 		List<String> newList=new ArrayList<String>();
 		List<Long> newIntegerList=new ArrayList<Long>();
 		List<Double> newDoubleList=new ArrayList<Double>();
-		System.out.println("Inside verifySortingOrder");
 		switch(colName)
 		{
 		case "Payer":
 		case "Payment Number":
-		case "Patient Name":
+		case "NPI":
 		case "Subscriber ID":
 		case "Account Number":
 		case "Claim #":
@@ -342,7 +360,10 @@ public class SearchRemittance extends paymentSummary {
 					List<String> actualListString = new ArrayList<String>();
 					listString=verifyTEST(criteriaType, colName);
 					Collections.sort(listString);
-					newList.addAll((listString.subList(0,30)));
+					if(listString.size()<30)
+						newList.addAll((listString.subList(0,listString.size())));
+					else
+						newList.addAll((listString.subList(0,30)));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString = getColumnValue(colName);					
@@ -350,7 +371,10 @@ public class SearchRemittance extends paymentSummary {
 
 					// now sorting in descending order
 					Collections.sort(listString, Collections.reverseOrder());
-					newList.addAll(listString.subList(0, 30));
+					if(listString.size()<30)
+						newList.addAll((listString.subList(0,listString.size())));
+					else
+						newList.addAll((listString.subList(0,30)));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					actualListString.clear();
@@ -359,27 +383,49 @@ public class SearchRemittance extends paymentSummary {
 					Helper.compareEquals(testConfig, colName, newList, actualListString);
 					break;
 					
-		case "NPI":
-					List<Long> listInteger = new ArrayList<Long>();
-					List<Long> actualListInteger = new ArrayList<Long>();
-					listString = verifyTEST(criteriaType, colName);
-					listInteger=convertFromStringToInteger(listString);
-					Collections.sort(listInteger);
-					newIntegerList.addAll((listInteger.subList(0,30)));
-					Element.clickByJS(testConfig, lnkName, colName);
-					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");					
-					listString = getColumnValue(colName);
-					actualListInteger=convertFromStringToInteger(listString);
-					Helper.compareEquals(testConfig, colName, newIntegerList,	actualListInteger);
+		case "Patient Name":
+					listString = new ArrayList<String>();
+					actualListString = new ArrayList<String>();
+					listString=verifyTEST(criteriaType, colName);
+					Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
 
-					// now sorting in descending order
-					Collections.sort(listInteger, Collections.reverseOrder());
-					newIntegerList.addAll((listInteger.subList(0,30)));
+						@Override
+						public int compare(ArrayList<String> a1,ArrayList<String> a2) {
+							int v1=a1.get(2).compareTo(a2.get(2));
+			                int v2=a1.get(1).compareTo(a2.get(1));
+			                int v3=a1.get(3).compareTo(a2.get(3));
+			                if(v1==0)
+			                    return (v2==0)?v3:v2;
+			                else
+			                    return v1;
+						}
+						
+					});
+					if(listString.size()<30)
+						for(int i=0;i<listString.size();i++)
+							newList.add(listOfPatients.get(0).get(0));
+					else
+						for(int i=0;i<30;i++)
+							newList.add(listOfPatients.get(0).get(0));
 					Element.clickByJS(testConfig, lnkName, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					listString = getColumnValue(colName);
-					actualListInteger=convertFromStringToInteger(listString);
-					Helper.compareEquals(testConfig, colName, newIntegerList, actualListInteger);
+					actualListString = getColumnValue(colName);					
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
+		
+					// now sorting in descending order
+					Collections.sort(listString, Collections.reverseOrder());
+					if(listString.size()<30)
+						for(int i=0;i<listString.size();i++)
+							newList.add(listOfPatients.get(0).get(0));
+					else
+						for(int i=0;i<30;i++)
+							newList.add(listOfPatients.get(0).get(0));
+					Element.clickByJS(testConfig, lnkName, colName);
+					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+					actualListString.clear();
+					actualListString = getColumnValue(colName);
+					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
+					Helper.compareEquals(testConfig, colName, newList, actualListString);
 					break;
 						
 		case "Claim Amount":
@@ -388,7 +434,10 @@ public class SearchRemittance extends paymentSummary {
 					listString=verifyTEST(criteriaType, colName);
 					listDouble = convertFromStringToDouble(listString);
 					Collections.sort(listDouble);
-					newDoubleList.addAll((listDouble.subList(0,30)));
+					if(listDouble.size()<30)
+						newDoubleList.addAll((listDouble.subList(0,listDouble.size())));
+					else
+						newDoubleList.addAll((listDouble.subList(0,30)));
 					Element.clickByJS(testConfig, lnkClaimAmount, colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					listString=getColumnValue(colName);
@@ -397,7 +446,10 @@ public class SearchRemittance extends paymentSummary {
 
 					// now sorting in descending order
 					Collections.sort(listDouble, Collections.reverseOrder());
-					newDoubleList.addAll((listDouble.subList(0,30)));
+					if(listDouble.size()<30)
+						newDoubleList.addAll((listDouble.subList(0,listDouble.size())));
+					else
+						newDoubleList.addAll((listDouble.subList(0,30)));
 					Element.clickByJS(testConfig, lnkClaimAmount,colName);
 					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 					listString=getColumnValue(colName);
@@ -419,7 +471,10 @@ public class SearchRemittance extends paymentSummary {
 							}
 						}
 					});
-				newList.addAll(listString.subList(0, 30));
+				if(listString.size()<30)
+					newList.addAll(listString.subList(0, listString.size()));
+				else 
+					newList.addAll(listString.subList(0, 30));
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 				actualListString = getColumnValue(colName);
@@ -427,7 +482,10 @@ public class SearchRemittance extends paymentSummary {
 				
 				// now sorting in descending order		
 				Collections.reverse(listString);
-				newList.addAll(listString.subList(0, 30));
+				if(listString.size()<30)
+					newList.addAll(listString.subList(0, listString.size()));
+				else 
+					newList.addAll(listString.subList(0, 30));
 				Element.clickByJS(testConfig, lnkClaimDate, colName);
 				Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 				actualListString = getColumnValue(colName);
@@ -447,14 +505,12 @@ public class SearchRemittance extends paymentSummary {
 		return l;
 	}
 
-
 	public List<Long> convertFromStringToInteger(List<String> listString) {
 		List<Long> l = new ArrayList<Long>();
 		for(String s : listString)
 			l.add(Long.parseLong(s));
 		return l;
 	}
-
 
 	public List<String> verifyTEST(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
@@ -999,9 +1055,15 @@ public class SearchRemittance extends paymentSummary {
 			for(int i=0;i<totalPayments;i++)
 			{
 				String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
-				patientName=patientName.replace("null", "").trim();
+				patientName=patientName.replace("null ", "").trim();
 				if(patientName!="")
 					list.add(patientName);
+				ArrayList<String> test=new ArrayList<String>();
+				test.add(patientName);
+				test.add(payments[i].getPatientFirstName());
+				test.add(payments[i].getPatientLastName());
+				test.add(payments[i].getSubscriberIdentifier());
+				listOfPatients.add(test);
 			}
 			break;
 		case "Account Number":
@@ -1010,8 +1072,8 @@ public class SearchRemittance extends paymentSummary {
 			break;
 		case "Claim #":
 			for(int i=0;i<totalPayments;i++)
-				if(payments[i].getClaimDate()!=null)
-					list.add(Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+				if(payments[i].getClaimIdentifier()!=null)
+				   list.add(payments[i].getClaimIdentifier());
 			break;
 		case "Claim Amount":
 			for(int i=0;i<totalPayments;i++)
@@ -1032,4 +1094,9 @@ public class SearchRemittance extends paymentSummary {
 		return list;
 	}
 	
+	public void verifyHoverText(){
+		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
+		divSearchResults.get(2).findElements(By.tagName("td")).get(3).click();
+		
+	}
 }

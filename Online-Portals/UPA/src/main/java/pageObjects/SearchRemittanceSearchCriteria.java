@@ -193,26 +193,6 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	break;	
 		    	
-
-
-//		    	int sqlRow = 42;
-//		    	date = null;
-//		    	String sbscrId;
-//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-//
-//		    	try {
-//		    		date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-//		    		testConfig.putRunTimeProperty("fromDate", date);
-//		    		testConfig.putRunTimeProperty("toDate", date);
-//		    		testConfig.putRunTimeProperty("key", "MARKET_TYPE");
-//		    		testConfig.putRunTimeProperty("value", "ALL"); 
-//		    	} catch (ParseException e) {
-//		    		// TODO Auto-generated catch block
-//		    		e.printStackTrace();
-//		    	}
-//		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);      
-//		    	//Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");      
-//		    	break;
 		    }
 		    
 		    case "byDOPAndAcntNo":
@@ -671,20 +651,20 @@ public class SearchRemittanceSearchCriteria {
            
            //by date of Payment for date range more than 30 days
            String expectedMsg="Date(s) of Payment date range must be 30 days or less";
-         clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfPayment");
+         clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDOP");
      selectPayer("UnitedHealthcare");
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,POSErrorMsg.getText());
            
      //now by date of service for date range more than 30 days
      expectedMsg="Date(s) of Service date range must be 30 days or less";
-         clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDateOfService");
+         clickFromDateIcon("byDOS").setDate(Helper.getDateBeforeOrAfterDays(-40,"MM/dd/yyyy"), "byDOS").clickToDateIcon("byDOS").setDate(Helper.getCurrentDate("MM/dd/yyyy"), "byDOS");
      selectPayer("UnitedHealthcare");
      Element.expectedWait(DOSErrorMsg, testConfig, "Date of Service Error message" , "Date of Service Error message");
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,DOSErrorMsg.getText());
      
      //by date of Payment before 14 month
      expectedMsg="Start Date should not be earlier than the rolling 13 months.";
-           clickFromDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDateOfPayment").clickToDateIcon("byDateOfPayment").setDate(Helper.getDateBeforeOrAfterDays(-470,"MM/dd/yyyy"), "byDateOfPayment");
+           clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP");
      selectPayer("UnitedHealthcare");
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,strtDateErrorMsg.getText());
      
@@ -692,7 +672,7 @@ public class SearchRemittanceSearchCriteria {
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,endDateErrorMsg.getText());
 
      //now by date of service before 14 month      
-         clickFromDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService").clickToDateIcon("byDateOfService").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDateOfService");
+         clickFromDateIcon("byDOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDOS").clickToDateIcon("byDOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDOS");
      Element.selectByVisibleText(payer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
      clickSearchBtn();
     }
