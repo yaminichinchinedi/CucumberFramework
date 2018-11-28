@@ -75,8 +75,7 @@ public class TestCSRViewPayments extends TestBase{
 	
 	
 	
-	@Test(priority=5,description="TS006_View Payments_Payments filter_Show All " + " "
-                  + "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+	@Test(priority=5,description="TS006_View Payments_Payments filter_Show All " + " "+ "<br>" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
 	void testRecordCountForShowALLFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
 		String filterPayments="Show All";
@@ -95,8 +94,7 @@ public class TestCSRViewPayments extends TestBase{
 	}
 	
 	
-	@Test(priority=5,description="TS005_View Payments_Payments filter_NPI Only"
-			   + "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+	@Test(priority=5,description="TS005_View Payments_Payments filter_NPI Only" + "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
 	void testRecordCountForNPIOnlyFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
 	         
@@ -124,8 +122,7 @@ public class TestCSRViewPayments extends TestBase{
     }	
 	   
 	   
-   @Test(priority=5,description="TS004_View Payments_Payments filter_TIN Only"
-	           + '\n' + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=5,description="TS004_View Payments_Payments filter_TIN Only" + '\n' + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
    void testRecordCountForTinOnlyfilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
      
@@ -198,21 +195,15 @@ public class TestCSRViewPayments extends TestBase{
 	   	CSRHomePage homePage=loginPage.doLogin(loginUserType);
 	   	SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(paymentType);
 		paymentSummary paymentSummaryPage = srchTinPage.clickSearchBtn();
-		
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments); 	
-      
         quickSearchFilter="Last 60 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 90 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 4-6 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 6-9 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 9-13 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
   }	
@@ -237,16 +228,12 @@ public class TestCSRViewPayments extends TestBase{
       
         quickSearchFilter="Last 60 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 90 days";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 4-6 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 6-9 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
-      
         quickSearchFilter="Last 9-13 months";
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
   }
