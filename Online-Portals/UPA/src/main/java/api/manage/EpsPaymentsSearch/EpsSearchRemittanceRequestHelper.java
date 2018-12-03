@@ -35,23 +35,27 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 			
 			switch (requestType) {
 	        case "byDOP":
-	               xmlFilePath=xmlFilePath +"\\DOP.xml";
+	        case "byDOP&SubscriberID":
+	        case "byDOPAndAccountNo":
+	        case "byDOPAndNpi":
+	        case "byDOPAndClaimNo":
+	        case "byDOPAndZeroPaymentClaims":
+	              xmlFilePath=xmlFilePath +"\\DOP.xml";
 	               break;
 	        case "byDOS":
 	               xmlFilePath=xmlFilePath +"\\RequestSearchRemitDOS.xml";
 	               break;
-	        case "byDOP&PatientName":
+	        case "byDOPAndPatientNm":
 	               xmlFilePath=xmlFilePath + "\\DOP&PatientNameRequest.xml";
 	               break;
-	        case "byDOP&SubscriberID":
-	               xmlFilePath=xmlFilePath+"\\DOP&SubscriberIDRequest.xml";
-	               break;
+	      
 	        case "byElectronicPaymentNo":
 	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
                   break;
 	        case "byCheckNo":
 	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
                 break;
+	       
 	        
 	        default:
 	               Log.Comment("No Request exists for given input");

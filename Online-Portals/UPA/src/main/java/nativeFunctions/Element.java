@@ -200,7 +200,6 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
-//              Browser.waitForLoad(testConfig.driver);
 		      Log.Pass("Clicked " + namOfElement);
 		 }
 		

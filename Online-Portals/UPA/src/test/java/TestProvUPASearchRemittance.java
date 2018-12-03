@@ -321,7 +321,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyreturnedReasonDisplayed(criteriaType,"UPA");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyReturnedReasonDisplayed(criteriaType);
    }
    
 	@Test(priority=5,description="TS036_Sorting on Payer Name")
@@ -331,7 +331,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payer");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payer");
     }
 	
 	@Test(priority=5,description="TS037_Sorting on Claim Date")
@@ -341,7 +341,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim Date");
     }
 	
 	@Test(priority=5,description="TS038_Sorting on NPI")
@@ -351,7 +351,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"NPI");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("NPI");
     }
 	
 	@Test(priority=5,description="TS039_Sorting on Patient Name")
@@ -361,7 +361,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Patient Name");
     }
 	
 	@Test(priority=5,description="TS040_Sorting on Subscriber Id")
@@ -371,7 +371,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Subscriber ID");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Subscriber ID");
     }
 	
 	@Test(priority=5,description="TS041_Sorting on Account Number")
@@ -381,7 +381,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Account Number");
     }
 	
 	@Test(priority=5,description="TS042_Sorting on Claim #")
@@ -391,7 +391,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim #");
     }
 	
 	@Test(priority=5,description="TS043_Sorting on Claim Amount")
@@ -401,7 +401,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim Amount");	        
     }
 	
 	@Test(priority=5,description="TS044_Sorting on Market Type")
@@ -411,7 +411,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Market Type");
     }
 	
 	@Test(priority=5,description="TS045_Sorting on Archive")
@@ -421,7 +421,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Archive");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Archive");
     }
 	
 	@Test(priority=5,description="TS047_Sorting on Payment Number")
@@ -431,7 +431,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payment Number");
     }
 	
 	@Test(priority=5,description="TS049_Pagination of Search Results")
@@ -758,7 +758,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.clickSearchRemittanceTab().doSearch(criteriaType).verifyreturnedReasonDisplayed(criteriaType,"UPA");
+	    home.clickSearchRemittanceTab().doSearch(criteriaType).verifyReturnedReasonDisplayed(criteriaType);
    }
 
 	@Test(priority=5,description="TS036_Sorting on Payer Name")
@@ -770,7 +770,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payer");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payer");
     }
 	
 	@Test(priority=5,description="TS037_Sorting on Claim Date")
@@ -782,7 +782,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Date");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim Date");
     }
 	
 	@Test(priority=5,description="TS038_Sorting on NPI")
@@ -794,7 +794,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"NPI");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("NPI");
     }
 	
 	@Test(priority=5,description="TS039_Sorting on Patient Name")
@@ -806,7 +806,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Patient Name");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Patient Name");
     }
 	
 	@Test(priority=5,description="TS040_Sorting on Subscriber Id")
@@ -818,7 +818,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Subscriber ID");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Subscriber ID");
     }
 	
 	@Test(priority=5,description="TS041_Sorting on Account Number")
@@ -830,7 +830,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Account Number");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Account Number");
     }
 	
 	@Test(priority=5,description="TS042_Sorting on Claim #")
@@ -842,7 +842,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim #");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim #");
     }
 	
 	@Test(priority=5,description="TS043_Sorting on Claim Amount")
@@ -854,7 +854,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Claim Amount");	        
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Claim Amount");	        
     }
 	
 	@Test(priority=5,description="TS044_Sorting on Market Type")
@@ -866,7 +866,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Market Type");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Market Type");
     }
 	
 	@Test(priority=5,description="TS045_Sorting on Archive")
@@ -878,7 +878,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Archive");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Archive");
     }
 	
 	@Test(priority=5,description="TS047_Sorting on Payment Number")
@@ -890,7 +890,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting(criteriaType,"Payment Number");
+	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payment Number");
     }
 	
 	@Test(priority=5,description="TS049_Pagination of Search Results")
