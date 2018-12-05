@@ -110,16 +110,27 @@ public String getTinForPaymentType(String paymentType)
  			sqlRowNo=50;
  			break;
  			
- 		 case "byElectronicPaymentforStatus":
+ 		case "byElectronicPaymentForVCP":
+ 			testConfig.putRunTimeProperty("type","VCP");
+ 			sqlRowNo=52;
+ 			break;
+ 		case "byElectronicPaymentForNON":
+ 			testConfig.putRunTimeProperty("type","NON");
  			sqlRowNo=52;
  			break;
  			
  		 case "DD":
+ 			 testConfig.putRunTimeProperty("type","DD");
  			 sqlRowNo=54;
  			 break;
  		 case "ReoriginatedACH":
+ 			 testConfig.putRunTimeProperty("type","ACH");
  			 sqlRowNo=56;
  			 break;
+ 		case "ReoriginatedCHK":
+			 testConfig.putRunTimeProperty("type","CHK");
+			 sqlRowNo=56;
+			 break;
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		

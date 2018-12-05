@@ -282,25 +282,25 @@ public class TestSubPayerSearchRemittance extends TestBase {
    @Test(priority=5,description="TS026_Type And Payment Status")
    public void testTypeAndPaymentStatusByElectronicPaymentForACH() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-	    String criteriaType="byDOP";
+	    String criteriaType="byElectronicPaymenForACH";
 		String tinType="ReoriginatedACH"; 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("ACH");
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
    public void testTypeAndPaymentStatusByElectronicPaymentForVCP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
-		String criteriaType="byElectronicPaymentforStatus";
-		String tinType="byElectronicPaymentforStatus";
+		String criteriaType="byElectronicPaymenForVCP";
+		String tinType="byElectronicPaymenForVCP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	   // home.selectTin();
 	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
    
@@ -705,12 +705,12 @@ public class TestSubPayerSearchRemittance extends TestBase {
    {
 	    String userType="SUBPAYER";
 		String accessType="Gen";
-		String criteriaType="byDOP";
+		String criteriaType="byElectronicPaymenForACH";
 		String tinType="ReoriginatedACH"; 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).searchByElectronicPaymentToVerifyPaymentStatusforACH(tinType).verifyPaymentStatus("ACH");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("ACH");
    }
    
    @Test(priority=5,description="TS026_Type And Payment Status")
@@ -718,14 +718,14 @@ public class TestSubPayerSearchRemittance extends TestBase {
    {
 	    String userType="SUBPAYER";
 		String accessType="Gen";
-		String criteriaType="byElectronicPaymentforStatus";
-		String tinType="byElectronicPaymentforStatus";
+		String criteriaType="byElectronicPaymenForVCP";
+		String tinType="byElectronicPaymenForVCP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	   // home.selectTin();
 	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).searchByElectronicPaymentToVerifyPaymentStatusforVCP(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
 	

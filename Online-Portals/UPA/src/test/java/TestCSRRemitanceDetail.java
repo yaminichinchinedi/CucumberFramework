@@ -25,6 +25,46 @@ public class TestCSRRemitanceDetail extends TestBase{
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
-		srchTinPage.clickSearchBtn().doSearch(criteriaType).verifyHoverText();
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyHoverTexts();
      }
+	
+	@Test(priority=5,description="TS02_PopUp for RMK Code")
+	public void testVerifyPopUpforRMKCode() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOP"; 
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyPopUpforRMKCode();
+     }
+	
+	@Test(priority=5,description="TS03_PopUp for ADJ reason Code")
+	public void testVerifyPopUpforADJCode() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOP"; 
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyPopUpforADJCode();
+     }
+	
+	@Test(priority=5,description="TS04_PLB Adjustment Only")
+	public void testVerifyPLBAdjustment() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOP"; 
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyPLBAdjustment();;
+    }
+	
+	@Test(priority=5,description="TS05_Page Verification")
+	public void testVerifyPageData() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOP"; 
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	
+		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyPageRemittanceDetail();
+    }
 }
