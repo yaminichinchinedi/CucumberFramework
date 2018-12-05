@@ -27,12 +27,13 @@ public class SearchTinPageSearchRemittance {
     {
       this.testConfig=testConfig;
 	  PageFactory.initElements(testConfig.driver, this);
-	  Element.verifyElementPresent(txtboxTinNo, "Enter Tin Text Box is present");
+	  Element.verifyElementPresent(txtboxTinNo, "Text Box for entering tin number is present");
     }
 	
 	public SearchTinPageSearchRemittance enterTin(String paymentType)
     {
-      Element.enterData(txtboxTinNo,getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
+	  String tin=getTin(paymentType);
+      Element.enterData(txtboxTinNo,tin, "Enter Tin as : " +tin, "Tin Textbox");
       return this;
     }
 	

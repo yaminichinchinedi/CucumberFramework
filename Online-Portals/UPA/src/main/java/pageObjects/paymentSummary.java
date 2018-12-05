@@ -44,8 +44,6 @@ import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 
-
-
 public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
@@ -508,7 +506,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			return recordCountElement[recordCountElement.length-1].trim();
 		 }
 	    catch(org.openqa.selenium.NoSuchElementException e)	{
-	    	searchRemittance=new SearchRemittance(testConfig);
+	    	searchRemittance=new SearchRemittance(testConfig,true);
 	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 			return String.valueOf(searchRemittance.divSearchResults.size());
 	    }
@@ -589,7 +587,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			           pageNo++;
 			     }
 		 }
-		Log.Comment("Details from UI is : " +'\n' +outerMap);
+//		Log.Comment("Details from UI is : " +'\n' +outerMap);
 		return outerMap;
 	   
     }
@@ -683,7 +681,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			outerMap.put(innerMap.get("Payment Number"), innerMap);
 		 }
 		  
-		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+//		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
 		 return outerMap;
 	}
 	
@@ -957,7 +955,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public EpsPaymentsSearchRequest setTinNumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		System.out.println(testConfig.getRunTimeProperty("tin"));
 	   ((EpsPaymentsSearchRequest) object).setTaxIdentifierNumber(testConfig.getRunTimeProperty("tin").trim());	
 		return (EpsPaymentsSearchRequest) object;
 	}

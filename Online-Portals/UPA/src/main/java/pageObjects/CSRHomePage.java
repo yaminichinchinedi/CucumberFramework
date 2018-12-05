@@ -80,16 +80,11 @@ public class CSRHomePage {
 	
 	CSRHomePage(TestBase testConfig) 
 	{
-		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		String expected = "Welcome";
-		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getTitle());	
+		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
 	}
 
-	
-	
 	public SearchTinPage clickManageUsersLink()
 	{
 		Element.click(lnkManageUsers, "Manage Users");
@@ -104,7 +99,7 @@ public class CSRHomePage {
     
     public SearchTinPageSearchRemittance clickSearchRemittanceLink()
     {
-           Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance");
+           Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance Link");
            return new SearchTinPageSearchRemittance(testConfig);
     }
 

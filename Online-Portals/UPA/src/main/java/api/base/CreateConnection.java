@@ -45,7 +45,7 @@ public abstract class CreateConnection {
 		httpUrlConn.getOutputStream());
 		String requestXML = convertRequestPojoToXml(pojoRequest);
 		requestXML = requestXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>","").replace("null", "");
-		System.out.println("REQUEST :" + requestXML);
+//		System.out.println("REQUEST :" + requestXML);
 		ReqWriter.write(requestXML);
 		ReqWriter.flush();
 
@@ -53,9 +53,9 @@ public abstract class CreateConnection {
 		BufferedReader ReplyReader = new BufferedReader(new InputStreamReader(httpUrlConn.getInputStream()));
 
 		/** printing response and writing it in api.xml*/
-		System.out.println("RESPONSE :" + '\n');
+//		System.out.println("RESPONSE :" + '\n');
 		while ((line = ReplyReader.readLine()) != null) {
-			System.out.println(line);
+//			System.out.println(line);
 			response = response + line;
 		}
 		ReplyReader.close();

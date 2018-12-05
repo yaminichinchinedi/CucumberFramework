@@ -73,34 +73,35 @@ public String getTinForPaymentType(String paymentType)
  		     sqlRowNo=36; 
  		     break;
  		     
- 		 case "byElectronicPaymentNo":
- 			sqlRowNo=39;
- 			 break;
- 			 
  		 case "byCheckNo":
- 			 sqlRowNo=39;
+ 		 case "byElectronicPaymentNo":
+ 			 sqlRowNo=50;
  			 break;
  			 
- 		 case "byDOS":
  		 case "byDOP":
- 		 case "byDOPAndAcntNo":
+ 		 case "byDOPAndAccountNo":
  		 case "byDOPAndSubscriberId":
  		 case "byDOPAndNpi":
+ 		 case "byDOPAndClaimNo":
+ 		 case "byDOPAndPatientNm":
  		 
+ 		 case "byDOS":
  		 case "byDOSAndSubscriberId":
  		 case "byDOSAndNpi":
  		 case "byDOSAndClaimNo":
- 		 case "byDOPAndClaimNo":
- 		 case "byDOPAndPtntNm":
+ 		 
+ 		
 			 sqlRowNo=41;
 			 break;
  		 case "byDOSAndAccountNo":
  			sqlRowNo=58;
  			 
- 		 case "byDateOfPaymentAndZeroPmntClms":
+ 		 case "byDOPAndZeroPaymentClaims":
 		 case "byDOSAndZeroPaymentClaims":
 			sqlRowNo=47;
+			
 			break;
+
  		   
  		case "byElectronicPmt":
  			sqlRowNo=48;
@@ -116,6 +117,9 @@ public String getTinForPaymentType(String paymentType)
  			break;
  		case "byElectronicPaymentForNON":
  			testConfig.putRunTimeProperty("type","NON");
+
+ 		
+ 		 case "byElectronicPaymentforStatus":
  			sqlRowNo=52;
  			break;
  			
@@ -135,10 +139,11 @@ public String getTinForPaymentType(String paymentType)
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
- 		Log.Comment("Getting tin for  " + paymentType);
  		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
- 		Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
+ 		Log.Comment("Tin retreived for search - " + "'"+ paymentType + "'"+ " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
  		testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
+ 		if(tinNumbers.containsKey("SETL_DT"))
+ 			testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
  		return tinNumbers.get("PROV_TAX_ID_NBR").toString();
  	}
 

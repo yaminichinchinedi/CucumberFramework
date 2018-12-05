@@ -828,7 +828,7 @@ return previousDate.getTime();
 	public static String getDateBeforeOrAfterDays(int days, String NEW_FORMAT, String date)
 	{
 
-		String OLD_FORMAT = "dd/MM/yyyy";
+		String OLD_FORMAT = "dd/mm/yyyy";
 		String newDateString = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
 		Date d = null;
@@ -842,6 +842,7 @@ return previousDate.getTime();
 		}
 		sdf.applyPattern(NEW_FORMAT);
 		newDateString = sdf.format(d);
+		
 		Calendar c = Calendar.getInstance();
 		try
 		{
@@ -852,10 +853,35 @@ return previousDate.getTime();
 			e.printStackTrace();
 		}
 		c.add(Calendar.DATE, days); // number of days to add
+		System.out.println(sdf.format(c.getTime()));
 		return sdf.format(c.getTime()); // dt is now the new date
 
 	}
 
+	public static String addDays(String date, int days) throws ParseException {
+		
+		//Given Date in String format
+		String oldDate = date;  
+		
+		//Specifying date format that matches the given date
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		try{
+		   //Setting the date to the given date
+		   c.setTime(sdf.parse(oldDate));
+		}catch(ParseException e){
+			e.printStackTrace();
+		 }
+		   
+		//Number of Days to add
+		c.add(Calendar.DAY_OF_MONTH, days);  
+		//Date after adding the days to the given date
+		String newDate = sdf.format(c.getTime());  
+
+		return newDate;
+	   }
+	
 	public static String getDateBeforeOrAfterYears(int years, String format)
 	{
 		Date tomorrow = new Date();
@@ -2032,13 +2058,43 @@ return previousDate.getTime();
 		}
 
 
-//	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
-//	{
-//	   if(expected.equals(actual))
-//			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
-//			else 
-//				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
-//	}
+	public static void compareLinkedMaps(TestBase testConfig,String what,LinkedHashMap<String, String> expected,LinkedHashMap<String, String> actual) 
+	{
+	   if(expected.equals(actual))
+			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
+			else 
+				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
+	   
+	   if(expected.keySet().equals(actual.keySet()))
+	   {
+		   for(String expectedKey : expected.keySet()) 
+		   {
+			   if(expected.get(expectedKey).equals(actual.get(expectedKey)))
+	
+				  Log.Pass("Passed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
+    	    	   else
+    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
+    		     
+			   }
+				   
+		   }
+	   }
+	   
+//	   for (String expectedKey : expected.keySet()) 
+//	     {
+//		   if(expectedKey.equals(actual.keySe)
+//	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+//	    	   else
+//	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+//		      }
+//      	
+//  	
+//  	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+//  	   else
+//  		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+//	      }
+//	  }
+
 	
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
 	{	
@@ -2053,6 +2109,7 @@ return previousDate.getTime();
 	    		 { 
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
+	    	        	
 	    	    	 if(expected.get(key).get(expectedInternalKey).equals(actual.get(key).get(expectedInternalKey)))
 	    	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    	    	   else
