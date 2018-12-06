@@ -51,7 +51,7 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		    case "remitPayment":
- 			sqlRowNo=35; 
+ 			sqlRowNo=31; //35
  			break;
  			
  		    case "generalPayment":
@@ -193,7 +193,7 @@ public String getTinForPaymentType(String paymentType)
  		 	break;
  			
  		    case "remitPayment":
- 			sqlRowNo=36; 
+ 			sqlRowNo=32; 
  			break;
  			
  		    case "nonEpraPayment":
@@ -271,25 +271,25 @@ public String getTinForPaymentType(String paymentType)
 	}
 		
 	
-	public String getQuickSearchFilterCriteria(String settlDate)
+	public String getQuickSearchFilterCriteria(String setlDate)
 	{
 		String filterCriteria="Last 30 days"; 
-	    if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getCurrentDate("yyyy-MM-dd")) < 0) 
+	    if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getCurrentDate("yyyy-MM-dd")) < 0) 
 		filterCriteria="Last 30 days";
 	    
-	    else if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) < 0) 
+	    else if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) < 0) 
 		filterCriteria="Last 60 days";
 		
-	    else if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-90,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) < 0)
+	    else if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-90,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) < 0)
 		filterCriteria="Last 90 days";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("fromDate").toString()) >=0 && settlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("toDate").toString()) <=0) 
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("fromDate").toString()) >=0 && setlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("toDate").toString()) <=0) 
 		filterCriteria="Last 4-6 months";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("fromDate").toString()) >=0 && settlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("toDate").toString()) <=0)
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("fromDate").toString()) >=0 && setlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("toDate").toString()) <=0)
 		filterCriteria="Last 6-9 months";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  settlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
 		filterCriteria="Last 9-13 months";
 	
 	    return filterCriteria;
