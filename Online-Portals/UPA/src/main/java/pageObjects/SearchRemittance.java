@@ -111,6 +111,9 @@ public class SearchRemittance extends paymentSummary {
 	
 	@FindBy(id = "saveArchive")
 	WebElement btnSaveArchive;
+
+	@FindBy(id = "paymentNbr_1")
+	WebElement paymentNbr1;
 	
 	private TestBase testConfig;
 	static int flag=0;
@@ -1200,9 +1203,9 @@ public class SearchRemittance extends paymentSummary {
 		return list;
 	}
 	
-	public void verifyHoverText(){
-		divSearchResults=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//table//tr");
-		divSearchResults.get(2).findElements(By.tagName("td")).get(3).click();
-		
+	public RemittanceDetail clickPaymentNo(){
+		Element.clickByJS(testConfig, paymentNbr1, "Payment Number of first Column");
+		testConfig.putRunTimeProperty("dspl_nbr", paymentNbr1.getText());
+		return new RemittanceDetail(testConfig);
 	}
 }

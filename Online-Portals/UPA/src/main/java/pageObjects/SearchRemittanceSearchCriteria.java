@@ -192,6 +192,8 @@ public class SearchRemittanceSearchCriteria {
 		    	int sqlRow = 42;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+
+		    	
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from payer deopdown");		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
@@ -447,7 +449,36 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;		    	
 		    }
-		      
+		    
+		    case "DD":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber,srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
+		    	
+		    case "byElectronicPaymenForACH":
+		    case "byElectronicPaymenForCHK":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
+		    	
+		    case "byElectronicPaymenForNON":
+		    case "byElectronicPaymenForVCP":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	testConfig.putRunTimeProperty("typeDescription",srchData.get("TYP_DESC").toString());
+		    	testConfig.putRunTimeProperty("paymentMethCode",srchData.get("PAY_METH_CD").toString());
+		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
+		    	break;
+		    	
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
 		 }
@@ -488,6 +519,7 @@ public class SearchRemittanceSearchCriteria {
 		return clickSearchBtn();
 	}
 	
+
 	public SearchRemittance searchByElectronicPaymentToVerifyReturnedReason(String criteriaType)
 	{
 		dataRequiredForSearch=dataProvider(criteriaType);
@@ -534,13 +566,15 @@ public class SearchRemittanceSearchCriteria {
 			case "byCheckNo":
 				sqlRowNo=51;
 				break;
-			case "byElectronicPaymentforStatus":
+			case "byElectronicPaymenForNON":
+			case "byElectronicPaymenForVCP":
 				sqlRowNo=53;
 				break;		
 			case "DD":
 				sqlRowNo=55;
 				break;
-			case "ReoriginatedACH":
+			case "byElectronicPaymenForACH":
+			case "byElectronicPaymenForCHK":
 				sqlRowNo=57;
 			break;
 		}
