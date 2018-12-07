@@ -58,6 +58,7 @@ public class TestCSRRemitanceDetail extends TestBase{
 		srchTinPage.clickSearchBtn().doSearch(criteriaType).clickPaymentNo().verifyPLBAdjustment();;
     }
 	
+	//verify Page Data
 	@Test(priority=5,description="TS05_Page Verification")
 	public void testVerifyPageData() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
