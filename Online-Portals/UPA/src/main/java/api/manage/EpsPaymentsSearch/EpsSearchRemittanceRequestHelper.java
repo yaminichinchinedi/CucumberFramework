@@ -22,7 +22,6 @@ import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResp
 import main.java.reporting.Log;
 
 
-
 //For Search Remittance Data 
 public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 		
