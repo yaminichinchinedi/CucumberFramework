@@ -19,7 +19,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @author schandy 
- * needs to be changed
+ * needs to be changed-Priyanka
  *
  */
 public class TestBSViewPayments extends TestBase {
