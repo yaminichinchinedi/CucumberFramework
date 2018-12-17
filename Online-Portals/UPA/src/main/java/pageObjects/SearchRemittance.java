@@ -207,7 +207,7 @@ public class SearchRemittance extends paymentSummary {
 
 	    /**Posting the modified request and getting response*/
 	    EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
-	    return searchResponse;
+	   return searchResponse;
 	}
 	
 	
