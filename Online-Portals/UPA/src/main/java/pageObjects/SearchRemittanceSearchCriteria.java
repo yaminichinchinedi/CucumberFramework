@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,7 +85,7 @@ public class SearchRemittanceSearchCriteria {
 	WebElement monthYearInCal;
 	
 	@FindBy(id="payerIdSelection")
-	WebElement payer;
+	WebElement drpDwnPayer;
 	
 	@FindBy(id="ClaimAccountNum")
 	WebElement accountNo;
@@ -184,7 +186,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	testConfig.putRunTimeProperty("fromDate",Helper.changeDateFormat(testConfig, fromDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
 		    	testConfig.putRunTimeProperty("toDate", Helper.changeDateFormat(testConfig, toDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from Payer dropdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");//
 		    	break;		    	
 		    }
 		    
@@ -196,7 +198,7 @@ public class SearchRemittanceSearchCriteria {
 
 		    	
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from payer deopdown");		    	
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
 		    	testConfig.putRunTimeProperty("fromDate",date);
 		    	testConfig.putRunTimeProperty("toDate",date);
@@ -215,7 +217,7 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(accountNo, acntNo, "Enter patient account no as : "+acntNo, "Account Number");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from payer deopdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
 		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
 		    	testConfig.putRunTimeProperty("value", acntNo);	
@@ -241,7 +243,7 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare",  "United Health Care from payer deopdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
 		    	
 		    	
 		    	break;
@@ -261,7 +263,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.clickByJS(testConfig,NPI, "NPItext box");
 		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ srchData.get("PROV_NPI_NBR").toString(), "NPI");
 		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare",  "United Health Care from payer dropdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer dropdown");//
 		    	break;
 		    }
 		    
@@ -277,7 +279,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
 		    	Element.enterData(claimNumber, srchData.get("CLM_NBR").toString(), "Enter claim no as : "+srchData.get("CLM_NBR").toString(), "Claim Number");
 		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
 		    	
 		    	break;		    	
 		    }
@@ -320,7 +322,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 //		    	clickFromDateIcon(criteriaType).setDate(Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.getCurrentDate("MM/dd/yyyy"), criteriaType);
 		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
 		    	
 		    	break;		    	
 		    }
@@ -339,7 +341,7 @@ public class SearchRemittanceSearchCriteria {
 				
 		    	Element.enterData(accountNo, acntNo, "Filling patient account no: "+acntNo, "Account Number");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_STRT_DT").toString());
@@ -370,7 +372,7 @@ public class SearchRemittanceSearchCriteria {
 				}
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	clickSearchBtn();
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
@@ -392,7 +394,7 @@ public class SearchRemittanceSearchCriteria {
 				
 		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Enter NPI No as : "+srchData.get("PROV_NPI_NBR").toString(), "NPI");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
@@ -417,7 +419,7 @@ public class SearchRemittanceSearchCriteria {
 				
 		    	Element.enterData(claimNumber, clmNo, "Filling claim no: "+clmNo, "Claim Number");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
@@ -440,7 +442,7 @@ public class SearchRemittanceSearchCriteria {
 				
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
 		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate",srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
@@ -456,7 +458,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
 		    	Element.enterData(paymentNumber,srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;
 		    	
 		    case "byElectronicPaymenForACH":
@@ -465,7 +467,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
 		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	break;
 		    	
 		    case "byElectronicPaymenForNON":
@@ -474,11 +476,34 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
 		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-		    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	testConfig.putRunTimeProperty("typeDescription",srchData.get("TYP_DESC").toString());
 		    	testConfig.putRunTimeProperty("paymentMethCode",srchData.get("PAY_METH_CD").toString());
 		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
 		    	break;
+		    
+		    case "byCheckNoOfConslPayDtl":
+		    	dataRequiredForSearch=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHK_NBR").toString(), "payment number");
+		    	testConfig.putRunTimeProperty("key1", "CHK_NBR");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHK_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    	
+		    case "byCheckNoOfReoriginNacha":
+		    	dataRequiredForSearch=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHECK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHECK_NBR").toString(), "payment number");
+		    	testConfig.putRunTimeProperty("key1", "CHECK_NBR");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHECK_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    	
 		    	
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
@@ -493,7 +518,7 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
     	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
     	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " + dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		return clickSearchBtn();
 	}
 	
@@ -503,7 +528,7 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
     	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
     	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
     	testConfig.putRunTimeProperty("typeDescription",dataRequiredForSearch.get("TYP_DESC").toString());
     	testConfig.putRunTimeProperty("paymentMethCode",dataRequiredForSearch.get("PAY_METH_CD").toString());
     	testConfig.putRunTimeProperty("paymentStatusTypeID",dataRequiredForSearch.get("PAY_STS_TYP_ID").toString());
@@ -516,7 +541,7 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
     	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
     	Element.enterData(paymentNumber,"1QG78728391" /*data.get("DSPL_CONSL_PAY_NBR").toString()*/, "Filling Electronic payment number", "payment number");
-    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		return clickSearchBtn();
 	}
 	
@@ -527,7 +552,7 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
     	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
     	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
     	testConfig.putRunTimeProperty("returnedReason",dataRequiredForSearch.get("RET_REASON_CD").toString());
 		return clickSearchBtn();
 	}
@@ -547,7 +572,7 @@ public class SearchRemittanceSearchCriteria {
     	Element.selectByVisibleText(paymentNumberType, "Check Number", "Select payment number type");
     	Element.clickByJS(testConfig,checkNumber, "Selecting Filter Criteria");
     	Element.enterData(checkNumber, dataRequiredForSearch.get("UCONSL_PAY_NBR").toString(), "Filling Check payment number", "payment number");  	
-    	Element.selectByVisibleText(payer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		return clickSearchBtn();
 	}
 	
@@ -577,6 +602,13 @@ public class SearchRemittanceSearchCriteria {
 			case "byElectronicPaymenForACH":
 			case "byElectronicPaymenForCHK":
 				sqlRowNo=57;
+				break;
+			case "byCheckNoOfReoriginNacha":
+				sqlRowNo=63;
+				break;
+			case "byCheckNoOfConslPayDtl":
+				sqlRowNo=64;
+				
 			break;
 		}
 		
@@ -689,7 +721,7 @@ public class SearchRemittanceSearchCriteria {
 	
     public SearchRemittanceSearchCriteria selectPayer(String payerName)
 	 {
-		 Element.selectByVisibleText(payer, payerName, "Payer selected on search remittance search criteria page is : " + payerName);
+		 Element.selectByVisibleText(drpDwnPayer, payerName, "Payer selected on search remittance search criteria page is : " + payerName);
 		 Element.clickByJS(testConfig,btnSearchRemittance, "Search Remittance Button");
 	    return this;
 	 }
@@ -721,7 +753,7 @@ public class SearchRemittanceSearchCriteria {
 
      //now by date of service before 14 month      
          clickFromDateIcon("byDOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDOS").clickToDateIcon("byDOS").setDate(Helper.getDateBeforeOrAfterDays(-430,"MM/dd/yyyy"), "byDOS");
-         Element.selectByVisibleText(payer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
+         Element.selectByVisibleText(drpDwnPayer,"UnitedHealthcare", "Payer selected on search remittance search criteria page");
          clickSearchBtn();
     }
     
@@ -743,5 +775,51 @@ public class SearchRemittanceSearchCriteria {
            else
            return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
     }
-
+    
+    public void verifyLargeNonLargeTin() throws IOException
+    {
+    	Map srchRslt=DataBase.executeSelectQuery(testConfig, 65, 1);
+    	int threshHoldValue=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
+    	
+//    	srchRslt=DataBase.executeSelectQuery(testConfig, 66, 1);
+//    	int days=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
+    	testConfig.putRunTimeProperty("tin", "262616046");
+    	String expected,actual;
+    	
+    	actual = Element.getFirstSelectedOption(testConfig, drpDwnPayer, "Default Option in Payer drop down");
+    	System.out.println("Actual is: "+actual);
+    	
+    	HashMap<Integer, HashMap<String, String>> srchData = DataBase.executeSelectQueryALL(testConfig, 67);
+		
+    	List<String> l =new ArrayList<String>();
+    	
+    	for (int i = 1; i <= srchData.size(); i++) {
+			l.add(srchData.get(i).get("PROV_KEY_ID"));
+		}
+    	
+    	String listString = "";
+    	
+    	for (String s : l)
+    	    listString += s + " ,";
+ 
+    	listString=listString.substring(0, listString.length()-1);
+    	testConfig.putRunTimeProperty("list", listString);
+    	System.out.println(listString);
+    	srchRslt=DataBase.executeSelectQuery(testConfig, 68, 1);
+    	System.out.println(srchRslt);
+    	int noOfPayments=Integer.parseInt(srchRslt.values().toString());
+    	System.out.println("no of payments are: "+noOfPayments);
+    	if(noOfPayments<threshHoldValue)
+    	{
+    		//for non large tin --> Show all
+    		expected ="Show all";
+//    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    	}
+    	else
+    	{
+    		//for large tin --> Select a payer
+    		expected ="Select a payer";
+//    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    	}
+    }
 }
