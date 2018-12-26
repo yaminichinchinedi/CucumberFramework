@@ -147,13 +147,13 @@ public class TestCSRSearchRemittance extends TestBase {
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);
 		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);	
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
      }
 	
 	@Test(priority=5,description="TS005_Search by DOP & Subscriber ID")
 	public void testEprabyDOPAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String criteriaType="byDOPAndSubscriberId";
+		String criteriaType="byDOP&SubscriberID";
 					
 		LoginCSR loginPage=new LoginCSR(testConfig);
 		CSRHomePage homePage=loginPage.doLogin(loginUserType);

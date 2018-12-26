@@ -302,10 +302,16 @@ import main.java.reporting.LogTemp;
 			Log.Fail(failureMsg);
 		}
 	}
+	catch(NoSuchElementException e)
+	{
+		String successMsg="Verified " + namOfElement + " is not present on the page";
+		Log.Pass(successMsg);
+			
+	}
+		
 	catch(Exception e)
 	{
-		Log.Fail(namOfElement +" is  present on the page" + e);
-			
+			Log.Fail(namOfElement +" is  present on the page" + e);		
 	}
 		
 	}
