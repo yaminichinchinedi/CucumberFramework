@@ -413,6 +413,13 @@ import main.java.reporting.LogTemp;
 		return options;
 	}
 	
+	/**
+	 * If u want to get text from drop down pass "text" as argument else pass "value" if attribute is to be retreived
+	 * @param testConfig
+	 * @param element
+	 * @param textOrValue --> Options
+	 * @return
+	 */
 	public static String getFirstSelectedOption(TestBase testConfig, WebElement element,String textOrValue)
 	{
 	  try{
@@ -420,6 +427,8 @@ import main.java.reporting.LogTemp;
 		   String FirstSelectedOption=null;
 		   
 		   Select sel = new Select(element);
+		   
+		  System.out.println( sel.getFirstSelectedOption().getText());
 		   
 		   if(textOrValue.contains("text"))
 		    FirstSelectedOption=sel.getFirstSelectedOption().getText();

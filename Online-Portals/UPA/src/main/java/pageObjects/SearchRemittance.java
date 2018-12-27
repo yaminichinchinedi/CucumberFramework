@@ -106,6 +106,12 @@ public class SearchRemittance extends paymentSummary {
 	@FindBy(linkText = "Market Type")
 	WebElement lnkMarketType;
 	
+	@FindBy(linkText = "Payment Date")
+	WebElement lnkPaymentDate;
+	
+	@FindBy(linkText = "Amount")
+	WebElement lnkPaymentAmount;
+	
 	@FindBy(linkText = "Archive")
 	WebElement lnkArchive;
 	
@@ -587,10 +593,10 @@ public class SearchRemittance extends paymentSummary {
 			verifySortingOrder(lnkMarketType,colName,criteriaType);
 			break;		
 		case "Payment Date":
-			verifySortingOrder(lnkMarketType,colName,criteriaType); //change link
+			verifySortingOrder(lnkPaymentDate,colName,criteriaType);
 			break;
 		case "Amount":
-			verifySortingOrder(lnkClaimAmount, colName,criteriaType); //change link
+			verifySortingOrder(lnkPaymentAmount, colName,criteriaType);
 			break;
 		default:
 			Log.Comment("No such Column present on page");

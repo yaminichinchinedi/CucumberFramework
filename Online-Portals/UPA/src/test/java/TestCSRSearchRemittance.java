@@ -20,6 +20,30 @@ import main.java.pageObjects.SearchTinPageSearchRemittance;
 public class TestCSRSearchRemittance extends TestBase {
 	String loginUserType="Super";
 	
+	@Test(priority=5,description="TS002_Search by Date of Payment")
+	public void testEpraByDOP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {	
+		String criteriaType="byDOP";
+					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);
+     }
+
+	@Test(priority=5,description="TS003_Search by Date of Service")
+	public void testEprabyDOS() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOS";
+		
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
+     }
+	
 	@Test(priority=5,description="TS004_Search by Electronic Payment Number only")
 	public void testEpraByPaymentNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
@@ -42,102 +66,8 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
       }
-	
-	
-	@Test(priority=5,description="TS005_Search by Check Number only")
-	public void testEprabyDOS() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	 {
-		String criteriaType="byDOS";
-		
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
-     }
-	
-	@Test(priority=5,description="TS005_Search by Check Number only")
-	public void testEpraByDOSAndAccountNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	 {
-		String criteriaType="byDOSAndAccountNo";
-		String requestType="byDOS";
-					
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
-     }
-	
-	@Test(priority=5,description="TS005_Search by Check Number only")
-	public void testEpraByDOSAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	 {
-		String loginUserType="Super";
-		String criteriaType="byDOSAndSubscriberId";
-		String requestType="byDOS";
-					
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
-		SearchRemittanceSearchCriteria srchCriteriaPage=srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
-     }
-		
-   @Test(priority=5,description="TS005_Search by Check Number only")
-   public void testEpraByDOSAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	{
-		String loginUserType="Super";
-		String criteriaType="byDOSAndNpi";
-		String requestType="byDOS";
-						
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
-    }
-		
-   @Test(priority=5,description="TS005_Search by Check Number only")
-   public void testEpraByDOSAndClaimNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-    {
-		String loginUserType="Super";
-		String criteriaType="byDOSAndClaimNo";
-		String requestType="byDOS";
-			
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
-    }
-		
-   @Test(priority=5,description="TS005_Search by Check Number only")
-   public void testEpraByDOSAndZeroPaymentClaims() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-    {
-		String loginUserType="Super";
-		String criteriaType="byDOSAndZeroPaymentClaims";
-		String requestType="byDOS";
-			
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-        srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);			
-	 }
-	
-	@Test(priority=5,description="TS005_Search by Date of Payment")
-	public void testEpraByDOP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
-	 {	
-		String criteriaType="byDOP";
-					
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(loginUserType);
-		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
-		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);
-     }
-	
-	@Test(priority=5,description="TS005_Search by DOP & Account No")
+
+	@Test(priority=5,description="TS006_Search by DOP & Account No")
 	public void testEprabyDOPAndAccountNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndAccountNo";
@@ -149,8 +79,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
      }
-	
-	@Test(priority=5,description="TS005_Search by DOP & Subscriber ID")
+	@Test(priority=5,description="TS007_Search by DOP & Subscriber ID")
 	public void testEprabyDOPAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOP&SubscriberID";
@@ -163,7 +92,7 @@ public class TestCSRSearchRemittance extends TestBase {
      }
 	
 	//NMeed to fix as div on ui is different having dfifferent parametrs
-	@Test(priority=5,description="TS005_Search by DOP & NPI")
+	@Test(priority=5,description="TS008_Search by DOP & NPI")
 	public void testEprabyDOPAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndNpi";
@@ -175,7 +104,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
      }
 	
-	@Test(priority=5,description="TS005_Search by DOP & Claim No")
+	@Test(priority=5,description="TS009_Search by DOP & Claim No")
 	public void testEprabyDOPAndClaimNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndClaimNo";
@@ -187,7 +116,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
      }
 	
-	@Test(priority=5,description="TS005_DOP & Patient Name")
+	@Test(priority=5,description="TS010_DOP & Patient Name")
 	public void testEprabyDOPAndPatientNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndPatientNm";
@@ -199,7 +128,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
      }
 	
-	@Test(priority=5,description="TS005_Search by Check Number only")
+	@Test(priority=5,description="TS011_Search by DOP and Zero Payment Claims")
 	public void testEprabyDOPAndZeroPaymentClaims() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndZeroPaymentClaims";
@@ -214,7 +143,7 @@ public class TestCSRSearchRemittance extends TestBase {
 	
 	//Ask abhinav to give its query
 	//need to complete this test case based on approach to cover different market Types
-	@Test(priority=5,description="TS005_Search by Check Number only")
+	@Test(priority=5,description="TS012_Search by DOP and Market Type")
 	public void testEprabyDOPAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
 		String criteriaType="byDOPAndMarketType";
@@ -226,6 +155,99 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
      }
 	
+	@Test(priority=5,description="TS013_Search by DOS and Account Number")
+	public void testEpraByDOSAndAccountNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String criteriaType="byDOSAndAccountNo";
+		String requestType="byDOS";
+					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
+     }
+	
+	@Test(priority=5,description="TS014_Search by DOS and Subscriber ID")
+	public void testEpraByDOSAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	 {
+		String loginUserType="Super";
+		String criteriaType="byDOSAndSubscriberId";
+		String requestType="byDOS";
+					
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
+		SearchRemittanceSearchCriteria srchCriteriaPage=srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
+     }
+		
+   @Test(priority=5,description="TS015_Search by DOS and NPI")
+   public void testEpraByDOSAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	{
+		String loginUserType="Super";
+		String criteriaType="byDOSAndNpi";
+		String requestType="byDOS";
+						
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
+    }
+		
+   @Test(priority=5,description="TS016_Search by DOS and Claim Number")
+   public void testEpraByDOSAndClaimNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+    {
+		String loginUserType="Super";
+		String criteriaType="byDOSAndClaimNo";
+		String requestType="byDOS";
+			
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);
+    }
+		
+   @Test(priority=5,description="TS017_DOS & Patient Name")
+   public void testEprabyDOSAndPatientNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   {
+		String criteriaType="byDOSAndPatientNm";
+		
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);	
+   }
+   
+   @Test(priority=5,description="TS018_Search by DOS and Zero Payment Claims")
+   public void testEpraByDOSAndZeroPaymentClaims() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+    {
+		String loginUserType="Super";
+		String criteriaType="byDOSAndZeroPaymentClaims";
+		String requestType="byDOS";
+			
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+        srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);			
+	 }
+	
+   @Test(priority=5,description="TS019_Search by DOS and Market Type")
+   public void testEprabyDOSAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+   {
+		String criteriaType="byDOSAndMarketType";
+		
+		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
+		SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
+   }
+   
 	//amit
 		@Test(priority=5,description="TS023_Error Messages")
 		public void testErrorMsgs() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
@@ -379,16 +401,18 @@ public class TestCSRSearchRemittance extends TestBase {
 			srchCriteriaPage.searchByCheckNumberToVerifyReturnedReason(criteriaType).verifyReturnedReasonDisplayed(criteriaType);
 	     }
 		
-		@Test(priority=5,description="TS029_Search Remittance Large Tin")
-		public void testSearchRemittanceLargeTin() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		@Test(priority=5,description="TS028/TS029_Search Remittance Large Tin")
+		public void testSearchRemittanceLargeNonLargeTin() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
 			String criteriaType="byDOP"; 	
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
 			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);;		
-			srchTinPage.clickSearchBtn().verifyLargeNonLargeTin();
+			srchTinPage.clickSearchBtn().verifyLargeNonLargeTin(); //002324228 
 	     }
 		
+		
+		///Issue while opening the downloaded xlsx file from Portal
 		@Test(priority=5,description="TS030_Print Search Result First Page")
 		public void testByPrintSearchResultFirstPage() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
@@ -584,7 +608,7 @@ public class TestCSRSearchRemittance extends TestBase {
 			String criteriaType="byDOS"; 
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
-			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin("421193699");	//421193699//596014973 
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);	//421193699//596014973 
 			srchTinPage.clickSearchBtn().doSearch(criteriaType).verifyPagination();
 		 }
 }
