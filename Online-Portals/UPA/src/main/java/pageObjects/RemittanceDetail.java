@@ -92,12 +92,12 @@ public class RemittanceDetail {
 	{
 		Element.clickByJS(testConfig, rmkCode, "RMK CODE");
 		Browser.switchToNewWindow(testConfig);
-		String expected="https://ppsp-stage2-e-csr.optumhealthfinancial.com/remarkCode.do";
-		String actual=Browser.getURL(testConfig);	
-		Helper.compareEquals(testConfig, "RMK Window URL", expected, actual);
+//		String expected="https://ppsp-stage2-e-csr.optumhealthfinancial.com/remarkCode.do";
+//		String actual=Browser.getURL(testConfig);	
+//		Helper.compareEquals(testConfig, "RMK Window URL", expected, actual);
 		
-		expected="Remark Type Reason Codes";
-		actual=testConfig.driver.getTitle();
+		String expected="Remark Type Reason Codes";
+		String actual=testConfig.driver.getTitle();
 		Helper.compareEquals(testConfig, "RMK Window Title", expected, actual);
 	}
 	
@@ -105,12 +105,12 @@ public class RemittanceDetail {
 	{
 		Element.clickByJS(testConfig, adjCode, "Adjustment Reason Code Link");
 		Browser.switchToNewWindow(testConfig);
-		String expected="https://ppsp-stage2-e-csr.optumhealthfinancial.com/adjustmentCode.do";
-		String actual=Browser.getURL(testConfig);
-		Helper.compareEquals(testConfig, "RMK Window URL", expected, actual);
+//		String expected="https://ppsp-stage2-e-csr.optumhealthfinancial.com/adjustmentCode.do";
+//		String actual=Browser.getURL(testConfig);
+//		Helper.compareEquals(testConfig, "RMK Window URL", expected, actual);
 		
-		expected="Adjustment Reason Codes";
-		actual=testConfig.driver.getTitle();
+		String expected="Adjustment Reason Codes";
+		String actual=testConfig.driver.getTitle();
 		Helper.compareEquals(testConfig, "RMK Window Title", expected, actual);
 	}
 	
@@ -155,12 +155,12 @@ public class RemittanceDetail {
 	{
 		HashMap<Integer, HashMap<String, String>> remittanceDetail=getRemittanceDetail();
 //		verifyAccountNumber(remittanceDetail).verifyPatientName(remittanceDetail).verifyClaimHash(remittanceDetail).verifySubscriberId(remittanceDetail).verifyPatientResp(remittanceDetail).verifyAmountCharged(remittanceDetail).verifyAmountAllowed(remittanceDetail).verifyAmountPaidToProvider(remittanceDetail).verifyHeader();
-		verifyPatientResp(remittanceDetail);
+		verifyPatientName(remittanceDetail);
 	}
 	
 	public HashMap<Integer, HashMap<String, String>> getRemittanceDetail() throws IOException
 	{
-		HashMap<Integer, HashMap<String, String>> remittanceDetail=DataBase.executeSelectQueryALL(testConfig, 63);
+		HashMap<Integer, HashMap<String, String>> remittanceDetail=DataBase.executeSelectQueryALL(testConfig, 69);
 		return remittanceDetail;
 	}
 	
@@ -185,11 +185,12 @@ public class RemittanceDetail {
 	public RemittanceDetail verifyPatientName(HashMap<Integer, HashMap<String, String>> remittanceDetail) throws IOException
 	{
 		actual.clear();
-//		int noOfRows=plbSegment.get(0).findElements(By.tagName("tr")).size();
-		int noOfRows=plbSegment.get(0).findElements(By.xpath("tr[@class='Tableheaderbold']")).size();
+		int noOfRows=plbSegment.get(0).findElements(By.tagName("tr")).size();
+//		int noOfRows=plbSegment.get(0).findElements(By.xpath(".//tr[@class='Tableheaderbold']")).size();
+		System.out.println("No of rows are: "+noOfRows);
 		for(int i=0;i<noOfRows;i++)
 		{
-//			if(plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).size()==6 || plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).size()==7)
+			if(plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).size()==6 || plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).size()==7)
 			{
 				String s=plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).get(1).getText();
 				int index=s.indexOf("/");
@@ -204,6 +205,8 @@ public class RemittanceDetail {
 			else
 				expected.add(remittanceDetail.get(i).get("PTNT_FST_NM")+" "+remittanceDetail.get(i).get("PTNT_MIDL_NM")+" "+remittanceDetail.get(i).get("PTNT_LST_NM"));
 		}	
+		Collections.sort(expected);
+		Collections.sort(actual);
 		Helper.compareEquals(testConfig, "Patient Name", expected, actual);
 		return this;
 	}
@@ -244,6 +247,7 @@ public class RemittanceDetail {
 		actual.clear();
 //		int noOfRows=plbSegment.get(0).findElements(By.tagName("tr")).size();
 		int noOfRows=plbSegment.get(0).findElements(By.xpath("tr[@class='rowDarkbold']")).size();
+		System.out.println("No Of Rows ARE: "+noOfRows);
 		for(int i=0;i<noOfRows;i++)
 		{
 //			if(plbSegment.get(0).findElements(By.tagName("tr")).get(i).findElements(By.tagName("td")).size()==12 &&

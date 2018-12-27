@@ -253,6 +253,7 @@ public class SearchRemittanceSearchCriteria {
 		    	int sqlRow = 44;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	String fromDate=Helper.addDays(srchData.get("SETL_DT").toString(), -10);
+		    	System.out.println(fromDate);
 		    	testConfig.putRunTimeProperty("fromDate",fromDate);
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
@@ -633,7 +634,7 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittanceSearchCriteria clickFromDateIcon(String criteriaType)
 	{
-		if(criteriaType.equalsIgnoreCase("byDOS")){  
+		if(criteriaType.contains("byDOS")){  
 			Element.clickByJS(testConfig, dosFrom, "From date calendar");
 			Browser.wait(testConfig, 2);	    	
 	    }
@@ -780,11 +781,10 @@ public class SearchRemittanceSearchCriteria {
     	Map srchRslt=DataBase.executeSelectQuery(testConfig, 65, 1);
     	int threshHoldValue=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
     	
-//    	srchRslt=DataBase.executeSelectQuery(testConfig, 66, 1);
-//    	int days=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
-    	testConfig.putRunTimeProperty("tin", "262616046");
+    	srchRslt=DataBase.executeSelectQuery(testConfig, 66, 1);
+    	int days=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
     	String expected,actual;
-    	
+    		
     	actual = Element.getFirstSelectedOption(testConfig, drpDwnPayer, "Default Option in Payer drop down");
     	System.out.println("Actual is: "+actual);
     	
@@ -792,33 +792,33 @@ public class SearchRemittanceSearchCriteria {
 		
     	List<String> l =new ArrayList<String>();
     	
-    	for (int i = 1; i <= srchData.size(); i++) {
+    	for (int i = 1; i <= srchData.size(); i++) 
 			l.add(srchData.get(i).get("PROV_KEY_ID"));
-		}
+		
     	
     	String listString = "";
     	
     	for (String s : l)
-    	    listString += s + " ,";
+    	    listString += "\'"+s+"\'" + " ,";
  
     	listString=listString.substring(0, listString.length()-1);
     	testConfig.putRunTimeProperty("list", listString);
     	System.out.println(listString);
     	srchRslt=DataBase.executeSelectQuery(testConfig, 68, 1);
     	System.out.println(srchRslt);
-    	int noOfPayments=Integer.parseInt(srchRslt.values().toString());
+    	int noOfPayments=Integer.parseInt(srchRslt.get("REC_COUNT").toString());
     	System.out.println("no of payments are: "+noOfPayments);
     	if(noOfPayments<threshHoldValue)
     	{
     		//for non large tin --> Show all
     		expected ="Show all";
-//    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
     	}
     	else
     	{
     		//for large tin --> Select a payer
     		expected ="Select a payer";
-//    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
     	}
     }
 }

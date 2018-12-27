@@ -380,7 +380,7 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 					List<String> listString = new ArrayList<String>();
 					List<String> actualListString = new ArrayList<String>();
-					listString=verifyTEST(criteriaType, colName);
+					listString=getExpectedRecordFromUI(criteriaType, colName);
 					Collections.sort(listString);
 					if(listString.size()<30)
 						newList.addAll((listString.subList(0,listString.size())));
@@ -408,7 +408,7 @@ public class SearchRemittance extends paymentSummary {
 		case "Patient Name":
 					listString = new ArrayList<String>();
 					actualListString = new ArrayList<String>();
-					listString=verifyTEST(criteriaType, colName);
+					listString=getExpectedRecordFromUI(criteriaType, colName);
 					Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
 
 						@Override
@@ -449,11 +449,12 @@ public class SearchRemittance extends paymentSummary {
 					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
 					Helper.compareEquals(testConfig, colName, newList, actualListString);
 					break;
-						
+			
+		case "Amount":
 		case "Claim Amount":
 					List<Double> listDouble = new ArrayList<Double>();
 					List<Double> actualListDouble = new ArrayList<Double>();
-					listString=verifyTEST(criteriaType, colName);
+					listString=getExpectedRecordFromUI(criteriaType, colName);
 					listDouble = convertFromStringToDouble(listString);
 					Collections.sort(listDouble);
 					if(listDouble.size()<30)
@@ -479,8 +480,9 @@ public class SearchRemittance extends paymentSummary {
 					Helper.compareEquals(testConfig, colName, newDoubleList, actualListDouble);
 					break;
 					
+		case "Payment Date":
 		case "Claim Date":
-				listString = verifyTEST(criteriaType, colName);
+				listString = getExpectedRecordFromUI(criteriaType, colName);
 				Collections.sort(listString, new Comparator<String>()
 					{
 						DateFormat f = new SimpleDateFormat("MM/dd/yyyy");
@@ -534,7 +536,7 @@ public class SearchRemittance extends paymentSummary {
 		return l;
 	}
 
-	public List<String> verifyTEST(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public List<String> getExpectedRecordFromUI(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
 		List<String> l= new ArrayList<String>();
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
@@ -580,6 +582,12 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 			verifySortingOrder(lnkMarketType,colName,criteriaType);
 			break;		
+		case "Payment Date":
+			verifySortingOrder(lnkMarketType,colName,criteriaType); //change link
+			break;
+		case "Amount":
+			verifySortingOrder(lnkClaimAmount, colName,criteriaType); //change link
+			break;
 		default:
 			Log.Comment("No such Column present on page");
 			break;

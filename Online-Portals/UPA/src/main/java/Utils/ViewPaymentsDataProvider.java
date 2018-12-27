@@ -83,8 +83,7 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndSubscriberId":
  		 case "byDOPAndNpi":
  		 case "byDOPAndClaimNo":
- 		 case "byDOPAndPatientNm":
- 		 
+ 		 case "byDOPAndPatientNm":	 
  		 case "byDOS":
  		 case "byDOSAndSubscriberId":
  		 case "byDOSAndNpi":
@@ -127,11 +126,11 @@ public String getTinForPaymentType(String paymentType)
  			 testConfig.putRunTimeProperty("type","DD");
  			 sqlRowNo=54;
  			 break;
- 		 case "ReoriginatedACH":
+ 		 case "byElectronicPaymenForACH":
  			 testConfig.putRunTimeProperty("type","ACH");
  			 sqlRowNo=56;
  			 break;
- 		case "ReoriginatedCHK":
+ 		case "byElectronicPaymenForCHK":
 			 testConfig.putRunTimeProperty("type","CHK");
 			 sqlRowNo=56;
 			 break;
