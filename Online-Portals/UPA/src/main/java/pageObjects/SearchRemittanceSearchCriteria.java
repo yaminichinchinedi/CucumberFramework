@@ -178,11 +178,12 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOS":
 		    {
-		    	
 		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
+		    	
 		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
 		    	System.out.println(Helper.changeDateFormat(testConfig, fromDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
+		    	
 		    	testConfig.putRunTimeProperty("fromDate",Helper.changeDateFormat(testConfig, fromDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
 		    	testConfig.putRunTimeProperty("toDate", Helper.changeDateFormat(testConfig, toDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");//
@@ -227,7 +228,7 @@ public class SearchRemittanceSearchCriteria {
 		    }
 		    
 		    
-		    case "byDOPAndSubscriberId":
+		    case "byDOP&SubscriberID":
 		    {
 		    	int sqlRow = 43;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);

@@ -2060,10 +2060,10 @@ return previousDate.getTime();
 
 	public static void compareLinkedMaps(TestBase testConfig,String what,LinkedHashMap<String, String> expected,LinkedHashMap<String, String> actual) 
 	{
-	   if(expected.equals(actual))
-			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
-			else 
-				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
+//	   if(expected.equals(actual))
+//			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
+//			else 
+//				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
 	   
 	   if(expected.keySet().equals(actual.keySet()))
 	   {
@@ -2078,6 +2078,10 @@ return previousDate.getTime();
 			   }
 				   
 		   }
+	   else 
+	   {
+		   Log.Fail("Expected key set was : " + expected.keySet() + " whereas actual key set is : " + actual.keySet());
+	   }
 	   }
 	   
 //	   for (String expectedKey : expected.keySet()) 

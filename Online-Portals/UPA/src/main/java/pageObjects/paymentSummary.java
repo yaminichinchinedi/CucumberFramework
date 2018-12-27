@@ -516,6 +516,28 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			}  
 	}
 	
+	
+	public String getRecordCountFromUISR()
+	{
+		 try{ 
+			String recordCountElement[]=recordCount.getText().split(":");
+			return recordCountElement[recordCountElement.length-1].trim();
+		 }
+	    catch(org.openqa.selenium.NoSuchElementException e)	{
+	    	searchRemittance=new SearchRemittance(testConfig,true);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+			return String.valueOf(searchRemittance.divSearchResults.size());
+	    }
+		catch(Exception e){
+				Log.Fail("Exception occured : " + e);
+				return null;
+			}  
+	}
+	
+	
+	
+	
+	
 	/**
 	 * This function creates an outer map 
 	 * with Key as payment number
@@ -934,8 +956,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 		
 		/**Creates POJO for Request.xml so that we can modify the elements*/
-		
-//		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
