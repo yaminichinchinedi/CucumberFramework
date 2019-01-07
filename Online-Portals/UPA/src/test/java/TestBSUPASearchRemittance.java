@@ -30,7 +30,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS002_Search by Date of Payment")
 	public void testEprabyDOP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOP";						
@@ -43,7 +42,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS003_Search by Date of service")
 	public void testEpraByDateOfService() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDateOfService";						
@@ -56,7 +54,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS004_Search by Electronic Payment Number only")
 	public void testEpraByPaymentNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byElectronicPaymentNumber";						
@@ -69,7 +66,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS005_Search by Check Number only")
 	public void testEpraByCheckNumber() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byCheckNumber";						
@@ -82,7 +78,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS006_Search by DOP and Acnt Number")
 	public void testEprabyDOPAndAcntNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndAcntNo";						
@@ -95,7 +90,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS007_Search by DOP and Subscriber ID")
 	public void testEprabyDOPAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndSubscriberId";						
@@ -108,7 +102,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS008_Search by DOP and NPI")
 	public void testEprabyDOPAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndNpi";						
@@ -121,7 +114,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS009_Search by DOP and Claim Number")
 	public void testEprabyDOPAndClmNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndClmNo";						
@@ -134,7 +126,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS010_Search by DOP and Patient Name")
 	public void testEprabyDOPAndPtntNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndPtntNm";						
@@ -147,7 +138,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS011_Search by DOP and Zero Payment Claims")
 	public void testEprabyDOPAndZeroPmntClms() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOPAndZeroPmntClms";						
@@ -160,7 +150,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS012_Search by DOP and Market Type")
 	public void testEprabyDOPAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 		String criteriaType="byDOPAndMarketType";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -172,7 +161,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS013_Search by DOS and Acnt Number")
 	public void testEprabyDOSAndAcntNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndAcntNo";						
@@ -185,7 +173,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS014_Search by DOS and Subscriber ID")
 	public void testEprabyDOSAndSubscriberId() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndSubscriberId";						
@@ -198,7 +185,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS015_Search by DOS and NPI")
 	public void testEprabyDOSAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndNpi";						
@@ -212,7 +198,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS016_Search by DOS and Claim Number")
 	public void testEprabyDOSAndClmNo() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndClmNo";						
@@ -225,7 +210,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS017_Search by DOS and Patient Name")
 	public void testEprabyDOSAndPtntNm() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndPtntNm";						
@@ -238,7 +222,6 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS018_Search by DOS and Zero Payment Claims")
 	public void testEprabyDOSAndZeroPmntClms() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 			
 		String criteriaType="byDOSAndZeroPmntClms";						
@@ -251,13 +234,25 @@ public class TestBSUPASearchRemittance extends TestBase{
 	@Test(priority=5,description="TS019_Search by DOS and Market Type")
 	public void testEprabyDOSAndMarketType() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
-		String userType="BS";
 		String accessType="Admin";
 		String criteriaType="byDOSAndMarketType";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);;		
+	}
+	
+	@Test(priority=5,description="TS020_Search by DOS and Rendering Provider")
+	public void testEprabyDOPAndRenderingProvider() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	{
+		String accessType="Admin";
+			
+		String criteriaType="byDOPAndRenderingProvider";
+		String tinType="byDOP";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
 	}
 	
    @Test(priority=5,description="TS023_Error Messages")
@@ -725,6 +720,19 @@ public class TestBSUPASearchRemittance extends TestBase{
 		    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 			home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);;		
+		}
+		
+		@Test(priority=5,description="TS020_Search by DOS and Rendering Provider")
+		public void testEprabyDOPAndRenderingProviderForBSGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+		{
+			String accessType="Gen";
+				
+			String criteriaType="byDOPAndRenderingProvider";
+			String tinType="byDOP";
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+			home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
 		}
 		
 	   @Test(priority=5,description="TS023_Error Messages")

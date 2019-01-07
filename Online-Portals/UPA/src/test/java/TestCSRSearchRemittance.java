@@ -248,7 +248,21 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
    }
    
-	//amit
+ //amit
+   
+	   @Test(priority=5,description="TS020_Search by DOS and Rendering Provider")
+	   public void testEprabyDOPAndRenderingProvider() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	   {
+			String criteriaType="byDOPAndRenderingProvider";
+			String tinType="byDOP";
+			LoginCSR loginPage=new LoginCSR(testConfig);
+			CSRHomePage homePage=loginPage.doLogin(loginUserType);
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);
+			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
+			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
+	   }
+   
+	
 		@Test(priority=5,description="TS023_Error Messages")
 		public void testErrorMsgs() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {

@@ -139,6 +139,8 @@ public String getTinForPaymentType(String paymentType)
  		case "byDOPAndPatientNmForTricare":
 			 sqlRowNo=63;
 			 break;
+			 
+ 		
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		

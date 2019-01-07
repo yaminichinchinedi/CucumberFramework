@@ -52,6 +52,9 @@ public class SearchRemittanceSearchCriteria {
 	WebElement patientFirstName;
 	
 	@FindBy(id="providerLastNameID")
+	WebElement renderingProvName;
+	
+	@FindBy(id="providerLastNameID")
 	WebElement providerLastName;
 	
 	@FindBy(name="searchRemittance")
@@ -505,7 +508,23 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	break;
 		    	
+		    case "byDOPAndRenderingProvider":
+		    	int sqlRow = 70;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String renderingProv=srchData.get("LST_NM").toString(); ///srchData.get("FST_NM").toString()+" "+srchData.get("MIDL_NM").toString()+" "+
+		    	renderingProv=renderingProv.replace(" null", "");
 		    	
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
+		    	testConfig.putRunTimeProperty("value", renderingProv);
+		    	
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(renderingProvName, renderingProv, "Filling Rendering Provider Name: "+renderingProv, "Rendering Prov");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
+	 			break;
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
 		 }
@@ -609,8 +628,10 @@ public class SearchRemittanceSearchCriteria {
 				break;
 			case "byCheckNoOfConslPayDtl":
 				sqlRowNo=64;
-				
-			break;
+				break;
+			case "byDOPAndRenderingProvider":
+				sqlRowNo=70;
+				break;
 		}
 		
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);		

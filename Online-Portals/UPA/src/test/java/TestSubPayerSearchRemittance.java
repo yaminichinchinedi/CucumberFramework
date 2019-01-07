@@ -255,6 +255,19 @@ public class TestSubPayerSearchRemittance extends TestBase {
 		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);;		
 	}
 	
+	@Test(priority=5,description="TS020_Search by DOS and Rendering Provider")
+	public void testEprabyDOPAndRenderingProvider() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	{
+		String accessType="Admin";
+			
+		String criteriaType="byDOPAndRenderingProvider";
+		String tinType="byDOP";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+	}
+	
    @Test(priority=5,description="TS023_Error Messages")
    public void testByErrorMsgs() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
@@ -547,7 +560,6 @@ public class TestSubPayerSearchRemittance extends TestBase {
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPagination();
-	    //010179500 //21-03-2018
    }
 	
 	
@@ -786,6 +798,19 @@ public class TestSubPayerSearchRemittance extends TestBase {
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);;		
+	}
+	
+	@Test(priority=5,description="TS020_Search by DOS and Rendering Provider")
+	public void testEprabyDOPAndRenderingProviderForSUBPAYERGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	{
+		String accessType="Gen";
+			
+		String criteriaType="byDOPAndRenderingProvider";
+		String tinType="byDOP";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
 	}
 	
    @Test(priority=5,description="TS023_Error Messages")

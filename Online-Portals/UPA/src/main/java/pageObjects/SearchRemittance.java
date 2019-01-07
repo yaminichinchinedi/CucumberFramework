@@ -364,7 +364,7 @@ public class SearchRemittance extends paymentSummary {
 					
 					List<String> actualListString = new ArrayList<String>();
 
-					listString=getExpectedRecordFromUI(criteriaType, colName);
+					listString=getExpectedDetailsFromFISL(criteriaType, colName);
 					
 					Collections.sort(listString);
 					
@@ -399,7 +399,7 @@ public class SearchRemittance extends paymentSummary {
 					listString = new ArrayList<String>();
 					actualListString = new ArrayList<String>();
 
-					listString=getExpectedRecordFromUI(criteriaType, colName);
+					listString=getExpectedDetailsFromFISL(criteriaType, colName);
 					Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
 
 						@Override
@@ -446,7 +446,7 @@ public class SearchRemittance extends paymentSummary {
 					List<Double> listDouble = new ArrayList<Double>();
 					List<Double> actualListDouble = new ArrayList<Double>();
 
-					listString=getExpectedRecordFromUI(criteriaType, colName);
+					listString=getExpectedDetailsFromFISL(criteriaType, colName);
 
 					listDouble = convertFromStringToDouble(listString);
 					Collections.sort(listDouble);
@@ -479,7 +479,7 @@ public class SearchRemittance extends paymentSummary {
 		case "Payment Date":
 		case "Claim Date":
 
-				listString = getExpectedRecordFromUI(criteriaType, colName);
+				listString = getExpectedDetailsFromFISL(criteriaType, colName);
 				Collections.sort(listString, new Comparator<String>()
 					{
 						DateFormat f = new SimpleDateFormat("MM/dd/yyyy");
@@ -537,23 +537,13 @@ public class SearchRemittance extends paymentSummary {
 	}
 
 
-	public List<String> getExpectedRecordFromUI(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public List<String> getExpectedDetailsFromFISL(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
 		List<String> l= new ArrayList<String>();
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		l=getDetailsFromFISL(searchResponse,colName);
-		System.out.println("List of details got from FISL is: "+l);
 		return l;
 	}
-//	public List<String> verifyTEST(String requestType,String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
-//	{
-//		List<String> l= new ArrayList<String>();
-//		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
-//		System.out.println("ss");
-//		l=getDetailsFromFISL(searchResponse,colName);
-//		System.out.println("List of details got from FISL is: "+l);
-//		return l;
-//	}
 	
 	public void verifySorting(String colName) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
 		String criteriaType="byDOP";
@@ -726,7 +716,8 @@ public class SearchRemittance extends paymentSummary {
 	
 	public void verifyPagination()
 	{
-		Log.Comment("No of records present is : " + divSearchResults.size());
+		int noOfRecords=divSearchResults.size()>0?divSearchResults.size()-2:0;
+		Log.Comment("No of records present is : " + noOfRecords);
 		if(divSearchResults.size()>30)
 		{
 			Element.verifyElementPresent(lnkLastPage, "Last Page Link");
