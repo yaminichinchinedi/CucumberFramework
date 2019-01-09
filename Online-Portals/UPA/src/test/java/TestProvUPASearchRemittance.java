@@ -34,8 +34,8 @@ public class TestProvUPASearchRemittance extends TestBase{
 		String criteriaType="byDOP";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
+		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType).selectTin(criteriaType);
+		home.clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
 	}
 	
 	//Check DOS Query with Abhinav
@@ -290,11 +290,10 @@ public class TestProvUPASearchRemittance extends TestBase{
    public void testTypeAndPaymentStatusByElectronicPaymentForVCP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
 		String criteriaType="byElectronicPaymenForVCP";
-		String tinType="byElectronicPaymenForVCP";
+		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType).selectTin(criteriaType);
 	    home.clickSearchRemittanceTab().doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
@@ -728,11 +727,9 @@ public class TestProvUPASearchRemittance extends TestBase{
 	    String userType="PROV";
 		String accessType="Gen";
 		String criteriaType="byElectronicPaymenForVCP";
-		String tinType="byElectronicPaymenForVCP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin();
+	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType).selectTin(criteriaType);
 	    home.clickSearchRemittanceTab().doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
@@ -867,7 +864,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Archive");
+	    home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Archive");
     }
 	
 	@Test(priority=5,description="TS047_Sorting on Payment Number")
@@ -879,7 +876,7 @@ public class TestProvUPASearchRemittance extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payment Number");
+	    home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySorting("Payment Number");
     }
 	
 	@Test(priority=5,description="TS049_Pagination of Search Results")
