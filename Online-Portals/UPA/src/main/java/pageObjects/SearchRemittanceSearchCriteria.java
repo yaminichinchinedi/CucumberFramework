@@ -52,6 +52,9 @@ public class SearchRemittanceSearchCriteria {
 	WebElement patientFirstName;
 	
 	@FindBy(id="providerLastNameID")
+	WebElement renderingProvName;
+	
+	@FindBy(id="providerLastNameID")
 	WebElement providerLastName;
 	
 	@FindBy(name="searchRemittance")
@@ -505,7 +508,23 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	break;
 		    	
+		    case "byDOPAndRenderingProvider":
+		    	int sqlRow = 70;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String renderingProv=srchData.get("LST_NM").toString(); ///srchData.get("FST_NM").toString()+" "+srchData.get("MIDL_NM").toString()+" "+
+		    	renderingProv=renderingProv.replace(" null", "");
 		    	
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
+		    	testConfig.putRunTimeProperty("value", renderingProv);
+		    	
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(renderingProvName, renderingProv, "Filling Rendering Provider Name: "+renderingProv, "Rendering Prov");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
+	 			break;
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
 		 }
@@ -609,8 +628,10 @@ public class SearchRemittanceSearchCriteria {
 				break;
 			case "byCheckNoOfConslPayDtl":
 				sqlRowNo=64;
-				
-			break;
+				break;
+			case "byDOPAndRenderingProvider":
+				sqlRowNo=70;
+				break;
 		}
 		
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);		
@@ -786,8 +807,7 @@ public class SearchRemittanceSearchCriteria {
     	int days=Integer.parseInt(srchRslt.get("PROC_DATA").toString());
     	String expected,actual;
     		
-    	actual = Element.getFirstSelectedOption(testConfig, drpDwnPayer, "Default Option in Payer drop down");
-    	System.out.println("Actual is: "+actual);
+    	actual = Element.getFirstSelectedOption(testConfig, drpDwnPayer, "text");
     	
     	HashMap<Integer, HashMap<String, String>> srchData = DataBase.executeSelectQueryALL(testConfig, 67);
 		
@@ -804,21 +824,21 @@ public class SearchRemittanceSearchCriteria {
  
     	listString=listString.substring(0, listString.length()-1);
     	testConfig.putRunTimeProperty("list", listString);
-    	System.out.println(listString);
+    	
     	srchRslt=DataBase.executeSelectQuery(testConfig, 68, 1);
-    	System.out.println(srchRslt);
+    	
     	int noOfPayments=Integer.parseInt(srchRslt.get("REC_COUNT").toString());
-    	System.out.println("no of payments are: "+noOfPayments);
+    	
     	if(noOfPayments<threshHoldValue)
     	{
     		//for non large tin --> Show all
-    		expected ="Show all";
+    		expected ="Show All";
     		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
     	}
     	else
     	{
     		//for large tin --> Select a payer
-    		expected ="Select a payer";
+    		expected ="Select a Payer";
     		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
     	}
     }

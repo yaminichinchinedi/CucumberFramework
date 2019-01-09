@@ -126,11 +126,9 @@ public String getTinForPaymentType(String paymentType)
  			 testConfig.putRunTimeProperty("type","DD");
  			 sqlRowNo=54;
  			 break;
-<<<<<<< HEAD
+
  		 case "byElectronicPaymenForACH":
-=======
  		 case "selectTin":
->>>>>>> 61913cd58f617522c4011d25eb49cfe90ba6f906
  			 testConfig.putRunTimeProperty("type","ACH");
  			 sqlRowNo=56;
  			 break;
@@ -141,6 +139,8 @@ public String getTinForPaymentType(String paymentType)
  		case "byDOPAndPatientNmForTricare":
 			 sqlRowNo=63;
 			 break;
+			 
+ 		
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
