@@ -302,11 +302,11 @@ public class TestBSUPASearchRemittance extends TestBase{
    public void testTypeAndPaymentStatusByElectronicPaymentForVCP() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
    {
 		String criteriaType="byElectronicPaymenForVCP";
-		String tinType="byElectronicPaymenForVCP";
+		String tinType="byElectronicPaymentForVCP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
    
@@ -348,12 +348,12 @@ public class TestBSUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Admin";	
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfReoriginNacha";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
@@ -361,12 +361,12 @@ public class TestBSUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Admin";		
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfConslPayDtl";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")
@@ -834,12 +834,12 @@ public class TestBSUPASearchRemittance extends TestBase{
 		{
 			 
 			String accessType="Gen";	
-			String tinType="byCheckNo";
+			String requestType="byCheckNo";
 			String criteriaType="byCheckNoOfReoriginNacha";						
 			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+			home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 		}
 	   
 		@Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
@@ -847,12 +847,12 @@ public class TestBSUPASearchRemittance extends TestBase{
 		{
 			 
 			String accessType="Gen";		
-			String tinType="byCheckNo";
+			String requestType="byCheckNo";
 			String criteriaType="byCheckNoOfConslPayDtl";						
 			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 			HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-			home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+			home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 		}
 	   
 		@Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")

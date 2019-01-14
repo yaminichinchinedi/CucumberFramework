@@ -452,25 +452,25 @@ public class TestCSRSearchRemittance extends TestBase {
 		@Test(priority=5,description="TS033_Search by Check Number from Reoriginated Nacha table")
 		public void testValidationOfCheckNoOfReOriginNacha() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
-			String tinType="byCheckNo";
+			String requestType="byCheckNo";
 			String criteriaType="byCheckNoOfReoriginNacha";			
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
-			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
 			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
+			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);		
 	      }
 		
 		@Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
 		public void testValidationOfCheckNoOfConslPayDtl() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
-			String tinType="byCheckNo";
+			String requestType="byCheckNo";
 			String criteriaType="byCheckNoOfConslPayDtl";		
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
-			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(tinType);
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);
 			SearchRemittanceSearchCriteria srchCriteriaPage = srchTinPage.clickSearchBtn();
-			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);;		
+			srchCriteriaPage.doSearch(criteriaType).verifySearchResults(requestType);		
 	      }
 		
 		@Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")

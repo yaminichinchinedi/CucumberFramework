@@ -334,12 +334,12 @@ public class TestProvUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Admin";	
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfReoriginNacha";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin(tinType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
@@ -347,12 +347,12 @@ public class TestProvUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Admin";		
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfConslPayDtl";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin(tinType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")
@@ -841,12 +841,12 @@ public class TestProvUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Gen";	
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfReoriginNacha";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin(tinType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
@@ -854,12 +854,12 @@ public class TestProvUPASearchRemittance extends TestBase{
 	{
 		 
 		String accessType="Gen";		
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfConslPayDtl";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin(tinType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.selectTin(criteriaType).clickSearchRemittanceTab().doSearch(criteriaType).verifySearchResults(requestType);		
 	}
   
 	@Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")

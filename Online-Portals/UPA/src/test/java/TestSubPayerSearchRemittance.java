@@ -20,6 +20,8 @@ import main.java.pageObjects.paymentSummary;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import com.gargoylesoftware.htmlunit.javascript.host.fetch.Request;
+
 
 public class TestSubPayerSearchRemittance extends TestBase {
 	 
@@ -310,7 +312,7 @@ public class TestSubPayerSearchRemittance extends TestBase {
 	    String criteriaType="byElectronicPaymenForACH";
 
 	    String accessType="Admin";
-		String tinType="ReoriginatedACH"; 		
+		String tinType="byElectronicPaymenForACH"; 		
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
@@ -322,15 +324,13 @@ public class TestSubPayerSearchRemittance extends TestBase {
    {
 
 		String criteriaType="byElectronicPaymenForVCP";
-		String tinType="byElectronicPaymenForVCP";
+		String tinType="byElectronicPaymentForVCP";
 
 	    String accessType="Admin";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   // home.selectTin();
-	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
    
@@ -373,12 +373,12 @@ public class TestSubPayerSearchRemittance extends TestBase {
 	 {
 		 
 		String accessType="Admin";	
-		String tinType="byCheckNo";
-		String criteriaType="byCheckNoOfReoriginNacha";						
+		String requestType="byCheckNo";
+		String criteriaType="byCheckNoOfReoriginNacha";	
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 	 }
    
    @Test(priority=5,description="TS034_Search by Check Number from Consolidated Payment Detail table")
@@ -386,12 +386,12 @@ public class TestSubPayerSearchRemittance extends TestBase {
 	 {
 		 
 		String accessType="Admin";		
-		String tinType="byCheckNo";
+		String requestType="byCheckNo";
 		String criteriaType="byCheckNoOfConslPayDtl";						
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifySearchResults(criteriaType);		
+		home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifySearchResults(requestType);		
 	 }
    
    @Test(priority=5,description="TS035_Search by Payment Number Of Consolidated Payment")
@@ -870,13 +870,11 @@ public class TestSubPayerSearchRemittance extends TestBase {
 	     
 		String accessType="Gen";
 		String criteriaType="byElectronicPaymenForVCP";
-		String tinType="byElectronicPaymenForVCP";
+		String tinType="byElectronicPaymentForVCP";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   // home.selectTin();
-	    testConfig.putRunTimeProperty("type","VCP");
-	    home.clickSearchRemittanceTab().selectTin(criteriaType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
+	    home.clickSearchRemittanceTab().selectTin(tinType,userType).doSearch(criteriaType).verifyPaymentStatus("VCP");
 		
    }
 	

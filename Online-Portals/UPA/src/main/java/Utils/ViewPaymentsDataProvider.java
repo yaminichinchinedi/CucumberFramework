@@ -140,7 +140,13 @@ public String getTinForPaymentType(String paymentType)
 			 sqlRowNo=63;
 			 break;
 			 
- 		
+ 		case "byCheckNoOfReoriginNacha":
+ 			sqlRowNo=98;
+ 			break;
+ 			
+ 		case "byCheckNoOfConslPayDtl":
+ 			sqlRowNo=99;
+ 			break;
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
