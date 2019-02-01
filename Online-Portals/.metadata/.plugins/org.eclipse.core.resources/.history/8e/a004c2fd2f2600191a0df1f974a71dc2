@@ -105,6 +105,18 @@ public class TestUS1202167 extends TestBase{
 		beginEnrollmentPage.selectHowYouHeard(option).verifyPopUp("AV");
 	 }
 	
+	/*@Test(priority=4,description="TS014 Validates navigation upon enroll as VCP and ACH only")
+	public void testEnrollAsVCP_ACH() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue();
+		
+	 }*/
+	
 	@Test(priority=4,description="TS020/TS021/TS022 Validates Content of PopUp upon clicking Cancel Button")
 	public void testCancelEnrollmentPopUp() throws IOException
 	 {

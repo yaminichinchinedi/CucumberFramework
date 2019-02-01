@@ -15,6 +15,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * @author Amit
+ *
+ */
 public class BeginEnrollmentContinue {
 
 	@FindBy(id="healthcareorgselect")
@@ -62,7 +66,7 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='enrollmentClassificationModal']/div[1]/div[3]/a")
 	WebElement closeTip1;
 	
-	@FindBy(xpath="//.[@id='vcpModal']/div[1]")
+	@FindBy(xpath="//.[@id='vcpModal']/div[1]") 
 	WebElement boxVCP;
 	
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[2]")
@@ -92,7 +96,6 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[1]")
 	WebElement btnIAgree;
 	
-	// .//*[@id='EFTERAenrForm']/div/div[1]/div[1]
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
@@ -126,21 +129,19 @@ public class BeginEnrollmentContinue {
 		   switch (enrollmentPaymentType)
 			 {
 			   case "AO":
-				Element.click(rdoAchOnly,"ACH only payment type");
+				clickRdoAO();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "AO");
 				break;
 				
 			  case "VO":	
-				Element.click(rdoVoOnly,"VCP only payment type");
-				Element.click(btnIAgree, "I agree button");
+				clickRdoVO();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "VO");
 				break;
 				
-			  case "AV":	
-				Element.click(rdoAV,"ACH & VCP both payment type");
-				Element.click(btnIAgree, "I agree button");
+			  case "AV":
+				clickRdoAV();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "AV");
 				break;
@@ -170,7 +171,27 @@ public class BeginEnrollmentContinue {
 	
 	public BeginEnrollmentContinue clickRdoHealthOrg()
 	{
-		clickRdoHealthOrg();
+		Element.click(rdoHealthcare,"HealthCare Organisation type");
+		return this;
+	}
+	
+	public BeginEnrollmentContinue clickRdoAO()
+	{
+		Element.click(rdoAchOnly,"ACH only payment type");
+		return this;
+	}
+	
+	public BeginEnrollmentContinue clickRdoVO()
+	{
+		Element.click(rdoVoOnly,"VCP only payment type");
+		Element.click(btnIAgree, "I agree button");
+		return this;
+	}
+	
+	public BeginEnrollmentContinue clickRdoAV()
+	{
+		Element.click(rdoAV,"ACH & VCP both payment type");
+		Element.click(btnIAgree, "I agree button");
 		return this;
 	}
 	
@@ -192,78 +213,91 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
-	public void clickChooseLink()
+	public BeginEnrollmentContinue clickChooseLinkFunctionality(WebElement lnkChoose,WebElement boxPopUp,WebElement closeTip)
 	{
-		Element.click(lnkChoose1, "Choose Link Before selecting Healthcare organization");
-		Element.verifyElementPresent(boxLinkPopUp1, "Choose Link Pop Up");
-		String text=boxLinkPopUp1.getText();
-		Element.click(closeTip1, "Close tip");
-		Browser.wait(testConfig, 2);
+		Element.click(lnkChoose, "Choose Link ");
+		Element.verifyElementPresent(boxPopUp, "Pop Up Box");
+		Element.click(closeTip, "Close tip");
+		return this;
+	}
+	
+	public BeginEnrollmentContinue clickChooseLink()
+	{
+		clickChooseLinkFunctionality(lnkChoose1,boxLinkPopUp1,closeTip1);
 		clickRdoHealthOrg(); 
-		Element.click(lnkChoose2,"Choose link After selecting Healthcare organization");
-		Element.verifyElementPresent(boxLinkPopUp2, "Choose Link Pop Up");
-		Browser.wait(testConfig, 2);
-		Element.click(closeTip2, "Close tip");
+		clickChooseLinkFunctionality(lnkChoose2,boxLinkPopUp2,closeTip2);
 		Browser.verifyURL(testConfig, "beginEnrollmentContinue.do");
-		
+		return this;
+	}
+	
+	
+	/*click on change link and verifies it.
+	input --> link to change option*/ 
+	public void verifyChangeLinkFunctionality(WebElement lnkChng)
+	{
+		Element.verifyElementPresent(lnkChng, "Change my answer for organization type");
+		Element.click(lnkChng,"Change my answer");
+		Element.verifyElementNotPresent(lnkChng, "Change my answer for organization type");
 	}
 	
 	public BeginEnrollmentContinue verifyChangeLink()
 	{
 		clickRdoHealthOrg();
-		Element.verifyElementPresent(lnkChangeOption, "Change my answer for organization type");
-		Element.click(lnkChangeOption,"Change my answer");
-		Element.verifyElementNotPresent(lnkChangeOption, "Change my answer for organization type");
+		verifyChangeLinkFunctionality(lnkChangeOption);
 		
 		clickRdoHealthOrg();
-		Element.click(rdoAchOnly,"ACH only payment type");
-		Element.verifyElementPresent(lnkChangeOption2, "Change my answer for organization type");
-		Element.click(lnkChangeOption2,"Change my answer");
-		Element.verifyElementNotPresent(lnkChangeOption2, "Change my answer for organization type");
+		clickRdoAO(); 
+		verifyChangeLinkFunctionality(lnkChangeOption2);
 		
-		Element.click(rdoVoOnly,"VCP only payment type");
-		Element.click(btnIAgree, "I agree button");
-		Element.verifyElementPresent(lnkChangeOption2, "Change my answer for organization type");
-		Element.click(lnkChangeOption2,"Change my answer");
-		Element.verifyElementNotPresent(lnkChangeOption2, "Change my answer for organization type");
+		clickRdoVO();
+		verifyChangeLinkFunctionality(lnkChangeOption2);
 		
-		Element.click(rdoAV,"ACH & VCP both payment type");
-		Element.click(btnIAgree, "I agree button");
-		Element.verifyElementPresent(lnkChangeOption2, "Change my answer for organization type");
-		Element.click(lnkChangeOption2,"Change my answer");
-		Element.verifyElementNotPresent(lnkChangeOption2, "Change my answer for organization type");
-		
+		clickRdoAV();
+		verifyChangeLinkFunctionality(lnkChangeOption2);
 		return this;
 	}
 	
-	public BeginEnrollmentContinue verifyPopUp()
+	public BeginEnrollmentContinue verifyPopUpFunctionality(WebElement payOptn)
 	{
-		clickRdoHealthOrg();
-		Element.click(rdoVoOnly,"VCP only payment type");
+		Element.click(payOptn,"Payment Type selected");
 		Element.verifyElementPresent(boxVCP, "VCP POP UP BOX");
-		Browser.wait(testConfig, 2);
 		Element.click(btnVCPCacnel, "VCP Cancel");
 		Browser.verifyURL(testConfig, "beginEnrollmentContinue.do");
 		return this;
 	}
 	
-	public void verifyErrorMsg()
+	public BeginEnrollmentContinue verifyPopUp(String paymentType)
 	{
 		clickRdoHealthOrg();
-		Element.click(rdoAchOnly,"ACH only payment type");
+		if(paymentType.equals("VO"))
+			verifyPopUpFunctionality(rdoVoOnly);
+		else
+			verifyPopUpFunctionality(rdoAV);
+		return this;
+	}
+	
+	public BeginEnrollmentContinue ErrorMsgFunctionality(String expected)
+	{
 		Element.click(btnContinue, "Continue");
 		String errMsg=Element.findElement(testConfig, "id", "tinerror1").getText();
-		Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errMsg);
-		String tinNumber="0011";
-		Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
-		Element.click(btnContinue, "Continue");
-		errMsg=Element.findElement(testConfig, "id", "tinerror1").getText();
-		Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errMsg);
-		tinNumber="abc888ui";
-		Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
-		Element.click(btnContinue, "Continue");
-		errMsg=Element.findElement(testConfig, "id", "tinerror1").getText();
-		Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errMsg);
+		Helper.compareEquals(testConfig, "ERROR MSG", expected, errMsg);
+		return this;
+	}
+	
+	public BeginEnrollmentContinue verifyErrorMsg()
+	{
+		clickRdoHealthOrg();
+		clickRdoAO();
+		ErrorMsgFunctionality("Missing Data");
 		
+		Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
+		ErrorMsgFunctionality("Missing Data");
+		
+		Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
+		ErrorMsgFunctionality("Invalid Data");
+		
+		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
+		ErrorMsgFunctionality("Invalid Data");
+		return this;
 	}
 }
