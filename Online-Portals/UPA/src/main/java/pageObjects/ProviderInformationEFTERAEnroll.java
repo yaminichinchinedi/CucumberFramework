@@ -32,7 +32,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "zip1")
 	WebElement zipCode1;
 
-	@FindBy(xpath = "//input[@id='14']//following-sibling::label")
+	@FindBy(xpath = ".//*[@id='prvtype']/ul[1]/li/label") //      // //input[@id='14']//following-sibling::label
 	WebElement rdoHospital;
 
 	@FindBy(xpath = "//input[@name='provType'][2]")
@@ -54,9 +54,11 @@ public class ProviderInformationEFTERAEnroll {
 	WebElement txtSecurity;
 	
 
-	private TestBase testConfig;
+	protected TestBase testConfig;
 	public ValidateEFTERAProviderInfo validateProvInfo;
 
+	public ProviderInformationEFTERAEnroll(){}
+	
 	public ProviderInformationEFTERAEnroll(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -76,7 +78,7 @@ public class ProviderInformationEFTERAEnroll {
 		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
 		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
 		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
-		Element.expectedWait(rdoHospital, testConfig, "Hospital/Facility radio button", "Hospital/Facility radio button");
+//		Element.expectedWait(rdoHospital, testConfig, "Hospital/Facility radio button", "Hospital/Facility radio button");
 		
 		Element.click(rdoHospital, "Hospital/Facility radio button");
 		

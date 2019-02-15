@@ -9,18 +9,27 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
 import main.java.pageObjects.UPARegistrationPage;
+import main.java.reporting.Log;
 
 public class TestUS1202167 extends TestBase{
 	
-	@Test(priority=4,description="TS001 Validates the Page navigation from")
-	public void testPageNavigation()
+	/**
+	 * This test case belong to US1348529
+	 */
+	@Test(priority=4,description="TS001/TS002 Validates the Page navigation from BeginEnrollment page to BeginEnrollmentContinue page")
+	public void testSurveyTablesAndResponse()
 	 {
-		String option="Health plan communication";
+		String option="Provider Advocate recommendation";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		registrationPage.clickEnrollNow().selectHowYouHeard(option);
+		registrationPage.clickEnrollNow().selectHowYouHeard(option).verifySurveyTables(option);
 	 }
 	
-	@Test(priority=4,description="TS002/TS018/TS019/TS023 Validates User Enrollment As Health Organisation")
+	/**
+	 * These below test cases belong to US1202167
+	 * @throws IOException
+	 */
+	
+	@Test(priority=4,description="TS001/TS002/TS018/TS023 Validates User Enrollment As Health Organisation") 
 	public void testUserEnrollmentAsHealthOrg() throws IOException
 	 {
 		String option="Health plan communication";
@@ -28,7 +37,7 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue();
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();
 	 }
 	
 	@Test(priority=4,description="TS003 Validates User Enrollment As BS")
@@ -39,17 +48,17 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue();
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinueBS().clickContinue().fillBusinessOrgInfo().fillPrimaryBSInfo().clickCntinue().uploadW9().fillInfoAndClickSubmit();
 	 }
 	
-	@Test(priority=4,description="TS004/TS006/TS015 Validates what shall i choose after Selecting Health Org /TS005 Validates Pop Up after clicking Close link")
+	@Test(priority=4,description="TS004/TS005/TS006/TS015 Validates what shall i choose after Selecting Health Org /TS005 Validates Pop Up after clicking Close link")
 	public void testPopUpAfterChoosingHealthOrg() throws IOException
 	 {
 		String option="Health plan communication";
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.clickChooseLink();
+		beginEnrollmentContinuePage.verifyChooseLink();
 	 }
 	
 	@Test(priority=4,description="TS007/TS016/TS017 Validates Page after clicking on change link")
@@ -72,7 +81,7 @@ public class TestUS1202167 extends TestBase{
 		beginEnrollmentContinuePage.verifyPopUp("VO");
 	 } 
 	
-	@Test(priority=4,description="TS010 Validates navigation upon enroll as VCP only")
+	@Test(priority=4,description="TS010 Validates navigation upon selection of I agree option on VCP pop up ")
 	public void testEnrollAsVCP() throws IOException
 	 {
 		String option="Health plan communication";
@@ -80,11 +89,11 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue();
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();;
 		
 	 }
 	
-	@Test(priority=4,description="TS011/TS014 Validates navigation upon enrolling as ACH and VCP")
+	@Test(priority=4,description="TS011/TS014 Validates navigation upon selection of I agree option on ACH and VCP pop up")
 	public void testEnrollAsVCPandACH() throws IOException
 	 {
 		String option="Health plan communication";
@@ -92,7 +101,7 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue();
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();;
 		
 	 }
 
@@ -116,7 +125,7 @@ public class TestUS1202167 extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).verifyCancelEnrollmentFunctionality();
 	 }
 	
-	@Test(priority=4,description="TS024-TS027 Validates errors messages displayed on various TIN combinations") //27 missing
+	@Test(priority=4,description="TS024-TS026 Validates errors messages displayed on various TIN combinations")
 	public void testErrorMsgs() throws IOException
 	 {
 		String option="Health plan communication";

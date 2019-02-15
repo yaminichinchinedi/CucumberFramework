@@ -3,6 +3,7 @@ package main.java.pageObjects;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,13 +23,13 @@ public class ValidateEnrollmentTypePage {
 		String expectedURL="/validateEnrollmentType.do";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+//		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
-	public ProviderEFTERAEnrollPage clickContinue()
+	public ProviderInformationEFTERAEnroll clickContinue()
 	{
 		Element.click(btnContinue, "Continue on validate enrollment type page");
-		return new ProviderEFTERAEnrollPage(testConfig) ;
+		return new ProviderInformationEFTERAEnroll(testConfig) ;
 	}
 
 }

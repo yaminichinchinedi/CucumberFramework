@@ -1,10 +1,15 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -38,6 +43,9 @@ public class BeginEnrollmentContinue {
 	
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
+	
+	@FindBy(xpath=".//*[@id='enrollment']/div/a[2]")
+	WebElement btnContinueBS;
 	
 	@FindBy(xpath=".//*[@id='enrollment3']/div/a[1]")
 	WebElement btnCancelEnrollment;
@@ -99,7 +107,7 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
-	
+	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	
@@ -155,6 +163,8 @@ public class BeginEnrollmentContinue {
 			Element.click(rdoBillingService, "Billing Service");
 			Element.clickByJS(testConfig, rdoBillingTin, "Billing Service Tin");
 			Element.enterData(txtBoxBSTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
+			enrollmentInfoObj.setBsTinIdentifier("TN");
+			enrollmentInfoObj.setTin(tinNumber);
 		}
 		else
 		Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
@@ -167,6 +177,12 @@ public class BeginEnrollmentContinue {
 	{
 		Element.clickByJS(testConfig,btnContinue, "Continue");
 		return new ValidateEnrollmentTypePage(testConfig);
+	}
+	
+	public ValidateBillingServiceEnrollmentType clickContinueBS()
+	{
+		Element.clickByJS(testConfig,btnContinueBS, "Continue");
+		return new ValidateBillingServiceEnrollmentType(testConfig);
 	}
 	
 	public BeginEnrollmentContinue clickRdoHealthOrg()
@@ -201,7 +217,11 @@ public class BeginEnrollmentContinue {
 		Element.verifyElementPresent(popUpCnclEnrlmnt, "Cancel Enrollment Pop Up"); 
 		return this;
 	}
-
+	
+	/**
+	 * verifies the page navigation upon canceling the enrollment 
+	 * @return
+	 */
 	public  BeginEnrollmentContinue verifyCancelEnrollmentFunctionality()
 	{
 		clickCancelEnrollment();
@@ -212,7 +232,12 @@ public class BeginEnrollmentContinue {
 		Browser.verifyURL(testConfig, "chooseEnrollmentType.do");
 		return this;
 	}
-	
+	/**
+	 * @param lnkChoose -- link of which option should i choose
+	 * @param boxPopUp -- Pop Up box which appears after clicking choose link
+	 * @param closeTip -- Close tip on Pop Up box
+	 * @return -- object of this page
+	 */
 	public BeginEnrollmentContinue clickChooseLinkFunctionality(WebElement lnkChoose,WebElement boxPopUp,WebElement closeTip)
 	{
 		Element.click(lnkChoose, "Choose Link ");
@@ -221,7 +246,11 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
-	public BeginEnrollmentContinue clickChooseLink()
+	/**
+	 * verifies the navigation upon clicking "which option shall i choose" link
+	 * @return
+	 */
+	public BeginEnrollmentContinue verifyChooseLink()
 	{
 		clickChooseLinkFunctionality(lnkChoose1,boxLinkPopUp1,closeTip1);
 		clickRdoHealthOrg(); 
@@ -231,8 +260,10 @@ public class BeginEnrollmentContinue {
 	}
 	
 	
-	/*click on change link and verifies it.
-	input --> link to change option*/ 
+	/**
+	 * verifies the page navigation upon clicking the change link in front of selected option
+	 * @param lnkChng
+	 */
 	public void verifyChangeLinkFunctionality(WebElement lnkChng)
 	{
 		Element.verifyElementPresent(lnkChng, "Change my answer for organization type");
@@ -257,6 +288,12 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
+	
+	/**
+	 * verifies the pop up on choosing VO or AV as payment option
+	 * @param payOptn -- VO or AV
+	 * @return
+	 */
 	public BeginEnrollmentContinue verifyPopUpFunctionality(WebElement payOptn)
 	{
 		Element.click(payOptn,"Payment Type selected");
@@ -266,6 +303,12 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
+	
+	/**
+	 * verifies the pop up upon choosing payment type as AV or VO
+	 * @param paymentType -- payment type( AV or VO)
+	 * @return
+	 */
 	public BeginEnrollmentContinue verifyPopUp(String paymentType)
 	{
 		clickRdoHealthOrg();
@@ -276,6 +319,12 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
+	
+	/**
+	 * 
+	 * @param expected -- expected Error message
+	 * @return
+	 */
 	public BeginEnrollmentContinue ErrorMsgFunctionality(String expected)
 	{
 		Element.click(btnContinue, "Continue");
@@ -284,6 +333,10 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
+	/**
+	 * verifies all the error messages that appears upon different combination of TIN
+	 * @return
+	 */
 	public BeginEnrollmentContinue verifyErrorMsg()
 	{
 		clickRdoHealthOrg();
@@ -292,12 +345,41 @@ public class BeginEnrollmentContinue {
 		
 		Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
 		ErrorMsgFunctionality("Missing Data");
-		
+		Browser.wait(testConfig, 2);
 		Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
 		ErrorMsgFunctionality("Invalid Data");
-		
+		Browser.wait(testConfig, 2);
 		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
 		ErrorMsgFunctionality("Invalid Data");
 		return this;
 	}
+	
+	public void verifySurveyTables(String option)
+	{
+		List<String> expected = Arrays.asList("CREAT_DTTM","QUESTION_SEQ","QUESTION_TXT","SURVEY_TYP","ACTV_IND","SURVEY_QUE_ID","LST_CHG_DTTM","CREAT_BY_ID","LST_CHG_BY_ID");
+		int sqlRowNo=98;
+		Map tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		List<String> actual=new ArrayList<String>(tblHeader.keySet());
+		Helper.compareEquals(testConfig, "SURVEY QUESTION", expected, actual); 
+		
+		expected = Arrays.asList("ANSWER_TXT","ANSWER_SEQ","CREAT_DTTM","SURVEY_ANS_ID", "ACTV_IND", "SURVEY_QUE_ID", "LST_CHG_DTTM","CREAT_BY_ID", "LST_CHG_BY_ID");
+		sqlRowNo=99;
+		tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		actual=new ArrayList<String>(tblHeader.keySet());
+		Helper.compareEquals(testConfig, "SURVEY ANSWER", expected, actual);
+		
+		expected = Arrays.asList("OTHER_TXT", "CREAT_DTTM","ORG_TYPE", "SURVEY_ANS_ID", "IDENTIFIER_NBR","RESPONSE_ID", "PAY_METH_TYP_CD");
+		sqlRowNo=100;
+		tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		actual=new ArrayList<String>(tblHeader.keySet());
+		Helper.compareEquals(testConfig, "SURVEY RESPONSE", expected,actual );
+		
+		testConfig.putRunTimeProperty("SURVEY_ANS_ID", tblHeader.get("SURVEY_ANS_ID").toString());
+		sqlRowNo=101;
+		tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		String actualOptn=tblHeader.get("ANSWER_TXT").toString();
+		Helper.compareEquals(testConfig, "Option Selected", option, actualOptn);
+		
+	}
+	
 }

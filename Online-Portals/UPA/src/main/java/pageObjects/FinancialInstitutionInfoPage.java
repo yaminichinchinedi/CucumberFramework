@@ -11,6 +11,7 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 
@@ -65,7 +66,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
 	WebElement txtSecurity;
 
-	private TestBase testConfig;
+	protected TestBase testConfig;
 	
 
 	public FinancialInstitutionInfoPage(TestBase testConfig) 
@@ -74,7 +75,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		String expectedURL = "/validateEFTERAProviderContact";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+//		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 
@@ -96,9 +97,38 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
         Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
 		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
 		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-		Element.click(rdoSavings, "Savings account type");
-		Element.click(rdoNPINo, "No radip button for Npi");
+
+		
 		fillFinancialInstInfoFromExcel();
+		Browser.wait(testConfig, 2);
+		uploadBankLetterPdfWithAcceptance();
+//		Element.click(rdoSavings, "Savings account type");
+//		Element.click(rdoNPINo, "No radip button for Npi");
+	}
+	
+	public void uploadBankLetterPdfWithAcceptance()  
+	{   
+		String expectedText="Optum reserves the right to request additional information to help ensure the security of your account.";
+		//Element.verifyTextPresent(txtSecurity,expectedText);
+		expectedText="For your security, you may be contacted";
+		//Element.verifyTextPresent(txtSecurity1,expectedText);
+		expectedText="and required to submit additional information.";
+		//Element.verifyTextPresent(txtSecurity2,expectedText);
+		
+		Browser.wait(testConfig, 2);
+		Element.click(rdoBankLetter, "Bank Letter radio button");
+		Browser.waitForLoad(testConfig.driver);
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		Browser.wait(testConfig,2);
+		Element.click(chkAcceptanceBox, "Acceptance check box");
+		if(chkAcceptanceBox.isSelected())
+		{
+			Log.Comment("Acceptance checkbox checked");
+		}
+		else
+		{
+			Element.click(chkAcceptanceBox, "Acceptance check box");
+		}
 	}
 	
 	public void fillFinancialInstInfoFromExcel() throws IOException 
@@ -115,6 +145,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-
+//	  Element.enterData(element, data, description, namOfElement);
     }
 }

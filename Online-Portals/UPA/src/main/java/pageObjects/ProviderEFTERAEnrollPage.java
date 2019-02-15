@@ -31,7 +31,7 @@ public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
 	
 	public ProviderInformationEFTERAEnroll clickContinue() 
 	{
-		Element.click(btnContinue, "Continue");
+			Element.click(btnContinue, "Continue");
 		return new ProviderInformationEFTERAEnroll(testConfig) ;
 	}
 

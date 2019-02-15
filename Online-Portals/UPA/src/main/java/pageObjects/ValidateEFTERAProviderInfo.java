@@ -21,11 +21,12 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
 
 public class ValidateEFTERAProviderInfo {
 
-	private TestBase testConfig;
-	
+	protected TestBase testConfig;
+	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	//First provider details
 	
 	@FindBy(name="firstNameContact1")
@@ -116,7 +117,7 @@ public class ValidateEFTERAProviderInfo {
 		String expectedURL="/validateEFTERAProviderInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+//		if(Browser.verifyURL(testConfig, expectedURL));
 	}
 	
 	public void fillPhoneNumber(String prvoiderType)
@@ -134,7 +135,8 @@ public class ValidateEFTERAProviderInfo {
 			Element.enterData(firstProvPhField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
 			Element.enterData(firstProvPhField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvPhField2");
 			Element.enterData(firstProvPhField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
-		    break;
+			enrollmentInfoPageObj.setPhnNumbr(phNo+phNo+phNoLstField);
+			break;
 		   }
 		  case "Secondary":
 		  {
@@ -147,13 +149,14 @@ public class ValidateEFTERAProviderInfo {
 		 
 	}
 	
-	public void fillPrimaryProvInfo()
+	public  ValidateEFTERAProviderInfo fillPrimaryProvInfo()
 	{	
 		Element.enterData(firstProvFName, fName,"Enter First name of first provider as : " + fName,"firstProvFirstName");
 		Element.enterData(firstProvLName, lName,"Enter Last name of first provider as : " + lName,"firstProvLastName");
 		fillPhoneNumber("Primary");
 		Element.enterData(firstProvEmail, firstProvEmailAdr, "Enter email address of first provider as : " +firstProvEmailAdr,"firstProvEmail");
 		Element.enterData(verifyFirstProvEmail, firstProvEmailAdr, "Retype email address of first provideras : " +firstProvEmailAdr,"verifyFirstProvEmail");
+		return this;
 	}
 	
 	
