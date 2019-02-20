@@ -37,7 +37,7 @@ public class BSEnrollmentSubmitted {
 		int sqlRowNo=102;
 		Map data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		
-		Helper.compareEquals(testConfig, "BS Tin Or SSN",enrollmentInfoPageObj.getBsTinIdentifier() , data.get("IDENTIFIER_TYP_CD"));
+		Helper.compareEquals(testConfig, "BS Tin Or SSN",enrollmentInfoPageObj.getTinIdentifier() , data.get("IDENTIFIER_TYP_CD"));
 		Helper.compareEquals(testConfig, "BS TIN",enrollmentInfoPageObj.getTin() , data.get("IDENTIFIER_NBR"));
 		Helper.compareEquals(testConfig, "BS Name",enrollmentInfoPageObj.getBusinessName() , data.get("BS_NM"));
 		Helper.compareEquals(testConfig, "Street", enrollmentInfoPageObj.getStreet(), data.get("ADR_TXT"));
@@ -52,6 +52,6 @@ public class BSEnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "Auth Lst Name", enrollmentInfoPageObj.getAuthLstName(), data.get("AUTH_LST_NM").toString());
 		Helper.compareEquals(testConfig, "Auth_Phn Number", enrollmentInfoPageObj.getAuthPhnNbr(), data.get("AUTH_TEL_NBR").toString());
 		Helper.compareEquals(testConfig, "Auth_Email", enrollmentInfoPageObj.getAuthEmail(), data.get("AUTH_EMAIL").toString());
-		
+		Helper.compareEquals(testConfig, "W9 Doc", enrollmentInfoPageObj.getW9DocCode(), data.get("W9_DOC_CD").toString());
 	}
 }

@@ -108,6 +108,7 @@ public class BeginEnrollmentContinue {
 	WebElement popUpCnclEnrlmnt;
 	
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
+	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	
@@ -128,7 +129,7 @@ public class BeginEnrollmentContinue {
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
-	
+//		enrollmentInfoObj.clear();
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
 		 {
 		   clickRdoHealthOrg();
@@ -140,18 +141,24 @@ public class BeginEnrollmentContinue {
 				clickRdoAO();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "AO");
+				enrollmentInfoObj.setTinIdentifier("AO");
+				enrollmentInfoObj.setTin(tinNumber);
 				break;
 				
 			  case "VO":	
 				clickRdoVO();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "VO");
+				enrollmentInfoObj.setTinIdentifier("VO");
+				enrollmentInfoObj.setTin(tinNumber);
 				break;
 				
 			  case "AV":
 				clickRdoAV();
 				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 				testConfig.putRunTimeProperty("enrollmentType", "AV");
+				enrollmentInfoObj.setTinIdentifier("AV");
+				enrollmentInfoObj.setTin(tinNumber);
 				break;
 				
 				default:
@@ -163,7 +170,7 @@ public class BeginEnrollmentContinue {
 			Element.click(rdoBillingService, "Billing Service");
 			Element.clickByJS(testConfig, rdoBillingTin, "Billing Service Tin");
 			Element.enterData(txtBoxBSTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
-			enrollmentInfoObj.setBsTinIdentifier("TN");
+			enrollmentInfoObj.setTinIdentifier("TN");
 			enrollmentInfoObj.setTin(tinNumber);
 		}
 		else

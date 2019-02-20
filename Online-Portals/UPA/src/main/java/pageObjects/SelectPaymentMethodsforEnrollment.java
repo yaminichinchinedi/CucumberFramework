@@ -1,0 +1,40 @@
+package main.java.pageObjects;
+
+import main.java.nativeFunctions.Browser;
+import main.java.nativeFunctions.Element;
+import main.java.nativeFunctions.TestBase;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class SelectPaymentMethodsforEnrollment {
+	
+private TestBase testConfig;
+	
+	@FindBy(linkText="Continue")
+	WebElement btnContinue;
+
+	@FindBy(xpath=".//*[@id='EFTERAregForm']//td[1]//tr[3]/td[2]/select")
+	WebElement drpPaytyp;
+	
+	public SelectPaymentMethodsforEnrollment(TestBase testConfig) 
+	{
+		String expectedURL = "/validateEFTERAFinancialInfo";
+		this.testConfig = testConfig;	
+		PageFactory.initElements(testConfig.driver, this);
+//		Browser.verifyURL(testConfig, expectedURL);
+	}
+
+	public void chooseACHVCP()
+	{
+		Element.selectByVisibleText(drpPaytyp, "VCP", "Choose VCP Option");
+	}
+	
+	public UploadW9 clickContinue() {
+		chooseACHVCP();
+		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig, btnContinue, "Continue");
+		return new UploadW9(testConfig) ;
+	}
+}

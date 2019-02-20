@@ -14,7 +14,7 @@ public class ValidateBillingServiceEnrollmentType extends ValidateEnrollmentType
 
 	public ValidateBillingServiceEnrollmentType(TestBase testConfig)
 	{   
-		super(testConfig);
+		super();
 		String expectedURL="/validateBillingServiceEnrollmentType.do";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);

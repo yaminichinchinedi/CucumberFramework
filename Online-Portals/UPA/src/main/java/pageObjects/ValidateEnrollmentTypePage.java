@@ -23,12 +23,16 @@ public class ValidateEnrollmentTypePage {
 		String expectedURL="/validateEnrollmentType.do";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		Browser.verifyURL(testConfig, expectedURL);
+		Browser.verifyURL(testConfig, expectedURL); 
 	}
 	
+	public ValidateEnrollmentTypePage() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ProviderInformationEFTERAEnroll clickContinue()
 	{
-		Element.click(btnContinue, "Continue on validate enrollment type page");
+		Element.clickByJS(testConfig, btnContinue, "Continue on validate enrollment type page");
 		return new ProviderInformationEFTERAEnroll(testConfig) ;
 	}
 

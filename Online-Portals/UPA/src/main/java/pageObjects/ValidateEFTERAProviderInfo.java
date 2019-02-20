@@ -117,9 +117,13 @@ public class ValidateEFTERAProviderInfo {
 		String expectedURL="/validateEFTERAProviderInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-//		if(Browser.verifyURL(testConfig, expectedURL));
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
+	public ValidateEFTERAProviderInfo() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void fillPhoneNumber(String prvoiderType)
 	{
 //		String expectedText="Enrollment & Account Security Reminder - To help support the security of your account, use of a business issued e-mail domain is required for enrollment and account access.";
@@ -156,6 +160,9 @@ public class ValidateEFTERAProviderInfo {
 		fillPhoneNumber("Primary");
 		Element.enterData(firstProvEmail, firstProvEmailAdr, "Enter email address of first provider as : " +firstProvEmailAdr,"firstProvEmail");
 		Element.enterData(verifyFirstProvEmail, firstProvEmailAdr, "Retype email address of first provideras : " +firstProvEmailAdr,"verifyFirstProvEmail");
+		enrollmentInfoPageObj.setFrstName(fName);
+		enrollmentInfoPageObj.setLstName(lName);
+		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
 		return this;
 	}
 	
@@ -268,7 +275,10 @@ public class ValidateEFTERAProviderInfo {
 		return new FinancialInstitutionInfoPage(testConfig) ;
 	}
 	
-	
+	public UploadW9 clickContinueVO() {
+		Element.click(btnContinue, "Continue");
+		return new UploadW9(testConfig) ;
+	}
 	public ValidateEFTERAProviderInfo clickYes(String provType)
 	{
 		Element.click(rdoYes, "Yes radio button");

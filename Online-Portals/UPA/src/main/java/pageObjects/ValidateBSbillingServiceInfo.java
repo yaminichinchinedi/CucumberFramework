@@ -17,7 +17,7 @@ public class ValidateBSbillingServiceInfo  extends ValidateEFTERAProviderInfo{
 	
 	public ValidateBSbillingServiceInfo(TestBase testConfig)
 	{   
-		super(testConfig);
+		super();
 		String expectedURL="/validateBSbillingServiceInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -37,11 +37,10 @@ public class ValidateBSbillingServiceInfo  extends ValidateEFTERAProviderInfo{
 		return this;
 	}
 	
-	public UploadW9Page clickCntinue()
+	public UploadW9PageBS clickCntinue()
 	{
-		Browser.wait(testConfig, 5);
 		Element.click(btnContinue, "Continue");
-		return new UploadW9Page(testConfig) ;
+		return new UploadW9PageBS(testConfig) ;
 	}
 	
 }

@@ -31,13 +31,13 @@ public class TestUS1202167 extends TestBase{
 	
 	@Test(priority=4,description="TS001/TS002/TS018/TS023 Validates User Enrollment As Health Organisation") 
 	public void testUserEnrollmentAsHealthOrg() throws IOException
-	 {
+	{
 		String option="Health plan communication";
 		int excelRow=1;
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();
 	 }
 	
 	@Test(priority=4,description="TS003 Validates User Enrollment As BS")
@@ -48,7 +48,7 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinueBS().clickContinue().fillBusinessOrgInfo().fillPrimaryBSInfo().clickCntinue().uploadW9().fillInfoAndClickSubmit();
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinueBS().clickContinue().fillBusinessOrgInfo().fillPrimaryBSInfo().clickCntinue().uploadW9().fillBSInfoAndClickSubmit();
 	 }
 	
 	@Test(priority=4,description="TS004/TS005/TS006/TS015 Validates what shall i choose after Selecting Health Org /TS005 Validates Pop Up after clicking Close link")
@@ -89,7 +89,7 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();;
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueVO().uploadW9().fillInfoAndClickSubmit();
 		
 	 }
 	
@@ -101,8 +101,7 @@ public class TestUS1202167 extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo();;
-		
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 	 }
 
 	@Test(priority=4,description="TS012/TS013 Validates navigation upon clicking Cancel on VCP PopUp Box")

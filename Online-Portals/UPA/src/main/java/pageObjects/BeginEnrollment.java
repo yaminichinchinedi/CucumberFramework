@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -35,7 +36,7 @@ public class BeginEnrollment {
 	
 	private TestBase testConfig;
 		
-	
+	EnrollmentInfo enrollment =EnrollmentInfo.getInstance();
 		
 	public BeginEnrollment(TestBase testConfig) {
 		this.testConfig=testConfig;
