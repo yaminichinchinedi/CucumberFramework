@@ -86,7 +86,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	}
 
 	public SelectPaymentMethodsforEnrollment clickContinueAV() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.click(btnContinue, "Continue");
 		return new SelectPaymentMethodsforEnrollment(testConfig) ;
 	}
 	

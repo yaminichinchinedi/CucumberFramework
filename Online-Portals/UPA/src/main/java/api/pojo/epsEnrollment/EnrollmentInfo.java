@@ -10,6 +10,11 @@ public  class EnrollmentInfo {
 	}
 
 	public static EnrollmentInfo getInstance() {
+		
+		/*if(instance == null){
+            instance = new EnrollmentInfo();
+        }
+        return instance;*/	
 		EnrollmentInfo result = instance;
 		if (result == null) {
 			synchronized (mutex) {
@@ -21,24 +26,164 @@ public  class EnrollmentInfo {
 		return result;
 	}
 
+	public static void clear() {
+	    instance = null;
+	}
 	
-	public String bsTinIdentifier;
-	public String tin;
-	public String businessName;
-	public String street;
-	public String city;
-	public String zipCode;
-	public String stateName;
-	public String frstName;
-	public String lstName;
-	public String email;
-	public String phnNumbr;
-	public String authFrstName;
-	public String authLstName;
-	public String authPhnNbr;
-	public String authEmail;
+	//Tin Info
+	protected String tinIdentifier;
+	protected String tin;
+	
+	//ORG name
+	protected String businessName;
+	protected String street;
+	protected String city;
+	protected String zipCode;
+	protected String stateName;
+	protected String mrktType;
+	protected String npi;
+	protected String provType;
+
+	//Primary Admin Info
+	protected String frstName;
+	protected String lstName;
+	protected String email;
+	protected String phnNumbr;
 	
 	
+	//Authorized Enrollers Info
+	protected String authFrstName;
+	protected String authLstName;
+	protected String authPhnNbr;
+	protected String authEmail;
+	protected String authTitle;
+	
+	//Financial Inst
+	protected String finInstName;
+	protected String finStreet;
+	protected String finCity;
+	protected String finState;
+	protected String finZip;
+	protected String finRoutingNo;
+	protected String finAcntNo;
+	protected String finPhoneNo;
+	protected String finDocCode;
+	
+	//W9
+	protected String w9DocCode;
+	
+	public String getProvType() {
+		return provType;
+	}
+
+	public void setProvType(String provType) {
+		this.provType = provType;
+	}
+	
+	public String getMrktType() {
+		return mrktType;
+	}
+
+	public void setMrktType(String mrktType) {
+		this.mrktType = mrktType;
+	}
+
+	public String getNpi() {
+		return npi;
+	}
+
+	public void setNpi(String npi) {
+		this.npi = npi;
+	}
+
+	public String getFinDocCode() {
+		return finDocCode;
+	}
+
+	public void setFinDocCode(String finDocCode) {
+		this.finDocCode = finDocCode;
+	}
+
+	public String getW9DocCode() {
+		return w9DocCode;
+	}
+
+	public void setW9DocCode(String w9DocCode) {
+		this.w9DocCode = w9DocCode;
+	}
+	
+	public String getFinInstName() {
+		return finInstName;
+	}
+
+	public void setFinInstName(String finInstName) {
+		this.finInstName = finInstName;
+	}
+
+	public String getFinStreet() {
+		return finStreet;
+	}
+
+	public void setFinStreet(String finStreet) {
+		this.finStreet = finStreet;
+	}
+
+	public String getFinCity() {
+		return finCity;
+	}
+
+	public void setFinCity(String finCity) {
+		this.finCity = finCity;
+	}
+
+	public String getFinState() {
+		return finState;
+	}
+
+	public void setFinState(String finState) {
+		this.finState = finState;
+	}
+
+	public String getFinZip() {
+		return finZip;
+	}
+
+	public void setFinZip(String finZip) {
+		this.finZip = finZip;
+	}
+
+	public String getFinRoutingNo() {
+		return finRoutingNo;
+	}
+
+	public void setFinRoutingNo(String finRoutingNo) {
+		this.finRoutingNo = finRoutingNo;
+	}
+
+	public String getFinAcntNo() {
+		return finAcntNo;
+	}
+
+	public void setFinAcntNo(String finAcntNo) {
+		this.finAcntNo = finAcntNo;
+	}
+
+	public String getFinPhoneNo() {
+		return finPhoneNo;
+	}
+
+	public void setFinPhoneNo(String finPhoneNo) {
+		this.finPhoneNo = finPhoneNo;
+	}
+
+	public String getAuthTitle() {
+		return authTitle;
+	}
+
+	public void setAuthTitle(String authTitle) {
+		this.authTitle = authTitle;
+	}
+
 	public String getFrstName() {
 		return frstName;
 	}
@@ -102,12 +247,12 @@ public  class EnrollmentInfo {
 		this.stateName = stateName;
 	}
 
-	public String getBsTinIdentifier() {
-		return bsTinIdentifier;
+	public String getTinIdentifier() {
+		return tinIdentifier;
 	}
 
-	public void setBsTinIdentifier(String bsTinIdentifier) {
-		this.bsTinIdentifier = bsTinIdentifier;
+	public void setTinIdentifier(String tinIdentifier) {
+		this.tinIdentifier = tinIdentifier;
 	}
 
 	public String getTin() {

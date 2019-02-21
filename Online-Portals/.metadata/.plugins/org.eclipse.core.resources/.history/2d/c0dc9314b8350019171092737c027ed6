@@ -30,12 +30,10 @@ public class ValidateEnrollmentTypePage {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProviderEFTERAEnrollPage clickContinue()
+	public ProviderInformationEFTERAEnroll clickContinue()
 	{
 		Element.clickByJS(testConfig, btnContinue, "Continue on validate enrollment type page");
-		return new ProviderEFTERAEnrollPage(testConfig) ;
+		return new ProviderInformationEFTERAEnroll(testConfig) ;
 	}
-	
-	
 
 }

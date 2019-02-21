@@ -34,7 +34,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "zip1")
 	WebElement zipCode1;
 
-	@FindBy(xpath = ".//*[@id='prvtype']/ul[2]/li/label") //      // //input[@id='14']//following-sibling::label
+	@FindBy(xpath = ".//*[@id='prvtype']/ul[1]/li/label") //      // //input[@id='14']//following-sibling::label
 	WebElement rdoHospital;
 
 	@FindBy(xpath = "//input[@name='provType'][2]")

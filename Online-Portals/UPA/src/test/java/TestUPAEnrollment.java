@@ -7,6 +7,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollmentContinue;
 import main.java.pageObjects.HomePage;
 import main.java.pageObjects.OptumIdLoginPage;
+import main.java.pageObjects.ProviderInformationEFTERAEnroll;
 import main.java.pageObjects.SplashPage3;
 import main.java.pageObjects.UPARegistrationPage;
 
@@ -60,7 +61,6 @@ public class TestUPAEnrollment extends TestBase {
 //       
 //	}
 
-	
 	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Primary Prov")
 	void testDupEmailErrorForPrimaryProvWithYes()throws IOException

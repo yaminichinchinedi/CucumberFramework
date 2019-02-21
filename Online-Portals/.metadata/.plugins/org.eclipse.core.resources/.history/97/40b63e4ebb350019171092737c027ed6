@@ -81,12 +81,12 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	
 
 	public UploadW9 clickContinue() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.click(btnContinue, "Continue");
 		return new UploadW9(testConfig) ;
 	}
 
 	public SelectPaymentMethodsforEnrollment clickContinueAV() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.click(btnContinue, "Continue");
 		return new SelectPaymentMethodsforEnrollment(testConfig) ;
 	}
 	

@@ -26,7 +26,7 @@ public class UploadW9 {
 		else if(testConfig.getRunTimeProperty("enrollmentType").equals("AV"))
 			expectedURL="/UploadW9EFTERAEnroll";
 		else
-			expectedURL="/uploadefterafile";
+			expectedURL="/validateEFTERAFinancialInfo";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
