@@ -8,17 +8,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SelectPaymentMethodsforEnrollment {
+public class SelectPaymentMethods {
 	
 private TestBase testConfig;
 	
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
 
-	@FindBy(xpath=".//*[@id='EFTERAregForm']//td[1]//tr[3]/td[2]/select")
+	@FindBy(xpath=".//*[@id='EFTERAregForm']//td[1]//tr[5]/td[2]/select")
 	WebElement drpPaytyp;
 	
-	public SelectPaymentMethodsforEnrollment(TestBase testConfig) 
+	public SelectPaymentMethods(TestBase testConfig) 
 	{
 		String expectedURL = "/validateEFTERAFinancialInfo";
 		this.testConfig = testConfig;	
@@ -28,7 +28,7 @@ private TestBase testConfig;
 
 	public void chooseACHVCP()
 	{
-		Element.selectByVisibleText(drpPaytyp, "VCP", "Choose VCP Option");
+		Element.selectVisibleText(drpPaytyp, "VCP", "Choose VCP Option");
 	}
 	
 	public UploadW9 clickContinue() {

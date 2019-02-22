@@ -21,7 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 
 public class ValidateEFTERAProviderInfo {
 
@@ -115,15 +115,13 @@ public class ValidateEFTERAProviderInfo {
 	public ValidateEFTERAProviderInfo(TestBase testConfig)
 	{   
 		String expectedURL="/validateEFTERAProviderInfo";
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSbillingServiceInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
-	public ValidateEFTERAProviderInfo() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void fillPhoneNumber(String prvoiderType)
 	{
 //		String expectedText="Enrollment & Account Security Reminder - To help support the security of your account, use of a business issued e-mail domain is required for enrollment and account access.";
@@ -165,7 +163,6 @@ public class ValidateEFTERAProviderInfo {
 		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
 		return this;
 	}
-	
 	
 	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
@@ -275,7 +272,7 @@ public class ValidateEFTERAProviderInfo {
 		return new FinancialInstitutionInfoPage(testConfig) ;
 	}
 	
-	public UploadW9 clickContinueVO() {
+	public UploadW9 clickContinueToW9() {
 		Element.click(btnContinue, "Continue");
 		return new UploadW9(testConfig) ;
 	}

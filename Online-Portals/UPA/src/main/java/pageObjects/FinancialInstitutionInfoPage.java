@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -85,9 +85,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return new UploadW9(testConfig) ;
 	}
 
-	public SelectPaymentMethodsforEnrollment clickContinueAV() {
+	public SelectPaymentMethods clickContinueAV() {
 		Element.clickByJS(testConfig, btnContinue, "Continue");
-		return new SelectPaymentMethodsforEnrollment(testConfig) ;
+		return new SelectPaymentMethods(testConfig) ;
 	}
 	
 	public FinancialInstitutionInfoPage fillFinancialInstInfo() throws IOException
@@ -111,8 +111,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		uploadBankLetterPdfWithAcceptance();
 		
 		return this;
-//		Element.click(rdoSavings, "Savings account type");
-//		Element.click(rdoNPINo, "No radip button for Npi");
 	}
 	
 	public void uploadBankLetterPdfWithAcceptance()  
@@ -130,15 +128,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Browser.waitForLoad(testConfig.driver);
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
-		/*Element.click(chkAcceptanceBox, "Acceptance check box");
-		if(chkAcceptanceBox.isSelected())
-		{
-			Log.Comment("Acceptance checkbox checked");
-		}
-		else
-		{
-			Element.click(chkAcceptanceBox, "Acceptance check box");
-		}*/
 	}
 	
 	public void fillFinancialInstInfoFromExcel() throws IOException 

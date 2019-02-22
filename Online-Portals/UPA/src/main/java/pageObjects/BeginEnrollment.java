@@ -1,6 +1,6 @@
 package main.java.pageObjects;
 
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 

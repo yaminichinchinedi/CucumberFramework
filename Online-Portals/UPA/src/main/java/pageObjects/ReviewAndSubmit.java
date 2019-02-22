@@ -3,7 +3,7 @@ package main.java.pageObjects;
 import java.io.IOException;
 
 import main.java.Utils.Helper;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -60,15 +60,13 @@ public class ReviewAndSubmit {
 	public ReviewAndSubmit(TestBase testConfig) 
 	{
 		String expectedURL = "/validateEFTERAUploadW9";
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSSubmitInfo";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
-	public ReviewAndSubmit() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public EnrollmentSubmitted fillInfoAndClickSubmit() throws IOException
 	{
 		Element.clickByJS(testConfig,chkAccptance, "Accept terms and condition");
@@ -81,7 +79,11 @@ public class ReviewAndSubmit {
 	{	
 		Element.enterData(frstName, fName,"Enter First name as : "+fName,"First Name");
 		Element.enterData(lstName, lName,"Enter Last nam as : "+lName,"Last Name");
-		Element.enterData(titleName, title,"Enter Title as : "+title,"Title");
+		if(!enrollmentInfoPageObj.getEnrollType().equals("BS"))
+		{
+			Element.enterData(titleName, title,"Enter Title as : "+title,"Title");
+			enrollmentInfoPageObj.setAuthTitle(title);
+		}
 		Element.enterData(priEmlAdrs, firstProvEmailAdr, "Enter email address as : " +firstProvEmailAdr,"firstProvEmail");
 		Element.enterData(retypEmlAdrs, firstProvEmailAdr, "Retype email address as : " +firstProvEmailAdr,"verifyFirstProvEmail");
 		Element.enterData(phField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
@@ -89,7 +91,6 @@ public class ReviewAndSubmit {
 		Element.enterData(phField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
 		enrollmentInfoPageObj.setAuthFrstName(fName);
 		enrollmentInfoPageObj.setAuthLstName(lName);
-		enrollmentInfoPageObj.setAuthTitle(title);
 		enrollmentInfoPageObj.setAuthEmail(firstProvEmailAdr);
 		testConfig.putRunTimeProperty("Auth_Email", firstProvEmailAdr);
 		enrollmentInfoPageObj.setAuthPhnNbr(phNo+phNo+phNoLstField);
