@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -47,6 +48,7 @@ public class BeginEnrollment {
 	
 	public BeginEnrollmentContinue selectHowYouHeard(String option)
 	{
+		Browser.wait(testConfig, 2);
 		Element.expectedWait(rdoHealthPlanCommunication, testConfig, "Health plan communication", "Health plan communication");
 		
 		if(option.equals("Health plan communication"))

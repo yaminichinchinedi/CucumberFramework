@@ -49,12 +49,12 @@ public class EnrollmentSubmitted {
 			  {
 				sqlRowNo=103;
 				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				verifyFinancialInfo(data);
 			  }
 			  else
 			  {
 				sqlRowNo=104;
 				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-				verifyFinancialInfo(data);
 			  }
 		  
 		  verifyMarketType();
