@@ -13,6 +13,15 @@ import main.java.reporting.Log;
 
 public class TestCreateEnrollment extends TestBase{
 	
+	
+	@Test(priority=4,description="US1348562--TS004 Validates Page text is content Managed.")
+	public void testPageContent() throws IOException
+	 {
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		registrationPage.clickEnrollNow().verifyPageContent();
+	 }
+	
+	
 	/**
 	 * This test case belong to US1348529
 	 */
