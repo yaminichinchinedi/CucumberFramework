@@ -131,12 +131,16 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Paragraph 3", pageBody.get(0).findElements(By.tagName("p")).get(3).getText(), dataTest.get(7).get("TEXT_VAL")+" "+dataTest.get(8).get("TEXT_VAL")+dataTest.get(9).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "PDF link 1 and 2",pageBody.get(0).findElements(By.tagName("p")).get(4).getText().toString().replace("\t", "").replace("\n", "").trim(), dataTest.get(10).get("TEXT_VAL")+"   "+dataTest.get(11).get("TEXT_VAL").replace("\t", "").trim());
 		Helper.compareEquals(testConfig, "PDF link 3", pageBody.get(0).findElements(By.tagName("p")).get(5).getText().replace("\t", "").trim(), dataTest.get(12).get("TEXT_VAL"));
-//		Helper.compareEquals(testConfig, "",test.getText(), dataTest.get(12).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Continue button",btnContinue.getText().toLowerCase(), dataTest.get(19).get("TEXT_VAL").toLowerCase());
 		Helper.compareEquals(testConfig, "Cancel Button",btnCancelEnrollment.getText().toLowerCase(), dataTest.get(20).get("TEXT_VAL").toLowerCase());
 		Helper.compareEquals(testConfig, "Policy link",lnkPolicy.getText(), dataTest.get(21).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Terms of Use",lnkUseTerms.getText(), dataTest.get(22).get("TEXT_VAL"));
 		Helper.compareContains(testConfig, "Optum copyright",dataTest.get(23).get("TEXT_VAL"),optum.getText());
+		
+		
+		sqlRowNo=98;
+		Map queData=DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
+		Helper.compareEquals(testConfig, "Survey Question",ques.getText(), queData.get("QUESTION_TXT"));
 		
 		sqlRowNo=99;
 		HashMap<Integer,HashMap<String,String>> options=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
