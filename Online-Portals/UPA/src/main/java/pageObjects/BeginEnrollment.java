@@ -1,22 +1,26 @@
 package main.java.pageObjects;
 
-import main.java.nativeFunctions.Element;
-import main.java.nativeFunctions.TestBase;
+import java.io.IOException;
+import java.sql.Timestamp;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import groovyjarjarantlr.collections.List;
+import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
+import main.java.nativeFunctions.Browser;
+import main.java.nativeFunctions.Element;
+import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
+import java.util.*;
+
 public class BeginEnrollment {
-		
-//	@FindBy(xpath="//input[@id=1]//following-sibling::label")
-//	WebElement rdoHealthPlanCommunication;
 	
 	@FindBy(xpath="//label[contains(text(),'Health')]")
 	WebElement rdoHealthPlanCommunication;
 	
-	
-
 	@FindBy(xpath="//label[contains(text(),'Provider')]")
 	WebElement rdoProviderAdvocateRecommendation;
 	
@@ -32,15 +36,43 @@ public class BeginEnrollment {
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
 	
+	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
+	WebElement dwnldAchGuide;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[2]")
+	WebElement dwnldVcpGuide;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[6]/a[1]")
+	WebElement dwnldBSGuide;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/div/div/span[2]")
+	WebElement aboutEPS;
+	
+	@FindBy(id="text1")
+	WebElement otherRadioTextBox;
+	
+	@FindBy(linkText="Cancel Enrollment")
+	WebElement btnCancelEnrollment;
+	
+	@FindBy(linkText="No")
+	WebElement btnCancelEnrollmentNo;
+	
+	@FindBy(linkText="Yes")
+	WebElement btnCancelEnrollmentYes;	
+	
+	@FindBy(xpath="//ul[@class='unstyled-list']//li")
+	java.util.List<WebElement> beginEnrlmntAnswersOnline;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/div/span[2]")
+	WebElement beginEnrlmntQuesOnline;
 	
 	private TestBase testConfig;
-		
-	
 		
 	public BeginEnrollment(TestBase testConfig) {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-	    Element.expectedWait(rdoHealthPlanCommunication, testConfig, "First Name textbox", "First Name textbox");	
+		Element.expectedWait(btnContinue, testConfig, "Continue Button", "Continue Button");
+		Browser.wait(testConfig, 1);
 	}
 	
 	
@@ -68,10 +100,104 @@ public class BeginEnrollment {
 			
 	}
 	
-	public void clickContinue()
+	public BeginEnrollmentContinue clickContinue()
 	{
 		Element.click(btnContinue, "Continue button");
+		return new BeginEnrollmentContinue(testConfig);
 	}
+	
+	public void validateBeginEnrollment() {
+		String expectedURL = "beginEnrollment.do";
+		Browser.verifyURL(testConfig, expectedURL);
+		Element.verifyElementPresent(dwnldAchGuide, "Download ACH Enrollment Guide");
+		Element.verifyElementPresent(dwnldVcpGuide, "Download VCP Enrollment Guide");
+		Element.verifyElementPresent(dwnldBSGuide, "Download Billing Service Enrollment Guide");
+		Element.verifyElementPresent(aboutEPS, "To get started, please let us know how you heard about EPS?");
+		Element.verifyTextPresent(rdoHealthPlanCommunication, "Health plan communication");
+	}
+	
+	public BeginEnrollmentContinue selectOtherToValidateErrorMessage() {
+		Element.click(rdoOther, "Other Radio Button");
+		Element.verifyElementPresent(otherRadioTextBox, "Text box appeared after selecting Other radio button");
+		return clickContinue();	
+	}
+	
+	public void validateTextBoxCharLmt() {
+		int sqlRowNo=108;
+		Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+		String textToEnter="This text is to test limit of fifty chars. This text is to test limit of fifty chars.";
+		String expectedText="This text is to test limit of fifty chars. This te";
+		Element.click(rdoOther, "Other Radio Button");
+		Element.verifyElementPresent(otherRadioTextBox, "Text box appreaded after selecting Other radio button");
+		Element.enterData(otherRadioTextBox, textToEnter, "Testing char limit of text box - Max limit is 50 chars\n"
+				+ "We are trying to enter - "+textToEnter+"\n"
+				+ "But we would be able to enter only - "+expectedText, "Text box appeared after selecting other radion button");		
+		Helper.compareEquals(testConfig, "", expectedText, otherRadioTextBox.getAttribute("value"));
+		clickContinue();
+		testConfig.putRunTimeProperty("timestamp", timeStamp.toString());
+		Map surveyResponse = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		int recordCount=Integer.parseInt(surveyResponse.get("RECORD_COUNT").toString().trim());
+		if(recordCount<1) {
+			Log.Fail("Unable to found entry in survey response table");
+		}
+	}
+	
+	public BeginEnrollment validateCancelEnrollmentBtnNo() {
+		Element.click(btnCancelEnrollment, "Cancel Enrollment");
+		Browser.wait(testConfig, 1);
+		Element.click(btnCancelEnrollmentNo, "Cancel Enrollment No Button");
+		return this;
+	}
+	
+	public UPARegistrationPage validateCancelEnrollmentBtnYes() {
+		Element.click(btnCancelEnrollment, "Cancel Enrollment");
+		Browser.wait(testConfig, 1);
+		Element.click(btnCancelEnrollmentYes, "Cancel Enrollment Yes Button");	
+		return new UPARegistrationPage(testConfig);
+	}
+	
+	public void validateUserIsAbleToDwnldEnrlmntPdf() {
+		validateBeginEnrollment();
+		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
+		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf");
+		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
+		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
+		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_VCP_v6.pdf");
+		Browser.closeBrowser(testConfig);
+		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
+		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
+		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_Billing_Services_v4.pdf");
+	}
+	
+	public void validateBeginEnrollmentQuestions() throws IOException {
+		int sqlRowNo=110;
+		boolean flag=false;
+		Map<String, String> surveyQuestionDB = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		if(surveyQuestionDB.get("QUESTION_TXT").equals(beginEnrlmntQuesOnline.getText())) {
+			Log.Comment("Survey question is matching between DB and online.");
+			sqlRowNo=109;
+			ArrayList<String> surveyAnswersDbList = new ArrayList<>();
+			HashMap<Integer, HashMap<String, String>> surveyAnswersDB = DataBase.executeSelectQueryALL(testConfig,sqlRowNo);
+			for(Integer tmp : surveyAnswersDB.keySet()){
+				surveyAnswersDbList.add(surveyAnswersDB.get(tmp).get("ANSWER_TXT"));
+			}
+			if(surveyAnswersDbList.size()==beginEnrlmntAnswersOnline.size()) {
+				for(int i=0; i<surveyAnswersDbList.size(); i++) {
+					if(!surveyAnswersDbList.get(i).equals(beginEnrlmntAnswersOnline.get(i).getText())) {
+						flag=true;
+					}
+				}			
+			}else {
+				flag=true;
+			}			
+		}else {
+			Log.Fail("Survey question is not matching between DB and online");
+		}
+		if(flag) {
+			Log.Fail("Test case failed: Either count or order of survey answers online is not matching with DB");
+		}
+	}
+	
 }
 
 

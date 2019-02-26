@@ -15,28 +15,12 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BeginEnrollmentContinue {
 	
-//	@FindBy(xpath="//span[contains(text(),'Choose Your Enrollment Type')]")
-//	WebElement txtEnrollmentType;
-//	
-//	@FindBy(xpath=".//*[@id='org1']/td[1]/input")
-//	WebElement rdoHealthcareOrg;
-	
 	@FindBy(id="healthcareorgselect")
 	WebElement rdoHealthcare;
 	
 	@FindBy(id="billingserivceselect")
 	WebElement rdoBillingService;
-			
-	
-	
-	
-	//new changes
-//	@FindBy(xpath="//input[@value='org']")
-//	WebElement rdoHealthcare;
-	
-//	@FindBy(xpath="//input[@value='bs']")
-//	WebElement rdoBillingService;
-	
+
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
 	
@@ -54,6 +38,15 @@ public class BeginEnrollmentContinue {
 	
 	@FindBy(css=".pops")
 	WebElement btnIAgree;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/h4")
+	WebElement errorMsg1;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/ul/li/p")
+	WebElement errorMsg2;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div[2]/div[2]/p")
+	WebElement errorMsg3;
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
@@ -120,6 +113,14 @@ public class BeginEnrollmentContinue {
 	{
 		Element.click(btnContinue, "Continue");
 		return new ValidateEnrollmentTypePage(testConfig);
+	}
+	
+	public void validateErrorMsgs() {
+		String expectedURL = "beginEnrollmentContinue.do";
+		Browser.verifyURL(testConfig, expectedURL);
+		Element.verifyTextPresent(errorMsg1, "Please correct the following fields before continuing the enrollment process:");
+		Element.verifyElementPresent(errorMsg2, "- Please tell us how you heard about EPS.");
+		Element.verifyElementPresent(errorMsg3, "Missing Data");
 	}
 	
 }
