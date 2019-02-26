@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+
 import main.java.nativeFunctions.*;
 
 import org.openqa.selenium.WebElement;
@@ -9,8 +10,12 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+
+//This page was in earlier phase but does not appear now, hence keeping it for inheriting purpose
+
 
 public class ProviderInformationEFTERAEnroll {
 
@@ -29,7 +34,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "zip1")
 	WebElement zipCode1;
 
-	@FindBy(xpath = "//input[@name='provType'][1]")
+	@FindBy(xpath = "//label[contains(text(),'Hospital/Facility')]//preceding-sibling::input")
 	WebElement rdoHospital;
 
 	@FindBy(xpath = "//input[@name='provType'][2]")
@@ -40,65 +45,76 @@ public class ProviderInformationEFTERAEnroll {
 
 	@FindBy(xpath = ".//*[@id='mktid']//input[1]")
 	WebElement chkBehaviouralHealth;
-	
-//	@FindBy(xpath = ".//*[@id='mktid']//input[4]")
-//	WebElement chkOther;
-	
-	@FindBy(xpath = "//input[@value='103']")
+
+	@FindBy(xpath = "//input[@id='103']//following-sibling::label")
 	WebElement chkOther;
 
-	@FindBy(name = "btnSubmit")
+	@FindBy(linkText = "Continue")
 	WebElement btnContinue;
+	
+	@FindBy(name = "npi")
+	WebElement txtNPI;
+	
+	@FindBy(name = "bsName")
+	WebElement bsName;
 	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
 	WebElement txtSecurity;
 	
+	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
-	private TestBase testConfig;
+	protected TestBase testConfig;
 	public ValidateEFTERAProviderInfo validateProvInfo;
 
 	public ProviderInformationEFTERAEnroll(TestBase testConfig) {
-		String expectedURL = "/providerInformationEFTERAEnroll";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
-		
-	
 	}
 
-	public ValidateEFTERAProviderInfo fillProviderInfo() throws IOException {
+	/**
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	public ValidateEFTERAProviderInfo fillProviderOrgInfo() throws IOException {
+	
 		int rowNo=1;
-		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);
 		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
-		
+		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		//Element.verifyTextPresent(txtSecurity, expectedText);
 		
-		String provName = Helper.generateRandomAlphabetsString(5);
-		Element.enterData(providerName, provName, "Enter provider name","providerName");
-		
-		String streetName = Helper.generateRandomAlphabetsString(5);
-		Element.enterData(street, streetName, "Enter street name","street");
-			
-		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name","city");
-		
-		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
-		
-		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
-		Browser.wait(testConfig, 5);
-		Element.click(rdoHospital, "Hospital/Facility radio button");
-		//Element.click(chkBehaviouralHealth, "Behavioual Health checkbox");
-		Browser.wait(testConfig, 5);
-		Element.click(chkOther, "Other sub checkbox");
-		Browser.wait(testConfig, 5);
-		if(!chkOther.isSelected())
+	
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+		else
 		{
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
+			Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+			enrollmentInfoPageObj.setProvType("Hospital/Facility");
 			Element.click(chkOther, "Other sub checkbox");
+			enrollmentInfoPageObj.setMrktType("Other");
 		}
-		Element.verifyElementIsChecked(chkOther, "other checkbox");
+		
+		
+		Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
+		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
+		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
+		
+		enrollmentInfoPageObj.setBusinessName(provName);
+		enrollmentInfoPageObj.setStreet(streetName);
+		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
+		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
+		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
+		
 		
 		Element.click(btnContinue, "Continue button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
-
+	
+	
+	
 }
