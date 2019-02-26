@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -55,8 +56,13 @@ public class BeginEnrollmentContinue {
 	@FindBy(css=".pops")
 	WebElement btnIAgree;
 	
+	@FindBy(xpath="//a[contains(text(),'I AGREE')]")
+	WebElement buttonIAgree;
+	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
+	
+	ViewPaymentsDataProvider dataProvider;
 	
 	public BeginEnrollmentContinue(TestBase testConfig)
 	{
@@ -115,11 +121,61 @@ public class BeginEnrollmentContinue {
 		return new BeginEnrollmentContinue(testConfig);
 	}
 	
+	public BeginEnrollmentContinue enrollTIN(int excelRowNo, String status) throws IOException
+	 {	
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
+		dataProvider=new ViewPaymentsDataProvider(testConfig);		
+		String tinNumber=dataProvider.getTinForStatus(status);		
+		testConfig.putRunTimeProperty("tin", tinNumber);
+		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();		
 	
+		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
+		 {
+		   Element.click(rdoHealthcare, "Healthcare organization");
+		   Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
+			
+		   switch (enrollmentPaymentType)
+			 {
+			   case "AO":
+				Element.click(rdoAchOnly,"ACH only payment type");
+				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "AO");
+				break;
+				
+			  case "VO":	
+				Element.click(rdoVoOnly,"VCP only payment type");
+				Element.click(buttonIAgree, "I agree button");
+				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "VO");
+				break;
+				
+			  case "AV":	
+				Element.click(rdoAV,"ACH & VCP both payment type");
+				Element.click(buttonIAgree, "I agree button");
+				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "AV");
+				break;
+				
+				default:
+				Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				 
+			}
+		}
+		else if(data.GetData(excelRowNo, "EnrollmentTypeOrg").trim().equalsIgnoreCase("BS"))
+		Element.click(rdoBillingService, "Billing Service");
+		else
+		Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
+	
+		return new BeginEnrollmentContinue(testConfig);
+	}
+		
 	public ValidateEnrollmentTypePage clickContinue()
 	{
+		
 		Element.click(btnContinue, "Continue");
+		
+		Browser.wait(testConfig, 20);
 		return new ValidateEnrollmentTypePage(testConfig);
 	}
+	
 	
 }

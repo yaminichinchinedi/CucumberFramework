@@ -64,7 +64,7 @@ public class UPARegistrationPage{
 		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
-	
+		
 	public void clickAndVerifyHeaderHome()
 	{
 		String expectedURL="/registrationSignIn.do";

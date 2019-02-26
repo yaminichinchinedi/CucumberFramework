@@ -169,6 +169,7 @@ import main.java.reporting.LogTemp;
 	{
 		try{
 		  element.click();
+		  Browser.wait(testConfig, 5);
 		  Log.Comment("Clicked " + namOfElement);
 		 }
 		

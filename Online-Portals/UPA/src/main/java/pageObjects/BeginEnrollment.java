@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -47,7 +48,6 @@ public class BeginEnrollment {
 	public BeginEnrollmentContinue selectHowYouHeard(String option)
 	{
 		Element.expectedWait(rdoHealthPlanCommunication, testConfig, "Health plan communication", "Health plan communication");
-		
 		if(option.equals("Health plan communication"))
 		{
 			Element.click(rdoHealthPlanCommunication, "Health plan communication");
@@ -64,6 +64,7 @@ public class BeginEnrollment {
 			Element.click(rdoOther, "Other");
 		
 		clickContinue();
+		Browser.wait(testConfig, 5);
 		return new BeginEnrollmentContinue(testConfig);
 			
 	}
