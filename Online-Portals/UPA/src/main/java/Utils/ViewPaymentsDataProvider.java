@@ -95,19 +95,19 @@ public class ViewPaymentsDataProvider {
 		switch(status) 
 		{
 		case "EnrolledActiveStatusTIN":
-			sqlRowNo=54; 
+			sqlRowNo=111; 
 			break;
 
 		case "EnrolledPreEnrollmentStatusTIN":
-			sqlRowNo=55; 
+			sqlRowNo=112; 
 			break;
 
 		case "AutoEnrolledPreEnrollmentStatusTIN":
-			sqlRowNo=56; 
+			sqlRowNo=113; 
 			break;
 
 		case "EnrolledInactiveAndBlockStatusTIN":
-			sqlRowNo=57; 
+			sqlRowNo=114; 
 			break;
 		
 		case "TINNotEnrolled":
@@ -115,7 +115,7 @@ public class ViewPaymentsDataProvider {
 			break;
 		
 		case "InactiveUnBlockedTIN":
-			sqlRowNo=58; 
+			sqlRowNo=115; 
 			break;
 
 		default:
@@ -143,49 +143,49 @@ public class ViewPaymentsDataProvider {
 		switch(content) 
 		{
 		case "EligibleTIN":
-			sqlRowNo=59; 
+			sqlRowNo=116; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for EligibleTIN is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());			
 			
 		case "provideInformation":
-			sqlRowNo=60; 
+			sqlRowNo=117; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for provideInformation is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "orgName":
-			sqlRowNo=61; 
+			sqlRowNo=118; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for orgName is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "administrators":
-			sqlRowNo=62; 
+			sqlRowNo=119; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for administrators is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "primaryContact":
-			sqlRowNo=63; 
+			sqlRowNo=120; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for primaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "secondaryContact":
-			sqlRowNo=64; 
+			sqlRowNo=121; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for secondaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "bankingInfo":
-			sqlRowNo=65; 
+			sqlRowNo=122; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for bankingInfo is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
 			
 		case "W-9":
-			sqlRowNo=66; 
+			sqlRowNo=123; 
 			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			Log.Comment("Content retreived from query for W-9 is : " + enrollmentContent.get("TEXT_VAL").toString());
 			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
