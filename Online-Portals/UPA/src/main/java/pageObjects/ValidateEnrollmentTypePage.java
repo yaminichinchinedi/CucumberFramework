@@ -14,7 +14,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
+
 import main.java.Utils.ViewPaymentsDataProvider;
+
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
+
 
 public class ValidateEnrollmentTypePage {
 
@@ -130,6 +134,7 @@ public class ValidateEnrollmentTypePage {
 	WebElement uxdsPageHeading;	
 	
 	private TestBase testConfig;
+	EnrollmentInfo enrollmnt=EnrollmentInfo.getInstance();
 	
 	ViewPaymentsDataProvider dataProvider;
 
@@ -138,13 +143,14 @@ public class ValidateEnrollmentTypePage {
 		String expectedURL="/validateEnrollmentType.do";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+		if(enrollmnt.getEnrollType().equals("BS"))
+			expectedURL="/validateBillingServiceEnrollmentType.do";
+		Browser.verifyURL(testConfig, expectedURL); 
 	}
 
 	public ProviderEFTERAEnrollPage clickContinue()
-	{
-		Element.click(btnContinue, "Continue on validate enrollment type page");
-		Browser.wait(testConfig, 20);
+	{		
+		Element.clickByJS(testConfig, btnContinue, "Continue on validate enrollment type page");
 		return new ProviderEFTERAEnrollPage(testConfig) ;
 	}
 	
@@ -312,44 +318,11 @@ public class ValidateEnrollmentTypePage {
 			}
 		}
 		
-		/*if (TINEligibleForEnrlHeading.getText().equals(TINEligibleForEnrlHeadingUXDS.getText()))
-			Log.Pass(TINEligibleForEnrlHeading +" & TINEligibleForEnrlHeadingUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(TINEligibleForEnrlHeading +" & TINEligibleForEnrlHeadingUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");			
-		if(enrollmentProcessInfo.getText().equals(enrollmentProcessInfoUXDS.getText()))
-			Log.Pass(enrollmentProcessInfo +" & enrollmentProcessInfoUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(enrollmentProcessInfo +" & enrollmentProcessInfoUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(orgName.getText().equals(orgNameUXDS.getText()))
-			Log.Pass(orgName +" & orgNameUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(orgName +" & orgNameUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(administrators.getText().equals(administratorsUXDS.getText()))
-			Log.Pass(administrators +" & administratorsUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(administrators +" & administratorsUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(primaryContact.getText().equals(primaryContactUXDS.getText()))
-			Log.Pass(primaryContact +" & primaryContactUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(primaryContact +" & primaryContactUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(secondaryContact.getText().equals(secondaryContactUXDS.getText()))
-			Log.Pass(secondaryContact +" & secondaryContactUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(secondaryContact +" & secondaryContactUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(tinAndBusinessInfo.getText().equals(tinAndBusinessInfoUXDS.getText()))
-			Log.Pass(tinAndBusinessInfo +" & tinAndBusinessInfoUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(tinAndBusinessInfo +" & tinAndBusinessInfoUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");		
-		if(w9Form.getText().equals(w9FormUXDS.getText()))
-			Log.Pass(w9Form +" & w9FormUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(w9Form +" & w9FormUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");
-		if(w9FormDownload.getText().equals(w9FormDownloadUXDS.getText()))
-			Log.Pass(w9FormDownload +" & w9FormDownloadUXDS"+ " :" + " " + "matches in both UI and UXDS HTML");
-		else
-			Log.Fail(w9FormDownload +" & w9FormDownloadUXDS"+ " :" + " " + "does not matches in both UI and UXDS HTML");	*/	
-		
 		return this;
 	}
 
-}
+		
+	}
+	
+
+
