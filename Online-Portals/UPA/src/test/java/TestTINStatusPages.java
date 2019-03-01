@@ -16,7 +16,7 @@ import main.java.pageObjects.*;
 
 public class TestTINStatusPages extends TestBase {
 
-	
+	 
 	@Test(priority=4,description="Verifies Header Links functionality")
 	public void testHeaderLinks()
 	 {
