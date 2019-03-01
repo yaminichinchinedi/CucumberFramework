@@ -22,6 +22,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -52,7 +53,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//span[contains(text(),'Provider Type')]")
 	WebElement lblProvType;
 
-	@FindBy(xpath = "//label[contains(text(),'Hospital/Facility')]")
+	@FindBy(xpath = "//label[contains(text(),'Hospital/Facility')]//preceding-sibling::input")
 	WebElement rdoHospital;
 
 	@FindBy(xpath = "//input[@name='provType'][2]")
@@ -72,6 +73,12 @@ public class ProviderInformationEFTERAEnroll {
 	
 	@FindBy(linkText = "Cancel Enrollment")
 	WebElement btnCancelEnrollment;
+
+	@FindBy(name = "npi")
+	WebElement txtNPI;
+	
+	@FindBy(name = "bsName")
+	WebElement bsName;
 	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
 	WebElement txtSecurity;
@@ -116,10 +123,10 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath="//div[@class='error']//ul//li")
 	List <WebElement> individualErrors;
 	
-	
-	
+	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
-	private TestBase testConfig;
+
+	protected TestBase testConfig;
 	public ValidateEFTERAProviderInfo validateProvInfo;
 
 	public ProviderInformationEFTERAEnroll(TestBase testConfig) {
@@ -127,35 +134,55 @@ public class ProviderInformationEFTERAEnroll {
 		PageFactory.initElements(testConfig.driver, this);
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public ValidateEFTERAProviderInfo fillProviderOrgInfo() throws IOException {
+	
 		int rowNo=1;
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);
 		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
 		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		//Element.verifyTextPresent(txtSecurity, expectedText);
 		
-		String provName = Helper.generateRandomAlphabetsString(5);
-		Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
+	
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+		else
+		{
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
+			Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+			enrollmentInfoPageObj.setProvType("Hospital/Facility");
+			Element.click(chkOther, "Other sub checkbox");
+			enrollmentInfoPageObj.setMrktType("Other");
+		}
 		
-		String streetName = Helper.generateRandomAlphabetsString(5);
+		
 		Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
 		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
 		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
 		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
-		Element.expectedWait(rdoHospital, testConfig, "Hospital/Facility radio button", "Hospital/Facility radio button");
 		
-		Element.click(rdoHospital, "Hospital/Facility radio button");
+		enrollmentInfoPageObj.setBusinessName(provName);
+		enrollmentInfoPageObj.setStreet(streetName);
+		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
+		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
+		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
 		
-		Element.click(chkOther, "Other sub checkbox");
+//		Element.click(chkOther, "Other sub checkbox");
+
 		Element.click(btnContinue, "Continue button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
 	
-	
 
 	public ProviderInformationEFTERAEnroll verifyUITextFromDB()  
 	{
-		int sqlRow=98;
+		int sqlRow=124;
 		testConfig.putRunTimeProperty("subject","txt.enterbusiness");
 		Map contentTbl=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		Helper.compareContains(testConfig, "Business Info Text", contentTbl.get("TEXT_VAL").toString(), txtBusinessOrgInfo.getText());
