@@ -1,4 +1,4 @@
-Env=Stage
+Env=test
 testSuite=UPA
 BrowserType=FF
 DataFile=\\DataFiles\\DataFile.xlsx
