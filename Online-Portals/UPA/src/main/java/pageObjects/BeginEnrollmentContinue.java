@@ -9,6 +9,7 @@ import java.util.Map;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -107,7 +108,10 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
+	
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
+	ViewPaymentsDataProvider dataProvider;
+	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
@@ -401,6 +405,16 @@ public class BeginEnrollmentContinue {
 		Helper.compareEquals(testConfig, "Option Selected", option, actualOptn);
 		
 	}
+
+
+	public BeginEnrollmentContinue getTin(int excelRowNo, String status) throws IOException
+	{
+	  dataProvider=new ViewPaymentsDataProvider(testConfig);
+	  this.tinNumber=dataProvider.getTinForStatus(status);
+	  enrollAs(excelRowNo);
+	  return this;
+	}
+		
 	
 	
 	
