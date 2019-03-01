@@ -63,7 +63,7 @@ public class UPARegistrationPage{
 		Element.click(lnkOptumLogo,"Optum Logo at header");
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
-	
+		
 	public void clickAndVerifyHeaderHome()
 	{
 		String expectedURL="/registrationSignIn.do";

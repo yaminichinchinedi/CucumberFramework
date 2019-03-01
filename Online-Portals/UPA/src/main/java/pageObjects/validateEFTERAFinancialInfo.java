@@ -14,7 +14,7 @@ public class validateEFTERAFinancialInfo {
 
 	private TestBase testConfig;
 	
-	@FindBy(id="bank-letter")
+	@FindBy(css="input[value='BL']")
 	WebElement rdoBankLetter;
 
 	@FindBy(css="input[value='VC']")
@@ -55,12 +55,18 @@ public class validateEFTERAFinancialInfo {
 
 
 	public validateEFTERAFinancialInfo(TestBase testConfig) {
-		String expectedURL = "/validateEFTERAProviderContact";
+		String expectedURL = "/validateEFTERAFinancialInfo";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
 		//Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
 	}
+	
+	//Default Constructor
+	public validateEFTERAFinancialInfo() {
+		
+	}
+
 	
 	
 	public void uploadBankLetterPdfWithAcceptance()  

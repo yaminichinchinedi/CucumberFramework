@@ -18,8 +18,7 @@ import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
 /**
- * @author schandy 
- * needs to be changed-Priyanka
+ * @author schandy
  *
  */
 public class TestBSViewPayments extends TestBase {
