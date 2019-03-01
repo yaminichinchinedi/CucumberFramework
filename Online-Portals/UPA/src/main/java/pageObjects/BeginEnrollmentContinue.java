@@ -97,7 +97,7 @@ public class BeginEnrollmentContinue {
 	WebElement txtBoxBSTin;
 	
 	@FindBy(id="tinerror1")
-	WebElement errorMsg1;
+	WebElement errorMsg;
 	
 	@FindBy(xpath=".//*[@id='recaptcha-anchor']/div[5]") 
 	WebElement chkBoxCaptcha;
@@ -351,43 +351,51 @@ public class BeginEnrollmentContinue {
 	
 	
 	/**
-	 * 
-	 * @param expected -- expected Error message
-	 * @return
-	 */
-	public BeginEnrollmentContinue ErrorMsgFunctionality(String expected)
-	{
-		Element.click(btnContinue, "Continue");
-		String errMsg=Element.findElement(testConfig, "id", "tinerror1").getText();
-		Helper.compareEquals(testConfig, "ERROR MSG", expected, errMsg);
-		return this;
-	}
-	
-	/**
-	 * verifies all the error messages that appears upon different combination of TIN
-	 * @return
-	 */
+	* verifies all the error messages that appears upon different combination of TIN
+	* @return
+	*/
 	public BeginEnrollmentContinue verifyErrorMsg()
 	{
-		clickRdoHealthOrg();
-		clickRdoAO();
-		ErrorMsgFunctionality("Missing Data");
-		
-		Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
-		ErrorMsgFunctionality("Missing Data");
-		Browser.wait(testConfig, 2);
-		Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
-		ErrorMsgFunctionality("Invalid Data");
-		Browser.wait(testConfig, 2);
-		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
-		ErrorMsgFunctionality("Invalid Data");
-		return this;
+	clickRdoHealthOrg().clickRdoAO();
+
+	Element.click(btnContinue, "Continue");
+
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	Browser.wait(testConfig, 2);
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"000111000", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	String errMsg=Element.findElement(testConfig, "id", "captchaerrororg").getText();
+	Helper.compareEquals(testConfig, "ERROR MSG","reCAPTCHA selection is required" , errMsg);
+	return this;
 	}
 	
 	
 	
-	/*
-	 * 
+	/*Verify column names in Database
+	 * from Survey table
+	 * Survey_question,answer & response
 	 */
 	public void verifySurveyTables(String option)
 	{
