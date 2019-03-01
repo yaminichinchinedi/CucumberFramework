@@ -284,6 +284,9 @@ public class ValidateEFTERAProviderInfo {
 		
 		 int sqlNo=9;
 		 Map portalUser=DataBase.executeSelectQuery(testConfig,sqlNo, 1);
+		 
+		 if(portalUser.size()>0)
+		 {
 		
 		if(provType.equals("Primary"))
 		 {
@@ -306,6 +309,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Phone No Field 3 ", portalUser.get("TEL_NBR").toString().substring(6,10),secondProvPhField3.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Email Address ", portalUser.get("EMAIL_ADR_TXT"),secondProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifySecondProvEmail.getAttribute("value"));
+		 }
 		 }
 		return this;
 	}
