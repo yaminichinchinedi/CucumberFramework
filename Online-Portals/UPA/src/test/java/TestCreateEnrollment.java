@@ -65,6 +65,35 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 
+	@Test(priority=4,description="US1202167--TS004/TS005/TS006/TS015 Validates what shall i choose after Selecting Health Org /TS005 Validates Pop Up after clicking Close link")
+	public void testPopUpAfterChoosingHealthOrg() throws IOException
+	 {
+		String option="Health plan communication";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.verifyChooseLink();
+	 }
+	
+	@Test(priority=4,description="US1202167--TS007/TS016/TS017 Validates Page after clicking on change link")
+	public void testChangeLinkFunctionality() throws IOException
+	 {
+		String option="Health plan communication";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.verifyChangeLink();
+	 }
+	
+	@Test(priority=4,description="US1202167--TS008 + TS009 =Validates navigation upon selection of VCP and healthOrg/TS009 Validates navigation upon clicking Cancel on VCP PopUp Box")
+	public void testChooseVCP() throws IOException
+	 {
+		String option="Health plan communication";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.verifyPopUp("VO");
+	 }
 
 	@Test(priority=4,description="US1202167--TS010 Validates navigation upon selection of I agree option on VCP pop up ")
 	public void testEnrollAsVCP() throws IOException
