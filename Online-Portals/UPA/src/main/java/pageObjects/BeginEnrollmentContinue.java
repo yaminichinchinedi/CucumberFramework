@@ -9,6 +9,7 @@ import java.util.Map;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -104,13 +105,22 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[1]")
 	WebElement btnIAgree;
 	
+
+	@FindBy(xpath="//a[contains(text(),'I AGREE')]")
+	WebElement buttonIAgree;
+
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
 	
+	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
+
+	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
+	
+	ViewPaymentsDataProvider dataProvider;
 	
 	public BeginEnrollmentContinue(TestBase testConfig)
 	{
@@ -125,8 +135,7 @@ public class BeginEnrollmentContinue {
 	
 	public BeginEnrollmentContinue enrollAs(int excelRowNo) throws IOException
 	 {
-		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
-		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 		
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
@@ -180,17 +189,32 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
-	
+	public BeginEnrollmentContinue getTin(int excelRowNo, String status) throws IOException
+	{
+	dataProvider=new ViewPaymentsDataProvider(testConfig);
+	this.tinNumber=dataProvider.getTinForStatus(status);
+	enrollAs(excelRowNo);
+	return this;
+	}
+		
 	public ValidateEnrollmentTypePage clickContinue()
 	{
+
+		
+		Element.click(btnContinue, "Continue");
+		
+		Browser.wait(testConfig, 20);
+
 		if(enrollmentInfoObj.getEnrollType().equals("BS"))
 			Element.clickByJS(testConfig,btnContinueBS, "Continue");
 		else
 			Element.clickByJS(testConfig,btnContinue, "Continue");
+
 		return new ValidateEnrollmentTypePage(testConfig);
 	}
 	
 	
+
 	public BeginEnrollmentContinue clickRdoHealthOrg()
 	{
 		Element.click(rdoHealthcare,"HealthCare Organisation type");
@@ -401,7 +425,5 @@ public class BeginEnrollmentContinue {
 		Helper.compareEquals(testConfig, "Option Selected", option, actualOptn);
 		
 	}
-	
-	
-	
+
 }

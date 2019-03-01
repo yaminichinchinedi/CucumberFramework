@@ -8,11 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.Log;
 
 public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 
@@ -61,18 +59,18 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath = "//input[@name='finInstTinNpiAcctYorN'][2]")
 	WebElement rdoNPINo;
 
-	@FindBy(linkText="Continue")
+	@FindBy(name = "btnSubmit")
 	WebElement btnContinue;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
 	WebElement txtSecurity;
 
-	protected TestBase testConfig;
-	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
+	private TestBase testConfig;
+	
 
 	public FinancialInstitutionInfoPage(TestBase testConfig) 
 	{
-		super(testConfig);
+		super();
 		String expectedURL = "/validateEFTERAProviderContact";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
@@ -80,17 +78,12 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	}
 	
 
-	public UploadW9 clickContinue() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
-		return new UploadW9(testConfig) ;
+	public validateEFTERAFinancialInfo clickContinue() {
+		Element.click(btnContinue, "Continue");
+		return new validateEFTERAFinancialInfo(testConfig) ;
 	}
 
-	public SelectPaymentMethods clickContinueAV() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
-		return new SelectPaymentMethods(testConfig) ;
-	}
-	
-	public FinancialInstitutionInfoPage fillFinancialInstInfo() throws IOException
+	public void fillFinancialInstInfo() throws IOException
 	{
 		String expectedText="To help ensure the security of your account, you must enter a physical address for your financial institution. PO Boxes are not allowed.";
 	//	Element.verifyTextPresent(txtSecurity, expectedText);
@@ -103,31 +96,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
         Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
 		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
 		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-		enrollmentInfoPageObj.setFinInstName(financialInstName);
-		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
-		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
+		Element.click(rdoSavings, "Savings account type");
+		Element.click(rdoNPINo, "No radip button for Npi");
 		fillFinancialInstInfoFromExcel();
-		Browser.wait(testConfig, 2);
-		uploadBankLetterPdfWithAcceptance();
-		
-		return this;
-	}
-	
-	public void uploadBankLetterPdfWithAcceptance()  
-	{   
-		String expectedText="Optum reserves the right to request additional information to help ensure the security of your account.";
-		//Element.verifyTextPresent(txtSecurity,expectedText);
-		expectedText="For your security, you may be contacted";
-		//Element.verifyTextPresent(txtSecurity1,expectedText);
-		expectedText="and required to submit additional information.";
-		//Element.verifyTextPresent(txtSecurity2,expectedText);
-		
-		Browser.wait(testConfig, 2);
-		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
-		enrollmentInfoPageObj.setFinDocCode("BL");
-		Browser.waitForLoad(testConfig.driver);
-		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
-		Browser.wait(testConfig,2);
 	}
 	
 	public void fillFinancialInstInfoFromExcel() throws IOException 
@@ -144,11 +115,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-	  enrollmentInfoPageObj.setFinState(stateName);
-	  enrollmentInfoPageObj.setFinCity(cityName);
-	  enrollmentInfoPageObj.setFinZip(zipCode);
-	  enrollmentInfoPageObj.setFinAcntNo(accountNo);
-	  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
-//	  Element.enterData(element, data, description, namOfElement);
+
     }
 }

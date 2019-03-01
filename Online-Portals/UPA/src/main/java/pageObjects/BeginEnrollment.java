@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +92,6 @@ public class BeginEnrollment {
 	{
 		Browser.wait(testConfig, 2);
 		Element.expectedWait(rdoHealthPlanCommunication, testConfig, "Health plan communication", "Health plan communication");
-		
 		if(option.equals("Health plan communication"))
 		{
 			Element.click(rdoHealthPlanCommunication, "Health plan communication");
@@ -108,6 +108,7 @@ public class BeginEnrollment {
 			Element.click(rdoOther, "Other");
 		
 		clickContinue();
+		Browser.wait(testConfig, 5);
 		return new BeginEnrollmentContinue(testConfig);
 			
 	}
