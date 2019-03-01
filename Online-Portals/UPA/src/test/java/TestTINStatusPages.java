@@ -25,7 +25,7 @@ public class TestTINStatusPages extends TestBase {
 		
 	 }
 	
-	@Test(priority=3,description="TS01_Enrolled and Active Status TIN")
+	@Test(priority=3,description="US1023501_TS01_Enrolled and Active Status TIN")
 	void testEnrolledActiveStatusTIN()throws IOException
 	{
 		int excelRowNo=1;
@@ -33,11 +33,10 @@ public class TestTINStatusPages extends TestBase {
 		
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyEnrolledActiveStatusTIN();		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyEnrolledActiveStatusTIN();	
 	}
 	
-	@Test(priority=3,description="TS02_Enrolled and Pre-Enrollment Status TIN")
+	@Test(priority=3,description="US1023501_TS02_Enrolled and Pre-Enrollment Status TIN")
 	void testEnrolledPreEnrollmentStatusTIN()throws IOException
 	{
 		int excelRowNo=1;
@@ -45,11 +44,10 @@ public class TestTINStatusPages extends TestBase {
 		
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyEnrolledPreEnrollmentStatusTIN();		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyEnrolledPreEnrollmentStatusTIN();			
 	}
 	
-	@Test(priority=3,description="TS03_Auto Enrolled and in Pre-Enrollment Status TIN")
+	@Test(priority=3,description="US1023501_TS03_Auto Enrolled and in Pre-Enrollment Status TIN")
 	void testAutoEnrolledPreEnrollmentStatusTIN()throws IOException
 	{
 		int excelRowNo=1;
@@ -57,11 +55,10 @@ public class TestTINStatusPages extends TestBase {
 		
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyAutoEnrolledPreEnrollmentStatusTIN();		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyAutoEnrolledPreEnrollmentStatusTIN();	
 	}
 	
-	@Test(priority=3,description="TS04_Enrolled and Inactive/Block Status TIN")
+	@Test(priority=3,description="US1023501_TS04_Enrolled and Inactive/Block Status TIN")
 	void testEnrolledInactiveAndBlockStatusTIN()throws IOException
 	{
 		int excelRowNo=1;
@@ -69,8 +66,7 @@ public class TestTINStatusPages extends TestBase {
 		
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyEnrolledInactiveAndBlockStatusTIN();		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyEnrolledInactiveAndBlockStatusTIN();
 	}
 
 }

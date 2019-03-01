@@ -25,7 +25,7 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 	}
 
-	@Test(priority=3,description="TS01_TIN does not exist on EPS")
+	@Test(priority=3,description="US1350108_TS01_TIN does not exist on EPS")
 	void testTINNotEnrolled()throws IOException
 	{
 		int excelRowNo=1;
@@ -33,11 +33,11 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();
+		
 	}
 
-	@Test(priority=3,description="TS02_TIN exists Inactive and not blocked")
+	@Test(priority=3,description="US1350108_TS02_TIN exists Inactive and not blocked")
 	void testInactiveUnBlockedTIN()throws IOException
 	{
 		int excelRowNo=1;
@@ -45,11 +45,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();			
 	}
 
-	@Test(priority=3,description="TS03_TIN does not exists on EPS_AO")
+	@Test(priority=3,description="US1350108_TS03_TIN does not exists on EPS_AO")
 	void testTINNotEnrolledAO()throws IOException
 	{
 		int excelRowNo=1;
@@ -57,11 +56,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();		
 	}
 
-	@Test(priority=3,description="TS04_TIN does not exists on EPS_AV")
+	@Test(priority=3,description="US1350108_TS04_TIN does not exists on EPS_AV")
 	void testTINNotEnrolledVO()throws IOException
 	{
 		int excelRowNo=4;
@@ -69,11 +67,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();				
 	}
 
-	@Test(priority=3,description="TS05_TIN does not exists on EPS_VO")
+	@Test(priority=3,description="US1350108_TS05_TIN does not exists on EPS_VO")
 	void testTINNotEnrolledAV()throws IOException
 	{
 		int excelRowNo=3;
@@ -81,11 +78,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();			
 	}
 
-	@Test(priority=3,description="TS06_Content Managed")
+	@Test(priority=3,description="US1350108_TS06_Content Managed")
 	void testContentManaged()throws IOException
 	{
 		int excelRowNo=3;
@@ -93,11 +89,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyContentManaged();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyContentManaged();	
 	}
 
-	@Test(priority=3,description="TS07_UXDS match")
+	@Test(priority=3,description="US1350108_TS07_UXDS match")
 	void testUXDSMatch()throws IOException
 	{
 		int excelRowNo=3;
@@ -105,11 +100,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyContentWithUXDS();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyContentWithUXDS();	
 	}
 
-	@Test(priority=3,description="TS08_Blank W9")
+	@Test(priority=3,description="US1350108_TS08_Blank W9")        // Need to check on this
 	void testW9Form()throws IOException
 	{
 		int excelRowNo=1;
@@ -117,11 +111,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyW9Form();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyW9Form();	
 	}
 
-	@Test(priority=3,description="TS09_Cancel and Continue Enabled")
+	@Test(priority=3,description="US1350108_TS09_Cancel and Continue Enabled")
 	void testCancelAndContinueBtn()throws IOException
 	{
 		int excelRowNo=1;
@@ -129,11 +122,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.verifyCancelAndContinueBtn();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyCancelAndContinueBtn();
 	}
 
-	@Test(priority=3,description="TS10_Cancel Enrollment_Popup")
+	@Test(priority=3,description="US1350108_TS10_Cancel Enrollment_Popup")
 	void testBtnCancelPopUp()throws IOException
 	{
 		int excelRowNo=1;
@@ -141,11 +133,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.clickCancel().verifyBtnCancelPopup();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().clickCancel().verifyBtnCancelPopup();				
 	}
 
-	@Test(priority=3,description="TS11_Cancel Enrollment_No")
+	@Test(priority=3,description="US1350108_TS11_Cancel Enrollment_No")
 	void testBtnCancelPopUpClickNo()throws IOException
 	{
 		int excelRowNo=1;
@@ -153,11 +144,10 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.clickCancel().verifyBtnCancelPopup().confirmCancelNo().verifyTINStatus();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().clickCancel().verifyBtnCancelPopup().confirmCancelNo().verifyTINStatus();
 	}
 
-	@Test(priority=3,description="TS12_Cancel Enrollment_Yes")
+	@Test(priority=3,description="US1350108_TS12_Cancel Enrollment_Yes")
 	void testBtnCancelPopUpClickYes()throws IOException
 	{
 		int excelRowNo=1;
@@ -165,8 +155,7 @@ public class TestTINReadyForEnrollment extends TestBase {
 
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
-		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollTIN(excelRowNo, status).clickContinue();
-		validateEnrollmentType.clickCancel().verifyBtnCancelPopup().confirmCancelYes().clickAndVerifyHeaderHome();	
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().clickCancel().verifyBtnCancelPopup().confirmCancelYes().clickAndVerifyHeaderHome();
 	}
 
 

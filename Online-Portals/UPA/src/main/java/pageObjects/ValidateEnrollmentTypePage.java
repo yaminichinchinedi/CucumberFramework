@@ -40,7 +40,7 @@ public class ValidateEnrollmentTypePage {
 	@FindBy(xpath="//*[@id='EFTERAenrForm']/section/main/ul/li[4]/span")
 	WebElement status;
 	
-	@FindBy(xpath="//html/body/form/section/main/h4/strong")
+	@FindBy(xpath="//*[@id='EFTERAenrForm']//h4/strong")
 	WebElement preEnrolledStatus;
 	
 	@FindBy(xpath="//html/body/form/section/main/p[3]/a")
@@ -157,21 +157,21 @@ public class ValidateEnrollmentTypePage {
 	public ValidateEnrollmentTypePage clickCancel()
 	{
 		Element.click(btnCancel, "Cancel Enrollment");
-		Browser.wait(testConfig, 20);
+		Browser.wait(testConfig, 2);
 		return this;
 	}
 	
 	public ValidateEnrollmentTypePage confirmCancelNo()
 	{
 		Element.click(btnNo, "Confirm Cancel No");
-		Browser.wait(testConfig, 20);
+		Browser.wait(testConfig, 2);
 		return this;
 	}
 	
 	public UPARegistrationPage confirmCancelYes()
 	{
 		Element.click(btnYes, "Confirm Cancel Yes");
-		Browser.wait(testConfig, 20);
+		Browser.wait(testConfig, 2);
 		return new UPARegistrationPage(testConfig);
 	}
 

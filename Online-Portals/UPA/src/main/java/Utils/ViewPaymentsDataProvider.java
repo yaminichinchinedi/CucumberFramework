@@ -62,7 +62,7 @@ public class ViewPaymentsDataProvider {
 		}
 
 		case "ACH":
-			sqlRowNo=35; 
+			sqlRowNo=35;
 			break;
 
 		case "VCP":

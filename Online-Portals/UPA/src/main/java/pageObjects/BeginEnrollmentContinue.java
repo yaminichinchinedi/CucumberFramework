@@ -113,6 +113,8 @@ public class BeginEnrollmentContinue {
 	WebElement popUpCnclEnrlmnt;
 	
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
+	
+	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 
 	
 	private TestBase testConfig;
@@ -133,8 +135,7 @@ public class BeginEnrollmentContinue {
 	
 	public BeginEnrollmentContinue enrollAs(int excelRowNo) throws IOException
 	 {
-		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
-		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 		
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
@@ -188,53 +189,12 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 	
-	// Needs to be changed - optimization - priyanka
-	
-	public BeginEnrollmentContinue enrollTIN(int excelRowNo, String status) throws IOException
-	 {	
-		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
-		dataProvider=new ViewPaymentsDataProvider(testConfig);		
-		String tinNumber=dataProvider.getTinForStatus(status);		
-		testConfig.putRunTimeProperty("tin", tinNumber);
-		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();		
-	
-		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
-		 {
-		   Element.click(rdoHealthcare, "Healthcare organization");
-		   Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
-			
-		   switch (enrollmentPaymentType)
-			 {
-			   case "AO":
-				Element.click(rdoAchOnly,"ACH only payment type");
-				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
-				testConfig.putRunTimeProperty("enrollmentType", "AO");
-				break;
-				
-			  case "VO":	
-				Element.click(rdoVoOnly,"VCP only payment type");
-				Element.click(buttonIAgree, "I agree button");
-				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
-				testConfig.putRunTimeProperty("enrollmentType", "VO");
-				break;
-				
-			  case "AV":	
-				Element.click(rdoAV,"ACH & VCP both payment type");
-				Element.click(buttonIAgree, "I agree button");
-				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as" + tinNumber,"txtBoxTin");
-				testConfig.putRunTimeProperty("enrollmentType", "AV");
-				break;
-				
-				default:
-				Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				 
-			}
-		}
-		else if(data.GetData(excelRowNo, "EnrollmentTypeOrg").trim().equalsIgnoreCase("BS"))
-		Element.click(rdoBillingService, "Billing Service");
-		else
-		Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
-	
-		return new BeginEnrollmentContinue(testConfig);
+	public BeginEnrollmentContinue getTin(int excelRowNo, String status) throws IOException
+	{
+	dataProvider=new ViewPaymentsDataProvider(testConfig);
+	this.tinNumber=dataProvider.getTinForStatus(status);
+	enrollAs(excelRowNo);
+	return this;
 	}
 		
 	public ValidateEnrollmentTypePage clickContinue()
