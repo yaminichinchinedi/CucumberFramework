@@ -193,7 +193,7 @@ public class ValidateEFTERAProviderInfo {
 		 }
 		else
 		{
-			sqlRowNo=53;
+			sqlRowNo=99;
 			enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			fillPrimaryProvInfo();
 			fillSecondProvInfo();
@@ -286,7 +286,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ",  portalUser.get("EMAIL_ADR_TXT"),firstProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifyFirstProvEmail.getAttribute("value"));	
 		 }
-		else
+		else if(provType.equals("Secondary"))
 		 {
 		   Log.Comment("Verifying details of Secondary provider..");
 		   Helper.compareEquals(testConfig, "First Name",portalUser.get("FST_NM"),secondProvFName.getAttribute("value"));

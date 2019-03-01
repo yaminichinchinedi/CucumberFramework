@@ -17,7 +17,7 @@ import main.java.pageObjects.*;
 public class TestUPAEnrollment extends TestBase {
 
 	
-	@Test(priority=4,description="Verifies Header Links functionality")
+	@Test(priority=1,description="Verifies Header Links functionality")
 	public void testHeaderLinks()
 	 {
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -130,7 +130,8 @@ public class TestUPAEnrollment extends TestBase {
 		providerEnrollPage.fillProviderOrgInfo().verifyDupEmailError(provType).clickYes(provType).verifyDupEmailError("Secondary");
 	}
 	
-	
+
+
 	
 
 }
