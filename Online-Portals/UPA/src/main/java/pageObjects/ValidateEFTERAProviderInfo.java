@@ -200,7 +200,7 @@ public class ValidateEFTERAProviderInfo {
 		 }
 		else
 		{
-			sqlRowNo=99;
+			sqlRowNo=125;
 			enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			fillPrimaryProvInfo();
 			fillSecondProvInfo();
@@ -282,9 +282,9 @@ public class ValidateEFTERAProviderInfo {
 		Element.click(btnContinue, "Continue");
 		Browser.verifyURL(testConfig, "confirmExistingUser.do");
 		
-		 int sqlNo=9;
+		 int sqlNo=13;
 		 Map portalUser=DataBase.executeSelectQuery(testConfig,sqlNo, 1);
-		
+
 		if(provType.equals("Primary"))
 		 {
 		   Log.Comment("Verifying details of Pimary provider..");
@@ -307,6 +307,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ", portalUser.get("EMAIL_ADR_TXT"),secondProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifySecondProvEmail.getAttribute("value"));
 		 }
+		 
 		return this;
 	}
 	
