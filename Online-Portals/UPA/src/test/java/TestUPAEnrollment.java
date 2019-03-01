@@ -17,7 +17,7 @@ import main.java.pageObjects.*;
 public class TestUPAEnrollment extends TestBase {
 
 	
-	@Test(priority=4,description="Verifies Header Links functionality")
+	@Test(priority=1,description="Verifies Header Links functionality")
 	public void testHeaderLinks()
 	 {
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
@@ -26,44 +26,8 @@ public class TestUPAEnrollment extends TestBase {
 	 }
 	
 	
-//	@Test(priority=1,description="Verifies Successful AO type new enrollment with all details saved in DB")
-//	public void testSuccessfulAOProviderEnrollment() throws Exception{
-//		
-//		int excelRowNo=1;
-//		int noOfEnrollments=0; 
-//        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
-//        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
-//     
-//		   
-//	}
-//	
-//	@Test(priority=2,description="Verifies Successful AV type new enrollment")
-//	public void testSuccessfulAVProviderEnrollment() throws Exception{
-//		
-//	    int excelRowNo=3;
-//		int noOfEnrollments=0;   
-//        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
-//        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
-//       
-//	}
-//	
-//	@Test(priority=2,description="Verifies Successful VO type new enrollment")
-//	public void testSuccessfulVOProviderEnrollment() throws Exception{
-//		
-//	    int excelRowNo=4;
-//		int noOfEnrollments=0;   
-//        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-//        noOfEnrollments=registrationPage.getNumberOfEnrollmentsToBeDone(excelRowNo);
-//        registrationPage.doCompleteEnrollment(excelRowNo, noOfEnrollments,registrationPage);
-//       
-//	}
-
-	
-	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Primary Prov")
-	void testDupEmailErrorForPrimaryProvWithYes()throws IOException
+	public void testDupEmailErrorForPrimaryProvWithYes()throws IOException
 	{
 		int excelRowNo=1;
 		String provType="Primary";
@@ -77,7 +41,7 @@ public class TestUPAEnrollment extends TestBase {
 	}
 	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Primary Prov")
-	void testDupEmailErrorForPrimaryProvWithNo()throws IOException
+	public void testDupEmailErrorForPrimaryProvWithNo()throws IOException
 	{
 		int excelRowNo=1;
 		String provType="Primary";
@@ -91,7 +55,7 @@ public class TestUPAEnrollment extends TestBase {
 	}
 	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Secondary Prov")
-	void testDupEmailErrorForSecondaryProvWithYes()throws IOException
+	public void testDupEmailErrorForSecondaryProvWithYes()throws IOException
 	{
 		int excelRowNo=1;
 		String provType="Secondary";
@@ -105,7 +69,7 @@ public class TestUPAEnrollment extends TestBase {
 	
 	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Secondary Prov")
-	void testDupEmailErrorForSecondaryProvWithNo()throws IOException
+	public void testDupEmailErrorForSecondaryProvWithNo()throws IOException
 	{
 		int excelRowNo=1;
 		String provType="Secondary";
@@ -118,7 +82,7 @@ public class TestUPAEnrollment extends TestBase {
 	}
 	
 	@Test(priority=3,description="Verifies validation message if an existing email is used for new enrollment For Secondary Prov")
-	void testDupEmailErrorForBothPrimaryAndSecondaryProv()throws IOException
+	public void testDupEmailErrorForBothPrimaryAndSecondaryProv()throws IOException
 	{
 		int excelRowNo=1;
 		String provType="PrimaryAndSecondary";
@@ -130,7 +94,62 @@ public class TestUPAEnrollment extends TestBase {
 		providerEnrollPage.fillProviderOrgInfo().verifyDupEmailError(provType).clickYes(provType).verifyDupEmailError("Secondary");
 	}
 	
+	//US1351123
 	
+	@Test(priority=3,description="[1]TS_00003_Page text is content managed + TS_00004_Field label changes display Business Name and Business Address. + TS_00005_Messaging on page indicates not to enter special characters. + TS_00006_Header displays - For AO .+ TS_00009_To Validate Cancel Enrollment and Continue options display." )
+	public void testPageContextFromDB()throws IOException
+	{
+		int excelRowNo=1;
+		
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");
+		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollAs(excelRowNo).clickContinue();
+		ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+		providerEnrollPage.verifyOrgInfoHeaders().verifyUITextFromDB();
+		
+	}
+	
+	@Test(priority=3,description="TS_00009_To Validate Cancel Enrollment and Continue options display.+ TS_00010_To Validate Cancel Enrollment and Continue options display. + TS_00011_ Validate  Upon selection of No, popup box closes and user is back on Organization Information page.. + TS_00012_ Validate Upon selection of Yes, user is returned to the EPS Landing page." )
+	public void testCancelEnrollment()throws IOException
+	{
+		int excelRowNo=1;
+		
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");
+		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollAs(excelRowNo).clickContinue();
+		ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+		providerEnrollPage.verifyCancelEnrollmentFlow();
+		
+	}
+	
+	
+	@Test(priority=3,description="TS_00009_To Validate Cancel Enrollment and Continue options display.+ TS_00010_To Validate Cancel Enrollment and Continue options display. + TS_00011_ Validate  Upon selection of No, popup box closes and user is back on Organization Information page.. + TS_00012_ Validate Upon selection of Yes, user is returned to the EPS Landing page.+TS_00013,14 and 15,17" )
+	public void testContinueEnrollment()throws IOException
+	{
+		int excelRowNo=1;
+		
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");
+		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollAs(excelRowNo).clickContinue();
+		ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+		providerEnrollPage.verifyContinueEnrollmentValidations();
+		
+	}
+	
+	@Test(priority=3,description="TS_00018_Missing and invalid field validation for Business Name (special characters)" )
+	public void testFieldValidations()throws IOException
+	{
+		int excelRowNo=1;
+		
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");
+		ValidateEnrollmentTypePage validateEnrollmentType = beginEnrollmentContinue.enrollAs(excelRowNo).clickContinue();
+		ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+		providerEnrollPage.fillBusinessName("#&*").verifyErrorMsgForInvalidData("BusinessName").fillBusinessAddress("#&*").verifyErrorMsgForInvalidData("BusinessAddress");
+		
+	}
+	
+
 	
 
 }
