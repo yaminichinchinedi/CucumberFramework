@@ -88,16 +88,11 @@ public class TestBeforeYouBeginEnrollment extends TestBase{
 	}
 	
 	@Test(priority=3,description="US1348562 - TS_00005 - Q and A are obtained from active entries in Survey Table (responses appear in appropriate order")
-	public void testBeginEnrollmentQuestions()
+	public void testBeginEnrollmentQuestions() throws IOException
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
-		try {
-			beginEnrollment.validateBeginEnrollmentQuestions();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		beginEnrollment.validateBeginEnrollmentQuestions();
 	}
 
 }
