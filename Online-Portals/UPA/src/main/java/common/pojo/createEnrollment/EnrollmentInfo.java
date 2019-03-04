@@ -1,7 +1,12 @@
-package main.java.api.pojo.epsEnrollment;
+package main.java.common.pojo.createEnrollment;
 
 public  class EnrollmentInfo {
+	/**
+	 * This class stores all the information while enrolling as BS or HealthOrganization.
+	 * @author akushw10
+	 */
 	
+		
 	private static volatile EnrollmentInfo instance;
 	private static Object mutex = new Object();
 
@@ -31,6 +36,7 @@ public  class EnrollmentInfo {
 	}
 	
 	//Tin Info
+	protected String enrollType;
 	protected String tinIdentifier;
 	protected String tin;
 	
@@ -72,6 +78,14 @@ public  class EnrollmentInfo {
 	//W9
 	protected String w9DocCode;
 	
+	public String getEnrollType() {
+		return enrollType;
+	}
+
+	public void setEnrollType(String enrollType) {
+		this.enrollType = enrollType;
+	}
+
 	public String getProvType() {
 		return provType;
 	}
@@ -295,4 +309,5 @@ public  class EnrollmentInfo {
 		this.authEmail = authEmail;
 	}
 	
+
 }

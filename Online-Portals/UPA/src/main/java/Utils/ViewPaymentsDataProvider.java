@@ -1,5 +1,6 @@
 package main.java.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -237,4 +238,123 @@ public String getTinForPaymentType(String paymentType)
 	
 	    return filterCriteria;
 	}
+	
+	
+	public String getTinForStatus(String status) {
+		int sqlRowNo=0;
+		boolean tinFlag = false;
+		switch(status) 
+		{
+		case "EnrolledActiveStatusTIN":
+			sqlRowNo=111; 
+			break;
+
+		case "EnrolledPreEnrollmentStatusTIN":
+			sqlRowNo=112; 
+			break;
+
+		case "AutoEnrolledPreEnrollmentStatusTIN":
+			sqlRowNo=113; 
+			break;
+
+		case "EnrolledInactiveAndBlockStatusTIN":
+			sqlRowNo=114; 
+			break;
+		
+		case "TINNotEnrolled":
+			tinFlag = true;
+			break;
+		
+		case "InactiveUnBlockedTIN":
+			sqlRowNo=115; 
+			break;
+
+		default:
+			Log.Comment("Payment Type " + status + " not found");
+		}
+		if(tinFlag==true) {
+			String tinNumber=Integer.toString(Helper.getUniqueTinNumber());	
+			return tinNumber;
+		}
+		else {
+		Log.Comment("Getting tin for  " + status);
+		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("Tin retreived from query for " + status + " is : " + tinNumbers.get("PROV_TIN_NBR").toString());
+		testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TIN_NBR").toString());
+		return tinNumbers.get("PROV_TIN_NBR").toString();
+		}
+	}
+	
+	
+public ArrayList getEnrollmentContent(String content) {
+		
+		int sqlRowNo=0;
+		ArrayList<String> contentList = new ArrayList<String>();
+		Map enrollmentContent;
+		
+		switch(content) 
+		{
+		case "EligibleTIN":
+			sqlRowNo=116; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for EligibleTIN is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());			
+			
+		case "provideInformation":
+			sqlRowNo=117; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for provideInformation is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "orgName":
+			sqlRowNo=118; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for orgName is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "administrators":
+			sqlRowNo=119; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for administrators is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "primaryContact":
+			sqlRowNo=120; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for primaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "secondaryContact":
+			sqlRowNo=121; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for secondaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "bankingInfo":
+			sqlRowNo=122; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for bankingInfo is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "W-9":
+			sqlRowNo=123; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for W-9 is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			break;
+			
+		default:
+			Log.Comment("Enrollment Content not found");
+		}
+	
+		return contentList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }

@@ -21,7 +21,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 
 public class ValidateEFTERAProviderInfo {
 
@@ -115,15 +115,13 @@ public class ValidateEFTERAProviderInfo {
 	public ValidateEFTERAProviderInfo(TestBase testConfig)
 	{   
 		String expectedURL="/validateEFTERAProviderInfo";
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSbillingServiceInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
-	public ValidateEFTERAProviderInfo() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public void fillPhoneNumber(String prvoiderType)
 	{
 //		String expectedText="Enrollment & Account Security Reminder - To help support the security of your account, use of a business issued e-mail domain is required for enrollment and account access.";
@@ -167,7 +165,6 @@ public class ValidateEFTERAProviderInfo {
 	}
 	
 	
-	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
 	{
 	   String expHeaderMsg="EPS Enrollment - Confirm Existing User";
@@ -203,7 +200,7 @@ public class ValidateEFTERAProviderInfo {
 		 }
 		else
 		{
-			sqlRowNo=53;
+			sqlRowNo=125;
 			enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			fillPrimaryProvInfo();
 			fillSecondProvInfo();
@@ -275,7 +272,7 @@ public class ValidateEFTERAProviderInfo {
 		return new FinancialInstitutionInfoPage(testConfig) ;
 	}
 	
-	public UploadW9 clickContinueVO() {
+	public UploadW9 clickContinueToW9() {
 		Element.click(btnContinue, "Continue");
 		return new UploadW9(testConfig) ;
 	}
@@ -285,9 +282,9 @@ public class ValidateEFTERAProviderInfo {
 		Element.click(btnContinue, "Continue");
 		Browser.verifyURL(testConfig, "confirmExistingUser.do");
 		
-		 int sqlNo=9;
+		 int sqlNo=13;
 		 Map portalUser=DataBase.executeSelectQuery(testConfig,sqlNo, 1);
-		
+
 		if(provType.equals("Primary"))
 		 {
 		   Log.Comment("Verifying details of Pimary provider..");
@@ -299,7 +296,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ",  portalUser.get("EMAIL_ADR_TXT"),firstProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifyFirstProvEmail.getAttribute("value"));	
 		 }
-		else
+		else if(provType.equals("Secondary"))
 		 {
 		   Log.Comment("Verifying details of Secondary provider..");
 		   Helper.compareEquals(testConfig, "First Name",portalUser.get("FST_NM"),secondProvFName.getAttribute("value"));
@@ -310,6 +307,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ", portalUser.get("EMAIL_ADR_TXT"),secondProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifySecondProvEmail.getAttribute("value"));
 		 }
+		 
 		return this;
 	}
 	

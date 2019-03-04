@@ -26,6 +26,8 @@ public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
 		String expectedURL = "/providerEFTERAEnroll.do";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/billingserviceinformationbsenroll";
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	

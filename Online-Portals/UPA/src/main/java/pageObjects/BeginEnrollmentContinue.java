@@ -9,7 +9,8 @@ import java.util.Map;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.Utils.ViewPaymentsDataProvider;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -37,12 +38,12 @@ public class BeginEnrollmentContinue {
 	
 	@FindBy(id="billingserivceselect")
 	WebElement rdoBillingService;
+
+	@FindBy(linkText="Continue")
+	WebElement btnContinue;
 	
 	@FindBy(id="tin")
 	WebElement rdoBillingTin;
-	
-	@FindBy(linkText="Continue")
-	WebElement btnContinue;
 	
 	@FindBy(xpath=".//*[@id='enrollment']/div/a[2]")
 	WebElement btnContinueBS;
@@ -96,7 +97,7 @@ public class BeginEnrollmentContinue {
 	WebElement txtBoxBSTin;
 	
 	@FindBy(id="tinerror1")
-	WebElement errorMsg1;
+	WebElement errorMsg;
 	
 	@FindBy(xpath=".//*[@id='recaptcha-anchor']/div[5]") 
 	WebElement chkBoxCaptcha;
@@ -104,10 +105,21 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[1]")
 	WebElement btnIAgree;
 	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/h4")
+	WebElement errorMsg1;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/ul/li/p")
+	WebElement errorMsg2;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div[2]/div[2]/p")
+	WebElement errorMsg3;
+
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
+	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
+	ViewPaymentsDataProvider dataProvider;
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
@@ -129,9 +141,9 @@ public class BeginEnrollmentContinue {
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
-//		enrollmentInfoObj.clear();
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
 		 {
+			enrollmentInfoObj.setEnrollType("HO");
 		   clickRdoHealthOrg();
 		   Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
 			
@@ -172,6 +184,7 @@ public class BeginEnrollmentContinue {
 			Element.enterData(txtBoxBSTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
 			enrollmentInfoObj.setTinIdentifier("TN");
 			enrollmentInfoObj.setTin(tinNumber);
+			enrollmentInfoObj.setEnrollType("BS");
 		}
 		else
 		Log.Comment("Enrollment type" +data.GetData(excelRowNo, "EnrollmentType").toLowerCase().trim() + " " +"not identified");
@@ -182,15 +195,22 @@ public class BeginEnrollmentContinue {
 	
 	public ValidateEnrollmentTypePage clickContinue()
 	{
-		Element.clickByJS(testConfig,btnContinue, "Continue");
+		if(enrollmentInfoObj.getEnrollType().equals("BS"))
+			Element.clickByJS(testConfig,btnContinueBS, "Continue");
+		else
+			Element.clickByJS(testConfig,btnContinue, "Continue");
 		return new ValidateEnrollmentTypePage(testConfig);
 	}
 	
-	public ValidateBillingServiceEnrollmentType clickContinueBS()
-	{
-		Element.clickByJS(testConfig,btnContinueBS, "Continue");
-		return new ValidateBillingServiceEnrollmentType(testConfig);
+
+	public void validateErrorMsgs() {
+		String expectedURL = "beginEnrollmentContinue.do";
+		Browser.verifyURL(testConfig, expectedURL);
+		Element.verifyTextPresent(errorMsg1, "Please correct the following fields before continuing the enrollment process:");
+		Element.verifyElementPresent(errorMsg2, "- Please tell us how you heard about EPS.");
+		Element.verifyElementPresent(errorMsg3, "Missing Data");
 	}
+	
 	
 	public BeginEnrollmentContinue clickRdoHealthOrg()
 	{
@@ -328,58 +348,72 @@ public class BeginEnrollmentContinue {
 	
 	
 	/**
-	 * 
-	 * @param expected -- expected Error message
-	 * @return
-	 */
-	public BeginEnrollmentContinue ErrorMsgFunctionality(String expected)
-	{
-		Element.click(btnContinue, "Continue");
-		String errMsg=Element.findElement(testConfig, "id", "tinerror1").getText();
-		Helper.compareEquals(testConfig, "ERROR MSG", expected, errMsg);
-		return this;
-	}
-	
-	/**
-	 * verifies all the error messages that appears upon different combination of TIN
-	 * @return
-	 */
+	* verifies all the error messages that appears upon different combination of TIN
+	* @return
+	*/
 	public BeginEnrollmentContinue verifyErrorMsg()
 	{
-		clickRdoHealthOrg();
-		clickRdoAO();
-		ErrorMsgFunctionality("Missing Data");
-		
-		Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
-		ErrorMsgFunctionality("Missing Data");
-		Browser.wait(testConfig, 2);
-		Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
-		ErrorMsgFunctionality("Invalid Data");
-		Browser.wait(testConfig, 2);
-		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
-		ErrorMsgFunctionality("Invalid Data");
-		return this;
+	clickRdoHealthOrg().clickRdoAO();
+
+	Element.click(btnContinue, "Continue");
+
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	Browser.wait(testConfig, 2);
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+	Element.enterData(txtBoxTin,"000111000", "Entered unique tin number as: abc888ui","txtBoxTin");
+	Element.click(btnContinue, "Continue");
+	String errMsg=Element.findElement(testConfig, "id", "captchaerrororg").getText();
+	Helper.compareEquals(testConfig, "ERROR MSG","reCAPTCHA selection is required" , errMsg);
+	return this;
 	}
 	
+	
+	
+	/*Verify column names in Database
+	 * from Survey table
+	 * Survey_question,answer & response
+	 */
 	public void verifySurveyTables(String option)
 	{
 		List<String> expected = Arrays.asList("CREAT_DTTM","QUESTION_SEQ","QUESTION_TXT","SURVEY_TYP","ACTV_IND","SURVEY_QUE_ID","LST_CHG_DTTM","CREAT_BY_ID","LST_CHG_BY_ID");
 		int sqlRowNo=98;
 		Map tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		List<String> actual=new ArrayList<String>(tblHeader.keySet());
-		Helper.compareEquals(testConfig, "SURVEY QUESTION", expected, actual); 
+		
+		Helper.compareEquals(testConfig, "SURVEY QUESTION Column Names ", expected, actual); 
 		
 		expected = Arrays.asList("ANSWER_TXT","ANSWER_SEQ","CREAT_DTTM","SURVEY_ANS_ID", "ACTV_IND", "SURVEY_QUE_ID", "LST_CHG_DTTM","CREAT_BY_ID", "LST_CHG_BY_ID");
 		sqlRowNo=99;
 		tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		actual=new ArrayList<String>(tblHeader.keySet());
-		Helper.compareEquals(testConfig, "SURVEY ANSWER", expected, actual);
+		Helper.compareEquals(testConfig, "SURVEY ANSWER Column Names", expected, actual);
 		
 		expected = Arrays.asList("OTHER_TXT", "CREAT_DTTM","ORG_TYPE", "SURVEY_ANS_ID", "IDENTIFIER_NBR","RESPONSE_ID", "PAY_METH_TYP_CD");
 		sqlRowNo=100;
 		tblHeader=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		actual=new ArrayList<String>(tblHeader.keySet());
-		Helper.compareEquals(testConfig, "SURVEY RESPONSE", expected,actual );
+		Helper.compareEquals(testConfig, "SURVEY RESPONSE Column Names", expected,actual );
 		
 		testConfig.putRunTimeProperty("SURVEY_ANS_ID", tblHeader.get("SURVEY_ANS_ID").toString());
 		sqlRowNo=101;
@@ -388,5 +422,14 @@ public class BeginEnrollmentContinue {
 		Helper.compareEquals(testConfig, "Option Selected", option, actualOptn);
 		
 	}
-	
+
+
+	public BeginEnrollmentContinue getTin(int excelRowNo, String status) throws IOException
+	{
+	  dataProvider=new ViewPaymentsDataProvider(testConfig);
+	  this.tinNumber=dataProvider.getTinForStatus(status);
+	  enrollAs(excelRowNo);
+	  return this;
+	}
+
 }

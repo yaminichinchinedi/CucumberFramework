@@ -1,6 +1,6 @@
 package main.java.pageObjects;
 
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -18,30 +18,30 @@ public class UploadW9 {
 	
 	private TestBase testConfig;
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
+	
 	public UploadW9(TestBase testConfig) 
 	{
-		String expectedURL;
-		if(testConfig.getRunTimeProperty("enrollmentType").equals("VO"))
-			expectedURL = "/validateEFTERAProviderContact";
-		else if(testConfig.getRunTimeProperty("enrollmentType").equals("AV"))
-			expectedURL="/UploadW9EFTERAEnroll";
-		else
-			expectedURL="/uploadefterafile";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
+		String expectedURL;
+		
+		if(enrollmentInfoObj.getTinIdentifier().equals("VO"))
+			expectedURL = "/validateEFTERAProviderContact";
+		else if(enrollmentInfoObj.getTinIdentifier().equals("AV"))
+			expectedURL="/UploadW9EFTERAEnroll";
+		else if(enrollmentInfoObj.getTinIdentifier().equals("AO"))
+			expectedURL="/validateefterafinancialinfo";
+		else
+			expectedURL="/validateBillingServiceContacts";
+		
 		Browser.verifyURL(testConfig, expectedURL);
-	}
-	
-	public UploadW9() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ReviewAndSubmit uploadW9()  
 	{   
-//		Browser.wait(testConfig, 5);
 		Element.enterData(btnW9,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnW9");
 		enrollmentInfoObj.setW9DocCode("W9");
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig, btnContinue, "Clicked Continue");
 		return new ReviewAndSubmit(testConfig);
 	}

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
-import main.java.api.pojo.epsEnrollment.EnrollmentInfo;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -24,25 +24,42 @@ public class EnrollmentSubmitted {
 		String expectedURL = "/validateEFTERASubmit";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-//		Browser.verifyURL(testConfig, expectedURL);
-		//Element.verifyElementPresent(txtEnrlmntSubmtd, "Enrollment Submitted");
-		validateBusinessOrgInfo();
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSSubmit";
+		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
-	public void validateBusinessOrgInfo() throws IOException
+	
+	public void validateEnrollmentInfo() throws IOException
 	{
-		Browser.wait(testConfig, 10);
 		int sqlRowNo;
-		Map data;
-		if(!testConfig.getRunTimeProperty("enrollmentType").equals("VO"))
+		Map data=null;
+		//For BS
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 		{
-			sqlRowNo=103;
+			sqlRowNo=102;
 			data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		}
+		
+		//For Healthcare
 		else
 		{
-			sqlRowNo=104;
-			data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			  if(!enrollmentInfoPageObj.getTinIdentifier().equals("VO"))
+			  {
+				sqlRowNo=103;
+				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				verifyFinancialInfo(data);
+			  }
+			  else
+			  {
+				sqlRowNo=104;
+				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			  }
+		  
+		  verifyMarketType();
+		  verifyAuthEnrlTitle(data);
+		  
 		}
 		
 		
@@ -60,37 +77,7 @@ public class EnrollmentSubmitted {
 		 */
 //		Helper.compareEquals(testConfig, "NPI", enrollmentInfoPageObj.getNpi().trim(), data.get("NPI_NBR").toString().trim());
 		
-		sqlRowNo=106;
-		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		if(!enrollmentInfoPageObj.getMrktType().trim().equals(dataTest.get(1).get("MKT_TYP_DESC").toString().trim()))
-		{
-			Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
-			Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
-		}
-		else
-		{
-			Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
-			Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
-		}
 		
-		//Financial Inst Info
-		if(!testConfig.getRunTimeProperty("enrollmentType").equals("VO"))
-		{
-			Helper.compareEquals(testConfig, "Fin City", enrollmentInfoPageObj.getFinCity().trim(), data.get("FIN_CTY").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Street", enrollmentInfoPageObj.getFinStreet().trim(), data.get("FIN_STR").toString().trim());
-			Helper.compareEquals(testConfig, "Fin State", enrollmentInfoPageObj.getFinState().trim(), data.get("FIN_ST").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Zip", enrollmentInfoPageObj.getFinZip().trim(), data.get("FIN_ZIP").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Tel", enrollmentInfoPageObj.getFinPhoneNo().trim(), data.get("FIN_TEL").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Bank Name", enrollmentInfoPageObj.getFinInstName().trim(), data.get("FIN_BNK_NM").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Acnt Nbr", enrollmentInfoPageObj.getFinAcntNo().trim(), data.get("ACNT_NBR").toString().trim());
-			Helper.compareEquals(testConfig, "Fin Rte nmbr", enrollmentInfoPageObj.getFinRoutingNo().trim(), data.get("RTE_NBR").toString().trim());
-			
-			//verify BL or VC
-			sqlRowNo=105;
-			Map BLdata=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "BL or VC", enrollmentInfoPageObj.getFinDocCode(), BLdata.get("DOC_TYP_CD").toString());
-			Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
-		}
 		//W9 Code
 		Helper.compareEquals(testConfig, "W9 Code", enrollmentInfoPageObj.getW9DocCode(), data.get("W9_DOC_CD").toString());
 		Helper.compareContains(testConfig, "W9 FILE NAME", enrollmentInfoPageObj.getTin(), data.get("FILE_NM").toString());
@@ -106,9 +93,56 @@ public class EnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "Auth Lst Name", enrollmentInfoPageObj.getAuthLstName(), data.get("AUTH_LST_NM").toString());
 		Helper.compareEquals(testConfig, "Auth_Phn Number", enrollmentInfoPageObj.getAuthPhnNbr(), data.get("AUTH_TEL_NBR").toString());
 		Helper.compareEquals(testConfig, "Auth_Email", enrollmentInfoPageObj.getAuthEmail(), data.get("AUTH_EMAIL").toString());
-		Helper.compareEquals(testConfig, "Auth_Title", enrollmentInfoPageObj.getAuthTitle(), data.get("AUTH_TITLE").toString());
-		
 		
 		enrollmentInfoPageObj.clear();
 	}
+	
+	public void verifyAuthEnrlTitle(Map data)
+	{
+		Helper.compareEquals(testConfig, "Auth_Title", enrollmentInfoPageObj.getAuthTitle(), data.get("AUTH_TITLE").toString());
+	}
+	
+	/*
+	 * Verify Market type and provider type from DB
+	 * Table Name- Market Designation and Market Type
+	 */
+	public void verifyMarketType() throws IOException
+	{
+		
+		int	sqlRowNo=106;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		if(!enrollmentInfoPageObj.getMrktType().trim().equals(dataTest.get(1).get("MKT_TYP_DESC").toString().trim()))
+		 {
+				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
+				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
+		 }
+		else
+		{
+				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
+				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
+		}
+		
+	}
+	
+	/*
+	 * data -- 
+	 */
+	public void verifyFinancialInfo(Map data)
+	{
+		Helper.compareEquals(testConfig, "Fin City", enrollmentInfoPageObj.getFinCity().trim(), data.get("FIN_CTY").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Street", enrollmentInfoPageObj.getFinStreet().trim(), data.get("FIN_STR").toString().trim());
+		Helper.compareEquals(testConfig, "Fin State", enrollmentInfoPageObj.getFinState().trim(), data.get("FIN_ST").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Zip", enrollmentInfoPageObj.getFinZip().trim(), data.get("FIN_ZIP").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Tel", enrollmentInfoPageObj.getFinPhoneNo().trim(), data.get("FIN_TEL").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Bank Name", enrollmentInfoPageObj.getFinInstName().trim(), data.get("FIN_BNK_NM").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Acnt Nbr", enrollmentInfoPageObj.getFinAcntNo().trim(), data.get("ACNT_NBR").toString().trim());
+		Helper.compareEquals(testConfig, "Fin Rte nmbr", enrollmentInfoPageObj.getFinRoutingNo().trim(), data.get("RTE_NBR").toString().trim());
+		
+		//verify BL or VC
+		int sqlRowNo=105;
+		Map BLdata=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "BL or VC", enrollmentInfoPageObj.getFinDocCode(), BLdata.get("DOC_TYP_CD").toString());
+		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
+	}
+	
 }
