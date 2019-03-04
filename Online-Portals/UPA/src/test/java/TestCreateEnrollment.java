@@ -10,6 +10,7 @@ import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
 import main.java.pageObjects.BenefitsOfEPS;
 import main.java.pageObjects.FinancialInstitutionInfoPage;
+import main.java.pageObjects.Footer;
 import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
 import main.java.pageObjects.UPARegistrationPage;
@@ -578,7 +579,7 @@ public class TestCreateEnrollment extends TestBase{
 	public void testFooterContents() throws IOException
 	 {
 		String option="Health plan communication";
-		TestFooter testfooter=new TestFooter();
+		Footer testfooter=new Footer();
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		testfooter.validateFooterContents(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
