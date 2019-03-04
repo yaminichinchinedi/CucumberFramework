@@ -8,7 +8,11 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
+import main.java.pageObjects.FinancialInstitutionInfoPage;
+import main.java.pageObjects.ProviderEFTERAEnrollPage;
 import main.java.pageObjects.UPARegistrationPage;
+import main.java.pageObjects.ValidateEFTERAProviderInfo;
+import main.java.pageObjects.ValidateEnrollmentTypePage;
 import main.java.reporting.Log;
 
 public class TestUS1202167 extends TestBase{
@@ -132,5 +136,28 @@ public class TestUS1202167 extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.verifyErrorMsg();
+	 }
+	@Test(priority=4,description="US1033480--TS01-Create Enrollment Provider Footer Display")
+	public void testFooterContents() throws IOException
+	 {
+		String option="Health plan communication";
+		TestFooter testfooter=new TestFooter();
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		testfooter.validateFooterContents(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		testfooter.validateFooterContents(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		testfooter.validateFooterContents(testConfig);
+		
+		
+			ValidateEnrollmentTypePage ValidateenrollmentTypePage=beginEnrollmentContinuePage.enrollAs(1).clickContinue();
+			testfooter.validateFooterContents(testConfig);
+			ProviderEFTERAEnrollPage providerEFTERAEnrollPage=ValidateenrollmentTypePage.clickContinue();
+			testfooter.validateFooterContents(testConfig);
+			ValidateEFTERAProviderInfo validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfo().fillPrimaryProvInfo();
+			testfooter.validateFooterContents(testConfig);
+			FinancialInstitutionInfoPage financialInstitutionInfoPage=validateEFTERAProviderInfo.clickContinue().fillFinancialInstInfo();
+			testfooter.validateFooterContents(testConfig);
+		
 	 }
 }
