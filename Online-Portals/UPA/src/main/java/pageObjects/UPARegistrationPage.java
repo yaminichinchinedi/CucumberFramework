@@ -61,6 +61,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkOptumLogo,"Optum Logo at header");
+		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -68,8 +69,7 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkHeaderHome,"Header Home");
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Login");
-		
+		Browser.waitForLoad(testConfig.driver);
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
@@ -85,21 +85,20 @@ public class UPARegistrationPage{
 	public void clickAndVerifyHeaderHowToEnroll()
 	{
 		String expectedURL="How To Enroll";
-		Browser.wait(testConfig, 2);
-		lnkHeaderHowtoEnroll=Element.findElement(testConfig, "linkText", "How to Enroll");
-		Element.clickByJS(testConfig,lnkHeaderHowtoEnroll,"How to enroll");
-		Element.click(lnkHeaderHowtoEnroll,"How to enroll");
-		
-//		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
+		Element.findElement(testConfig, "linkText","How to Enroll");
+		Element.expectedWait(lnkHeaderHowtoEnroll, testConfig, "How to enroll","How to enroll");
+		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
-		Helper.compareContains(testConfig, "Browser URL", expectedURL.replace(" " , ""), Browser.getURL(testConfig));
+		expectedURL=expectedURL.replace(" " , "");
+		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderFAQs()
 	{
 		String expectedURL="/epsFaqs.do";
+		System.out.println("faq" + testConfig.driver.getTitle());
 		Element.click(lnkHeaderFAQs,"Header FAQs");
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "FAQS");
+		Browser.wait(testConfig, 2);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 

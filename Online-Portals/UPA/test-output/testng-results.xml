@@ -2,7 +2,7 @@
 <testng-results skipped="0" failed="0" ignored="11" total="12" passed="1">
   <reporter-output>
     <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage2</font></br>]]>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
     </line>
     <line>
       <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
@@ -17,25 +17,19 @@
       <![CDATA[<font color='Black'>Launching Firefox browser..</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Running on environmentStage2</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage2</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+      <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
     </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="212074" started-at="2019-03-01T14:39:42Z" finished-at="2019-03-01T14:43:14Z">
+  <suite name="Default suite" duration-ms="169693" started-at="2018-10-25T13:22:15Z" finished-at="2018-10-25T13:25:05Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="212074" started-at="2019-03-01T14:39:42Z" finished-at="2019-03-01T14:43:14Z">
-      <class name="test.java.TestUS1202167">
-        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="setUpReportingConfig" is-config="true" duration-ms="514" started-at="2019-03-01T20:09:42Z" finished-at="2019-03-01T20:09:42Z">
+    <test name="Default test" duration-ms="169693" started-at="2018-10-25T13:22:15Z" finished-at="2018-10-25T13:25:05Z">
+      <class name="test.java.TestProviderViewPayments">
+        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="setUpReportingConfig" is-config="true" duration-ms="393" started-at="2018-10-25T18:52:15Z" finished-at="2018-10-25T18:52:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpReportingConfig -->
-        <test-method status="PASS" signature="tearUp()[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="tearUp" is-config="true" duration-ms="4859" started-at="2019-03-01T20:09:42Z" finished-at="2019-03-01T20:09:47Z">
+        <test-method status="PASS" signature="tearUp()[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="tearUp" is-config="true" duration-ms="9683" started-at="2018-10-25T18:52:15Z" finished-at="2018-10-25T18:52:25Z">
           <reporter-output>
             <line>
               <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
@@ -47,55 +41,49 @@
               <![CDATA[<font color='Black'>Launching Firefox browser..</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Running on environmentStage2</font></br>]]>
+              <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
             </line>
           </reporter-output>
         </test-method> <!-- tearUp -->
-        <test-method status="PASS" signature="init()[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="init" is-config="true" duration-ms="0" started-at="2019-03-01T20:09:47Z" finished-at="2019-03-01T20:09:47Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="init" is-config="true" duration-ms="0" started-at="2018-10-25T18:52:25Z" finished-at="2018-10-25T18:52:25Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="setupTestMethod" is-config="true" duration-ms="2193" started-at="2019-03-01T20:09:47Z" finished-at="2019-03-01T20:09:49Z">
+        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="setupTestMethod" is-config="true" duration-ms="359" started-at="2018-10-25T18:52:25Z" finished-at="2018-10-25T18:52:25Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void test.java.TestUS1202167.testFooterContents() throws java.io.IOException]]>
+                <![CDATA[void test.java.TestProviderViewPayments.testPaymentDetailsWithShowALLFilter() throws java.io.IOException,java.lang.InterruptedException,javax.xml.bind.JAXBException,org.xml.sax.SAXException,javax.xml.parsers.ParserConfigurationException,java.text.ParseException]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setupTestMethod -->
-        <test-method status="PASS" signature="testFooterContents()[pri:4, instance:test.java.TestUS1202167@1ca901e]" name="testFooterContents" duration-ms="204608" started-at="2019-03-01T20:09:49Z" description="TS01-Create Enrollment Provider Footer Display" finished-at="2019-03-01T20:13:14Z">
+        <test-method status="PASS" signature="testPaymentDetailsWithShowALLFilter()[pri:1, instance:test.java.TestProviderViewPayments@73846619]" name="testPaymentDetailsWithShowALLFilter" duration-ms="158993" started-at="2018-10-25T18:52:25Z" description="TS006_View Payments_Payments filter_Show All &lt;br&gt;TS002_View Payments_display of TINs latest payments within the last 30 daysValidate correct payment information is displayed on selection of &#039;Show All&#039; from the  filter - Filter Payments" finished-at="2018-10-25T18:55:04Z">
           <reporter-output>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage2</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
           </reporter-output>
-        </test-method> <!-- testFooterContents -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="endTest" is-config="true" duration-ms="366" started-at="2019-03-01T20:13:14Z" finished-at="2019-03-01T20:13:14Z">
+        </test-method> <!-- testPaymentDetailsWithShowALLFilter -->
+        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="endTest" is-config="true" duration-ms="607" started-at="2018-10-25T18:55:04Z" finished-at="2018-10-25T18:55:05Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=testFooterContents status=SUCCESS method=TestUS1202167.testFooterContents()[pri:4, instance:test.java.TestUS1202167@1ca901e] output=<font color='Orange'>Running on Environment : Stage2</font></br>]]]>
+                <![CDATA[[TestResult name=testPaymentDetailsWithShowALLFilter status=SUCCESS method=TestProviderViewPayments.testPaymentDetailsWithShowALLFilter()[pri:1, instance:test.java.TestProviderViewPayments@73846619] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
-        <test-method status="PASS" signature="deinit()[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="deinit" is-config="true" duration-ms="0" started-at="2019-03-01T20:13:14Z" finished-at="2019-03-01T20:13:14Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- deinit -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestUS1202167@1ca901e]" name="tearDown" is-config="true" duration-ms="18" started-at="2019-03-01T20:13:14Z" finished-at="2019-03-01T20:13:14Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="tearDown" is-config="true" duration-ms="20" started-at="2018-10-25T18:55:05Z" finished-at="2018-10-25T18:55:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- test.java.TestUS1202167 -->
+        <test-method status="PASS" signature="deinit()[pri:0, instance:test.java.TestProviderViewPayments@73846619]" name="deinit" is-config="true" duration-ms="0" started-at="2018-10-25T18:55:05Z" finished-at="2018-10-25T18:55:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deinit -->
+      </class> <!-- test.java.TestProviderViewPayments -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

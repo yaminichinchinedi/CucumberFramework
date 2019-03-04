@@ -3,18 +3,12 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="test.java.TestUS1202167">
+      <class name="test.java.TestMyProfileTab">
         <methods>
-          <include name="setupTestMethod"/>
-          <include name="endTest"/>
-          <include name="testFooterContents"/>
           <include name="tearDown"/>
-          <include name="init"/>
-          <include name="tearUp"/>
-          <include name="setUpReportingConfig"/>
-          <include name="deinit"/>
+          <include name="testChangePasswordValidations"/>
         </methods>
-      </class> <!-- test.java.TestUS1202167 -->
+      </class> <!-- test.java.TestMyProfileTab -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
