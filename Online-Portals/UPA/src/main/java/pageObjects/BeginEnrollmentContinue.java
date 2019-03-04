@@ -38,12 +38,12 @@ public class BeginEnrollmentContinue {
 	
 	@FindBy(id="billingserivceselect")
 	WebElement rdoBillingService;
+
+	@FindBy(linkText="Continue")
+	WebElement btnContinue;
 	
 	@FindBy(id="tin")
 	WebElement rdoBillingTin;
-	
-	@FindBy(linkText="Continue")
-	WebElement btnContinue;
 	
 	@FindBy(xpath=".//*[@id='enrollment']/div/a[2]")
 	WebElement btnContinueBS;
@@ -105,13 +105,21 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[1]")
 	WebElement btnIAgree;
 	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/h4")
+	WebElement errorMsg1;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/ul/li/p")
+	WebElement errorMsg2;
+	
+	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div[2]/div[2]/p")
+	WebElement errorMsg3;
+
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
 	
-	
+	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
 	ViewPaymentsDataProvider dataProvider;
-	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 	
 	private TestBase testConfig;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
@@ -192,6 +200,15 @@ public class BeginEnrollmentContinue {
 		else
 			Element.clickByJS(testConfig,btnContinue, "Continue");
 		return new ValidateEnrollmentTypePage(testConfig);
+	}
+	
+
+	public void validateErrorMsgs() {
+		String expectedURL = "beginEnrollmentContinue.do";
+		Browser.verifyURL(testConfig, expectedURL);
+		Element.verifyTextPresent(errorMsg1, "Please correct the following fields before continuing the enrollment process:");
+		Element.verifyElementPresent(errorMsg2, "- Please tell us how you heard about EPS.");
+		Element.verifyElementPresent(errorMsg3, "Missing Data");
 	}
 	
 	
@@ -414,8 +431,5 @@ public class BeginEnrollmentContinue {
 	  enrollAs(excelRowNo);
 	  return this;
 	}
-		
-	
-	
-	
+
 }

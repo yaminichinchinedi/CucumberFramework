@@ -151,6 +151,16 @@ public class UPARegistrationPage{
 		   
 	}
 	
+	public HowToEnroll clickHowToEnrollLink() {
+		Element.click(lnkHeaderHowtoEnroll, "How to Enroll Link");
+		return new HowToEnroll(testConfig);
+	}
+	
+	public BenefitsOfEPS clickBenefitsOfEPSLink() {
+		Element.click(lnkHeaderBenefitsofEPS, "Benefits of EPS Link");
+		return new BenefitsOfEPS(testConfig);
+	}
+	
 		
 //	public void doCompleteEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
 //	{
