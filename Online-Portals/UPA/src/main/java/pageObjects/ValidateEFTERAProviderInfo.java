@@ -21,11 +21,12 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 
 public class ValidateEFTERAProviderInfo {
 
-	private TestBase testConfig;
-	
+	protected TestBase testConfig;
+	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	//First provider details
 	
 	@FindBy(name="firstNameContact1")
@@ -114,6 +115,8 @@ public class ValidateEFTERAProviderInfo {
 	public ValidateEFTERAProviderInfo(TestBase testConfig)
 	{   
 		String expectedURL="/validateEFTERAProviderInfo";
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSbillingServiceInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
@@ -134,7 +137,8 @@ public class ValidateEFTERAProviderInfo {
 			Element.enterData(firstProvPhField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
 			Element.enterData(firstProvPhField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvPhField2");
 			Element.enterData(firstProvPhField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
-		    break;
+			enrollmentInfoPageObj.setPhnNumbr(phNo+phNo+phNoLstField);
+			break;
 		   }
 		  case "Secondary":
 		  {
@@ -147,15 +151,18 @@ public class ValidateEFTERAProviderInfo {
 		 
 	}
 	
-	public void fillPrimaryProvInfo()
+	public  ValidateEFTERAProviderInfo fillPrimaryProvInfo()
 	{	
 		Element.enterData(firstProvFName, fName,"Enter First name of first provider as : " + fName,"firstProvFirstName");
 		Element.enterData(firstProvLName, lName,"Enter Last name of first provider as : " + lName,"firstProvLastName");
 		fillPhoneNumber("Primary");
 		Element.enterData(firstProvEmail, firstProvEmailAdr, "Enter email address of first provider as : " +firstProvEmailAdr,"firstProvEmail");
 		Element.enterData(verifyFirstProvEmail, firstProvEmailAdr, "Retype email address of first provideras : " +firstProvEmailAdr,"verifyFirstProvEmail");
+		enrollmentInfoPageObj.setFrstName(fName);
+		enrollmentInfoPageObj.setLstName(lName);
+		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
+		return this;
 	}
-	
 	
 	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
@@ -193,7 +200,7 @@ public class ValidateEFTERAProviderInfo {
 		 }
 		else
 		{
-			sqlRowNo=53;
+			sqlRowNo=125;
 			enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			fillPrimaryProvInfo();
 			fillSecondProvInfo();
@@ -265,16 +272,19 @@ public class ValidateEFTERAProviderInfo {
 		return new FinancialInstitutionInfoPage(testConfig) ;
 	}
 	
-	
+	public UploadW9 clickContinueToW9() {
+		Element.click(btnContinue, "Continue");
+		return new UploadW9(testConfig) ;
+	}
 	public ValidateEFTERAProviderInfo clickYes(String provType)
 	{
 		Element.click(rdoYes, "Yes radio button");
 		Element.click(btnContinue, "Continue");
 		Browser.verifyURL(testConfig, "confirmExistingUser.do");
 		
-		 int sqlNo=9;
+		 int sqlNo=13;
 		 Map portalUser=DataBase.executeSelectQuery(testConfig,sqlNo, 1);
-		
+
 		if(provType.equals("Primary"))
 		 {
 		   Log.Comment("Verifying details of Pimary provider..");
@@ -286,7 +296,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ",  portalUser.get("EMAIL_ADR_TXT"),firstProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifyFirstProvEmail.getAttribute("value"));	
 		 }
-		else
+		else if(provType.equals("Secondary"))
 		 {
 		   Log.Comment("Verifying details of Secondary provider..");
 		   Helper.compareEquals(testConfig, "First Name",portalUser.get("FST_NM"),secondProvFName.getAttribute("value"));
@@ -297,6 +307,7 @@ public class ValidateEFTERAProviderInfo {
 		   Helper.compareEquals(testConfig, "Email Address ", portalUser.get("EMAIL_ADR_TXT"),secondProvEmail.getAttribute("value"));
 		   Helper.compareEquals(testConfig, "Re type Email Address",portalUser.get("EMAIL_ADR_TXT"),verifySecondProvEmail.getAttribute("value"));
 		 }
+		 
 		return this;
 	}
 	

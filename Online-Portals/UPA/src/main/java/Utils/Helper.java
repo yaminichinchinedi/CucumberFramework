@@ -2014,6 +2014,17 @@ return previousDate.getTime();
 		return randomInt;
 	}
 
+	public static int getUniqueNPINumber()
+	{
+		Random random = new Random(System.nanoTime());
+        int randomInt=random.nextInt(1000000000)+1;
+        while (String.valueOf(randomInt).length()!=10)
+        {
+        	randomInt=random.nextInt(1000000000)+1;
+        }
+		return randomInt;
+	}
+	
 	public static void compareEquals(TestBase testConfig, String what,ArrayList<String> expected, ArrayList<String> actual) 
 	{ 
 		separateListValues(expected,";");
