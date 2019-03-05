@@ -18,6 +18,9 @@ import org.openqa.selenium.support.PageFactory;
 public class EnrollmentSubmitted {
 	protected TestBase testConfig;
 	
+	@FindBy(xpath=".//*[@id='EFTERAregForm']//div[1]/p[4]/span")
+	WebElement imgPDF;
+	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
 	{
@@ -27,6 +30,7 @@ public class EnrollmentSubmitted {
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			expectedURL="/validateBSSubmit";
 		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
+		Element.expectedWait(imgPDF, testConfig, "PDF image", "PDF image");
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	

@@ -17,6 +17,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -366,23 +367,27 @@ public class BeginEnrollmentContinue {
 	Element.click(btnContinue, "Continue");
 	Browser.wait(testConfig, 2);
 	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
+	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
 	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
 
 	Element.enterData(txtBoxTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
 	Element.click(btnContinue, "Continue");
-
+	Browser.wait(testConfig, 2);
+	
 	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
 	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
 	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
 
 	Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
 	Element.click(btnContinue, "Continue");
+	Browser.wait(testConfig, 2);
 	errorMsg=Element.findElement(testConfig, "id", "tinerror1");
 	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
 	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
-
-	Element.enterData(txtBoxTin,"000111000", "Entered unique tin number as: abc888ui","txtBoxTin");
+	
+	Element.enterData(txtBoxTin,"000111000", "Entered unique tin number as: 000111000","txtBoxTin");
 	Element.click(btnContinue, "Continue");
+	Browser.wait(testConfig, 2);
 	String errMsg=Element.findElement(testConfig, "id", "captchaerrororg").getText();
 	Helper.compareEquals(testConfig, "ERROR MSG","reCAPTCHA selection is required" , errMsg);
 	return this;

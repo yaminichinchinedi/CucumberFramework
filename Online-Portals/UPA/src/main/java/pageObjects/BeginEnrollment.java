@@ -97,13 +97,6 @@ public class BeginEnrollment {
 	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[2]/div[1]")
 	List<WebElement> popUp;
 	
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[2]/div[1]/div[1]/h4")
-	WebElement popUp1;
-	
-	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[2]/div[1]/div[2]")
-	WebElement popUp2;
-	
-	
 	private TestBase testConfig;
 		
 	EnrollmentInfo enrollment =EnrollmentInfo.getInstance();
@@ -247,6 +240,7 @@ public class BeginEnrollment {
 			
 		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(1).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, " SubTitle", hdrSubTitle.getText(), dataTest.get(2).get("TEXT_VAL"));
+		Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
 		Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElement(By.tagName("h1")).getText(), dataTest.get(3).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 1", pageBody.get(0).findElements(By.tagName("p")).get(1).getText(), dataTest.get(5).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 2", pageBody.get(0).findElements(By.tagName("p")).get(2).getText(), dataTest.get(6).get("TEXT_VAL"));
@@ -272,11 +266,12 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Survey Options",pageBody.get(0).findElements(By.tagName("li")).get(3).getText(), options.get(4).get("ANSWER_TXT"));
 		Helper.compareEquals(testConfig, "Survey Options",pageBody.get(0).findElements(By.tagName("li")).get(4).getText(), options.get(5).get("ANSWER_TXT"));
 		
-		Helper.compareEquals(testConfig, "",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "",popUp.get(0).findElements(By.tagName("a")).get(0).getText(),  dataTest.get(17).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "",popUp.get(0).findElements(By.tagName("a")).get(1).getText(),  dataTest.get(18).get("TEXT_VAL"));
+		Element.click(btnCancelEnrollment, "Cancel Enrollment");
+		Helper.compareEquals(testConfig, "Pop Up Heading",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "No Link",popUp.get(0).findElements(By.tagName("a")).get(1).getText(),  dataTest.get(17).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Yes Link",popUp.get(0).findElements(By.tagName("a")).get(0).getText(),  dataTest.get(18).get("TEXT_VAL"));
 		
 	}
 }

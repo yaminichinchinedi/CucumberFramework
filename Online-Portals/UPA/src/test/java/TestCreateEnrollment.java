@@ -31,7 +31,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * This test case belong to US1348529
 	 * @author Amit
 	 */
-	@Test(priority=4,description="US1348529--TS001/TS002 Validates the Page navigation from BeginEnrollment page to BeginEnrollmentContinue page")
+	@Test(priority=4,groups="",description="US1348529--TS001/TS002 Validates the Page navigation from BeginEnrollment page to BeginEnrollmentContinue page")
 	public void testSurveyTablesAndResponse()
 	 {
 		String option="Provider Advocate recommendation";
@@ -46,7 +46,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	
-	@Test(priority=4,description="US1202167--TS001/TS002/TS018/TS023 Validates User Enrollment As Health Organisation") 
+	@Test(priority=4,groups="",description="US1202167--TS001/TS002/TS018/TS023 Validates User Enrollment As Health Organisation") 
 	public void testUserEnrollmentAsHealthOrg() throws IOException
 	{
 		String option="Health plan communication";
@@ -57,7 +57,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
 	 }
 	
-	@Test(priority=4,description="US1202167--TS003 Validates User Enrollment As BS")
+	@Test(priority=4,groups="",description="US1202167--TS003 Validates User Enrollment As BS")
 	public void testUserEnrollmentAsBS() throws IOException
 	 {
 		String option="Health plan communication";
