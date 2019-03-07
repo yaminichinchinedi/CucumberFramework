@@ -36,7 +36,7 @@ public class ValidateEnrollmentTypePage {
 	@FindBy(xpath="//*[@id='EFTERAenrForm']/section/main/ul/li[4]/span")
 	WebElement status;
 	
-	@FindBy(xpath="//*[@id='EFTERAenrForm']//h4/strong")
+	@FindBy(xpath="/html/body/form/section/main/h4/strong")
 	WebElement preEnrolledStatus;
 	
 	@FindBy(xpath="//html/body/form/section/main/p[3]/a")
