@@ -118,7 +118,7 @@ public class UPARegistrationPage{
 	
 	public OptumIdLoginPage clickSignInWithOptumId()
 	{
-		Element.click(lnkSignInWithOptumId, "Sign in with optum id button");
+		Element.clickByJS(testConfig, lnkSignInWithOptumId, "Sign in with optum id button");
 		return new OptumIdLoginPage(testConfig);
 	}
 	

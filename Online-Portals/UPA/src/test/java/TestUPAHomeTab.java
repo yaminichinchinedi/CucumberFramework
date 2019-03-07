@@ -81,38 +81,38 @@ public class TestUPAHomeTab extends TestBase {
 	
 	
 	
-	@Test(priority=7,description="Verifies Terms and conditions")
-	public void testTermAndConditions() throws IOException 
-     {   
-	    String userType="PROV";
-		String accessType="Admin";
-	    
-		testConfig.putRunTimeProperty("userType", userType);
-		testConfig.putRunTimeProperty("accessType", accessType);
-		
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    
-	    optumIDLoginPage.fillCredsAndSignIn("","").verifyTermsConditionsPage();
-	   
-     }
+//	@Test(priority=7,description="Verifies Terms and conditions")
+//	public void testTermAndConditions() throws IOException 
+//     {   
+//	    String userType="PROV";
+//		String accessType="Admin";
+//	    
+//		testConfig.putRunTimeProperty("userType", userType);
+//		testConfig.putRunTimeProperty("accessType", accessType);
+//		
+//		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+//	    
+//	    optumIDLoginPage.fillCredsAndSignIn("","").verifyTermsConditionsPage();
+//	   
+//     }
 	
 	
 	
-	@Test(priority=7,description="Verifies Login validations negative scenarios")
-	public void testUPALoginValidations() throws IOException 
-     {   
-	   int excelRowNo=4;
-	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	   
-	   //Correct UserName and incorrect Password
-	   optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo);  
-      
-       excelRowNo=5;
-       //Incorrect username and correct Password
-       optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
-      }
+//	@Test(priority=7,description="Verifies Login validations negative scenarios")
+//	public void testUPALoginValidations() throws IOException 
+//     {   
+//	   int excelRowNo=4;
+//	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+//	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+//	   
+//	   //Correct UserName and incorrect Password
+//	   optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo);  
+//      
+//       excelRowNo=5;
+//       //Incorrect username and correct Password
+//       optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
+//      }
 	
 	
 	

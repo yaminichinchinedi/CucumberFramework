@@ -238,6 +238,7 @@ public class ProviderInformationEFTERAEnroll {
 		Element.click(btnContinue, "Continue button");
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
 		List <String> expectedErrorMsgs=Arrays.asList("- Organization Information - Business Name","- Organization Information - Street","- Organization Information - City","- Organization Information - State","- Organization Information - Zip Code","- Organization Information - Provider Type/Market Type");
+//		List <String> expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
 		for(int i=0;i<expectedErrorMsgs.size();i++)
 			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
 		
@@ -286,28 +287,30 @@ public class ProviderInformationEFTERAEnroll {
 		
 		Log.Comment("Verifying Error Msg is displayed for Business Name..");
 		Element.verifyTextPresent(providerName.findElement(By.xpath("../following-sibling::p")), expectedText);
+//		Element.verifyTextPresent(bsName.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(providerName.getCssValue("border-top-color")).asHex());
+//		Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(bsName.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Street..");
-		Element.verifyTextPresent(street.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(street.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(street.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for City..");
-		Element.verifyTextPresent(city.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(city.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(city.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for State dropdown..");
-		Element.verifyTextPresent(drpDwnState.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(drpDwnState.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for State dropdown" , expectedColor, Color.fromString(drpDwnState.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-		Element.verifyTextPresent(zipCode1.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Element.verifyTextPresent(zipCode1.findElement(By.xpath("following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(zipCode1.getCssValue("border-top-color")).asHex());
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(zipCode2.getCssValue("border-top-color")).asHex());
 		
-		Log.Comment("Verifying Error Msg is displayed for Provide type..");
-		Element.verifyTextPresent(lblProvType.findElement(By.xpath("following-sibling::p")), expectedText);
-		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Provide type.." , expectedColor, Color.fromString(lblProvType.getCssValue("border-top-color")).asHex());
+//		Log.Comment("Verifying Error Msg is displayed for Provide type..");
+//		Element.verifyTextPresent(lblProvType.findElement(By.xpath("following-sibling::p")), expectedText);
+//		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Provide type.." , expectedColor, Color.fromString(lblProvType.getCssValue("border-top-color")).asHex());
 	}
 	
 	public ProviderInformationEFTERAEnroll clickCancelEnrollment()

@@ -85,57 +85,89 @@ public class OptumIdLoginPage {
 	}
 	
 
-   public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
-   {   
-	    id=testConfig.getUsername("UPA", userType, accessType, env);
-	    password=testConfig.getPassword("UPA", userType, accessType, env);
-		
-		loggedInUserDetails.put("id", id);
-		loggedInUserDetails.put("password", password);
-		setUserProperties();
-		
-		return loggedInUserDetails;
+	public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
+	{
+	id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
+	password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
+	loggedInUserDetails.put("id", id);
+	loggedInUserDetails.put("password", password);
+	setUserProperties();
+
+	return loggedInUserDetails;
 	}
    
 	
-   public HomePage loginWithOptumID(String userType,String accessType) 
+//   public HomePage loginWithOptumID(String userType,String accessType) 
+//	{
+//		
+//		Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, accessType));
+//		
+//		fillCredsAndSignIn(details.get("id"), details.get("password"));
+//	    
+//	    WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+//	    
+//	    divTermsAndConditions= Element.findElement(testConfig, "xpath","//div[@class='pguide']");
+//	    
+//	    
+//	    if(welcomeTxt!=null)
+//	      Log.Comment("Security Question not present");
+//	    
+//	    
+//	    else if(divTermsAndConditions!=null)
+//	    {
+//	    	Element.click(chkBoxTerms, "Terms & Conditions check box");
+//		    Element.click(btnSubmit, "Submit button");
+//	    }
+//	    
+//	    else
+//	    {
+//         for(int i=0;i<2;i++)
+//          {
+//            securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+//            Element.expectedWait(securityQuestion, testConfig, "securityQuestion", "securityQuestion");
+//            if(securityQuestion!=null)
+//            { 
+//   	       fillAns();
+//              break;
+//            }
+//          }
+//	    }
+//    return new HomePage(testConfig);
+//  }
+
+	
+	public HomePage loginWithOptumID(String userType,String accessType) 
 	{
-		
-		Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, accessType));
-		
-		fillCredsAndSignIn(details.get("id"), details.get("password"));
+	Map <String,String> details=new HashMap<String,String>();
+
+	details=getDetailOfUserToBeLoggedIn(userType, accessType);
+
+	    Element.enterData(txtboxOptumID,details.get("id"), "Entered Optum ID as:" + " " +details.get("id"), "txtboxOptumID"); 
+	    Element.enterData(txtboxPwd,details.get("password"), "Entered Optum ID password  as :" + " "+ details.get("password"), "txtboxPwd");
+	    Element.click(btnSignIn, "Sign In");
+	    Browser.waitForLoad(testConfig.driver);
+	    Browser.wait(testConfig, 3);
 	    
 	    WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
-	    
-	    divTermsAndConditions= Element.findElement(testConfig, "xpath","//div[@class='pguide']");
-	    
-	    
 	    if(welcomeTxt!=null)
-	      Log.Comment("Security Question not present");
-	    
-	    
-	    else if(divTermsAndConditions!=null)
-	    {
-	    	Element.click(chkBoxTerms, "Terms & Conditions check box");
-		    Element.click(btnSubmit, "Submit button");
-	    }
-	    
+	     Log.Comment("Security Question not present");
 	    else
 	    {
-         for(int i=0;i<2;i++)
-          {
-            securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
-            Element.expectedWait(securityQuestion, testConfig, "securityQuestion", "securityQuestion");
-            if(securityQuestion!=null)
-            { 
-   	       fillAns();
-              break;
-            }
-          }
+          for(int i=0;i<2;i++)
+           {
+             securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+             if(securityQuestion!=null)
+             { 
+            fillAns();
+               break;
+             }
+           }
 	    }
-    return new HomePage(testConfig);
-  }
+           
 
+        
+     return new HomePage(testConfig);
+   }
 
 	public void fillAns() {
 		
@@ -206,36 +238,36 @@ public class OptumIdLoginPage {
 
 	
 	
-	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException
-	{
-		TestDataReader data=testConfig.cacheTestDataReaderObject("Login");
-		id=data.GetData(rowNo,"Username");
-		password=data.GetData(rowNo,"Password");
-		
-		fillCredsAndSignIn(id,password);
-		
-		verifyLoginErrorMessage();
-		
-	}
+//	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException
+//	{
+//		TestDataReader data=testConfig.cacheTestDataReaderObject("Login");
+//		id=data.GetData(rowNo,"Username");
+//		password=data.GetData(rowNo,"Password");
+//		
+//		fillCredsAndSignIn(id,password);
+//		
+//		verifyLoginErrorMessage();
+//		
+//	}
 	
 	
-	public OptumIdLoginPage fillCredsAndSignIn(String id, String password)
-	{
-		if(id.isEmpty())
-		{
-		   id=testConfig.getUsername("UPA", testConfig.getRunTimeProperty("userType"), testConfig.getRunTimeProperty("accessType"), env);
-		   password=testConfig.getPassword("UPA", testConfig.getRunTimeProperty("userType"), testConfig.getRunTimeProperty("accessType"), env);
-		}
-	
-		Element.enterData(txtboxOptumID, id, " Optum ID entered as :"+" " + id, "txtboxOptumID");	
-		Element.enterData(txtboxPwd, password, " Password entered :" + " " + password, "txtboxPwd");
-		Element.click(btnSignIn, "Sign In button");
-		Browser.waitForLoad(testConfig.driver);
-		testConfig.putRunTimeProperty("id", id);
-		
-		
-		return this;
-	}
+//	public OptumIdLoginPage fillCredsAndSignIn(String id, String password)
+//	{
+//		if(id.isEmpty())
+//		{
+//		   id=testConfig.getUsername("UPA", testConfig.getRunTimeProperty("userType"), testConfig.getRunTimeProperty("accessType"), env);
+//		   password=testConfig.getPassword("UPA", testConfig.getRunTimeProperty("userType"), testConfig.getRunTimeProperty("accessType"), env);
+//		}
+//	
+//		Element.enterData(txtboxOptumID, id, " Optum ID entered as :"+" " + id, "txtboxOptumID");	
+//		Element.enterData(txtboxPwd, password, " Password entered :" + " " + password, "txtboxPwd");
+//		Element.click(btnSignIn, "Sign In button");
+//		Browser.waitForLoad(testConfig.driver);
+//		testConfig.putRunTimeProperty("id", id);
+//		
+//		
+//		return this;
+//	}
 	
 	
 	public void verifyLoginErrorMessage()
@@ -244,7 +276,7 @@ public class OptumIdLoginPage {
 	}
 	
 	
-    public OptumIdLoginPage verifyTermsConditionsPage()
+   /* public OptumIdLoginPage verifyTermsConditionsPage()
     {
 		int sqlRow=7;
 		Map portalUser=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -287,6 +319,6 @@ public class OptumIdLoginPage {
 		
 
 	}
-    
+ */   
     
 }

@@ -398,18 +398,18 @@ public class TestBase {
 		}
 
 	}
-	public String getUsername(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	}
-	public String getPassword(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
-	}
+//	public String getUsername(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
+//	}
+//	public String getPassword(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
+//	}
 
 	
 	public void purgeDirectory(File dir)

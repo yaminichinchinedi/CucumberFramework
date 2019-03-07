@@ -270,8 +270,8 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Pop Up Heading",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "No Link",popUp.get(0).findElements(By.tagName("a")).get(1).getText(),  dataTest.get(17).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Yes Link",popUp.get(0).findElements(By.tagName("a")).get(0).getText(),  dataTest.get(18).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "No Link",popUp.get(0).findElements(By.tagName("a")).get(2).getText().toLowerCase(),  dataTest.get(17).get("TEXT_VAL").toLowerCase());
+		Helper.compareEquals(testConfig, "Yes Link",popUp.get(0).findElements(By.tagName("a")).get(1).getText().toLowerCase(),  dataTest.get(18).get("TEXT_VAL").toLowerCase());
 		
 	}
 }

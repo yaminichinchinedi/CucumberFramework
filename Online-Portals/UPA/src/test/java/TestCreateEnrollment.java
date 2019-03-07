@@ -566,5 +566,16 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
 		beginEnrollment.validateBeginEnrollmentQuestions();
 	}
+	
+	@Test(priority=3,description="US1048048 - TS_013 - Validate Billing Service Name")
+	public void testValidateBillingServiceName() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().verifyContinueEnrollmentValidations();
+	}
 		
 }
