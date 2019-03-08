@@ -234,7 +234,7 @@ public class TestBase {
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+		capabilities.setCapability("firefox_binary","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 		capabilities.setCapability("marionette", true); 
 		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
 		
