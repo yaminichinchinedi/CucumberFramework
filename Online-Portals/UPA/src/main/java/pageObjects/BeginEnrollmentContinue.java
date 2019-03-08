@@ -137,8 +137,7 @@ public class BeginEnrollmentContinue {
 	
 	public BeginEnrollmentContinue enrollAs(int excelRowNo) throws IOException
 	 {
-		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 
-		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 		
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
