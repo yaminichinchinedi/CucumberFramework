@@ -81,7 +81,7 @@ public class TestUPAHomeTab extends TestBase {
 	
 	
 	
-	@Test(priority=7,description="Verifies Terms and conditions")
+	/*@Test(priority=7,description="Verifies Terms and conditions")
 	public void testTermAndConditions() throws IOException 
      {   
 	    String userType="PROV";
@@ -112,7 +112,7 @@ public class TestUPAHomeTab extends TestBase {
        excelRowNo=5;
        //Incorrect username and correct Password
        optumIDLoginPage.doInvalidLoginAndVerifyValidation(excelRowNo); 
-      }
+      }*/
 	
 	
 	

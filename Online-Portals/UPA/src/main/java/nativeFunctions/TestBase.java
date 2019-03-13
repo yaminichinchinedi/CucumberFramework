@@ -16,12 +16,17 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -37,7 +42,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
-
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
@@ -205,8 +209,12 @@ public class TestBase {
 
 	private static WebDriver initChromeDriver() {
 		LogTemp.Comment("Launching google chrome..");
-		System.setProperty("webdriver.chrome.driver","C:\\ChromeDriver\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\drivers\\chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+		
+		//For handling pop up -Loading of unpacked extensions is disabled by the administrator
+		options.setExperimentalOption("useAutomationExtension", false);
+		WebDriver driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
 	}
@@ -398,18 +406,20 @@ public class TestBase {
 		}
 
 	}
-	public String getUsername(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	}
-	public String getPassword(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
-	}
+	
+	
+//	public String getUsername(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
+//	}
+//	public String getPassword(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
+//	}
 
 	
 	public void purgeDirectory(File dir)
@@ -420,4 +430,8 @@ public class TestBase {
 	    }
 	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
 	}
+	
+	
+	
+	
 }

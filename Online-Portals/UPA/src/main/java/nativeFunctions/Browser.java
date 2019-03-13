@@ -100,6 +100,24 @@ public class Browser
 	}
 	
 	
+	
+	
+	public static void dismissAlert(TestBase testConfig) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
+	        wait.until(ExpectedConditions.alertIsPresent());
+	        Alert alert = testConfig.driver.switchTo().alert();
+	        alert.dismiss();
+	        Log.Comment("Alert is present and is dismissed");
+	    } catch (NoAlertPresentException e) {
+	        Log.Comment("No alert is present..continuing..");
+	    }
+	    
+	    catch (Exception e) {
+	        Log.Comment("No alert is present..continuing..");
+	    }
+	}
+	
 	public static void waitForLoad(WebDriver driver) 
 	{
 		try{
