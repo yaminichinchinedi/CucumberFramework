@@ -606,26 +606,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author rkrish38
 	 * @throws IOException
 	 */
-	@Test(priority=4,description="US1033910-TS_00003_Page text is content managed.") 
-	public void testVerifyDBContentfrmScreen() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRow=1;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
-		
-		//int sqlRowNo=116;
-		//Map enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		//System.out.println("Size of Table is:"+enrolledProviderTable.size());
-		
-		
-		
-		//String existingEmailAdr=enrolledProviderTable.get("EMAIL_ADR_TXT").toString().toLowerCase().trim();
 
-		
-	 }
 	
 	@Test(priority=4,description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page") 
 	public void testHeaderDisplayforAO() throws IOException
