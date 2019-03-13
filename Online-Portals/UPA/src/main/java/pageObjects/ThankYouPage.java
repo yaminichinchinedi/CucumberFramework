@@ -115,31 +115,17 @@ public class ThankYouPage {
 
 	public void VerifyPrntCompltEnrollmentFrmDwnldorVieworPrnt()
 			throws IOException {
-		 Element.click(lnkPrintPdf, "Print Completed Enrollment Form");
-		//Element.clickByJS(testConfig, lnkPrintPdf,"Print Completed Enrollment Form");
+		//Element.click(lnkPrintPdf, "Print Completed Enrollment Form");
+		Element.clickByJS(testConfig, lnkPrintPdf,"Print Completed Enrollment Form");
 		
 
 	}
 
 	public void ClickOnLinkACHAddenfumRecord() throws IOException {
 		Element.click(lnkACHAddndmRcrd, " What is the ACH Addenfum Record for");
-		// Element.clickByJS(testConfig,lnkPrintPdf,
-		// "Print Completed Enrollment Form");
-		System.out.println("CLicked and Before switching to alert");
+        Element.click(closetip, "Close Tip Button");
 
-		// DesiredCapabilities dc=new DesiredCapabilities();
-		// dc.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
-		// UnexpectedAlertBehaviour.IGNORE);
-		// CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,
-		// UnexpectedAlertBehaviour.IGNORE;
-		// Alert alert=testConfig.driver.switchTo().alert();
 
-		Element.click(closetip, "Close Tip Button");
-		System.out.println("Switched to alert");
-		// alert.accept();
-		System.out.println("accepted alert");
-
-		// Browser.acceptAlert(testConfig);
 
 	}
 
