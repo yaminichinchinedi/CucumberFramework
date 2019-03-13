@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,17 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+
+
+
 public class EnrollmentSubmitted {
 	protected TestBase testConfig;
+	@FindBy(linkText="Print Completed Enrollment Form")
+	WebElement lnkPrintPdf;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
+	
+
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
 	{
 		String expectedURL = "/validateEFTERASubmit";
@@ -26,6 +34,8 @@ public class EnrollmentSubmitted {
 		PageFactory.initElements(testConfig.driver, this);
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			expectedURL="/validateBSSubmit";
+	
+		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
 		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
 		Browser.verifyURL(testConfig, expectedURL);
 	}
@@ -145,4 +155,5 @@ public class EnrollmentSubmitted {
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
 	}
 	
+
 }
