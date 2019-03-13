@@ -567,8 +567,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateBeginEnrollmentQuestions();
 	}
 	
-	@Test(priority=3,description="US1048048 - TS_013 - Validate Billing Service Name")
-	public void testValidateBillingServiceName() throws IOException
+	@Test(priority=3,description="US1048048 - TS_013 - Validate Billing Service Fields")
+	public void testValidateBillingServiceFieldsLeftBlank() throws IOException
 	{
 		String option="Health plan communication";
 		int excelRow=2;
@@ -576,6 +576,24 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().verifyContinueEnrollmentValidations();
+	}
+	
+	@Test(priority=3,description="US1048048 - TS_013 - Validate Billing Service Fields")
+	public void testValidateBillingServiceFieldsWithSpecialChar() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow(); 
+		beginEnrollmentPage.selectHowYouHeard(option).enrollAs(excelRow).clickContinue().clickContinue().validateBillingService("BSName", "&*min").validateBillingService("Street", "*(*(*").validateBillingService("Street", "PO BOX 7530").validateBillingService("City", "%^&&").validateBillingService("ZipCode", "anjhu").validateBillingService("ZipCode", "70165");;;
+	}
+	
+	@Test(priority=3,description="US1048048 - TS_013 - Validate Billing Service Fields")
+	public void testPDFRead() throws IOException
+	{
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		beginEnrollmentPage.readPDF();
 	}
 		
 }

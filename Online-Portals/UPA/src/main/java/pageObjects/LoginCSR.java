@@ -162,11 +162,11 @@ public class LoginCSR {
 	   String env=System.getProperty("env");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
-	testConfig.putRunTimeProperty("id", id);
+       testConfig.putRunTimeProperty("id", id);
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName"); 
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-	   return new CSRHomePage(testConfig);
+	   return new CSRHomePage(testConfig);	
 	}
 	
    private void fillCredsAndSignIn(String username, String password) {

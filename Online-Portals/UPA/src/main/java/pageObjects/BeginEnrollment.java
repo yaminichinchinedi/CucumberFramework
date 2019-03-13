@@ -1,6 +1,9 @@
 package main.java.pageObjects;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +16,18 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.reporting.Log;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BeginEnrollment {
 	
@@ -274,6 +282,35 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Yes Link",popUp.get(0).findElements(By.tagName("a")).get(1).getText().toLowerCase(),  dataTest.get(18).get("TEXT_VAL").toLowerCase());
 		
 	}
+	
+	public void readPDF() throws IOException {
+		String output="";
+        testConfig.driver.get("file:///C:/Users/akushw10/Downloads/EnrollmentPDF.pdf");
+        URL url = new URL(testConfig.driver.getCurrentUrl());
+        InputStream is = url.openStream();
+        BufferedInputStream fileToParse = new BufferedInputStream(is);
+        PDDocument document = null;
+        try {
+            document = PDDocument.load(fileToParse);
+            output = new PDFTextStripper().getText(document);
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            fileToParse.close();
+            is.close();
+        }
+        Pattern p = Pattern.compile(" \\b(Organization) .* ");  
+        System.out.println("Pattern is: "+p);
+        Matcher m = p.matcher(output);
+        System.out.println("Pattern found or not: "+m.find());
+        if (m.find())
+        {
+          String theGroup = m.group(1);
+          System.out.format("Extracted text is: '%s'\n", theGroup);
+        }
+//        System.out.println(output);
+    }
 }
 
 

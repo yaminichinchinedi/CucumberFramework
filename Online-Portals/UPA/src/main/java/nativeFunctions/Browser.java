@@ -89,7 +89,8 @@ public class Browser
 	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
 	        wait.until(ExpectedConditions.alertIsPresent());
 	        Alert alert = testConfig.driver.switchTo().alert();
-	        alert.accept();
+//	        alert.accept();
+	        alert.dismiss();
 	    } catch (NoAlertPresentException e) {
 	        Log.Comment("No alert is present..continuing..");
 	    }
