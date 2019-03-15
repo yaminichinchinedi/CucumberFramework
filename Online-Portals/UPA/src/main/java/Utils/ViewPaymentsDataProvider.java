@@ -94,12 +94,13 @@ public String getTinForPaymentType(String paymentType)
 		{
 			 paySum.getQuickSearchDates("Last 60 days");
 			 sqlRowNo=130;
+			 break;
 		}
 			
 		case "generalPaymentForNPI_90days":
 		{
 			paySum.getQuickSearchDates("Last 90 days");
-			sqlRowNo=130;
+			sqlRowNo=147;
 			break;
 		}
 		
@@ -134,8 +135,8 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "generalPayment90Days":
 		{ 
-			paySum.getQuickSearchDates("Last 60 days");
- 	 		sqlRowNo=126; 
+			paySum.getQuickSearchDates("Last 90 days");
+ 	 		sqlRowNo=143; 
  	 		break;
 		}
  	 		  
@@ -180,7 +181,7 @@ public String getTinForPaymentType(String paymentType)
 		case "generalPaymentForTIN_90days":
 		{
 			  paySum.getQuickSearchDates("Last 90 days");
-			  sqlRowNo=134; 
+			  sqlRowNo=144; 
 		 	  break;
 			
 		}
@@ -225,7 +226,7 @@ public String getTinForPaymentType(String paymentType)
 		case "archiveOnly90Days":
 		{
 			 paySum.getQuickSearchDates("Last 90 days");
-			 sqlRowNo=137; 
+			 sqlRowNo=145; 
 		 	 break;
 		}
 		
@@ -267,7 +268,7 @@ public String getTinForPaymentType(String paymentType)
 		case "activeOnly90Days":
 		{
 			 paySum.getQuickSearchDates("Last 90 days");
-			 sqlRowNo=140; 
+			 sqlRowNo=146; 
 		 	 break;
 		}
 		

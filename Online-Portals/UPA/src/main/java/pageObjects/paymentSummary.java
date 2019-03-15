@@ -489,7 +489,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		{
 			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
 			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
-			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));	
+			System.out.println("from date" + testConfig.getRunTimeProperty("fromDate")) ;
+			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+			System.out.println("to date" + testConfig.getRunTimeProperty("toDate")) ;
 		}
 		
 		else 
@@ -955,10 +957,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		
 		/**Creates POJO for Request.xml so that we can modify the elements*/
 		
-//		EpsPaymentsSearchRequest epsPaymentsSearchRequest=(EpsPaymentsSearchRequest) createRequest();
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
+		if(testConfig.getRunTimeProperty("payerID")!=null)
+			setPayerID(epsPaymentsSearchRequest);
 		
 		/**Posting the modified request and getting response*/
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
