@@ -16,6 +16,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
@@ -283,7 +284,7 @@ public class BeginEnrollment {
 		
 	}
 	
-	public void readPDF() throws IOException {
+	public String readPDF() throws IOException {
 		String output="";
         testConfig.driver.get("file:///C:/Users/akushw10/Downloads/EnrollmentPDF.pdf");
         URL url = new URL(testConfig.driver.getCurrentUrl());
@@ -292,6 +293,7 @@ public class BeginEnrollment {
         PDDocument document = null;
         try {
             document = PDDocument.load(fileToParse);
+            document.getNumberOfPages();
             output = new PDFTextStripper().getText(document);
         } finally {
             if (document != null) {
@@ -300,16 +302,17 @@ public class BeginEnrollment {
             fileToParse.close();
             is.close();
         }
-        Pattern p = Pattern.compile(" \\b(Organization) .* ");  
-        System.out.println("Pattern is: "+p);
-        Matcher m = p.matcher(output);
-        System.out.println("Pattern found or not: "+m.find());
-        if (m.find())
-        {
-          String theGroup = m.group(1);
-          System.out.format("Extracted text is: '%s'\n", theGroup);
-        }
-//        System.out.println(output);
+        String tin=StringUtils.substringBetween(output, "TIN:", "\n");
+//        Helper.compareEquals(testConfig, "Tin Masked", "*****"+enrollmentInfoPageObj.getTin().substring(5), tin);
+        System.out.println("TIN:\n"+StringUtils.substringBetween(output, "TIN:", "\n"));
+        System.out.println("Organizational Information:\n"+StringUtils.substringBetween(output, "Organization Information", "Identify"));
+        System.out.println("Identify Administration Information:\n"+StringUtils.substringBetween(output, "Identify Administrators", "Financial"));
+        System.out.println("Financial Institution Information for TIN:\n"+StringUtils.substringBetween(output, "Financial Institution Information for TIN", "Financial"));
+        System.out.println("Authorized Enroller's Information:\n"+StringUtils.substringBetween(output, "Authorized Enroller's Information", "Page"));
+        System.out.println("Authorization section and W9 section:\n"+StringUtils.substringBetween(output, "Authorization", "Authorized Enroller's"));
+        System.out.println("Terms and conditions :\n"+StringUtils.substringBetween(output, "EPS EFT Provider Authorization", "\n"));
+        
+        return tin;
     }
 }
 
