@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -37,7 +38,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
-
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
@@ -233,6 +233,9 @@ public class TestBase {
 		profile.setPreference("browser.download.useDownloadDir", "false"); 
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		
+		//profile.setPreference("plugin.scan.Acrobat", "999.0");
+		//profile.setPreference("plugin.scan.plid.all", false);
+		
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
 		capabilities.setCapability("marionette", true); 
@@ -412,12 +415,6 @@ public class TestBase {
 	}
 
 	
-	public void purgeDirectory(File dir)
-	{
-	    for (File file: dir.listFiles()) {
-	        if (file.isDirectory()) purgeDirectory(file);
-	        file.delete();
-	    }
-	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
-	}
+	
+	
 }
