@@ -50,6 +50,7 @@ public class UPARegistrationPage{
 	public UPARegistrationPage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;		
+		Browser.dismissAlert(testConfig);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
