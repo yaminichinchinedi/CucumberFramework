@@ -698,7 +698,12 @@ public class Helper
 		toDate=getPreviousDate(endPeriod);
 
 		startAndEndDatesMap.put("fromDate", dateFormat.format(fromDate).toString());
+//		System.out.println(Helper.getDateBeforeOrAfterDays(-1,"yyyy-MM-dd", dateFormat.format(fromDate),"yyyy-MM-dd"));
+//		
+//		startAndEndDatesMap.put("fromDate", Helper.getDateBeforeOrAfterDays(-1,"yyyy-MM-dd", dateFormat.format(fromDate),"yyyy-MM-dd"));
 		startAndEndDatesMap.put("toDate", dateFormat.format(toDate).toString());
+		
+		System.out.println(startAndEndDatesMap.get("fromDate"));
 
 		return startAndEndDatesMap;
 	}

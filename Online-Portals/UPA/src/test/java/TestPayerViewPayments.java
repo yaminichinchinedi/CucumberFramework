@@ -201,91 +201,6 @@ public class TestPayerViewPayments extends TestBase {
  		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);
     }
    
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
-   void testTINOnlyFilter60Days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-         
-        String filterPayments="TIN Only";
-        String quickSearchFilter="Last 60 days";
-        String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForTIN";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "TIN");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","60 days");	
-
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
- 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	
- 		paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);
-        
-    }
-   
-   
-  
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
-   void testTINOnlyFilter90Days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {
-         
-        String filterPayments="TIN Only";
-        String quickSearchFilter="Last 90 days";
-        String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForTIN";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "TIN");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","90 days");	
-
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
- 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	
- 		paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);
-        
-    }
-   
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
-   void testNPIOnlyFilter4To6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {         
-        String filterPayments="NPI Only";
-        String quickSearchFilter="Last 4-6 months";
-        String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForNPI";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "NPI");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","120 days");	
-
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
- 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	 		
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
-    }
-   
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
-   void testTINOnlyFilter4To6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {         
-        String filterPayments="TIN Only";
-        String quickSearchFilter="Last 4-6 months";
-        String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForTIN";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "TIN");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","120 days");	
-
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
- 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	 		
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
-    }
    
    @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
    void testNPIOnlyFilter6To9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
@@ -293,38 +208,16 @@ public class TestPayerViewPayments extends TestBase {
         String filterPayments="NPI Only";
         String quickSearchFilter="Last 6-9 months";
         String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForNPI";
-        
+        String paymentType="generalPaymentForNPI_6-9months";
         testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "NPI");	
 		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","180 days");
+		
 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
  		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	 		
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
-    }
-   
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
-   void testTINOnlyFilter6To9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
-    {         
-        String filterPayments="TIN Only";
-        String quickSearchFilter="Last 6-9 months";
-        String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForTIN";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "TIN");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","180 days");
-
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
- 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	 		
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
+ 		 home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
     }
    
    @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
@@ -333,12 +226,86 @@ public class TestPayerViewPayments extends TestBase {
         String filterPayments="NPI Only";
         String quickSearchFilter="Last 9-13 months";
         String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForNPI";
-        
+        String paymentType="generalPaymentForNPI_9-13months";
         testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "NPI");	
 		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","270 days");	
+
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+ 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+ 		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
+    }
+   
+   /**
+    * Tin only
+    * 
+    */
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   void testTINOnlyFilter60Days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+         
+        String filterPayments="TIN Only";
+        String quickSearchFilter="Last 60 days";
+        String MktTypeFilter = "Show All";
+        String paymentType="generalPaymentForTIN_60days";
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+		testConfig.putRunTimeProperty("value", "TIN");	
+		testConfig.putRunTimeProperty("payerID", "87726");		
+
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+ 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+ 		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);
+        
+    }
+   
+  
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   void testTINOnlyFilter90Days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {
+        String filterPayments="TIN Only";
+        String quickSearchFilter="Last 90 days";
+        String MktTypeFilter = "Show All";
+        String paymentType="generalPaymentForTIN_90days";
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+		testConfig.putRunTimeProperty("value", "TIN");	
+		testConfig.putRunTimeProperty("payerID", "87726");	
+			
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+ 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+ 		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter); 
+    }
+   
+   
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   void testTINOnlyFilter4To6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {         
+        String filterPayments="TIN Only";
+        String quickSearchFilter="Last 4-6 months";
+        String MktTypeFilter = "Show All";
+        String paymentType="generalPaymentForTIN_4_6months";
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+		testConfig.putRunTimeProperty("value", "TIN");	
+		testConfig.putRunTimeProperty("payerID", "87726");		
+
+        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+ 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+ 		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
+    }
+   
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   void testTINOnlyFilter6To9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    {         
+        String filterPayments="TIN Only";
+        String quickSearchFilter="Last 6-9 months";
+        String MktTypeFilter = "Show All";
+        String paymentType="generalPaymentForTIN_6_9months";
+        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+		testConfig.putRunTimeProperty("value", "TIN");	
+		testConfig.putRunTimeProperty("payerID", "87726");	
 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
@@ -347,46 +314,43 @@ public class TestPayerViewPayments extends TestBase {
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
     }
    
+   
+   
    @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
    void testTINOnlyFilter9To13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {         
         String filterPayments="TIN Only";
         String quickSearchFilter="Last 9-13 months";
         String MktTypeFilter = "Show All";
-        String paymentType="generalPaymentForTIN";
-        
+        String paymentType="generalPaymentForTIN_9_13months";
         testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 		testConfig.putRunTimeProperty("value", "TIN");	
-		testConfig.putRunTimeProperty("payerID", "87726");	
-		testConfig.putRunTimeProperty("days","270 days");	
+		testConfig.putRunTimeProperty("payerID", "87726");		
 
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
  		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);	 		
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
+ 		home.clickViewPaymentsTab().payerTin(paymentType).verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);        
     }
         
    @Test(priority=4,description="TS003_View Payments_chronological order of payments" + "<br>" + "Validate Payment date sorting for both ascending and descending")
    void testPaymentDateSorting() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {  
-	    String filterPayments= "Show All";
-	    String quickSearchFilter="";
-	    quickSearchFilter="Last 4-6 months";
-	    String MktTypeFilter = "Show All";
-        
-        testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
-		testConfig.putRunTimeProperty("value", "TIN");		
-		testConfig.putRunTimeProperty("payerID", "87726");
+	   String paymentType="generalPayment90Days";
+   	   String filterPayments="Show All";
+   	   String quickSearchFilter="Last 90 days";
+       testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+	   testConfig.putRunTimeProperty("value", "TIN");		
+	   testConfig.putRunTimeProperty("payerID", "87726");
 		
-        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin();
+       UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+       OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
+	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
+ 	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
  		
-        home.clickViewPaymentsTab().setSearchFilters(filterPayments, quickSearchFilter, filterPayments, MktTypeFilter);
-        paymentSummaryPage.verifyPaymentDateSorting("Desc");
-        paymentSummaryPage.verifyPaymentDateSorting("Asc");    
+       home.clickViewPaymentsTab().setSearchFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
+       paymentSummaryPage.verifyPaymentDateSorting("Desc");
+       paymentSummaryPage.verifyPaymentDateSorting("Asc");    
    }
       
    @Test(priority=5,description="TS012_View Payments_Market Type filter_Medical_Dental etc" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type")
