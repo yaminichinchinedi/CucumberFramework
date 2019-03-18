@@ -69,6 +69,7 @@ public class ReviewAndSubmit {
 	
 	public EnrollmentSubmitted fillInfoAndClickSubmit() throws IOException
 	{
+		//Element.expectedWait(chkAccptance, testConfig, "Accept terms and condition", "Check Acceptance");
 		Element.clickByJS(testConfig,chkAccptance, "Accept terms and condition");
 		fillAuthorizedEnrollersInfo();
 		Element.clickByJS(testConfig,btnEnrllmnt, "Submit Enrollment");

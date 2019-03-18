@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 import org.openqa.selenium.By;
@@ -26,32 +27,35 @@ public class Footer extends TestBase {
 	 @FindBy(xpath="//nobr")
 	private WebElement cpyright;
 
+	 @FindBy(className="copyright")
+    private WebElement cpyrightwthoutnobr;
 
+	 
 
+	public Footer(TestBase testConfig)
+	{
+		PageFactory.initElements(testConfig.driver, this);
+		Browser.waitForLoad(testConfig.driver);	
+		Element.expectedWait(lnkPrvcyPlcy, testConfig, "Privacy Policy", "Privacy Policy");
+	
+		
+	}
 
 	public void validateFooterContents(TestBase testConfig) {
 		// Check first privacy policy
 
-		
-		//this.testConfig = testConfig;
-		PageFactory.initElements(testConfig.driver, this);
-		Browser.waitForLoad(testConfig.driver);
-		
+
 		String parentwindowhandle=testConfig.driver.getWindowHandle();
 
-		//System.out.println("Current URL is:"+testConfig.driver.getCurrentUrl());
-		
 		Browser.scrollToBottom(testConfig);
-		//System.out.println("scrolled to bottom");
+		
 		Element.click(lnkPrvcyPlcy, "Privacy Policy");
 		Browser.switchToNewWindow(testConfig);
 		String expectePrivacydURL = "Website_Privacy_Policy.pdf";
 		
 
 		Browser.verifyURL(testConfig, expectePrivacydURL);
-		//System.out.println("Privacy Policy passed");
-
-//		
+		
 		 //Then check Terms of Use
 
 		 Browser.switchToParentWindow( testConfig,  parentwindowhandle);
@@ -61,24 +65,42 @@ public class Footer extends TestBase {
 		 Browser.switchToNewWindow(testConfig);
 		 String expecteTrmsOfUsedURL="Terms_of_Use.pdf";
 		 Browser.verifyURL( testConfig, expecteTrmsOfUsedURL);
-		 System.out.println("Terms of used passed");
+		
 		 
 		 
 		 
 		 String actualcopyright=null;
+		 int cpyrghtlngth=0;
 		  //Then check for copyright
 		 Browser.switchToParentWindow( testConfig,  parentwindowhandle);
-		 try{
-		  actualcopyright=cpyright.getText();
-		 }
-		 catch(NoSuchElementException e)
+		// try{
+		if( (testConfig.driver.getCurrentUrl().toLowerCase().contains("providerefteraenroll")) ||
+			(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraproviderinfo"))	
+				)
+		{
+		Element.expectedWait(cpyrightwthoutnobr, testConfig, "CopyRight Element without nobr", "CopyRight Element");
+		actualcopyright=cpyrightwthoutnobr.getText();
+		}
+		
+		 else	
 		 {
-			 cpyright= testConfig.driver.findElement(By.className("copyright"));
-			 actualcopyright=cpyright.getText();
-		 }
+		Element.expectedWait(cpyright, testConfig, "CopyRight Element with nobr", "CopyRight Element");
+		actualcopyright=cpyright.getText();
+			}
+		  
+		 cpyrghtlngth=actualcopyright.length();
+		
+//		 }
+//		 catch(NoSuchElementException e)
+//		 {
+//			 
+//			 cpyright= testConfig.driver.findElement(By.className("copyright"));
+//			 actualcopyright=cpyright.getText();
+//			 
+//			 }
 		// System.out.println("value of copyright text:"+actualcopyright);
 		
-		 if(actualcopyright.length() != 10)
+		 if(cpyrghtlngth != 10)
 		 {
 			 actualcopyright=actualcopyright.substring(2);
 			 
@@ -92,16 +114,16 @@ public class Footer extends TestBase {
 		  
 		  if ( (Integer.parseInt(stryear)==year) && (optum.equalsIgnoreCase("optum")) ) 
 		  {
-			  //Assert.assertTrue(true);
-		  Log.Pass("Passed" + " " + ":" + "" + '\n' + "Expected was :" +" " + expectedcopyright + '\n' + "Actual is :" +" " +actualcopyright );
-		 // System.out.println("Copyright passed");
+			  
+		  Log.Pass("Passed Copyright Comparision" + " " + ":" + ""  + "Expected was :" +" " + expectedcopyright  + "and Actual is :" +" " +actualcopyright );
+		
 		  }
 		  
 		  else
 		  {
-			 //Assert.assertTrue(false);
-			  Log.Fail("Failed" + " " + ":" + "" + '\n' + "Expected was :" +" " + expectedcopyright + '\n' + "Actual is :" +" " +actualcopyright );
-		  //  System.out.println("Copyright failed"); 
+			 
+			  Log.Fail("Failed Copyright Comparision" + " " + ":" + ""  + "Expected was :" +" " + expectedcopyright  + "and Actual is :" +" " +actualcopyright );
+		 
 			  }
 		 
 
