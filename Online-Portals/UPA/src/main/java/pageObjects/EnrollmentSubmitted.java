@@ -1,6 +1,9 @@
 package main.java.pageObjects;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +14,8 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -20,6 +25,9 @@ public class EnrollmentSubmitted {
 	
 	@FindBy(xpath=".//*[@id='EFTERAregForm']//div[1]/p[4]/span")
 	WebElement imgPDF;
+	
+	@FindBy(linkText="Print Completed Enrollment Form")
+	WebElement lnkPrintPdf;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
@@ -98,7 +106,15 @@ public class EnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "Auth_Phn Number", enrollmentInfoPageObj.getAuthPhnNbr(), data.get("AUTH_TEL_NBR").toString());
 		Helper.compareEquals(testConfig, "Auth_Email", enrollmentInfoPageObj.getAuthEmail(), data.get("AUTH_EMAIL").toString());
 		
+//		readPDF();
+		verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
 		enrollmentInfoPageObj.clear();
+	}
+	
+	public void verifyEnrollmentFormIsDownloaded(String downloadedFile) throws IOException  {
+		boolean s=Helper.PDFDownloadVerification(testConfig,lnkPrintPdf,"Print Completed Enrollment Form",downloadedFile);
+		System.out.println("File Downloaded: "+s);
+//		if(s)
 	}
 	
 	public void verifyAuthEnrlTitle(Map data)
@@ -147,6 +163,28 @@ public class EnrollmentSubmitted {
 		Map BLdata=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "BL or VC", enrollmentInfoPageObj.getFinDocCode(), BLdata.get("DOC_TYP_CD").toString());
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
+	}
+	
+	public String readPDF() throws IOException {
+		String output="";
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+        testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
+        URL url = new URL(testConfig.driver.getCurrentUrl());
+        InputStream is = url.openStream();
+        BufferedInputStream fileToParse = new BufferedInputStream(is);
+        PDDocument document = null;
+        try {
+            document = PDDocument.load(fileToParse);
+            document.getNumberOfPages();
+            output = new PDFTextStripper().getText(document);
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            fileToParse.close();
+            is.close();
+        }
+        return output;
 	}
 	
 }

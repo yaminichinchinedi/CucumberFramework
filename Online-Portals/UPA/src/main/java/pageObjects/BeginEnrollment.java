@@ -286,7 +286,9 @@ public class BeginEnrollment {
 	
 	public String readPDF() throws IOException {
 		String output="";
-        testConfig.driver.get("file:///C:/Users/akushw10/Downloads/EnrollmentPDF.pdf");
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+//        testConfig.driver.get("file:///C:/Users/akushw10/Downloads/EnrollmentPDF.pdf");
+        testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
         URL url = new URL(testConfig.driver.getCurrentUrl());
         InputStream is = url.openStream();
         BufferedInputStream fileToParse = new BufferedInputStream(is);

@@ -218,7 +218,7 @@ public class TestBase {
 		
 		FirefoxProfile profile = new FirefoxProfile();
 		
-		profile.setPreference("browser.download.dir", "C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads");
+		profile.setPreference("browser.download.dir", "C:\\Automation\\Online-Portals\\UPA\\Downloads");
 		profile.setPreference("browser.download.folderList", 2);
  
 	
@@ -231,6 +231,7 @@ public class TestBase {
 		//needed for pdf download
 		profile.setPreference("pdfjs.disabled", true);
 		profile.setPreference("browser.download.useDownloadDir", "false"); 
+		
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
