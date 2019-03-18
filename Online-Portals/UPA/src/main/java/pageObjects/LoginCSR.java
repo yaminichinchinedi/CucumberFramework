@@ -148,6 +148,7 @@ public class LoginCSR {
 		FFdriver.quit();
 	}
 	
+
 //	public CSRHomePage doLogin(String userType)
 //	{
 //       Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, userType));
@@ -157,8 +158,13 @@ public class LoginCSR {
 //	   return new CSRHomePage(testConfig);
 //	}
 	
+	
+
+
+	
 	public CSRHomePage doLogin(String userType)
 	{
+
 	   String env=System.getProperty("env");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
@@ -166,14 +172,18 @@ public class LoginCSR {
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName"); 
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-	   return new CSRHomePage(testConfig);	
+
+	   return new CSRHomePage(testConfig); 
+
 	}
 	
-   private void fillCredsAndSignIn(String username, String password) {
+   
+	/*private void fillCredsAndSignIn(String username, String password) {
 	   Element.enterData(txtboxUserName, username, "Username entered as : " + id,"txtboxUserName");	
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 		
 	}
+
 
 //public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
 //   {   
@@ -186,6 +196,19 @@ public class LoginCSR {
 //			
 //	  return loggedInUserDetails;
 //    }
+
+    public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
+    {   
+	   id=testConfig.getUsername("CSR", userType, accessType, env);
+	   password=testConfig.getPassword("CSR", userType, accessType, env);	
+	   loggedInUserDetails.put("id", id);
+	   loggedInUserDetails.put("password", password);
+	   
+	   setUserProperties();
+			
+	  return loggedInUserDetails;
+    }*/
+
 	 
 	 public void setUserProperties() {
 			

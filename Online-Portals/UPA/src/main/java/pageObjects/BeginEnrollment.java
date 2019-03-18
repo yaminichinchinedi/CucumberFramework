@@ -50,7 +50,6 @@ public class BeginEnrollment {
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
 	
-
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
 	WebElement dwnldAchGuide;
 	
@@ -115,7 +114,7 @@ public class BeginEnrollment {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(btnContinue, testConfig, "Continue Button", "Continue Button");
-		Browser.wait(testConfig, 1);
+		
 	}
 	
 	
@@ -276,11 +275,14 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Survey Options",pageBody.get(0).findElements(By.tagName("li")).get(4).getText(), options.get(5).get("ANSWER_TXT"));
 		
 		Element.click(btnCancelEnrollment, "Cancel Enrollment");
-		Helper.compareEquals(testConfig, "Pop Up Heading",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "No Link",popUp.get(0).findElements(By.tagName("a")).get(2).getText().toLowerCase(),  dataTest.get(17).get("TEXT_VAL").toLowerCase());
-		Helper.compareEquals(testConfig, "Yes Link",popUp.get(0).findElements(By.tagName("a")).get(1).getText().toLowerCase(),  dataTest.get(18).get("TEXT_VAL").toLowerCase());
+
+		
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up Header",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up No",popUp.get(0).findElements(By.tagName("a")).get(1).getText().toLowerCase(),  dataTest.get(18).get("TEXT_VAL").toLowerCase());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up Yes",popUp.get(0).findElements(By.tagName("a")).get(2).getText().toLowerCase(),  dataTest.get(17).get("TEXT_VAL").toLowerCase());
+
 		
 	}
 	

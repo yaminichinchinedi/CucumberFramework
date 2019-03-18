@@ -87,6 +87,7 @@ public class Browser
 	public static void  acceptAlert(TestBase testConfig) {
 	    try {
 	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
+	       
 	        wait.until(ExpectedConditions.alertIsPresent());
 	        Alert alert = testConfig.driver.switchTo().alert();
 //	        alert.accept();
@@ -100,6 +101,24 @@ public class Browser
 	    }
 	}
 	
+	
+	
+	
+	public static void dismissAlert(TestBase testConfig) {
+	    try {
+	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
+	        wait.until(ExpectedConditions.alertIsPresent());
+	        Alert alert = testConfig.driver.switchTo().alert();
+	        alert.dismiss();
+	        Log.Comment("Alert is present and is dismissed");
+	    } catch (NoAlertPresentException e) {
+	        Log.Comment("No alert is present..continuing..");
+	    }
+	    
+	    catch (Exception e) {
+	        Log.Comment("No alert is present..continuing..");
+	    }
+	}
 	
 	public static void waitForLoad(WebDriver driver) 
 	{
@@ -529,7 +548,7 @@ public class Browser
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
-			Browser.waitForLoad(testConfig.driver);
+//			Browser.waitForLoad(testConfig.driver);
 			return oldWindow;
 		}
 		return null;
