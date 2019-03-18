@@ -87,6 +87,7 @@ public class Browser
 	public static void  acceptAlert(TestBase testConfig) {
 	    try {
 	        WebDriverWait wait = new WebDriverWait(testConfig.driver, 2);
+	       
 	        wait.until(ExpectedConditions.alertIsPresent());
 	        Alert alert = testConfig.driver.switchTo().alert();
 	        alert.accept();
@@ -546,7 +547,7 @@ public class Browser
 					Log.Pass("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
 				}
 			}
-			Browser.waitForLoad(testConfig.driver);
+//			Browser.waitForLoad(testConfig.driver);
 			return oldWindow;
 		}
 		return null;
