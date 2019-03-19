@@ -558,13 +558,13 @@ public class TestCreateEnrollment extends TestBase{
 		upaRegistrationPage = beginEnrollment.validateCancelEnrollmentBtnYes();
 	}
 	
-	@Test(priority=3,description="US1348562 - TS_00008 - User is able to download Enrollment Guide PDFs.")
-	public void testAbleToDwnldEnrlmntPdf()
-	{
-		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
-		beginEnrollment.validateUserIsAbleToDwnldEnrlmntPdf();		
-	}
+//	@Test(priority=3,description="US1348562 - TS_00008 - User is able to download Enrollment Guide PDFs.")
+//	public void testAbleToDwnldEnrlmntPdf()
+//	{
+//		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
+//		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
+//		beginEnrollment.validateUserIsAbleToDwnldEnrlmntPdf();		
+//	}
 	
 	@Test(priority=3,description="US1348562 - TS_00005 - Q and A are obtained from active entries in Survey Table (responses appear in appropriate order")
 	public void testBeginEnrollmentQuestions() throws IOException
