@@ -16,12 +16,18 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -37,7 +43,6 @@ import com.relevantcodes.extentreports.LogStatus;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
-
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
@@ -205,8 +210,12 @@ public class TestBase {
 
 	private static WebDriver initChromeDriver() {
 		LogTemp.Comment("Launching google chrome..");
-		System.setProperty("webdriver.chrome.driver","C:\\ChromeDriver\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
+		System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+"\\drivers\\chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+		
+		//For handling pop up -Loading of unpacked extensions is disabled by the administrator
+		options.setExperimentalOption("useAutomationExtension", false);
+		WebDriver driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
 	}
@@ -218,7 +227,7 @@ public class TestBase {
 		
 		FirefoxProfile profile = new FirefoxProfile();
 		
-		profile.setPreference("browser.download.dir", "C:\\AutomationFinal\\TestAutomation\\Online-Portals\\UPA\\Downloads");
+		profile.setPreference("browser.download.dir", System.getProperty("user.dir")+"\\Downloads");
 		profile.setPreference("browser.download.folderList", 2);
  
 	
@@ -227,14 +236,17 @@ public class TestBase {
 		 
 		profile.setPreference( "browser.download.manager.showWhenStarting", false );
 
-//		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");
 		//needed for pdf download
-//		profile.setPreference("pdfjs.disabled", true);
+		profile.setPreference("pdfjs.disabled", true);
 		profile.setPreference("browser.download.useDownloadDir", "false"); 
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		
+		//profile.setPreference("plugin.scan.Acrobat", "999.0");
+		//profile.setPreference("plugin.scan.plid.all", false);
+		
 		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-		capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+		capabilities.setCapability("firefox_binary","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 		capabilities.setCapability("marionette", true); 
 		capabilities.setCapability (FirefoxDriver.PROFILE, profile);
 		
@@ -398,26 +410,22 @@ public class TestBase {
 		}
 
 	}
-	public String getUsername(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	}
-	public String getPassword(String appName,String userType,String accessType,String env){
-		if(loginCredentials == null || loginCredentials.isEmpty()){
-			fetchAppCredentials();
-		}
-		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
-	}
+	
+	
+//	public String getUsername(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
+//	}
+//	public String getPassword(String appName,String userType,String accessType,String env){
+//		if(loginCredentials == null || loginCredentials.isEmpty()){
+//			fetchAppCredentials();
+//		}
+//		return loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
+//	}
 
 	
-	public void purgeDirectory(File dir)
-	{
-	    for (File file: dir.listFiles()) {
-	        if (file.isDirectory()) purgeDirectory(file);
-	        file.delete();
-	    }
-	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
-	}
+	
+	
 }

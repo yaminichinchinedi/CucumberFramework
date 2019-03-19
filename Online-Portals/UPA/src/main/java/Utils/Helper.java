@@ -31,11 +31,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.java.nativeFunctions.DataProvider;
+import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.WebElement;
 
 
 public class Helper
@@ -828,6 +830,39 @@ return previousDate.getTime();
 	{
 
 		String OLD_FORMAT = "dd/MM/yyyy";
+		String newDateString = null;
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		Date d = null;
+		try
+		{
+			d = sdf.parse(date);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		sdf.applyPattern(NEW_FORMAT);
+		newDateString = sdf.format(d);
+		Calendar c = Calendar.getInstance();
+		try
+		{
+			c.setTime(sdf.parse(newDateString));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, days); // number of days to add
+		return sdf.format(c.getTime()); // dt is now the new date
+
+	}
+	
+	
+	
+	public static String getDateBeforeOrAfterDays(int days, String NEW_FORMAT, String date,String oldFormat)
+	{
+
+		String OLD_FORMAT = oldFormat;
 		String newDateString = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
 		Date d = null;
@@ -2060,9 +2095,11 @@ return previousDate.getTime();
 	    	  {
 	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
 	    		 { 
-	    			 System.out.println("Actual equals expectd");
+//	    			 Log.Pass("Actual  equals expected");
+	    			 Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
+	    	        	
 	    	    	 if(expected.get(key).get(expectedInternalKey).equals(actual.get(key).get(expectedInternalKey)))
 	    	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    	    	   else
@@ -2084,6 +2121,67 @@ return previousDate.getTime();
 			listOfString.append(StringUtils.join(string,"; "));
 		return listOfString.toString();
 	}
+	
+	public static void purgeDirectory(File dir)
+	{
+	    for (File file: dir.listFiles()) {
+	        if (file.isFile()) 
+	        	//purgeDirectory(file);
+	        file.delete();
+	    }
+	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
+	}
+	
+	public static boolean isFileExist(File dir,String fileName)
+	{
+		boolean retun1=false;
+		
+		for (File file: dir.listFiles()) {
+	        if (file.getName().equals(fileName))
+	        {
+	        Log.Pass(fileName+" File is downloaded successfully");
+	       // file.delete();
+	        retun1= true;
+	        break;
+	        }
+//	        else
+//	        {
+//	        	retun1 = false;
+//	        }
+	    }	
+		return retun1;
+	}
+	
+	public static boolean PDFDownloadVerification(TestBase testConfig,WebElement elt,String namOfElement,String downloadedFile)
+	{
+	boolean isDownloaded=true;
+	String filedir=System.getProperty("user.dir")+"\\Downloads";
+	File fileDirectory=new File(filedir);
+	purgeDirectory( fileDirectory);
+	Element.clickByJS(testConfig, elt,downloadedFile);
+// Element.click( elt,namOfElement);
+	//add for verification in downloads folder hat file exists
+	//Browser.wait(testConfig,8);
+	int i=0;
+
+	while( ! isFileExist(fileDirectory,downloadedFile))
+	{
+	i++;
+	if (i>100000)
+	{
+	isDownloaded=false;
+    Log.Fail(downloadedFile+" File not downloaded");
+	break;
+
+	}
+
+	}
+	Log.Comment("value of i is:"+i);
+
+	return isDownloaded;
+
+	}
+	
 	
 	}
 

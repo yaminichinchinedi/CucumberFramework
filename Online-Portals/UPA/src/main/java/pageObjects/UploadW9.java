@@ -40,6 +40,7 @@ public class UploadW9 {
 	public ReviewAndSubmit uploadW9()  
 	{   
 		Element.enterData(btnW9,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnW9");
+		Browser.wait(testConfig, 2);
 		enrollmentInfoObj.setW9DocCode("W9");
 		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig, btnContinue, "Clicked Continue");
