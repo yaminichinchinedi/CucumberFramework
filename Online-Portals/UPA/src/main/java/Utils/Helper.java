@@ -2182,5 +2182,52 @@ return previousDate.getTime();
 
 	}
 	
+	public static void compareLinkedMaps(TestBase testConfig,String what,LinkedHashMap<String, String> expected,LinkedHashMap<String, String> actual) 
+	{
+	   if(expected.keySet().equals(actual.keySet()))
+	   {
+		   for(String expectedKey : expected.keySet()) 
+		   {
+			   if(expected.get(expectedKey).equals(actual.get(expectedKey)))
+	
+				  Log.Pass("Passed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
+    	    	   else
+    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
+    		     
+			   }
+				   
+		   }
+	   else 
+	   {
+		   Log.Fail("Expected key set was : " + expected.keySet() + " whereas actual key set is : " + actual.keySet());
+	   }
+	   }
+	   
+
+
+public static String addDays(String date, int days) throws ParseException {
+		
+		//Given Date in String format
+		String oldDate = date;  
+		
+		//Specifying date format that matches the given date
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		try{
+		   //Setting the date to the given date
+		   c.setTime(sdf.parse(oldDate));
+		}catch(ParseException e){
+			e.printStackTrace();
+		 }
+		   
+		//Number of Days to add
+		c.add(Calendar.DAY_OF_MONTH, days);  
+		//Date after adding the days to the given date
+		String newDate = sdf.format(c.getTime());  
+
+		return newDate;
+	   }
+	
 	
 	}
