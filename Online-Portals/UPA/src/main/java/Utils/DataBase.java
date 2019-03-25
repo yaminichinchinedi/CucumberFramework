@@ -3,6 +3,7 @@ package main.java.Utils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -21,7 +22,7 @@ public class DataBase
 {
 	public enum DatabaseType
 	{
-		IMPL(6),Stage(6), PROD(6),Stage2(6);
+		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test(6);
 
 	  public final int values;
 	  
@@ -96,6 +97,16 @@ public class DataBase
 		return executeSelectQuery(testConfig, selectQuery, dbType);
 	}
 
+	
+	
+	public static ResultSet testExecuteSelectQuery(TestBase testConfig, String query, DatabaseType dbType) throws IOException
+	{
+		// Read the Query column of SQL sheet of Test data excel
+		String selectQuery = query;
+		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		return executeSelectQuery(testConfig, selectQuery, dbType);
+	}
 	/**
 	 * Executes the select db query , and saves the result in
 	 * Config.runtimeProperties as well as returns Map
@@ -138,6 +149,10 @@ public class DataBase
          {
 	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
        }
+         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
+         {
+	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test);
+       }
     else
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
@@ -175,6 +190,8 @@ public class DataBase
 			dbType=DatabaseType.Stage2;
 	        else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
 	        dbType=DatabaseType.PROD;
+	        else if (System.getProperty("Database").equalsIgnoreCase("Automation"))
+		        dbType=DatabaseType.Automation;
 	        else
 	    	dbType=DatabaseType.IMPL; 
 		return dbType;
@@ -322,6 +339,10 @@ public class DataBase
          {
 	   return executeSelectQuery(testConfig,DatabaseType.PROD,sqlRow);
        }
+         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
+         {
+	   return executeSelectQuery(testConfig,DatabaseType.Test,sqlRow);
+       }
     else
 	return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
 }
@@ -460,6 +481,25 @@ public class DataBase
 		// Read the Query column of SQL sheet of Test data excel
 		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject("SQL");
 		String updateQuery = sqlData.GetData(sqlToUpdate, "Query");
+
+		return executeUpdateQuery(testConfig, updateQuery, dbType);
+	}
+	
+	public static int executeUpdateQuery(TestBase testConfig, int sqlToUpdate)
+	{		
+		// Read the Query column of SQL sheet of Test data excel
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String updateQuery = sqlData.GetData(sqlToUpdate, "Query");
+		DatabaseType dbType=getDatabaseType();
+//		TestDataReader sqlData = testConfig.getCachedTestDataReaderObject("SQL");
+//		String updateQuery = sqlData.GetData(sqlToUpdate, "Query");
 
 		return executeUpdateQuery(testConfig, updateQuery, dbType);
 	}
@@ -606,13 +646,30 @@ public class DataBase
 				userName = testConfig.getRunTimeProperty("ProdDBUsername");
 				password = testConfig.getRunTimeProperty("ProdDBPassword");
 				break;
+				
+			case Test:
+				connectString = testConfig.getRunTimeProperty("TestDBConnectionString");
+				Log.Comment("Connecting to Test DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("TestDBUsername");
+				password = testConfig.getRunTimeProperty("TestDBPassword");
+				break;
+				
+			case Automation:
+				connectString = testConfig.getRunTimeProperty("AutomationDBConnectionString");
+				Log.Comment("Connecting to Automation DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("AutomationDBUsername");
+				password = testConfig.getRunTimeProperty("AutomationDBPassword");
+				break;
 			
 			default:
 				break;
 			}
 					
 			try
-			{
+			{ 
+				if(dbType.toString().equals("Automation"))
+				Class.forName(testConfig.getRunTimeProperty("SQLConnectionDriver"));
+				else
 				Class.forName(testConfig.getRunTimeProperty("DBConnectionDriver"));
 			}
 			catch (ClassNotFoundException e)
@@ -750,4 +807,200 @@ public class DataBase
 		}
 	}
 	
+	
+	
+	public static Map<String, String> executeSelectQueryDB(TestBase testConfig, int sqlRow, int rowNumber)
+	{
+		
+		String selectQuery="select *  from eps_automation.queries_config where sqlRow=%d";
+		selectQuery=String.format(selectQuery, sqlRow);
+		
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		
+		
+		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
+		{
+          return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage);
+		}
+		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
+         {
+	    return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
+         }
+         else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
+         {
+	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+       }
+    else
+	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
+}
+	
+	
+	
+	
+	
+
+	/**
+	 * Executes the update db query
+	 * 
+	 * @param Config
+	 *            test config instance
+	 * @param dbType
+	 *            the type of database
+	 * @param updateStatement
+	 *            query to be executed
+	 * @param values
+	 *            prepared statement values
+	 * @return number of rows affected
+	 */
+	public static int executeUpdatePreparedStatement(TestBase testConfig, int sqlRow, Object[] values)
+	{
+		String updateStatement = getQuery(testConfig, sqlRow);
+		PreparedStatement stmt = null;
+		int rows = 0;
+		try
+		{	
+			Log.Comment("\nExecuting the update query - '" + updateStatement + "'", testConfig);
+			stmt = setPreparedStatementValues(testConfig, updateStatement, values);
+			rows = stmt.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			Log.Comment("Exception is " +e);
+		}
+		finally
+		{
+			if (stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch (SQLException e)
+				{
+					Log.Comment("Exception is " +e);
+				}
+			}
+		}
+		
+		if (0 == rows)
+			Log.Comment("No rows were updated by this query");
+		else
+			Log.Comment("No. of rows  updated by this query :" + rows);
+
+		return rows;
+	}
+
+	/**
+	 * Executes the select query
+	 * 
+	 * @param Config
+	 *            test config instance
+	 * @param dbType
+	 *            the type of database
+	 * @param updateStatement
+	 *            query to be executed
+	 * @param values
+	 *            prepared statement values
+	 * @return number of rows affected
+	 */
+	public static List<HashMap<String, String>> executeSelectPreparedStatement(TestBase testConfig, int sqlRow, Object[] values)
+	{
+		String selectQuery = getQuery(testConfig, sqlRow);
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+		List<HashMap<String, String>> finalResult =null;
+		try
+		{	
+			Log.Comment("Executing the select query - '" + selectQuery + "'", testConfig);
+			stmt = setPreparedStatementValues(testConfig, selectQuery, values);
+			result = stmt.executeQuery();
+			finalResult = convertResultSetToList(null, result);
+		}
+		catch (SQLException e)
+		{
+			Log.Comment("Exception is " +e);
+		}
+		finally
+		{
+			if (stmt != null)
+			{
+				try
+				{
+					stmt.close();
+				}
+				catch (SQLException e)
+				{
+					Log.Comment("Exception is " +e);
+				}
+			}
+		}
+		
+		if (result == null)
+			Log.Comment("No rows were returned by this query");
+		else
+			Log.Comment("Rows have been returned by this query" );
+
+		return finalResult;
+	}
+	
+	
+	public static PreparedStatement setPreparedStatementValues(TestBase testConfig, String updateStatement, Object[] values)
+	 {
+		 Connection con = null;
+		 PreparedStatement stmt= null;
+		 try
+		 {
+
+			 Log.Comment("Creating the prepared statements for the query being executed '" + updateStatement + "'", testConfig);
+			 DatabaseType dbType = getDatabaseType();
+			 con = getConnection(testConfig, dbType);
+			 stmt= con.prepareStatement(updateStatement);
+			 if(values != null)
+			 {
+				 for(int index =0; index < values.length; index++)
+				 {
+					 if( values[index] instanceof Integer )
+					 {
+						 stmt.setInt(index+1, (int)values[index] );
+					 }
+					 else if(values[index] instanceof String )
+					 {
+						stmt.setString(index+1, (String)values[index]); 
+					 }
+					 else if(values[index] instanceof Double )
+					 {
+							stmt.setDouble(index+1, (double)values[index]);
+					 }
+					 else if(values[index] instanceof Boolean )
+					 {
+						 stmt.setBoolean(index+1, (boolean)values[index]);
+					 }
+				 }
+			 }
+		 }
+		 catch(Exception ex)
+		 {
+			 Log.Comment("Exception generated while preparing Prepared Statement " +ex);
+		 }
+		 return stmt;
+	 }
+
+
+	public static String getQuery(TestBase testConfig, int sqlRow)
+	{
+		TestDataReader sqlData = null;
+		try 
+		{
+			Log.Comment("Retrieving the query to be executed ", testConfig);
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		String query = sqlData.GetData(sqlRow, "Query");
+		return query;
+	}
+	
+
 }

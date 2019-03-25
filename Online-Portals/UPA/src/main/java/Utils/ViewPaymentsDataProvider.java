@@ -1,11 +1,14 @@
 package main.java.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.print.attribute.HashAttributeSet;
 
 import org.openqa.selenium.support.PageFactory;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.HomePage;
@@ -16,10 +19,12 @@ public class ViewPaymentsDataProvider {
 	
 	private TestBase testConfig;
 	
+	
 	public ViewPaymentsDataProvider(TestBase testConfig) {
 		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		
 	}
 	
 	//Default Constructor
@@ -28,6 +33,7 @@ public class ViewPaymentsDataProvider {
 	}
 
 
+	
    /**
    * This function is basically
    * for preparing the data in 
@@ -40,6 +46,8 @@ public class ViewPaymentsDataProvider {
 public String getTinForPaymentType(String paymentType)
 	{
 		int sqlRowNo=0;
+		String payType="";
+		paymentSummary paySum=new paymentSummary(testConfig,"filter");
  		switch(paymentType) 
  		 {
  		    case "failedPayment": 
@@ -51,13 +59,17 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		    case "remitPayment":
- 			sqlRowNo=31; //35
+ 			sqlRowNo=31;//35; 
  			break;
  			
  		    case "generalPayment":
- 	 		sqlRowNo=37; 
+ 	 		sqlRowNo=127;//37; 
  	 		break;
  			
+ 		   case "generalPayment30Days":
+ 	 	 		sqlRowNo=129;//37; 
+ 	 	 		break;
+ 	 			
  		   case "nonEpraPayment":
  		   { 
  		      testConfig.putRunTimeProperty("paymentNo",getPaymentNoDetails("nonEpraPayment").get("paymentNo").toString());
@@ -102,61 +114,299 @@ public String getTinForPaymentType(String paymentType)
 			break;
 
  		   
- 		case "byElectronicPmt":
- 			sqlRowNo=48;
- 			break;
- 			
- 		case "byCheckPmt":
- 			sqlRowNo=50;
- 			break;
- 			
- 		case "byElectronicPaymentForVCP":
- 			testConfig.putRunTimeProperty("type","VCP");
- 			sqlRowNo=52;
- 			break;
- 		case "byElectronicPaymentForNON":
- 			testConfig.putRunTimeProperty("type","NON");
+//<<<<<<< HEAD
+// 		case "byElectronicPmt":
+// 			sqlRowNo=48;
+// 			break;
+// 			
+// 		case "byCheckPmt":
+// 			sqlRowNo=50;
+// 			break;
+// 			
+// 		case "byElectronicPaymentForVCP":
+// 			testConfig.putRunTimeProperty("type","VCP");
+// 			sqlRowNo=52;
+// 			break;
+// 		case "byElectronicPaymentForNON":
+// 			testConfig.putRunTimeProperty("type","NON");
+//
+// 		
+// 		 case "byElectronicPaymentforStatus":
+// 			sqlRowNo=52;
+// 			break;
+// 			
+// 		 case "DD":
+// 			 testConfig.putRunTimeProperty("type","DD");
+// 			 sqlRowNo=54;
+// 			 break;
+//
+// 		 case "byElectronicPaymenForACH":
+// 		 case "selectTin":
+// 			 testConfig.putRunTimeProperty("type","ACH");
+// 			 sqlRowNo=56;
+// 			 break;
+// 		case "byElectronicPaymenForCHK":
+//			 testConfig.putRunTimeProperty("type","CHK");
+//			 sqlRowNo=56;
+//			 break;
+// 		case "byDOPAndPatientNmForTricare":
+//			 sqlRowNo=63;
+//			 break;
+//			 
+// 		case "byCheckNoOfReoriginNacha":
+// 			sqlRowNo=98;
+// 			break;
+// 			
+// 		case "byCheckNoOfConslPayDtl":
+// 			sqlRowNo=99;
+// 			break;
+//=======
+ 		case "generalPaymentForTIN":
+			sqlRowNo=51; 
+			break;
 
- 		
- 		 case "byElectronicPaymentforStatus":
- 			sqlRowNo=52;
- 			break;
- 			
- 		 case "DD":
- 			 testConfig.putRunTimeProperty("type","DD");
- 			 sqlRowNo=54;
- 			 break;
-
- 		 case "byElectronicPaymenForACH":
- 		 case "selectTin":
- 			 testConfig.putRunTimeProperty("type","ACH");
- 			 sqlRowNo=56;
- 			 break;
- 		case "byElectronicPaymenForCHK":
-			 testConfig.putRunTimeProperty("type","CHK");
-			 sqlRowNo=56;
+		case "generalPaymentForNPI_30days":
+		{
+			 paySum.getQuickSearchDates("Last 30 days");
+			 sqlRowNo=131;
 			 break;
- 		case "byDOPAndPatientNmForTricare":
-			 sqlRowNo=63;
+		}
+		     
+		case "generalPaymentForNPI_60days":
+		{
+			 paySum.getQuickSearchDates("Last 60 days");
+			 sqlRowNo=130;
 			 break;
+		}
+			
+		case "generalPaymentForNPI_90days":
+		{
+			paySum.getQuickSearchDates("Last 90 days");
+			sqlRowNo=147;
+			break;
+		}
+		
+		case "generalPaymentForNPI_4-6months":
+		{
+			paySum.getQuickSearchDates("Last 4-6 months");
+			sqlRowNo=132; 
+	 		break;
+		}
+		
+		case "generalPaymentForNPI_6-9months":
+		{
+			  paySum.getQuickSearchDates("Last 6-9 months");
+			  sqlRowNo=132; 
+		 	  break;
+			
+		}
+		case "generalPaymentForNPI_9-13months":
+		{
+			  paySum.getQuickSearchDates("Last 9-13 months");
+			  sqlRowNo=132; 
+		 	  break;
+		}
 			 
- 		case "byCheckNoOfReoriginNacha":
- 			sqlRowNo=98;
- 			break;
- 			
- 		case "byCheckNoOfConslPayDtl":
- 			sqlRowNo=99;
- 			break;
+			
+		case "generalPayment60Days":
+		{
+			 paySum.getQuickSearchDates("Last 60 days");
+			 sqlRowNo=126; 
+	 		 break;
+		}
+		
+		case "generalPayment90Days":
+		{ 
+			paySum.getQuickSearchDates("Last 90 days");
+ 	 		sqlRowNo=143; 
+ 	 		break;
+		}
+ 	 		  
+		case "Last 4-6 months":
+		{     
+			  paySum.getQuickSearchDates("Last 4-6 months");
+			  sqlRowNo=127; 
+	 		  break;
+		}
+		
+		case "Last 9-13 months":
+		{
+			  paySum.getQuickSearchDates("Last 9-13 months");
+			  sqlRowNo=127; 
+		 	  break;
+			
+		}
+		case "Last 6-9 months":
+		{
+			  paySum.getQuickSearchDates("Last 6-9 months");
+			  sqlRowNo=127; 
+		 	  break;
+			
+		}
+		
+		case "generalPaymentForTIN_30days":
+		{
+			  paySum.getQuickSearchDates("Last 30 days");
+			  sqlRowNo=133; 
+		 	  break;
+			
+		}
+	
+		case "generalPaymentForTIN_60days":
+		{
+			  paySum.getQuickSearchDates("Last 60 days");
+			  sqlRowNo=134; 
+		 	  break;
+			
+		}
+		
+		case "generalPaymentForTIN_90days":
+		{
+			  paySum.getQuickSearchDates("Last 90 days");
+			  sqlRowNo=144; 
+		 	  break;
+			
+		}
+		
+		case "generalPaymentForTIN_4_6months":
+		{
+			  paySum.getQuickSearchDates("Last 4-6 months");
+			  sqlRowNo=135; 
+		 	  break;
+			
+		}
+		case "generalPaymentForTIN_6_9months":
+		{
+			  paySum.getQuickSearchDates("Last 6-9 months");
+			  sqlRowNo=135; 
+		 	  break;
+			
+		}
+		
+		case "generalPaymentForTIN_9_13months":
+		{
+			  paySum.getQuickSearchDates("Last 9-13 months");
+			  sqlRowNo=135; 
+		 	  break;
+			
+		}
+		
+		case "archiveOnly30Days":
+		{
+			 paySum.getQuickSearchDates("Last 30 days");
+			 sqlRowNo=136; 
+		 	 break;
+		}
+		
+		case "archiveOnly60Days":
+		{
+			 paySum.getQuickSearchDates("Last 60 days");
+			 sqlRowNo=137; 
+		 	 break;
+		}
+		
+		case "archiveOnly90Days":
+		{
+			 paySum.getQuickSearchDates("Last 90 days");
+			 sqlRowNo=145; 
+		 	 break;
+		}
+		
+		case "archiveOnly4_6months":
+		{
+			 paySum.getQuickSearchDates("Last 4-6 months");
+			 sqlRowNo=138; 
+		 	 break;
+		}
+		
+		case "archiveOnly6_9months":
+		{
+			 paySum.getQuickSearchDates("Last 6-9 months");
+			 sqlRowNo=138; 
+		 	 break;
+		}
+		case "archiveOnly9_13months":
+		{
+			 paySum.getQuickSearchDates("Last 9-13 months");
+			 sqlRowNo=138; 
+		 	 break;
+		}
+			
+		
+		case "activeOnly30Days":
+		{
+			 paySum.getQuickSearchDates("Last 30 days");
+			 sqlRowNo=139; 
+		 	 break;
+		}
+		
+		case "activeOnly60Days":
+		{
+			 paySum.getQuickSearchDates("Last 60 days");
+			 sqlRowNo=140; 
+		 	 break;
+		}
+		
+		case "activeOnly90Days":
+		{
+			 paySum.getQuickSearchDates("Last 90 days");
+			 sqlRowNo=146; 
+		 	 break;
+		}
+		
+		case "activeOnly4_6months":
+		{
+			 paySum.getQuickSearchDates("Last 4-6 months");
+			 sqlRowNo=141; 
+		 	 break;
+		}
+		
+		case "activeOnly6_9months":
+		{
+			 paySum.getQuickSearchDates("Last 6-9 months");
+			 sqlRowNo=141; 
+		 	 break;
+		}
+		case "activeOnly9_13months":
+		{
+			 paySum.getQuickSearchDates("Last 9-13 months");
+			 sqlRowNo=141; 
+		 	 break;
+		}
+			
+		case "medicalFilter":
+		{
+			payType="medicalPayment";
+			getPaymentNoDetails(payType);
+		}  
+	 	    break;
+		
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
- 		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
- 		Log.Comment("Tin retreived for search - " + "'"+ paymentType + "'"+ " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
- 		testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
- 		if(tinNumbers.containsKey("SETL_DT"))
- 			testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
+
+ 		if(!payType.equalsIgnoreCase("medicalPayment"))
+ 		 { 
+ 		   Log.Comment("Getting tin for  " + paymentType);
+ 		   Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+ 		   
+ 		   try{
+ 		    Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
+ 		    testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
+ 		    }
+ 		  catch(Exception e)
+ 		  {
+ 			testConfig.putRunTimeProperty("AlreadyFailed","yes");
+ 			Log.FailWarning("No tin with payments from the above query, please execute the test case manually",testConfig);
+ 		  }
+ 		
+
  		return tinNumbers.get("PROV_TAX_ID_NBR").toString();
+ 		 }
+ 		else 
+ 			return testConfig.getRunTimeProperty("provTinNo");
+ 		
  	}
 
 	
@@ -228,7 +478,7 @@ public String getTinForPaymentType(String paymentType)
  		 	break;
  			
  		    case "remitPayment":
- 			sqlRowNo=32; 
+ 			sqlRowNo=32;//36; 
  			break;
  			
  		    case "nonEpraPayment":
@@ -242,6 +492,11 @@ public String getTinForPaymentType(String paymentType)
  		    case "VCP":
  	 		sqlRowNo=36; 
  	 		break;
+ 	 		 
+ 		    case "medicalPayment":
+ 		    sqlRowNo=142;
+ 		    break;
+ 	 		
  	 		
  	 		default:
  	 			Log.Comment("No SQL Row defined");
@@ -262,6 +517,13 @@ public String getTinForPaymentType(String paymentType)
 		
 		   testConfig.putRunTimeProperty("paymentNo",displayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
 		   testConfig.putRunTimeProperty("setlDate",dateToValidate);
+		   try{
+		   testConfig.putRunTimeProperty("provTinNo",displayConsNo.get("PROV_TAX_ID_NBR").toString());
+		   }
+		   catch(Exception e)
+		   {
+			   Log.Fail("Exception occured in setting Tin Number " + e);
+		   }
 		 }
 		else
 			Log.Warning("No result returned from query", testConfig);
@@ -326,7 +588,129 @@ public String getTinForPaymentType(String paymentType)
 		
 	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
 		filterCriteria="Last 9-13 months";
+	    
+	    paymentSummary pay=new paymentSummary(testConfig,"quickSearchDates");
+	    pay.getQuickSearchDates(filterCriteria);
 	
 	    return filterCriteria;
 	}
+	
+	
+	public String getTinForStatus(String status) {
+		int sqlRowNo=0;
+		boolean tinFlag = false;
+		switch(status) 
+		{
+		case "EnrolledActiveStatusTIN":
+			sqlRowNo=111; 
+			break;
+
+		case "EnrolledPreEnrollmentStatusTIN":
+			sqlRowNo=112; 
+			break;
+
+		case "AutoEnrolledPreEnrollmentStatusTIN":
+			sqlRowNo=113; 
+			break;
+
+		case "EnrolledInactiveAndBlockStatusTIN":
+			sqlRowNo=114; 
+			break;
+		
+		case "TINNotEnrolled":
+			tinFlag = true;
+			break;
+		
+		case "InactiveUnBlockedTIN":
+			sqlRowNo=115; 
+			break;
+
+		default:
+			Log.Comment("Payment Type " + status + " not found");
+		}
+		if(tinFlag==true) {
+			String tinNumber=Integer.toString(Helper.getUniqueTinNumber());	
+			return tinNumber;
+		}
+		else {
+		Log.Comment("Getting tin for  " + status);
+		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("Tin retreived from query for " + status + " is : " + tinNumbers.get("PROV_TIN_NBR").toString());
+		testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TIN_NBR").toString());
+		return tinNumbers.get("PROV_TIN_NBR").toString();
+		}
+	}
+	
+	
+public ArrayList getEnrollmentContent(String content) {
+		
+		int sqlRowNo=0;
+		ArrayList<String> contentList = new ArrayList<String>();
+		Map enrollmentContent;
+		
+		switch(content) 
+		{
+		case "EligibleTIN":
+			sqlRowNo=116; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for EligibleTIN is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());			
+			
+		case "provideInformation":
+			sqlRowNo=117; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for provideInformation is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "orgName":
+			sqlRowNo=118; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for orgName is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "administrators":
+			sqlRowNo=119; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for administrators is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "primaryContact":
+			sqlRowNo=120; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for primaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "secondaryContact":
+			sqlRowNo=121; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for secondaryContact is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "bankingInfo":
+			sqlRowNo=122; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for bankingInfo is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			
+		case "W-9":
+			sqlRowNo=123; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for W-9 is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			break;
+			
+		default:
+			Log.Comment("Enrollment Content not found");
+		}
+	
+		return contentList;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }

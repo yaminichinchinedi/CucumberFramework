@@ -12,9 +12,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -42,6 +44,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.xml.sax.SAXException;
+
+import com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentsservice_v1_0.EpsConsolidatedClaimPaymentSummary;
+
+import main.java.Utils.ViewPaymentsDataProvider;
+import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 
 public class paymentSummary extends ViewPaymentsDataProvider{
@@ -126,7 +133,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id=\"paymentsummaryform\"]/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[1]/th[13]/a")
 	WebElement lnkArchive;
 	
+
 	public SearchRemittance searchRemittance;
+
+	@FindBy(xpath="//*[@id='paymentsummaryform']/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[2]/td/span/input[1]")
+	WebElement txtBoxPayerTin2;
+
 	
 	
 	private TestBase testConfig;
@@ -142,15 +154,22 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		
 		service = new PaymentSummaryFislService();
 		
-		txtBoxPayerTin=Element.findElement(testConfig, "name", "payerProvTin");
-		txtBoxBSTin=Element.findElement(testConfig, "name", "billingProvTin");
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		
+		if(drpDwnQuickSearch!=null)
+			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		else
 		if(txtBoxPayerTin!=null)
 			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
 		else if(txtBoxBSTin !=null)
 			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
-		else
-			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		
+	}
+	
+	public paymentSummary(TestBase testConfig,String filter)
+	{
+		super(testConfig);
+		this.testConfig=testConfig;
 	}
 	
 	
@@ -177,9 +196,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			setlDate=getPaymentNoDetails(paymentType).get("setlDate");
 
 		String filterToBeSelected=getQuickSearchFilterCriteria(setlDate);
-		
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		Element.expectedWait(drpDwnQuickSearch, testConfig, "Quick Search Filter", "Quick Search Filter");
 		return this;
 	}
@@ -407,9 +427,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public void verifyDefaultSearchRecordCount() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
-			Helper.compareEquals(testConfig, "Record count from FISL and UI where FISL : ", getRecordCountFromFISL(), getRecordCountFromUI());
+			Helper.compareEquals(testConfig, "Record count from FISL and UI where FISL for 30 days (by default) : ", getRecordCountFromFISL(), getRecordCountFromUI());
 			else
-			 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
+			 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization. and Record count for 30 days (by default) is 0");
 	}
 		
 	/**
@@ -433,11 +453,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
         	Browser.waitForLoad(testConfig.driver);
     		Browser.wait(testConfig,2);
         }
-        
+		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
-		getQuickSearchDates(quickSearchFilter);
+//		getQuickSearchDates(quickSearchFilter);
 		
 		Element.selectByVisibleText(drpDwnMarketType,MktTypeFilter,MktTypeFilter + " " +" from 'Market Type' dropdown");	
 		Browser.wait(testConfig,3);
@@ -481,7 +501,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		{
 			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
 			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
-			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));	
+			System.out.println("from date" + testConfig.getRunTimeProperty("fromDate")) ;
+			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+			System.out.println("to date" + testConfig.getRunTimeProperty("toDate")) ;
 		}
 		
 		else 
@@ -584,7 +606,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			   innerMap.remove("Redemption Date");
 			   innerMap.remove("Proxy Number");
 			   innerMap.remove("Payment Status / Trace Number");
-			   innerMap.remove("Payer");
+			   innerMap.remove("Payer/Patient");
 			   innerMap.remove("Type");
 			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
 		    }
@@ -641,7 +663,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	
 	
-	public void verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public paymentSummary verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{	
 		setSearchFilters(filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter);
 		
@@ -656,6 +678,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+
+		return this;
      }
 	
 
@@ -769,18 +793,11 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public String getRecordCountFromDB()
 	{
-		//int sqlRowNo=4;
 		int totalRecord=0;
-		
-//		List<String> schemas=Arrays.asList("PP001","PP002","PP003","PP004","PP005","PP006","PP024");
-//		
-		int sqlRowNo=34;
-//		for(String schema:schemas)
-//		{
-//			testConfig.putRunTimeProperty("schema", schema);
-			Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			totalRecord=totalRecord+Integer.parseInt(srchConsolTable.get("RECORD_COUNT").toString().trim());
-//		}
+		int sqlRowNo=128;
+
+		Map srchConsolTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		totalRecord=totalRecord+Integer.parseInt(srchConsolTable.get("RECORD_COUNT").toString().trim());
 		
 		return String.valueOf(totalRecord);	
 	}	
@@ -870,14 +887,14 @@ public class paymentSummary extends ViewPaymentsDataProvider{
  * @throws ParserConfigurationException
  */
 	
-	public void verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public paymentSummary verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{	
 		String archiveFilter = "Show All";	
 		String actualPaymntNo = "";
 		String ZeroDollar = "$0.00";
         String dateToValidate = getPaymentNoDetails(expectedPaymentType).get("setlDate");
        
-    setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, archiveFilter);        
+        setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, archiveFilter);        
         
 		//FISL Response
 		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
@@ -902,8 +919,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 						actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 						actualPaymntNo=actualPaymntNo.replace("\n", "");
 						
-						if(payments[i-1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo)){
+						if(payments[i-1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo))
+						{
 							Log.Pass("FISL and UI Payment No", payments[i-1].getDisplayConsolidatedPaymentNumber(), actualPaymntNo);
+							Helper.compareContains(testConfig, "Zero dollar amount for above payment No: ", ZeroDollar, paymentAmountUI);
 							break OUTERLOOP;
 						}						
 					}
@@ -929,6 +948,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     		else
 			     Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
 		 }
+    	return this;
 	}
 	
 	public paymentSummary payerTin(){
@@ -944,6 +964,23 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		Element.click(btnSearch, "Search Button");
 		return this;
 	}
+	
+	public paymentSummary payerTin(String paymentType) 
+	 {
+		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		txtBoxPayerTin = Element.findElement(testConfig, "name", "payerProvTin");
+		if(txtBoxPayerTin!=null){
+			Element.enterData(txtBoxPayerTin, tin,"Entered TIN", "Payer Tin");
+		}
+		else{
+			Element.enterData(txtBoxPayerTin2, tin,"Entered TIN", "Payer Tin");
+		}
+//		Element.enterData(txtBoxPayerTin, tin,"Entered TIN", "Payer Tin");
+		testConfig.putRunTimeProperty("tin", tin);
+		Element.click(btnSearch, "Search Button");
+		return this;
+	}
 
 	/**
 	 * Getting response from EPSA
@@ -956,9 +993,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 		
 		/**Creates POJO for Request.xml so that we can modify the elements*/
+
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
+		if(testConfig.getRunTimeProperty("payerID")!=null)
+			setPayerID(epsPaymentsSearchRequest);
 		
 		/**Posting the modified request and getting response*/
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(epsPaymentsSearchRequest);
@@ -2068,8 +2108,134 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		return this;
 	}
 	
+	/**
+	 * This function creates an outer map 
+	 * with Key as payment number
+	 * and  Value as another hash map i.e. inner map
+	 * that contains all the details for key 
+	 * like payer name, amount etc
+	 * @return Outer map
+	 * @throws IOException 
+	 */	
+	public paymentSummary verifyPayerRolePayments() throws IOException{
+
+		int sqlRowNo=40;		
+		ArrayList<String> payerListFromDB = new ArrayList<String>();
+		List<String> payerListFromUI = new ArrayList<String>();
+		HashMap<Integer, HashMap<String, String>> payerMapFromDB = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+
+		for (int i = 1; i <= payerMapFromDB.size(); i++) {
+			payerListFromDB.add(payerMapFromDB.get(i).get("PAYR_NM"));
+			payerListFromDB.add(payerMapFromDB.get(i).get("PAYR_DSPL_NM"));
+			payerListFromDB.add(payerMapFromDB.get(i).get("SUB_PAYR_NM"));
+			payerListFromDB.add(payerMapFromDB.get(i).get("SUB_PAYR_DSPL_NM"));
+		}
+
+		Set<String> payersWithoutDuplicates = new LinkedHashSet<String>(payerListFromDB);
+
+		payerListFromDB.clear();
+		payerListFromDB.addAll(payersWithoutDuplicates);
+
+		for( Entry<String, LinkedHashMap<String, String>> entry : getPayerDetailsFromUI().entrySet() ){			
+			LinkedHashMap<String, String> innerMap= new LinkedHashMap<String,String>();
+			innerMap = entry.getValue();
+			Set<String> keys = innerMap.keySet();
+
+			for(String k:keys){
+				if(k.equalsIgnoreCase("Payer")){
+					payerListFromUI.add(innerMap.get(k)); 
+				}
+			}	        
+		}
+
+		for (String payer : payerListFromUI) {
+			if (payerListFromDB.contains(payer)) {
+				Log.Pass(payer + " :" + " " + "matches in both UI and DB");
+			}
+			else {
+				Log.Fail(payer + " :" + " " + "not present in DB");				
+			}
+		}
+		return this;		
+	}
+	
+	
+	public Map<String,LinkedHashMap<String,String>> getPayerDetailsFromUI()
+	{	   
+		LinkedHashMap<String,String> innerMap;	
+		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
+		ArrayList<String> headers=getHeadersFromResultTable();	   
+		int totalNoOfPages=getNumberOfPages();
+
+		if(totalNoOfPages>2)
+			totalNoOfPages=1;		   
+
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		{ 
+			Element.findElements(testConfig, "xpath", ".//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr"); 
+
+			for(int i=1;i<searchResultRows.size();i++)
+			{			   
+				innerMap=new LinkedHashMap<String,String>();
+				String details=searchResultRows.get(i).findElements(By.tagName("td")).get(0).getText();
+				details=details.replace("\n", "");
+				innerMap.put(headers.get(0), details);
+				outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+			}
+
+			if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			{   
+				int pageToBeClicked=pageNo+1;
+				WebElement pageLink= Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]");
+				if(pageLink!=null)
+					pageLink.click();
+				else
+					Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				Log.Comment("Clicked Page number : " + pageToBeClicked);
+				Browser.wait(testConfig, 3);
+			}
+			else if(pageNo%10==0 && totalNoOfPages!=2)
+			{
+				Browser.wait(testConfig,1);
+				LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+				Element.click(lnkNextPage,"Next Link");
+				Browser.wait(testConfig,3);
+				pageNo++;
+			}
+		}
+		return outerMap;
+	}
   		  
 	
+	
+
+	public paymentSummary verifyMktType(String marketType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{	
+		String archiveFilter = "Show All";	
+        String dateToValidate = testConfig.getRunTimeProperty("setlDate");
+        setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, marketType);        
+        
+		//FISL Response
+		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
+		Log.Comment("Total no.of payments with " + marketType +"filter are  :" + responseFromFISL.getResponseReturnStatus().getTotalCount());
+		
+		if(getNumberOfPages()>1)
+			Log.Comment("Verifying market type for top 30 payments");
+			
+		
+		//Verifying for 30 payments hence taken 1 page
+		for(int pageNo=1;pageNo<=1;pageNo++)
+		 {
+			for(int i=1; i<searchResultRows.size(); i++)
+			  {    		
+				Log.Comment("Verifying Market type for Payment No: " + payments[i-1].getDisplayConsolidatedPaymentNumber());
+				Helper.compareContains(testConfig, "Market Type", getDisplayMarketType(payments[i-1].getPaymentTypeIndicator()), searchResultRows.get(i).findElements(By.tagName("td")).get(9).getText());
+			  }
+		 }
+    			
+    	return this;
+	}
 	
 }
 

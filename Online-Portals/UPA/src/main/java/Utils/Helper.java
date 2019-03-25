@@ -31,11 +31,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import main.java.nativeFunctions.DataProvider;
+import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.WebElement;
 
 
 public class Helper
@@ -678,7 +680,6 @@ public class Helper
 	}
 	
 	
-	
 	public static Map<String, String> getStartAndEndPeriod(String argPeriod) {
 		
 		Map<String, String> startAndEndDatesMap = new HashMap<String, String>();
@@ -828,7 +829,7 @@ return previousDate.getTime();
 	public static String getDateBeforeOrAfterDays(int days, String NEW_FORMAT, String date)
 	{
 
-		String OLD_FORMAT = "dd/mm/yyyy";
+		String OLD_FORMAT = "dd/MM/yyyy";
 		String newDateString = null;
 		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
 		Date d = null;
@@ -842,7 +843,6 @@ return previousDate.getTime();
 		}
 		sdf.applyPattern(NEW_FORMAT);
 		newDateString = sdf.format(d);
-		
 		Calendar c = Calendar.getInstance();
 		try
 		{
@@ -853,35 +853,43 @@ return previousDate.getTime();
 			e.printStackTrace();
 		}
 		c.add(Calendar.DATE, days); // number of days to add
-		System.out.println(sdf.format(c.getTime()));
+		return sdf.format(c.getTime()); // dt is now the new date
+
+	}
+	
+	
+	
+	public static String getDateBeforeOrAfterDays(int days, String NEW_FORMAT, String date,String oldFormat)
+	{
+
+		String OLD_FORMAT = oldFormat;
+		String newDateString = null;
+		SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+		Date d = null;
+		try
+		{
+			d = sdf.parse(date);
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		sdf.applyPattern(NEW_FORMAT);
+		newDateString = sdf.format(d);
+		Calendar c = Calendar.getInstance();
+		try
+		{
+			c.setTime(sdf.parse(newDateString));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, days); // number of days to add
 		return sdf.format(c.getTime()); // dt is now the new date
 
 	}
 
-	public static String addDays(String date, int days) throws ParseException {
-		
-		//Given Date in String format
-		String oldDate = date;  
-		
-		//Specifying date format that matches the given date
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar c = Calendar.getInstance();
-		try{
-		   //Setting the date to the given date
-		   c.setTime(sdf.parse(oldDate));
-		}catch(ParseException e){
-			e.printStackTrace();
-		 }
-		   
-		//Number of Days to add
-		c.add(Calendar.DAY_OF_MONTH, days);  
-		//Date after adding the days to the given date
-		String newDate = sdf.format(c.getTime());  
-
-		return newDate;
-	   }
-	
 	public static String getDateBeforeOrAfterYears(int years, String format)
 	{
 		Date tomorrow = new Date();
@@ -2041,6 +2049,17 @@ return previousDate.getTime();
 		return randomInt;
 	}
 
+	public static int getUniqueNPINumber()
+	{
+		Random random = new Random(System.nanoTime());
+        int randomInt=random.nextInt(1000000000)+1;
+        while (String.valueOf(randomInt).length()!=10)
+        {
+        	randomInt=random.nextInt(1000000000)+1;
+        }
+		return randomInt;
+	}
+	
 	public static void compareEquals(TestBase testConfig, String what,ArrayList<String> expected, ArrayList<String> actual) 
 	{ 
 		separateListValues(expected,";");
@@ -2058,59 +2077,26 @@ return previousDate.getTime();
 		}
 
 
-	public static void compareLinkedMaps(TestBase testConfig,String what,LinkedHashMap<String, String> expected,LinkedHashMap<String, String> actual) 
-	{
+//	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
+//	{
 //	   if(expected.equals(actual))
 //			Log.Pass("Passed" + " " + what + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual );
 //			else 
 //				Log.Fail("Failed" + what + ":" + "" + "<br>" + "Expected was :" +" " + expected + '\n' + "Actual is :" +" " +actual);
-	   
-	   if(expected.keySet().equals(actual.keySet()))
-	   {
-		   for(String expectedKey : expected.keySet()) 
-		   {
-			   if(expected.get(expectedKey).equals(actual.get(expectedKey)))
-	
-				  Log.Pass("Passed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
-    	    	   else
-    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedKey + '\n' + "Expected was :" + " " + expected.get(expectedKey) + '\n' + "Actual is :" +" " +actual.get(expectedKey));
-    		     
-			   }
-				   
-		   }
-	   else 
-	   {
-		   Log.Fail("Expected key set was : " + expected.keySet() + " whereas actual key set is : " + actual.keySet());
-	   }
-	   }
-	   
-//	   for (String expectedKey : expected.keySet()) 
-//	     {
-//		   if(expectedKey.equals(actual.keySe)
-//	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
-//	    	   else
-//	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
-//		      }
-//      	
-//  	
-//  	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
-//  	   else
-//  		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
-//	      }
-//	  }
-
+//	}
 	
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
-	{	
+	{
 		try{
 		Set<String> expectedKeys = expected.keySet();	
 		for (String key : expectedKeys) 
 		{
-			Log.Comment('\n' + "Comparing results for Payment Number :" + " " + key + '\n');
 	    	 if(expected.get(key).keySet() != null)
 	    	  {
 	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
 	    		 { 
+//	    			 Log.Pass("Actual  equals expected");
+	    			 Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
 	    	        	
@@ -2120,18 +2106,13 @@ return previousDate.getTime();
 	    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    		      }
 	    		  }
-	    		 else
-	    		 {
-	    			 Log.Fail("Expected and actual Key dows not match " + '\n' + "Expected Key set was : " + expected.get(key).keySet() + "whereas Actual keyset is :" + actual.get(key).keySet() );
-	    		 }
 	    	  }
 		}
 	}	 
 		catch (Exception e) {
-			Log.Fail("Unable to compare maps due to Exception " +'\n' + e );
+			Log.Comment("Exception" + e);
 		}
 	}
-		
 	
 	public static String separateListValues(List<String> list,String separator)
 	{
@@ -2141,37 +2122,65 @@ return previousDate.getTime();
 		return listOfString.toString();
 	}
 	
-	public static String getDateBeforeOrAfterDays(int days, String OLD_FORMAT, String NEW_FORMAT, String date)
+	public static void purgeDirectory(File dir)
 	{
+	    for (File file: dir.listFiles()) {
+	        if (file.isFile()) 
+	        	//purgeDirectory(file);
+	        file.delete();
+	    }
+	    Log.Comment("Cleaned directory : " + dir.getAbsolutePath());
+	}
+	
+	public static boolean isFileExist(File dir,String fileName)
+	{
+		boolean retun1=false;
+		
+		for (File file: dir.listFiles()) {
+	        if (file.getName().equals(fileName))
+	        {
+	        Log.Pass(fileName+" File is downloaded successfully");
+	       // file.delete();
+	        retun1= true;
+	        break;
+	        }
+//	        else
+//	        {
+//	        	retun1 = false;
+//	        }
+	    }	
+		return retun1;
+	}
+	
+	public static boolean PDFDownloadVerification(TestBase testConfig,WebElement elt,String namOfElement,String downloadedFile)
+	{
+	boolean isDownloaded=true;
+	String filedir=System.getProperty("user.dir")+"\\Downloads";
+	File fileDirectory=new File(filedir);
+	purgeDirectory( fileDirectory);
+	Element.clickByJS(testConfig, elt,downloadedFile);
+// Element.click( elt,namOfElement);
+	//add for verification in downloads folder hat file exists
+	//Browser.wait(testConfig,8);
+	int i=0;
 
-	String newDateString = null;
-	SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-	Date d = null;
-	try
+	while( ! isFileExist(fileDirectory,downloadedFile))
 	{
-	d = sdf.parse(date);
-	}
-	catch (ParseException e)
+	i++;
+	if (i>100000)
 	{
-	e.printStackTrace();
+	isDownloaded=false;
+    Log.Fail(downloadedFile+" File not downloaded");
+	break;
+
 	}
-	sdf.applyPattern(NEW_FORMAT);
-	newDateString = sdf.format(d);
-	Calendar c = Calendar.getInstance();
-	try
-	{
-	c.setTime(sdf.parse(newDateString));
+
 	}
-	catch (ParseException e)
-	{
-	e.printStackTrace();
-	}
-	c.add(Calendar.DATE, days); // number of days to add
-	return sdf.format(c.getTime()); // dt is now the new date
+	Log.Comment("value of i is:"+i);
+
+	return isDownloaded;
 
 	}
 	
-}
 	
-
-
+	}

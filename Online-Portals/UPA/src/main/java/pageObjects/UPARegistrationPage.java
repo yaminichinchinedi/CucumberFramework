@@ -50,19 +50,18 @@ public class UPARegistrationPage{
 	public UPARegistrationPage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;		
+		Browser.dismissAlert(testConfig);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
 		Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-		
 	}
 	
 	public void clickAndVerifyOptumLogo()
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkOptumLogo,"Optum Logo at header");
-		Browser.waitForLoad(testConfig.driver);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
@@ -70,9 +69,9 @@ public class UPARegistrationPage{
 	{
 		String expectedURL="/registrationSignIn.do";
 		Element.click(lnkHeaderHome,"Header Home");
-		Browser.waitForLoad(testConfig.driver);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Login");
+		
 		Browser.verifyURL(testConfig, expectedURL);
-		//Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderBenefitsOfEPS()
@@ -87,33 +86,35 @@ public class UPARegistrationPage{
 	public void clickAndVerifyHeaderHowToEnroll()
 	{
 		String expectedURL="How To Enroll";
-		Element.expectedWait(lnkHeaderHowtoEnroll, testConfig, "Header How to Enroll", "Header How to Enroll");
-		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
+		Browser.wait(testConfig, 2);
+		lnkHeaderHowtoEnroll=Element.findElement(testConfig, "linkText", "How to Enroll");
+		Element.clickByJS(testConfig,lnkHeaderHowtoEnroll,"How to enroll");
+		Element.click(lnkHeaderHowtoEnroll,"How to enroll");
+		
+//		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
-		expectedURL=expectedURL.replace(" " , "");
-		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
+		Helper.compareContains(testConfig, "Browser URL", expectedURL.replace(" " , ""), Browser.getURL(testConfig));
 	}
 	
 	public void clickAndVerifyHeaderFAQs()
 	{
 		String expectedURL="/epsFaqs.do";
-		System.out.println("faq" + testConfig.driver.getTitle());
 		Element.click(lnkHeaderFAQs,"Header FAQs");
-		Browser.wait(testConfig, 2);
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "FAQS");
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
 
 		
-	public EnrollmentTypePage clickEnrollNow()
+	public BeginEnrollment clickEnrollNow()
 	{
 		Element.click(lnkEnrollNow,"Enroll Now");
-		return new EnrollmentTypePage(testConfig);
+		return new BeginEnrollment(testConfig);
 	}
 	
-	public EnrollmentTypePage clickbtnEnrollNow()
+	public BeginEnrollment clickbtnEnrollNow()
 	{
 		Element.click(btnEnrollNow,"Enroll Now");
-		return new EnrollmentTypePage(testConfig);
+		return new BeginEnrollment(testConfig);
 	}
 	
 	public OptumIdLoginPage clickSignInWithOptumId()
@@ -151,56 +152,69 @@ public class UPARegistrationPage{
 		   
 	}
 	
-		
-	public void doCompleteEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
-	{
-		   int i=0;
-		   boolean result=true;
-		   while(i<noOfEnrollments) 
-		   {
-		 	 try 
-		      {
-		    	EnrollmentTypePage enrollmentTypePage = registrationPage.clickEnrollNow();
-		        ValidateEnrollmentTypePage validateEnrollmentType = enrollmentTypePage.enrollAs(excelRowNo).clickNext();
-		        ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
-		        ProviderInformationEFTERAEnroll providerInfoPage = providerEnrollPage.clickContinue();
-		        ValidateEFTERAProviderInfo validateProvInfoPage = providerInfoPage.fillProviderInfo();
-		        validateProvInfoPage.fillFirstProviderInfo();
-		        validateProvInfoPage.fillSecondProviderInfo();
-		        FinancialInstitutionInfoPage financialInstPage = validateProvInfoPage.clickContinue();
-		       
-		        if(!testConfig.getRunTimeProperty("enrollmentType").equalsIgnoreCase("VO"))
-		        {
-		         	financialInstPage.fillFinancialInstInfo();
-			        validateEFTERAFinancialInfo validateFinancialInfoPage = financialInstPage.clickContinue();
-			        validatw9SubmitForm = validateFinancialInfoPage.fillUploadEFTERAFileFormAndSubmit();
-		        }
-		        else
-		        {
-		        	financialInstPage.checkAcceptanceBox().fillAuthorizedSignature().submitForm();
-			        validatw9SubmitForm= new ValidateEFTERASubmitInfo(testConfig);
-		        }
-		        
-		        ThankYouPage thankYouPage = validatw9SubmitForm.fillEnrollersInfo();
-//		        thankYouPage.verifyPDF();
-		        thankYouPage.verifyEnrollmentInfoInDB();
-		       }
-		
-		     catch(Exception e)
-		      {	
-		    	 Log.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
-		    	 result=false;
-		      }
-		    finally
-		     {
-		       i++;
-		       registrationPage=new UPARegistrationPage(testConfig);
-		     }
-		}
-		   Log.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
-		   if(!result){
-			   Log.Fail("Exception occured while execution");
-		   }   
+	public HowToEnroll clickHowToEnrollLink() {
+		Element.click(lnkHeaderHowtoEnroll, "How to Enroll Link");
+		return new HowToEnroll(testConfig);
 	}
+	
+	public BenefitsOfEPS clickBenefitsOfEPSLink() {
+		Element.click(lnkHeaderBenefitsofEPS, "Benefits of EPS Link");
+		return new BenefitsOfEPS(testConfig);
+	}
+	
+		
+//	public void doCompleteEnrollment(int excelRowNo,int noOfEnrollments,UPARegistrationPage registrationPage) 
+//	{
+//		   int i=0;
+//		   boolean result=true;
+//		   while(i<noOfEnrollments) 
+//		   {
+//		 	 try 
+//		      {
+//		    	BeginEnrollment enrollmentTypePage = registrationPage.clickEnrollNow();
+//		    	enrollmentTypePage=enrollmentTypePage.selectHowYouHeard("");
+//		    	
+//		    	
+//		        ValidateEnrollmentTypePage validateEnrollmentType = enrollmentTypePage.enrollAs(excelRowNo).clickNext();
+//		        ProviderEFTERAEnrollPage providerEnrollPage = validateEnrollmentType.clickContinue();
+//		        ProviderInformationEFTERAEnroll providerInfoPage = providerEnrollPage.clickContinue();
+//		        ValidateEFTERAProviderInfo validateProvInfoPage = providerInfoPage.fillProviderInfo();
+//		        validateProvInfoPage.fillFirstProviderInfo();
+//		        validateProvInfoPage.fillSecondProviderInfo();
+//		        FinancialInstitutionInfoPage financialInstPage = validateProvInfoPage.clickContinue();
+//		       
+//		        if(!testConfig.getRunTimeProperty("enrollmentType").equalsIgnoreCase("VO"))
+//		        {
+//		         	financialInstPage.fillFinancialInstInfo();
+//			        validateEFTERAFinancialInfo validateFinancialInfoPage = financialInstPage.clickContinue();
+//			        validatw9SubmitForm = validateFinancialInfoPage.fillUploadEFTERAFileFormAndSubmit();
+//		        }
+//		        else
+//		        {
+//		        	financialInstPage.checkAcceptanceBox().fillAuthorizedSignature().submitForm();
+//			        validatw9SubmitForm= new ValidateEFTERASubmitInfo(testConfig);
+//		        }
+//		        
+//		        ThankYouPage thankYouPage = validatw9SubmitForm.fillEnrollersInfo();
+////		        thankYouPage.verifyPDF();
+//		        thankYouPage.verifyEnrollmentInfoInDB();
+//		       }
+//		
+//		     catch(Exception e)
+//		      {	
+//		    	 Log.Warning(i+1 + "th enrollment failed due to" + e ,testConfig);
+//		    	 result=false;
+//		      }
+//		    finally
+//		     {
+//		       i++;
+//		       registrationPage=new UPARegistrationPage(testConfig);
+//		     }
+//		}
+//		   Log.Comment("Enrollment flow ran for" + " "+ i + " "+ "times","Brown");
+//		   if(!result){
+//			   Log.Fail("Exception occured while execution");
+//		   }   
+//	}
 
 }
