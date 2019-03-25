@@ -48,6 +48,7 @@ import org.xml.sax.SAXException;
 import com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentsservice_v1_0.EpsConsolidatedClaimPaymentSummary;
 
 import main.java.Utils.ViewPaymentsDataProvider;
+import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 
 public class paymentSummary extends ViewPaymentsDataProvider{
@@ -184,7 +185,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			setlDate=getPaymentNoDetails(paymentType).get("setlDate");
 
 		String filterToBeSelected=getQuickSearchFilterCriteria(setlDate);
-		
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
@@ -2078,7 +2079,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 * @return Outer map
 	 * @throws IOException 
 	 */	
-	public void verifyPayerRolePayments() throws IOException{
+	public paymentSummary verifyPayerRolePayments() throws IOException{
 
 		int sqlRowNo=40;		
 		ArrayList<String> payerListFromDB = new ArrayList<String>();
@@ -2116,7 +2117,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			else {
 				Log.Fail(payer + " :" + " " + "not present in DB");				
 			}
-		}		
+		}
+		return this;		
 	}
 	
 	
