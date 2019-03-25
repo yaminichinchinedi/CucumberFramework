@@ -1002,5 +1002,4 @@ public class DataBase
 		return query;
 	}
 	
-
 }
