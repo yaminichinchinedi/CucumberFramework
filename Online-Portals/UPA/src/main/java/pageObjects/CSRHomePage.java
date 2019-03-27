@@ -72,24 +72,22 @@ public class CSRHomePage {
 	
 	
 	@FindBy(xpath="//input[@value='Save']")
-	WebElement btnSaveUser;  
+	WebElement btnSaveUser;
+	
+	@FindBy(linkText="Search Remittance")
+    WebElement lnkSearchRemittance;
 	
 	
 	CSRHomePage(TestBase testConfig) 
 	{
-		
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		String expected = "Welcome";
-		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
-		Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getTitle());	
+		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
 	}
 
-	
-	
 	public SearchTinPage clickManageUsersLink()
 	{
-		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
+		Element.click(lnkManageUsers, "Manage Users");
 		return new SearchTinPage(testConfig);
 	}
 	
@@ -97,6 +95,12 @@ public class CSRHomePage {
     {
            Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
+    }
+    
+    public SearchTinPageSearchRemittance clickSearchRemittanceLink()
+    {
+           Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance Link");
+           return new SearchTinPageSearchRemittance(testConfig);
     }
 
 	

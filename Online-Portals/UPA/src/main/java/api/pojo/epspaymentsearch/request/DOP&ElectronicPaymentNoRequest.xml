@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EpsPaymentsSearchRequest xmlns="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0" xmlns:ns2="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0" xmlns:ns1="http://enterprise.optum.com/schema/cim/common/Service_v1_0" xmlns:ns4="http://enterprise.optum.com/schema/cim/common/Common_v1_0" xmlns:ns3="http://enterprise.optum.com/schema/cim/common/Identifier_v1_0">
+<ns1:SearchCriteria ns1:FromRecord="0" ns1:MaxResult="0" ns1:SortDirection="DESC" ns1:SortFieldNumber="12">
+<ns1:ParameterMap>
+<ns1:Entries>
+<ns1:Key>PAYMENT_LEVEL_DETAIL</ns1:Key>
+<ns1:Value>Y</ns1:Value>
+<ns1:Comparator>Equals</ns1:Comparator>
+</ns1:Entries>
+<ns1:Entries>
+<ns1:Key>ELECTRONIC_PAYMENT_NUMBER</ns1:Key>
+<ns1:Value>R86050903000009</ns1:Value>
+<ns1:Comparator>Equals</ns1:Comparator>
+</ns1:Entries>
+</ns1:ParameterMap>
+</ns1:SearchCriteria>
+<ns2:ServiceData>
+<ns2:ApplicationIdentifier>EPS</ns2:ApplicationIdentifier>
+<ns2:Version>1.0</ns2:Version>
+</ns2:ServiceData>
+<ns3:TaxIdentifierNumber>989887896</ns3:TaxIdentifierNumber>
+<ns2:UserRole>PROVIDER</ns2:UserRole>
+<ns4:PaymentMadeOnDateRange>
+<ns4:FromDate>2015-08-01</ns4:FromDate>
+<ns4:ToDate>2017-08-01</ns4:ToDate>
+</ns4:PaymentMadeOnDateRange>
+<ns2:EpsSecondaryPayerReferenceIdentifiers></ns2:EpsSecondaryPayerReferenceIdentifiers>
+</EpsPaymentsSearchRequest>

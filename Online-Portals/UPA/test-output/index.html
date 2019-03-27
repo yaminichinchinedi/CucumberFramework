@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-Default_suite">
-                    <span>C:\Users\p1058\AppData\Local\Temp\testng-eclipse-877020150\testng-customsuite.xml</span>
+                    <span>C:\Users\p1058\AppData\Local\Temp\testng-eclipse--241253253\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -102,7 +102,7 @@
                     <div class="method-list-content passed suite-Default_suite">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="test.java.TestProviderViewPayments" hash-for-method="testPaymentDetailsWithShowALLFilter">testPaymentDetailsWithShowALLFilter</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="test.java.TestManageUsers" hash-for-method="testCreatingNewUser">testCreatingNewUser</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -120,16 +120,16 @@
           <div class="suite-Default_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">test.java.TestProviderViewPayments</span>
+              <span class="class-name">test.java.TestManageUsers</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="testPaymentDetailsWithShowALLFilter">
-                  </a> <!-- testPaymentDetailsWithShowALLFilter -->
-                  <span class="method-name">testPaymentDetailsWithShowALLFilter</span>
+                  <a name="testCreatingNewUser">
+                  </a> <!-- testCreatingNewUser -->
+                  <span class="method-name">testCreatingNewUser</span>
                   <em>
-(TS006_View Payments_Payments filter_Show All <br>TS002_View Payments_display of TINs latest payments within the last 30 daysValidate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments)                  </em>
+(Verify details for New user.)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -137,7 +137,7 @@
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\p1058\AppData\Local\Temp\testng-eclipse-877020150\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\p1058\AppData\Local\Temp\testng-eclipse--241253253\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -146,11 +146,11 @@
 &lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;Default suite&quot;&gt;
   &lt;test verbose=&quot;2&quot; name=&quot;Default test&quot;&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;test.java.TestProviderViewPayments&quot;&gt;
+      &lt;class name=&quot;test.java.TestManageUsers&quot;&gt;
         &lt;methods&gt;
-          &lt;include name=&quot;testPaymentDetailsWithShowALLFilter&quot;/&gt;
+          &lt;include name=&quot;testCreatingNewUser&quot;/&gt;
         &lt;/methods&gt;
-      &lt;/class&gt; &lt;!-- test.java.TestProviderViewPayments --&gt;
+      &lt;/class&gt; &lt;!-- test.java.TestManageUsers --&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Default test --&gt;
 &lt;/suite&gt; &lt;!-- Default suite --&gt;
@@ -192,14 +192,14 @@ data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
 data.addRows(1);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'testPaymentDetailsWithShowALLFilter')
-data.setCell(0, 2, 'test.java.TestProviderViewPayments')
-data.setCell(0, 3, 158993);
+data.setCell(0, 1, 'testCreatingNewUser')
+data.setCell(0, 2, 'test.java.TestManageUsers')
+data.setCell(0, 3, 75703);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <span class="suite-total-time">Total running time: 1 minutes</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -210,37 +210,97 @@ return data;
             <span class="header-content">Reporter output for Default suite</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
+            <div class="reporter-method-div">
+              <span class="reporter-method-name">testCreatingNewUser</span>
+              <div class="reporter-method-output-div">
+                <span class="reporter-method-output"><font color='Black'>Navigated to UPA</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Waiting for 2 seconds</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Username entered as: USPROV7729</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Password entered as : Test_123</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Login button</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Sign in with optum id linkis present on page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Sign in with optum id</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Verified Optum id Textbox is present on the page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Entered Optum ID as: provider5user</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Entered Optum ID password  as : Test_123</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Sign In</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Waiting for 20 seconds</font></br></span>
+                <span class="reporter-method-output"><font color='Green'> Welcome Screen Textis present on page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Waiting for 3 seconds</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Tin dropdownis present on page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>SelectSelect Tin in dropdownfrom dropdown</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Waiting for 5 seconds</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Selected tin number is109884928 - Enrolled</font></br></span>
+                <span class="reporter-method-output"><font color='Green'> Welcome Screen Textis present on page</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Manage Users tabis present on page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Manage Users Tab</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Verified User List is present on the page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Add User</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Verified First Name textbox is present on the page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter First Name as : SZD</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter Last Name as : SZD</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter Phone number in field 1 as: 983</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter Phone number in field 2 as: 983</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter Phone number in field 3 as: 3184</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Enter Email address as: ddd1521714500334@abc.com</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Re type email address as : ddd1521714500334@abc.com</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Verified First Name textbox is present on the page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>SelectSelect first tinfrom dropdown</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Add Tin/NPI</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>SelectSelected access Level asAdministratorfrom dropdown</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Save</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Verified User List is present on the page</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked UserName:  SZD</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Read:-'DataFile.xlsx', Sheet:- 'SQL'</font></br></span>
+                <span class="reporter-method-output"><font color=''>Executing the query - 'select * from OLE.PORTAL_USER p
+ join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL
+ join OLE.portal_user_tin pt 
+on p.PORTAL_USER_ID=pt.PORTAL_USER_ID
+where p.EMAIL_ADR_TXT='ddd1521714500334@abc.com' and pv.PAY_PROC_CD_DESC='User Type Code''</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Connecting to Stage 2 DB:-jdbc:db2://dbsps0164:50000/PPS2PS</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Connection succeeded</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  First name
+Expected was : SZD 
+Actual is : SZD</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  Last name
+Expected was : SZD 
+Actual is : SZD</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  Phone number
+Expected was : 9839833184 
+Actual is : 9839833184</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  Email address
+Expected was : ddd1521714500334@abc.com 
+Actual is : ddd1521714500334@abc.com</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  User Type
+Expected was : Provider 
+Actual is : Provider</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  Associated Tin Number
+Expected was : 109884928 
+Actual is : 109884928</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Passed comparison of  Status
+Expected was : Pending Registration 
+Actual is : Status:  Pending Registration</font></br></span>
+                <span class="reporter-method-output"><font color='Black'>Clicked Remove tin checkbox</font></br></span>
+                <span class="reporter-method-output"><font color='Green'>Tin removed</font></br></span>
+              </div> <!-- reporter-method-output-div -->
+            </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">11 ignored methods</span>
+            <span class="header-content">4 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
-              <span class="ignored-class-name">test.java.TestProviderViewPayments</span>
+              <span class="ignored-class-name">test.java.TestManageUsers</span>
               <div class="ignored-methods-div">
-                <span class="ignored-method-name">testRemitPayments</span>
+                <span class="ignored-method-name">testUserListSorting</span>
                 <br/>
-                <span class="ignored-method-name">testPaymentDetailsWithSpecificMarketTypeFilter</span>
+                <span class="ignored-method-name">testTinGridDetails</span>
                 <br/>
-                <span class="ignored-method-name">testArchivedPaymentsFilterActiveOnly</span>
+                <span class="ignored-method-name">testAddNewUserValidations</span>
                 <br/>
-                <span class="ignored-method-name">testZeroDollarACHPayments</span>
-                <br/>
-                <span class="ignored-method-name">testPaymentDetailsWithALLMarketTypeFilter</span>
-                <br/>
-                <span class="ignored-method-name">testZeroDollarVCPPayments</span>
-                <br/>
-                <span class="ignored-method-name">testPaymentDateSorting</span>
-                <br/>
-                <span class="ignored-method-name">testFailedPayments</span>
-                <br/>
-                <span class="ignored-method-name">testPaymentDetailsWithNPIOnlyFilter</span>
-                <br/>
-                <span class="ignored-method-name">testArchivedPaymentsFilterShowALL</span>
-                <br/>
-                <span class="ignored-method-name">testPaymentDetailsWithTinOnlyFilter</span>
+                <span class="ignored-method-name">testChangesInExistingActiveUser</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -252,39 +312,15 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">test.java.TestProviderViewPayments</div> <!-- chronological-class-name -->
-              <div class="configuration-suite before">
-                <span class="method-name">setUpReportingConfig</span>
-                <span class="method-start">0 ms</span>
-              </div> <!-- configuration-suite before -->
-              <div class="configuration-test before">
-                <span class="method-name">tearUp</span>
-                <span class="method-start">393 ms</span>
-              </div> <!-- configuration-test before -->
-              <div class="configuration-class before">
-                <span class="method-name">init</span>
-                <span class="method-start">10085 ms</span>
-              </div> <!-- configuration-class before -->
-              <div class="configuration-method before">
-                <span class="method-name">setupTestMethod(void test.java.TestProviderViewPayments.testPaymentDetailsWithShowALLFilter() throws java.io.IOExcep...)</span>
-                <span class="method-start">10106 ms</span>
-              </div> <!-- configuration-method before -->
+              <div class="chronological-class-name">test.java.TestManageUsers</div> <!-- chronological-class-name -->
               <div class="test-method">
-                <span class="method-name">testPaymentDetailsWithShowALLFilter</span>
-                <span class="method-start">10465 ms</span>
+                <span class="method-name">testCreatingNewUser</span>
+                <span class="method-start">0 ms</span>
               </div> <!-- test-method -->
-              <div class="configuration-method after">
-                <span class="method-name">endTest([TestResult name=testPaymentDetailsWithShowALLFilter status=SUCCESS method=TestProviderViewPayments....)</span>
-                <span class="method-start">169459 ms</span>
-              </div> <!-- configuration-method after -->
-              <div class="configuration-class after">
-                <span class="method-name">deinit</span>
-                <span class="method-start">170066 ms</span>
-              </div> <!-- configuration-class after -->
-              <div class="configuration-test after">
+              <div class="configuration-suite after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">170066 ms</span>
-              </div> <!-- configuration-test after -->
+                <span class="method-start">75737 ms</span>
+              </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
       </div> <!-- main-panel-root -->

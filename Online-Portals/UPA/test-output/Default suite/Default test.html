@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>1/0/0</td>
 </tr><tr>
-<td>Started on:</td><td>Thu Oct 25 18:52:15 IST 2018</td>
+<td>Started on:</td><td>Thu Mar 22 15:57:16 IST 2018</td>
 </tr>
-<tr><td>Total time:</td><td>169 seconds (169693 ms)</td>
+<tr><td>Total time:</td><td>75 seconds (75733 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,10 +75,85 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='test.java.TestProviderViewPayments.testPaymentDetailsWithShowALLFilter()'><b>testPaymentDetailsWithShowALLFilter</b><br>Test class: test.java.TestProviderViewPayments<br>Test method: TS006_View Payments_Payments filter_Show All <br>TS002_View Payments_display of TINs latest payments within the last 30 daysValidate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments</td>
+<td title='test.java.TestManageUsers.testCreatingNewUser()'><b>testCreatingNewUser</b><br>Test class: test.java.TestManageUsers<br>Test method: Verify details for New user.<br/>
+<a href="#Output-998062648" onClick='toggleBox("Output-998062648", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-998062648" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-998062648">
+<font color='Black'>Navigated to UPA</font></br><br/>
+<font color='Black'>Waiting for 2 seconds</font></br><br/>
+<font color='Black'>Username entered as: USPROV7729</font></br><br/>
+<font color='Black'>Password entered as : Test_123</font></br><br/>
+<font color='Black'>Clicked Login button</font></br><br/>
+<font color='Green'>Sign in with optum id linkis present on page</font></br><br/>
+<font color='Black'>Clicked Sign in with optum id</font></br><br/>
+<font color='Green'>Verified Optum id Textbox is present on the page</font></br><br/>
+<font color='Black'>Entered Optum ID as: provider5user</font></br><br/>
+<font color='Black'>Entered Optum ID password  as : Test_123</font></br><br/>
+<font color='Black'>Clicked Sign In</font></br><br/>
+<font color='Black'>Waiting for 20 seconds</font></br><br/>
+<font color='Green'> Welcome Screen Textis present on page</font></br><br/>
+<font color='Black'>Waiting for 3 seconds</font></br><br/>
+<font color='Green'>Tin dropdownis present on page</font></br><br/>
+<font color='Black'>SelectSelect Tin in dropdownfrom dropdown</font></br><br/>
+<font color='Black'>Waiting for 5 seconds</font></br><br/>
+<font color='Black'>Selected tin number is109884928 - Enrolled</font></br><br/>
+<font color='Green'> Welcome Screen Textis present on page</font></br><br/>
+<font color='Green'>Manage Users tabis present on page</font></br><br/>
+<font color='Black'>Clicked Manage Users Tab</font></br><br/>
+<font color='Green'>Verified User List is present on the page</font></br><br/>
+<font color='Black'>Clicked Add User</font></br><br/>
+<font color='Green'>Verified First Name textbox is present on the page</font></br><br/>
+<font color='Black'>Enter First Name as : SZD</font></br><br/>
+<font color='Black'>Enter Last Name as : SZD</font></br><br/>
+<font color='Black'>Enter Phone number in field 1 as: 983</font></br><br/>
+<font color='Black'>Enter Phone number in field 2 as: 983</font></br><br/>
+<font color='Black'>Enter Phone number in field 3 as: 3184</font></br><br/>
+<font color='Black'>Enter Email address as: ddd1521714500334@abc.com</font></br><br/>
+<font color='Black'>Re type email address as : ddd1521714500334@abc.com</font></br><br/>
+<font color='Green'>Verified First Name textbox is present on the page</font></br><br/>
+<font color='Black'>SelectSelect first tinfrom dropdown</font></br><br/>
+<font color='Black'>Clicked Add Tin/NPI</font></br><br/>
+<font color='Black'>SelectSelected access Level asAdministratorfrom dropdown</font></br><br/>
+<font color='Black'>Clicked Save</font></br><br/>
+<font color='Green'>Verified User List is present on the page</font></br><br/>
+<font color='Black'>Clicked UserName:  SZD</font></br><br/>
+<font color='Black'>Read:-'DataFile.xlsx', Sheet:- 'SQL'</font></br><br/>
+<font color=''>Executing the query - 'select * from OLE.PORTAL_USER p
+ join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL
+ join OLE.portal_user_tin pt 
+on p.PORTAL_USER_ID=pt.PORTAL_USER_ID
+where p.EMAIL_ADR_TXT='ddd1521714500334@abc.com' and pv.PAY_PROC_CD_DESC='User Type Code''</font></br><br/>
+<font color='Black'>Connecting to Stage 2 DB:-jdbc:db2://dbsps0164:50000/PPS2PS</font></br><br/>
+<font color='Black'>Connection succeeded</font></br><br/>
+<font color='Green'>Passed comparison of  First name
+Expected was : SZD 
+Actual is : SZD</font></br><br/>
+<font color='Green'>Passed comparison of  Last name
+Expected was : SZD 
+Actual is : SZD</font></br><br/>
+<font color='Green'>Passed comparison of  Phone number
+Expected was : 9839833184 
+Actual is : 9839833184</font></br><br/>
+<font color='Green'>Passed comparison of  Email address
+Expected was : ddd1521714500334@abc.com 
+Actual is : ddd1521714500334@abc.com</font></br><br/>
+<font color='Green'>Passed comparison of  User Type
+Expected was : Provider 
+Actual is : Provider</font></br><br/>
+<font color='Green'>Passed comparison of  Associated Tin Number
+Expected was : 109884928 
+Actual is : 109884928</font></br><br/>
+<font color='Green'>Passed comparison of  Status
+Expected was : Pending Registration 
+Actual is : Status:  Pending Registration</font></br><br/>
+<font color='Black'>Clicked Remove tin checkbox</font></br><br/>
+<font color='Green'>Tin removed</font></br><br/>
+</div>
+</td>
 <td></td>
-<td>158</td>
-<td>test.java.TestProviderViewPayments@73846619</td></tr>
+<td>75</td>
+<td>test.java.TestManageUsers@341814d3</td></tr>
 </table><p>
 </body>
 </html>

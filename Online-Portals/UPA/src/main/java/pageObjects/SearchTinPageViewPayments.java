@@ -11,7 +11,8 @@ import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
-public class SearchTinPageViewPayments{
+public class SearchTinPageViewPayments {
+
 	
 	private ViewPaymentsDataProvider dataProvider;
 	

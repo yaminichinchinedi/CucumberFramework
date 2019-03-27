@@ -1,4 +1,4 @@
-package test.java;
+/*package test.java;
 
 
 import java.net.URI;
@@ -44,10 +44,10 @@ public class MSExchangeEmailService {
     private static ExchangeService service;
     private static Integer NUMBER_EMAILS_FETCH =2; // only latest 5 emails/appointments are fetched.
    
-    /**
+    *//**
      * Firstly check, whether "https://webmail.xxxx.com/ews/Services.wsdl" and "https://webmail.xxxx.com/ews/Exchange.asmx"
      * is accessible, if yes that means the Exchange Webservice is enabled on your MS Exchange.
-     */
+     *//*
     
     static{
         try{
@@ -59,10 +59,10 @@ public class MSExchangeEmailService {
         }
     }
     
-    /**
+    *//**
      * Initialize the Exchange Credentials. 
      * Don't forget to replace the "USRNAME","PWD","DOMAIN_NAME" variables. 
-     */
+     *//*
     
     public MSExchangeEmailService() {
     	ExchangeCredentials credentials = new WebCredentials("p1058", "Pa@543210", "MS");
@@ -70,10 +70,10 @@ public class MSExchangeEmailService {
         service.setTraceEnabled(true);
     }
     
-    /**
+    *//**
      * Reading one email at a time. Using Item ID of the email.
      * Creating a message data map as a return value.   
-     */
+     *//*
     public Map readEmailItem(ItemId itemId){
         Map messageData = new HashMap();
         try{
@@ -96,9 +96,9 @@ public class MSExchangeEmailService {
         return messageData;
     }
     
-    /**
+    *//**
      * Number of email we want to read is defined as NUMBER_EMAILS_FETCH, 
-     */
+     *//*
     public List readEmails(){
         @SuppressWarnings("rawtypes")
 		List msgDataList = new ArrayList();
@@ -122,10 +122,10 @@ public class MSExchangeEmailService {
     }
     
     
-    /**
+    *//**
      * Reading one appointment at a time. Using Appointment ID of the email.
      * Creating a message data map as a return value.   
-     */
+     *//*
     public Map readAppointment(Appointment appointment){
         Map appointmentData = new HashMap();
         try {
@@ -141,11 +141,11 @@ public class MSExchangeEmailService {
     }
     
     
-    /**
+    *//**
       *Number of Appointments we want to read is defined as NUMBER_EMAILS_FETCH,
       *  Here I also considered the start data and end date which is a 30 day span.
       *  We need to set the CalendarView property depending upon the need of ours.   
-     */
+     *//*
     public List readAppointments(){
         List apntmtDataList = new ArrayList();
         Calendar now = Calendar.getInstance();
@@ -217,4 +217,4 @@ public class MSExchangeEmailService {
 //            Logger.getLogger(MSExchangeEmailService.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-}
+}*/
