@@ -26,6 +26,12 @@ public class ViewPaymentsDataProvider {
 		PageFactory.initElements(testConfig.driver, this);
 		
 	}
+	
+	//Default Constructor
+    public ViewPaymentsDataProvider() {
+		
+	}
+
 
 	
    /**
@@ -78,7 +84,83 @@ public String getTinForPaymentType(String paymentType)
  		 case "VCP":
  		     sqlRowNo=36; 
  		     break;
+ 		     
+ 		 case "byCheckNo":
+ 		 case "byElectronicPaymentNo":
+ 			 sqlRowNo=50;
+ 			 break;
+ 			 
+ 		 case "byDOP":
+ 		 case "byDOPAndAccountNo":
+ 		 case "byDOP&SubscriberID":
+ 		 case "byDOPAndNpi":
+ 		 case "byDOPAndClaimNo":
+ 		 case "byDOPAndPatientNm":	 
+ 		 case "byDOS":
+ 		 case "byDOSAndSubscriberId":
+ 		 case "byDOSAndNpi":
+ 		 case "byDOSAndClaimNo":
+ 		 
+ 		
+			 sqlRowNo=41;
+			 break;
+ 		 case "byDOSAndAccountNo":
+ 			sqlRowNo=58;
+ 			 
+ 		 case "byDOPAndZeroPaymentClaims":
+		 case "byDOSAndZeroPaymentClaims":
+			sqlRowNo=47;
+			
+			break;
+
  		   
+//<<<<<<< HEAD
+// 		case "byElectronicPmt":
+// 			sqlRowNo=48;
+// 			break;
+// 			
+// 		case "byCheckPmt":
+// 			sqlRowNo=50;
+// 			break;
+// 			
+// 		case "byElectronicPaymentForVCP":
+// 			testConfig.putRunTimeProperty("type","VCP");
+// 			sqlRowNo=52;
+// 			break;
+// 		case "byElectronicPaymentForNON":
+// 			testConfig.putRunTimeProperty("type","NON");
+//
+// 		
+// 		 case "byElectronicPaymentforStatus":
+// 			sqlRowNo=52;
+// 			break;
+// 			
+// 		 case "DD":
+// 			 testConfig.putRunTimeProperty("type","DD");
+// 			 sqlRowNo=54;
+// 			 break;
+//
+// 		 case "byElectronicPaymenForACH":
+// 		 case "selectTin":
+// 			 testConfig.putRunTimeProperty("type","ACH");
+// 			 sqlRowNo=56;
+// 			 break;
+// 		case "byElectronicPaymenForCHK":
+//			 testConfig.putRunTimeProperty("type","CHK");
+//			 sqlRowNo=56;
+//			 break;
+// 		case "byDOPAndPatientNmForTricare":
+//			 sqlRowNo=63;
+//			 break;
+//			 
+// 		case "byCheckNoOfReoriginNacha":
+// 			sqlRowNo=98;
+// 			break;
+// 			
+// 		case "byCheckNoOfConslPayDtl":
+// 			sqlRowNo=99;
+// 			break;
+//=======
  		case "generalPaymentForTIN":
 			sqlRowNo=51; 
 			break;
@@ -299,11 +381,11 @@ public String getTinForPaymentType(String paymentType)
 		}  
 	 	    break;
 		
-		
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
+
  		if(!payType.equalsIgnoreCase("medicalPayment"))
  		 { 
  		   Log.Comment("Getting tin for  " + paymentType);
@@ -319,6 +401,7 @@ public String getTinForPaymentType(String paymentType)
  			Log.FailWarning("No tin with payments from the above query, please execute the test case manually",testConfig);
  		  }
  		
+
  		return tinNumbers.get("PROV_TAX_ID_NBR").toString();
  		 }
  		else 
@@ -353,6 +436,25 @@ public String getTinForPaymentType(String paymentType)
 		Log.Comment("Tin No " + tin + " is already associated with logged in user");
 		return tin;
 	}
+	
+	//amit - to be reviewed
+	public String associateTinWithUser(String tin, int sqlRowNo,int insertQueryRowNo)
+	{
+			int isTinAssociated;
+
+			testConfig.putRunTimeProperty("tin", tin);
+
+			Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+			if(isTinAssociated == 0) 
+			{
+			   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+			   Log.Comment("Associated tin " + tin + "With Logged in user");
+			}
+			else
+			Log.Comment("Tin No " + tin + " is already associated with logged in user");
+			return tin;
+			}
 	
 	
 	/**
@@ -466,25 +568,25 @@ public String getTinForPaymentType(String paymentType)
 	}
 		
 	
-	public String getQuickSearchFilterCriteria(String settlDate)
+	public String getQuickSearchFilterCriteria(String setlDate)
 	{
 		String filterCriteria="Last 30 days"; 
-	    if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getCurrentDate("yyyy-MM-dd")) < 0) 
+	    if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getCurrentDate("yyyy-MM-dd")) < 0) 
 		filterCriteria="Last 30 days";
 	    
-	    else if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) < 0) 
+	    else if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-30,"yyyy-MM-dd")) < 0) 
 		filterCriteria="Last 60 days";
 		
-	    else if (settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-90,"yyyy-MM-dd")) >= 0 && settlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) < 0)
+	    else if (setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-90,"yyyy-MM-dd")) >= 0 && setlDate.compareTo(Helper.getDateBeforeOrAfterDays(-60,"yyyy-MM-dd")) < 0)
 		filterCriteria="Last 90 days";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("fromDate").toString()) >=0 && settlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("toDate").toString()) <=0) 
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("fromDate").toString()) >=0 && setlDate.compareTo(Helper.getStartAndEndPeriod("4-6").get("toDate").toString()) <=0) 
 		filterCriteria="Last 4-6 months";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("fromDate").toString()) >=0 && settlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("toDate").toString()) <=0)
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("fromDate").toString()) >=0 && setlDate.compareTo(Helper.getStartAndEndPeriod("6-9").get("toDate").toString()) <=0)
 		filterCriteria="Last 6-9 months";
 		
-	    else if (settlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  settlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
+	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
 		filterCriteria="Last 9-13 months";
 	    
 	    paymentSummary pay=new paymentSummary(testConfig,"quickSearchDates");

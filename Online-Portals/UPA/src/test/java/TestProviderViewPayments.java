@@ -795,8 +795,7 @@ public class TestProviderViewPayments extends TestBase {
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    home.selectTin(paymentType);
-        home.clickViewPaymentsTab().verifyMktType(mktTypeFilter); 	
+	    home.selectTin(paymentType).clickViewPaymentsTab().verifyMktType(mktTypeFilter); 	
    }
       
    

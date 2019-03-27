@@ -27,6 +27,7 @@ import main.java.api.pojo.epspaymentsearch.request.PaymentMadeOnDateRange;
     "claimServiceDateRange",
     "epsSecondaryPayerReferenceIdentifiers"
 })
+
 public class EpsPaymentsSearchRequest
     extends SearchByCriteriaRequest
 {

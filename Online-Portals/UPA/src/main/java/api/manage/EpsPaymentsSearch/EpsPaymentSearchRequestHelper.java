@@ -22,16 +22,14 @@ import org.xml.sax.SAXException;
 
 public class EpsPaymentSearchRequestHelper extends CreateConnection
 {
-	// "http://apsrs3771:8080/api/finance/providers/payments/v1/search";
-	
-	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";
-			
+	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";	
 	static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
-	
+	 
 	public EpsPaymentSearchRequestHelper()
 	{
 		super(connectionUrl);
-	}
+    }
+
 	
 	@Override
 	public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException
@@ -40,7 +38,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller(); 
 		EpsPaymentsSummarySearchResponse searchResponse= (EpsPaymentsSummarySearchResponse) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));  
         return searchResponse;		
-
 	}
 	
 	
@@ -59,8 +56,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		EpsPaymentsSearchRequest requestXML= (EpsPaymentsSearchRequest) jaxbUnmarshaller.unmarshal(new File(xmlFilePath));
 		return requestXML;
-		
-		
 	}
 
 	/**

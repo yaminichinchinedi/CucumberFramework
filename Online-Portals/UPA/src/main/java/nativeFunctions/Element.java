@@ -200,7 +200,6 @@ import main.java.reporting.LogTemp;
 		try{
 			 JavascriptExecutor js = (JavascriptExecutor) testConfig.driver;
 		      js.executeScript("arguments[0].click();", element);
-		      Browser.waitForLoad(testConfig.driver);
 		      Log.Pass("Clicked " + namOfElement);
 		 }
 		
@@ -229,6 +228,7 @@ import main.java.reporting.LogTemp;
 		{
 			Log.Comment("Unable to click " + namOfElement);
 			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
+
 		}
 	}
 	
@@ -302,10 +302,16 @@ import main.java.reporting.LogTemp;
 			Log.Fail(failureMsg);
 		}
 	}
+	catch(NoSuchElementException e)
+	{
+		String successMsg="Verified " + namOfElement + " is not present on the page";
+		Log.Pass(successMsg);
+			
+	}
+		
 	catch(Exception e)
 	{
-		Log.Fail(namOfElement +" is  present on the page" + e);
-			
+			Log.Fail(namOfElement +" is  present on the page" + e);		
 	}
 		
 	}
@@ -407,6 +413,13 @@ import main.java.reporting.LogTemp;
 		return options;
 	}
 	
+	/**
+	 * If u want to get text from drop down pass "text" as argument else pass "value" if attribute is to be retreived
+	 * @param testConfig
+	 * @param element
+	 * @param textOrValue --> Options
+	 * @return
+	 */
 	public static String getFirstSelectedOption(TestBase testConfig, WebElement element,String textOrValue)
 	{
 	  try{
@@ -414,6 +427,8 @@ import main.java.reporting.LogTemp;
 		   String FirstSelectedOption=null;
 		   
 		   Select sel = new Select(element);
+		   
+		  System.out.println( sel.getFirstSelectedOption().getText());
 		   
 		   if(textOrValue.contains("text"))
 		    FirstSelectedOption=sel.getFirstSelectedOption().getText();
@@ -628,6 +643,12 @@ import main.java.reporting.LogTemp;
     }
 	
 	
-	
+	/*public static Map getAllAttributes(TestBase testConfig,WebElement element,String desc)
+    {
+       JavascriptExecutor executor = (JavascriptExecutor)testConfig.driver;
+       Map attributes=(Map) executor.executeScript("var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;", element);
+       return attributes;   
+ }*/
+
 
 }

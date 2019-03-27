@@ -63,7 +63,7 @@ public class MyProfileChangePwd extends MyProfile{
     {   
     	clickCancel();
     	Element.click(btnYes, "Yes button");
-    	Browser.waitTillSpecificPageIsLoaded(testConfig, "My Profile");
+    	Browser.wait(testConfig, 2);
     	Browser.verifyURL(testConfig, "returnmyprofile.do");
     	return this;
     }
@@ -72,21 +72,23 @@ public class MyProfileChangePwd extends MyProfile{
     {
     	clickCancel();
     	Element.click(btnNo, "No button");
-    	Browser.waitTillSpecificPageIsLoaded(testConfig, "My Profile-Change Password");
+    	Browser.wait(testConfig, 2);
     	Browser.verifyURL(testConfig, "returnchangepwdpage.do");
     	return this;
     }
     
-    public void clickCancel()
+    public String clickCancel()
     { 
     	String expectedText="Are you sure you wish to cancel your password change?";
     	Element.click(btnCancel, "Cancel button");
     	Element.verifyTextPresent(cancelTxt, expectedText);
+    	return Browser.getURL(testConfig);
     }
     
     public MyProfile savePwd()
     { 
-    	String currentPwd=testConfig.getRunTimeProperty("password");
+    	
+    	String currentPwd="Test@1234";
     	Element.enterData(txtBoxCurrentPwd,currentPwd ,"Enter Current Password as :"+" " + currentPwd, "Current Password");
     	Element.enterData(txtBoxNewPwd, currentPwd ,"Enter New Password as :"+" " + currentPwd, "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  currentPwd ,"Retype New Password as :"+" " + currentPwd, "Re type New Password");
@@ -99,41 +101,49 @@ public class MyProfileChangePwd extends MyProfile{
     public MyProfileChangePwd verifyChangePwdValidations()
     { 
     	
-    	String pwd=testConfig.getRunTimeProperty("password");
+    	String pwd="Test@1234";
     	
     	/**Leave current password field blank*/
+    	
     	Element.enterData(txtBoxCurrentPwd,"","Enter Current Password as empty string", "Current Password");
     	
     	/**Enter valid password in new password fields*/
     	
     	Element.enterData(txtBoxNewPwd,pwd ,"Enter New Password as :"+" " + pwd, "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  pwd ,"Retype New Password as :"+" " + pwd, "Re type New Password");
-    	Element.click(btnSave, "Save button");
-    	Element.verifyTextPresent(errorMsg, "Current Password: Invalid Data");
     	
+    	//Click Save button
+    	Element.click(btnSave, "Save button");
+    	
+    	Element.verifyTextPresent(errorMsg, "Current Password: Invalid Data");
     	
     	/** Enter valid data in current password */
     	Element.enterData(txtBoxCurrentPwd,pwd ,"Enter Current Password as :"+" " + pwd, "Current Password");
     	
     	/**Leave new password blank */
+    	
     	Element.enterData(txtBoxNewPwd,"" ,"Enter New Password as empty string", "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  pwd ,"Retype New Password as :"+" " + pwd, "Re type New Password");
     	Element.click(btnSave, "Save button");
+    	
     	Element.verifyTextPresent(errorMsg, "New Password: Invalid Data");
     	
     	//Different passwords in new password and retype password textbox
     	Element.enterData(txtBoxCurrentPwd,pwd ,"Enter Current Password as :"+" " + pwd, "Current Password");
     	Element.enterData(txtBoxNewPwd, pwd ,"Enter New Password as :"+" " + pwd, "New Password");
     	Element.enterData(txtBoxRetypeNewPwd,  pwd+"1" ,"Retype New Password as :"+" " + pwd+"1", "Re type New Password");
+    	
     	Element.click(btnSave, "Save button");
+    	
     	Element.verifyTextPresent(errorMsg, "Retype New Password: Invalid Data.");
     	
     	return new MyProfileChangePwd(testConfig) ;
-	
+    	
+    	
     }
 
 
-    public MyProfileChangePwd verifyPwdGuideLines()
+    public void verifyPwdGuideLines()
     {
     	List<WebElement> pwdGuideLines=pwdGuide.findElements(By.tagName("li"));
     	LogTemp.Comment("Verifying password guidelines..");
@@ -142,7 +152,6 @@ public class MyProfileChangePwd extends MyProfile{
     	Element.verifyTextPresent(pwdGuideLines.get(2), "be case-sensitive");
     	Element.verifyTextPresent(pwdGuideLines.get(3), "not contain your username");
     	Element.verifyTextPresent(pwdGuideLines.get(4), "not be same as any of the last 10 passwords");
-    	return this;
    
     }
 	
