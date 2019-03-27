@@ -706,11 +706,109 @@ public ArrayList getEnrollmentContent(String content) {
 		return contentList;
 		
 	}
+
+	public ArrayList getEnrollmentContentForActiveBSTIN(String content) {
+
+		int sqlRowNo=0;
+		ArrayList<String> contentList = new ArrayList<String>();
+		Map enrollmentContent;
+
+		switch(content) 
+		{
+		case "enrolledBSTIN":
+			sqlRowNo=151; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for enrolledBSTIN is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());			
+
+		case "enrolledActive":
+			sqlRowNo=152; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for enrolledActive is : " + enrollmentContent.get("TEXT_VAL").toString());
+			contentList.add(enrollmentContent.get("TEXT_VAL").toString());	
+			break;
+
+		default:
+			Log.Comment("Enrollment Content not found");
+		}
+
+		return contentList;
+
+}
 	
 	
+	public String getEnrollmentContentForPendingEnrollmentBSTIN(String content) {
+
+		int sqlRowNo=0;
+		String value = "";
+		Map enrollmentContent;
+
+		switch(content) 
+		{
+		case "PendingEnrollmentBSTIN":
+			sqlRowNo=153; 
+			enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Log.Comment("Content retreived from query for PendingEnrollmentBSTIN is : " + enrollmentContent.get("TEXT_VAL").toString());
+			value = enrollmentContent.get("TEXT_VAL").toString();		
+			break;
+
+		default:
+			Log.Comment("Enrollment Content not found");
+		}
+
+		return value;
+
+}
 	
 	
+	public String getBSTinForStatus(String status) {
+		int sqlRowNo=0;
+		boolean tinFlag = false;
+		switch(status) 
+		{
+
+		case "EnrolledActiveBSTIN":
+			sqlRowNo=148; 
+			break;
+			
+		case "PreEnrolledBSTIN":
+			sqlRowNo=150; 
+			break;	
+
+		default:
+			Log.Comment("Payment Type " + status + " not found");
+		}
+
+		Log.Comment("Getting tin for  " + status);
+		Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("Tin retreived from query for " + status + " is : " + tinNumbers.get("IDENTIFIER_NBR").toString());
+		testConfig.putRunTimeProperty("tin",tinNumbers.get("IDENTIFIER_NBR").toString());
+		return tinNumbers.get("IDENTIFIER_NBR").toString();
+	}
 	
+	public Map<String, String> getBSTinDetails()
+	{
+		int sqlRowNo=149;
+		Map<String,String> bsTinDetails= new HashMap<String, String>();
+
+		Map bsTin=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+
+		if(bsTin.get("IDENTIFIER_NBR").toString()!=null)
+		{
+			bsTinDetails.put("BSTin", bsTin.get("IDENTIFIER_NBR").toString());
+			bsTinDetails.put("BSName", bsTin.get("BS_NM").toString());
+			bsTinDetails.put("BSAddress", bsTin.get("ADR_TXT").toString());
+			bsTinDetails.put("BSStatus", bsTin.get("ENRL_STS_CD").toString());
+
+			Log.Comment("Getting Payment Details : " + bsTinDetails);
+
+			testConfig.putRunTimeProperty("BSTin", bsTin.get("IDENTIFIER_NBR").toString());
+		}
+		else
+			Log.Warning("No result returned from query", testConfig);
+		
+		return bsTinDetails;
+	}
 	
 	
 }
