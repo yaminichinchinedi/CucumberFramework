@@ -220,12 +220,21 @@
 			<version>2.4</version>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
+		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports 
     <dependency>
     <groupId>com.relevantcodes</groupId>
     <artifactId>extentreports</artifactId>
     <version>2.41.2</version>
-    </dependency>
+    </dependency>-->
+    
+    
+    <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>3.0.7</version>
+</dependency>
+    
 
 <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
        <dependency>

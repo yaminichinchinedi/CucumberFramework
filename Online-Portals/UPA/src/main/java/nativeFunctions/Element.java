@@ -20,8 +20,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.relevantcodes.extentreports.converters.TestConverter;
 import com.sun.mail.iap.Argument;
 
 import main.java.reporting.Log;
