@@ -25,7 +25,7 @@ import main.java.reporting.Log;
 
 public class TestCreateEnrollment extends TestBase{
 	
-	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1348562--TS004 Validates Page text is content Managed.",groups="Provider")
 	public void testPageContent() throws IOException
 	 {
@@ -38,6 +38,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * This test case belong to US1348529
 	 * @author Amit
 	 */
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1348529--TS001/TS002 Validates the Page navigation from BeginEnrollment page to BeginEnrollmentContinue page",groups="Provider")
 	public void testSurveyTablesAndResponse()
 	 {

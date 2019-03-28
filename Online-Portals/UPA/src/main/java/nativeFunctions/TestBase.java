@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,6 +46,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import test.java.TestDetails;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
@@ -348,7 +350,10 @@ public class TestBase {
 		Test test = method.getAnnotation(Test.class);
         if (test == null)
             return;
-        Log logger =new Log(testConfig,method.getName(),test.description());
+        TestDetails details=method.getAnnotation(TestDetails.class);
+        String author = details.author();
+        
+        Log logger =new Log(testConfig,method.getName(),test.description(),author);
 //		fetchAppCredentials();
 		
 	}

@@ -41,10 +41,11 @@ public  class Log  {
 	
 	//static boolean testAlreadyFailed=true;
 	
-	public Log(TestBase testConfig,String testCaseName,String desc)
+	public Log(TestBase testConfig,String testCaseName,String desc,String author)
 	{
 		this.testConfig=testConfig;
 		logger=report.createTest(testCaseName,desc);
+		 logger.assignAuthor(author);
 	}
 	
 
@@ -70,6 +71,7 @@ public  class Log  {
 	    else if(result.getStatus() == ITestResult.SKIP)
 	    	Log.skipped(result);
 	    logger.assignCategory(result.getMethod().getGroups());
+	   
 		report.flush();
 	}
 	
