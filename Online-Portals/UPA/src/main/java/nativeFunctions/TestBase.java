@@ -346,13 +346,19 @@ public class TestBase {
 	@BeforeMethod()	
 	public void setupTestMethod (Method method) 
 	{
+		
+		String author;
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		Test test = method.getAnnotation(Test.class);
         if (test == null)
-            return;
+        	return;
+            
         TestDetails details=method.getAnnotation(TestDetails.class);
-        String author = details.author();
-        
+        if(details==null)
+        	author="Unspecified";
+        else
+        author = details.author();
+
         Log logger =new Log(testConfig,method.getName(),test.description(),author);
 //		fetchAppCredentials();
 		
