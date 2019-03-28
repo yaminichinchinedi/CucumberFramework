@@ -202,12 +202,18 @@ public class BeginEnrollment {
 	public void validateUserIsAbleToDwnldEnrlmntPdf() {
 		validateBeginEnrollment();
 		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
-		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf");
+		String handle =Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf");		
 		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_VCP_v6.pdf");
-		Browser.closeBrowser(testConfig);
-		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
+		Set<String> handles= Browser.getWindowHandles(testConfig);   //testConfig.driver.getWindowHandles();
+		 for (String handl : handles) {
+			 	if(handl.compareTo(handle)==0)
+			 	{
+			 		testConfig.driver.switchTo().window(handl);
+			 		break;
+			 	}
+		 }
 		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_Billing_Services_v4.pdf");
 	}
@@ -248,6 +254,7 @@ public class BeginEnrollment {
 			
 		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(1).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, " SubTitle", hdrSubTitle.getText(), dataTest.get(2).get("TEXT_VAL"));
+		Browser.wait(testConfig, 2);
 		Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
 		Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElement(By.tagName("h1")).getText(), dataTest.get(3).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 1", pageBody.get(0).findElements(By.tagName("p")).get(1).getText(), dataTest.get(5).get("TEXT_VAL"));

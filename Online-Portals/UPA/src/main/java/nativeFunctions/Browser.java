@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.IIOImage;
@@ -560,6 +561,10 @@ public class Browser
 		return testConfig.driver.getWindowHandles().size();
 	}
 	
+	public static  Set<String> getWindowHandles(TestBase testConfig)
+	{
+		return testConfig.driver.getWindowHandles();
+	}
 	
 	public static void waitTillSpecificPageIsLoaded(TestBase testConfig,String pageTitle)
 	{

@@ -2165,6 +2165,7 @@ return previousDate.getTime();
 		File fileDirectory=new File(filedir);
 		purgeDirectory( fileDirectory);
 		Element.clickByJS(testConfig, elt,downloadedFile);
+		System.out.println("Clicked download link");
 //		Element.click( elt,namOfElement);
 		//add for verification in downloads folder hat file exists
 		//Browser.wait(testConfig,8);

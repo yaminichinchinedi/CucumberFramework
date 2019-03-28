@@ -86,16 +86,16 @@ public class OptumIdLoginPage {
 	
 
 
-	public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
-	{
-	id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
-	password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
-	loggedInUserDetails.put("id", id);
-	loggedInUserDetails.put("password", password);
-	setUserProperties();
-
-	return loggedInUserDetails;
-	}
+//	public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
+//	{
+//	id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+accessType+"_"+env);
+//	password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+accessType+"_"+env);
+//	loggedInUserDetails.put("id", id);
+//	loggedInUserDetails.put("password", password);
+//	setUserProperties();
+//
+//	return loggedInUserDetails;
+//	}
    
 	
 //   public HomePage loginWithOptumID(String userType,String accessType) 

@@ -5,11 +5,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
 import java.io.File;
-
 import java.util.Arrays;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,9 @@ import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.WebElement;
@@ -34,8 +33,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class EnrollmentSubmitted {
 	protected TestBase testConfig;
-	@FindBy(linkText="Print Completed Enrollment Form")
-	WebElement lnkPrintPdf;
 	
 	@FindBy(partialLinkText = "What is the ACH Addenfum Record")
 	WebElement lnkACHAddndmRcrd;
@@ -60,56 +57,60 @@ public class EnrollmentSubmitted {
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	
-
+	static Map data=null;
+	static HashMap<Integer,HashMap<String,String>> dataTest=null;
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
 	{
 		String expectedURL = "/validateEFTERASubmit";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-			expectedURL="/validateBSSubmit";
+//		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+//			expectedURL="/validateBSSubmit";
 	
-		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
-		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
-		Element.expectedWait(imgPDF, testConfig, "PDF image", "PDF image");
-		Browser.verifyURL(testConfig, expectedURL);
+//		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
+//		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
+//		Element.expectedWait(imgPDF, testConfig, "PDF image", "PDF image");
+//		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	
 	public EnrollmentSubmitted validateEnrollmentInfo() throws IOException
 	{
 		int sqlRowNo;
-		Map data=null;
+		Browser.wait(testConfig, 50);
+//		testConfig.putRunTimeProperty("tin", "816532336"); //ACH
+//		testConfig.putRunTimeProperty("tin", "784355039"); //VCP
+		testConfig.putRunTimeProperty("tin", "645068088"); //BS
 		//For BS
-		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-		{
+//		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+//		{
 			sqlRowNo=102;
 			data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-		}
+//		}
 		
 		//For Healthcare
-		else
+//		else
 		{
-			  if(!enrollmentInfoPageObj.getTinIdentifier().equals("VO"))
-			  {
-				sqlRowNo=103;
-				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-				verifyFinancialInfo(data);
-			  }
-			  else
-			  {
-				sqlRowNo=104;
-				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			  }
+//			  if(!enrollmentInfoPageObj.getTinIdentifier().equals("VO"))
+//			  {
+//				sqlRowNo=103;
+//				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+//				verifyFinancialInfo(data);
+//			  }
+//			  else
+//			  {
+//				sqlRowNo=104;
+//				data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+//			  }
 		  
-		  verifyMarketType();
-		  verifyAuthEnrlTitle(data);
+//		  verifyMarketType();
+//		  verifyAuthEnrlTitle(data);
 		  
 		}
 		
 		
 		//Organization Info
-		Helper.compareEquals(testConfig, "Enrollment type",enrollmentInfoPageObj.getTinIdentifier() , data.get("PAY_METH_TYP_CD"));
+		/*Helper.compareEquals(testConfig, "Enrollment type",enrollmentInfoPageObj.getTinIdentifier() , data.get("PAY_METH_TYP_CD"));
 		Helper.compareEquals(testConfig, "TIN",enrollmentInfoPageObj.getTin() , data.get("PROV_TIN_NBR"));
 		Helper.compareEquals(testConfig, "Name",enrollmentInfoPageObj.getBusinessName() , data.get("ORG_NM"));
 		Helper.compareEquals(testConfig, "Street", enrollmentInfoPageObj.getStreet(), data.get("ORG_STR"));
@@ -117,9 +118,9 @@ public class EnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "State", enrollmentInfoPageObj.getStateName(), data.get("ORG_ST").toString());
 		Helper.compareEquals(testConfig, "Zip", enrollmentInfoPageObj.getZipCode().trim(), data.get("ORG_ZIP").toString().trim());
 		
-		/**
+		*//**
 		 * NPI is not getting saved in DB in table PROVIDER PAYMENT UNIT so skipping this validation
-		 */
+		 *//*
 //		Helper.compareEquals(testConfig, "NPI", enrollmentInfoPageObj.getNpi().trim(), data.get("NPI_NBR").toString().trim());
 		
 		
@@ -139,16 +140,157 @@ public class EnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "Auth_Phn Number", enrollmentInfoPageObj.getAuthPhnNbr(), data.get("AUTH_TEL_NBR").toString());
 		Helper.compareEquals(testConfig, "Auth_Email", enrollmentInfoPageObj.getAuthEmail(), data.get("AUTH_EMAIL").toString());
 		
-//		readPDF();
-		verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
+		System.out.println("Waiting for downloading file");
+		Browser.wait(testConfig, 60);*/
+//		Element.clickByJS(testConfig, lnkPrintPdf,"");
+//		verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
 		enrollmentInfoPageObj.clear();
 		return this;
 	}
 	
-	public void verifyEnrollmentFormIsDownloaded(String downloadedFile) throws IOException  {
-		boolean s=Helper.PDFDownloadVerification(testConfig,lnkPrintPdf,"Print Completed Enrollment Form",downloadedFile);
-		System.out.println("File Downloaded: "+s);
-//		if(s)
+	
+	public void verifyPDFData() throws IOException
+	{
+		String pdfData=readPDF();
+		verifyTinMasking(pdfData).verifyOrgInfoInPDF(pdfData).verifyAdministrators(pdfData).verifAuthInfoInPDF(pdfData).verifyW9FormAndAuthSectionInPDF(pdfData).verifyPayerSectionInPDF(pdfData).verifyTermsAndConditionInPDF(pdfData);
+		verifyFinancialInfoInPDF(pdfData);
+	}
+	
+	public EnrollmentSubmitted verifyTinMasking(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "TIN:", "\n");
+		Helper.compareContains(testConfig, "Masked TIN", "*****"+data.get("PROV_TIN_NBR").toString().substring(5).toString(),subjectData);
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifyAdministrators(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Identify Administrators", "Financial");
+		Helper.compareContains(testConfig, "First Name",  data.get("PRI_ADM_FST_NM").toString(),subjectData);
+		Helper.compareContains(testConfig, "Last Name",  data.get("PRI_ADM_LST_NM").toString(),subjectData);
+		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(0,3),subjectData);
+		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(3,6),subjectData);
+		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(6),subjectData);
+//		Helper.compareContains(testConfig, "Email",  data.get("PRI_ADM_EML").toString(),subjectData);
+		
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifyTermsAndConditionInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "EPS EFT Provider Authorization", "\n");
+		Helper.compareContains(testConfig, "T&C", "Terms and Conditions Agreement",subjectData);
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifyW9FormAndAuthSectionInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Authorization", "Authorized Enroller's");
+		Helper.compareContains(testConfig, "W9", "A copy of your W9 was uploaded with your Enrollment submission",subjectData);
+		Helper.compareContains(testConfig, "Authorization Section", "I accept these Terms and Conditions",subjectData);
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifyPayerSectionInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Payer", "Page");
+		Helper.compareContains(testConfig, "Payer", "Information",subjectData);
+		switch(data.get("PAY_METH_TYP_CD").toString())
+		{
+		case "AO":
+			Helper.compareContains(testConfig, "Payment Method", "ACH",subjectData);
+			break;
+		case "AV":
+			Helper.compareContains(testConfig, "Payment Method", "",subjectData);
+			break;
+		case "VO":
+			Helper.compareContains(testConfig, "Payment Method", "VCP",subjectData);
+			break;
+		}
+		return this;
+	}
+	
+	
+	public EnrollmentSubmitted verifyOrgInfoInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Organization Information", "Identify");
+		switch(data.get("PAY_METH_TYP_CD").toString())
+		{
+		case "AO":
+			Helper.compareContains(testConfig, "Enrollment type", "ACH Only",subjectData);
+			break;
+		case "AV":
+			Helper.compareContains(testConfig, "Enrollment type", "",subjectData);
+			break;
+		case "VO":
+			Helper.compareContains(testConfig, "Enrollment type", "VCP Only",subjectData);
+			break;
+		}
+		Helper.compareContains(testConfig, "Name", data.get("ORG_NM").toString(),subjectData);
+		Helper.compareContains(testConfig, "Street",  data.get("ORG_STR").toString(),subjectData);
+		Helper.compareContains(testConfig, "City",  data.get("ORG_CTY").toString().trim(),subjectData);
+		Helper.compareContains(testConfig, "State", data.get("ORG_ST").toString(),subjectData);
+		Helper.compareContains(testConfig, "Zip",  data.get("ORG_ZIP").toString().trim(),subjectData);
+//		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
+		{
+			Helper.compareContains(testConfig, "Provider Type",dataTest.get(2).get("MKT_TYP_DESC").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Market Type",dataTest.get(1).get("MKT_TYP_DESC").toString().trim(),subjectData);
+		}
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifAuthInfoInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Authorized Enroller's Information", "Page");
+		Helper.compareContains(testConfig, "Auth Frst Name",data.get("AUTH_FST_NM").toString(),subjectData);
+		Helper.compareContains(testConfig, "Auth Lst Name", data.get("AUTH_LST_NM").toString(),subjectData);
+		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(0, 3),subjectData);
+		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(3, 6),subjectData);
+		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(6),subjectData);
+//		Helper.compareContains(testConfig, "Auth_Email",data.get("AUTH_EMAIL").toString().trim(),subjectData);
+	
+		return this;
+	}
+	
+	public EnrollmentSubmitted verifyFinancialInfoInPDF(String pdfData)throws IOException
+	{
+		String subjectData=StringUtils.substringBetween(pdfData, "Financial Institution", "Page");
+		
+//		if(enrollmentInfoPageObj.getTinIdentifier().equals("VO"))
+//		{
+//			if(subjectData==null) 
+//				subjectData="";
+//			Helper.compareEquals(testConfig, "Financial Information is not present", "", subjectData);
+//		}
+//		else
+		{
+			Helper.compareContains(testConfig, "Fin City", data.get("FIN_CTY").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin Street", data.get("FIN_STR").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin State",  data.get("FIN_ST").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin Zip",data.get("FIN_ZIP").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(0, 3),subjectData);
+			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(3, 6),subjectData);
+			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(6),subjectData);
+			Helper.compareContains(testConfig, "Fin Bank Name", data.get("FIN_BNK_NM").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin Acnt Nbr",  data.get("ACNT_NBR").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin Rte nmbr",  data.get("RTE_NBR").toString().trim(),subjectData);
+			
+			int sqlRowNo=148;
+			Map npiData=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareContains(testConfig, "Fin NPI City", npiData.get("CTY_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Street", npiData.get("ADR_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI State",  npiData.get("ST_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Zip",npiData.get("ZIP_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(0, 3),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(3, 6),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(6),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Bank Name", npiData.get("BNK_NM_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Acnt Nbr",  npiData.get("BNK_ACCT_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI Rte nmbr",  npiData.get("RTE_NPI").toString().trim(),subjectData);
+			Helper.compareContains(testConfig, "Fin NPI nmbr",  npiData.get("NPI_NBR").toString().trim(),subjectData);
+			
+		}
+		return this;
 	}
 	
 	public void verifyAuthEnrlTitle(Map data)
@@ -164,17 +306,17 @@ public class EnrollmentSubmitted {
 	{
 		
 		int	sqlRowNo=106;
-		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		if(!enrollmentInfoPageObj.getMrktType().trim().equals(dataTest.get(1).get("MKT_TYP_DESC").toString().trim()))
-		 {
-				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
-				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
-		 }
-		else
-		{
-				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
-				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
-		}
+		dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+//		if(!enrollmentInfoPageObj.getMrktType().trim().equals(dataTest.get(1).get("MKT_TYP_DESC").toString().trim()))
+//		 {
+//				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
+//				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
+//		 }
+//		else
+//		{
+//				Helper.compareEquals(testConfig, "Provider Type", enrollmentInfoPageObj.getProvType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
+//				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(1).get("MKT_TYP_DESC").toString().trim());
+//		}
 		
 	}
 	
@@ -203,7 +345,8 @@ public class EnrollmentSubmitted {
 	public String readPDF() throws IOException {
 		String output="";
 		String filedir=System.getProperty("user.dir")+"\\Downloads";
-        testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
+//        testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf"); //  OnlineBillingServiceEnroll_PDF
+        testConfig.driver.get("file:///"+filedir+"\\OnlineBillingServiceEnroll_PDF.pdf");
         URL url = new URL(testConfig.driver.getCurrentUrl());
         InputStream is = url.openStream();
         BufferedInputStream fileToParse = new BufferedInputStream(is);
@@ -223,9 +366,9 @@ public class EnrollmentSubmitted {
 	}
 	
 
-		public void verifyHeaders() {
+		public  EnrollmentSubmitted verifyHeaders() {
 
-		List<String> headers = Arrays.asList("Organization Information",
+		List<String> headers = Arrays.asList("Billing Service Information","Organization Information",
 				"Identify Administrators", "Financial Institution Information",
 				"Select Payment Methods", "Upload W9", "Review and Submit");
 		for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
@@ -278,6 +421,7 @@ public class EnrollmentSubmitted {
 			}
 
 		}
+		return this;
 	}
 	
 	
