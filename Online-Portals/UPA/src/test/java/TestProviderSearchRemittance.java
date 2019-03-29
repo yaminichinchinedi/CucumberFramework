@@ -20,7 +20,7 @@ import main.java.pageObjects.paymentSummary;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-public class TestProvUPASearchRemittance extends TestBase{
+public class TestProviderSearchRemittance extends TestBase{
  
 	String userType="PROV";
 	String accessType="Admin";

@@ -25,6 +25,7 @@ import main.java.reporting.Log;
 
 public class TestCreateEnrollment extends TestBase{
 	
+	
 	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1348562--TS004 Validates Page text is content Managed.",groups="Provider")
 	public void testPageContent() throws IOException
@@ -47,12 +48,13 @@ public class TestCreateEnrollment extends TestBase{
 		registrationPage.clickEnrollNow().selectHowYouHeard(option).verifySurveyTables(option);
 	 }
 
+
 	/**
 	 * These below test cases belong to US1202167
 	 * @author Amit
 	 * @throws IOException
 	 */
-	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS001/TS002/TS018/TS023 Validates User Enrollment As Health Organisation",groups="Provider") 
 	public void testUserEnrollmentAsHealthOrg() throws IOException
 	{
@@ -64,6 +66,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS003 Validates User Enrollment As BS",groups="Billing Service")
 	public void testUserEnrollmentAsBS() throws IOException
 	 {
@@ -75,7 +78,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
 	 }
 	
-
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS004/TS005/TS006/TS015 Validates what shall i choose after Selecting Health Org /TS005 Validates Pop Up after clicking Close link",groups="Provider")
 	public void testPopUpAfterChoosingHealthOrg() throws IOException
 	 {
@@ -86,6 +89,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.verifyChooseLink();
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS007/TS016/TS017 Validates Page after clicking on change link",groups="Provider")
 	public void testChangeLinkFunctionality() throws IOException
 	 {
@@ -96,6 +100,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.verifyChangeLink();
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS008 + TS009 =Validates navigation upon selection of VCP and healthOrg/TS009 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
 	public void testChooseVCP() throws IOException
 	 {
@@ -106,6 +111,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.verifyPopUp("VO");
 	 }
 
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS010 Validates navigation upon selection of I agree option on VCP pop up ",groups="Provider")
 	public void testEnrollAsVCP() throws IOException
 	 {
@@ -118,6 +124,7 @@ public class TestCreateEnrollment extends TestBase{
 		
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS011/TS014 Validates navigation upon selection of I agree option on ACH and VCP pop up",groups="Provider")
 	public void testEnrollAsVCPandACH() throws IOException
 	 {
@@ -129,6 +136,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
 	 }
 
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS012/TS013 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
 	public void testChooseVCPandACH() throws IOException
 	 {
@@ -138,6 +146,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentPage.selectHowYouHeard(option).verifyPopUp("AV");
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS020/TS021/TS022 Validates Content of PopUp upon clicking Cancel Button",groups="Provider")
 	public void testCancelEnrollmentPopUp() throws IOException
 	 {
@@ -149,6 +158,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).verifyCancelEnrollmentFunctionality();
 	 }
 	
+	@TestDetails(author="Amit")
 	@Test(priority=4,description="US1202167--TS024-TS026 Validates errors messages displayed on various TIN combinations",groups="Provider")
 	public void testErrorMsgs() throws IOException
 	 {
@@ -165,7 +175,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author Priyanka
 	 * @throws IOException
 	 */
-	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351123- [1]TS_00003_Page text is content managed + TS_00004_Field label changes display Business Name and Business Address. + TS_00005_Messaging on page indicates not to enter special characters. + TS_00006_Header displays - For AO .+ TS_00009_To Validate Cancel Enrollment and Continue options display.",groups="Provider" )
 	public void testPageContextFromDB()throws IOException
 	{
@@ -179,6 +189,7 @@ public class TestCreateEnrollment extends TestBase{
 			
 	}
 		
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351123- TS_00009_To Validate Cancel Enrollment and Continue options display.+ TS_00010_To Validate Cancel Enrollment and Continue options display. + TS_00011_ Validate  Upon selection of No, popup box closes and user is back on Organization Information page.. + TS_00012_ Validate Upon selection of Yes, user is returned to the EPS Landing page.",groups="Provider" )
 	public void testCancelEnrollment()throws IOException
 	{
@@ -192,7 +203,7 @@ public class TestCreateEnrollment extends TestBase{
 			
 	}
 		
-		
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351123 - TS_00009_To Validate Cancel Enrollment and Continue options display.+ TS_00010_To Validate Cancel Enrollment and Continue options display. + TS_00011_ Validate  Upon selection of No, popup box closes and user is back on Organization Information page.. + TS_00012_ Validate Upon selection of Yes, user is returned to the EPS Landing page.+TS_00013,14 and 15,17",groups="Provider" )
 	public void testContinueEnrollment()throws IOException
 	{
@@ -206,6 +217,7 @@ public class TestCreateEnrollment extends TestBase{
 			
 	}
 		
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351123-TS_00018_Missing and invalid field validation for Business Name (special characters)",groups="Billing Service" )
 	public void testFieldValidations()throws IOException
 	{
@@ -226,6 +238,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351172 -  TS007,TS009- Verifies validation message if an existing email is used for new enrollment For Primary Prov",groups="Provider")
 	public void testDupEmailErrorForPrimaryProvWithYes()throws IOException
 	{
@@ -240,6 +253,7 @@ public class TestCreateEnrollment extends TestBase{
 		
 	}
 	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351172 -TS008 validation message if an existing email is used for new enrollment For Primary Prov",groups="Provider")
 	public void testDupEmailErrorForPrimaryProvWithNo()throws IOException
 	{
@@ -254,6 +268,7 @@ public class TestCreateEnrollment extends TestBase{
 		
 	}
 	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351172 -TS007-Verifies validation message if an existing email is used for new enrollment For Secondary Prov",groups="Provider")
 	public void testDupEmailErrorForSecondaryProvWithYes()throws IOException
 	{
@@ -267,7 +282,7 @@ public class TestCreateEnrollment extends TestBase{
 		providerEnrollPage.fillProviderOrgInfo().verifyDupEmailError(provType).verifyAssociatedTins().clickYes(provType);
 	}
 	
-	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351172 -TS008-Verifies validation message if an existing email is used for new enrollment For Secondary Prov",groups="Provider")
 	public void testDupEmailErrorForSecondaryProvWithNo()throws IOException
 	{
@@ -281,6 +296,7 @@ public class TestCreateEnrollment extends TestBase{
 		providerEnrollPage.fillProviderOrgInfo().verifyDupEmailError(provType).verifyAssociatedTins().clickNo(provType);
 	}
 	
+	@TestDetails(author="Priyanka")
 	@Test(priority=3,description="US1351172 -TS013 - Verifies validation message if an existing email is used for new enrollment For Secondary Prov",groups="Provider")
 	public void testDupEmailErrorForBothPrimaryAndSecondaryProv()throws IOException
 	{
@@ -301,6 +317,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS01_TIN does not exist on EPS",groups="Provider")
 	void testTINNotEnrolled()throws IOException
 	{
@@ -313,6 +330,7 @@ public class TestCreateEnrollment extends TestBase{
 		
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS02_TIN exists Inactive and not blocked",groups="Provider")
 	void testInactiveUnBlockedTIN()throws IOException
 	{
@@ -324,6 +342,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();			
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS03_TIN does not exists on EPS_AO",groups="Provider")
 	void testTINNotEnrolledAO()throws IOException
 	{
@@ -335,6 +354,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();		
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS04_TIN does not exists on EPS_AV",groups="Provider")
 	void testTINNotEnrolledVO()throws IOException
 	{
@@ -346,6 +366,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();				
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS05_TIN does not exists on EPS_VO",groups="Provider")
 	void testTINNotEnrolledAV()throws IOException
 	{
@@ -357,6 +378,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus();			
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS06_Content Managed",groups="Provider")
 	void testContentManaged()throws IOException
 	{
@@ -368,6 +390,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyContentManaged();	
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS07_UXDS match",groups="Provider")
 	void testUXDSMatch()throws IOException
 	{
@@ -379,6 +402,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyContentWithUXDS();	
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS08_Blank W9",groups="Provider")        // Need to check on this
 	void testW9Form()throws IOException
 	{
@@ -390,6 +414,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyW9Form();	
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS09_Cancel and Continue Enabled",groups="Provider")
 	void testCancelAndContinueBtn()throws IOException
 	{
@@ -401,6 +426,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyCancelAndContinueBtn();
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS10_Cancel Enrollment_Popup",groups="Provider")
 	void testBtnCancelPopUp()throws IOException
 	{
@@ -412,6 +438,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().clickCancel().verifyBtnCancelPopup();				
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS11_Cancel Enrollment_No",groups="Provider")
 	void testBtnCancelPopUpClickNo()throws IOException
 	{
@@ -423,6 +450,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().clickCancel().verifyBtnCancelPopup().confirmCancelNo().verifyTINStatus();
 	}
 
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1350108_TS12_Cancel Enrollment_Yes",groups="Provider")
 	void testBtnCancelPopUpClickYes()throws IOException
 	{
@@ -438,10 +466,11 @@ public class TestCreateEnrollment extends TestBase{
 	
 	/**
 	 * US1023501
-	 * @author p1058:Avneet
+	 * @author :Avneet
 	 * @throws IOException
 	 */
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1023501_TS01_Enrolled and Active Status TIN",groups="Provider")
 	void testEnrolledActiveStatusTIN()throws IOException
 	{
@@ -453,6 +482,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyEnrolledActiveStatusTIN();	
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1023501_TS02_Enrolled and Pre-Enrollment Status TIN",groups="Provider")
 	void testEnrolledPreEnrollmentStatusTIN()throws IOException
 	{
@@ -464,6 +494,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyEnrolledPreEnrollmentStatusTIN();			
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1023501_TS03_Auto Enrolled and in Pre-Enrollment Status TIN",groups="Provider")
 	void testAutoEnrolledPreEnrollmentStatusTIN()throws IOException
 	{
@@ -475,6 +506,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyAutoEnrolledPreEnrollmentStatusTIN();	
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1023501_TS04_Enrolled and Inactive/Block Status TIN",groups="Provider")
 	void testEnrolledInactiveAndBlockStatusTIN()throws IOException
 	{
@@ -492,6 +524,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author Abhinav
 	 */
 	
+	@TestDetails(author="Abhinav")
 	@Test(priority=3,description="US1348562 - TS_00001 - Upon selection of  Enroll Now button click navigates user to Before you begin enrollment page",groups="Provider")
 	public void testBeforeYouBeginEnrollmentPage()
 	{
@@ -501,8 +534,8 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	
-	// TC_0007 is covered with this
-	@Test(priority=3,description="US1348562 - TS_00002 - Enroll Now  button from How to Enroll Page navigates user to  Before you begin enrollment  page",groups="Provider")
+	@TestDetails(author="Abhinav")
+	@Test(priority=3,description="US1348562 - TS_00002/TC_0007 - Enroll Now  button from How to Enroll Page navigates user to  Before you begin enrollment  page",groups="Provider")
 	public void testHowToEnrollLink()
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
@@ -511,16 +544,18 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateBeginEnrollment();
 	}
 	
+	@TestDetails(author="Abhinav")
 	@Test(priority=3,description="US1348562 - TS_00006 - Benefits of EPS link on page navigates user to the Benefits of EPS page.",groups="Provider")
 	public void testValidateBenefitsOfEPSLink()
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
-		BenefitsOfEPS benefitsOfEPS = upaRegistrationPage.clickBenefitsOfEPSLink();		
+		upaRegistrationPage.clickBenefitsOfEPSLink();		
 	}
 	
-	// TC_0009 is already covered and standard step for each test case.
 	
-	@Test(priority=3,description="US1348562 - TS_00010 - To Validate If user does not select an option and clicks continue , error message is displayed  below the radio buttons.",groups="Provider")
+	
+	@TestDetails(author="Abhinav")
+	@Test(priority=3,description="US1348562 - TS_00010/TC_0009 - To Validate If user does not select an option and clicks continue , error message is displayed  below the radio buttons.",groups="Provider")
 	public void testBeginEnrollmentErrorValidation()
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
@@ -529,8 +564,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.validateErrorMsgs();		
 	}
 	
-	//TC_00012 is also covered with this
-	@Test(priority=3,description="US1348562 - TS_00011 - the error message  if user selects Other without entering text and clicks continue",groups="Provider")
+	@TestDetails(author="Abhinav")
+	@Test(priority=3,description="US1348562 - TS_00011/TC_00012 - the error message  if user selects Other without entering text and clicks continue",groups="Provider")
 	public void testBeginEnrollmentOtherRadioSelectedErrorValidation()
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
@@ -539,8 +574,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.validateErrorMsgs();		
 	}
 	
-	//Add TC0015 in below 
-	@Test(priority=3,description="US1348562 - TS_00013 - the limit of characters to be entered for the Text box, [Max limit 50]",groups="Provider")
+	@TestDetails(author="Abhinav")
+	@Test(priority=3,description="US1348562 - TS_00013/TC0015 - the limit of characters to be entered for the Text box, [Max limit 50]",groups="Provider")
 	public void testBeginEnrollmentValidateLmtOfChars()
 	{
 		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
@@ -548,6 +583,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateTextBoxCharLmt();
 	}
 	
+	@TestDetails(author="Abhinav")
 	@Test(priority=3,description="US1348562 - TS_00014 - The Pop up message on click of Cancel Enrollment Button.",groups="Provider")
 	public void testValidateCancelEnrlmntBtn()
 	{
@@ -558,14 +594,15 @@ public class TestCreateEnrollment extends TestBase{
 		upaRegistrationPage = beginEnrollment.validateCancelEnrollmentBtnYes();
 	}
 	
-//	@Test(priority=3,description="US1348562 - TS_00008 - User is able to download Enrollment Guide PDFs.")
-//	public void testAbleToDwnldEnrlmntPdf()
-//	{
-//		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
-//		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
-//		beginEnrollment.validateUserIsAbleToDwnldEnrlmntPdf();		
-//	}
+	@Test(priority=3,description="US1348562 - TS_00008 - User is able to download Enrollment Guide PDFs.")
+	public void testAbleToDwnldEnrlmntPdf()
+	{
+		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollment = upaRegistrationPage.clickEnrollNow();
+		beginEnrollment.validateUserIsAbleToDwnldEnrlmntPdf();		
+	}
 	
+	@TestDetails(author="Abhinav")
 	@Test(priority=3,description="US1348562 - TS_00005 - Q and A are obtained from active entries in Survey Table (responses appear in appropriate order",groups="Provider")
 	public void testBeginEnrollmentQuestions() throws IOException
 	{
@@ -578,7 +615,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author rkrish38
 	 * @throws IOException
 	 */
-	
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033480--TS01/TS02/TS03--Create Enrollment Provider Footer Display",groups="Provider")
 	public void testFooterContents() throws IOException
 	 {
@@ -605,7 +642,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 
-	
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page",groups="Provider") 
 	public void testHeaderDisplayforAO() throws IOException
 	{
@@ -615,14 +652,15 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
-		
 		enrollmentSubmitted.verifyHeaders();
 	 }
+	
 	/**
 	 * @author rkrish38
 	 * @throws IOException
 	 */
 	
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033910-TS005 Validate the header display for AV ( Enrollment Submitted ) Page",groups="Provider")
 	public void testHeaderDisplayforAV() throws IOException
 	 {
@@ -632,13 +670,13 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
-	
 		enrollmentSubmitted.verifyHeaders();
 	 }
 	/**
 	 * @author rkrish38
 	 * @throws IOException
 	 */
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033910-TS006 Validate the header display for VO ( Enrollment Submitted ) Page",groups="Provider") 
 	public void testHeaderDisplayforVO() throws IOException
 	{
@@ -648,7 +686,6 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
-		
 		enrollmentSubmitted.verifyHeaders();
 	}
 	
@@ -656,6 +693,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author rkrish38
 	 * @throws IOException
 	 */
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="TS_00007_The PDF display  for the user to download or view or print their enrollment form",groups="Provider") 
 	public void testDownloadEnrollmentForm() throws IOException
 	{
@@ -666,9 +704,9 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
 		enrollmentSubmitted.verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
-	
 	}
 	
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033910-TS_00008_Upon selection of What is the ACH addendum record for link, a pop-up appears with information on ACH Addendum Record",groups="Provider") 
 	public void testclickACHAddenfumRecrd() throws IOException
 	{
@@ -678,12 +716,11 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
-		
 		enrollmentSubmitted.clickACHAddenfumRecrd();
 	 }
 	
 	
-	 //EXIT ENROLLMENT 
+	@TestDetails(author="Rahul")
 	@Test(priority=4,description="US1033910-TS009/0010 Option displays to Exit Enrollment and When click on Exit Enrollment button Navigate  to EPS Landing page.",groups="Provider") 
 	public void testVerifyExitEnrollemnt() throws IOException
 	{
@@ -702,14 +739,15 @@ public class TestCreateEnrollment extends TestBase{
 	 * User story- US1048015
 	 */
 
+	@TestDetails(author="Avneet")
 	@Test(priority=4,description="Verifies Header Links functionality",groups="Billing Service")
 	public void testHeaderLinks()
 	 {
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		registrationPage.verifyAllHeaderLinks();
-		
 	 }
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS01_Enrolled_and_Active_BS_TIN",groups="Billing Service")
 	void testEnrolledActiveBSTIN()throws IOException
 	{
@@ -721,6 +759,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyEnrolledActiveBSTIN();		
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS02_Enrolled_and_Active_BS_TIN_Details",groups="Billing Service")
 	void testEnrolledActiveBSTINDetails()throws IOException
 	{
@@ -732,6 +771,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyEnrolledActiveBSTINDetails();		
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS03_Enrolled_and_Active_BS_TIN_Sign_In_To_EPS_Option",groups="Billing Service")
 	void testEnrolledActiveBSTINReturnToLogin()throws IOException
 	{
@@ -743,6 +783,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyEnrolledActiveBSTINDetails().returnToLogin();		
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS04_Pre_Enrolled_BS_TIN",groups="Billing Service")
 	void testPreEnrolledBSTIN()throws IOException
 	{
@@ -754,6 +795,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyPreEnrolledBSTIN();
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS05_Pre_Enrolled_BS_TIN_Sign_In_To_EPS_Option",groups="Billing Service")
 	void testPreEnrolledBSTINReturnToLogin()throws IOException
 	{
@@ -765,6 +807,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyPreEnrolledBSTIN().returnToLogin();
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS06_UXDS_HTML",groups="Billing Service")
 	void testUXDSHTML()throws IOException
 	{
@@ -776,6 +819,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyContentWithUXDSBS();	
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS07_Content_Managed",groups="Billing Service")
 	void testContentManagedActiveBSTIN()throws IOException
 	{
@@ -787,6 +831,7 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyContentManagedForActiveBSTIN();
 	}
 	
+	@TestDetails(author="Avneet")
 	@Test(priority=3,description="US1048015_TS07_Content_Managed",groups="Billing Service")
 	void testContentManagedPendingEnrollmentBSTIN()throws IOException
 	{

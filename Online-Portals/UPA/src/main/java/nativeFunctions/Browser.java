@@ -502,14 +502,10 @@ public class Browser
 			Log.Comment("Switching to the new window");
 			Browser.wait(testConfig, 2);
 			String oldWindow = testConfig.driver.getWindowHandle();
-			
-			  
+	
 			  if (testConfig.driver.getWindowHandles().size() < 2)
- 			  {
 				  Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
-			  }
-			
-			  
+		
 			for (String winHandle : testConfig.driver.getWindowHandles())
 			{
 				if (!winHandle.equals(oldWindow))
