@@ -141,7 +141,7 @@ public class TestProviderViewPayments extends TestBase {
     
     @TestDetails(author="Priyanka")
     @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
-    void testPaymentsForhowALLFilter_9_13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+    void testPaymentsForShowALLFilter_9_13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
  	    accessType="Admin";

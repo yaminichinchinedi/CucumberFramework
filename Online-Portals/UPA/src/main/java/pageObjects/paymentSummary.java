@@ -761,12 +761,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{
 		if (maketTypeFromFISL.equalsIgnoreCase("M"))
 		return "Medical";
-		
 		else if(maketTypeFromFISL.equalsIgnoreCase("H"))
 		return "HRA";
-		
 		else if(maketTypeFromFISL.equalsIgnoreCase("Y"))
 			return "Member Payments";
+		else if(maketTypeFromFISL.equalsIgnoreCase("W"))
+			return "Workers Compensation";
 
 		else
 		return maketTypeFromFISL;
