@@ -18,6 +18,7 @@ import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
 import main.java.pageObjects.ThankYouPage;
 import main.java.pageObjects.UPARegistrationPage;
+import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 import main.java.pageObjects.UPARegistrationPage;
@@ -579,7 +580,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	
-	@Test(priority=4,description="US1033480--TS01/TS02/TS03--Create Enrollment Provider Footer Display")
+	@Test(priority=4,groups="Create Enrollment",description="US1033480--TS01/TS02/TS03--Create Enrollment Provider Footer Display")
 	public void testFooterContents() throws IOException
 	 {
 		String option = "Health plan communication";
@@ -606,7 +607,22 @@ public class TestCreateEnrollment extends TestBase{
 //	 */
 //
 //	
-	@Test(priority=4,description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page") 
+	
+
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page") 
+	public void testApprovedUIforAO() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();	
+		
+		enrollmentSubmitted.verifyPageUI(testConfig);
+	 }
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page") 
 	public void testHeaderDisplayforAO() throws IOException
 	{
 		String option="Health plan communication";
@@ -614,7 +630,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 		
 		enrollmentSubmitted.verifyHeaders();
 	 }
@@ -623,7 +639,7 @@ public class TestCreateEnrollment extends TestBase{
 //	 * @throws IOException
 //	 */
 //	
-	@Test(priority=4,description="US1033910-TS005 Validate the header display for AV ( Enrollment Submitted ) Page")
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS005 Validate the header display for AV ( Enrollment Submitted ) Page")
 	public void testHeaderDisplayforAV() throws IOException
 	 {
 		String option="Health plan communication";
@@ -631,7 +647,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 	
 		enrollmentSubmitted.verifyHeaders();
 	 }
@@ -639,7 +655,7 @@ public class TestCreateEnrollment extends TestBase{
 //	 * @author rkrish38
 //	 * @throws IOException
 //	 */
-	@Test(priority=4,description="US1033910-TS006 Validate the header display for VO ( Enrollment Submitted ) Page") 
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS006 Validate the header display for VO ( Enrollment Submitted ) Page") 
 	public void testHeaderDisplayforVO() throws IOException
 	{
 		String option="Health plan communication";
@@ -647,7 +663,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit();
 		
 		enrollmentSubmitted.verifyHeaders();
 	}
@@ -656,7 +672,9 @@ public class TestCreateEnrollment extends TestBase{
 	 * @author rkrish38
 	 * @throws IOException
 	 */
-	@Test(priority=4,description="TS_00007_The PDF display  for the user to download or view or print their enrollment form") 
+	
+	
+	@Test(priority=4,groups="Create Enrollment",description="TS_00007_The PDF display  for the user to download or view or print their enrollment form") 
 	public void testDownloadEnrollmentForm() throws IOException
 	{
 		String option="Health plan communication";
@@ -664,12 +682,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit();
 		enrollmentSubmitted.verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
 	
 	}
 	
-	@Test(priority=4,description="US1033910-TS_00008_Upon selection of What is the ACH addendum record for link, a pop-up appears with information on ACH Addendum Record") 
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS_00008_Upon selection of What is the ACH addendum record for link, a pop-up appears with information on ACH Addendum Record") 
 	public void testclickACHAddenfumRecrd() throws IOException
 	{
 		String option="Health plan communication";
@@ -677,14 +695,14 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 		
 		enrollmentSubmitted.clickACHAddenfumRecrd();
 	 }
 	
 	
 	 //EXIT ENROLLMENT 
-	@Test(priority=4,description="US1033910-TS009/0010 Option displays to Exit Enrollment and When click on Exit Enrollment button Navigate  to EPS Landing page.") 
+	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS009/0010 Option displays to Exit Enrollment and When click on Exit Enrollment button Navigate  to EPS Landing page.") 
 	public void testVerifyExitEnrollemnt() throws IOException
 	{
 		String option="Health plan communication";
@@ -692,9 +710,112 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit();
 		
 		enrollmentSubmitted.verifyExitEnrollemnt();
 	}
+	/**
+	 * @author rkrish38
+	 * @throws IOException
+	 */
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS001 Create Enrollment - Upload W9 - Billing Service")
+	public void testUserEnrollmntAsBSNavigateToUpldW9page() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+	 }
 	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS02_Create Enrollment_BS_Upload W9_Header")
+	public void testUserEnrollmntAsBSvlDtHeader() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+		new UploadW9(testConfig).verifyHeaders();
+		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+	 }
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS03_Create Enrollment_BS_Upload W9_Cancel_Back_Submit buttons")
+	public void testUserEnrollmntAsBSvlDtFooter() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+		new UploadW9(testConfig).verifyFootersContent();
+		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+	 }
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS04_Create Enrollment_BS_Upload W9_Back functionality")
+	public void testUserEnrollmntAsBSBckToProvdr() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+		new UploadW9(testConfig).verifyProvierAdmin();
+		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+	 }
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS05_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup")
+	public void testUserEnrollmntAsBSClckCancEnroll() throws IOException
+	 {
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+		new UploadW9(testConfig).verifyClckCancEnroll();
+		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+	 }
+	
+	
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS06_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup_No")
+	   public void testUserEnrollmntAsBSClickNo() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRow=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+			new UploadW9(testConfig).verifyClckNo();
+		 }
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS07_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup_Yes")
+	   public void testUserEnrollmntAsBSClickYes() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRow=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+			new UploadW9(testConfig).verifyClckYes();
+		 }
+	
+	@Test(priority=4,groups="Create Enrollment",description="US1048076-TS12_Create Enrollment_BS_Upload W9 page_FederalW9 link")
+	   public void testUserEnrollmntAsBSClickFederalW9link() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRow=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
+			new UploadW9(testConfig).verifyFederalW9link();
+		 }
 }
