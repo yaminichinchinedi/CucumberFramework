@@ -2,6 +2,7 @@ package main.java.pageObjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -23,7 +25,7 @@ import org.openqa.selenium.support.PageFactory;
 
 
 
-public class EnrollmentSubmitted {
+public class EnrollmentSubmitted  {
 	protected TestBase testConfig;
 	@FindBy(linkText="Print Completed Enrollment Form")
 	WebElement lnkPrintPdf;
@@ -39,9 +41,18 @@ public class EnrollmentSubmitted {
 
 	@FindBy(xpath = "//span[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeaders;
-
+	
+	@FindBy(xpath = "//a[@class='progress-indicator__title']")
+	List<WebElement> OrgInfoHeadersBS;
+	
 	@FindBy(xpath = "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']")
 	WebElement exitEnrollment;
+	
+	//@FindBy(xpath = "//div[@class='margin-bottom-alpha']")
+	//WebElement content1;
+	
+	@FindBy(xpath="//fieldset" )
+	WebElement fieldset;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	
@@ -175,61 +186,101 @@ public class EnrollmentSubmitted {
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
 	}
 	
-		public void verifyHeaders() {
+	public void verifyPageUI(TestBase testBase)  {
+		
+		ApprovdUIPage agreedpage=new ApprovdUIPage();
+		
+		ArrayList<String> lstofexpectedUIText=new ArrayList<String>();
+		ArrayList<String> lstofexpectedUIFont=new ArrayList<String>();
+		ArrayList<String> lstofexpectedUIColor=new ArrayList<String>();
 
-		List<String> headers = Arrays.asList("Organization Information",
-				"Identify Administrators", "Financial Institution Information",
-				"Select Payment Methods", "Upload W9", "Review and Submit");
-		for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
+		ArrayList<String> lstofEnrolmntSbmtpage=new ArrayList<String>();
+		ArrayList<String> lstofEnrolmntSbmtpageFont=new ArrayList<String>();
+		ArrayList<String> lstofEnrolmntSbmtpageColr=new ArrayList<String>();
 
-			// Helper.compareEquals(testConfig, "Headers comparison for : " +
-			// headers.get(i) , headers.get(i),
-			// (OrgInfoHeaders.get(i).getText().replace("\n", " ")).trim());
-			if (!(OrgInfoHeaders.get(i).getText().replace("\n", " "))
-					.equalsIgnoreCase("Enrollment Submitted")
-					&& headers.get(i)
-							.equalsIgnoreCase(
-									(OrgInfoHeaders.get(i).getText().replace(
-											"\n", " ")))) {
-				Helper.compareEquals(
-						testConfig,
-						"Color Value for "
-								+ (OrgInfoHeaders.get(i).getText().replace(
-										"\n", " ")) + " Information is:",
-						"#e87722",
-						Color.fromString(
-								OrgInfoHeaders.get(i).getCssValue("color"))
-								.asHex());
-
-				Helper.compareEquals(testConfig, "font weight for "
-						+ (OrgInfoHeaders.get(i).getText().replace("\n", " "))
-						+ " Information is:", "400", OrgInfoHeaders.get(i)
-						.getCssValue("font-weight"));
-			}
-
-			if ((OrgInfoHeaders.get(i).getText().replace("\n", " "))
-					.equalsIgnoreCase("Enrollment Submitted")
-					&& OrgCircle.get(i).isDisplayed() == true) {
-				Helper.compareEquals(
-						testConfig,
-						"Color Value for "
-								+ (OrgInfoHeaders.get(i).getText().replace(
-										"\n", " ")) + " Information is:",
-						"#e87722",
-						Color.fromString(
-								OrgInfoHeaders.get(i).getCssValue("color"))
-								.asHex());
-
-				Helper.compareEquals(
-						testConfig,
-						"Bold font with circle is present for "
-								+ (OrgInfoHeaders.get(i).getText().replace(
-										"\n", " ")), "900",
-						OrgInfoHeaders.get(i).getCssValue("font-weight"));
-
-			}
-
+		for (WebElement wblt:agreedpage.OrgInfoforAO)
+		{
+			lstofexpectedUIText.add(wblt.getText().replace("\n", " "));
+			lstofexpectedUIColor.add(Color.fromString((wblt.getCssValue("color"))).asHex());
+			lstofexpectedUIFont.add (wblt.getCssValue("font-weight"));
 		}
+		
+		for (WebElement wblt:OrgInfoHeaders)
+		{
+			
+			lstofEnrolmntSbmtpage.add(wblt.getText().replace("\n", " "));
+			lstofEnrolmntSbmtpageColr.add(Color.fromString((wblt.getCssValue("color"))).asHex());
+			lstofEnrolmntSbmtpageFont.add (wblt.getCssValue("font-weight"));
+		}
+
+		 Helper.compareEquals(testConfig, "Headrs text Comparison",lstofexpectedUIText, lstofEnrolmntSbmtpage);
+		 Helper.compareEquals(testConfig, "Headrs text color Comparison",lstofexpectedUIColor, lstofEnrolmntSbmtpageColr);
+		 Helper.compareEquals(testConfig, "Headers text font Comparison",lstofexpectedUIFont, lstofEnrolmntSbmtpageFont);
+
+
+		 if ((agreedpage.fieldset.getText().substring(0, 457)).equalsIgnoreCase(fieldset.getText().substring(0, 457))  
+				 && (agreedpage.fieldset.getText().substring(458, 477)).equalsIgnoreCase(fieldset.getText().substring(458, 477)) 
+				 && (agreedpage.fieldset.getText().substring(479)).equalsIgnoreCase(fieldset.getText().substring(479)) 
+				 )
+		 {
+			 Log.Pass("Passes the text comparision of Enrollment Submitted Page and Approved HTML page ");
+		 }
+		 else
+		 {
+			 Log.Fail("Failed the text comparision of Enrollment Submitted Page and Approved HTML page ");
+		 }
+		// Helper.compareContains(testBase, "text comparision", agreedpage.fieldset.getText(), content1.getText());
+		
+	}
+	
+
+	
+	
+	public void verifyHeadersFunctionality(List<String> headers)
+	{
+	List<WebElement> Headers;
+	if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
+		Headers=OrgInfoHeaders;
+	else
+		Headers=OrgInfoHeadersBS;
+	for (int i = 0; i < (Headers.size()); i++) {
+			if ( !(Headers.get(i).getText().replace("\n", " ")).equalsIgnoreCase("Enrollment Submitted") 
+			&& headers.get(i).equalsIgnoreCase((Headers.get(i).getText().replace("\n", " "))))	
+				Helper.compareEquals(testConfig, "font weight for "+ (Headers.get(i).getText().replace("\n", " "))+ " Information is:", "400", Headers.get(i).getCssValue("font-weight"));
+			if ((Headers.get(i).getText().replace("\n", " ")).equalsIgnoreCase("Enrollment Submitted")&& OrgCircle.get(i).isDisplayed() == true) 
+				Helper.compareEquals(testConfig,"Bold font with circle is present for "+ (Headers.get(i).getText().replace("\n", " ")), "900",Headers.get(i).getCssValue("font-weight")); 
+			Helper.compareEquals(testConfig,"Color Value for "+ (Headers.get(i).getText().replace("\n", " ")) + " Information is:","#e87722",Color.fromString(Headers.get(i).getCssValue("color")).asHex());
+		}
+	}
+	
+	public  EnrollmentSubmitted verifyHeaders() {
+
+	     List<String> headersAV = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information","Select Payment Methods", "Upload W9", "Review and Submit");
+		 List<String> headersAO = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information", "Upload W9", "Review and Submit");
+		 List<String> headersVO = Arrays.asList("Organization Information","Identify Administrators", "Upload W9", "Review and Submit");
+		 List<String> headersBS = Arrays.asList("Billing Service Information","Identify Administrators", "Upload W9", "Review and Submit");
+			
+		 
+		 switch(enrollmentInfoPageObj.getTinIdentifier())
+		 {
+		 case "AV":
+			 verifyHeadersFunctionality(headersAV);
+			 break;
+			 
+		 case "AO":
+			 verifyHeadersFunctionality(headersAO);
+			 break;
+			 
+		 case "VO":
+			 verifyHeadersFunctionality(headersVO);
+			 break;
+			 
+		 default:
+			 verifyHeadersFunctionality(headersBS);
+			 break;
+			 
+		 }
+		return this;
 	}
 	
 	
@@ -252,12 +303,16 @@ public class EnrollmentSubmitted {
 		//make close tip function and call in above
 		public void closeTipButton() throws IOException
 		{
-			Element.click(closetip, "Close Tip Button");	
+			Element.click(closetip, "Close Tip Button");
+			Element.verifyElementNotPresent(closetip, "Close Tip Button");
+			
 		}
-			public void verifyExitEnrollemnt() throws IOException {
+		
+		public void verifyExitEnrollemnt() throws IOException {
 			String expected = "EXIT ENROLLMENT"; 
 			String expecteHOMEURL = "returnToLoginPage.do";
-			Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());
+			Element.expectedWait(exitEnrollment, testConfig, "EXIT ENROLLMENT Button Text", "EXIT ENROLLMENT Button Text");
+            Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());
 			Element.click(exitEnrollment, "EXIT ENROLLMENT");
 			Browser.verifyURL(testConfig, expecteHOMEURL);
 		}
