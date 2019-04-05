@@ -175,39 +175,18 @@ public class EnrollmentSubmitted {
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
 	}
 	
-		public void verifyHeaders() {
-
-		List<String> headers = Arrays.asList("Organization Information",
-				"Identify Administrators", "Financial Institution Information",
-				"Select Payment Methods", "Upload W9", "Review and Submit");
-		for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
-
-			// Helper.compareEquals(testConfig, "Headers comparison for : " +
-			// headers.get(i) , headers.get(i),
-			// (OrgInfoHeaders.get(i).getText().replace("\n", " ")).trim());
-			if (!(OrgInfoHeaders.get(i).getText().replace("\n", " "))
-					.equalsIgnoreCase("Enrollment Submitted")
-					&& headers.get(i)
-							.equalsIgnoreCase(
-									(OrgInfoHeaders.get(i).getText().replace(
-											"\n", " ")))) {
-				Helper.compareEquals(
-						testConfig,
-						"Color Value for "
-								+ (OrgInfoHeaders.get(i).getText().replace(
-										"\n", " ")) + " Information is:",
-						"#e87722",
-						Color.fromString(
-								OrgInfoHeaders.get(i).getCssValue("color"))
-								.asHex());
-
-				Helper.compareEquals(testConfig, "font weight for "
-						+ (OrgInfoHeaders.get(i).getText().replace("\n", " "))
-						+ " Information is:", "400", OrgInfoHeaders.get(i)
-						.getCssValue("font-weight"));
+	public void verifyHeaders() 
+	 {
+		  List<String> headers = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information","Select Payment Methods", "Upload W9", "Review and Submit");
+		  for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
+		  
+		  if (!(OrgInfoHeaders.get(i).getText().replace("\n", " ")).equalsIgnoreCase("Enrollment Submitted")&& headers.get(i).equalsIgnoreCase((OrgInfoHeaders.get(i).getText().replace("\n", " "))))
+			{
+				Helper.compareEquals(testConfig,"Color Value for "+ (OrgInfoHeaders.get(i).getText().replace("\n", " ")) + " Information is:","#e87722",Color.fromString(OrgInfoHeaders.get(i).getCssValue("color")).asHex());
+				Helper.compareEquals(testConfig, "font weight for "+ (OrgInfoHeaders.get(i).getText().replace("\n", " "))+ " Information is:", "400", OrgInfoHeaders.get(i).getCssValue("font-weight"));
 			}
 
-			if ((OrgInfoHeaders.get(i).getText().replace("\n", " "))
+		  if ((OrgInfoHeaders.get(i).getText().replace("\n", " "))
 					.equalsIgnoreCase("Enrollment Submitted")
 					&& OrgCircle.get(i).isDisplayed() == true) {
 				Helper.compareEquals(
@@ -254,7 +233,9 @@ public class EnrollmentSubmitted {
 		{
 			Element.click(closetip, "Close Tip Button");	
 		}
-			public void verifyExitEnrollemnt() throws IOException {
+		
+		public void verifyExitEnrollemnt() throws IOException 
+		{
 			String expected = "EXIT ENROLLMENT"; 
 			String expecteHOMEURL = "returnToLoginPage.do";
 			Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());

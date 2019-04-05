@@ -152,9 +152,7 @@ public class SearchRemittance extends paymentSummary {
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
 		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
-		   {
 			Helper.compareLinkedMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
-		  }
 		  else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
@@ -208,7 +206,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	    setMapEntryKey(epsSearchRemittanceSearchRequest);
 	    setServiceData(epsSearchRemittanceSearchRequest);
-	    if(requestType=="byDOS") 
+	    if(requestType.contains("byDOS")) 
 			setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
 		else
 			setToAndFromDate(epsSearchRemittanceSearchRequest);
@@ -745,7 +743,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	   /**Gets headers List which will be key for following map*/
 	   int startingLoop=2;
-		if(requestType.equalsIgnoreCase("byElectronicPaymentNo"))
+		if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi")||requestType.equalsIgnoreCase("byDOP&SubscriberID"))
 			startingLoop=1;
 		
 	   LinkedHashMap<String,String> innerMap = null;
@@ -778,13 +776,13 @@ public class SearchRemittance extends paymentSummary {
 			      innerMap.put(headers.get(j), details);	
 				 }
 			    
-			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo"))
+			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo"))
 			    { 
 			      if(innerMap.get("Amount").contains(","))
-			     {
+			      {
 			      amount=innerMap.get("Amount").replace(",", "");
 			      innerMap.put("Amount", amount);
-			     }
+			      }
 			    }
 			   else
 			   {
@@ -823,7 +821,7 @@ public class SearchRemittance extends paymentSummary {
 			           pageNo++;
 			     }
 		 }
-	   System.out.println(innerMap);
+	   Log.Comment("UI detials " +(innerMap));
 		return innerMap;
 	   
     }
@@ -1037,15 +1035,25 @@ public class SearchRemittance extends paymentSummary {
 		  {
 			 
 			innerMap=new LinkedHashMap<String, String>();
-			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			
+//			if(requestType.equals("byDOP")||requestType.equals("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndAccountNo"))
+			innerMap.put("Payer/Patient",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+
 			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
 			patientName=patientName.replace("null ", "").trim();
-
 			
-			if(payments[i].getClaimDate()!=null)
-			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
-			else 
+			
+			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP"))
+			 {
+			   if(payments[i].getClaimDate()!=null)
+			   innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			  else 
+			  innerMap.put("Claim Date","");
+			 }
+			else
+				if(payments[i].getClaimDate()!=null)
+					 innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+				else
 			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
 		  
 			if(payments[i].getNationalProviderIdentifier()!=null)
@@ -1054,14 +1062,25 @@ public class SearchRemittance extends paymentSummary {
 			innerMap.put("NPI",""); 
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			
-			if(patientName!="" && requestType!="byElectronicPaymentNo")
-			   innerMap.put("Patient Name",patientName);
 			
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			 {
+			    if(patientName!="")
+			      innerMap.put("Patient Name",patientName);
+			 }
+			   
+	
 			if(payments[i].getSubscriberIdentifier()!=null)
 			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
 			
-			if(requestType!="byElectronicPaymentNo")
-				innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			{
+				if(payments[i].getPatientAccountNumber()!=null)
+					innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+				else
+					innerMap.put("Account Number","");
+			}
+				
 			
 			
 			
@@ -1084,10 +1103,23 @@ public class SearchRemittance extends paymentSummary {
 			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
 			    innerMap.put("Amount","$"+ amount);
 			}
-				
-				
- 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
-// 			innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+			
+			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+			if(innerMap.get("Amount")!=null)
+			{
+			    if(innerMap.get("Amount").equals("$0.00"))
+				innerMap.put("Type","DD");
+			}
+			
+			 
+ 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo"))
+ 			{
+ 				if(payments[i].getPaymentStatusCode().getDescription()!=null)
+ 					innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+ 				else
+ 					innerMap.put("Payment Status/Trace Number","N/A");
+ 			}
+ 			 
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 		 }
 		  

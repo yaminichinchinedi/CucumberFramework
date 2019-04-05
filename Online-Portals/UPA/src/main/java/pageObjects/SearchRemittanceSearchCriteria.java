@@ -158,6 +158,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");
 		    	
 		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
@@ -172,6 +173,8 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
 		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
 		    	Element.enterData(checkNumber, dataRequiredForSearch.get("UCONSL_PAY_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("UCONSL_PAY_NBR").toString(), "payment number");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");
+		    	
 		    	testConfig.putRunTimeProperty("key1", "CHECK_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("UCONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
@@ -292,8 +295,6 @@ public class SearchRemittanceSearchCriteria {
 		    {
 		    	int sqlRow = 46;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	
-		    	
 		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
 		    	testConfig.putRunTimeProperty("value", srchData.get("PTNT_FST_NM").toString());
 		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
@@ -301,15 +302,11 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
 		    	
-		    
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");					
 		    	Element.enterData(patientFirstName, srchData.get("PTNT_FST_NM").toString(), "Enter First Name as : "+srchData.get("PTNT_FST_NM").toString(), "First Name");
 		    	Element.enterData(patientLastName, srchData.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+srchData.get("PTNT_LST_NM").toString(), "Last Name");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	
-		    	
-		    	
-
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
 		    	break;		    	
 		    }
 		    
@@ -331,7 +328,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOSAndAccountNo":
+		    case "byDOSAndAcntNo":
 		    {
 		    	int sqlRow = 58;
 		    	String dosFrom = null;
@@ -356,28 +353,28 @@ public class SearchRemittanceSearchCriteria {
 		    	break;
 		    }
 		    
-		    case "DOSAndSubscriberId":
+		    case "byDOSAndSubscriberId":
 		    {
-		    	int sqlRow = 50;
+		    	int sqlRow = 157;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	String sbscrId;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	sbscrId=srchData.get("SBSCR_ID").toString();
 		    	try {
-		    		System.out.println(srchData.get("CLM_STRT_DT").toString()+":"+srchData.get("CLM_END_DT").toString());
 					dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-					System.out.println(dosFrom+":"+dosTo);
+					
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Exception occured");
+					
 					e.printStackTrace();
 				}
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
-		    	clickSearchBtn();
+		    	
+		    	
+		    	
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
@@ -475,7 +472,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;
 		    	
 		    case "byElectronicPaymenForNON":
-		    case "byElectronicPaymenForVCP":
+		    case "byElectronicPaymentForVCP":
 		    	srchData=dataProvider(criteriaType);
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
@@ -613,7 +610,7 @@ public class SearchRemittanceSearchCriteria {
 				sqlRowNo=51;
 				break;
 			case "byElectronicPaymenForNON":
-			case "byElectronicPaymenForVCP":
+			case "byElectronicPaymentForVCP":
 				sqlRowNo=53;
 				break;		
 			case "DD":
@@ -670,9 +667,9 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittanceSearchCriteria clickToDateIcon(String criteriaType)
 	{
-		if(criteriaType.equalsIgnoreCase("byDOS")){  
-	    	Element.expectedWait(dopTo, testConfig, "Calendar Present", "calendar");
-	    	Element.clickByJS(testConfig,dosTo, "To date calendar");
+		if(criteriaType.contains("byDOS")){  
+	    	Element.expectedWait(dosTo, testConfig, "Calendar Present", "calendar");
+	    	Element.clickByJS(testConfig,dosTo, "To date calendar for Date of service");
 			Browser.wait(testConfig, 2);	    	
 	     }
 		else{

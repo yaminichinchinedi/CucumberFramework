@@ -429,7 +429,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
 			Helper.compareEquals(testConfig, "Record count from FISL and UI where FISL for 30 days (by default) : ", getRecordCountFromFISL(), getRecordCountFromUI());
 			else
-			 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization. and Record count for 30 days (by default) is 0");
+			 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization");
 	}
 		
 	/**
@@ -744,11 +744,15 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		int sqlRowNo=20;
 		testConfig.putRunTimeProperty("payerName", payerNameFromFISL);
 		Map payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//		if(payerTable.get("PAYR_DSPL_NM").toString().trim() != null)
+		if(payerTable!= null)
 		return payerTable.get("PAYR_DSPL_NM").toString().trim();	
-//		else
+		else
+		{
+			return payerNameFromFISL;
 //		sqlRowNo=20;
 //		payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		return payerTable.get("PAYR_DSPL_NM").toString().trim();
+		}
 	}
 	
 	/**
