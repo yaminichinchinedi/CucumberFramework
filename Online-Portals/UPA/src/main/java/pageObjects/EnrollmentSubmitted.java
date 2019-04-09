@@ -48,9 +48,6 @@ public class EnrollmentSubmitted  {
 	@FindBy(xpath = "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']")
 	WebElement exitEnrollment;
 	
-	//@FindBy(xpath = "//div[@class='margin-bottom-alpha']")
-	//WebElement content1;
-	
 	@FindBy(xpath="//fieldset" )
 	WebElement fieldset;
 	
@@ -229,7 +226,7 @@ public class EnrollmentSubmitted  {
 		 {
 			 Log.Fail("Failed the text comparision of Enrollment Submitted Page and Approved HTML page ");
 		 }
-		// Helper.compareContains(testBase, "text comparision", agreedpage.fieldset.getText(), content1.getText());
+		
 		
 	}
 	
