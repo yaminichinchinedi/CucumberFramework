@@ -48,6 +48,7 @@ import org.xml.sax.SAXException;
 import com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentsservice_v1_0.EpsConsolidatedClaimPaymentSummary;
 
 import main.java.Utils.ViewPaymentsDataProvider;
+import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 
 public class paymentSummary extends ViewPaymentsDataProvider{
@@ -132,8 +133,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id=\"paymentsummaryform\"]/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[1]/th[13]/a")
 	WebElement lnkArchive;
 	
+
+	public SearchRemittance searchRemittance;
+
 	@FindBy(xpath="//*[@id='paymentsummaryform']/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[2]/td/span/input[1]")
 	WebElement txtBoxPayerTin2;
+
 	
 	
 	private TestBase testConfig;
@@ -168,6 +173,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
+
+	public paymentSummary(TestBase testConfig,boolean flag) {
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+	}
+
+
 	/**
 	 * Sets quick search date range filter
 	 * for the passed tin
@@ -184,7 +196,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			setlDate=getPaymentNoDetails(paymentType).get("setlDate");
 
 		String filterToBeSelected=getQuickSearchFilterCriteria(setlDate);
-		
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
@@ -341,7 +353,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     				actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText(); // fetching payment number from UI
     				actualPaymntNo=actualPaymntNo.replace("\n", "");
     				   if(actualPaymntNo.equals(expectedPaymntNo)) {
-    					Element.onMouseHover(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(3), "Remit Payment with payment number : " + actualPaymntNo);
+    					Element.mouseHoverByJS(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(3), "Remit Payment with payment number : " + actualPaymntNo);
     					 //add for text verification in pop up
     					break;
     			      }
@@ -511,18 +523,42 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 */
 	public String getRecordCountFromUI()
 	{
-		try
-		{
+		 try{ 
 			String recordCountElement[]=recordCount.getText().split(":");
 			return recordCountElement[recordCountElement.length-1].trim();
-		}
-		catch(Exception e)
-		{
-			Log.Fail("Exception occured : " + e);
-			return null;
-		}
-	    
+		 }
+	    catch(org.openqa.selenium.NoSuchElementException e)	{
+	    	searchRemittance=new SearchRemittance(testConfig,true);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+			return String.valueOf(searchRemittance.divSearchResults.size());
+	    }
+		catch(Exception e){
+				Log.Fail("Exception occured : " + e);
+				return null;
+			}  
 	}
+	
+	
+	public String getRecordCountFromUISR()
+	{
+		 try{ 
+			String recordCountElement[]=recordCount.getText().split(":");
+			return recordCountElement[recordCountElement.length-1].trim();
+		 }
+	    catch(org.openqa.selenium.NoSuchElementException e)	{
+	    	searchRemittance=new SearchRemittance(testConfig,true);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+			return String.valueOf(searchRemittance.divSearchResults.size());
+	    }
+		catch(Exception e){
+				Log.Fail("Exception occured : " + e);
+				return null;
+			}  
+	}
+	
+	
+	
+	
 	
 	/**
 	 * This function creates an outer map 
@@ -642,6 +678,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		else
 		 Element.verifyTextPresent(errorMsg,"No payments have been made to this Organization.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",getRecordCountFromFISL(),getRecordCountFromDB());
+
 		return this;
      }
 	
@@ -724,12 +761,12 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	{
 		if (maketTypeFromFISL.equalsIgnoreCase("M"))
 		return "Medical";
-		
 		else if(maketTypeFromFISL.equalsIgnoreCase("H"))
 		return "HRA";
-		
 		else if(maketTypeFromFISL.equalsIgnoreCase("Y"))
 			return "Member Payments";
+		else if(maketTypeFromFISL.equalsIgnoreCase("W"))
+			return "Workers Compensation";
 
 		else
 		return maketTypeFromFISL;
@@ -956,7 +993,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
 		
 		/**Creates POJO for Request.xml so that we can modify the elements*/
-		
+
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
@@ -998,8 +1035,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	public EpsPaymentsSearchRequest setMapEntryKey(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
-		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+		if(testConfig.getRunTimeProperty("key")!=null){
+			((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setKey(testConfig.getRunTimeProperty("key"));
+			((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(0).setValue(testConfig.getRunTimeProperty("value"));
+			}
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
@@ -2078,7 +2117,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 * @return Outer map
 	 * @throws IOException 
 	 */	
-	public void verifyPayerRolePayments() throws IOException{
+	public paymentSummary verifyPayerRolePayments() throws IOException{
 
 		int sqlRowNo=40;		
 		ArrayList<String> payerListFromDB = new ArrayList<String>();
@@ -2116,7 +2155,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			else {
 				Log.Fail(payer + " :" + " " + "not present in DB");				
 			}
-		}		
+		}
+		return this;		
 	}
 	
 	

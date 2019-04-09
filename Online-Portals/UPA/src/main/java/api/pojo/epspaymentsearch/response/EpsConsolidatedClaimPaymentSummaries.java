@@ -1,56 +1,86 @@
 package main.java.api.pojo.epspaymentsearch.response;
 
-import javax.xml.bind.annotation.XmlElement;   
+import javax.xml.bind.annotation.XmlElement;
 
 public class EpsConsolidatedClaimPaymentSummaries
 {
 	@XmlElement(name = "PayerSummary", required = true)
-    private PayerSummary PayerSummary;
+	private PayerSummary PayerSummary;
 
-    @XmlElement(name = "PaymentTypeIndicator", required = true)
+	@XmlElement(name = "PaymentTypeIndicator", required = true)
     private String PaymentTypeIndicator;
 
-    @XmlElement(name = "PaymentIdentifier", required = true)
+	@XmlElement(name = "PatientMiddleName", required = true)
+    private String PatientMiddleName;
+
+	@XmlElement(name = "PaymentStatusTypeDateTime", required = true)
+    private String PaymentStatusTypeDateTime;
+
+	@XmlElement(name = "PaymentIdentifier", required = true)
     private String PaymentIdentifier;
 
-    @XmlElement(name = "ConsolidatedPaymentNumber", required = true)
-    private String ConsolidatedPaymentNumber;
+	@XmlElement(name = "PatientFirstName", required = true)
+    private String PatientFirstName;
 
-    @XmlElement(name = "EpsPrimaryPayerIdentifier", required = true)
+	@XmlElement(name = "EpsConsolidatedClaimPaymentDetails", required = true)
+    private EpsConsolidatedClaimPaymentDetails EpsConsolidatedClaimPaymentDetails;
+
+	@XmlElement(name = "ClaimIdentifier", required = true)
+    private String ClaimIdentifier;
+
+	@XmlElement(name = "EpsPrimaryPayerIdentifier", required = true)
     private String EpsPrimaryPayerIdentifier;
 
-    @XmlElement(name = "PayeePaymentMethod", required = true)
-    private PayeePaymentMethod PayeePaymentMethod;
-
-    @XmlElement(name = "DisplayConsolidatedPaymentNumber", required = true)
+	@XmlElement(name = "DisplayConsolidatedPaymentNumber", required = true)
     private String DisplayConsolidatedPaymentNumber;
 
-    @XmlElement(name = "ClaimCountTotal", required = true)
-    private String ClaimCountTotal;
+	@XmlElement(name = "ClaimOrder", required = true)
+    private String ClaimOrder;
 
-    @XmlElement(name = "PaymentMadeOn", required = true)
+	@XmlElement(name = "PatientAccountNumber", required = true)
+    private String PatientAccountNumber;
+
+	@XmlElement(name = "ClaimDate", required = true)
+    private String ClaimDate;
+
+	@XmlElement(name = "PaymentMadeOn", required = true)
     private String PaymentMadeOn;
 
-//    @XmlElement(name = "EpsPaymentStatusCode", required = true)
-//    private String EpsPaymentStatusCode;
-    
-    @XmlElement(name = "EpsPaymentStatusCode", required = true)
+	@XmlElement(name = "SubscriberIdentifier", required = true)
+    private String SubscriberIdentifier;
+
+	@XmlElement(name = "EpsPaymentStatusCode", required = true)
     private EpsPaymentStatusCode EpsPaymentStatusCode;
 
-    @XmlElement(name = "TotalAmount", required = true)
-    private String TotalAmount;
+	@XmlElement(name = "PatientLastName", required = true)
+    private String PatientLastName;
 
-    @XmlElement(name = "PaymentStatusCode", required = true)
-    private String PaymentStatusCode;
+	@XmlElement(name = "ClaimAmount", required = true)
+    private String ClaimAmount;
 
-    @XmlElement(name = "NationalProviderIdentifier", required = true)
+	@XmlElement(name = "NationalProviderIdentifier", required = true)
     private String NationalProviderIdentifier;
 
-    @XmlElement(name = "EpsSecondaryPayerReferenceIdentifier", required = true)
-    private String EpsSecondaryPayerReferenceIdentifier;
+	@XmlElement(name = "PaymentStatusCode", required = true)
+	private PaymentStatusCode PaymentStatusCode;
 
-    @XmlElement(name = "PayerPaymentMethod", required = true)
+	@XmlElement(name = "PayerPaymentMethod", required = true)
     private PayerPaymentMethod PayerPaymentMethod;
+
+	@XmlElement(name = "EpsClaimCount", required = true)
+    private String EpsClaimCount;
+
+	@XmlElement(name = "ConsolidatedPaymentNumber", required = true)
+    private String ConsolidatedPaymentNumber;
+
+	@XmlElement(name = "PayeePaymentMethod", required = true)
+    private PayeePaymentMethod PayeePaymentMethod;
+
+	@XmlElement(name = "TotalAmount", required = true)
+    private String TotalAmount;
+
+	@XmlElement(name = "EpsSecondaryPayerReferenceIdentifier", required = true)
+    private String EpsSecondaryPayerReferenceIdentifier;
 
     public PayerSummary getPayerSummary ()
     {
@@ -72,6 +102,26 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.PaymentTypeIndicator = PaymentTypeIndicator;
     }
 
+    public String getPatientMiddleName ()
+    {
+        return PatientMiddleName;
+    }
+
+    public void setPatientMiddleName (String PatientMiddleName)
+    {
+        this.PatientMiddleName = PatientMiddleName;
+    }
+
+    public String getPaymentStatusTypeDateTime ()
+    {
+        return PaymentStatusTypeDateTime;
+    }
+
+    public void setPaymentStatusTypeDateTime (String PaymentStatusTypeDateTime)
+    {
+        this.PaymentStatusTypeDateTime = PaymentStatusTypeDateTime;
+    }
+
     public String getPaymentIdentifier ()
     {
         return PaymentIdentifier;
@@ -82,14 +132,34 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.PaymentIdentifier = PaymentIdentifier;
     }
 
-    public String getConsolidatedPaymentNumber ()
+    public String getPatientFirstName ()
     {
-        return ConsolidatedPaymentNumber;
+        return PatientFirstName;
     }
 
-    public void setConsolidatedPaymentNumber (String ConsolidatedPaymentNumber)
+    public void setPatientFirstName (String PatientFirstName)
     {
-        this.ConsolidatedPaymentNumber = ConsolidatedPaymentNumber;
+        this.PatientFirstName = PatientFirstName;
+    }
+
+    public EpsConsolidatedClaimPaymentDetails getEpsConsolidatedClaimPaymentDetails ()
+    {
+        return EpsConsolidatedClaimPaymentDetails;
+    }
+
+    public void setEpsConsolidatedClaimPaymentDetails (EpsConsolidatedClaimPaymentDetails EpsConsolidatedClaimPaymentDetails)
+    {
+        this.EpsConsolidatedClaimPaymentDetails = EpsConsolidatedClaimPaymentDetails;
+    }
+
+    public String getClaimIdentifier ()
+    {
+        return ClaimIdentifier;
+    }
+
+    public void setClaimIdentifier (String ClaimIdentifier)
+    {
+        this.ClaimIdentifier = ClaimIdentifier;
     }
 
     public String getEpsPrimaryPayerIdentifier ()
@@ -102,16 +172,6 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.EpsPrimaryPayerIdentifier = EpsPrimaryPayerIdentifier;
     }
 
-    public PayeePaymentMethod getPayeePaymentMethod ()
-    {
-        return PayeePaymentMethod;
-    }
-
-    public void setPayeePaymentMethod (PayeePaymentMethod PayeePaymentMethod)
-    {
-        this.PayeePaymentMethod = PayeePaymentMethod;
-    }
-
     public String getDisplayConsolidatedPaymentNumber ()
     {
         return DisplayConsolidatedPaymentNumber;
@@ -122,14 +182,34 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.DisplayConsolidatedPaymentNumber = DisplayConsolidatedPaymentNumber;
     }
 
-    public String getClaimCountTotal ()
+    public String getClaimOrder ()
     {
-        return ClaimCountTotal;
+        return ClaimOrder;
     }
 
-    public void setClaimCountTotal (String ClaimCountTotal)
+    public void setClaimOrder (String ClaimOrder)
     {
-        this.ClaimCountTotal = ClaimCountTotal;
+        this.ClaimOrder = ClaimOrder;
+    }
+
+    public String getPatientAccountNumber ()
+    {
+        return PatientAccountNumber;
+    }
+
+    public void setPatientAccountNumber (String PatientAccountNumber)
+    {
+        this.PatientAccountNumber = PatientAccountNumber;
+    }
+
+    public String getClaimDate ()
+    {
+        return ClaimDate;
+    }
+
+    public void setClaimDate (String ClaimDate)
+    {
+        this.ClaimDate = ClaimDate;
     }
 
     public String getPaymentMadeOn ()
@@ -142,12 +222,19 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.PaymentMadeOn = PaymentMadeOn;
     }
 
-     
-    
-    
+    public String getSubscriberIdentifier ()
+    {
+        return SubscriberIdentifier;
+    }
+
+    public void setSubscriberIdentifier (String SubscriberIdentifier)
+    {
+        this.SubscriberIdentifier = SubscriberIdentifier;
+    }
+
     public EpsPaymentStatusCode getEpsPaymentStatusCode ()
     {
-    	return EpsPaymentStatusCode ;
+        return EpsPaymentStatusCode;
     }
 
     public void setEpsPaymentStatusCode (EpsPaymentStatusCode EpsPaymentStatusCode)
@@ -155,24 +242,24 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.EpsPaymentStatusCode = EpsPaymentStatusCode;
     }
 
-    public String getTotalAmount ()
+    public String getPatientLastName ()
     {
-        return TotalAmount;
+        return PatientLastName;
     }
 
-    public void setTotalAmount (String TotalAmount)
+    public void setPatientLastName (String PatientLastName)
     {
-        this.TotalAmount = TotalAmount;
+        this.PatientLastName = PatientLastName;
     }
 
-    public String getPaymentStatusCode ()
+    public String getClaimAmount ()
     {
-        return PaymentStatusCode;
+        return ClaimAmount;
     }
 
-    public void setPaymentStatusCode (String PaymentStatusCode)
+    public void setClaimAmount (String ClaimAmount)
     {
-        this.PaymentStatusCode = PaymentStatusCode;
+        this.ClaimAmount = ClaimAmount;
     }
 
     public String getNationalProviderIdentifier ()
@@ -185,14 +272,14 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.NationalProviderIdentifier = NationalProviderIdentifier;
     }
 
-    public String getEpsSecondaryPayerReferenceIdentifier ()
+    public PaymentStatusCode getPaymentStatusCode ()
     {
-        return EpsSecondaryPayerReferenceIdentifier;
+        return PaymentStatusCode;
     }
 
-    public void setEpsSecondaryPayerReferenceIdentifier (String EpsSecondaryPayerReferenceIdentifier)
+    public void setPaymentStatusCode (PaymentStatusCode PaymentStatusCode)
     {
-        this.EpsSecondaryPayerReferenceIdentifier = EpsSecondaryPayerReferenceIdentifier;
+        this.PaymentStatusCode = PaymentStatusCode;
     }
 
     public PayerPaymentMethod getPayerPaymentMethod ()
@@ -205,9 +292,59 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.PayerPaymentMethod = PayerPaymentMethod;
     }
 
+    public String getEpsClaimCount ()
+    {
+        return EpsClaimCount;
+    }
+
+    public void setEpsClaimCount (String EpsClaimCount)
+    {
+        this.EpsClaimCount = EpsClaimCount;
+    }
+
+    public String getConsolidatedPaymentNumber ()
+    {
+        return ConsolidatedPaymentNumber;
+    }
+
+    public void setConsolidatedPaymentNumber (String ConsolidatedPaymentNumber)
+    {
+        this.ConsolidatedPaymentNumber = ConsolidatedPaymentNumber;
+    }
+
+    public PayeePaymentMethod getPayeePaymentMethod ()
+    {
+        return PayeePaymentMethod;
+    }
+
+    public void setPayeePaymentMethod (PayeePaymentMethod PayeePaymentMethod)
+    {
+        this.PayeePaymentMethod = PayeePaymentMethod;
+    }
+
+    public String getTotalAmount ()
+    {
+        return TotalAmount;
+    }
+
+    public void setTotalAmount (String TotalAmount)
+    {
+        this.TotalAmount = TotalAmount;
+    }
+
+    public String getEpsSecondaryPayerReferenceIdentifier ()
+    {
+        return EpsSecondaryPayerReferenceIdentifier;
+    }
+
+    public void setEpsSecondaryPayerReferenceIdentifier (String EpsSecondaryPayerReferenceIdentifier)
+    {
+        this.EpsSecondaryPayerReferenceIdentifier = EpsSecondaryPayerReferenceIdentifier;
+    }
+
     @Override
     public String toString()
     {
-        return "ClassPojo [PayerSummary = "+PayerSummary+", PaymentTypeIndicator = "+PaymentTypeIndicator+", PaymentIdentifier = "+PaymentIdentifier+", ConsolidatedPaymentNumber = "+ConsolidatedPaymentNumber+", EpsPrimaryPayerIdentifier = "+EpsPrimaryPayerIdentifier+", PayeePaymentMethod = "+PayeePaymentMethod+", DisplayConsolidatedPaymentNumber = "+DisplayConsolidatedPaymentNumber+", ClaimCountTotal = "+ClaimCountTotal+", PaymentMadeOn = "+PaymentMadeOn+", EpsPaymentStatusCode = "+EpsPaymentStatusCode+", TotalAmount = "+TotalAmount+", PaymentStatusCode = "+PaymentStatusCode+", NationalProviderIdentifier = "+NationalProviderIdentifier+", EpsSecondaryPayerReferenceIdentifier = "+EpsSecondaryPayerReferenceIdentifier+", PayerPaymentMethod = "+PayerPaymentMethod+"]";
+        return "ClassPojo [PayerSummary = "+PayerSummary+", PaymentTypeIndicator = "+PaymentTypeIndicator+", PatientMiddleName = "+PatientMiddleName+", PaymentStatusTypeDateTime = "+PaymentStatusTypeDateTime+", PaymentIdentifier = "+PaymentIdentifier+", PatientFirstName = "+PatientFirstName+", EpsConsolidatedClaimPaymentDetails = "+EpsConsolidatedClaimPaymentDetails+", ClaimIdentifier = "+ClaimIdentifier+", EpsPrimaryPayerIdentifier = "+EpsPrimaryPayerIdentifier+", DisplayConsolidatedPaymentNumber = "+DisplayConsolidatedPaymentNumber+", ClaimOrder = "+ClaimOrder+", PatientAccountNumber = "+PatientAccountNumber+", ClaimDate = "+ClaimDate+", PaymentMadeOn = "+PaymentMadeOn+", SubscriberIdentifier = "+SubscriberIdentifier+", EpsPaymentStatusCode = "+EpsPaymentStatusCode+", PatientLastName = "+PatientLastName+", ClaimAmount = "+ClaimAmount+", NationalProviderIdentifier = "+NationalProviderIdentifier+", PaymentStatusCode = "+PaymentStatusCode+", PayerPaymentMethod = "+PayerPaymentMethod+", EpsClaimCount = "+EpsClaimCount+", ConsolidatedPaymentNumber = "+ConsolidatedPaymentNumber+", PayeePaymentMethod = "+PayeePaymentMethod+", TotalAmount = "+TotalAmount+", EpsSecondaryPayerReferenceIdentifier = "+EpsSecondaryPayerReferenceIdentifier+"]";
     }
 }

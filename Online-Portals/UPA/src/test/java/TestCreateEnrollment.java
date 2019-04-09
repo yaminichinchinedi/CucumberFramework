@@ -644,6 +644,7 @@ public class TestCreateEnrollment extends TestBase{
 	 */
 
 	@TestDetails(author="Rahul")
+<<<<<<< HEAD
 	@Test(priority=4,groups="Create Enrollment",description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page") 
 	public void testApprovedUIforAO() throws IOException
 	{
@@ -657,6 +658,8 @@ public class TestCreateEnrollment extends TestBase{
 		enrollmentSubmitted.verifyPageUI(testConfig);
 	 }
     @TestDetails(author="Rahul")
+=======
+>>>>>>> master
 	@Test(priority=4,description="US1033910-TS004 Validate the header display for AO ( Enrollment Submitted ) Page",groups="Provider") 
 	public void testHeaderDisplayforAO() throws IOException
 	{
@@ -665,8 +668,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+<<<<<<< HEAD
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 		
+=======
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+>>>>>>> master
 		enrollmentSubmitted.verifyHeaders();
 	 }
 	
@@ -684,8 +691,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+<<<<<<< HEAD
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 	
+=======
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+>>>>>>> master
 		enrollmentSubmitted.verifyHeaders();
 	 }
 	/**
@@ -701,8 +712,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+<<<<<<< HEAD
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit();
 		
+=======
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+>>>>>>> master
 		enrollmentSubmitted.verifyHeaders();
 	}
 	
@@ -732,8 +747,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+<<<<<<< HEAD
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit();	
 		
+=======
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();	
+>>>>>>> master
 		enrollmentSubmitted.clickACHAddenfumRecrd();
 	 }
 	
@@ -747,8 +766,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+<<<<<<< HEAD
 		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit();
 		
+=======
+		EnrollmentSubmitted enrollmentSubmitted=beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+>>>>>>> master
 		enrollmentSubmitted.verifyExitEnrollemnt();
 	}
 	
@@ -861,6 +884,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyContentManagedForPendingEnrollmentBSTIN();
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -971,4 +995,6 @@ public class TestCreateEnrollment extends TestBase{
 			new UploadW9(testConfig).verifyFederalW9link();
 		 }
 	
+=======
+>>>>>>> master
 }
