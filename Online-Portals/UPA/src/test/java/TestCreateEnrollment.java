@@ -878,7 +878,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
-		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+		
 	 }
 	@TestDetails(author="Rahul")
 	@Test(priority=4,groups="Billing Service",description="US1048076-TS02_Create Enrollment_BS_Upload W9_Header")
@@ -891,7 +891,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
 		new UploadW9(testConfig).verifyHeaders();
-		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+		
 	 }
 	@TestDetails(author="Rahul")
 	@Test(priority=4,groups="Billing Service",description="US1048076-TS03_Create Enrollment_BS_Upload W9_Cancel_Back_Submit buttons")
@@ -904,7 +904,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
 		new UploadW9(testConfig).verifyFootersContent();
-		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+		
 	 }
 	@TestDetails(author="Rahul")
 	@Test(priority=4,groups="Billing Service",description="US1048076-TS04_Create Enrollment_BS_Upload W9_Back functionality")
@@ -917,7 +917,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
 		new UploadW9(testConfig).verifyProvierAdmin();
-		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+		
 	 }
 	@TestDetails(author="Rahul")
 	@Test(priority=4,groups="Billing Service",description="US1048076-TS05_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup")
@@ -930,7 +930,7 @@ public class TestCreateEnrollment extends TestBase{
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9();
 		new UploadW9(testConfig).verifyClckCancEnroll();
-		//.uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo()
+		
 	 }
 	
 	
