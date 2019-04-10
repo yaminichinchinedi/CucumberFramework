@@ -33,6 +33,9 @@ public class UploadW9 {
 	
 	@FindBy(xpath = "//footer[@class='enrollment-container-footer float-left']/a")
 	List<WebElement> OrgInfoFooters;
+	//exit-modal-header__title float-left
+	@FindBy(xpath="//h4[@class='exit-modal-header__title float-left']")
+	WebElement CancHeaderTitle;
 	
 	@FindBy(xpath = "//div[@class='exit-modal-footer float-right text-right']/a")
 	List<WebElement> PopupYesNo;
@@ -113,57 +116,39 @@ public class UploadW9 {
 	}
 
 	public void verifyProvierAdmin() {
-		OrgInfoFooters.get(1).click();
+		Element.click(OrgInfoFooters.get(1), "Back Button");
 		Browser.verifyURL(testConfig, "viewBillingServiceContacts.do");
 
 	}
 	
 	public void verifyClckCancEnroll() {
-		List<String> YesNoList = Arrays.asList("YES", "NO");
-		OrgInfoFooters.get(2).click();
-
-		for (int i = 0; i < (PopupYesNo.size()); i++) {
-			if (PopupYesNo.get(i).getText().equals(YesNoList.get(i))) {
-				Log.Pass(YesNoList.get(i), YesNoList.get(i), PopupYesNo.get(i).getText());
-
-				if (PopupYesNo.get(i).getText().equalsIgnoreCase("Yes")) {
-					PopupYesNo.get(i).click();
-					Browser.verifyURL(testConfig, "returnToLoginPage.do");
-				}
-				if (PopupYesNo.get(i).getText().equalsIgnoreCase("No")) {
-					PopupYesNo.get(i).click();
-					Browser.verifyURL(testConfig,"validateBillingServiceContacts.do");
-				}
-
-			}
-		}
+		Element.click(OrgInfoFooters.get(2), "Cancel Enrollment Button");
+		Browser.wait(testConfig, 3);
+		Helper.compareEquals(testConfig, "Cancel Popup Header", "Are you sure you want to cancel your EPS enrollment application?", CancHeaderTitle.getText());
+		Helper.compareEquals(testConfig, "Yes Button of Cancel Popup", "YES", PopupYesNo.get(0).getText());
+		Helper.compareEquals(testConfig, "No Button of Cancel Popup", "NO", PopupYesNo.get(1).getText());
+		//For clicking No button
+		Browser.wait(testConfig, 3);
+		Element.click(PopupYesNo.get(1), "No Button");
+		Browser.verifyURL(testConfig, "validateBillingServiceContacts.do");
+	
 
 	}
 	
 	public void verifyClckYes() {
-		OrgInfoFooters.get(2).click();
-
-		if (PopupYesNo.get(0).getText().equalsIgnoreCase("Yes")) {
-			Browser.wait(testConfig, 3);
-			PopupYesNo.get(0).click();
+		
+		Element.click(OrgInfoFooters.get(2), "Cancel Enrollment Button");
+		Browser.wait(testConfig, 3);
+		
+			Element.click(PopupYesNo.get(0), "Yes Button");
 			Browser.verifyURL(testConfig, "returnToLoginPage.do");
-		}
+		
 
 	}
 	
-	public void verifyClckNo() {
-		OrgInfoFooters.get(2).click();
-
-		if (PopupYesNo.get(1).getText().equalsIgnoreCase("No")) {
-			Browser.wait(testConfig, 3);
-			PopupYesNo.get(1).click();
-			Browser.verifyURL(testConfig, "validateBillingServiceContacts.do");
-		}
-
-	}
 	
 	public void verifyFederalW9link() {
-		fedW9Lnk.click();
+		Element.click(fedW9Lnk, "Federal W9 Link");
 		String expectedURL = "W9.pdf";
 		Browser.switchToNewWindow(testConfig);
 		Browser.verifyURL(testConfig, expectedURL);
