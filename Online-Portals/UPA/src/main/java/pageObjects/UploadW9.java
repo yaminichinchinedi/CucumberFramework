@@ -85,14 +85,13 @@ public class UploadW9 {
 			if ( (OrgInfoHeaders.get(i).getText().replace("\n", " ")) .equalsIgnoreCase("Review and Submit") && headers.get(i) .equalsIgnoreCase( (OrgInfoHeaders.get(i).getText().replace( "\n", " "))) || 
 					(OrgInfoHeaders.get(i).getText().replace("\n", " ")) .equalsIgnoreCase("Enrollment Submitted") && headers.get(i) .equalsIgnoreCase( (OrgInfoHeaders.get(i).getText().replace( "\n", " "))) 
 					)
-			{
+			
 				Helper.compareEquals( testConfig, "Color Value for " + (OrgInfoHeaders.get(i).getText().replace( "\n", " ")) + " Info is:", "#999999", Color.fromString( OrgInfoHeaders.get(i).getCssValue("color")) .asHex());  
-			}
+			
 				else
-			{
+			
 			Helper.compareEquals( testConfig, "Color Value for " + (OrgInfoHeaders.get(i).getText().replace( "\n", " ")) + " Info is:", "#e87722", Color.fromString( OrgInfoHeaders.get(i).getCssValue("color")) .asHex());  
-			}
-			 
+			
 			 Helper.compareEquals(testConfig, "font weight for " + (OrgInfoHeaders.get(i).getText().replace("\n", " ")) + " Info is:", "400", OrgInfoHeaders.get(i) .getCssValue("font-weight")); 
 			 
 		 } 
@@ -107,9 +106,11 @@ public class UploadW9 {
 	
 	public void verifyFootersContent() {
 		List<String> footers = Arrays.asList("CONTINUE", "BACK","CANCEL ENROLLMENT");
-		for (int i = 0; i < (OrgInfoFooters.size()); i++) {
-			if (OrgInfoFooters.get(i).getText().equals(footers.get(i)))
-				Log.Pass(footers.get(i), footers.get(i), OrgInfoFooters.get(i).getText());
+		for (int i = 0; i < (OrgInfoFooters.size()); i++) 
+		{
+			Helper.compareEquals(testConfig, footers.get(i), OrgInfoFooters.get(i).getText(), footers.get(i));
+			//if (OrgInfoFooters.get(i).getText().equals(footers.get(i)))
+			//	Log.Pass(footers.get(i), footers.get(i), OrgInfoFooters.get(i).getText());
 
 		}
 
@@ -121,19 +122,27 @@ public class UploadW9 {
 
 	}
 	
-	public void verifyClckCancEnroll() {
+	public UploadW9 verifyClckCancEnroll() {
 		Element.click(OrgInfoFooters.get(2), "Cancel Enrollment Button");
 		Browser.wait(testConfig, 3);
 		Helper.compareEquals(testConfig, "Cancel Popup Header", "Are you sure you want to cancel your EPS enrollment application?", CancHeaderTitle.getText());
 		Helper.compareEquals(testConfig, "Yes Button of Cancel Popup", "YES", PopupYesNo.get(0).getText());
 		Helper.compareEquals(testConfig, "No Button of Cancel Popup", "NO", PopupYesNo.get(1).getText());
-		//For clicking No button
+		
+		return this;
+
+	}
+	
+public void verifyClckNo() {
+		
 		Browser.wait(testConfig, 3);
 		Element.click(PopupYesNo.get(1), "No Button");
 		Browser.verifyURL(testConfig, "validateBillingServiceContacts.do");
 	
+		
 
 	}
+	
 	
 	public void verifyClckYes() {
 		

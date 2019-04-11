@@ -921,14 +921,14 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	@TestDetails(author="Rahul")
 	@Test(priority=4,groups="Billing Service",description="US1048076-TS05_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup/TS06_Create Enrollment_BS_Upload W9_Cancel Enrollment Popup_No")
-	public void testUserEnrollmntAsBSClckCancEnroll() throws IOException
+	public void testUserEnrollmntAsBSClckCancEnrollNclckNo() throws IOException
 	 {
 		String option="Health plan communication";
 		int excelRow=2;
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().verifyClckCancEnroll();
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().verifyClckCancEnroll().verifyClckNo();
 		
 		
 	 }
