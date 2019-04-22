@@ -20,51 +20,58 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.testng.Assert;
 import org.testng.ITestListener;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
-import com.relevantcodes.extentreports.ExtentReports;
-import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
+import com.aventstack.extentreports.ExtentReporter;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+
 
 public  class Log  {
 		
-	public static ExtentReports report;
-	public static ExtentTest logger;
+	static com.aventstack.extentreports.ExtentReports report;
+	static ExtentHtmlReporter htmlReporter;
+	static com.aventstack.extentreports.ExtentTest logger;
+	
 	private  static TestBase testConfig;
 	static boolean showInHtmlReport=false;
 	
 	//static boolean testAlreadyFailed=true;
 	
-	public Log(TestBase testConfig,String testCaseName)
+	public Log(TestBase testConfig,String testCaseName,String desc,String author)
 	{
-		logger=report.startTest(testCaseName);
 		this.testConfig=testConfig;
+		logger=report.createTest(testCaseName,desc);
+		 logger.assignAuthor(author);
 	}
+	
 
-	   
-	@SuppressWarnings("deprecation")
-	public static void setReportingConfig()
+	public static void startTest(ITestNGMethod  method)
 	{
 		
-		report= new ExtentReports(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html", true);
-		report.loadConfig(new File (System.getProperty("user.dir")+"\\ExtentReports\\extent-config.xml"));
+	}
+	
+	   
+	public static void setReportingConfig()
+	{
+		report=new ExtentReports();
+		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html");
+		htmlReporter.config().setReportName("Automation Report");
+		report.attachReporter(htmlReporter);
 	}
 	
 	
-	public static void endTest(String testCaseDesc,ITestResult result)
+	public static void endTest(ITestResult result)
 	{
-		logger.setDescription(testCaseDesc);
 	    if(result.getStatus() == ITestResult.FAILURE) 
-		 {
 		  Log.Fail(result);
-		 }
 	    else if(result.getStatus() == ITestResult.SKIP)
-		 {
 	    	Log.skipped(result);
-		 }
-		report.endTest(logger);
+	    logger.assignCategory(result.getMethod().getGroups());
+	   
 		report.flush();
 	}
 	
@@ -77,7 +84,7 @@ public  class Log  {
 	
 	public static void skipped(ITestResult result) 
 	{
-		logger.log(LogStatus.SKIP, result.getThrowable());
+		logger.skip(result.getThrowable());
 
 	}
 	
@@ -89,7 +96,8 @@ public  class Log  {
 			printToScreen(message);
 			
 			//This message will be displayed in HTML reports 
-			logger.log(LogStatus.INFO, message);	
+			logger.info(message);
+				
 	}
 			
 	//Overloaded Comment Method for passing color internally
@@ -133,7 +141,8 @@ public  class Log  {
 					{
 					  Browser.wait(testConfig, 3);
 					  String dest=captureScreenshot(testConfig);
-					  logger.log(LogStatus.FAIL, message  +  logger.addScreenCapture(dest));
+					  logger.addScreenCaptureFromPath(dest);
+					  logger.fail(message);
 					} 
 					catch (IOException e) 
 					{
@@ -171,22 +180,20 @@ public  class Log  {
 		public static void Pass(String message)
 		{
 			printToScreen(message);
-			logger.log(LogStatus.PASS, message);
+			logger.pass(message);
 		}
 		
 		
 		public static void Warning(String message, TestBase testConfig)
 		{  
 			printToScreen(message);
-			logger.log(LogStatus.WARNING, message);
-			testConfig.testLog = testConfig.testLog.concat(message);
+			logger.warning(message);
 		}
 		
 		public static void FailWarning(String message, TestBase testConfig)
 		{  
 			printToScreen(message);
-			logger.log(LogStatus.WARNING, message);
-			testConfig.testLog = testConfig.testLog.concat(message);
+			logger.warning(message);
 			Softfailure(message);
 		}
 
@@ -220,8 +227,7 @@ public  class Log  {
 	}
 
 	public void logWarning(String message) {
-		logger.log(LogStatus.WARNING, message);
-		
+		logger.warning(message);	
 		
 	}
 
@@ -240,7 +246,7 @@ public  class Log  {
 		}
 		
 		//This message will be displayed in HTML reports 
-		logger.log(LogStatus.INFO, message);
+		logger.info(message);
 		
 	}
 		

@@ -319,6 +319,7 @@ public class HomePage extends LoginUPA {
 
 	public paymentSummary clickViewPaymentsTab() 
 	{
+		Browser.wait(testConfig,2);
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.clickByJS(testConfig,viewPaymentsTab, "View Payments Tab");
 		return new paymentSummary(testConfig);
@@ -363,6 +364,14 @@ public class HomePage extends LoginUPA {
 	
 	
 
+	public SearchRemittanceSearchCriteria clickSearchRemittanceTab()
+	{
+	Element.expectedWait(searchRemittanceTab, testConfig, "Search Remittance Tab", "Search Remittance Tab");
+	Element.clickByJS(testConfig,searchRemittanceTab, "Search Remittance Tab");
+	return new SearchRemittanceSearchCriteria(testConfig);
+	}
+
+
 	/*public void logOutAndReLogin(TestBase testConfig)
 	{
 		Element.clickByJS(testConfig,lnkLogOut, "Log out");
@@ -370,6 +379,7 @@ public class HomePage extends LoginUPA {
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    optumIDLoginPage.fillCredsAndSignIn("", "");
 	}*/
+
 
 	
 

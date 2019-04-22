@@ -132,23 +132,23 @@ public class MyProfile {
 		return new ManageSecurityQuestions(testConfig);
 	}	
 	
-	public void verifyUserDetails(String userType) throws IOException
+	public MyProfile verifyUserDetails(String userType) throws IOException
 	{
 		int sqlNo=0;
 		String associatedTin="";
 		if(userType.equals("PROV"))
 		{
-			sqlNo=8;
+			sqlNo=159;//8;
 			associatedTin="PROV_TIN_NBR";
 		}
 		else if (userType.equals("BS"))
 		{
-			sqlNo=49;
+			sqlNo=160;
 			associatedTin="IDENTIFIER_NBR";
 		}
 		else if (userType.equals("PAY"))
 		{
-			sqlNo=50;
+			sqlNo=161;
 			associatedTin="PAYR_TIN_NBR";
 		}
 		ArrayList<String> tinsListFromDB = new ArrayList<String>();
@@ -172,6 +172,7 @@ public class MyProfile {
 			Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getPayerTinsFromUI());
 		else
 		Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getTinsFromUI());
+		return this;
 	}
 	
 	

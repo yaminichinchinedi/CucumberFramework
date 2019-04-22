@@ -148,8 +148,7 @@ public class AddUserDetails {
 	public AddUserDetails fillNewUserInfo()
 	{
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
-		Element.expectedWait(email, testConfig, "email text box", "email text box");
-		
+		Browser.wait(testConfig, 2);
 		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
@@ -179,17 +178,9 @@ public class AddUserDetails {
 	
 	public AddUserDetails addTinCSR(String tinNo)
 	{
-		Element.enterData(addTin,tinNo, "Associate to tin","addTin");
+		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
 		clickAddTin();
 		return this;
-	}
-	
-	public String  addTinCSR(int sqlNo)
-	{
-		Map tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
-		Element.enterData(addTin,tinNo.get("PROV_TIN_NBR").toString(), "Enter tin number : " + tinNo.get("PROV_TIN_NBR").toString() ,"add Tin");
-		clickAddTin();
-		return tinNo.get("PROV_TIN_NBR").toString();
 	}
 	
 	public AddUserDetails clickAddTin()
@@ -295,21 +286,18 @@ public class AddUserDetails {
 		List<String> tinsListFromUI = new ArrayList<String>();
 
 		HashMap<Integer, HashMap<String, String>> associatedTins = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		
 		for (int i = 1; i <= associatedTins.size(); i++) {
 			tinsListFromDB.add(associatedTins.get(i).get("PROV_TIN_NBR"));
 		}
-		
 		tinsListFromUI = Element.getAllOptionsInSelect(testConfig, drpDwnSelectTin);
-		
 		List<String> newListFromUI = new ArrayList<String>();
 		for (String tinNo : tinsListFromUI) {
 			String tin[] = tinNo.split("-");
 			newListFromUI.add(tin[0].trim());
 		}
 		
-		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI);
-		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB);
+		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
+		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
 		
 		for (String tinNo : tinsListFromDB) {
 			if (newListFromUI.contains(tinNo)) {
@@ -322,7 +310,6 @@ public class AddUserDetails {
 			}
 		}
 	}
-	
 	public void verifyErrorMessages() throws IOException
 	{
 
@@ -357,7 +344,7 @@ public class AddUserDetails {
 		Element.enterData(email, firstNameTxt, "Enter Email address as:" + " " +firstNameTxt,"email");
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		selectAndAddTin();
-		Element.clickByJS(testConfig,btnSave, "Save button");
+		Element.click(btnSave, "Save button");
 		
 		Element.verifyTextPresent(errorFname, "Invalid First Name");
 		Element.verifyTextPresent(errorLname, "Invalid Last Name");
@@ -402,10 +389,11 @@ public class AddUserDetails {
 		selectTinAccessLvl(accessLevel);
 		Element.click(btnSave, "Save button");
 		String expString="Confirm Existing User";
-		Element.verifyTextPresent(exitingUserText,expString);	
+		Element.verifyTextPresent(exitingUserText,expString);
+		
+		//verifyAssociatedTins();
+		
 	}
-	
-	
 	
 	
 	

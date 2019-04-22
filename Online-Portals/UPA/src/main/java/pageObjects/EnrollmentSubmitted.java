@@ -364,6 +364,7 @@ public class EnrollmentSubmitted {
 	}
 	
 
+
 	public String readPDF() throws IOException {
 		String output="";
 		String filedir=System.getProperty("user.dir")+"\\Downloads";
@@ -388,7 +389,40 @@ public class EnrollmentSubmitted {
         }
         return output;
 	}
-	
+
+	public void verifyHeaders() 
+	 {
+		  List<String> headers = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information","Select Payment Methods", "Upload W9", "Review and Submit");
+		  for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
+		  
+		  if (!(OrgInfoHeaders.get(i).getText().replace("\n", " ")).equalsIgnoreCase("Enrollment Submitted")&& headers.get(i).equalsIgnoreCase((OrgInfoHeaders.get(i).getText().replace("\n", " "))))
+			{
+				Helper.compareEquals(testConfig,"Color Value for "+ (OrgInfoHeaders.get(i).getText().replace("\n", " ")) + " Information is:","#e87722",Color.fromString(OrgInfoHeaders.get(i).getCssValue("color")).asHex());
+				Helper.compareEquals(testConfig, "font weight for "+ (OrgInfoHeaders.get(i).getText().replace("\n", " "))+ " Information is:", "400", OrgInfoHeaders.get(i).getCssValue("font-weight"));
+			}
+
+		  if ((OrgInfoHeaders.get(i).getText().replace("\n", " "))
+					.equalsIgnoreCase("Enrollment Submitted")
+					&& OrgCircle.get(i).isDisplayed() == true) {
+				Helper.compareEquals(
+						testConfig,
+						"Color Value for "
+								+ (OrgInfoHeaders.get(i).getText().replace(
+										"\n", " ")) + " Information is:",
+						"#e87722",
+						Color.fromString(
+								OrgInfoHeaders.get(i).getCssValue("color"))
+								.asHex());
+
+				Helper.compareEquals(
+						testConfig,
+						"Bold font with circle is present for "
+								+ (OrgInfoHeaders.get(i).getText().replace(
+										"\n", " ")), "900",
+						OrgInfoHeaders.get(i).getCssValue("font-weight"));
+
+			}
+
 
 	public void verifyHeadersFunctionality(List<String> headers)
 	{
@@ -458,7 +492,9 @@ public class EnrollmentSubmitted {
 		{
 			Element.click(closetip, "Close Tip Button");	
 		}
-			public void verifyExitEnrollemnt() throws IOException {
+		
+		public void verifyExitEnrollemnt() throws IOException 
+		{
 			String expected = "EXIT ENROLLMENT"; 
 			String expecteHOMEURL = "returnToLoginPage.do";
 			Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());

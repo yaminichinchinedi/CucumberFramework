@@ -31,9 +31,7 @@ public class TestUPAMyProfileTab extends TestBase
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		home.selectTin();
-		MyProfile myProfilePage=home.clickMyProfileTab();
-		myProfilePage.verifyUserDetails(userType);
+		home.selectTin().clickMyProfileTab().verifyUserDetails(userType);
 	 }
 	
 	@Test(priority=5,description="Verifies User Details displayed on My profile Page from user details saved in Database for logged in user")
@@ -45,8 +43,7 @@ public class TestUPAMyProfileTab extends TestBase
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		MyProfile myProfilePage=home.clickMyProfileTab();
-		myProfilePage.verifyUserDetails(userType);
+		home.clickMyProfileTab().verifyUserDetails(userType);
 	 }
 	
 	
@@ -59,8 +56,7 @@ public class TestUPAMyProfileTab extends TestBase
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		MyProfile myProfilePage=home.clickMyProfileTab();
-		myProfilePage.verifyUserDetails(userType);
+		MyProfile myProfilePage=home.clickMyProfileTab().verifyUserDetails(userType);
 	 }
 	
 	@Test(priority=1,description="Verifies Error messages for provider")

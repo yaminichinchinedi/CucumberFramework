@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,8 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.hamcrest.Description;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
@@ -28,6 +32,9 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.IClass;
+import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -36,10 +43,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.relevantcodes.extentreports.LogStatus;
-
+import test.java.TestDetails;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
@@ -342,18 +349,30 @@ public class TestBase {
 	@BeforeMethod()	
 	public void setupTestMethod (Method method) 
 	{
+		
+		String author;
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
-		String testCaseName=method.getName();
-		Log logger =new Log(testConfig,testCaseName);
-		fetchAppCredentials();
+		Test test = method.getAnnotation(Test.class);
+        if (test == null)
+        	return;
+            
+        TestDetails details=method.getAnnotation(TestDetails.class);
+        if(details==null)
+        	author="Unspecified";
+        else
+        author = details.author();
+
+        Log logger =new Log(testConfig,method.getName(),test.description(),author);
+//		fetchAppCredentials();
 		
 	}
+	
 	
 	@AfterMethod()
 	public void endTest(ITestResult iTestResult)
 	{
-		String testCaseDesc=iTestResult.getMethod().getDescription();
-		Log.endTest(testCaseDesc,iTestResult);
+		Log.endTest(iTestResult);
+
 	}
 	
 	@AfterTest
@@ -361,6 +380,9 @@ public class TestBase {
     Browser.closeBrowser(testConfig);
 		
 	}	
+	
+	
+	
 	
 	
 	@BeforeClass()

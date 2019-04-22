@@ -202,14 +202,15 @@ public class BeginEnrollment {
 	public void validateUserIsAbleToDwnldEnrlmntPdf() {
 		validateBeginEnrollment();
 		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
-		String handle =Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf");		
+		String handle =Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf"); 
+
 		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_VCP_v6.pdf");
 		Browser.switchToParentWindow(testConfig, handle);
 		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_Billing_Services_v4.pdf");
-	}
+		}
 	
 	public void validateBeginEnrollmentQuestions() throws IOException {
 		int sqlRowNo=110;

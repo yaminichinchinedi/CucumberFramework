@@ -356,12 +356,8 @@ public class TestPayerViewPayments extends TestBase {
    @Test(priority=5,description="TS012_View Payments_Market Type filter_Medical_Dental etc" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type")
    void testSpecificMarketTypeFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
-      
-	   String filterPayments="Show All";
 	   String mktTypeFilter="Medical";
-	   String quickSearchFilter="Last 60 days";
-	   String paymentType="generalPayment";
-
+       String paymentType="medicalFilter";
 	   testConfig.putRunTimeProperty("key", "MARKET_TYPE");
 	   testConfig.putRunTimeProperty("value", "M");
 	   testConfig.putRunTimeProperty("payerID", "87726");
@@ -369,8 +365,7 @@ public class TestPayerViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
-	   paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, mktTypeFilter); 	
+	   home.clickViewPaymentsTab().payerTin(paymentType).verifyMktType(mktTypeFilter);
    }
       
    
@@ -378,27 +373,24 @@ public class TestPayerViewPayments extends TestBase {
    void testALLMarketTypeFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
       
-        String filterPayments="Show All";
-        String mktTypeFilter="Show All";
-        String quickSearchFilter="Last 60 days";
-        String paymentType="generalPayment";
-
-        testConfig.putRunTimeProperty("key", "MARKET_TYPE");
-		testConfig.putRunTimeProperty("value", "ALL");
-		testConfig.putRunTimeProperty("payerID", "87726");		
+	   String filterPayments="Show All";
+       String quickSearchFilter="Last 60 days";
+       String paymentType="generalPayment60Days";
+       testConfig.putRunTimeProperty("key", "MARKET_TYPE");
+	   testConfig.putRunTimeProperty("value", "ALL"); 
+	   testConfig.putRunTimeProperty("payerID", "87726");		
 		
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	    paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
-        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, mktTypeFilter); 	
+        paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments); 	
    }
    
    @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments")
    void testZeroDollarACHPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	   String paymentType="ACH"; 
-	    
 	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 	   testConfig.putRunTimeProperty("value", "ALL");	
 	   testConfig.putRunTimeProperty("payerID", "87726");
@@ -406,8 +398,7 @@ public class TestPayerViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
-	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
+	   home.clickViewPaymentsTab().payerTin(paymentType).verifyZeroDollarPayments(paymentType);      
    }
    
    @Test(priority=5,description="TS015_View Payments_Zero Dollar ACH Payments")
@@ -422,14 +413,14 @@ public class TestPayerViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
-	   paymentSummaryPage.verifyZeroDollarPayments(paymentType);      
+	   home.clickViewPaymentsTab().payerTin(paymentType).verifyZeroDollarPayments(paymentType);      
    }
    
+   //ask avneet to fix
    @Test(priority=5,description="TS020_View Payments_display of Payments for Payer Role")
    void testPayerRolePayments() throws IOException  
    {
-	   String paymentType="generalPayment"; 
+	   String paymentType="generalPayment90Days"; 
 	    
 	   testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
 	   testConfig.putRunTimeProperty("value", "ALL");	
@@ -438,8 +429,7 @@ public class TestPayerViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home = optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType);
-	   paymentSummaryPage.verifyPayerRolePayments();    
+	   home.clickViewPaymentsTab().payerTin(paymentType).verifyPayerRolePayments();    
    }
    
    @Test(priority=5,description="TS024_View Payments_Remit payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Remit Payments")
@@ -454,7 +444,7 @@ public class TestPayerViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType).setQuickSearchFilter(paymentType);       
+	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().payerTin(paymentType).setQuickSearchFilter(paymentType);  
        paymentSummaryPage.verifyRemitPaymentPopUp();  
 	}
 

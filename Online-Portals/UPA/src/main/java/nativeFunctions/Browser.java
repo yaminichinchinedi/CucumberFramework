@@ -504,14 +504,10 @@ public class Browser
 			Log.Comment("Switching to the new window");
 			Browser.wait(testConfig, 2);
 			String oldWindow = testConfig.driver.getWindowHandle();
-			
-			  
+	
 			  if (testConfig.driver.getWindowHandles().size() < 2)
- 			  {
 				  Log.Fail("No new window appeared, windows count available :-" + testConfig.driver.getWindowHandles().size());
-			  }
-			
-			  
+		
 			for (String winHandle : testConfig.driver.getWindowHandles())
 			{
 				if (!winHandle.equals(oldWindow))
@@ -581,11 +577,23 @@ public class Browser
 	 * @param windowHandle
 	 *            Name of the window to be switched to
 	 */
+//	public static void switchToParentWindow(TestBase testConfig, String windowHandle)
+//	{
+//		if (testConfig.driver != null)
+//		{
+//			Log.Comment("Switching to the given window handle:- " + windowHandle);
+////			testConfig.driver.close();
+//			testConfig.driver.switchTo().window(windowHandle);
+//			Log.Comment("Switched to window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+//		}
+//	}
+	
 	public static void switchToParentWindow(TestBase testConfig, String windowHandle)
 	{
 		if (testConfig.driver != null)
 		{
 			Log.Comment("Switching to the given window handle:- " + windowHandle);
+
 			if(getNoOfWindowHandles(testConfig)>1)
 			testConfig.driver.close();
 			testConfig.driver.switchTo().window(windowHandle);

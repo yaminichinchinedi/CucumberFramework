@@ -5,9 +5,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import main.java.nativeFunctions.Browser;
@@ -61,11 +59,7 @@ public class LoginCSR {
 	
 	
 	private TestBase testConfig;
-	
 	String id, password;
-	String env=System.getProperty("env");
-	Map<String,String> loggedInUserDetails=new HashMap<String, String>();
-	
 
 	public LoginCSR(TestBase testConfig)
 	{
@@ -74,7 +68,6 @@ public class LoginCSR {
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
 	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
-       Element.expectedWait(txtboxUserName, testConfig, "Username text box", "Username text box");
 	}
 	
 	//Default constructor
@@ -149,6 +142,7 @@ public class LoginCSR {
 	}
 	
 
+
 //	public CSRHomePage doLogin(String userType)
 //	{
 //       Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, userType));
@@ -160,6 +154,16 @@ public class LoginCSR {
 	
 	
 
+
+
+	/*public CSRHomePage doLogin(String userType)
+	{  
+        	Map <String,String> details=new HashMap<String,String>(getDetailOfUserToBeLoggedIn(userType, userType));
+		
+	   fillCredsAndSignIn(details.get("id"), details.get("password"));
+	   Element.click(btnLogin,"click Login button");
+	   return new CSRHomePage(testConfig);
+	}*/
 
 	
 	public CSRHomePage doLogin(String userType)
@@ -179,10 +183,12 @@ public class LoginCSR {
 	
    
 	/*private void fillCredsAndSignIn(String username, String password) {
-	   Element.enterData(txtboxUserName, username, "Username entered as : " + id,"txtboxUserName");	
+	   Element.enterData(txtboxUserName, username, "Username entered as : " + id,"txtboxUserName");	s
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-		
+	   Element.clickByJS(testConfig,btnLogin,"click Login button");
+	   return new CSRHomePage(testConfig);
 	}
+
 
 
 //public Map<String,String> getDetailOfUserToBeLoggedIn(String userType,String accessType)
