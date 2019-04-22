@@ -385,15 +385,27 @@ public class BeginEnrollmentContinue {
 	Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
 	Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
 	
-	int sqlRowNo=149;
-	DataBase.executeInsertQuery(testConfig, sqlRowNo);
+	testConfig.putRunTimeProperty("captcha", "true");
+	int sqlRowNo=155;
+	DataBase.executeUpdateQuery(testConfig, sqlRowNo);
 	Element.enterData(txtBoxTin,"000111000", "Entered unique tin number as: 000111000","txtBoxTin");
 	Element.click(btnContinue, "Continue");
 	Browser.wait(testConfig, 2);
 	String errMsg=Element.findElement(testConfig, "id", "captchaerrororg").getText();
 	Helper.compareEquals(testConfig, "ERROR MSG","reCAPTCHA selection is required" , errMsg);
-	sqlRowNo=150;
-	DataBase.executeInsertQuery(testConfig, sqlRowNo);
+	testConfig.putRunTimeProperty("captcha", "false");
+	try{
+		sqlRowNo=155;
+		DataBase.executeUpdateQuery(testConfig, sqlRowNo);
+		Log.Pass("Turned off captcha successfully");
+	}catch(Exception e){
+		Log.Warning("Unable to turn off Captcha", testConfig);
+	}
+	finally{
+		Log.Comment("\nTurning off the captcha - in FINAL Block");
+		sqlRowNo=155;
+		DataBase.executeUpdateQuery(testConfig, sqlRowNo);
+	}
 	return this;
 	}
 	

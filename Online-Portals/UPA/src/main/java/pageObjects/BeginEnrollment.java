@@ -206,14 +206,7 @@ public class BeginEnrollment {
 		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_VCP_v6.pdf");
-		Set<String> handles= Browser.getWindowHandles(testConfig);   //testConfig.driver.getWindowHandles();
-		 for (String handl : handles) {
-			 	if(handl.compareTo(handle)==0)
-			 	{
-			 		testConfig.driver.switchTo().window(handl);
-			 		break;
-			 	}
-		 }
+		Browser.switchToParentWindow(testConfig, handle);
 		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_Billing_Services_v4.pdf");
 	}

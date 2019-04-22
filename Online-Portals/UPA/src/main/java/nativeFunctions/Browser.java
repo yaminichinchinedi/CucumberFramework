@@ -529,7 +529,6 @@ public class Browser
 		return null;
 	}
 	
-	
 	public static String switchToNewWindow(TestBase testConfig)
 	{  
 		if (testConfig.driver != null)
@@ -559,11 +558,6 @@ public class Browser
 	public static int getNoOfWindowHandles(TestBase testConfig)
 	{
 		return testConfig.driver.getWindowHandles().size();
-	}
-	
-	public static  Set<String> getWindowHandles(TestBase testConfig)
-	{
-		return testConfig.driver.getWindowHandles();
 	}
 	
 	public static void waitTillSpecificPageIsLoaded(TestBase testConfig,String pageTitle)
