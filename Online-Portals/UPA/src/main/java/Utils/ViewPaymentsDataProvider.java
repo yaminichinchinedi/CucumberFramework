@@ -104,7 +104,7 @@ public String getTinForPaymentType(String paymentType)
 			 sqlRowNo=41;
 			 break;
  		 case "byDOSAndAcntNo":
- 			sqlRowNo=60;
+ 			sqlRowNo=41;
  			break;
  			 
  		 case "byDOPAndZeroPaymentClaims":
@@ -113,7 +113,7 @@ public String getTinForPaymentType(String paymentType)
 			break;
 			
 		 case "byDOSAndSubscriberId":
-			 sqlRowNo=156;
+			 sqlRowNo=41;//156;
 			 break;
 			 
 

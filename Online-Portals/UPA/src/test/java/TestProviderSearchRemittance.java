@@ -516,7 +516,7 @@ public class TestProviderSearchRemittance extends TestBase{
 	//Test cases for PROVIDER GENERAL
 	
 	
-	/*@Test(priority=5,description="TS002_Search by Date of Payment")
+	@Test(priority=5,description="TS002_Search by Date of Payment")
 	public void testEprabyDOPForProvGen() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
 		String accessType="Gen";
@@ -1027,6 +1027,6 @@ public class TestProviderSearchRemittance extends TestBase{
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	    home.selectTin().clickSearchRemittanceTab().doSearch(criteriaType).verifyPagination();
-   }*/
+   }
 }
 

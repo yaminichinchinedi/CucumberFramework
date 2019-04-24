@@ -2095,8 +2095,7 @@ return previousDate.getTime();
 	    	  {
 	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
 	    		 { 
-//	    			 Log.Pass("Actual  equals expected");
-	    			 Log.Comment("Verifying data for payment No : " + key);
+	    			Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
 	    	        	

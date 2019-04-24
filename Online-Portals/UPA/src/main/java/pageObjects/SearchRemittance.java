@@ -152,7 +152,7 @@ public class SearchRemittance extends paymentSummary {
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
 		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
-			Helper.compareLinkedMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
 		  else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
@@ -738,7 +738,7 @@ public class SearchRemittance extends paymentSummary {
 	 * like payer name, amount etc
 	 * @return Outer map
 	 */	
-	public LinkedHashMap<String,String> getSRDetailsFromUI(String requestType)
+	public Map<String, LinkedHashMap<String, String>> getSRDetailsFromUI(String requestType)
 	{	   
 		
 	   /**Gets headers List which will be key for following map*/
@@ -747,6 +747,7 @@ public class SearchRemittance extends paymentSummary {
 			startingLoop=1;
 		
 	   LinkedHashMap<String,String> innerMap = null;
+	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	   ArrayList<String> headers=getHeadersFromResultTable();
 	   int totalNoOfPages=getNumberOfPages();
 	   if(totalNoOfPages>2)
@@ -758,6 +759,7 @@ public class SearchRemittance extends paymentSummary {
 	   Log.Comment("Fetching all payments From UI..");
 	   String details="";
 	   String amount="";
+	   int l=0;;
 	
 	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
@@ -765,6 +767,8 @@ public class SearchRemittance extends paymentSummary {
 		   
 			for(int i=startingLoop;i<divSearchResults.size();i++)
 		    {
+				System.out.println(divSearchResults.size());
+				
 			   innerMap=new LinkedHashMap<String,String>();
 			   
 			   for(int j=0,k=0;j<headers.size();j++,k++)
@@ -799,6 +803,8 @@ public class SearchRemittance extends paymentSummary {
 			   innerMap.remove("Payer PRA");
 			   innerMap.remove("Archive");
 			   innerMap.remove("Payment Status / Trace Number");
+			   outerMap.put(innerMap.get("Payment Number")+l, innerMap);
+				  l++;
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -820,9 +826,11 @@ public class SearchRemittance extends paymentSummary {
 			           Browser.wait(testConfig,3);
 			           pageNo++;
 			     }
+			 
 		 }
-	   Log.Comment("UI detials " +(innerMap));
-		return innerMap;
+	   
+	   Log.Comment("UI detials " +(outerMap));
+		return outerMap;
 	   
     }
 	
@@ -1020,12 +1028,12 @@ public class SearchRemittance extends paymentSummary {
 	   
     }
 	
-	public LinkedHashMap<String, String> getSRDetailsFromFISL(String requestType,Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public Map<String, LinkedHashMap<String, String>> getSRDetailsFromFISL(String requestType,Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
 		int totalPayments;
 		LinkedHashMap<String,String> innerMap = null;
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
-		
+	    Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
 			 totalPayments=30;
 		  else
@@ -1117,15 +1125,19 @@ public class SearchRemittance extends paymentSummary {
  				if(payments[i].getPaymentStatusCode().getDescription()!=null)
  					innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
  				else
+ 					if(innerMap.get("Type").equals("ACH"))
+ 						innerMap.put("Payment Status/Trace Number","Successful ACH");
+ 					else
  					innerMap.put("Payment Status/Trace Number","N/A");
  			}
  			 
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			outerMap.put(innerMap.get("Payment Number")+i, innerMap);
 		 }
 		  
 		  
-		 Log.Comment("Details from FISL is :"  + '\n' +innerMap);
-		 return innerMap;
+		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 return outerMap;
 	}
 	
 	public LinkedHashMap<String, String> getPaymentDetailsFromFISLForCSR(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException

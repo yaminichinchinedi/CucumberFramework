@@ -345,7 +345,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
 		    	testConfig.putRunTimeProperty("value", acntNo);
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");

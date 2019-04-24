@@ -56,7 +56,7 @@ public class TestUPAMyProfileTab extends TestBase
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-		MyProfile myProfilePage=home.clickMyProfileTab().verifyUserDetails(userType);
+		home.clickMyProfileTab().verifyUserDetails(userType);
 	 }
 	
 	@Test(priority=1,description="Verifies Error messages for provider")
