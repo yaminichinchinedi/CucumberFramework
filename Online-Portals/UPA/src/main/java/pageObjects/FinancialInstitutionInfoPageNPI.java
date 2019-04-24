@@ -14,50 +14,58 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
+public class FinancialInstitutionInfoPageNPI{
 
-	@FindBy(name = "finInstTinName")
+	@FindBy(name = "finInstNameNPI")
 	WebElement finInstName;
 
 	@FindBy(name = "finInstNpiNPI")
 	WebElement finInstNPINo;
 	
-	@FindBy(name = "finInstTinStreet")
+	@FindBy(name = "finInstStreetNPI")
 	WebElement finInstStreet;
 
-	@FindBy(name = "finInstTinCity")
+	@FindBy(name = "finInstCityNPI")
 	WebElement finInstCity;
 
-	@FindBy(name = "finInstTinState")
+	@FindBy(name = "finInstStateNPI")
 	WebElement finInstState;
 
-	@FindBy(name = "finInstTinZip1")
+	@FindBy(name = "finInstZip1NPI")
 	WebElement finInstZip1;
 
-	@FindBy(name = "finInstTinZip2")
+	@FindBy(name = "finInstZip2NPI")
 	WebElement finInstZip2;
 
-	@FindBy(name = "finInstTinPhone1")
+	@FindBy(name = "finInstPhone1NPI")
 	WebElement finInstPhone1;
 
-	@FindBy(name = "finInstTinPhone2")
+	@FindBy(name = "finInstPhone2NPI")
 	WebElement finInstPhone2;
 
-	@FindBy(name = "finInstTinPhone3")
+	@FindBy(name = "finInstPhone3NPI")
 	WebElement finInstPhone3;
 
-	@FindBy(name = "finInstTinRoutNum")
+	@FindBy(name = "finInstRoutingNPI")
 	WebElement finInstRoutNum;
 
-	@FindBy(name = "finInstTinAcctNum")
+	@FindBy(name = "finInstBankAccNPI")
 	WebElement finInstAcctNum;
 
-	@FindBy(xpath = "//input[@name='finInstTinAcctType'][1]")
+	@FindBy(xpath = "//input[@name='finInstAccTypeNPI'][1]")
 	WebElement rdoChecking;
 
-	@FindBy(xpath = "//input[@name='finInstTinAcctType'][2]")
+	@FindBy(xpath = "//input[@name='finInstAccTypeNPI'][2]")
 	WebElement rdoSavings;
-
+	
+	@FindBy(id="uploads[0]")
+	WebElement btnBrowse;
+	
+	// //div[4]/div[1]/div/div/div[1]/div[2]/div/label
+	
+	@FindBy(name="npienrollment_0")
+	WebElement rdoBankLetter;
+	
 	@FindBy(xpath = "//input[@name='finInstTinNpiAcctYorN'][1]")
 	WebElement rdoNPIYes;
 
@@ -73,12 +81,14 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	protected TestBase testConfig;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
-	public FinancialInstitutionInfoPage(TestBase testConfig) 
+	public FinancialInstitutionInfoPageNPI(TestBase testConfig) 
 	{
-		super(testConfig);
-		String expectedURL = "/validateEFTERAProviderContact";
+	
+		String expectedURL = "/validateefterafinancialinfo";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
+		if(enrollmentInfoPageObj.getEnrollType().equals("AV"))
+			expectedURL="/validateefteraprovidercontact";
 		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
@@ -88,17 +98,12 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return new UploadW9(testConfig) ;
 	}
 	
-	public  FinancialInstitutionInfoPageNPI clickContinueNPI() {
-		Element.clickByJS(testConfig, btnContinue, "Continue for NPI");
-		return new FinancialInstitutionInfoPageNPI(testConfig);
-	}
-
 	public SelectPaymentMethods clickContinueAV() {
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new SelectPaymentMethods(testConfig) ;
 	}
 	
-	public FinancialInstitutionInfoPage fillFinancialInstInfo() throws IOException
+	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoForNPI() throws IOException
 	{
 		String expectedText="To help ensure the security of your account, you must enter a physical address for your financial institution. PO Boxes are not allowed.";
 	//	Element.verifyTextPresent(txtSecurity, expectedText);
@@ -106,14 +111,16 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		String financialInstStreet = Helper.generateRandomAlphabetsString(5);
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
+		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstName");
 		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
 		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
         Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
 		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
 		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-		enrollmentInfoPageObj.setFinInstName(financialInstName);
-		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
-		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
+//		enrollmentInfoPageObj.setFinInstName(financialInstName);
+//		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
+//		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
 		fillFinancialInstInfoFromExcel();
 		Browser.wait(testConfig, 2);
 		uploadBankLetterPdfWithAcceptance();
@@ -132,7 +139,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		
 		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
-		enrollmentInfoPageObj.setFinDocCode("BL");
+//		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
@@ -140,7 +147,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	
 	public void fillFinancialInstInfoFromExcel() throws IOException 
 	{
-	  int rowNo=1;
+	  int rowNo=15;
 	  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 	  String cityName =data.GetData(rowNo, "City");
 	  String stateName =data.GetData(rowNo, "State");
@@ -152,12 +159,11 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-	  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
-	  enrollmentInfoPageObj.setFinState(stateName);
-	  enrollmentInfoPageObj.setFinCity(cityName);
-	  enrollmentInfoPageObj.setFinZip(zipCode);
-	  enrollmentInfoPageObj.setFinAcntNo(accountNo);
-	  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
+//	  enrollmentInfoPageObj.setFinState(stateName);
+//	  enrollmentInfoPageObj.setFinCity(cityName);
+//	  enrollmentInfoPageObj.setFinZip(zipCode);
+//	  enrollmentInfoPageObj.setFinAcntNo(accountNo);
+//	  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
 //	  Element.enterData(element, data, description, namOfElement);
     }
 }

@@ -1,6 +1,9 @@
 package main.java.pageObjects;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +16,19 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.reporting.Log;
+
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BeginEnrollment {
 	
@@ -95,13 +104,6 @@ public class BeginEnrollment {
 	
 	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[2]/div[1]")
 	List<WebElement> popUp;
-	
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[2]/div[1]/div[1]/h4")
-	WebElement popUp1;
-	
-	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[2]/div[1]/div[2]")
-	WebElement popUp2;
-	
 	
 	private TestBase testConfig;
 		
@@ -201,6 +203,7 @@ public class BeginEnrollment {
 		validateBeginEnrollment();
 		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
 		String handle =Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_ACH_v6.pdf"); 
+
 		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Browser.switchToNewWindow(testConfig, "EPS_Enrollment_guide_VCP_v6.pdf");
@@ -245,6 +248,8 @@ public class BeginEnrollment {
 			
 		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(1).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, " SubTitle", hdrSubTitle.getText(), dataTest.get(2).get("TEXT_VAL"));
+		Browser.wait(testConfig, 2);
+		Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
 		Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElement(By.tagName("h1")).getText(), dataTest.get(3).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 1", pageBody.get(0).findElements(By.tagName("p")).get(1).getText(), dataTest.get(5).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 2", pageBody.get(0).findElements(By.tagName("p")).get(2).getText(), dataTest.get(6).get("TEXT_VAL"));
@@ -271,14 +276,49 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, "Survey Options",pageBody.get(0).findElements(By.tagName("li")).get(4).getText(), options.get(5).get("ANSWER_TXT"));
 		
 		Element.click(btnCancelEnrollment, "Cancel Enrollment");
+
 		
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up Header",popUp.get(0).findElement(By.tagName("h4")).getText(),  dataTest.get(14).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(0).getText(),  dataTest.get(15).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up para",popUp.get(0).findElements(By.tagName("p")).get(1).getText(),  dataTest.get(16).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up No",popUp.get(0).findElements(By.tagName("a")).get(1).getText().toLowerCase(),  dataTest.get(18).get("TEXT_VAL").toLowerCase());
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up Yes",popUp.get(0).findElements(By.tagName("a")).get(2).getText().toLowerCase(),  dataTest.get(17).get("TEXT_VAL").toLowerCase());
+
 		
 	}
+	
+	public String readPDF() throws IOException {
+		String output="";
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+//        testConfig.driver.get("file:///C:/Users/akushw10/Downloads/EnrollmentPDF.pdf");
+        testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
+        URL url = new URL(testConfig.driver.getCurrentUrl());
+        InputStream is = url.openStream();
+        BufferedInputStream fileToParse = new BufferedInputStream(is);
+        PDDocument document = null;
+        try {
+            document = PDDocument.load(fileToParse);
+            document.getNumberOfPages();
+            output = new PDFTextStripper().getText(document);
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            fileToParse.close();
+            is.close();
+        }
+        String tin=StringUtils.substringBetween(output, "TIN:", "\n");
+//        Helper.compareEquals(testConfig, "Tin Masked", "*****"+enrollmentInfoPageObj.getTin().substring(5), tin);
+        System.out.println("TIN:\n"+StringUtils.substringBetween(output, "TIN:", "\n"));
+        System.out.println("Organizational Information:\n"+StringUtils.substringBetween(output, "Organization Information", "Identify"));
+        System.out.println("Identify Administration Information:\n"+StringUtils.substringBetween(output, "Identify Administrators", "Financial"));
+        System.out.println("Financial Institution Information for TIN:\n"+StringUtils.substringBetween(output, "Financial Institution Information for TIN", "Financial"));
+        System.out.println("Authorized Enroller's Information:\n"+StringUtils.substringBetween(output, "Authorized Enroller's Information", "Page"));
+        System.out.println("Authorization section and W9 section:\n"+StringUtils.substringBetween(output, "Authorization", "Authorized Enroller's"));
+        System.out.println("Terms and conditions :\n"+StringUtils.substringBetween(output, "EPS EFT Provider Authorization", "\n"));
+        
+        return tin;
+    }
 }
 
 

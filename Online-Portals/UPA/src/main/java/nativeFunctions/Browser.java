@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.IIOImage;
@@ -90,7 +91,8 @@ public class Browser
 	       
 	        wait.until(ExpectedConditions.alertIsPresent());
 	        Alert alert = testConfig.driver.switchTo().alert();
-	        alert.accept();
+//	        alert.accept();
+	        alert.dismiss();
 	    } catch (NoAlertPresentException e) {
 	        Log.Comment("No alert is present..continuing..");
 	    }
@@ -523,7 +525,6 @@ public class Browser
 		return null;
 	}
 	
-	
 	public static String switchToNewWindow(TestBase testConfig)
 	{  
 		if (testConfig.driver != null)
@@ -554,7 +555,6 @@ public class Browser
 	{
 		return testConfig.driver.getWindowHandles().size();
 	}
-	
 	
 	public static void waitTillSpecificPageIsLoaded(TestBase testConfig,String pageTitle)
 	{
