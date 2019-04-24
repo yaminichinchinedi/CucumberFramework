@@ -18,6 +18,7 @@ import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
 import org.apache.commons.lang3.StringUtils;
@@ -63,7 +64,7 @@ public class EnrollmentSubmitted {
 	List<WebElement> pageBody;
  	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
-	
+	String subjectData=null;
 	static Map data=null;
 	static HashMap<Integer,HashMap<String,String>> dataTest=null;
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
@@ -84,10 +85,7 @@ public class EnrollmentSubmitted {
 	public EnrollmentSubmitted validateEnrollmentInfo() throws IOException
 	{
 		int sqlRowNo;
-//		testConfig.putRunTimeProperty("tin", "816532336"); //ACH
-//		testConfig.putRunTimeProperty("tin", "784355039"); //VCP
-//		testConfig.putRunTimeProperty("tin", "645068088"); //BS 
-//		testConfig.putRunTimeProperty("tin", "477198293"); //AV
+
 		//For BS
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 		{
@@ -141,7 +139,6 @@ public class EnrollmentSubmitted {
 		Helper.compareEquals(testConfig, "Auth_Phn Number", enrollmentInfoPageObj.getAuthPhnNbr(), data.get("AUTH_TEL_NBR").toString());
 		Helper.compareEquals(testConfig, "Auth_Email", enrollmentInfoPageObj.getAuthEmail(), data.get("AUTH_EMAIL").toString());
 		
-//		Element.clickByJS(testConfig, lnkPrintPdf,"");
 		enrollmentInfoPageObj.clear();
 		return this;
 	}
@@ -161,7 +158,8 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyTinMasking(String pdfData)throws IOException
 	{
-		String subjectData=null;
+		//subjectData contains TIN details from PDF
+		Log.Comment("Expected data contains masked Tin and Actual Data contains Masked Tin Segment");
 		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
 			subjectData=StringUtils.substringBetween(pdfData, "TIN:", "\n");
 		else
@@ -172,7 +170,8 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyAdministrators(String pdfData)throws IOException
 	{
-		String subjectData=null;
+		//subjectData contains Administrators info from PDF
+		Log.Comment("Expected data contains Administrators Info from DB and Actual Data contains Administrators info paragraph from PDF");
 		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
 			subjectData=StringUtils.substringBetween(pdfData, "Identify Administrators", "Financial");
 		else
@@ -190,7 +189,8 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyTermsAndConditionInPDF(String pdfData)throws IOException
 	{
-		String subjectData=null;
+		//subjectData contains Terms And Condition Block from PDF
+		Log.Comment("Expected data contains Terms and Condition and Actual Data contains Terms and Condition paragraph from PDF");
 		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
 			subjectData=StringUtils.substringBetween(pdfData, "EPS EFT Provider Authorization", "\n");
 		else
@@ -201,7 +201,9 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyW9FormAndAuthSectionInPDF(String pdfData)throws IOException
 	{
-		String subjectData=StringUtils.substringBetween(pdfData, "Authorization", "Authorized Enroller's");
+		//subjectData contains Authorization section 
+		Log.Comment("Expected data contains Auth Name Info from DB, Accept Terms and condition and Actual Data contains w9Form and Auth Section info paragraph from PDF");
+		subjectData=StringUtils.substringBetween(pdfData, "Authorization", "Authorized Enroller's");
 		Helper.compareContains(testConfig, "W9", "A copy of your W9 was uploaded with your Enrollment submission",subjectData);
 		Helper.compareContains(testConfig, "Authorization Section", "I accept these Terms and Conditions",subjectData);
 		Helper.compareContains(testConfig, "Auth Frst Name",data.get("AUTH_FST_NM").toString(),subjectData);
@@ -211,7 +213,9 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyPayerSectionInPDF(String pdfData)throws IOException
 	{
-		String subjectData=StringUtils.substringBetween(pdfData, "Payer", "Page");
+		//subjectData contains PayerSection Info in PDF
+		Log.Comment("Expected data contains Payer Info and Actual Data contains Payer info paragraph from PDF");
+		subjectData=StringUtils.substringBetween(pdfData, "Payer", "Page");
 		Helper.compareContains(testConfig, "Payer", "Information",subjectData);
 		switch(data.get("PAY_METH_TYP_CD").toString())
 		{
@@ -232,7 +236,8 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyOrgInfoInPDF(String pdfData)throws IOException
 	{
-		String subjectData=null;
+		//subjectData contains Organization info from PDF
+		Log.Comment("Expected data contains Organisation Info from DB and Actual Data contains organisation info paragraph from PDF");
 		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
 			subjectData=StringUtils.substringBetween(pdfData, "Organization Information", "Identify");
 		else
@@ -264,7 +269,9 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifAuthInfoInPDF(String pdfData)throws IOException
 	{
-		String subjectData=StringUtils.substringBetween(pdfData, "Authorized Enroller's Information", "Page");
+		//subjectData contains authorization info in PDF
+		Log.Comment("Expected data contains Authorization Info from DB and Actual Data contains Authorization info paragraph from PDF");
+		subjectData=StringUtils.substringBetween(pdfData, "Authorized Enroller's Information", "Page");
 		Helper.compareContains(testConfig, "Auth Frst Name",data.get("AUTH_FST_NM").toString(),subjectData);
 		Helper.compareContains(testConfig, "Auth Lst Name", data.get("AUTH_LST_NM").toString(),subjectData);
 		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(0, 3),subjectData);
@@ -277,7 +284,9 @@ public class EnrollmentSubmitted {
 	
 	public EnrollmentSubmitted verifyFinancialInfoInPDF(String pdfData)throws IOException
 	{
-		String subjectData=StringUtils.substringBetween(pdfData, "Financial Institution", "Page");
+		//subjectData contains FinancialInfo in PDF
+		Log.Comment("Expected data contains Financial Info from DB and Actual Data contains Financial info paragraph from PDF");
+		subjectData=StringUtils.substringBetween(pdfData, "Financial Institution", "Page");
 		
 		if(enrollmentInfoPageObj.getTinIdentifier().equals("VO") || enrollmentInfoPageObj.getEnrollType().equals("BS"))
 		{
@@ -390,7 +399,7 @@ public class EnrollmentSubmitted {
         return output;
 	}
 
-	public void verifyHeaders() 
+	/*public  EnrollmentSubmitted verifyHeaders() 
 	 {
 		  List<String> headers = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information","Select Payment Methods", "Upload W9", "Review and Submit");
 		  for (int i = 0; i < (OrgInfoHeaders.size()); i++) {
@@ -420,8 +429,10 @@ public class EnrollmentSubmitted {
 								+ (OrgInfoHeaders.get(i).getText().replace(
 										"\n", " ")), "900",
 						OrgInfoHeaders.get(i).getCssValue("font-weight"));
-
-			}
+		  		}
+		  }
+				return this;
+	}*/
 
 
 	public void verifyHeadersFunctionality(List<String> headers)
@@ -565,7 +576,7 @@ public class EnrollmentSubmitted {
 		
 		public EnrollmentSubmitted verifyPageContextforBS() throws IOException
 		{
-			int sqlRowNo=156;
+			int sqlRowNo=162;
 			HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
 			Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElements(By.tagName("h1")).get(0).getText(), dataTest.get(1).get("TEXT_VAL"));

@@ -613,8 +613,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateBeginEnrollmentQuestions();
 	}
 	
-
-	@Test(priority=3,groups="Create Enrollment",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
+	@TestDetails(author="Amit")
+	@Test(priority=3,groups="Billing Service",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
 	public void testValidateBillingServiceFieldsLeftBlank() throws IOException
 	{
 		String option="Health plan communication";
@@ -625,7 +625,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().verifyContinueEnrollmentValidations();
 	}
 	
-	@Test(priority=3,groups="Create Enrollment",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
+	@TestDetails(author="Amit")
+	@Test(priority=3,groups="Billing Service",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
 	public void testValidateBillingServiceFieldsWithSpecialChar() throws IOException
 	{
 		String option="Health plan communication";
@@ -635,8 +636,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentPage.selectHowYouHeard(option).enrollAs(excelRow).clickContinue().clickContinue().validateBillingService("BSName", "&*min").validateBillingService("Street", "*(*(*").validateBillingService("Street", "PO BOX 7530").validateBillingService("City", "%^&&").validateBillingService("ZipCode", "anjhu").validateBillingService("ZipCode", "70165");
 	}
 		
-	@TestDetails(Author="Amit")
-	@Test(priority=4,groups="Create Enrollment",description="US1033935 -TS001_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AO enrollment") 
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS001_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AO enrollment") 
 	public void testPDFVerificationforACH() throws IOException
 	{
 		String option="Health plan communication";
@@ -647,8 +648,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueNPI().fillFinancialInstInfoForNPI().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
 	}
 	
-	
-	@Test(priority=4,groups="Create Enrollment",description="US1033935 -TS002_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AV enrollment") 
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS002_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AV enrollment") 
 	public void testPDFVerificationforVCP() throws IOException
 	{
 		String option="Health plan communication";
@@ -659,8 +660,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
 	 }
 	
-	
-	@Test(priority=4,groups="Create Enrollment",description="US1033935 -TS003_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_VO enrollment") 
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS003_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_VO enrollment") 
 	public void testPDFVerificationforACHandVCP() throws IOException
 	{
 		String option="Health plan communication";
@@ -671,8 +672,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueNPI().fillFinancialInstInfoForNPI().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
 	 }
 	
-	
-	@Test(priority=4,groups="Create Enrollment",description="US1048199 - TS01-TS07 All test cases are getting covered here /US1048192-TS05") 
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Billing Service",description="US1048199 - TS01-TS07 Verify pdf data while enrolling as BS/US1048192-TS05") 
 	public void testPDFVerificationforBS() throws IOException
 	{
 		String option="Health plan communication";
@@ -683,7 +684,8 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
 	 }
 
-	@Test(priority=4,groups="Create Enrollment",description="US1048192 - TS01/TS03/TS04/TS06/TS07 Enrollment Submitted page verification and Exit Enrollment Button present or not and its functionality") 
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Billing Service",description="US1048192 - TS01/TS03/TS04/TS06/TS07 Enrollment Submitted page verification and Exit Enrollment Button present or not and its functionality") 
 	public void testExitEnrollmentforBS() throws IOException
 	{
 		String option="Health plan communication";
