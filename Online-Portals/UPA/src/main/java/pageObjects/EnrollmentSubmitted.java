@@ -379,7 +379,30 @@ public class EnrollmentSubmitted  {
 		Helper.compareEquals(testConfig, "BL or VC", enrollmentInfoPageObj.getFinDocCode(), BLdata.get("DOC_TYP_CD").toString());
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
 	}
-	
+	public String readPDF() throws IOException {
+		String output="";
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
+			testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
+		else
+			testConfig.driver.get("file:///"+filedir+"\\OnlineBillingServiceEnroll_PDF.pdf");
+        URL url = new URL(testConfig.driver.getCurrentUrl());
+        InputStream is = url.openStream();
+        BufferedInputStream fileToParse = new BufferedInputStream(is);
+        PDDocument document = null;
+        try {
+            document = PDDocument.load(fileToParse);
+            document.getNumberOfPages();
+            output = new PDFTextStripper().getText(document);
+        } finally {
+            if (document != null) {
+                document.close();
+            }
+            fileToParse.close();
+            is.close();
+        }
+        return output;
+	}	
 	public void verifyPageUI(TestBase testBase)  {
 		
 		ApprovdUIPage agreedpage=new ApprovdUIPage();
