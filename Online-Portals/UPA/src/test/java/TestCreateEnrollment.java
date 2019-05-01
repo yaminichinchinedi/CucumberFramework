@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.testng.annotations.Test;
 
+
+import main.java.Utils.Helper;
+
 import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -612,6 +615,89 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateBeginEnrollmentQuestions();
 	}
 	
+	@TestDetails(author="Amit")
+	@Test(priority=3,groups="Billing Service",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
+	public void testValidateBillingServiceFieldsLeftBlank() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().verifyContinueEnrollmentValidations();
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=3,groups="Billing Service",description="US1048048 - TS_013-TS023 - Validate Billing Service Fields")
+	public void testValidateBillingServiceFieldsWithSpecialChar() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow(); 
+		beginEnrollmentPage.selectHowYouHeard(option).enrollAs(excelRow).clickContinue().clickContinue().validateBillingService("BSName", "&*min").validateBillingService("Street", "*(*(*").validateBillingService("Street", "PO BOX 7530").validateBillingService("City", "%^&&").validateBillingService("ZipCode", "anjhu").validateBillingService("ZipCode", "70165");
+	}
+		
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS001_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AO enrollment") 
+	public void testPDFVerificationforACH() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueNPI().fillFinancialInstInfoForNPI().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS002_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AV enrollment") 
+	public void testPDFVerificationforVCP() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=4;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1033935 -TS003_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_VO enrollment") 
+	public void testPDFVerificationforACHandVCP() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueNPI().fillFinancialInstInfoForNPI().clickContinueAV().clickContinue().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Billing Service",description="US1048199 - TS01-TS07 Verify pdf data while enrolling as BS/US1048192-TS05") 
+	public void testPDFVerificationforBS() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().validateEnrollmentInfo().verifyPDFData();
+	 }
+
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Billing Service",description="US1048192 - TS01/TS03/TS04/TS06/TS07 Enrollment Submitted page verification and Exit Enrollment Button present or not and its functionality") 
+	public void testExitEnrollmentforBS() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().fillInfoAndClickSubmit().verifyPageContextforBS().verifyHeaders().verifyExitEnrollemnt();
+		
+	 }
 	/**
 	 * @author rkrish38
 	 * @throws IOException
