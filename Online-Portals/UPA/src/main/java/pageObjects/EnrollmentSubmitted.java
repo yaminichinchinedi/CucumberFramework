@@ -1,12 +1,8 @@
 package main.java.pageObjects;
 
-
-import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.io.InputStream;
-import java.net.URL;
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,12 +16,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
@@ -36,6 +27,8 @@ import org.openqa.selenium.support.PageFactory;
 
 public class EnrollmentSubmitted  {
 	protected TestBase testConfig;
+	@FindBy(linkText="Print Completed Enrollment Form")
+	WebElement lnkPrintPdf;
 	
 	@FindBy(partialLinkText = "What is the ACH Addenfum Record")
 	WebElement lnkACHAddndmRcrd;
@@ -57,18 +50,10 @@ public class EnrollmentSubmitted  {
 	
 	@FindBy(xpath="//fieldset" )
 	WebElement fieldset;
-	@FindBy(xpath=".//*[@id='EFTERAregForm']//div[1]/p[4]/span")
-	WebElement imgPDF;
 	
-	@FindBy(linkText="Print Completed Enrollment Form")
-	WebElement lnkPrintPdf;
-	
-	@FindBy(id="BSETForm")
-	List<WebElement> pageBody;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
-	String subjectData=null;
-	static Map data=null;
-	static HashMap<Integer,HashMap<String,String>> dataTest=null;
+	
+
 	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
 	{
 		String expectedURL = "/validateEFTERASubmit";
@@ -86,7 +71,7 @@ public class EnrollmentSubmitted  {
 	public EnrollmentSubmitted validateEnrollmentInfo() throws IOException
 	{
 		int sqlRowNo;
-
+		Map data=null;
 		//For BS
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 		{
@@ -150,186 +135,6 @@ public class EnrollmentSubmitted  {
 		return this;
 	}
 	
-	public void verifyPDFData() throws IOException
-	{
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			verifyEnrollmentFormIsDownloaded("EnrollmentPDF.pdf");
-		else
-			verifyEnrollmentFormIsDownloaded("OnlineBillingServiceEnroll_PDF.pdf");
-		String pdfData=readPDF();
-		verifyTinMasking(pdfData).verifyOrgInfoInPDF(pdfData).verifyAdministrators(pdfData).verifAuthInfoInPDF(pdfData).verifyW9FormAndAuthSectionInPDF(pdfData).verifyTermsAndConditionInPDF(pdfData);
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			verifyFinancialInfoInPDF(pdfData).verifyPayerSectionInPDF(pdfData);
-	}
-	
-	public EnrollmentSubmitted verifyTinMasking(String pdfData)throws IOException
-	{
-		//subjectData contains TIN details from PDF
-		Log.Comment("Expected data contains masked Tin and Actual Data contains Masked Tin Segment");
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			subjectData=StringUtils.substringBetween(pdfData, "TIN:", "\n");
-		else
-			subjectData=StringUtils.substringBetween(pdfData, "Billing Service Tax Identification Number:", "\n"); 
-		Helper.compareContains(testConfig, "Masked TIN", "*****"+data.get("PROV_TIN_NBR").toString().substring(5).toString(),subjectData);
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifyAdministrators(String pdfData)throws IOException
-	{
-		//subjectData contains Administrators info from PDF
-		Log.Comment("Expected data contains Administrators Info from DB and Actual Data contains Administrators info paragraph from PDF");
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			subjectData=StringUtils.substringBetween(pdfData, "Identify Administrators", "Financial");
-		else
-			subjectData=StringUtils.substringBetween(pdfData, "Identify Administrators", "Authorization");
-		
-		Helper.compareContains(testConfig, "First Name",  data.get("PRI_ADM_FST_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Last Name",  data.get("PRI_ADM_LST_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(0,3),subjectData);
-		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(3,6),subjectData);
-		Helper.compareContains(testConfig, "Phone Number", data.get("PRI_ADM_TEL").toString().substring(6),subjectData);
-		Helper.compareContains(testConfig, "Email",  data.get("PRI_ADM_EML").toString(),subjectData);
-		
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifyTermsAndConditionInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains Terms And Condition Block from PDF
-		Log.Comment("Expected data contains Terms and Condition and Actual Data contains Terms and Condition paragraph from PDF");
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			subjectData=StringUtils.substringBetween(pdfData, "EPS EFT Provider Authorization", "\n");
-		else
-			subjectData=StringUtils.substringBetween(pdfData, "EPS Billing Service Authorization", "\n");
-		Helper.compareContains(testConfig, "T&C", "Terms and Conditions Agreement",subjectData);
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifyW9FormAndAuthSectionInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains Authorization section 
-		Log.Comment("Expected data contains Auth Name Info from DB, Accept Terms and condition and Actual Data contains w9Form and Auth Section info paragraph from PDF");
-		subjectData=StringUtils.substringBetween(pdfData, "Authorization", "Authorized Enroller's");
-		Helper.compareContains(testConfig, "W9", "A copy of your W9 was uploaded with your Enrollment submission",subjectData);
-		Helper.compareContains(testConfig, "Authorization Section", "I accept these Terms and Conditions",subjectData);
-		Helper.compareContains(testConfig, "Auth Frst Name",data.get("AUTH_FST_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Auth Lst Name", data.get("AUTH_LST_NM").toString(),subjectData);
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifyPayerSectionInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains PayerSection Info in PDF
-		Log.Comment("Expected data contains Payer Info and Actual Data contains Payer info paragraph from PDF");
-		subjectData=StringUtils.substringBetween(pdfData, "Payer", "Page");
-		Helper.compareContains(testConfig, "Payer", "Information",subjectData);
-		switch(data.get("PAY_METH_TYP_CD").toString())
-		{
-		case "AO":
-			Helper.compareContains(testConfig, "Payment Method", "ACH",subjectData);
-			break;
-		case "AV":
-			Helper.compareContains(testConfig, "Payment Method", "VCP",subjectData);
-			Helper.compareContains(testConfig, "Payment Method", "ACH",subjectData);
-			break;
-		case "VO":
-			Helper.compareContains(testConfig, "Payment Method", "VCP",subjectData);
-			break;
-		}
-		return this;
-	}
-	
-	
-	public EnrollmentSubmitted verifyOrgInfoInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains Organization info from PDF
-		Log.Comment("Expected data contains Organisation Info from DB and Actual Data contains organisation info paragraph from PDF");
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			subjectData=StringUtils.substringBetween(pdfData, "Organization Information", "Identify");
-		else
-			subjectData=StringUtils.substringBetween(pdfData, "Billing Service Information", "Identify");
-		switch(data.get("PAY_METH_TYP_CD").toString())
-		{
-		case "AO":
-			Helper.compareContains(testConfig, "Enrollment type", "ACH Only",subjectData);
-			break;
-		case "AV":
-			Helper.compareContains(testConfig, "Enrollment type", "ACH and VCP",subjectData);
-			break;
-		case "VO":
-			Helper.compareContains(testConfig, "Enrollment type", "VCP Only",subjectData);
-			break;
-		}
-		Helper.compareContains(testConfig, "Name", data.get("ORG_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Street",  data.get("ORG_STR").toString(),subjectData);
-		Helper.compareContains(testConfig, "City",  data.get("ORG_CTY").toString().trim(),subjectData);
-		Helper.compareContains(testConfig, "State", data.get("ORG_ST").toString(),subjectData);
-		Helper.compareContains(testConfig, "Zip",  data.get("ORG_ZIP").toString().trim(),subjectData);
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-		{
-			Helper.compareContains(testConfig, "Provider Type",dataTest.get(2).get("MKT_TYP_DESC").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Market Type",dataTest.get(1).get("MKT_TYP_DESC").toString().trim(),subjectData);
-		}
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifAuthInfoInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains authorization info in PDF
-		Log.Comment("Expected data contains Authorization Info from DB and Actual Data contains Authorization info paragraph from PDF");
-		subjectData=StringUtils.substringBetween(pdfData, "Authorized Enroller's Information", "Page");
-		Helper.compareContains(testConfig, "Auth Frst Name",data.get("AUTH_FST_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Auth Lst Name", data.get("AUTH_LST_NM").toString(),subjectData);
-		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(0, 3),subjectData);
-		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(3, 6),subjectData);
-		Helper.compareContains(testConfig, "Auth_Phn Number",data.get("AUTH_TEL_NBR").toString().substring(6),subjectData);
-		Helper.compareContains(testConfig, "Auth_Email",data.get("AUTH_EMAIL").toString().trim(),subjectData);
-	
-		return this;
-	}
-	
-	public EnrollmentSubmitted verifyFinancialInfoInPDF(String pdfData)throws IOException
-	{
-		//subjectData contains FinancialInfo in PDF
-		Log.Comment("Expected data contains Financial Info from DB and Actual Data contains Financial info paragraph from PDF");
-		subjectData=StringUtils.substringBetween(pdfData, "Financial Institution", "Page");
-		
-		if(enrollmentInfoPageObj.getTinIdentifier().equals("VO") || enrollmentInfoPageObj.getEnrollType().equals("BS"))
-		{
-			if(subjectData==null) 
-				subjectData="";
-			Helper.compareEquals(testConfig, "Financial Information is not present", "", subjectData);
-		}
-		else
-		{
-			Helper.compareContains(testConfig, "Fin City", data.get("FIN_CTY").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin Street", data.get("FIN_STR").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin State",  data.get("FIN_ST").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin Zip",data.get("FIN_ZIP").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(0, 3),subjectData);
-			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(3, 6),subjectData);
-			Helper.compareContains(testConfig, "Fin Tel", data.get("FIN_TEL").toString().trim().substring(6),subjectData);
-			Helper.compareContains(testConfig, "Fin Bank Name", data.get("FIN_BNK_NM").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin Acnt Nbr",  data.get("ACNT_NBR").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin Rte nmbr",  data.get("RTE_NBR").toString().trim(),subjectData);
-			
-			int sqlRowNo=154;
-			Map npiData=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareContains(testConfig, "Fin NPI City", npiData.get("CTY_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Street", npiData.get("ADR_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI State",  npiData.get("ST_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Zip",npiData.get("ZIP_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(0, 3),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(3, 6),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Tel", npiData.get("TEL_NPI").toString().trim().substring(6),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Bank Name", npiData.get("BNK_NM_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Acnt Nbr",  npiData.get("BNK_ACCT_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI Rte nmbr",  npiData.get("RTE_NPI").toString().trim(),subjectData);
-			Helper.compareContains(testConfig, "Fin NPI nmbr",  npiData.get("NPI_NBR").toString().trim(),subjectData);
-			
-		}
-		return this;
-	}
 	public void verifyAuthEnrlTitle(Map data)
 	{
 		Helper.compareEquals(testConfig, "Auth_Title", enrollmentInfoPageObj.getAuthTitle(), data.get("AUTH_TITLE").toString());
@@ -343,7 +148,7 @@ public class EnrollmentSubmitted  {
 	{
 		
 		int	sqlRowNo=106;
-		dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		if(!enrollmentInfoPageObj.getMrktType().trim().equals(dataTest.get(1).get("MKT_TYP_DESC").toString().trim()))
 		 {
 				Helper.compareEquals(testConfig, "Market Type", enrollmentInfoPageObj.getMrktType().trim(), dataTest.get(2).get("MKT_TYP_DESC").toString().trim());
@@ -377,30 +182,7 @@ public class EnrollmentSubmitted  {
 		Helper.compareEquals(testConfig, "BL or VC", enrollmentInfoPageObj.getFinDocCode(), BLdata.get("DOC_TYP_CD").toString());
 		Helper.compareContains(testConfig, "BL or VC FILE NAME", enrollmentInfoPageObj.getTin(), BLdata.get("FILE_NM").toString());
 	}
-	public String readPDF() throws IOException {
-		String output="";
-		String filedir=System.getProperty("user.dir")+"\\Downloads";
-		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
-			testConfig.driver.get("file:///"+filedir+"\\EnrollmentPDF.pdf");
-		else
-			testConfig.driver.get("file:///"+filedir+"\\OnlineBillingServiceEnroll_PDF.pdf");
-        URL url = new URL(testConfig.driver.getCurrentUrl());
-        InputStream is = url.openStream();
-        BufferedInputStream fileToParse = new BufferedInputStream(is);
-        PDDocument document = null;
-        try {
-            document = PDDocument.load(fileToParse);
-            document.getNumberOfPages();
-            output = new PDFTextStripper().getText(document);
-        } finally {
-            if (document != null) {
-                document.close();
-            }
-            fileToParse.close();
-            is.close();
-        }
-        return output;
-	}	
+	
 	public void verifyPageUI(TestBase testBase)  {
 		
 		ApprovdUIPage agreedpage=new ApprovdUIPage();
@@ -593,21 +375,4 @@ public class EnrollmentSubmitted  {
 		// }
 		
 		
-		public EnrollmentSubmitted verifyPageContextforBS() throws IOException
-		{
-			int sqlRowNo=162;
-			HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-			Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
-			Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElements(By.tagName("h1")).get(0).getText(), dataTest.get(1).get("TEXT_VAL"));
-			Helper.compareEquals(testConfig, "Paragraph 1", pageBody.get(0).findElements(By.tagName("p")).get(0).getText(), dataTest.get(2).get("TEXT_VAL"));
-			Helper.compareEquals(testConfig, "Paragraph 2", pageBody.get(0).findElements(By.tagName("p")).get(1).getText(), dataTest.get(3).get("TEXT_VAL")+"\n"+dataTest.get(4).get("TEXT_VAL"));
-			Helper.compareEquals(testConfig, "Paragraph 3", pageBody.get(0).findElements(By.tagName("p")).get(2).getText(), dataTest.get(5).get("CLOBVAL"));
-			Helper.compareEquals(testConfig, "PDF link",pageBody.get(0).findElements(By.tagName("a")).get(0).getText(), dataTest.get(6).get("TEXT_VAL"));
-			Helper.compareEquals(testConfig, "Sub Heading", pageBody.get(0).findElements(By.tagName("h1")).get(1).getText(), dataTest.get(7).get("TEXT_VAL"));
-			Helper.compareEquals(testConfig, " Paragraph 4", pageBody.get(0).findElements(By.tagName("li")).get(0).getText(), dataTest.get(8).get("CLOBVAL"));
-			Helper.compareEquals(testConfig, " Paragraph 5", pageBody.get(0).findElements(By.tagName("li")).get(1).getText(), dataTest.get(9).get("CLOBVAL"));
-			Helper.compareEquals(testConfig, " Exit button", pageBody.get(0).findElements(By.tagName("a")).get(1).getText(), dataTest.get(10).get("TEXT_VAL"));
-			
-			return this;
-		}
 }
