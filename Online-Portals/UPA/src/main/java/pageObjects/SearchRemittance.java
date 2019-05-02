@@ -152,9 +152,7 @@ public class SearchRemittance extends paymentSummary {
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
 		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
-		   {
-			Helper.compareLinkedMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
-		  }
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
 		  else
 		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
 //		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
@@ -208,7 +206,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	    setMapEntryKey(epsSearchRemittanceSearchRequest);
 	    setServiceData(epsSearchRemittanceSearchRequest);
-	    if(requestType=="byDOS") 
+	    if(requestType.contains("byDOS")) 
 			setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
 		else
 			setToAndFromDate(epsSearchRemittanceSearchRequest);
@@ -740,15 +738,16 @@ public class SearchRemittance extends paymentSummary {
 	 * like payer name, amount etc
 	 * @return Outer map
 	 */	
-	public LinkedHashMap<String,String> getSRDetailsFromUI(String requestType)
+	public Map<String, LinkedHashMap<String, String>> getSRDetailsFromUI(String requestType)
 	{	   
 		
 	   /**Gets headers List which will be key for following map*/
 	   int startingLoop=2;
-		if(requestType.equalsIgnoreCase("byElectronicPaymentNo"))
+		if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi")||requestType.equalsIgnoreCase("byDOP&SubscriberID"))
 			startingLoop=1;
 		
 	   LinkedHashMap<String,String> innerMap = null;
+	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	   ArrayList<String> headers=getHeadersFromResultTable();
 	   int totalNoOfPages=getNumberOfPages();
 	   if(totalNoOfPages>2)
@@ -760,6 +759,7 @@ public class SearchRemittance extends paymentSummary {
 	   Log.Comment("Fetching all payments From UI..");
 	   String details="";
 	   String amount="";
+	   int l=0;;
 	
 	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
@@ -767,6 +767,8 @@ public class SearchRemittance extends paymentSummary {
 		   
 			for(int i=startingLoop;i<divSearchResults.size();i++)
 		    {
+				System.out.println(divSearchResults.size());
+				
 			   innerMap=new LinkedHashMap<String,String>();
 			   
 			   for(int j=0,k=0;j<headers.size();j++,k++)
@@ -778,13 +780,13 @@ public class SearchRemittance extends paymentSummary {
 			      innerMap.put(headers.get(j), details);	
 				 }
 			    
-			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo"))
+			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo"))
 			    { 
 			      if(innerMap.get("Amount").contains(","))
-			     {
+			      {
 			      amount=innerMap.get("Amount").replace(",", "");
 			      innerMap.put("Amount", amount);
-			     }
+			      }
 			    }
 			   else
 			   {
@@ -801,6 +803,8 @@ public class SearchRemittance extends paymentSummary {
 			   innerMap.remove("Payer PRA");
 			   innerMap.remove("Archive");
 			   innerMap.remove("Payment Status / Trace Number");
+			   outerMap.put(innerMap.get("Payment Number")+l, innerMap);
+				  l++;
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -822,9 +826,11 @@ public class SearchRemittance extends paymentSummary {
 			           Browser.wait(testConfig,3);
 			           pageNo++;
 			     }
+			 
 		 }
-	   System.out.println(innerMap);
-		return innerMap;
+	   
+	   Log.Comment("UI detials " +(outerMap));
+		return outerMap;
 	   
     }
 	
@@ -1022,12 +1028,12 @@ public class SearchRemittance extends paymentSummary {
 	   
     }
 	
-	public LinkedHashMap<String, String> getSRDetailsFromFISL(String requestType,Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public Map<String, LinkedHashMap<String, String>> getSRDetailsFromFISL(String requestType,Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
 		int totalPayments;
 		LinkedHashMap<String,String> innerMap = null;
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
-		
+	    Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
 			 totalPayments=30;
 		  else
@@ -1037,15 +1043,25 @@ public class SearchRemittance extends paymentSummary {
 		  {
 			 
 			innerMap=new LinkedHashMap<String, String>();
-			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			
+//			if(requestType.equals("byDOP")||requestType.equals("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndAccountNo"))
+			innerMap.put("Payer/Patient",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+
 			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
 			patientName=patientName.replace("null ", "").trim();
-
 			
-			if(payments[i].getClaimDate()!=null)
-			  innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
-			else 
+			
+			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP"))
+			 {
+			   if(payments[i].getClaimDate()!=null)
+			   innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+			  else 
+			  innerMap.put("Claim Date","");
+			 }
+			else
+				if(payments[i].getClaimDate()!=null)
+					 innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+				else
 			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
 		  
 			if(payments[i].getNationalProviderIdentifier()!=null)
@@ -1054,14 +1070,25 @@ public class SearchRemittance extends paymentSummary {
 			innerMap.put("NPI",""); 
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			
-			if(patientName!="" && requestType!="byElectronicPaymentNo")
-			   innerMap.put("Patient Name",patientName);
 			
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			 {
+			    if(patientName!="")
+			      innerMap.put("Patient Name",patientName);
+			 }
+			   
+	
 			if(payments[i].getSubscriberIdentifier()!=null)
 			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
 			
-			if(requestType!="byElectronicPaymentNo")
-				innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			{
+				if(payments[i].getPatientAccountNumber()!=null)
+					innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+				else
+					innerMap.put("Account Number","");
+			}
+				
 			
 			
 			
@@ -1084,16 +1111,33 @@ public class SearchRemittance extends paymentSummary {
 			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
 			    innerMap.put("Amount","$"+ amount);
 			}
-				
-				
- 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
-// 			innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+			
+			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+			if(innerMap.get("Amount")!=null)
+			{
+			    if(innerMap.get("Amount").equals("$0.00"))
+				innerMap.put("Type","DD");
+			}
+			
+			 
+ 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo"))
+ 			{
+ 				if(payments[i].getPaymentStatusCode().getDescription()!=null)
+ 					innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+ 				else
+ 					if(innerMap.get("Type").equals("ACH"))
+ 						innerMap.put("Payment Status/Trace Number","Successful ACH");
+ 					else
+ 					innerMap.put("Payment Status/Trace Number","N/A");
+ 			}
+ 			 
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			outerMap.put(innerMap.get("Payment Number")+i, innerMap);
 		 }
 		  
 		  
-		 Log.Comment("Details from FISL is :"  + '\n' +innerMap);
-		 return innerMap;
+		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+		 return outerMap;
 	}
 	
 	public LinkedHashMap<String, String> getPaymentDetailsFromFISLForCSR(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException

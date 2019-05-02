@@ -19,6 +19,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(name = "finInstTinName")
 	WebElement finInstName;
 
+	@FindBy(name = "finInstNpiNPI")
+	WebElement finInstNPINo;
+	
 	@FindBy(name = "finInstTinStreet")
 	WebElement finInstStreet;
 
@@ -84,7 +87,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new UploadW9(testConfig) ;
 	}
-
+	
 	public SelectPaymentMethods clickContinueAV() {
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new SelectPaymentMethods(testConfig) ;
@@ -144,6 +147,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+	  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
 	  enrollmentInfoPageObj.setFinState(stateName);
 	  enrollmentInfoPageObj.setFinCity(cityName);
 	  enrollmentInfoPageObj.setFinZip(zipCode);

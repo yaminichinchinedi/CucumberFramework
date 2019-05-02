@@ -1,12 +1,15 @@
-package main.java.Utils;
+﻿package main.java.Utils;
 
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,12 +40,13 @@ import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import org.openqa.selenium.WebElement;
+
 
 
 public class Helper
 {
-	
 	/**
 	 * Function to change the given date value from given old Date Format to
 	 * desired new Date Format.
@@ -2095,8 +2099,7 @@ return previousDate.getTime();
 	    	  {
 	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
 	    		 { 
-//	    			 Log.Pass("Actual  equals expected");
-	    			 Log.Comment("Verifying data for payment No : " + key);
+	    			Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
 	    	        	
@@ -2152,34 +2155,37 @@ return previousDate.getTime();
 		return retun1;
 	}
 	
+	
+	
 	public static boolean PDFDownloadVerification(TestBase testConfig,WebElement elt,String namOfElement,String downloadedFile)
 	{
-	boolean isDownloaded=true;
-	String filedir=System.getProperty("user.dir")+"\\Downloads";
-	File fileDirectory=new File(filedir);
-	purgeDirectory( fileDirectory);
-	Element.clickByJS(testConfig, elt,downloadedFile);
-// Element.click( elt,namOfElement);
-	//add for verification in downloads folder hat file exists
-	//Browser.wait(testConfig,8);
-	int i=0;
-
-	while( ! isFileExist(fileDirectory,downloadedFile))
-	{
-	i++;
-	if (i>100000)
-	{
-	isDownloaded=false;
-    Log.Fail(downloadedFile+" File not downloaded");
-	break;
-
-	}
-
-	}
-	Log.Comment("value of i is:"+i);
-
-	return isDownloaded;
-
+		boolean isDownloaded=true;
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+		File fileDirectory=new File(filedir);
+		purgeDirectory( fileDirectory);
+		Element.clickByJS(testConfig, elt,downloadedFile);
+		System.out.println("Clicked download link");
+//		Element.click( elt,namOfElement);
+		//add for verification in downloads folder hat file exists
+		//Browser.wait(testConfig,8);
+		int i=0;
+		
+		while(	! isFileExist(fileDirectory,downloadedFile))
+		{
+			i++;
+			if (i>100000)
+			{
+				isDownloaded=false;
+//				Log.Fail(downloadedFile+" File not downloaded");
+				break;
+				
+				}
+				
+		}
+		Log.Comment("value of i is:"+i);
+		
+		return isDownloaded;
+		
 	}
 	
 	public static void compareLinkedMaps(TestBase testConfig,String what,LinkedHashMap<String, String> expected,LinkedHashMap<String, String> actual) 
@@ -2230,4 +2236,6 @@ public static String addDays(String date, int days) throws ParseException {
 	   }
 	
 	
+
 	}
+

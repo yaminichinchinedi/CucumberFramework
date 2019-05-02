@@ -64,7 +64,7 @@ public class ReviewAndSubmit {
 			expectedURL="/validateBSSubmitInfo";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+//		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	public EnrollmentSubmitted fillInfoAndClickSubmit() throws IOException

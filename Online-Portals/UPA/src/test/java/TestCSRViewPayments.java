@@ -94,6 +94,103 @@ public class TestCSRViewPayments extends TestBase{
 	}
 	
 	
+	@TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowAllFilter_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");
+ 		String paymentType="generalPayment30Days";
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(paymentType);
+		srchTinPage.clickSearchBtn().verifyDefaultSearchResultCount();
+
+ 	 }
+    
+    @TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowAllFilter_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 	    String filterPayments="Show All";
+		String quickSearchFilter="Last 60 days";
+ 		String paymentType="generalPayment60Days";
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");	
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(paymentType);
+		srchTinPage.clickSearchBtn().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);	
+
+ 	 }
+    
+    @TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowAllFilter_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 	    String filterPayments="Show All";
+		String quickSearchFilter="Last 90 days";
+		String paymentType="generalPayment90Days";
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");	
+ 		
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(paymentType);
+		srchTinPage.clickSearchBtn().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);		
+ 	 }
+    
+    @TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowAllFilter_4_6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 	    String filterPayments="Show All";
+		String quickSearchFilter="Last 4-6 months";
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");	
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(quickSearchFilter);
+		srchTinPage.clickSearchBtn().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);			
+
+ 	 }
+    
+    @TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowALLFilter_6_9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 	    String filterPayments="Show All";
+		String quickSearchFilter="Last 6-9 months";
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");	
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(quickSearchFilter);
+		srchTinPage.clickSearchBtn().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);			
+ 	 }
+    
+    @TestDetails(author="Priyanka")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    void testPaymentsForShowALLFilter_9_13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
+ 	 {
+ 	    String filterPayments="Show All";
+		String quickSearchFilter="Last 9-13 months";
+ 		testConfig.putRunTimeProperty("key", "TAX_IDENTIFIER_TYPE");
+ 		testConfig.putRunTimeProperty("value", "ALL");	
+ 		
+ 		LoginCSR loginPage=new LoginCSR(testConfig);
+		CSRHomePage homePage=loginPage.doLogin(loginUserType);
+		SearchTinPageViewPayments srchTinPage = homePage.clickViewPaymentsLink().enterTin(quickSearchFilter);
+		srchTinPage.clickSearchBtn().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);			
+ 	 }
+        
+	
+	
 	@Test(priority=5,description="TS005_View Payments_Payments filter_NPI Only" + "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
 	void testRecordCountForNPIOnlyFilter() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{

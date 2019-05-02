@@ -97,36 +97,32 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndClaimNo":
  		 case "byDOPAndPatientNm":	 
  		 case "byDOS":
- 		 case "byDOSAndSubscriberId":
+ 		
  		 case "byDOSAndNpi":
  		 case "byDOSAndClaimNo":
- 		 
  		
 			 sqlRowNo=41;
 			 break;
- 		 case "byDOSAndAccountNo":
- 			sqlRowNo=58;
+ 		 case "byDOSAndAcntNo":
+ 			sqlRowNo=41;
+ 			break;
  			 
  		 case "byDOPAndZeroPaymentClaims":
 		 case "byDOSAndZeroPaymentClaims":
 			sqlRowNo=47;
-			
 			break;
+			
+		 case "byDOSAndSubscriberId":
+			 sqlRowNo=41;//156;
+			 break;
+			 
 
  		   
-//<<<<<<< HEAD
-// 		case "byElectronicPmt":
-// 			sqlRowNo=48;
-// 			break;
-// 			
-// 		case "byCheckPmt":
-// 			sqlRowNo=50;
-// 			break;
-// 			
-// 		case "byElectronicPaymentForVCP":
-// 			testConfig.putRunTimeProperty("type","VCP");
-// 			sqlRowNo=52;
-// 			break;
+
+ 		case "byElectronicPaymentForVCP":
+ 			testConfig.putRunTimeProperty("type","VCP");
+ 			sqlRowNo=52;
+ 			break;
 // 		case "byElectronicPaymentForNON":
 // 			testConfig.putRunTimeProperty("type","NON");
 //
@@ -140,11 +136,11 @@ public String getTinForPaymentType(String paymentType)
 // 			 sqlRowNo=54;
 // 			 break;
 //
-// 		 case "byElectronicPaymenForACH":
-// 		 case "selectTin":
-// 			 testConfig.putRunTimeProperty("type","ACH");
-// 			 sqlRowNo=56;
-// 			 break;
+ 		 case "byElectronicPaymenForACH":
+ 		 case "selectTin":
+ 			 testConfig.putRunTimeProperty("type","ACH");
+ 			 sqlRowNo=56;
+ 			 break;
 // 		case "byElectronicPaymenForCHK":
 //			 testConfig.putRunTimeProperty("type","CHK");
 //			 sqlRowNo=56;

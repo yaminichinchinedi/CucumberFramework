@@ -123,6 +123,12 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath="//div[@class='error']//ul//li")
 	List <WebElement> individualErrors;
 	
+	@FindBy(xpath = "//p[@class='error-msg']") 
+	WebElement error;
+	
+	@FindBy(xpath = "//div[@class='error']//a") 
+	WebElement errorLink;
+	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
 
@@ -233,11 +239,14 @@ public class ProviderInformationEFTERAEnroll {
 	
 	public ProviderInformationEFTERAEnroll verifyContinueEnrollmentValidations()
 	{
-		
+		List <String> expectedErrorMsgs;
 		Log.Comment("Keep all fields blank..");
 		Element.click(btnContinue, "Continue button");
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
-		List <String> expectedErrorMsgs=Arrays.asList("- Organization Information - Business Name","- Organization Information - Street","- Organization Information - City","- Organization Information - State","- Organization Information - Zip Code","- Organization Information - Provider Type/Market Type");
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			 expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
+		else
+			expectedErrorMsgs=Arrays.asList("- Organization Information - Business Name","- Organization Information - Street","- Organization Information - City","- Organization Information - State","- Organization Information - Zip Code","- Organization Information - Provider Type/Market Type");
 		for(int i=0;i<expectedErrorMsgs.size();i++)
 			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
 		
@@ -285,29 +294,38 @@ public class ProviderInformationEFTERAEnroll {
 		String expectedColor="#c21926";
 		
 		Log.Comment("Verifying Error Msg is displayed for Business Name..");
-		Element.verifyTextPresent(providerName.findElement(By.xpath("../following-sibling::p")), expectedText);
-		Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(providerName.getCssValue("border-top-color")).asHex());
+		if(enrollmentInfoPageObj.getEnrollType().contains("BS"))
+		{
+			Element.verifyTextPresent(bsName.findElement(By.xpath("../following-sibling::p")), expectedText);
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(bsName.getCssValue("border-top-color")).asHex());
+		}
+		else
+		{
+			Element.verifyTextPresent(providerName.findElement(By.xpath("../following-sibling::p")), expectedText);
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(providerName.getCssValue("border-top-color")).asHex());
+			
+			Log.Comment("Verifying Error Msg is displayed for Provide type..");
+			Element.verifyTextPresent(lblProvType.findElement(By.xpath("following-sibling::p")), expectedText);
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Provide type.." , expectedColor, Color.fromString(lblProvType.getCssValue("border-top-color")).asHex());
+		}
 		
 		Log.Comment("Verifying Error Msg is displayed for Street..");
-		Element.verifyTextPresent(street.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(street.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(street.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for City..");
-		Element.verifyTextPresent(city.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(city.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(city.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for State dropdown..");
-		Element.verifyTextPresent(drpDwnState.findElement(By.xpath("following-sibling::p")), expectedText);
+		Element.verifyTextPresent(drpDwnState.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for State dropdown" , expectedColor, Color.fromString(drpDwnState.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-		Element.verifyTextPresent(zipCode1.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Element.verifyTextPresent(zipCode1.findElement(By.xpath("following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(zipCode1.getCssValue("border-top-color")).asHex());
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(zipCode2.getCssValue("border-top-color")).asHex());
 		
-		Log.Comment("Verifying Error Msg is displayed for Provide type..");
-		Element.verifyTextPresent(lblProvType.findElement(By.xpath("following-sibling::p")), expectedText);
-		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Provide type.." , expectedColor, Color.fromString(lblProvType.getCssValue("border-top-color")).asHex());
 	}
 	
 	public ProviderInformationEFTERAEnroll clickCancelEnrollment()
@@ -327,5 +345,79 @@ public class ProviderInformationEFTERAEnroll {
 		Element.click(btnNoOnCancelPopUp, "No button on cancel Enrollment Pop up");	
 		return this;
 	}
+	
+	public  ProviderInformationEFTERAEnroll validateBillingService(String field,String data) throws IOException {
+		WebElement ele=null;
+		switch(field)
+		{
+			case "BSName":
+				Element.enterData(bsName, data, "Enter provider name as :" + data,"providerName");
+				ele=bsName;
+				break;
+			case "Street":
+				Element.enterData(street, data, "Enter street name as : " + data,"street");
+				ele=street;
+				break;
+			case "City":
+				Element.enterData(city, data, "Enter city name as :" + data,"city");
+				ele=city;
+				break;
+			case "State":
+				Element.selectVisibleText(drpDwnState, data, "Enter state name");
+				ele=drpDwnState;
+				break;
+			case "ZipCode":
+				Element.enterData(zipCode1, data,"Entered zip code in first textbox as" + data,"zipCode1");
+				ele=zipCode1;
+				break;
+		}
+		fillBillingServiceInfo(field);
+		Element.click(btnContinue, "Continue button");
+		verifyBSError(ele);
+		return this;
 
+	}
+	
+	public  ProviderInformationEFTERAEnroll fillBillingServiceInfo(String field) throws IOException {
+		int rowNo=1;
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);
+		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
+	
+		if(!field.equals("BSName"))
+			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+		if(!field.equals("Street"))
+			Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
+		if(!field.equals("City"))
+			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
+		if(!field.equals("State"))
+			Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+		if(!field.equals("ZipCode"))
+			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
+		
+		return this;
+	}	
+
+	public void verifyBSError(WebElement element)
+	{
+		if(element.equals(zipCode1))
+		{
+			if(error.getText().contains("Data"))
+				Element.verifyTextPresent(error, "Invalid Data");
+			else
+				Element.verifyTextPresent(error, "Invalid for City/State");
+		}
+		else if(element.equals(street))
+		{
+			if(error.getText().contains("Special"))
+				Element.verifyTextPresent(error, "Special characters not allowed");
+			else
+				Element.verifyTextPresent(error, "P.O. Boxes are not accepted");
+		}
+		else
+			Element.verifyTextPresent(error, "Special characters not allowed");
+		Element.verifyElementPresent(errorLink, "Error links");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
+		
+	}
 }
