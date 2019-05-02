@@ -36,8 +36,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class EnrollmentSubmitted  {
 	protected TestBase testConfig;
-	@FindBy(linkText="Print Completed Enrollment Form")
-	WebElement lnkPrintPdf;
 	
 	@FindBy(partialLinkText = "What is the ACH Addenfum Record")
 	WebElement lnkACHAddndmRcrd;
