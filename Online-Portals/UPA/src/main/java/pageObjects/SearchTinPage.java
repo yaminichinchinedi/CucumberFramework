@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -47,9 +49,10 @@ public class SearchTinPage {
 		
 	}
 	
-	public void selectUserType(String userType)
+	public SearchTinPage selectUserType(String userType)
 	{
-		Element.selectByValue(drpDownUserType,userType, "Select User type as :" + " " + userType);
+		Element.selectByValue(drpDownUserType,userType, "User type as :" + " " + userType + " ");
+		return this;
 	}
 	
 	public ManageUsers doSearch(String userType)
@@ -96,6 +99,53 @@ public class SearchTinPage {
 		}
 		
 		testConfig.putRunTimeProperty("tin", tin);
+		return new ManageUsers(testConfig);
+	}
+	
+	public String enterTin(String typeOfTin)
+	{
+		List<String> userAndTinDetails=getTinAndUserDetails(typeOfTin);
+		Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+		testConfig.putRunTimeProperty("username", userAndTinDetails.get(1));
+		return userAndTinDetails.get(0);
+	}
+	
+	public List<String> getTinAndUserDetails(String typeOfTin)
+	{
+		Map tinDetails=null;
+		int sqlRow;
+		List<String> userAndTinDetails=new ArrayList<String>();
+		switch(typeOfTin)
+		{
+		   case "tinWithOneActiveAdmin" :
+		   {
+			  sqlRow=163;
+			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+			  Log.Comment("Fetched a tin that has only One Active Admin and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
+			  break;
+		    }
+		   
+		   case "tinWithMoreThanOneActiveAdmin" :
+		   {
+			  sqlRow=164;
+			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+			  Log.Comment("Fetched a tin that has only 2 Active Admins and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
+			  break;
+		    }
+			  
+		   default :
+			   Log.Comment("No Search criteria defined");
+		   
+		}
+		
+		userAndTinDetails.add(tinDetails.get("PROV_TIN_NBR").toString());
+		userAndTinDetails.add(tinDetails.get("LST_NM").toString().toUpperCase() + "," +" " + tinDetails.get("FST_NM").toString().toUpperCase());
+		return userAndTinDetails;
+	}
+	
+	public ManageUsers clickSearch()
+	{
+		Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 		return new ManageUsers(testConfig);
 	}
 	
