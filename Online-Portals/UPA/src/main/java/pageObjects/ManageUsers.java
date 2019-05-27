@@ -119,7 +119,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public AddUserDetails clickAddNewUser()
 	{
-		Element.click(btnAddUser, "Add User");
+		Element.clickByJS(testConfig,btnAddUser, "Add User");
 		return new AddUserDetails(testConfig);
 	}
 
