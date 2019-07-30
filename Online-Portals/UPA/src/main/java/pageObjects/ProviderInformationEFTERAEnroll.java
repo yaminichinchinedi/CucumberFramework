@@ -420,4 +420,5 @@ public class ProviderInformationEFTERAEnroll {
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
 		
 	}
+	
 }

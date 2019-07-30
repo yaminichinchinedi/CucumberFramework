@@ -15,6 +15,7 @@ import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -48,6 +49,17 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="emailContact1")
 	WebElement firstProvEmail;
 	
+	@FindBy(name="mobilePhone1Contact1")
+	WebElement firstProvMobField1;
+	
+	@FindBy(name="mobilePhone2Contact1")
+	WebElement firstProvMobField2;
+	
+	@FindBy(name="mobilePhone3Contact1")
+	WebElement firstProvMobField3;
+	
+	@FindBy(id="sendAlertsContact1")
+	WebElement firstProvMobAlert;
 	
 	@FindBy(name="verifyEmailContact1")
 	WebElement verifyFirstProvEmail;
@@ -77,8 +89,26 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="verifyEmailContact2")
 	WebElement verifySecondProvEmail;
 	
+	@FindBy(name="mobilePhone1Contact2")
+	WebElement SecProvMobField1;
+	
+	@FindBy(name="mobilePhone2Contact2")
+	WebElement SecProvMobField2;
+	
+	@FindBy(name="mobilePhone3Contact2")
+	WebElement SecProvMobField3;
+	
+	@FindBy(id="sendAlertsContact2")
+	WebElement SecProvMobAlert;
+	
 	@FindBy(linkText="Continue")
 	WebElement btnContinue;
+	
+	@FindBy(linkText="CANCEL ENROLLMENT")
+	WebElement btnCnclEnrlmnt;
+	
+	@FindBy(linkText="Back")
+	WebElement btnBack;
 	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][2]//td//table//tr//td//b")
 	WebElement txtSecurityBold;
@@ -103,6 +133,41 @@ public class ValidateEFTERAProviderInfo {
 
 	@FindBy(xpath ="//input[@id='no']//following-sibling::label")
 	WebElement rdoNo;
+	
+	@FindBy(linkText="Learn about alert frequency")
+	WebElement lnkAlertFrequency;
+	
+	@FindBy(linkText="Close Tip") 
+	WebElement lnkClosTip;
+	
+	@FindBy(xpath="//section//form/div[3]/div[1]/div")
+	List<WebElement> divFrqncyPopUp;
+	
+	@FindBy(xpath="//section//form/a")
+	WebElement lnkClrAdmnInfo;
+	
+	@FindBy(xpath="//section//form/div[5]/div[1]/div")
+	List<WebElement> divClrInfo;
+	
+	@FindBy(xpath="//section//form/div[4]/div[1]/div")
+	List<WebElement> divCnclEnrlmnt;
+	
+	@FindBy(xpath="//div[@class='error']//h4")
+	WebElement errorHeader;
+	
+	@FindBy(xpath = "//div[@class='error']//a") 
+	WebElement errorLink;
+	
+	@FindBy(xpath = "//p[@class='error-msg']") 
+	WebElement error;
+	
+	@FindBy(xpath = "//form//div[7]//div[1]/label") 
+	WebElement btnYesOnExsistingEmailPage;
+	
+	@FindBy(xpath = "//form//div[7]//div[2]/label") 
+	WebElement btnNoOnExsistingEmailPage;
+	
+	HashMap<Integer,HashMap<String,String>> pageData=null;
 	
 	String fName=Helper.generateRandomAlphabetsString(5);
 	String lName=Helper.generateRandomAlphabetsString(5);
@@ -164,6 +229,36 @@ public class ValidateEFTERAProviderInfo {
 		return this;
 	}
 	
+	public  ValidateEFTERAProviderInfo fillMobileCntct(String providerType)
+	{	
+		switch(providerType)
+		{
+		  case "Primary":
+		  {
+			
+			Element.enterData(firstProvMobField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvMobField1");
+			Element.enterData(firstProvMobField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvMobField2");
+			Element.enterData(firstProvMobField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvMobField3");
+			Helper.compareEquals(testConfig, "check box is not disabled",null,firstProvMobAlert.getAttribute("disabled") );
+//			System.out.println("check box is not disabled: "+firstProvMobAlert.getAttribute("disabled"));
+//			Browser.wait(testConfig, 2);
+			Element.enterData(firstProvMobField3, "89","Entered last four digits of phone number as : 89"  ,"firstProvMobField3");
+			Helper.compareEquals(testConfig, "", "true", firstProvMobAlert.getAttribute("disabled"));
+//			System.out.println("check box disabled:"+firstProvMobAlert.getAttribute("disabled"));
+			break;
+		   }
+		  case "Secondary":
+		  {
+		   Element.enterData(SecProvMobField1, phNo, "Entered first three digits of phone number as :" + phNo,"SecProvMobField1");
+		   Element.enterData(SecProvMobField2, phNo, "Entered second three digits of phone number as :" + phNo,"SecProvMobField2");
+		   Element.enterData(SecProvMobField3, phNoLstField, "Entered last four digits of phone number as :" + phNoLstField,"SecProvMobField3");
+		   
+		   break;
+		  } 
+	     }
+		
+		return this;
+	}
 	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
 	{
@@ -173,7 +268,38 @@ public class ValidateEFTERAProviderInfo {
 	   Element.click(btnContinue, "Continue");
 	   
 	   Element.verifyTextPresent(exitingUserHeaderMsg,expHeaderMsg);
-	   Element.verifyTextPresent(exitingUserMsg,expMsg);
+	   Element.verifyElementPresent(btnYesOnExsistingEmailPage, "Yes BTN");
+	   Element.verifyElementPresent(btnNoOnExsistingEmailPage, "NO BTN");
+	   Browser.wait(testConfig, 120);
+//	   Element.verifyTextPresent(exitingUserMsg,expMsg);
+	   return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyYesBtnFunctionality() throws IOException
+	{
+		Element.click(btnYesOnExsistingEmailPage, "Yes Button");
+		Element.click(btnContinue, "Continue");
+		int sqlRowNo=164;
+		Map adminData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			
+		String firstName=firstProvFName.getAttribute("value");
+		String email=firstProvEmail.getAttribute("value");
+		String lastName=firstProvLName.getAttribute("value");
+		String telNo=firstProvPhField1.getAttribute("value")+firstProvPhField2.getAttribute("value")+firstProvPhField3.getAttribute("value");
+		Helper.compareEquals(testConfig, "Provider First Name", firstName, adminData.get("FST_NM"));
+		Helper.compareEquals(testConfig, "Provider Last Name", lastName, adminData.get("LST_NM"));
+		Helper.compareEquals(testConfig, "Provider Phone Number", telNo, adminData.get("TEL_NBR"));
+		Helper.compareEquals(testConfig, "Provider Email", email, adminData.get("EMAIL_ADR_TXT"));
+		
+	   return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyNoBtnFunctionality() throws IOException
+	{
+	   Element.click(btnNoOnExsistingEmailPage, "No Button");
+	   Element.click(btnContinue, "Continue");
+	   String firstNameString=firstProvFName.getAttribute("value");
+	   Helper.compareEquals(testConfig, "Provider First Name", firstNameString, "");
 	   return this;
 	}
 	
@@ -361,5 +487,201 @@ public class ValidateEFTERAProviderInfo {
 		Element.verifyTextPresent(exitingUserMsg,expMsg);
 	}
 	
+	public ValidateEFTERAProviderInfo verifyAlertFrequencyPopUp() throws IOException
+	{
+		int sqlRow=163;
+		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
+		Element.click(lnkAlertFrequency, "Alert frequency Link");
+		Element.verifyElementPresent(lnkClosTip, "Alert frequency PopUp");
+		Helper.compareContains(testConfig, "Alert Pop Up Heading",divFrqncyPopUp.get(0).findElement(By.tagName("h4")).getText(),pageData.get(33).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(1).findElement(By.tagName("p")).getText(),pageData.get(34).get("CLOBVAL").trim().replace("\n", "").replaceAll("( )+", " "));
+		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(2).findElement(By.tagName("a")).getText(),pageData.get(35).get("TEXT_VAL").toUpperCase());
+		Element.click(lnkClosTip, "Click close tip on Pop Up");
+		Element.verifyElementNotPresent(lnkClosTip, "Alert frequency PopUp");
+		return this;
+	}
 	
+	public ValidateEFTERAProviderInfo verifyClrInfo() 
+	{
+		Element.click(lnkClrAdmnInfo, "Clear Administrator Information");
+		Element.verifyElementPresent(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(0).findElement(By.tagName("h4")).getText(),pageData.get(41).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(42).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(43).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
+		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(0), "clicked NO");
+		Element.verifyElementNotPresent(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo clickBackBtn()
+	{
+		Element.click(btnContinue, "Clicked Back Button");
+		Browser.verifyURL(testConfig, "validateefteraprovidercontact");
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo clickYesOnClrInfoPopUp()
+	{
+		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "clicked YES");
+		System.out.println(firstProvFName.getAttribute("value"));
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo clickCancelEnrlmnt() throws IOException
+	{
+		int sqlRow=163;
+		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
+		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
+		Element.verifyElementPresent(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(0).findElement(By.tagName("h4")).getText(),pageData.get(36).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(37).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(38).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
+		
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo clickNoCancelEnrlmnt()
+	{
+		Element.click(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1), "clicked NO");
+		Element.verifyElementNotPresent(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo clickYesCancelEnrlmnt()
+	{
+		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
+		Element.click(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0), "clicked Yes");
+		Browser.verifyURL(testConfig, "registrationsignin");
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyPageContent()
+	{
+		
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyErrorOnContinueEnrlment()
+	{
+		String expectedText="Missing Data";
+		String expectedColor="#c21926";
+		Element.click(btnContinue, "Continue Button");
+		
+		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
+		Element.verifyElementPresent(errorLink, "Error links");
+		
+		Log.Comment("Verifying Error Msg is displayed for Provider First Name..");
+		Element.verifyTextPresent(firstProvFName.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvFName.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Provider Last Name..");
+		Element.verifyTextPresent(firstProvLName.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvLName.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Provider First Name.."); ///html/body/section/main/form/section[1]/fieldset/fieldset[1]/div/div[3]/p
+//		Element.verifyTextPresent(firstProvPhField1.findElement(By.xpath("../following-sibling::div//p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField1.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Provider First Name..");
+//		Element.verifyTextPresent(firstProvPhField2.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField2.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Provider First Name..");
+//		Element.verifyTextPresent(firstProvPhField3.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField3.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Email..");
+		Element.verifyTextPresent(firstProvEmail.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvEmail.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Retype Email address..");
+		Element.verifyTextPresent(verifyFirstProvEmail.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(verifyFirstProvEmail.getCssValue("border-top-color")).asHex());		
+		return this;
+	}
+	
+	public  ValidateEFTERAProviderInfo validateSecondaryAdminFields(String field,String data) throws IOException {
+		WebElement ele=null;
+		switch(field)
+		{
+			case "ScndProvFName":
+				Element.enterData(secondProvFName, data, "Enter provider name as :" + data,"providerName");
+				ele=secondProvFName;
+				break;
+			case "ScndProvLName":
+				Element.enterData(secondProvLName, data, "Enter street name as : " + data,"street");
+				ele=secondProvLName;
+				break;
+			case "ScndProvPhnNo":
+				Element.enterData(secondProvPhField1,  data, "Enter city name as :" + data,"city");
+				Element.enterData(secondProvPhField2,  data, "Enter city name as :" + data,"city");
+				Element.enterData(secondProvPhField3,  data, "Enter city name as :" + data,"city");
+				ele=secondProvPhField1;
+				break;
+			case "ScndProvEmail":
+				Element.enterData(secondProvEmail, data, "Enter state name","city");
+				ele=secondProvEmail;
+				break;
+			case "ScndProvReEmail":
+				Element.enterData(verifySecondProvEmail, data,"Entered zip code in first textbox as" + data,"zipCode1");
+				ele=verifySecondProvEmail;
+				break;
+		}
+		fillSecondProvInfo(field);
+		Element.click(btnContinue, "Continue button");
+		verifySecAdminError(ele);
+		return this;
+
+	}
+	
+	public  ValidateEFTERAProviderInfo fillSecondProvInfo(String field) throws IOException {
+		int rowNo=1;
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);
+		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
+	
+		if(!field.equals("ScndProvFName"))
+			Element.enterData(secondProvFName, provName, "Enter provider name as :" + provName,"providerName");
+		if(!field.equals("ScndProvLName"))
+			Element.enterData(secondProvLName, provName, "Enter street name as : " + streetName,"street");
+		if(!field.equals("ScndProvPhnNo"))
+		{
+			Element.enterData(secondProvPhField1, provName , "Enter city name as :" + data,"city");
+			Element.enterData(secondProvPhField2, provName,  "Enter city name as :" + data,"city");
+			Element.enterData(secondProvPhField3, provName,  "Enter city name as :" + data,"city");
+		}
+		if(!field.equals("ScndProvEmail"))
+			Element.enterData(secondProvEmail,secondProvEmailAdr , "Enter state name","email");
+		if(!field.equals("ScndProvReEmail"))
+			Element.enterData(verifySecondProvEmail, secondProvEmailAdr,"Entered zip code in first textbox as" ,"email");
+		
+		return this;
+	}	
+
+	public void verifySecAdminError(WebElement element)
+	{
+		/*if(element.equals(zipCode1))
+		{
+			if(error.getText().contains("Data"))
+				Element.verifyTextPresent(error, "Invalid Data");
+			else
+				Element.verifyTextPresent(error, "Invalid for City/State");
+		}
+		else if(element.equals(street))
+		{
+			if(error.getText().contains("Special"))
+				Element.verifyTextPresent(error, "Special characters not allowed");
+			else
+				Element.verifyTextPresent(error, "P.O. Boxes are not accepted");
+		}
+		else*/
+//		Element.verifyTextPresent(error, "Missing Data");
+		Element.verifyElementPresent(errorLink, "Error links");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
+		
+	}
 }

@@ -6,10 +6,9 @@ import java.util.Map;
 import org.testng.annotations.Test;
 
 
+
 import main.java.Utils.Helper;
-
 import main.java.Utils.DataBase;
-
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
@@ -18,6 +17,7 @@ import main.java.pageObjects.BenefitsOfEPS;
 import main.java.pageObjects.EnrollmentSubmitted;
 import main.java.pageObjects.FinancialInstitutionInfoPage;
 import main.java.pageObjects.Footer;
+import main.java.pageObjects.HeaderContentValidation;
 import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
 import main.java.pageObjects.ThankYouPage;
@@ -933,6 +933,166 @@ public class TestCreateEnrollment extends TestBase{
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
 		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
 		beginEnrollmentContinue.getBSTin(excelRowNo, status).clickContinue().verifyContentManagedForPendingEnrollmentBSTIN();
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS001/TS003/TS004/TS007-TS013/TS015/TS022") 
+	public void testAdministratorsPage() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().verifyAlertFrequencyPopUp().verifyClrInfo().verifyErrorOnContinueEnrlment();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS005/TS006") 
+	public void testAdministratorsPageMobileAlert() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillMobileCntct("Primary");
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS014") 
+	public void testAdministratorsPageContinuebtnErrors() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().clickBackBtn();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS016/TS017") 
+	public void testAdministratorsPageCancelEnrlmnt() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().clickCancelEnrlmnt().clickNoCancelEnrlmnt();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS018") 
+	public void testAdministratorsPageCancelEnrlmntYesBtn() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().clickYesCancelEnrlmnt();
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS019") 
+	public void testAdministratorsPageHeaderVerificationForAO() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
+		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS020") 
+	public void testAdministratorsPageHeaderVerificationForAV() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
+		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS021") 
+	public void testAdministratorsPageHeaderVerificationForVO() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=4;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
+		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1247779 -TS023-TS027") 
+	public void testSecondaryAdminInfo() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=3;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().validateSecondaryAdminFields("ScndProvFName", "").validateSecondaryAdminFields("ScndProvLName", "").validateSecondaryAdminFields("ScndProvPhnNo", "").validateSecondaryAdminFields("ScndProvEmail", "").validateSecondaryAdminFields("ScndProvReEmail", "");
+	 }
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1064240 -TS001/TS002") 
+	public void testIdentifyAdminForBS() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo();
+		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1064240 -TS003/TS005/TS006/TS007/TS008") 
+	public void testIdentifyAdminExistingEmailForBS() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("Primary").verifyNoBtnFunctionality().verifyDupEmailError("Primary").verifyYesBtnFunctionality();
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1064240 -TS009") 
+	public void testIdentifyAdminExistingEmailSecForBS() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("Secondary");
+	}
+	
+	@TestDetails(author="Amit")
+	@Test(priority=4,groups="Provider",description="US1064240 -TS010") 
+	public void testIdentifyAdminExistingEmailForBSBoth() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRowNo=2;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("");
 	}
 
 }
