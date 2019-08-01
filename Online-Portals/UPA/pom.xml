@@ -24,8 +24,9 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<executable>C:\Java\jdk1.8.0_91\bin\javac</executable>
-				</configuration>
+					<!--executable>C:\Java\jdk1.8.0_91\bin\javac</executable-->
+					<executable>C:\Program Files (x86)\Java\jdk1.8.0_91\bin\javac</executable>
+					</configuration>
 			</plugin>
 			
 			<plugin>
