@@ -450,9 +450,8 @@ public class TestBase {
 		System.out.println(iTestContext.getAllTestMethods());
 		testConfig.putRunTimeProperty("passedTests",String.valueOf(iTestContext.getPassedTests().size()));
 		testConfig.putRunTimeProperty("failedTests",String.valueOf(iTestContext.getFailedTests().size()));
-	
+	    if (testConfig.getRunTimeProperty("IsAutomationStatRequired").equalsIgnoreCase("Yes"))
 		insertAutomationCount();
-		
 	}
 	
 	public void insertAutomationCount()
