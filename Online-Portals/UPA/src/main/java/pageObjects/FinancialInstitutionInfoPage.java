@@ -64,7 +64,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath = "//input[@name='finInstTinNpiAcctYorN'][2]")
 	WebElement rdoNPINo;
 
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")

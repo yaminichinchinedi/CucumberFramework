@@ -1,7 +1,9 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.Color;
 import main.java.nativeFunctions.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -19,10 +22,13 @@ import org.openqa.selenium.support.PageFactory;
 
 
 
+import org.testng.Assert;
+
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -68,7 +74,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//input[@id='103']//following-sibling::label")
 	WebElement chkOther;
 
-	@FindBy(linkText = "Continue")
+	@FindBy(linkText = "CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(linkText = "Cancel Enrollment")
@@ -129,6 +135,32 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//div[@class='error']//a") 
 	WebElement errorLink;
 	
+	@FindBy(name="btnCancel")
+	WebElement btnCancel;
+	
+	@FindBy(linkText="SAVE CHANGES")
+	WebElement savChanges;
+
+	@FindBy(xpath="//div[@id='bsNameField']/label")
+	WebElement lblbsName;
+	
+	@FindBy(xpath = "//section[1]/p") 
+	WebElement billingServiceInfoReqTxtror;
+	
+	@FindBy(xpath="//div[@class='margin-top-beta']/h4")
+	WebElement billingServiceInfoServiceAddrs;
+	
+	@FindBy(xpath="//div[@class='margin-top-beta']//p")
+	WebElement billingServiceInfoSerAdrsTxt;
+	
+	@FindBy(xpath = "//h2[@class='margin-bottom-beta']") 
+	WebElement billingServiceInfoIdentInfo;
+	
+	@FindBy(xpath = "//*[@class='lg']") 
+	WebElement billingServiceInfoIdentifiers;
+	
+	@FindBy(xpath = "//ul[@class='tin-list']//div/span") 
+	WebElement billingServiceInfoTin;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
 
@@ -185,6 +217,46 @@ public class ProviderInformationEFTERAEnroll {
 
 	}
 	
+	
+	public ValidateEFTERAProviderInfo fillProviderOrgInfoAgain() throws IOException {
+		
+		int rowNo=1;
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);
+		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
+		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
+		//Element.verifyTextPresent(txtSecurity, expectedText);
+		
+	
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+		else
+		{
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
+			Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+			enrollmentInfoPageObj.setProvType("Hospital/Facility");
+			Element.click(chkOther, "Other sub checkbox");
+			enrollmentInfoPageObj.setMrktType("Other");
+		}
+		
+		
+		Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
+		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
+		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
+		
+		enrollmentInfoPageObj.setBusinessName(provName);
+		enrollmentInfoPageObj.setStreet(streetName);
+		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
+		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
+		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
+		
+		Element.click(savChanges, "Save Changes button");
+        
+		return new ValidateEFTERAProviderInfo(testConfig);
+
+	}
+	
 
 	public ProviderInformationEFTERAEnroll verifyUITextFromDB()  
 	{
@@ -207,6 +279,35 @@ public class ProviderInformationEFTERAEnroll {
 		Element.verifyElementPresent(lblBusinessAddress, "Business Address Label");
 		Element.verifyElementPresent(btnContinue, "Continue button");
 		Element.verifyElementPresent(btnCancelEnrollment, "Continue button");
+		return this;
+		
+	}
+	
+	public ProviderInformationEFTERAEnroll verifyUITextFromDBforBS() throws IOException  
+	{
+		int sqlRowNo=165;
+		
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		Element.expectedWait(lblbsName, testConfig, "Billing Service Name", "Billing Service Name");
+		
+		
+		String BSInfoReqTxtror=dataTest.get(1).get("TEXT_VAL")+"\n"+dataTest.get(2).get("TEXT_VAL")+"() "+dataTest.get(3).get("TEXT_VAL");
+		
+		Helper.compareEquals(testConfig, "BS Info Req. Text", billingServiceInfoReqTxtror.getText(), BSInfoReqTxtror);
+		
+		Helper.compareEquals(testConfig, "Billing Service Name", lblbsName.getText(), dataTest.get(4).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Billing Service Name", billingServiceInfoServiceAddrs.getText(), dataTest.get(5).get("TEXT_VAL"));
+		
+		String BSInfoSerAdrsTxt=dataTest.get(6).get("TEXT_VAL")+" "+dataTest.get(7).get("TEXT_VAL")+dataTest.get(8).get("TEXT_VAL");
+		Helper.compareEquals(testConfig, "BS Info Address Text", billingServiceInfoSerAdrsTxt.getText(), BSInfoSerAdrsTxt);
+		
+		Helper.compareEquals(testConfig, "BS Identifier Info.", billingServiceInfoIdentInfo.getText(), dataTest.get(9).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "BS Identifiers", billingServiceInfoIdentifiers.getText(), dataTest.get(10).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Billing Service TIN", billingServiceInfoTin.getText(), dataTest.get(11).get("TEXT_VAL"));
+		
 		return this;
 		
 	}
@@ -322,7 +423,10 @@ public class ProviderInformationEFTERAEnroll {
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for State dropdown" , expectedColor, Color.fromString(drpDwnState.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-		Element.verifyTextPresent(zipCode1.findElement(By.xpath("following-sibling::p")), expectedText);
+		
+		//Element.verifyTextPresent(zipCode1.findElement(By.xpath("//following-sibling::p")), expectedText);
+		Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//*[@id='EFTERAenrBSForm']/section[1]/div[3]/div[2]/fieldset/div/p")), expectedText);
+		//Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//div[id='bsZipField']//following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(zipCode1.getCssValue("border-top-color")).asHex());
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(zipCode2.getCssValue("border-top-color")).asHex());
 		
@@ -346,7 +450,7 @@ public class ProviderInformationEFTERAEnroll {
 		return this;
 	}
 	
-	public  ProviderInformationEFTERAEnroll validateBillingService(String field,String data) throws IOException {
+	public  ProviderInformationEFTERAEnroll validateBillingService(String field,String data,String ButtonType) throws IOException {
 		WebElement ele=null;
 		switch(field)
 		{
@@ -372,7 +476,19 @@ public class ProviderInformationEFTERAEnroll {
 				break;
 		}
 		fillBillingServiceInfo(field);
+
+		if (ButtonType.equalsIgnoreCase("CONTINUE"))
 		Element.click(btnContinue, "Continue button");
+		
+		else
+		{
+		Element.click(savChanges, "Save Changes button");
+		if (btnCancel.isEnabled()== false)
+		Log.Pass("Cancel button is disabled on click of Save changes button");
+		}
+		
+		
+		
 		verifyBSError(ele);
 		return this;
 
@@ -420,4 +536,119 @@ public class ProviderInformationEFTERAEnroll {
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
 		
 	}
+	public ProviderInformationEFTERAEnroll verifyEditable(){
+		
+		String bsNamereadonly=bsName.getAttribute("readonly");
+		String bsNameVal=bsName.getAttribute("value");
+		
+		Assert.assertNotNull(bsNameVal);
+		Assert.assertNull(bsNamereadonly);
+		Log.Pass("Billing service Name has some value and It is editable filed");
+		return this;
+	}
+	public void verifyFooterButton()
+	{
+		
+		if (btnCancel.isDisplayed() && savChanges.isDisplayed())
+		{
+		Log.Pass("Cancel changes and Save changes button are present on webpage");
+		Element.click(btnCancel, "Cancel Changes Button");
+		String expectedURL="cancelBSReviewSubmit";
+		Browser.verifyURL(testConfig, expectedURL);
+		}
+		else
+			Log.Fail("Either Cancel changes or Save changes button or Both are not present on webpage");
+	}
+	public void verifyClickSaveChanges()
+	{
+		
+		if (savChanges.isDisplayed() && savChanges.isEnabled())
+		{
+		Log.Pass("Save changes button are present on webpage");
+		savChanges.click();
+		
+		}
+		else
+			Log.Fail("Either Cancel changes or Save changes button or Both are not present on webpage");
+	}
+	public void verifyErrorMsgNull()
+	{
+		 bsName.clear();
+		 street.clear();
+		 city.clear();
+		 Element.selectByVisibleText(drpDwnState, "Select State", "default select state option");
+	 	 zipCode1.clear();
+		 zipCode2.clear();
+		
+		
+		savChanges.click();
+		
+		List <String> expectedErrorMsgs;
+		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
+		 expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
+		for(int i=0;i<expectedErrorMsgs.size();i++)
+		{
+			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
+		}
+		verifyMissingDataErrorMsg();
+		
+	}
+	
+	public void verifyContentBSWithUXDS() throws IOException
+	{
+
+		ArrayList<String> listUI = new ArrayList<String>();
+		ArrayList<String> listUXDS = new ArrayList<String>();
+		listUI.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
+		listUI.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
+		listUI.add( billingServiceInfoReqTxtror.getText());
+		listUI.add( lblbsName.getText());
+		listUI.add( billingServiceInfoServiceAddrs.getText());
+		listUI.add( billingServiceInfoSerAdrsTxt.getText());
+		listUI.add( billingServiceInfoIdentInfo.getText());
+		listUI.add( billingServiceInfoIdentifiers.getText());
+		listUI.add(billingServiceInfoTin.getText());
+
+		
+		testConfig.driver.navigate().to("http://webrd1220.uhc.com/eps-2018/approved/");
+		PageFactory.initElements(testConfig.driver, this);
+		Browser.waitForLoad(testConfig.driver);
+		WebElement uxdsPageHeading=testConfig.driver.findElement(By.xpath("/html/body/section[1]/h1"));
+		Element.expectedWait(uxdsPageHeading, testConfig, "Pages",  "Pages");
+		Element.click(testConfig.driver.findElement(By.linkText("Enrollment BS Billing Service")), "Enrollment BS Billing Service");
+		Browser.wait(testConfig, 5);
+		
+		listUXDS.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
+        listUXDS.add(testConfig.driver.findElement(By.xpath("//form//p")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//label [text()='Billing Service Name']")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']/h4")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']//p")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//h2 [text()='Billing Service Identifiers Information']")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//strong [text()='Billing Service Identifiers']")).getText());
+		listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service TIN ']")).getText());
+		//listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service SSN']")).getText());
+
+		if (listUI.equals(listUXDS))
+		{
+			Log.Pass( "matches in both UI and UXDS");
+		}
+		else
+		{
+			Log.Fail( "matches in both UI and UXDS");
+		}
+		
+//	for (String contentUI : listUI) {
+//			if (listUXDS.contains(contentUI)) {
+//				Log.Pass(contentUI + " :" + " " + "matches in both UI and UXDS");
+//			}
+//			else {
+//				Log.Fail(contentUI + " :" + " " + "not present in UXDS");				
+//			}
+//		}
+
+	//	return this;
+	}
+	
+
 }

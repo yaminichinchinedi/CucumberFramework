@@ -47,7 +47,7 @@ public class BeginEnrollment {
 	@FindBy(xpath="//label[contains(text(),'Other')]")
 	WebElement rdoOther;
 	
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")

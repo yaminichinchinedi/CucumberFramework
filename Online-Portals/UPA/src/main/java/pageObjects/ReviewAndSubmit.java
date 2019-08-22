@@ -46,6 +46,8 @@ public class ReviewAndSubmit {
 	@FindBy(name="enrollerTele3")
 	WebElement phField3;
 	
+	@FindBy(xpath = "//a[@class='button--primary-hover float-right margin-top-delta margin-top-delta margin-bottom-delta']")
+    WebElement edtlnk;
 	private TestBase testConfig;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
@@ -97,4 +99,17 @@ public class ReviewAndSubmit {
 		enrollmentInfoPageObj.setAuthPhnNbr(phNo+phNo+phNoLstField);
 		return this;
 	}
+	
+	public ProviderInformationEFTERAEnroll clickEditLink()
+	{
+		Element.click(edtlnk, "Edit Hyperlink");
+		String expectedURL="billingServiceInformationBSEnroll";
+		Browser.verifyURL(testConfig, expectedURL);
+		
+		return new ProviderInformationEFTERAEnroll(testConfig).verifyEditable();
+		 
+		
+	}
+	
+	
 }
