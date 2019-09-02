@@ -21,8 +21,10 @@ import main.java.pageObjects.Footer;
 import main.java.pageObjects.HeaderContentValidation;
 import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
+import main.java.pageObjects.ProviderInformationEFTERAEnroll;
 import main.java.pageObjects.ThankYouPage;
 import main.java.pageObjects.UPARegistrationPage;
+import main.java.pageObjects.UXDSPageValidation;
 import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
@@ -1164,7 +1166,7 @@ public class TestCreateEnrollment extends TestBase{
 			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().fillProviderOrgInfoAgain();
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().fillProviderOrgInfo();
 			
 			
 		 }

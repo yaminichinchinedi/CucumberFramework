@@ -212,7 +212,13 @@ public class ProviderInformationEFTERAEnroll {
 		
 //		Element.click(chkOther, "Other sub checkbox");
 
-		Element.click(btnContinue, "Continue button");
+	//	Element.click(btnContinue, "Continue button");
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+
+		//Same xpath has been used both for Continue and save changes button.
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']/footer/a[1]"), "Continue/Save Changes Button");
+		else
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
@@ -483,8 +489,8 @@ public class ProviderInformationEFTERAEnroll {
 		else
 		{
 		Element.click(savChanges, "Save Changes button");
-		if (btnCancel.isEnabled()== false)
-		Log.Pass("Cancel button is disabled on click of Save changes button");
+		Element.verifyElementVisiblity(btnCancel, "Cancle Button");
+		
 		}
 		
 		
@@ -548,17 +554,14 @@ public class ProviderInformationEFTERAEnroll {
 	}
 	public void verifyFooterButton()
 	{
+		Element.verifyElementPresent(btnCancel, "Cancel Changes Button");
+		Element.verifyElementPresent(savChanges, "Save Changes Button");
 		
-		if (btnCancel.isDisplayed() && savChanges.isDisplayed())
-		{
-		Log.Pass("Cancel changes and Save changes button are present on webpage");
 		Element.click(btnCancel, "Cancel Changes Button");
 		String expectedURL="cancelBSReviewSubmit";
 		Browser.verifyURL(testConfig, expectedURL);
-		}
-		else
-			Log.Fail("Either Cancel changes or Save changes button or Both are not present on webpage");
-	}
+			}
+	
 	public void verifyClickSaveChanges()
 	{
 		
@@ -573,15 +576,18 @@ public class ProviderInformationEFTERAEnroll {
 	}
 	public void verifyErrorMsgNull()
 	{
-		 bsName.clear();
-		 street.clear();
-		 city.clear();
+		Element.clearData(bsName,  "Billing Service Name"); 
+		Element.clearData(street,  "Street Field ");
+		Element.clearData(city,  "City Field ");
+		Element.clearData(bsName,  "Billing Service Name");
+
 		 Element.selectByVisibleText(drpDwnState, "Select State", "default select state option");
-	 	 zipCode1.clear();
-		 zipCode2.clear();
+		 Element.clearData(zipCode1,  "Zip Code1 field");
+		 Element.clearData(zipCode2,  "Zip Code2 field");
+
 		
+		Element.click(savChanges, "Save Changes Button");
 		
-		savChanges.click();
 		
 		List <String> expectedErrorMsgs;
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
@@ -610,23 +616,37 @@ public class ProviderInformationEFTERAEnroll {
 		listUI.add(billingServiceInfoTin.getText());
 
 		
-		testConfig.driver.navigate().to("http://webrd1220.uhc.com/eps-2018/approved/");
-		PageFactory.initElements(testConfig.driver, this);
-		Browser.waitForLoad(testConfig.driver);
-		WebElement uxdsPageHeading=testConfig.driver.findElement(By.xpath("/html/body/section[1]/h1"));
-		Element.expectedWait(uxdsPageHeading, testConfig, "Pages",  "Pages");
-		Element.click(testConfig.driver.findElement(By.linkText("Enrollment BS Billing Service")), "Enrollment BS Billing Service");
-		Browser.wait(testConfig, 5);
+//		testConfig.driver.navigate().to("http://webrd1220.uhc.com/eps-2018/approved/");
+//		PageFactory.initElements(testConfig.driver, this);
+//		Browser.waitForLoad(testConfig.driver);
+//		WebElement uxdsPageHeading=testConfig.driver.findElement(By.xpath("/html/body/section[1]/h1"));
+//		Element.expectedWait(uxdsPageHeading, testConfig, "Pages",  "Pages");
+//		Element.click(testConfig.driver.findElement(By.linkText("Enrollment BS Billing Service")), "Enrollment BS Billing Service");
+//		Browser.wait(testConfig, 5);
 		
-		listUXDS.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
-        listUXDS.add(testConfig.driver.findElement(By.xpath("//form//p")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//label [text()='Billing Service Name']")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']/h4")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']//p")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//h2 [text()='Billing Service Identifiers Information']")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//strong [text()='Billing Service Identifiers']")).getText());
-		listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service TIN ']")).getText());
+		new UXDSPageValidation(testConfig,"Enrollment BS Billing Service");
+		
+		
+		listUXDS.add(Element.findElement(testConfig, "className", "progress-indicator__container").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//h1 [text()='Billing Service Information']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//form//p").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//label [text()='Billing Service Name']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//div[@class='margin-top-beta']/h4").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//div[@class='margin-top-beta']//p").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//h2 [text()='Billing Service Identifiers Information']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//strong [text()='Billing Service Identifiers']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//span [text()='Billing Service TIN ']").getText());
+		//listUXDS.add(Element.findElement(testConfig, "xpath", "//span [text()='Billing Service SSN']").getText());
+		
+//		listUXDS.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
+//        listUXDS.add(testConfig.driver.findElement(By.xpath("//form//p")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//label [text()='Billing Service Name']")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']/h4")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']//p")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//h2 [text()='Billing Service Identifiers Information']")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//strong [text()='Billing Service Identifiers']")).getText());
+//		listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service TIN ']")).getText());
 		//listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service SSN']")).getText());
 
 		if (listUI.equals(listUXDS))
