@@ -56,6 +56,15 @@ public class Browser
 		wait(testConfig,3);
 	}
 	
+	public static void forward(TestBase testConfig)
+	{
+		testConfig.driver.navigate().forward();
+		Log.Comment("Forward the browser...");
+		
+		waitForLoad(testConfig.driver);
+		wait(testConfig,3);
+	}
+	
 	public static void scrollToBottom(TestBase testConfig)
 	{
 		try{

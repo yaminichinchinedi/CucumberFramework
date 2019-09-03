@@ -242,35 +242,40 @@ public class ValidateEFTERAProviderInfo {
 		case "First Name":
 		{	
 		
-		WebElement error=testConfig.driver.findElement(By.xpath("//div[@class='margin-bottom-alpha']/div[1]/p"));
+		//WebElement error=testConfig.driver.findElement(By.xpath("//div[@class='margin-bottom-alpha']/div[1]/p"));
+		WebElement error=Element.findElement(testConfig, "xpath", "//div[@class='margin-bottom-alpha']/div[1]/p");
 		Element.verifyTextPresent(error, "Missing Data");
 		break;
 		}
 		case "Last Name":
 		{
 			
-		WebElement errorLstNm=testConfig.driver.findElement(By.xpath("//div[@class='margin-bottom-alpha']/div[3]/p"));
+		//WebElement errorLstNm=testConfig.driver.findElement(By.xpath("//div[@class='margin-bottom-alpha']/div[3]/p"));
+		WebElement errorLstNm=Element.findElement(testConfig, "xpath", "//div[@class='margin-bottom-alpha']/div[3]/p");
 		Element.verifyTextPresent(errorLstNm, "Missing Data");
 		break;
 		}
 		case "Telephone No":
 		{
 			
-		WebElement errorLstNm=testConfig.driver.findElement(By.xpath("//div[@id='telephoneNumberContact1']/div[3]/p"));
-		Element.verifyTextPresent(errorLstNm, "Missing Data");
+		//WebElement errorLstNm=testConfig.driver.findElement(By.xpath("//div[@id='telephoneNumberContact1']/div[3]/p"));
+		WebElement Telno=Element.findElement(testConfig, "xpath", "//div[@id='telephoneNumberContact1']/div[3]/p");
+		Element.verifyTextPresent(Telno, "Missing Data");
 		break;
 		}
 		case "Email Address":
 		{
 			
-		WebElement errorEmlAd=testConfig.driver.findElement(By.xpath("//div[@id='emailmailContactOne']/p"));
+		//WebElement errorEmlAd=testConfig.driver.findElement(By.xpath("//div[@id='emailmailContactOne']/p"));
+		WebElement errorEmlAd=Element.findElement(testConfig, "xpath", "//div[@id='emailmailContactOne']/p");
 		Element.verifyTextPresent(errorEmlAd, "Missing Data");
 		break;
 		}
 		case "ReType Email Address":
 		{
 			
-		WebElement errorReTypEmlAd=testConfig.driver.findElement(By.xpath("//div[@id='verifyEmailContactOne']/div/p"));
+		//WebElement errorReTypEmlAd=testConfig.driver.findElement(By.xpath("//div[@id='verifyEmailContactOne']/div/p"));
+		WebElement errorReTypEmlAd=Element.findElement(testConfig, "xpath", "//div[@id='verifyEmailContactOne']/div/p");
 		Element.verifyTextPresent(errorReTypEmlAd, "Missing Data");
 		break;
 		}
@@ -588,19 +593,22 @@ public class ValidateEFTERAProviderInfo {
 	{
 		if (element.equalsIgnoreCase("First Name")&& (firstProvFName.getText().contains("Special")))
 		{
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@class='margin-bottom-alpha']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@class='margin-bottom-alpha']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@class='margin-bottom-alpha']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 		if (element.equalsIgnoreCase("Middle Name")&& (firstProvMName.getText().contains("Special")))
 		{
 			
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@id='middleNmContact1']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@id='middleNmContact1']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@id='middleNmContact1']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 		if (element.equalsIgnoreCase("Last Name")&& (firstProvLName.getText().contains("Special")))
 		{
 			
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@id='lastNmContact1']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@id='lastNmContact1']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@id='lastNmContact1']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 	}
@@ -611,19 +619,22 @@ public class ValidateEFTERAProviderInfo {
 		if (element.equalsIgnoreCase("First Name")&& (secondProvFName.getText().contains("Special")))
 		{
 			
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@class='margin-bottom-alpha']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@class='margin-bottom-alpha']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@class='margin-bottom-alpha']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 		if (element.equalsIgnoreCase("Middle Name")&& (secondProvMName.getText().contains("Special")))
 		{
 			
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@id='middleNmContact2']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@id='middleNmContact2']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@id='middleNmContact2']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 		if (element.equalsIgnoreCase("Last Name")&& (secondProvLName.getText().contains("Special")))
 		{
 			
-			WebElement error=testConfig.driver.findElement(By.xpath("div[@id='lastNmContact2']//p"));
+			//WebElement error=testConfig.driver.findElement(By.xpath("div[@id='lastNmContact2']//p"));
+			WebElement error=Element.findElement(testConfig, "xpath", "div[@id='lastNmContact2']//p");
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 	}
@@ -635,7 +646,9 @@ public class ValidateEFTERAProviderInfo {
 		Element.enterData(secondProvEmail, secondProvEmailAdr, "Enter email address of Second provider","secondProvEmail");
 		Element.enterData(verifySecondProvEmail, secondProvEmailAdr, "Retype email address of Second provider","verifySecondProvEmail");
 		Element.click(btnContinue, "Continue");
-		String secProvPhErr=testConfig.driver.findElement(By.xpath("//fieldset[@class='margin-bottom-beta'][1]//p")).getText();
+		//String secProvPhErr=testConfig.driver.findElement(By.xpath("//fieldset[@class='margin-bottom-beta'][1]//p")).getText();
+		String secProvPhErr=Element.findElement(testConfig, "xpath", "//fieldset[@class='margin-bottom-beta'][1]//p").getText();
+
 		Helper.compareEquals(testConfig, "Phone data", "Invalid Data", secProvPhErr);
 		return this;
 	}
