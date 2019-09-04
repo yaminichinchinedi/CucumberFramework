@@ -1182,7 +1182,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidSecondProvInfo(1).fillInvalidSecondProvInfo(2).fillInvalidSecondProvInfo(3);	
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidSecondProvInfo();	
 		
 	 }
 	
@@ -1230,9 +1230,9 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Rahul")
-	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0033_Validate the error message when alphanumeric data entered for Secondary Administrator First Name."+
-							"TS_0035_Validate the error message when alphanumeric data entered for Secondary Administrator Middle Name."+
-			"TS_0037_Validate the error message when alphanumeric data entered for Secondary Administrator Last Name.") 
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0033_Validate the error message when special characters entered for Secondary Administrator First Name."+
+							"TS_0035_Validate the error message when special characters entered for Secondary Administrator Middle Name."+
+			"TS_0037_Validate the error message when special characters entered for Secondary Administrator Last Name.") 
 	public void testValiDateSecSpCharErrMsgNames() throws IOException
 	{
 		String option="Health plan communication";
@@ -1240,7 +1240,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidSpCharSecondProvInfoName("First Name","&*min").fillInvalidSpCharSecondProvInfoName("Middle Name", "*(*(*").fillInvalidSpCharSecondProvInfoName("Last Name", "%^&&");	
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillSpCharSecondProvInfoName("First Name","&*min").fillSpCharSecondProvInfoName("Middle Name", "*(*(*").fillSpCharSecondProvInfoName("Last Name", "%^&&");	
 		
 	 }
 	
@@ -1278,12 +1278,12 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidPrmryProvInfo(1).fillInvalidPrmryProvInfo(2).fillInvalidPrmryProvInfo(3);	
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidPrmryProvInfo();	
 		
 	 }
 	
 	@TestDetails(author="Rahul")
-	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0047_Validate the error message when data entered in not proper format for Secondary Administrator Email Address.") 
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0047_Validate the error message when data entered in not proper format for Primary Administrator Email Address.") 
 	public void testValiDatePrmryEmailErr() throws IOException
 	{
 		String option="Health plan communication";
@@ -1296,7 +1296,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Rahul")
-	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0048_Validate the error message when data entered for Secondary Administrator Email Address does not match email address.") 
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0048_Validate the error message when data entered for Primary Administrator Email Address does not match email address.") 
 	public void testValiDateSecProvEmailComp() throws IOException
 	{
 		String option="Health plan communication";

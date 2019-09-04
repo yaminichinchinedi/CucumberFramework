@@ -402,9 +402,10 @@ public class ValidateEFTERAProviderInfo {
 		Element.enterData(verifySecondProvEmail, secondProvEmailAdr, "Retype email address of Second provider"+secondProvEmailAdr,"verifySecondProvEmail");
 		Element.click(btnContinue, "Continue");
 		
-		WebElement errorEmail=testConfig.driver.findElement(By.xpath("//div[@id='emailcontact2']/p"));
+		WebElement errorEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailcontact2']/p");
 		Element.verifyTextPresent(errorEmail, "Invalid Data");
-		WebElement errorRetypeEmail=testConfig.driver.findElement(By.xpath("//*[@id='verifyemailContact2']/p"));
+		
+		WebElement errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyemailContact2']/p");
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
 		return this;
 	}
@@ -423,7 +424,7 @@ public class ValidateEFTERAProviderInfo {
 		
 		Element.click(btnContinue, "Continue");
 		
-		WebElement errorRetypeEmail=testConfig.driver.findElement(By.xpath("//*[@id='verifyemailContact2']/p"));
+		WebElement errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyemailContact2']/p");
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
 		
 	}
@@ -452,7 +453,7 @@ public class ValidateEFTERAProviderInfo {
 		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
 		Element.click(btnContinue, "Continue");
 		
-		WebElement errorRetypeEmail=testConfig.driver.findElement(By.xpath("//div[@id='emailmailContactOne']/p"));
+		WebElement errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailmailContactOne']/p");
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
 		
 		return this;
@@ -472,7 +473,9 @@ public class ValidateEFTERAProviderInfo {
 		enrollmentInfoPageObj.setLstName(lName);
 		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
 		Element.click(btnContinue, "Continue");
-		WebElement errorRetypeEmail=testConfig.driver.findElement(By.xpath("//div[@id='verifyEmailContactOne']/div/p"));
+		
+		WebElement errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='verifyEmailContactOne']/div/p");
+
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
 		return this;
 	}
@@ -531,7 +534,7 @@ public class ValidateEFTERAProviderInfo {
 		return this;
 	}
 	
-	public ValidateEFTERAProviderInfo fillInvalidSpCharSecondProvInfoName(String inputField,String data)
+	public ValidateEFTERAProviderInfo fillSpCharSecondProvInfoName(String inputField,String data)
 	{
 		switch(inputField)
 		{
@@ -638,32 +641,40 @@ public class ValidateEFTERAProviderInfo {
 			Element.verifyTextPresent(error, "Invalid Data");
 		}
 	}
-	public ValidateEFTERAProviderInfo fillInvalidSecondProvInfo(int phoneNoLngth)
+	public ValidateEFTERAProviderInfo fillInvalidSecondProvInfo()
 	{
+		for (int length=1;length<=4;length++)
+		{
 		Element.enterData(secondProvFName, fName,"Enter First name of Second provider as: "+ fName,"secondProvFirstName");
 		Element.enterData(secondProvLName, lName,"Enter Last name of Second provider as : "+ lName,"secondProvLastName");
-		fillInvalidPhoneNumber("Secondary",phoneNoLngth);
+		fillInvalidPhoneNumber("Secondary",length);
 		Element.enterData(secondProvEmail, secondProvEmailAdr, "Enter email address of Second provider","secondProvEmail");
 		Element.enterData(verifySecondProvEmail, secondProvEmailAdr, "Retype email address of Second provider","verifySecondProvEmail");
 		Element.click(btnContinue, "Continue");
-		//String secProvPhErr=testConfig.driver.findElement(By.xpath("//fieldset[@class='margin-bottom-beta'][1]//p")).getText();
+		
 		String secProvPhErr=Element.findElement(testConfig, "xpath", "//fieldset[@class='margin-bottom-beta'][1]//p").getText();
 
 		Helper.compareEquals(testConfig, "Phone data", "Invalid Data", secProvPhErr);
+		}
 		return this;
 	}
 	
-	public ValidateEFTERAProviderInfo fillInvalidPrmryProvInfo(int inputField)
+	public ValidateEFTERAProviderInfo fillInvalidPrmryProvInfo()
 	{
-		
+		for (int length=1;length<=4;length++)
+		{	
 		Element.enterData(firstProvFName, fName,"Enter First name of first provider as : " + fName,"firstProvFirstName");
 		Element.enterData(firstProvLName, lName,"Enter Last name of first provider as : " + lName,"firstProvLastName");
-		fillInvalidPhoneNumber("Primary",inputField);
+		fillInvalidPhoneNumber("Primary",length);
 		Element.enterData(firstProvEmail, firstProvEmailAdr, "Enter email address of first provider as : " +firstProvEmailAdr,"firstProvEmail");
 		Element.enterData(verifyFirstProvEmail, firstProvEmailAdr, "Retype email address of first provideras : " +firstProvEmailAdr,"verifyFirstProvEmail");
 		enrollmentInfoPageObj.setFrstName(fName);
 		enrollmentInfoPageObj.setLstName(lName);
 		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
+		Element.click(btnContinue, "Continue");
+		WebElement Telno=Element.findElement(testConfig, "xpath", "//div[@id='telephoneNumberContact1']/div[3]/p");
+		Element.verifyTextPresent(Telno, "Invalid Data");
+		}
 		return this;
 		
 		
@@ -671,8 +682,17 @@ public class ValidateEFTERAProviderInfo {
 	
 	public void fillInvalidPhoneNumber(String input,int length)
 	{
+		 
+		if (length == 4)
+		{
 		phNo=Helper.generateRandomAlphaNumericString(length);
 		phNoLstField=Helper.generateRandomAlphaNumericString(length);
+		}
+		else
+		{
+		phNo = Long.toString(Helper.generateRandomNumber(length));
+		phNoLstField = Long.toString(Helper.generateRandomNumber(length));
+		}
 		switch(input)
 		{
 		case "Primary":
@@ -793,10 +813,9 @@ public class ValidateEFTERAProviderInfo {
 	
 	public void valiDateButtons()
 	{
-		
-		String continueBut=testConfig.driver.findElement(By.xpath("//a[@class='button--primary enrollment-container-footer__btn-margin float-right']")).getText();
-		String backBut=testConfig.driver.findElement(By.xpath("//a[@class='button--secondary enrollment-container-footer__btn-margin float-right']")).getText();
-		String cancelEnrol=testConfig.driver.findElement(By.xpath("//a[@class='button--primary-hover float-right cancel-activation']")).getText();
+		String continueBut=Element.findElement(testConfig, "xpath", "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']").getText();
+		String backBut=Element.findElement(testConfig, "xpath", "//a[@class='button--secondary enrollment-container-footer__btn-margin float-right']").getText();
+		String cancelEnrol=Element.findElement(testConfig, "xpath", "//a[@class='button--primary-hover float-right cancel-activation']").getText();
 		Helper.compareContains(testConfig, "Continue Button", "CONTINUE", continueBut);
 		Helper.compareContains(testConfig, "Back Button", "BACK", backBut);
 		Helper.compareContains(testConfig, "Cancel Enrollment Button", "CANCEL ENROLLMENT", cancelEnrol);
