@@ -544,14 +544,24 @@ public class ProviderInformationEFTERAEnroll {
 	}
 	public ProviderInformationEFTERAEnroll verifyEditable(){
 		
-		String bsNamereadonly=bsName.getAttribute("readonly");
-		String bsNameVal=bsName.getAttribute("value");
-		Helper.compareContains(testConfig, "BS Name Value", enrollmentInfoPageObj.getBusinessName(), bsNameVal);
+		//Comparision of various fields with previous input
 		
-		if (bsNamereadonly == null)
-		Log.Pass("Billing service Name is editable field");
+		Helper.compareEquals(testConfig, "BS Name Value comparision", enrollmentInfoPageObj.getBusinessName(), bsName.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Street Value comparision", enrollmentInfoPageObj.getStreet(), street.getAttribute("value"));
+		Helper.compareEquals(testConfig, "City Value comparision", enrollmentInfoPageObj.getCity(), city.getAttribute("value"));
+		Helper.compareEquals(testConfig, "State Value comparision", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
+		Helper.compareEquals(testConfig, "zip code Value comparision", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
+		
+		//Checking of editable criteria
+		if (    (bsName.getAttribute("readonly") == null)&&
+				(street.getAttribute("readonly")== null) &&
+				(city.getAttribute("readonly")== null) &&
+				(drpDwnState.getAttribute("readonly")==null) && 
+				(zipCode1.getAttribute("readonly")== null)
+				)
+		Log.Pass("Billing service fields are editable.");
 		else
-		Log.Fail("Billing service Name is readOnly field");
+		Log.Fail("Billing service fields are readOnly.");
 		return this;
 	}
 	public void verifyFooterButton()
