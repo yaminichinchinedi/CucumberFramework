@@ -68,10 +68,10 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//input[@id='103']//following-sibling::label")
 	WebElement chkOther;
 
-	@FindBy(linkText = "Continue")
+	@FindBy(linkText = "CONTINUE")
 	WebElement btnContinue;
 	
-	@FindBy(linkText = "Cancel Enrollment")
+	@FindBy(linkText = "CANCEL ENROLLMENT")
 	WebElement btnCancelEnrollment;
 
 	@FindBy(name = "npi")
@@ -111,10 +111,10 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath="//div[@class='modal modal-cancel-activation']//div//div[@class='exit-modal-content float-left']//p")
 	List <WebElement> txtCancelEnrollmentPopUpExtend;
 	
-	@FindBy(linkText="Yes")
+	@FindBy(linkText="YES")
 	WebElement btnYesOnCancelPopUp;
 	
-	@FindBy(linkText="No")
+	@FindBy(linkText="NO")
 	WebElement btnNoOnCancelPopUp;
 	
 	@FindBy(xpath="//div[@class='error']//h4")
@@ -185,6 +185,11 @@ public class ProviderInformationEFTERAEnroll {
 
 	}
 	
+	public ValidateEFTERAProviderInfo clickContinueToProviderInfoPage()
+	{
+		Element.click(btnContinue, "Continue Button");
+		return new ValidateEFTERAProviderInfo(testConfig);
+	}
 
 	public ProviderInformationEFTERAEnroll verifyUITextFromDB()  
 	{

@@ -127,6 +127,9 @@ public class SearchRemittanceSearchCriteria {
 	WebElement btnSearch;
 	Map dataRequiredForSearch;
 	
+	@FindBy(linkText="Home")
+	WebElement home;
+	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
 		this.testConfig=testConfig;
@@ -831,12 +834,14 @@ public class SearchRemittanceSearchCriteria {
     		//for non large tin --> Show all
     		expected ="Show All";
     		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    		
     	}
     	else
     	{
     		//for large tin --> Select a payer
     		expected ="Select a Payer";
     		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
+    		
     	}
     }
 }

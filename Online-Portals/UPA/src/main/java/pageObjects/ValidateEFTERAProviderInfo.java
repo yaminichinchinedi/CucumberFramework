@@ -3,6 +3,8 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,8 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="phoneNum3Contact1")
 	WebElement firstProvPhField3;
 	
+	@FindBy(id="EFTERAenrBSForm")
+	List<WebElement> pageForm;
 	
 	@FindBy(name="emailContact1")
 	WebElement firstProvEmail;
@@ -101,15 +105,18 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(id="sendAlertsContact2")
 	WebElement SecProvMobAlert;
 	
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCnclEnrlmnt;
 	
-	@FindBy(linkText="Back")
+	@FindBy(linkText="BACK")
 	WebElement btnBack;
 	
+	@FindBy(linkText="CLEAR ADMINISTRATOR INFORMATION")
+	WebElement btnCrlAdmnInfo;
+		
 	@FindBy(xpath = "//tr[@class='subheadernormal'][2]//td//table//tr//td//b")
 	WebElement txtSecurityBold;
 	
@@ -137,7 +144,7 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(linkText="Learn about alert frequency")
 	WebElement lnkAlertFrequency;
 	
-	@FindBy(linkText="Close Tip") 
+	@FindBy(linkText="CLOSE TIP") 
 	WebElement lnkClosTip;
 	
 	@FindBy(xpath="//section//form/div[3]/div[1]/div")
@@ -167,6 +174,18 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(xpath = "//form//div[7]//div[2]/label") 
 	WebElement btnNoOnExsistingEmailPage;
 	
+	@FindBy(xpath="//*[@id='EFTERAregForm']/div[5]/div[1]")
+	WebElement divClrAdminInfo;
+	
+	@FindBy(linkText="NO")
+	WebElement btnNo;
+	
+	@FindBy(linkText="YES")
+	WebElement btnYes;
+	
+	@FindBy(xpath="//*[@id='yesnosecondary']//div[2]/label")
+	WebElement rdoBtnNo;
+	
 	HashMap<Integer,HashMap<String,String>> pageData=null;
 	
 	String fName=Helper.generateRandomAlphabetsString(5);
@@ -185,6 +204,12 @@ public class ValidateEFTERAProviderInfo {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, expectedURL);
+	}
+	
+	public ValidateEFTERAProviderInfo validateContinueButtonfunctionality()
+	{
+		Helper.compareEquals(testConfig, "Provider First Namw", firstProvFName.getAttribute("value"),enrollmentInfoPageObj.getFrstName() );
+		return this;
 	}
 	
 	public void fillPhoneNumber(String prvoiderType)
@@ -239,12 +264,7 @@ public class ValidateEFTERAProviderInfo {
 			Element.enterData(firstProvMobField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvMobField1");
 			Element.enterData(firstProvMobField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvMobField2");
 			Element.enterData(firstProvMobField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvMobField3");
-			Helper.compareEquals(testConfig, "check box is not disabled",null,firstProvMobAlert.getAttribute("disabled") );
-//			System.out.println("check box is not disabled: "+firstProvMobAlert.getAttribute("disabled"));
-//			Browser.wait(testConfig, 2);
-			Element.enterData(firstProvMobField3, "89","Entered last four digits of phone number as : 89"  ,"firstProvMobField3");
-			Helper.compareEquals(testConfig, "", "true", firstProvMobAlert.getAttribute("disabled"));
-//			System.out.println("check box disabled:"+firstProvMobAlert.getAttribute("disabled"));
+			
 			break;
 		   }
 		  case "Secondary":
@@ -260,6 +280,15 @@ public class ValidateEFTERAProviderInfo {
 		return this;
 	}
 	
+	public ValidateEFTERAProviderInfo verifyMobileNoChckBoxfunctionality()
+	{
+		fillMobileCntct("Primary");
+		Helper.compareEquals(testConfig, "check box is not disabled",null,firstProvMobAlert.getAttribute("disabled") );
+		Element.enterData(firstProvMobField3, "89","Entered last four digits of phone number as : 89"  ,"firstProvMobField3");
+		Helper.compareEquals(testConfig, "", "true", firstProvMobAlert.getAttribute("disabled"));
+		return this;
+	}
+	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
 	{
 	   String expHeaderMsg="EPS Enrollment - Confirm Existing User";
@@ -270,9 +299,42 @@ public class ValidateEFTERAProviderInfo {
 	   Element.verifyTextPresent(exitingUserHeaderMsg,expHeaderMsg);
 	   Element.verifyElementPresent(btnYesOnExsistingEmailPage, "Yes BTN");
 	   Element.verifyElementPresent(btnNoOnExsistingEmailPage, "NO BTN");
-	   Browser.wait(testConfig, 120);
+	  
 //	   Element.verifyTextPresent(exitingUserMsg,expMsg);
 	   return this;
+	}
+	
+	public void verifyIdentifyAdminDupEmailContentManaged() throws IOException
+	{
+		int sqlRowNo=166;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		WebElement page=Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']//fieldset");
+		
+//		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(9).get("TEXT_VAL"),page.findElement(By.tagName("legend")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(1).get("TEXT_VAL")+"\n"+dataTest.get(21).get("TEXT_VAL")
+				+"\n"+dataTest.get(1).get("TEXT_VAL")+"\n"+dataTest.get(22).get("TEXT_VAL")
+				,page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[3]")).getText());
+		
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(3).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[4]//dl/dt[1]")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(4).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[4]//dl/dt[2]")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(8).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[4]//dl/dt[3]")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(9).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[4]//dl/dt[4]")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(10).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[4]//dl/dt[5]")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(11).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[5]//h4")).getText());
+		
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(12).get("TEXT_VAL")+" "+dataTest.get(13).get("TEXT_VAL")+" "+dataTest.get(14).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[5]//thead")).getText());
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(18).get("TEXT_VAL")+"\n"+dataTest.get(17).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[6]")).getText());
+		Helper.compareEquals(testConfig, "Yes No Radio  Button",dataTest.get(19).get("TEXT_VAL")+"\n"+dataTest.get(20).get("TEXT_VAL")
+				+"\n"+dataTest.get(19).get("TEXT_VAL")+"\n"+dataTest.get(20).get("TEXT_VAL")
+				,page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[7]")).getText());
+		Element.click(rdoBtnNo, "Sec Prov No button");
+		Element.click(btnContinue, "Continue Button");
+		verifyDupEmailError("Primary");
+		page=Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']//fieldset");
+		Helper.compareEquals(testConfig, "Compare Heading",dataTest.get(1).get("TEXT_VAL")+"\n"+dataTest.get(2).get("TEXT_VAL")
+				,page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[3]")).getText());
+		
+	
 	}
 	
 	public ValidateEFTERAProviderInfo verifyYesBtnFunctionality() throws IOException
@@ -283,6 +345,7 @@ public class ValidateEFTERAProviderInfo {
 		Map adminData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
 		String firstName=firstProvFName.getAttribute("value");
+		System.out.println("First Name is: "+firstName);
 		String email=firstProvEmail.getAttribute("value");
 		String lastName=firstProvLName.getAttribute("value");
 		String telNo=firstProvPhField1.getAttribute("value")+firstProvPhField2.getAttribute("value")+firstProvPhField3.getAttribute("value");
@@ -303,6 +366,35 @@ public class ValidateEFTERAProviderInfo {
 	   return this;
 	}
 	
+	public ValidateEFTERAProviderInfo verifyAssociatedTinsData() throws IOException
+	{
+		int sqlRowNo=9;
+		HashMap<Integer,HashMap<String,String>> gridData=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
+		verifyAssociatedTins();
+		ArrayList<String> orgNameFromUI=new ArrayList<String>();
+		ArrayList<String> accsLvlFromUI=new ArrayList<String>();
+		for(int i=0;i<associatedTinsTable.size();i++)
+		{
+			orgNameFromUI.add(associatedTinsTable.get(i).findElements(By.tagName("td")).get(1).getText());
+			accsLvlFromUI.add(associatedTinsTable.get(i).findElements(By.tagName("td")).get(2).getText());
+		}
+		
+		ArrayList<String> orgNameFromDB=new ArrayList<String>();
+		ArrayList<String> accsLvlFromDB=new ArrayList<String>();
+		for (int i = 1; i <= gridData.size(); i++) 
+		{
+			orgNameFromDB.add(gridData.get(i).get("ORG_NM"));
+			if(gridData.get(i).get("ACCESS_LVL").equals("A"))
+				accsLvlFromDB.add("Administrator");
+			else
+				accsLvlFromDB.add("General");
+		}
+		
+		Helper.compareEquals(testConfig, "Associated Org Name", orgNameFromUI, orgNameFromDB);
+		Helper.compareEquals(testConfig, "Associated User Level", accsLvlFromUI, accsLvlFromDB);
+		return this;
+	}
 	
 	public String fillProvInfoWithDupEmail(String provType)
 	{
@@ -367,6 +459,7 @@ public class ValidateEFTERAProviderInfo {
          ArrayList<String> tinsFromUI=new ArrayList<String>();
 		for(int i=0;i<associatedTinsTable.size();i++)
 			tinsFromUI.add(associatedTinsTable.get(i).findElements(By.tagName("td")).get(0).getText());
+		Collections.sort(tinsFromUI);
 		return tinsFromUI;
 	}
 	
@@ -378,7 +471,8 @@ public class ValidateEFTERAProviderInfo {
 	   HashMap<Integer, HashMap<String, String>> portalUser=DataBase.executeSelectQueryALL(testConfig,sqlNo);
 	   for (int i = 1; i <= portalUser.size(); i++) 
 		   tinsListFromDB.add(portalUser.get(i).get("PROV_TIN_NBR"));
-		return tinsListFromDB;
+	   Collections.sort(tinsListFromDB);
+	   	return tinsListFromDB;
 	}
 		
 	
@@ -505,27 +599,35 @@ public class ValidateEFTERAProviderInfo {
 	{
 		Element.click(lnkClrAdmnInfo, "Clear Administrator Information");
 		Element.verifyElementPresent(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(0).findElement(By.tagName("h4")).getText(),pageData.get(41).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(42).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(43).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
-		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(0), "clicked NO");
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(0).findElement(By.tagName("h4")).getText(),pageData.get(41).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(42).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(43).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
+		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "NO");
+		if(firstProvFName.getAttribute("value").equalsIgnoreCase(""))
+			Log.Fail("Failed Verification of functionality upon selection of No button");
+		else
+			Log.Pass("Passed Verification of functionality upon selection of No button");
 		Element.verifyElementNotPresent(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
 		return this;
 	}
 	
-	public ValidateEFTERAProviderInfo clickBackBtn()
+	public ProviderInformationEFTERAEnroll clickBackBtn()
 	{
-		Element.click(btnContinue, "Clicked Back Button");
-		Browser.verifyURL(testConfig, "validateefteraprovidercontact");
-		return this;
+		Element.click(btnBack, "Clicked Back Button");
+		Browser.verifyURL(testConfig, "providerinformationefteraenroll");
+		return new ProviderInformationEFTERAEnroll(testConfig);
 	}
 	
 	public ValidateEFTERAProviderInfo clickYesOnClrInfoPopUp()
 	{
-		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "clicked YES");
-		System.out.println(firstProvFName.getAttribute("value"));
+		Element.click(lnkClrAdmnInfo, "Clear Administrator Information");
+		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(0), "clicked YES");
+		if(firstProvFName.getAttribute("value").equalsIgnoreCase(""))
+			Log.Pass("Passed Verification of functionality upon selection of No button");
+		else
+			Log.Fail("Failed Verification of functionality upon selection of No button");
 		return this;
 	}
 	
@@ -559,8 +661,105 @@ public class ValidateEFTERAProviderInfo {
 		return this;
 	}
 	
-	public ValidateEFTERAProviderInfo verifyPageContent()
+	
+	public ValidateEFTERAProviderInfo verifyContentWithUXDS()
 	{
+		ArrayList<String> listUI = new ArrayList<String>();
+		ArrayList<String> listUXDS = new ArrayList<String>();
+		
+		listUI.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
+		listUI.add(testConfig.driver.findElement(By.xpath("//*[@id='EFTERAregForm']")).getText());
+	
+		new UXDSPageValidation(testConfig,"Enrollment HO Identify Administrators");
+		
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//section//header[1]/ul").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//h1 [text()='Identify Administrators']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//p[1]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//div[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//p[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//p[3]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]/fieldset/h4").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//p[4]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//div[3]/div[1]/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//div[3]/div[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//div[3]/div[3]/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//fieldset[1]/div/label").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]/fieldset/fieldset[1]/div/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//fieldset[2]/div/legend").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//fieldset[2]/div/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]/fieldset/div[4]/div[1]/div[1]/label").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]/fieldset/div[4]/div[1]/div[2]/div/label").getText()); // div[1]/div[2]
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[1]//div[4]/div[2]").getText());
+		
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//h4").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//p").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[1]/div[1]/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[1]/div[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[1]/div[3]/div").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//fieldset[1]/div/legend").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]/fieldset/fieldset[1]/div/div").getText());
+		
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//fieldset[2]/div/legend").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//fieldset[2]/div/div").getText()); //*[@id="providerContacts"]/section[2]/fieldset/fieldset[1]/div/div
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[2]/div[1]/div[1]/label").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[2]/div[1]/div[2]/div/label").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/section[2]//div[2]/div[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/a").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/footer/a[1]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/footer/a[2]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/footer/a[3]").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//*[@id='providerContacts']/footer/div").getText());
+		
+		Helper.compareEquals(testConfig, "UI and UXDS", listUXDS, listUI);
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyPageContent() throws IOException
+	{
+		int sqlRowNo=163;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
+		pageForm=Element.findElements(testConfig, "xpath", "//*[@id='EFTERAregForm']/section");
+		
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(1).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h1")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(2).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(3).get("TEXT_VAL")+"\n"+dataTest.get(4).get("TEXT_VAL")+"\n"+dataTest.get(5).get("TEXT_VAL")+"\n"+dataTest.get(6).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(7).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(1).getText());
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(10).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h4")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(8).get("TEXT_VAL")+" () "+dataTest.get(9).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("p")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(11).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(3).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(12).get("TEXT_VAL")+"\n"+dataTest.get(13).get("TEXT_VAL")+"\n"+dataTest.get(14).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(15).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(16).get("TEXT_VAL")), pageForm.get(0).findElements(By.tagName("fieldset")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("CLOBVAL")+" "+dataTest.get(19).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("fieldset")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(20).get("TEXT_VAL")+"\n"+dataTest.get(21).get("TEXT_VAL")+"\n"+dataTest.get(22).get("CLOBVAL")+"\n"+
+				dataTest.get(23).get("TEXT_VAL")+" "+dataTest.get(24).get("TEXT_VAL")+" "+dataTest.get(25).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(11).getText());
+		
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(26).get("TEXT_VAL"), pageForm.get(1).findElement(By.tagName("h4")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(46).get("TEXT_VAL")+" () "+dataTest.get(47).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("p")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(27).get("CLOBVAL"), pageForm.get(1).findElements(By.tagName("p")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(12).get("TEXT_VAL")+"\n"+dataTest.get(13).get("TEXT_VAL")+"\n"+dataTest.get(14).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(15).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(16).get("TEXT_VAL")), pageForm.get(1).findElements(By.tagName("fieldset")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("CLOBVAL")+" "+dataTest.get(19).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("fieldset")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(20).get("TEXT_VAL")+"\n"+dataTest.get(21).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(13).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("CLOBVAL")+"\n"+dataTest.get(23).get("TEXT_VAL")+" "+dataTest.get(24).get("TEXT_VAL")+" "+dataTest.get(25).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(17).getText());
+		Helper.compareEquals(testConfig, "Clear Administrator Btn", dataTest.get(28).get("TEXT_VAL"), btnCrlAdmnInfo.getText());
+		Helper.compareEquals(testConfig, "Back Button", dataTest.get(44).get("TEXT_VAL").toLowerCase(), btnBack.getText().toLowerCase());
+		Helper.compareEquals(testConfig, "Continue Button", dataTest.get(45).get("TEXT_VAL").toLowerCase(), btnContinue.getText().toLowerCase());
+		Element.click(btnCrlAdmnInfo, "Clear Administrator Information");
+		Helper.compareEquals(testConfig, "Clear Administrator Information Div", dataTest.get(41).get("TEXT_VAL")+"\n"+dataTest.get(42).get("TEXT_VAL")+"\n"+dataTest.get(43).get("TEXT_VAL")+"\n"+dataTest.get(39).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(40).get("TEXT_VAL").toUpperCase(), divClrAdminInfo.getText());
+		Element.click(btnNo, "No Button Clicked");
+		Element.click(lnkAlertFrequency, "Alert Frequency Button");
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(33).get("TEXT_VAL"), divFrqncyPopUp.get(0).getText());
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(34).get("CLOBVAL").replace("\n", " ").trim().replaceAll("( )+", " "), divFrqncyPopUp.get(1).getText());
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(35).get("TEXT_VAL").toUpperCase(), divFrqncyPopUp.get(2).getText());
+		Element.click(lnkClosTip, "Close Tip");
+		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(36).get("TEXT_VAL"), divCnclEnrlmnt.get(0).getText());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(37).get("TEXT_VAL")+"\n"+dataTest.get(38).get("TEXT_VAL"), divCnclEnrlmnt.get(1).getText());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up",dataTest.get(39).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(40).get("TEXT_VAL").toUpperCase(), divCnclEnrlmnt.get(2).getText());
+		sqlRowNo=165;
+		Map cancelData=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Cancel Button", cancelData.get("TEXT_VAL").toString().toLowerCase(), btnCnclEnrlmnt.getText().toLowerCase());
 		
 		return this;
 	}
@@ -582,24 +781,25 @@ public class ValidateEFTERAProviderInfo {
 		Element.verifyTextPresent(firstProvLName.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvLName.getCssValue("border-top-color")).asHex());
 		
-		Log.Comment("Verifying Error Msg is displayed for Provider First Name.."); ///html/body/section/main/form/section[1]/fieldset/fieldset[1]/div/div[3]/p
-//		Element.verifyTextPresent(firstProvPhField1.findElement(By.xpath("../following-sibling::div//p")), expectedText);
+		Log.Comment("Verifying Error Msg is displayed for Provider Phone Number.."); 
+		Element.verifyTextPresent(firstProvPhField1.findElement(By.xpath("//*[@id='telephoneNumberContact1']/div[3]/p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField1.getCssValue("border-top-color")).asHex());
 		
-		Log.Comment("Verifying Error Msg is displayed for Provider First Name..");
+		Log.Comment("Verifying Error Msg is displayed for Provider Phone Number..");
 //		Element.verifyTextPresent(firstProvPhField2.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField2.getCssValue("border-top-color")).asHex());
 		
-		Log.Comment("Verifying Error Msg is displayed for Provider First Name..");
+		Log.Comment("Verifying Error Msg is displayed for Provider Phone Number..");
 //		Element.verifyTextPresent(firstProvPhField3.findElement(By.xpath("../following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvPhField3.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Email..");
-		Element.verifyTextPresent(firstProvEmail.findElement(By.xpath("../following-sibling::p")), expectedText);
+//		Element.verifyTextPresent(firstProvEmail.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Element.verifyTextPresent(firstProvEmail.findElement(By.xpath("//div[@id='emailmailContactOne']/p")), expectedText); 
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(firstProvEmail.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Retype Email address..");
-		Element.verifyTextPresent(verifyFirstProvEmail.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Element.verifyTextPresent(verifyFirstProvEmail.findElement(By.xpath("//*[@id='verifyEmailContactOne']/div/p")), expectedText); 
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(verifyFirstProvEmail.getCssValue("border-top-color")).asHex());		
 		return this;
 	}
@@ -609,25 +809,25 @@ public class ValidateEFTERAProviderInfo {
 		switch(field)
 		{
 			case "ScndProvFName":
-				Element.enterData(secondProvFName, data, "Enter provider name as :" + data,"providerName");
+				Element.enterData(secondProvFName, data, "Enter provider First name as :" + data,"providerFName");
 				ele=secondProvFName;
 				break;
 			case "ScndProvLName":
-				Element.enterData(secondProvLName, data, "Enter street name as : " + data,"street");
+				Element.enterData(secondProvLName, data, "Enter provider Last name as : " + data,"providerLName");
 				ele=secondProvLName;
 				break;
 			case "ScndProvPhnNo":
-				Element.enterData(secondProvPhField1,  data, "Enter city name as :" + data,"city");
-				Element.enterData(secondProvPhField2,  data, "Enter city name as :" + data,"city");
-				Element.enterData(secondProvPhField3,  data, "Enter city name as :" + data,"city");
+				Element.enterData(secondProvPhField1,  data, "Enter phone no filed1 as :" + data,"PhNo1");
+				Element.enterData(secondProvPhField2,  data, "Enter phone no filed2 as :" + data,"PhNo2");
+				Element.enterData(secondProvPhField3,  data, "Enter phone no filed3 as :" + data,"PhNo3");
 				ele=secondProvPhField1;
 				break;
 			case "ScndProvEmail":
-				Element.enterData(secondProvEmail, data, "Enter state name","city");
+				Element.enterData(secondProvEmail, data, "Enter Scnd Prov Email","Sec Prov Email");
 				ele=secondProvEmail;
 				break;
 			case "ScndProvReEmail":
-				Element.enterData(verifySecondProvEmail, data,"Entered zip code in first textbox as" + data,"zipCode1");
+				Element.enterData(verifySecondProvEmail, data,"Enter Sec Prov ReEmail" + data,"Sec Prov ReEmail");
 				ele=verifySecondProvEmail;
 				break;
 		}
@@ -639,48 +839,39 @@ public class ValidateEFTERAProviderInfo {
 	}
 	
 	public  ValidateEFTERAProviderInfo fillSecondProvInfo(String field) throws IOException {
-		int rowNo=1;
 		String provName = Helper.generateRandomAlphabetsString(5);
-		String streetName = Helper.generateRandomAlphabetsString(5);
-		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
-	
+		
 		if(!field.equals("ScndProvFName"))
-			Element.enterData(secondProvFName, provName, "Enter provider name as :" + provName,"providerName");
+			Element.enterData(secondProvFName, provName, "Enter provider Firts name as :" + provName,"providerFName");
 		if(!field.equals("ScndProvLName"))
-			Element.enterData(secondProvLName, provName, "Enter street name as : " + streetName,"street");
+			Element.enterData(secondProvLName, provName, "Enter provider Last name as : " + provName,"providerLName");
 		if(!field.equals("ScndProvPhnNo"))
 		{
-			Element.enterData(secondProvPhField1, provName , "Enter city name as :" + data,"city");
-			Element.enterData(secondProvPhField2, provName,  "Enter city name as :" + data,"city");
-			Element.enterData(secondProvPhField3, provName,  "Enter city name as :" + data,"city");
+			Element.enterData(secondProvPhField1, phNo , "Enter sec Prov Phone No1 :" + phNo,"PhNo1");
+			Element.enterData(secondProvPhField2, phNo,  "Enter sec Prov Phone No2 :" + phNo,"PhNo2");
+			Element.enterData(secondProvPhField3, phNoLstField,  "Enter sec Prov Phone No3 :" + phNoLstField,"PhNo3");
 		}
 		if(!field.equals("ScndProvEmail"))
-			Element.enterData(secondProvEmail,secondProvEmailAdr , "Enter state name","email");
+			Element.enterData(secondProvEmail,secondProvEmailAdr , "Enter Sec Prov Email: "+secondProvEmailAdr,"email");
 		if(!field.equals("ScndProvReEmail"))
-			Element.enterData(verifySecondProvEmail, secondProvEmailAdr,"Entered zip code in first textbox as" ,"email");
+			Element.enterData(verifySecondProvEmail, secondProvEmailAdr,"Enter Sec Prov ReEmail: "+secondProvEmailAdr ,"EeEmail");
 		
 		return this;
 	}	
 
 	public void verifySecAdminError(WebElement element)
 	{
-		/*if(element.equals(zipCode1))
-		{
-			if(error.getText().contains("Data"))
-				Element.verifyTextPresent(error, "Invalid Data");
-			else
-				Element.verifyTextPresent(error, "Invalid for City/State");
-		}
-		else if(element.equals(street))
-		{
-			if(error.getText().contains("Special"))
-				Element.verifyTextPresent(error, "Special characters not allowed");
-			else
-				Element.verifyTextPresent(error, "P.O. Boxes are not accepted");
-		}
-		else*/
-//		Element.verifyTextPresent(error, "Missing Data");
-		Element.verifyElementPresent(errorLink, "Error links");
+		String errorMsg="Missing Data";
+		if(element.equals(secondProvFName)||element.equals(secondProvLName))
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("../following-sibling::p")).getText(),errorMsg);
+		else if(element.equals(secondProvPhField1))
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//section[2]//fieldset[1]/div[2]/p")).getText(),errorMsg);
+		else if(element.equals(secondProvEmail))
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//*[@id='emailcontact2']/p")).getText(),errorMsg);
+		else 
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//*[@id='verifyemailContact2']/p")).getText(),errorMsg);
+			
+		Element.verifyElementPresent(errorLink, "Error link");
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
 		
 	}

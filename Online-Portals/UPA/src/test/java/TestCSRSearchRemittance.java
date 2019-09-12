@@ -7,9 +7,12 @@ import java.text.ParseException;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
+import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.LoginCSR;
@@ -91,7 +94,7 @@ public class TestCSRSearchRemittance extends TestBase {
 		srchCriteriaPage.doSearch(criteriaType).verifySearchResults(criteriaType);		
      }
 	
-	//NMeed to fix as div on ui is different having dfifferent parametrs
+//	//NMeed to fix as div on ui is different having dfifferent parametrs
 	@Test(priority=5,description="TS008_Search by DOP & NPI")
 	public void testEprabyDOPAndNpi() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	 {
@@ -415,17 +418,19 @@ public class TestCSRSearchRemittance extends TestBase {
 			srchCriteriaPage.searchByCheckNumberToVerifyReturnedReason(criteriaType).verifyReturnedReasonDisplayed(criteriaType);
 	     }
 		
+	
 		@Test(priority=5,description="TS028/TS029_Search Remittance Large Tin")
 		public void testSearchRemittanceLargeNonLargeTin() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException
 		 {
-			String criteriaType="byDOP"; 	
+			String criteriaType="byDOP"; 
 			LoginCSR loginPage=new LoginCSR(testConfig);
 			CSRHomePage homePage=loginPage.doLogin(loginUserType);
-			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);;		
-			srchTinPage.clickSearchBtn().verifyLargeNonLargeTin(); //002324228 
+			
+			SearchTinPageSearchRemittance srchTinPage = homePage.clickSearchRemittanceLink().enterTin(criteriaType);		
+			srchTinPage.clickSearchBtn().verifyLargeNonLargeTin(); 
+			//002324228 
 	     }
-		
-		
+	
 		///Issue while opening the downloaded xlsx file from Portal
 		@Test(priority=5,description="TS030_Print Search Result First Page")
 		public void testByPrintSearchResultFirstPage() throws InterruptedException, IOException, AWTException, JAXBException, SAXException, ParserConfigurationException, ParseException

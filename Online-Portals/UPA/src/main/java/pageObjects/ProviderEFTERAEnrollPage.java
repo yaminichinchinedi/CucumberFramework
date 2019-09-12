@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.Helper;
 
 public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
+
 	
 	@FindBy(name="btnSubmit")
 	WebElement btnContinue;
@@ -37,6 +38,7 @@ public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
 		return new ProviderInformationEFTERAEnroll(testConfig) ;
 	}
 
+	
 	
 
 }

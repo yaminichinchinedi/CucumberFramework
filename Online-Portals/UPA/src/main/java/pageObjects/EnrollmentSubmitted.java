@@ -3,6 +3,7 @@ package main.java.pageObjects;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.InputStream;
 import java.net.URL;
 import java.io.File;
@@ -21,6 +22,8 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
+
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -33,7 +36,7 @@ import org.openqa.selenium.support.PageFactory;
 
 
 
-public class EnrollmentSubmitted {
+public class EnrollmentSubmitted  {
 	protected TestBase testConfig;
 	
 	@FindBy(partialLinkText = "What is the ACH Addenfum Record")
@@ -51,11 +54,20 @@ public class EnrollmentSubmitted {
 	@FindBy(xpath = "//a[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeadersBS;
 
+	
+	
+	
+	@FindBy(xpath="//fieldset" )
+	WebElement fieldset;
+	
+
+
 	@FindBy(xpath = "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']")
 	WebElement exitEnrollment;
 	
 	@FindBy(xpath=".//*[@id='EFTERAregForm']//div[1]/p[4]/span")
 	WebElement imgPDF;
+
 	
 	@FindBy(linkText="Print Completed Enrollment Form")
 	WebElement lnkPrintPdf;
@@ -72,13 +84,13 @@ public class EnrollmentSubmitted {
 		String expectedURL = "/validateEFTERASubmit";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-//		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-//			expectedURL="/validateBSSubmit";
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			expectedURL="/validateBSSubmit";
 	
-//		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
-//		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
-//		Element.expectedWait(imgPDF, testConfig, "PDF image", "PDF image");
-//		Browser.verifyURL(testConfig, expectedURL);
+		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
+		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
+		
+		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	
@@ -373,6 +385,58 @@ public class EnrollmentSubmitted {
 	}
 	
 
+	public void verifyPageUI(TestBase testBase)  {
+		
+		ApprovdUIPage agreedpage=new ApprovdUIPage();
+		
+		ArrayList<String> lstofexpectedUIText=new ArrayList<String>();
+		ArrayList<String> lstofexpectedUIFont=new ArrayList<String>();
+		ArrayList<String> lstofexpectedUIColor=new ArrayList<String>();
+
+		ArrayList<String> lstofEnrolmntSbmtpage=new ArrayList<String>();
+		ArrayList<String> lstofEnrolmntSbmtpageFont=new ArrayList<String>();
+		ArrayList<String> lstofEnrolmntSbmtpageColr=new ArrayList<String>();
+
+		for (WebElement wblt:agreedpage.OrgInfoforAO)
+		{
+			lstofexpectedUIText.add(wblt.getText().replace("\n", " "));
+			lstofexpectedUIColor.add(Color.fromString((wblt.getCssValue("color"))).asHex());
+			lstofexpectedUIFont.add (wblt.getCssValue("font-weight"));
+		}
+		
+		for (WebElement wblt:OrgInfoHeaders)
+		{
+			
+			lstofEnrolmntSbmtpage.add(wblt.getText().replace("\n", " "));
+			lstofEnrolmntSbmtpageColr.add(Color.fromString((wblt.getCssValue("color"))).asHex());
+			lstofEnrolmntSbmtpageFont.add (wblt.getCssValue("font-weight"));
+		}
+
+		 Helper.compareEquals(testConfig, "Headrs text Comparison",lstofexpectedUIText, lstofEnrolmntSbmtpage);
+		 Helper.compareEquals(testConfig, "Headrs text color Comparison",lstofexpectedUIColor, lstofEnrolmntSbmtpageColr);
+		 Helper.compareEquals(testConfig, "Headers text font Comparison",lstofexpectedUIFont, lstofEnrolmntSbmtpageFont);
+
+
+		 if ((agreedpage.fieldset.getText().substring(0, 457)).equalsIgnoreCase(fieldset.getText().substring(0, 457))  
+				 && (agreedpage.fieldset.getText().substring(458, 477)).equalsIgnoreCase(fieldset.getText().substring(458, 477)) 
+				 && (agreedpage.fieldset.getText().substring(479)).equalsIgnoreCase(fieldset.getText().substring(479)) 
+				 )
+		 {
+			 Log.Pass("Passes the text comparision of Enrollment Submitted Page and Approved HTML page ");
+		 }
+		 else
+		 {
+			 Log.Fail("Failed the text comparision of Enrollment Submitted Page and Approved HTML page ");
+		 }
+		
+		
+	}
+	
+
+	
+	
+	
+
 
 	public String readPDF() throws IOException {
 		String output="";
@@ -450,6 +514,7 @@ public class EnrollmentSubmitted {
 				}
 			if ((Headers.get(i).getText().replace("\n", " ")).equalsIgnoreCase("Enrollment Submitted")&& OrgCircle.get(i).isDisplayed() == true) 
 				Helper.compareEquals(testConfig,"Bold font with circle is present for "+ (Headers.get(i).getText().replace("\n", " ")), "900",Headers.get(i).getCssValue("font-weight"));		
+
 			Helper.compareEquals(testConfig,"Color Value for "+ (Headers.get(i).getText().replace("\n", " ")) + " Information is:","#e87722",Color.fromString(Headers.get(i).getCssValue("color")).asHex());
 		}
 	}
@@ -467,12 +532,14 @@ public class EnrollmentSubmitted {
 		 case "AV":
 			 verifyHeadersFunctionality(headersAV);
 			 break;
+
 		 case "AO":
 			 verifyHeadersFunctionality(headersAO);
 			 break;			 
 		 case "VO":
 			 verifyHeadersFunctionality(headersVO);
 			 break;			 
+
 		 default:
 			 verifyHeadersFunctionality(headersBS);
 			 break;
@@ -501,14 +568,19 @@ public class EnrollmentSubmitted {
 		//make close tip function and call in above
 		public void closeTipButton() throws IOException
 		{
-			Element.click(closetip, "Close Tip Button");	
+			Element.click(closetip, "Close Tip Button");
+			Element.verifyElementNotPresent(closetip, "Close Tip Button");
+			
 		}
 		
+
 		public void verifyExitEnrollemnt() throws IOException 
 		{
+
 			String expected = "EXIT ENROLLMENT"; 
 			String expecteHOMEURL = "returnToLoginPage.do";
-			Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());
+			Element.expectedWait(exitEnrollment, testConfig, "EXIT ENROLLMENT Button Text", "EXIT ENROLLMENT Button Text");
+            Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());
 			Element.click(exitEnrollment, "EXIT ENROLLMENT");
 			Browser.verifyURL(testConfig, expecteHOMEURL);
 		}

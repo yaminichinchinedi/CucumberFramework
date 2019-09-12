@@ -1,6 +1,4 @@
-﻿package main.java.Utils;
-
-
+package main.java.Utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -1984,51 +1982,6 @@ return previousDate.getTime();
 		return count;
 	}
 
-	/**
-	 * Create regex of string in list
-	 * @param list
-	 * 			--->	list of String for which regex will be created
-	 * @return
-     *   		---> regex of string in  list
-	 */
-	public static String createRegex(List<String> listOfString){
-
-		int index=0;
-		int size=0;
-		String regex="";
-
-		size=listOfString.size();
-
-		//creating copy of original list of string
-		List<String> copyOfListOfString=new ArrayList<String>();
-		copyOfListOfString=listOfString;
-
-		//escaped special character from list of String
-		escapeSpecialCharacterInstringOfList(copyOfListOfString);
-		while(index<size){
-			if(index == (size-1))
-				regex=regex+copyOfListOfString.get(index);
-			else
-				regex=regex+copyOfListOfString.get(index)+"(\\r|\\n| )+";
-			index++;
-		}
-		return regex;
-	}
-
-	/**
-	 * Escape special character from list of String
-	 * @param listOfString
-	 * @return
-	 *      ---> return list of String after escaped special character
-	 */
-	public static List<String> escapeSpecialCharacterInstringOfList(List<String> listOfString){
-		int length = listOfString.size();
-
-		for(int index=0; index<length; index++){
-			listOfString.set(index,listOfString.get(index).replaceAll("[\\<\\(\\[\\{\\\\\\^\\-\\=\\$\\!\\|\\]\\}\\)‌​\\?\\*\\+\\.\\>\\&\\@\\!\\,\\:]", "\\\\$0"));
-		}
-		return listOfString;
-	}
 	
 	
 	public static long getEpochTime()

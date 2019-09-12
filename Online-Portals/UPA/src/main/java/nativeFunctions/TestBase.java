@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -344,6 +345,7 @@ public class TestBase {
 	{
 		setDriver(runtimeProperties.getProperty("BrowserType"));
 		LogTemp.Comment("Running on environment" + System.getProperty("env"));
+		testConfig.putRunTimeProperty("createDt",Helper.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
 	}
 	
 	@BeforeMethod()	
@@ -372,6 +374,8 @@ public class TestBase {
 	public void endTest(ITestResult iTestResult)
 	{
 		Log.endTest(iTestResult);
+		String testClass=iTestResult.getTestClass().getName().replace("test.java.", "");
+		testConfig.putRunTimeProperty("testClass", testClass);
 
 	}
 	
@@ -398,15 +402,15 @@ public class TestBase {
 	{
 	}
 
-	@AfterClass()
-	public void deinit()
-	{
-		deinitializeData();
-	}
-	
-	public void deinitializeData()
-	{
-	}
+//	@AfterClass()
+//	public void deinit()
+//	{
+//		deinitializeData();
+//	}
+//	
+//	public void deinitializeData()
+//	{
+//	}
 	
 
 
@@ -436,6 +440,29 @@ public class TestBase {
 
 	}
 
+	@AfterClass()
+	public void afterClass(ITestContext iTestContext) throws UnknownHostException 
+	{
+        testConfig.putRunTimeProperty("endDt", Helper.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+		java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
+		testConfig.putRunTimeProperty("host",localMachine.getHostName() + "-" + System.getProperty("user.name"));
+		   
+		System.out.println(iTestContext.getAllTestMethods());
+		testConfig.putRunTimeProperty("passedTests",String.valueOf(iTestContext.getPassedTests().size()));
+		testConfig.putRunTimeProperty("failedTests",String.valueOf(iTestContext.getFailedTests().size()));
+	    if (testConfig.getRunTimeProperty("IsAutomationStatRequired").equalsIgnoreCase("Yes"))
+		insertAutomationCount();
+	}
+	
+	public void insertAutomationCount()
+	{
+		System.setProperty("Database","Automation");
+		int sqlRow=158;
+		DataBase.executeInsertQuery(testConfig, sqlRow);
+
+				
+	}
+	
 	
 
 //	public String getUsername(String appName,String userType,String accessType,String env){

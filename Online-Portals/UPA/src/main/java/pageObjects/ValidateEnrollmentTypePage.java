@@ -19,7 +19,7 @@ import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 
 public class ValidateEnrollmentTypePage {
 
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 
 	@FindBy(xpath="/html/body/form/section/main/h4/strong")

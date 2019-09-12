@@ -47,7 +47,7 @@ public class BeginEnrollment {
 	@FindBy(xpath="//label[contains(text(),'Other')]")
 	WebElement rdoOther;
 	
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
@@ -65,10 +65,10 @@ public class BeginEnrollment {
 	@FindBy(id="text1")
 	WebElement otherRadioTextBox;
 	
-	@FindBy(linkText="No")
+	@FindBy(linkText="NO")
 	WebElement btnCancelEnrollmentNo;
 	
-	@FindBy(linkText="Yes")
+	@FindBy(linkText="YES")
 	WebElement btnCancelEnrollmentYes;	
 	
 	@FindBy(xpath="//ul[@class='unstyled-list']//li")
@@ -77,7 +77,7 @@ public class BeginEnrollment {
 	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/div/span[2]")
 	WebElement beginEnrlmntQuesOnline;
 	
-	@FindBy(linkText="Cancel Enrollment")
+	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancelEnrollment;
 	
 	@FindBy(linkText="Privacy Policy")

@@ -72,7 +72,6 @@ public class HeaderContentValidation {
 		 List<String> headersVO = Arrays.asList("Organization Information","Identify Administrators", "Upload W9", "Review and Submit","Enrollment Submitted");
 		 List<String> headersBS = Arrays.asList("Billing Service Information","Identify Administrators", "Upload W9", "Review and Submit","Enrollment Submitted");
 			
-		 
 		 switch(enrollmentInfoPageObj.getTinIdentifier())
 		 {
 		 case "AV":

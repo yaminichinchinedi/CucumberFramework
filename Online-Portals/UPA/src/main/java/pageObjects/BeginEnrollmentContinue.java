@@ -40,7 +40,7 @@ public class BeginEnrollmentContinue {
 	@FindBy(id="billingserivceselect")
 	WebElement rdoBillingService;
 
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 
 	@FindBy(id="tin")

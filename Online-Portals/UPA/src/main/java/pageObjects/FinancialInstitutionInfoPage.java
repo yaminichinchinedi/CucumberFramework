@@ -88,10 +88,12 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return new UploadW9(testConfig) ;
 	}
 	
+
 	public  FinancialInstitutionInfoPageNPI clickContinueNPI() {
 		Element.clickByJS(testConfig, btnContinue, "Continue for NPI");
 		return new FinancialInstitutionInfoPageNPI(testConfig);
 	}
+
 
 	public SelectPaymentMethods clickContinueAV() {
 		Element.clickByJS(testConfig, btnContinue, "Continue");
