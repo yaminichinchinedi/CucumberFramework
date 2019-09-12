@@ -546,10 +546,12 @@ public class ProviderInformationEFTERAEnroll {
 		
 		String bsNamereadonly=bsName.getAttribute("readonly");
 		String bsNameVal=bsName.getAttribute("value");
+		Helper.compareContains(testConfig, "BS Name Value", enrollmentInfoPageObj.getBusinessName(), bsNameVal);
 		
-		Assert.assertNotNull(bsNameVal);
-		Assert.assertNull(bsNamereadonly);
-		Log.Pass("Billing service Name has some value and It is editable filed");
+		if (bsNamereadonly == null)
+		Log.Pass("Billing service Name is editable field");
+		else
+		Log.Fail("Billing service Name is readOnly field");
 		return this;
 	}
 	public void verifyFooterButton()

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="95" total="96" passed="1">
+  <reporter-output>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Browser on which test suite is running is : chrome</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Launching google chrome..</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
+    </line>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="43853" started-at="2019-09-04T11:32:58Z" finished-at="2019-09-04T11:33:42Z">
+    <groups>
+      <group name="Create Enrollment">
+        <method signature="TestCreateEnrollment.testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472]" name="testValiDateButtons" class="test.java.TestCreateEnrollment"/>
+      </group> <!-- Create Enrollment -->
+    </groups>
+    <test name="Default test" duration-ms="43853" started-at="2019-09-04T11:32:58Z" finished-at="2019-09-04T11:33:42Z">
+      <class name="test.java.TestCreateEnrollment">
+        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="setUpReportingConfig" is-config="true" duration-ms="327" started-at="2019-09-04T17:02:58Z" finished-at="2019-09-04T17:02:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpReportingConfig -->
+        <test-method status="PASS" signature="tearUp()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="tearUp" is-config="true" duration-ms="8837" started-at="2019-09-04T17:02:58Z" finished-at="2019-09-04T17:03:07Z">
+          <reporter-output>
+            <line>
+              <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Browser on which test suite is running is : chrome</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Launching google chrome..</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- tearUp -->
+        <test-method status="PASS" signature="init()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="init" is-config="true" duration-ms="0" started-at="2019-09-04T17:03:07Z" finished-at="2019-09-04T17:03:07Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="setupTestMethod" is-config="true" duration-ms="98" started-at="2019-09-04T17:03:07Z" finished-at="2019-09-04T17:03:07Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void test.java.TestCreateEnrollment.testValiDateButtons() throws java.io.IOException]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupTestMethod -->
+        <test-method status="PASS" signature="testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472]" name="testValiDateButtons" duration-ms="33939" started-at="2019-09-04T17:03:07Z" description="US1247779_TS_0055_Validate the error message when non numeric data entered for Secondary Administrator Telephone Number." finished-at="2019-09-04T17:03:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testValiDateButtons -->
+        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="endTest" is-config="true" duration-ms="554" started-at="2019-09-04T17:03:41Z" finished-at="2019-09-04T17:03:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testValiDateButtons status=SUCCESS method=TestCreateEnrollment.testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endTest -->
+        <test-method status="PASS" signature="deinit()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="deinit" is-config="true" duration-ms="0" started-at="2019-09-04T17:03:42Z" finished-at="2019-09-04T17:03:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deinit -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="tearDown" is-config="true" duration-ms="366" started-at="2019-09-04T17:03:42Z" finished-at="2019-09-04T17:03:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- test.java.TestCreateEnrollment -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
