@@ -306,7 +306,7 @@ public class ValidateEFTERAProviderInfo {
 	
 	public void verifyIdentifyAdminDupEmailContentManaged() throws IOException
 	{
-		int sqlRowNo=166;
+		int sqlRowNo=169;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		WebElement page=Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']//fieldset");
 		
@@ -341,7 +341,7 @@ public class ValidateEFTERAProviderInfo {
 	{
 		Element.click(btnYesOnExsistingEmailPage, "Yes Button");
 		Element.click(btnContinue, "Continue");
-		int sqlRowNo=164;
+		int sqlRowNo=167;
 		Map adminData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
 		String firstName=firstProvFName.getAttribute("value");
@@ -583,7 +583,7 @@ public class ValidateEFTERAProviderInfo {
 	
 	public ValidateEFTERAProviderInfo verifyAlertFrequencyPopUp() throws IOException
 	{
-		int sqlRow=163;
+		int sqlRow=166;
 		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
 		Element.click(lnkAlertFrequency, "Alert frequency Link");
 		Element.verifyElementPresent(lnkClosTip, "Alert frequency PopUp");
@@ -633,7 +633,7 @@ public class ValidateEFTERAProviderInfo {
 	
 	public ValidateEFTERAProviderInfo clickCancelEnrlmnt() throws IOException
 	{
-		int sqlRow=163;
+		int sqlRow=166;
 		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
 		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
 		Element.verifyElementPresent(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
@@ -716,7 +716,7 @@ public class ValidateEFTERAProviderInfo {
 	
 	public ValidateEFTERAProviderInfo verifyPageContent() throws IOException
 	{
-		int sqlRowNo=163;
+		int sqlRowNo=166;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		
 		pageForm=Element.findElements(testConfig, "xpath", "//*[@id='EFTERAregForm']/section");
@@ -757,7 +757,7 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(36).get("TEXT_VAL"), divCnclEnrlmnt.get(0).getText());
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(37).get("TEXT_VAL")+"\n"+dataTest.get(38).get("TEXT_VAL"), divCnclEnrlmnt.get(1).getText());
 		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up",dataTest.get(39).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(40).get("TEXT_VAL").toUpperCase(), divCnclEnrlmnt.get(2).getText());
-		sqlRowNo=165;
+		sqlRowNo=168;
 		Map cancelData=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "Cancel Button", cancelData.get("TEXT_VAL").toString().toLowerCase(), btnCnclEnrlmnt.getText().toLowerCase());
 		

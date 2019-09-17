@@ -19,7 +19,7 @@ public class UploadW9 {
 	@FindBy(id="file")
 	WebElement btnW9;
 	
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	private TestBase testConfig;

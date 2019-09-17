@@ -64,7 +64,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath = "//input[@name='finInstTinNpiAcctYorN'][2]")
 	WebElement rdoNPINo;
 
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
@@ -154,7 +154,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-	  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
+	
 	  enrollmentInfoPageObj.setFinState(stateName);
 	  enrollmentInfoPageObj.setFinCity(cityName);
 	  enrollmentInfoPageObj.setFinZip(zipCode);
@@ -162,4 +162,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
 //	  Element.enterData(element, data, description, namOfElement);
     }
+	
+	public FinancialInstitutionInfoPage clickYestoNPI()
+	{
+		  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
+		  return this;
+	}
 }

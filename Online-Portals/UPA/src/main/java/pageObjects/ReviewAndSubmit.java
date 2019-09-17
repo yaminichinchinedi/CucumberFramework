@@ -46,6 +46,9 @@ public class ReviewAndSubmit {
 	@FindBy(name="enrollerTele3")
 	WebElement phField3;
 	
+	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div[1]/a")
+	WebElement btnEditOrg;
+	
 	private TestBase testConfig;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
@@ -96,6 +99,12 @@ public class ReviewAndSubmit {
 		testConfig.putRunTimeProperty("Auth_Email", firstProvEmailAdr);
 		enrollmentInfoPageObj.setAuthPhnNbr(phNo+phNo+phNoLstField);
 		return this;
+	}
+	
+	public ProviderInformationEFTERAEnroll clickEditOrgButton()
+	{
+		Element.click(btnEditOrg,"Organisation Edit Button");
+		return new ProviderInformationEFTERAEnroll(testConfig);
 	}
 	
 }

@@ -12,7 +12,7 @@ public class SelectPaymentMethods {
 	
 private TestBase testConfig;
 	
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 
 	@FindBy(xpath=".//*[@id='EFTERAregForm']//td[1]//tr[5]/td[2]/select")
@@ -32,7 +32,7 @@ private TestBase testConfig;
 	}
 	
 	public UploadW9 clickContinue() {
-		chooseACHVCP();
+//		chooseACHVCP();
 		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new UploadW9(testConfig) ;

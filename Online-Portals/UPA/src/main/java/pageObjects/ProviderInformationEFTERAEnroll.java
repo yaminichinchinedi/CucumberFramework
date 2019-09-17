@@ -426,4 +426,14 @@ public class ProviderInformationEFTERAEnroll {
 		
 	}
 	
+	public ProviderInformationEFTERAEnroll verifyEditable()
+	{
+		Helper.compareEquals(testConfig, "Organisation Name", enrollmentInfoPageObj.getBusinessName(),providerName.getAttribute("value"));
+		Helper.compareEquals(testConfig, "City", enrollmentInfoPageObj.getCity(),city.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Street", enrollmentInfoPageObj.getStreet(),street.getAttribute("value"));
+		Helper.compareEquals(testConfig, "State", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Zip Code", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
+		return this;
+	}
+	
 }
