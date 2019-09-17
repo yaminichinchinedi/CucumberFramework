@@ -489,7 +489,7 @@ public class ProviderInformationEFTERAEnroll {
 		else
 		{
 		Element.click(savChanges, "Save Changes button");
-		Element.verifyElementVisiblity(btnCancel, "Cancle Button");
+		Element.verifyElementVisiblity(btnCancel, "Cancel Button");
 		
 		}
 		
@@ -648,19 +648,8 @@ public class ProviderInformationEFTERAEnroll {
 		listUXDS.add(Element.findElement(testConfig, "xpath", "//h2 [text()='Billing Service Identifiers Information']").getText());
 		listUXDS.add(Element.findElement(testConfig, "xpath", "//strong [text()='Billing Service Identifiers']").getText());
 		listUXDS.add(Element.findElement(testConfig, "xpath", "//span [text()='Billing Service TIN ']").getText());
-		//listUXDS.add(Element.findElement(testConfig, "xpath", "//span [text()='Billing Service SSN']").getText());
-		
-//		listUXDS.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
-//        listUXDS.add(testConfig.driver.findElement(By.xpath("//form//p")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//label [text()='Billing Service Name']")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']/h4")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//div[@class='margin-top-beta']//p")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//h2 [text()='Billing Service Identifiers Information']")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//strong [text()='Billing Service Identifiers']")).getText());
-//		listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service TIN ']")).getText());
-		//listUXDS.add(testConfig.driver.findElement(By.xpath("//span [text()='Billing Service SSN']")).getText());
-
+	
+		Helper.compareEquals(testConfig, "UI and UXDS comparision", listUXDS, listUI);
 		if (listUI.equals(listUXDS))
 		{
 			Log.Pass( "matches in both UI and UXDS");
@@ -670,14 +659,6 @@ public class ProviderInformationEFTERAEnroll {
 			Log.Fail( "matches in both UI and UXDS");
 		}
 		
-//	for (String contentUI : listUI) {
-//			if (listUXDS.contains(contentUI)) {
-//				Log.Pass(contentUI + " :" + " " + "matches in both UI and UXDS");
-//			}
-//			else {
-//				Log.Fail(contentUI + " :" + " " + "not present in UXDS");				
-//			}
-//		}
 
 	//	return this;
 	}
