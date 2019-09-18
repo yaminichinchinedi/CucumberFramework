@@ -224,44 +224,6 @@ public class ProviderInformationEFTERAEnroll {
 	}
 	
 	
-	public ValidateEFTERAProviderInfo fillProviderOrgInfoAgain() throws IOException {
-		
-		int rowNo=1;
-		String provName = Helper.generateRandomAlphabetsString(5);
-		String streetName = Helper.generateRandomAlphabetsString(5);
-		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
-		String expectedText="To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
-		//Element.verifyTextPresent(txtSecurity, expectedText);
-		
-	
-		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
-		else
-		{
-			Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
-			Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
-			enrollmentInfoPageObj.setProvType("Hospital/Facility");
-			Element.click(chkOther, "Other sub checkbox");
-			enrollmentInfoPageObj.setMrktType("Other");
-		}
-		
-		
-		Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
-		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),"city");
-		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
-		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"),"zipCode1");
-		
-		enrollmentInfoPageObj.setBusinessName(provName);
-		enrollmentInfoPageObj.setStreet(streetName);
-		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
-		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
-		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
-		
-		Element.click(savChanges, "Save Changes button");
-        
-		return new ValidateEFTERAProviderInfo(testConfig);
-
-	}
 	
 
 	public ProviderInformationEFTERAEnroll verifyUITextFromDB()  
@@ -627,14 +589,6 @@ public class ProviderInformationEFTERAEnroll {
 		listUI.add( billingServiceInfoIdentifiers.getText());
 		listUI.add(billingServiceInfoTin.getText());
 
-		
-//		testConfig.driver.navigate().to("http://webrd1220.uhc.com/eps-2018/approved/");
-//		PageFactory.initElements(testConfig.driver, this);
-//		Browser.waitForLoad(testConfig.driver);
-//		WebElement uxdsPageHeading=testConfig.driver.findElement(By.xpath("/html/body/section[1]/h1"));
-//		Element.expectedWait(uxdsPageHeading, testConfig, "Pages",  "Pages");
-//		Element.click(testConfig.driver.findElement(By.linkText("Enrollment BS Billing Service")), "Enrollment BS Billing Service");
-//		Browser.wait(testConfig, 5);
 		
 		new UXDSPageValidation(testConfig,"Enrollment BS Billing Service");
 		

@@ -398,15 +398,15 @@ public class TestBase {
 	{
 	}
 
-	@AfterClass()
-	public void deinit()
-	{
-		deinitializeData();
-	}
-	
-	public void deinitializeData()
-	{
-	}
+//	@AfterClass()
+//	public void deinit()
+//	{
+//		deinitializeData();
+//	}
+//	
+//	public void deinitializeData()
+//	{
+//	}
 	
 
 
