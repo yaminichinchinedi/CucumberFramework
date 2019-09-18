@@ -185,7 +185,7 @@ public class AddUserDetails {
 	
 	public AddUserDetails clickAddTin()
 	{
-		Element.click(btnAddTin_NPI, "Add Tin/NPI");
+		Element.clickByJS(testConfig,btnAddTin_NPI, "Add Tin/NPI");
 		return this;
 	}
 	
@@ -205,6 +205,16 @@ public class AddUserDetails {
 		return new ManageUsers(testConfig) ;
 		
 	}
+	
+	public String  addTinCSR(int sqlNo)
+	{
+		Map tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Element.enterData(addTin,tinNo.get("PROV_TIN_NBR").toString(), "Enter tin number : " + tinNo.get("PROV_TIN_NBR").toString() ,"add Tin");
+		clickAddTin();
+		return tinNo.get("PROV_TIN_NBR").toString();
+	}
+	
+	
 	
 	
 	
