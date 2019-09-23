@@ -1353,4 +1353,78 @@ public class TestCreateEnrollment extends TestBase{
 		
 	 }
 	
+	
+	/**
+	 * @author umadhavi
+	 * @throws IOException
+	 */
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=4,groups="Billing Service",description="US1350550-TS_0001_Validate the page upon selection of Continue from the Enrollment Type page for not enrolled TIN.")
+	   public void validatePageForTinNotEnrolled() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRow=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().verifyTINStatus();
+		 }
+	
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0003_Validate the layout of the Congratulations, your TIN is eligible for enrollment page.",groups="Billing Service")
+	void validateLayoutForInactiveEnrolledTin() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyContentTinEligibleBSWithUXDS();	
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0004_Validate the content of the Congratulations, your TIN is eligible for enrollment page.",groups="Billing Service")
+	void validateContentForInactiveEnrolledTin() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyContentManagedForTinNotEnrolledBS();	
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0005_Validate the page navigation upon clicking This link.",groups="Billing Service")
+	void validatePageNavigationThisLink() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyW9Form();		
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0008/TS_0009",groups="Billing Service")
+	void validatePopUpCancelBSEnrollmentAsNo() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyCancelAndContinueBtn().clickCancel().confirmCancelNo().clickCancel().confirmCancelYes();		
+	}
+
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_002/TS_006/TS_007")
+	void validateBSEnrollment() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyCancelAndContinueBtn().clickCancel().verifyBSNotEnrolledBtnCancelPopup();	
+	}
+	
 }

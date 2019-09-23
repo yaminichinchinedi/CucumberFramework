@@ -19,6 +19,9 @@ public class UXDSPageValidation   {
 	@FindBy(linkText="Enrollment BS Billing Service")
 	WebElement EnrollBS;
 	
+	@FindBy(xpath="/html/body/section[1]/fieldset/section[4]/ul[1]/li[29]/a")
+	WebElement TinElligibleBSUXDS;
+	
 	protected TestBase testConfig;
 	
 	public UXDSPageValidation(TestBase testConfig,String targetElement)
@@ -34,6 +37,13 @@ public class UXDSPageValidation   {
 		Element.click(EnrollBS, "Enrollment BS Billing Service");
 		Browser.wait(testConfig, 3);
 		Browser.verifyURL(testConfig, "enrollment-bs-billing-service-information");
+		}
+		
+		if (targetElement.equalsIgnoreCase("Enrollment TIN Eligible BS"))
+		{	
+		Element.click(TinElligibleBSUXDS, "Enrollment TIN Eligible BS");
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, "enrollment-tin-eligible_bs.html");
 		}
 	}
 	

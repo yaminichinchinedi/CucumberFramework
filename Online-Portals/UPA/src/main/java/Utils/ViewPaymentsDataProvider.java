@@ -1,5 +1,6 @@
 package main.java.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -806,5 +807,37 @@ public ArrayList getEnrollmentContent(String content) {
 		return bsTinDetails;
 	}
 	
+	public ArrayList<String> getEnrollmentContentForTinNotEnrolledBs() throws IOException {
+		
+		int sqlRowNo=170;
+		ArrayList<String> contentList = new ArrayList<String>();
+		Map enrollmentContent;
+		String orgText= null;
+		String formText= null;
+		HashMap<Integer, HashMap<String, String>> createEnroolment=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		for (int i = 1; i <= createEnroolment.size(); i++) {
+			if(!createEnroolment.get(i).get("TEXT_VAL").equals("")) {
+				 if(createEnroolment.get(i).get("TEXT_VAL").equals("If your organization does not have a completed W-9 form, please follow")) {
+					 
+					 orgText=createEnroolment.get(i).get("TEXT_VAL");
+				 }
+				 if(createEnroolment.get(i).get("TEXT_VAL").equals("to download a copy and complete the form.")) {
+					 formText=createEnroolment.get(i).get("TEXT_VAL");
+				 }
+				 
+				contentList.add(createEnroolment.get(i).get("TEXT_VAL"));
+			}
+		}
+		
+		contentList.add(orgText+" this link "+formText);
+		sqlRowNo=117; 
+		enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String advisedText =enrollmentContent.get("TEXT_VAL").toString();
+		Log.Comment("Content retreived from query for provideInformation is : " + advisedText);
+		contentList.add(advisedText);
+		
+		return contentList;
+		
+	}
 	
 }
