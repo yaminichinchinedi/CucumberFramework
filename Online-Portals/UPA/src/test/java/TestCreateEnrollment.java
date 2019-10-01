@@ -1103,12 +1103,6 @@ public class TestCreateEnrollment extends TestBase{
 		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
 	}
 	
-	/*
-	 * As yes and No radio buttons do not work on Prod while enrolling as BS
-	 * so these functionalities cannot be tested and the test case below is incomplete.
-	 * 
-	 */
-	
 	@TestDetails(author="Amit")
 	@Test(priority=4,groups="Provider",description="US1064240 -TS003/TS004/TS005/TS006/TS007/TS008") 
 	public void testIdentifyAdminExistingEmailForBS() throws IOException
@@ -1118,7 +1112,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("Primary").verifyAssociatedTinsData();//.verifyNoBtnFunctionality().verifyDupEmailError("Primary").verifyYesBtnFunctionality();
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("Primary").verifyAssociatedTinsData().verifyNoBtnFunctionality().verifyDupEmailError("Primary").verifyYesBtnFunctionality();
 	}
 	
 	@TestDetails(author="Amit")
@@ -1145,12 +1139,11 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("");
 	}
 	/*
-	 * TS011- Not completed as the yes no button functionality is not working on Prod. PT has been opened for same.
 	 * TS012 - Not completed as the page layout does not match to that of production. Layout is not updated on UXDS design pages.
 	 */
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS013") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS011/TS013") 
 	public void testIdentifyAdminExistingEmailForBSContentManaged() throws IOException
 	{
 		String option="Health plan communication";
@@ -1158,8 +1151,8 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("").verifyIdentifyAdminDupEmailContentManaged();
-	}
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().verifyDupEmailError("").verifyIdentifyAdminDupEmailContentManaged(); 
+	} 
 	
 	
 	
