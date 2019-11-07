@@ -129,6 +129,12 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//div[@class='error']//a") 
 	WebElement errorLink;
 	
+	@FindBy(name="btnCancel")
+	WebElement btnCanclChng;
+	
+	@FindBy(linkText="SAVE CHANGES")
+	WebElement btnSavChng;
+		
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
 
@@ -434,6 +440,19 @@ public class ProviderInformationEFTERAEnroll {
 		Helper.compareEquals(testConfig, "State", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
 		Helper.compareEquals(testConfig, "Zip Code", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
 		return this;
+	}
+	
+	public ProviderInformationEFTERAEnroll verifyCanclSavChangeBtns()
+	{
+		Element.verifyElementPresent(btnCanclChng, "CANCEL CHANGES button");
+		Element.verifyElementPresent(btnSavChng, "SAVE CHANGES button");
+		return this;
+	}
+	
+	public ReviewAndSubmit clickCanclChangBtn()
+	{
+		Element.click(btnCanclChng, "CANCEL CHANGES button");
+		return new ReviewAndSubmit(testConfig);
 	}
 	
 }

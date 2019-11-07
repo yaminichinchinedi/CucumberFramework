@@ -159,7 +159,7 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(xpath="//section//form/div[4]/div[1]/div")
 	List<WebElement> divCnclEnrlmnt;
 	
-//	@FindBy(xpath="//div[@class='error']//h4")
+	@FindBy(xpath="//div[@class='error']//h4")
 	WebElement errorHeader;
 	
 	@FindBy(xpath = "//div[@class='error']//a") 

@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.List;
 
 import main.java.Utils.Helper;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
@@ -8,6 +9,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -48,6 +50,10 @@ public class ReviewAndSubmit {
 	
 	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div[1]/a")
 	WebElement btnEditOrg;
+	
+	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div")
+	List<WebElement> divOrgInfo;
+	
 	
 	private TestBase testConfig;
 	
@@ -103,8 +109,14 @@ public class ReviewAndSubmit {
 	
 	public ProviderInformationEFTERAEnroll clickEditOrgButton()
 	{
+		Element.verifyElementPresent(btnEditOrg, "Edit Organization Button");
 		Element.click(btnEditOrg,"Organisation Edit Button");
 		return new ProviderInformationEFTERAEnroll(testConfig);
 	}
 	
+	public ReviewAndSubmit verifyOrgInfo()
+	{
+		System.out.println("KUCH KUCH TO HOGA"+divOrgInfo.get(1).findElements(By.tagName("div")).get(2).findElements(By.tagName("dl")).get(0).findElement(By.tagName("dd")));
+		return this;
+	}
 }

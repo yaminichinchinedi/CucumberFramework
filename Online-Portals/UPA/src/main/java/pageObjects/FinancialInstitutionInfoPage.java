@@ -1,8 +1,11 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -67,9 +70,36 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
+	@FindBy(linkText="BACK")
+	WebElement btnBack;
+	
+	@FindBy(linkText="CANCEL ENROLLMENT")
+	WebElement btnCancEnroll;
+	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
 	WebElement txtSecurity;
-
+	
+	@FindBy(id="voided-check")
+	WebElement voidChk;
+	
+	@FindBy(id="bank-letter")
+	WebElement bnkLetter;
+	
+	@FindBy(partialLinkText="Where can I find a financial institution's")
+	WebElement lnkFINRouNo;
+	
+	@FindBy(partialLinkText= "How do I manage multiple NPI bank")
+	WebElement lnkNPIBnk;
+	
+	@FindBy(linkText="CLOSE TIP")
+	WebElement btnCloseTIP;
+	
+	@FindBy(linkText="YES")
+	WebElement btnYes;
+	
+	@FindBy(linkText="NO")
+	WebElement btnNo;
+	
 	protected TestBase testConfig;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
@@ -83,6 +113,147 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	}
 	
 
+	public void clickFINRoutlnk()
+	{
+	Element.click(lnkFINRouNo, "Finantial Institution Routing No");
+	Browser.wait(testConfig, 1);
+	Element.click(btnCloseTIP, "Close TIP Button");
+	
+	
+	}
+	public void clickFINMngNPIAcc()
+	{
+	
+	Element.click(lnkNPIBnk, "Manage Multiple NPI Bank Account ");
+	Browser.wait(testConfig, 1);
+	Element.click(btnCloseTIP, "Close TIP Button");
+	}
+	public void verifyFinAccount()
+	{
+		//rdoChecking
+//		Element.verifyElementIsChecked(rdoChecking, "Checking finantial Account");
+//		Element.click(rdoSavings, "Saving Account");
+//		Browser.wait(testConfig, 2);
+//		Element.verifyElementIsChecked(rdoSavings, "Saving Account");
+//		
+//		Element.verifyElementIsChecked(voidChk, "Voided Check");
+//		Browser.wait(testConfig, 3);
+//		Element.click(rdoBankLetter, "Bank Letter");
+//		Browser.wait(testConfig, 2);
+//		Element.verifyElementIsChecked(rdoBankLetter, "Bank Letter");
+		
+		Element.verifyElementIsChecked(rdoNPINo, "NPI Account No Check");
+		Browser.wait(testConfig, 3);
+		Element.click(rdoNPIYes, "NPI Account Yes Check");
+		Browser.wait(testConfig, 2);
+		Element.verifyElementIsChecked(rdoBankLetter, "Bank Letter");
+		
+	}
+	
+	public void verifyButtons()
+	{
+		Element.verifyElementPresent(btnContinue, "Continue Button");
+		Element.verifyElementPresent(btnBack, "Back Button");
+		Element.verifyElementPresent(btnCancEnroll, "Cancel Enrollment Button");
+		
+		Element.click(btnBack, "Back Button");
+		Browser.verifyURL(testConfig, "providerContactsEFTERAEnroll.do");
+		Browser.wait(testConfig, 2);
+		//Browser.forward(testConfig);
+		Element.click(btnContinue, "Continue Button");
+		Browser.wait(testConfig, 1);
+		Element.click(btnCancEnroll, "Cancel Enroll Button");
+		Browser.wait(testConfig, 1);
+		
+		Element.click(btnNo, "No Button of PopUp");
+		Browser.verifyURL(testConfig, "validateEFTERAProviderContact.do");
+		
+		Browser.wait(testConfig, 2);
+		Element.click(btnCancEnroll, "Cancel Enroll Button");
+		Browser.wait(testConfig, 2);
+		
+		Element.click(btnYes, "YES Button of PopUp");
+		Browser.verifyURL(testConfig, "registrationSignIn.do");
+	}
+	public void verifyErrors()
+	{
+		Element.clickByJS(testConfig, btnContinue, "Continue");
+		ArrayList <String> errNames=new ArrayList<String>();
+		errNames.add("- Financial Institution Information - Financial Institution / Bank Name");
+		errNames.add("- Financial Institution Information - Street");
+		errNames.add("- Financial Institution Information - City");
+		errNames.add("- Financial Institution Information - State");
+		errNames.add("- Financial Institution Information - Zip");
+		errNames.add("- Financial Institution Information - Phone");
+		errNames.add("- Financial Institution Information - Financial Institution Routing Number");
+		errNames.add("- Financial Institution Information - Provider's Account Number with Financial Institution");
+		errNames.add("- Financial Institution Information - Upload Voided Check/Bank Letter");
+		
+		ArrayList <String> webErrNamesText=new ArrayList<String>(); ;
+		int i=1;
+			while(i<10){
+			String xpath="//form[@id=\"EFTERAregForm\"]/section[1]/fieldset[1]/legend/div/ul/"+"li"+"["+i+"]"+"/a";
+			
+			if (Element.findElement(testConfig, "xpath", xpath).getTagName().equals("a"))
+			{
+			webErrNamesText.add(Element.findElement(testConfig, "xpath", xpath).getText());
+			xpath=null;
+			i++;
+			}
+			}
+		
+		Helper.compareEquals(testConfig, "", errNames, webErrNamesText);
+	verifyErrorMessages();
+	}
+	public void verifyErrorMessages()
+	{
+		
+		
+			String expectedText="Missing Data";
+			String expectedColor="#c21926";
+			
+			Log.Comment("Verifying Error Msg is displayed for Financial Institution / Bank Name...");
+			WebElement welt=finInstName.findElement(By.xpath("..//following::p"));
+			//Element.verifyTextPresent(finInstName.findElement(By.xpath("../following::p")), expectedText);
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted in Finantial Institution/Bank text box" , expectedColor, Color.fromString(finInstName.getCssValue("border-top-color")).asHex());
+
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution Street...");
+//			Element.verifyTextPresent(finInstStreet.findElement(By.xpath("following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Street Text Box..." , expectedColor, Color.fromString(finInstStreet.getCssValue("border-top-color")).asHex());
+//
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution city...");
+//			Element.verifyTextPresent(finInstCity.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(finInstCity.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  state...");
+//			Element.verifyTextPresent(finInstState.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted in State text box" , expectedColor, Color.fromString(finInstState.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  Telephone...");
+//			Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , expectedColor, Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
+//
+//			Element.verifyTextPresent(finInstZip1.findElement(By.xpath("//following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(finInstZip1.getCssValue("border-top-color")).asHex());
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(finInstZip2.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Financial Institution Routing Number..");
+//			Element.verifyTextPresent(finInstRoutNum.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Fin Ins Routing No" , expectedColor, Color.fromString(finInstRoutNum.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Provider's Account Number..");
+//			Element.verifyTextPresent(finInstAcctNum.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Provider's AC No field" , expectedColor, Color.fromString(finInstAcctNum.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Voided Check");
+//			Element.verifyTextPresent(finInstFile.findElement(By.xpath("../following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(finInstFile.getCssValue("border-top-color")).asHex());
+//
+
+	}
 	public UploadW9 clickContinue() {
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new UploadW9(testConfig) ;

@@ -951,7 +951,10 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS001/TS004/TS007-TS013/TS022") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0001_Validate the navigation upon selection of Continue from Organization Information page."
+			+ "/TS_0004_Validate the error message when all the Secondary Admin fields are left empty."
+			+ "/TS007-TS013/Validate the action upon clicking on Learn About Frequency/Clear Secondary Information Pop Up box and Yes and No button Functionality on these box"
+			+ "TS022") 
 	public void testAdministratorsPage() throws IOException
 	{
 		String option="Health plan communication";
@@ -968,7 +971,7 @@ public class TestCreateEnrollment extends TestBase{
 	 */
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS002") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0002_Validate the layout of the Identify Administrators page.") 
 	public void testAdministratorsPageUXDS() throws IOException
 	{
 		String option="Health plan communication";
@@ -980,7 +983,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS003") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0003_Validate the content of the Identify Administrators page.") 
 	public void testAdministratorsPageContent() throws IOException
 	{
 		String option="Health plan communication";
@@ -992,7 +995,8 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS005/TS006") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0005_Validate the Mobile Phone Number field is mandatory or not If Send text alerts boxed is unchecked."
+			+ "/TS_0006_Validate the Mobile Phone Number field is mandatory or not If Send text alerts boxed is checked.") 
 	public void testAdministratorsPageMobileAlert() throws IOException
 	{
 		String option="Health plan communication";
@@ -1004,7 +1008,8 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS014/TS015") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0014_Validate the navigation upon selection of Back button."
+			+ "/TS015") 
 	public void testAdministratorsPageContinuebtnErrors() throws IOException
 	{
 		String option="Health plan communication";
@@ -1016,7 +1021,8 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS016/TS017") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0016_Validate the content of the Pop Up box upon click of Cancel Enrollment button."
+			+ "/TS_0017_Validate the page navigation upon clicking No button on Cancel Popup.") 
 	public void testAdministratorsPageCancelEnrlmnt() throws IOException
 	{
 		String option="Health plan communication";
@@ -1028,7 +1034,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS018") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0018_Validate the page navigation upon clicking Yes button on Cancel Popup.") 
 	public void testAdministratorsPageCancelEnrlmntYesBtn() throws IOException
 	{
 		String option="Health plan communication";
@@ -1040,7 +1046,9 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS019") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS_0019_Validate the headers on Identify Administrator page for AO TIN."
+	+"TS_0020_Validate the headers on Identify Administrator page for AV TIN."
+	+"TS_0021_Validate the headers on Identify Administrator page for VO TIN.") 
 	public void testAdministratorsPageHeaderVerificationForAO() throws IOException
 	{
 		String option="Health plan communication";
@@ -1048,38 +1056,18 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
-		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+		for(;excelRowNo<=4;excelRowNo++)
+		{
+			if(excelRowNo==2)
+				continue;
+			beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
+			new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
+		}
 	 }
 	
-	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS020") 
-	public void testAdministratorsPageHeaderVerificationForAV() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRowNo=3;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
-		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
-	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS021") 
-	public void testAdministratorsPageHeaderVerificationForVO() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRowNo=4;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
-		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
-	 }
-	
-	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS023-TS027") 
+	@Test(priority=4,groups="Provider",description="US1247779 -TS023-TS027/Validate error msgs when No data entered for Secondary Administrators FirstName/SecondName/Email/ReEmail/Telephone") 
 	public void testSecondaryAdminInfo() throws IOException
 	{
 		String option="Health plan communication";
@@ -1091,7 +1079,8 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS001/TS002") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS01_Create Enrollment_BS_Identify Administrators page"
+			+ "/TS02_Create Enrollment_BS_Identify Administrators page_Header") 
 	public void testIdentifyAdminForBS() throws IOException
 	{
 		String option="Health plan communication";
@@ -1104,7 +1093,12 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS003/TS004/TS005/TS006/TS007/TS008") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS03_Create Enrollment_BS_Identify Administrators page_Existing Email"
+			+ "/TS04_Create Enrollment_BS_Identify Administrators page_Existing Email_Association Grid"
+			+ "TS05_Create Enrollment_BS_Identify Administrators page_Existing Email_Confirm User option/"
+			+ "TS06_Create Enrollment_BS_Identify Administrators page_Existing Email_Confirm User option_Yes/"
+			+ "TS07_Create Enrollment_BS_Identify Administrators page_Existing Email_Confirm User option_No/"
+			+ "TS08_Create Enrollment_BS_Identify Administrators page_Existing Email_Primary only") 
 	public void testIdentifyAdminExistingEmailForBS() throws IOException
 	{
 		String option="Health plan communication";
@@ -1116,7 +1110,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS009") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS09_Create Enrollment_BS_Identify Administrators page_Existing Email_Secondary Only") 
 	public void testIdentifyAdminExistingEmailSecForBS() throws IOException
 	{
 		String option="Health plan communication";
@@ -1128,7 +1122,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS010") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS10_Create Enrollment_BS_Identify Administrators page_Existing Email_Primary and Secondary both") 
 	public void testIdentifyAdminExistingEmailForBSBoth() throws IOException
 	{
 		String option="Health plan communication";
@@ -1143,7 +1137,8 @@ public class TestCreateEnrollment extends TestBase{
 	 */
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1064240 -TS011/TS013") 
+	@Test(priority=4,groups="Provider",description="US1064240 -TS11_Create Enrollment_BS_Identify Administrators page_Existing Email_Confirm User option_No Response"
+			+ "/TS13_Create Enrollment_BS_Content Managed") 
 	public void testIdentifyAdminExistingEmailForBSContentManaged() throws IOException
 	{
 		String option="Health plan communication";
@@ -1249,41 +1244,5 @@ public class TestCreateEnrollment extends TestBase{
 			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().verifyFederalW9link();
 			
 		 }
-	
-	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1248704- TS01 Edit option for AV",groups="Provider") 
-	public void testReviewAndSubmitPageforAV() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRow=3;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinueAV().clickContinue().uploadW9().clickEditOrgButton().verifyEditable();
-	 }
-	
-	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1248704- TS02 Edit option for AO",groups="Provider") 
-	public void testReviewAndSubmitPageforAO() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRow=1;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinue().fillFinancialInstInfo().clickContinue().uploadW9().clickEditOrgButton().verifyEditable();
-	 }
-	
-	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1248704- TS03 Edit option for VO",groups="Provider") 
-	public void testReviewAndSubmitPageforVO() throws IOException
-	{
-		String option="Health plan communication";
-		int excelRow=4;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditOrgButton().verifyEditable();
-	 }
 
 }
