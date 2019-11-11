@@ -1049,17 +1049,17 @@ public class TestCreateEnrollment extends TestBase{
 	@Test(priority=4,groups="Provider",description="US1247779 -TS_0019_Validate the headers on Identify Administrator page for AO TIN."
 	+"TS_0020_Validate the headers on Identify Administrator page for AV TIN."
 	+"TS_0021_Validate the headers on Identify Administrator page for VO TIN.") 
-	public void testAdministratorsPageHeaderVerificationForAO() throws IOException
+	public void testAdministratorsPageHeaderVerification() throws IOException
 	{
 		String option="Health plan communication";
 		int excelRowNo=1;
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
-		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 		for(;excelRowNo<=4;excelRowNo++)
 		{
 			if(excelRowNo==2)
 				continue;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
 			beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo();
 			new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
 		}
