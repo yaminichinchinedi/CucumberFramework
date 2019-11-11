@@ -447,6 +447,31 @@ public class TestBase {
 
 	}
 
+
+	@AfterClass()
+	public void afterClass(ITestContext iTestContext) throws UnknownHostException 
+	{
+        testConfig.putRunTimeProperty("endDt", Helper.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+		java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
+		testConfig.putRunTimeProperty("host",localMachine.getHostName() + "-" + System.getProperty("user.name"));
+		   
+		System.out.println(iTestContext.getAllTestMethods());
+		testConfig.putRunTimeProperty("passedTests",String.valueOf(iTestContext.getPassedTests().size()));
+		testConfig.putRunTimeProperty("failedTests",String.valueOf(iTestContext.getFailedTests().size()));
+	    if (testConfig.getRunTimeProperty("IsAutomationStatRequired").equalsIgnoreCase("Yes"))
+		insertAutomationCount();
+	}
+	
+	public void insertAutomationCount()
+	{
+		System.setProperty("Database","Automation");
+		int sqlRow=158;
+		DataBase.executeInsertQuery(testConfig, sqlRow);
+
+				
+	}
+	
+
 	
 
 //	public String getUsername(String appName,String userType,String accessType,String env){

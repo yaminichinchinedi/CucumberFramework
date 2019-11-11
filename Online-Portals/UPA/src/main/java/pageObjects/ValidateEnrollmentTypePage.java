@@ -16,6 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
+import main.java.Utils.DataBase;
 
 public class ValidateEnrollmentTypePage {
 
@@ -195,6 +196,14 @@ public class ValidateEnrollmentTypePage {
 
 	@FindBy(xpath="/html/body/form/section/main/footer/a")
 	WebElement returnToLoginBtn;
+	
+	@FindBy(xpath="/html/body/form/section/main/div[2]/ul/li/ul/li[2]")
+	WebElement w9FormBS;
+	
+	@FindBy(xpath="/html/body/form/section/main/div[2]/ul/li/ul/li[3]")
+	WebElement downloadw9FormBS;
+	
+	
 	
 	
 	ViewPaymentsDataProvider dataProvider;
@@ -525,7 +534,80 @@ public class ValidateEnrollmentTypePage {
 		return this;
 	}
 
+	public ValidateEnrollmentTypePage verifyBSNotEnrolledBtnCancelPopup() throws IOException
+	{
+		int sqlRowNo=171; 
+		Map enrollmentContent = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String btnCancelPopupMsg = enrollmentContent.get("TEXT_VAL").toString();
+		Log.Comment("Content retreived from query for Cancel enrollment popup message  is : " + btnCancelPopupMsg);
+		Element.verifyTextPresent(btnCancelPopUp, btnCancelPopupMsg);
+		Element.verifyElementPresent(btnYes,"Cancel Button Yes");
+		Element.verifyElementPresent(btnNo,"Cancel Button No");
+		return this;
+	} 
+	
+	public ValidateEnrollmentTypePage verifyContentTinEligibleBSWithUXDS() throws IOException
+	{
 
+		ArrayList<String> listUI = new ArrayList<String>();
+		ArrayList<String> listUXDS = new ArrayList<String>();
+
+		
+		listUI.add(TINEligibleForEnrlHeading.getText());
+		listUI.add(enrollmentProcessInfo.getText());
+		listUI.add(orgName.getText());
+		listUI.add(administrators.getText());
+		listUI.add(primaryContact.getText());
+		listUI.add(secondaryContact.getText());
+		listUI.add(tinAndBusinessInfo.getText());
+		listUI.add(w9FormBS.getText());
+		listUI.add(downloadw9FormBS.getText());
+		
+		new UXDSPageValidation(testConfig,"Enrollment TIN Eligible BS");
+
+		listUXDS.add(TINEligibleForEnrlHeadingUXDS.getText());
+		listUXDS.add(enrollmentProcessInfoUXDS.getText());
+		listUXDS.add(orgNameUXDS.getText());
+		listUXDS.add(administratorsUXDS.getText());
+		listUXDS.add(primaryContactUXDS.getText());
+		listUXDS.add(secondaryContactUXDS.getText());
+		listUXDS.add(tinAndBusinessInfoUXDS.getText());
+		listUXDS.add(w9FormUXDS.getText());
+		listUXDS.add(w9FormDownloadUXDS.getText());
+		
+		Log.Pass("check in UXDS" + " :" + " " + w9FormDownloadUXDS.getText());
+		
+		 Helper.compareEquals(testConfig, "comparing UI with DB",listUXDS , listUI);
+
+		return this;
+	}
+
+	public ValidateEnrollmentTypePage verifyContentManagedForTinNotEnrolledBS() throws IOException
+	{
+		ArrayList<String> listDB = new ArrayList<String>();
+		ArrayList<String> listUI = new ArrayList<String>();
+		dataProvider=new ViewPaymentsDataProvider(testConfig);	
+		listDB =  dataProvider.getEnrollmentContentForTinNotEnrolledBs();		
+		listUI.add(TINEligibleForEnrlHeading.getText());
+		listUI.add(enrollmentProcessInfo.getText());
+		listUI.add(orgName.getText());
+		listUI.add(administrators.getText());
+		listUI.add(primaryContact.getText());
+		listUI.add(secondaryContact.getText());
+		listUI.add(tinAndBusinessInfo.getText());
+		listUI.add(w9FormBS.getText());
+		listUI.add(downloadw9FormBS.getText());
+		for (String list : listUI) {
+			if (listDB.contains(list)) {
+				Log.Pass(list + " :" + " " + "matches in both UI and DB");
+			}
+			else {
+				Log.Fail(list + " :" + " " + "not present in DB");
+				break;
+			}
+		}
+		return this;
+	} 
 
 
 }

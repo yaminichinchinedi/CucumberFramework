@@ -16,12 +16,19 @@ public class UXDSPageValidation   {
 
 	@FindBy(xpath="/html/body/section[1]/h1")
 	WebElement uxdsPageHeading;
-	
+
 	@FindBy(linkText="Enrollment BS Billing Service")
 	WebElement EnrollBS;
 	
 	@FindBy(linkText="Enrollment HO Identify Administrators")
 	WebElement EnrollHOIdentifyAdmin;
+
+	@FindBy(linkText="Enrollment BS Billing Service")
+	WebElement EnrollBS;
+	
+	@FindBy(xpath="/html/body/section[1]/fieldset/section[4]/ul[1]/li[29]/a")
+	WebElement TinElligibleBSUXDS;
+
 	
 	protected TestBase testConfig;
 	
@@ -39,6 +46,7 @@ public class UXDSPageValidation   {
 		Browser.wait(testConfig, 3);
 		Browser.verifyURL(testConfig, "enrollment-bs-billing-service-information");
 		}
+
 		else if(targetElement.equalsIgnoreCase("Enrollment HO Identify Administrators"))
 		{	
 		Element.click(EnrollHOIdentifyAdmin, "Enrollment HO Billing Service");
@@ -46,6 +54,15 @@ public class UXDSPageValidation   {
 		Browser.verifyURL(testConfig, "enrollment_HO-identify-admins");
 		}
 		
+
+		
+		if (targetElement.equalsIgnoreCase("Enrollment TIN Eligible BS"))
+		{	
+		Element.click(TinElligibleBSUXDS, "Enrollment TIN Eligible BS");
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, "enrollment-tin-eligible_bs.html");
+		}
+
 	}
 	
 	

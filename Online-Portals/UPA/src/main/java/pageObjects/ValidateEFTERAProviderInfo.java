@@ -35,6 +35,9 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="firstNameContact1")
 	WebElement firstProvFName;
 	
+	@FindBy(name="middleNameContact1")
+	WebElement firstProvMName;
+	
 	@FindBy(name="lastNameContact1")
 	WebElement firstProvLName;
 	
@@ -72,6 +75,9 @@ public class ValidateEFTERAProviderInfo {
 	
 	@FindBy(name="firstNameContact2")
 	WebElement secondProvFName;
+	
+	@FindBy(name="middleNameContact2")
+	WebElement secondProvMName;
 	
 	@FindBy(name="lastNameContact2")
 	WebElement secondProvLName;
@@ -190,6 +196,7 @@ public class ValidateEFTERAProviderInfo {
 	WebElement rdoBtnNoPri;
 	
 	HashMap<Integer,HashMap<String,String>> pageData=null;
+
 	
 	String fName=Helper.generateRandomAlphabetsString(5);
 	String lName=Helper.generateRandomAlphabetsString(5);
@@ -199,6 +206,11 @@ public class ValidateEFTERAProviderInfo {
 	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
 	
 	String expHeaderMsg="EPS Enrollment - Confirm Existing User";
+	
+	String frstName="";
+	String lstName="";
+	String email="";
+	
 	public ValidateEFTERAProviderInfo(TestBase testConfig)
 	{   
 		String expectedURL="/validateEFTERAProviderInfo";
@@ -290,6 +302,113 @@ public class ValidateEFTERAProviderInfo {
 		Element.enterData(firstProvMobField3, "89","Entered last four digits of phone number as : 89"  ,"firstProvMobField3");
 		Helper.compareEquals(testConfig, "", "true", firstProvMobAlert.getAttribute("disabled"));
 		return this;
+	}
+
+	public  ValidateEFTERAProviderInfo fillPrimaryNoDataProvInfo(String inputType)
+	{	
+		
+		String retypeEmail="";
+		if (inputType.equalsIgnoreCase("First Name"))
+			{
+			frstName=fName;
+			fName="";
+			}	
+		if (inputType.equalsIgnoreCase("Last Name"))
+		{
+			lstName=lName;
+			lName="";
+			fName=frstName;
+		}
+		if (inputType.equalsIgnoreCase("Email Address"))
+		{
+		email=firstProvEmailAdr;
+		firstProvEmailAdr="";
+		fName=frstName;
+		lName=lstName;
+		}
+		retypeEmail=firstProvEmailAdr;
+		if (inputType.equalsIgnoreCase("ReType Email Address"))
+		{	
+			
+		fName=frstName;
+		lName = lstName;
+		firstProvEmailAdr=email;
+		retypeEmail="";
+		}
+		Element.enterData(firstProvFName, fName,"Enter First name of first provider as : " + fName,"firstProvFirstName");
+		Element.enterData(firstProvLName, lName,"Enter Last name of first provider as : " + lName,"firstProvLastName");
+		
+		if (inputType.equalsIgnoreCase("Telephone No"))
+		{		
+			phNo="";
+			phNoLstField="";
+			Element.enterData(firstProvPhField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
+			Element.enterData(firstProvPhField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvPhField2");
+			Element.enterData(firstProvPhField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
+			
+		}
+		else
+		fillPhoneNumber("Primary");
+		
+		Element.enterData(firstProvEmail, firstProvEmailAdr, "Enter email address of first provider as : " +firstProvEmailAdr,"firstProvEmail");
+		Element.enterData(verifyFirstProvEmail, retypeEmail, "Retype email address of first provideras : " +retypeEmail,"verifyFirstProvEmail");
+		enrollmentInfoPageObj.setFrstName(fName);
+		enrollmentInfoPageObj.setLstName(lName);
+		if (inputType.equalsIgnoreCase("Telephone No"))
+		enrollmentInfoPageObj.setPhnNumbr(phNo+phNo+phNoLstField);
+		
+		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
+		Element.click(btnContinue, "Continue");
+		
+		VerifyError(inputType);
+		
+		return this;
+	}
+	public void VerifyError(String inputType)
+	{
+		switch(inputType)
+		{
+		case "First Name":
+		{	
+		
+		
+		WebElement error=Element.findElement(testConfig, "xpath", "//div[@class='margin-bottom-alpha']/div[1]/p");
+		Element.verifyTextPresent(error, "Missing Data");
+		break;
+		}
+		case "Last Name":
+		{
+			
+		
+		WebElement errorLstNm=Element.findElement(testConfig, "xpath", "//div[@class='margin-bottom-alpha']/div[3]/p");
+		Element.verifyTextPresent(errorLstNm, "Missing Data");
+		break;
+		}
+		case "Telephone No":
+		{
+			
+		
+		WebElement Telno=Element.findElement(testConfig, "xpath", "//div[@id='telephoneNumberContact1']/div[3]/p");
+		Element.verifyTextPresent(Telno, "Missing Data");
+		break;
+		}
+		case "Email Address":
+		{
+			
+		
+		WebElement errorEmlAd=Element.findElement(testConfig, "xpath", "//div[@id='emailmailContactOne']/p");
+		Element.verifyTextPresent(errorEmlAd, "Missing Data");
+		break;
+		}
+		case "ReType Email Address":
+		{
+			
+		
+		WebElement errorReTypEmlAd=Element.findElement(testConfig, "xpath", "//div[@id='verifyEmailContactOne']/div/p");
+		Element.verifyTextPresent(errorReTypEmlAd, "Missing Data");
+		break;
+		}
+		
 	}
 	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException
@@ -492,7 +611,292 @@ public class ValidateEFTERAProviderInfo {
 		Element.enterData(secondProvEmail, secondProvEmailAdr, "Enter email address of Second provider","secondProvEmail");
 		Element.enterData(verifySecondProvEmail, secondProvEmailAdr, "Retype email address of Second provider","verifySecondProvEmail");
 	}
+	
+	public ValidateEFTERAProviderInfo fillProvInfoWrngEmail(String inputType,String  inputFormat)
+	{
+		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
+		if (inputType.equals("Secondary"))
+		{
+		ArrayList <WebElement> secProv=new ArrayList<WebElement>();
+		secProv.add(secondProvFName);
+		secProv.add(secondProvLName);
+		secProv.add(secondProvEmail);
+		secProv.add(verifySecondProvEmail);
+		tmpProv=secProv;
+		}
+		if (inputType.equals("Primary"))
+		{
+		ArrayList <WebElement> prmProv=new ArrayList<WebElement>();
+		prmProv.add(firstProvFName);
+		prmProv.add(firstProvLName);
+		prmProv.add(firstProvEmail);
+		prmProv.add(verifyFirstProvEmail);
+		tmpProv=prmProv;
+		}
+		
+		Element.enterData(tmpProv.get(0), fName,"Enter First name of"+ inputType +"provider as: "+ fName,"ProvFirstName");
+		Element.enterData(tmpProv.get(1), lName,"Enter Last name of" + inputType + "provider as : "+ lName,"ProvLastName");
+		fillPhoneNumber(inputType);
+		String ProvEmailAdr=null;
+		if (inputFormat.equals("inpFormatOne")){
+		 ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "");
+		 	}
+		if (inputFormat.equals("inpFormatTwo")){
+			ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "abc.com");
+		}
+		if (inputFormat.equals("inpFormatThree")){
+			 ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "@xyzcom");
+		}
+		Element.enterData(tmpProv.get(2), ProvEmailAdr, "Enter email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmail");
+		Element.enterData(tmpProv.get(3), ProvEmailAdr, "Retype email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmailAdr");
+		Element.click(btnContinue, "Continue");
+		
+		
+		if (inputType.equals("Secondary"))
+		{
+		WebElement errorEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailcontact2']/p");
+		Element.verifyTextPresent(errorEmail, "Invalid Data");
+		}
+		WebElement errorRetypeEmail=null;
+		if (inputType.equals("Primary"))
+		errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailmailContactOne']/p");
+		else
+		 errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyemailContact2']/p");
+		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+		return this;
+	}
+	
 
+
+	
+	public  ValidateEFTERAProviderInfo fillProvMailComp(String inputType)
+	{	
+		
+		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
+		if (inputType.equals("Secondary"))
+		{
+		ArrayList <WebElement> secProv=new ArrayList<WebElement>();
+		secProv.add(secondProvFName);
+		secProv.add(secondProvLName);
+		secProv.add(secondProvEmail);
+		secProv.add(verifySecondProvEmail);
+		tmpProv=secProv;
+		}
+		if (inputType.equals("Primary"))
+		{
+		ArrayList <WebElement> prmProv=new ArrayList<WebElement>();
+		prmProv.add(firstProvFName);
+		prmProv.add(firstProvLName);
+		prmProv.add(firstProvEmail);
+		prmProv.add(verifyFirstProvEmail);
+		tmpProv=prmProv;
+		}
+		
+		
+		
+		Element.enterData(tmpProv.get(0), fName,"Enter First name of"+ inputType +"provider as: "+ fName,"ProvFirstName");
+		Element.enterData(tmpProv.get(1), lName,"Enter Last name of" + inputType + "provider as : "+ lName,"ProvLastName");
+		fillPhoneNumber(inputType);
+		Element.enterData(tmpProv.get(2), firstProvEmailAdr, "Enter email address of " + inputType + " provider as : " +firstProvEmailAdr,"ProvEmail");
+		
+		String retypeEmail=Helper.getUniqueEmailId();
+		if(!retypeEmail.equals(firstProvEmailAdr))
+		Element.enterData(tmpProv.get(3), retypeEmail, "Retype email address of " + inputType + " provider as : " +retypeEmail,"verifyProvEmail");
+		enrollmentInfoPageObj.setFrstName(fName);
+		enrollmentInfoPageObj.setLstName(lName);
+		enrollmentInfoPageObj.setEmail(firstProvEmailAdr);
+		Element.click(btnContinue, "Continue");
+		WebElement errorRetypeEmail=null;
+		
+		if (inputType.equals("Primary"))
+		errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='verifyEmailContactOne']/div/p");
+		
+		if (inputType.equals("Secondary"))
+		errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyemailContact2']/p");
+		Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+		return this;
+
+		
+	}
+	
+
+
+
+	public ValidateEFTERAProviderInfo fillProvInfoName(String inputType,String inputField,String data)
+	{
+		
+		String alphaNumChar="[a-zA-Z0-9]*";
+		int flag=1;
+		
+		if (data.matches(alphaNumChar))
+		flag=2;
+		
+		
+		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
+		if (inputType.equals("Secondary"))
+		{
+		ArrayList <WebElement> secProv=new ArrayList<WebElement>();
+		secProv.add(secondProvFName);
+		secProv.add(secondProvMName);
+		secProv.add(secondProvLName);
+		secProv.add(secondProvEmail);
+		secProv.add(verifySecondProvEmail);
+		tmpProv=secProv;
+		}
+		if (inputType.equals("Primary"))
+		{
+		ArrayList <WebElement> prmProv=new ArrayList<WebElement>();
+		prmProv.add(firstProvFName);
+		prmProv.add(firstProvMName);
+		prmProv.add(firstProvLName);
+		prmProv.add(firstProvEmail);
+		prmProv.add(verifyFirstProvEmail);
+		tmpProv=prmProv;
+		}
+		
+		
+		switch(inputField)
+		{
+		case "First Name":
+		Element.enterData(tmpProv.get(0), data,"Enter First name of Second provider as: "+ data,"ProvFirstName");
+		Element.enterData(tmpProv.get(2), lName,"Enter Last name of Second provider as : "+ lName,"ProvLastName");
+		break;
+		case "Middle Name":
+		Element.enterData(tmpProv.get(0), fName,"Enter First name of Second provider as: "+ fName,"ProvFirstName");
+		Element.enterData(tmpProv.get(1), data,"Enter Middle name of Second provider as: "+ data,"ProvMName");
+		Element.enterData(tmpProv.get(2), lName,"Enter Last name of Second provider as : "+ lName,"ProvLastName");
+		break;
+		case "Last Name":
+		Element.enterData(tmpProv.get(0), fName,"Enter First name of Second provider as: "+ fName,"ProvFirstName");
+		secondProvMName.clear();
+		Element.enterData(tmpProv.get(2), data,"Enter Last name of Second provider as : "+ data,"ProvLastName");
+		break;
+		}
+		fillPhoneNumber(inputType);
+		Element.enterData(tmpProv.get(3), secondProvEmailAdr, "Enter email address of Second provider","ProvEmail");
+		Element.enterData(tmpProv.get(4), secondProvEmailAdr, "Retype email address of Second provider","verifyProvEmail");
+		Element.click(btnContinue, "Continue");
+		
+		if (flag ==1)
+		verifyBSNames( inputType,inputField);
+		if (flag==2)
+		{	
+		Browser.wait(testConfig, 3);
+		Element.click(Element.findElement(testConfig, "linkText", "BACK"), "Back Button");
+		}
+		return this;
+	}
+	
+	
+	
+
+
+	public void verifyBSNames(String inputType,String element)
+	{
+		WebElement error=null;
+		if (element.equalsIgnoreCase("First Name"))
+		{
+			
+			if (inputType.equals("Secondary"))
+			error=Element.findElement(testConfig, "xpath", "//div[@id='fnameSecAdmin']/p");
+			else
+			error=Element.findElement(testConfig, "xpath", "//div[@class='margin-bottom-alpha']//p");	
+			Element.verifyTextPresent(error, "Invalid Data");
+		}
+		if (element.equalsIgnoreCase("Middle Name"))
+		{
+			if (inputType.equals("Secondary")) 
+			error=Element.findElement(testConfig, "xpath", "//div[@id='middleNmContact2']/div/p");
+			else
+		    error=Element.findElement(testConfig, "xpath", "//div[@id='middleNmContact1']//p");	
+			Element.verifyTextPresent(error, "Invalid Data");
+		}
+		if (element.equalsIgnoreCase("Last Name"))
+		{
+			if (inputType.equals("Secondary")) 
+			error=Element.findElement(testConfig, "xpath", "//div[@id='lastNmContact2']//p");
+			else
+			error=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset/div[3]/div[3]/p");	
+			Element.verifyTextPresent(error, "Invalid Data");
+		}
+	}
+	public ValidateEFTERAProviderInfo fillInvalidProvInfo(String provType,String inpdataTyp)
+	{
+		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
+		if (provType.equals("Secondary"))
+		{
+		ArrayList <WebElement> secProv=new ArrayList<WebElement>();
+		secProv.add(secondProvFName);
+		secProv.add(secondProvLName);
+		secProv.add(secondProvEmail);
+		secProv.add(verifySecondProvEmail);
+		tmpProv=secProv;
+		}
+		if (provType.equals("Primary"))
+		{
+		ArrayList <WebElement> prmProv=new ArrayList<WebElement>();
+		prmProv.add(firstProvFName);
+		prmProv.add(firstProvLName);
+		prmProv.add(firstProvEmail);
+		prmProv.add(verifyFirstProvEmail);
+		tmpProv=prmProv;
+		}
+		
+		String ProvEmailAdr=Helper.getUniqueEmailId();
+		String Telno=null;
+		Element.enterData(tmpProv.get(0), fName,"Enter First name of  provider as: "+ fName,"ProvFirstName");
+		Element.enterData(tmpProv.get(1), lName,"Enter Last name of  provider as : "+ lName,"ProvLastName");
+		fillInvalidPhoneNumber(provType,inpdataTyp);
+		Element.enterData(tmpProv.get(2), ProvEmailAdr, "Enter email address of  provider","ProvEmail");
+		Element.enterData(tmpProv.get(3), ProvEmailAdr, "Retype email address of  provider","verifyProvEmail");
+		Element.click(btnContinue, "Continue");
+		
+		if (provType.equals("Secondary"))
+		Telno=Element.findElement(testConfig, "xpath", "//fieldset[@class='margin-bottom-beta'][1]//p").getText();
+
+		if (provType.equals("Primary"))
+		Telno=Element.findElement(testConfig, "xpath", "//div[@id='telephoneNumberContact1']/div[3]/p").getText();
+		
+		Helper.compareEquals(testConfig, "phone no comparision", Telno, "Invalid Data");
+		return this;
+	}
+	
+	
+	
+	public void fillInvalidPhoneNumber(String input,String InpdataType)
+	{
+		 
+		if (InpdataType.equals("nonNumeric"))
+		{
+		phNo=Helper.generateRandomAlphaNumericString(3);
+		phNoLstField=Helper.generateRandomAlphaNumericString(4);
+		}
+		if (InpdataType.equals("Incomplete"))
+		{
+		phNo = Long.toString(Helper.generateRandomNumber(2));
+		phNoLstField = Long.toString(Helper.generateRandomNumber(3));
+		}
+		switch(input)
+		{
+		case "Primary":
+		{
+			
+			Element.enterData(firstProvPhField1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
+			Element.enterData(firstProvPhField2, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvPhField2");
+			Element.enterData(firstProvPhField3, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
+			break;
+		 } 
+
+		case "Secondary":
+				 {
+				   Element.enterData(secondProvPhField1, phNo, "Entered first field of phone number as :" + phNo,"secondProvPhField1");
+				   Element.enterData(secondProvPhField2, phNo, "Entered second field of phone number as :" + phNo,"secondProvPhField2");
+				   Element.enterData(secondProvPhField3, phNoLstField, "Entered third field of phone number as :" + phNoLstField,"secondProvPhField3");
+				 break;
+				  } 
+		}
+		 
+	}
 	
 	public FinancialInstitutionInfoPage clickContinue()
 	{
@@ -883,4 +1287,16 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
 		
 	}
+	
+	public void valiDateButtons()
+	{
+		String continueBut=Element.findElement(testConfig, "xpath", "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']").getText();
+		String backBut=Element.findElement(testConfig, "xpath", "//a[@class='button--secondary enrollment-container-footer__btn-margin float-right']").getText();
+		String cancelEnrol=Element.findElement(testConfig, "xpath", "//a[@class='button--primary-hover float-right cancel-activation']").getText();
+		Helper.compareContains(testConfig, "Continue Button", "CONTINUE", continueBut);
+		Helper.compareContains(testConfig, "Back Button", "BACK", backBut);
+		Helper.compareContains(testConfig, "Cancel Enrollment Button", "CANCEL ENROLLMENT", cancelEnrol);
+	}
+	
+	
 }

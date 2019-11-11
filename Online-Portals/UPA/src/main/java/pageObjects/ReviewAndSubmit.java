@@ -48,6 +48,7 @@ public class ReviewAndSubmit {
 	@FindBy(name="enrollerTele3")
 	WebElement phField3;
 	
+
 	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div[1]/a")
 	WebElement btnEditOrg;
 	
@@ -55,6 +56,10 @@ public class ReviewAndSubmit {
 	List<WebElement> divOrgInfo;
 	
 	
+
+	@FindBy(xpath = "//a[@class='button--primary-hover float-right margin-top-delta margin-top-delta margin-bottom-delta']")
+    WebElement edtlnk;
+
 	private TestBase testConfig;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
@@ -107,6 +112,7 @@ public class ReviewAndSubmit {
 		return this;
 	}
 	
+
 	public ProviderInformationEFTERAEnroll clickEditOrgButton()
 	{
 		Element.verifyElementPresent(btnEditOrg, "Edit Organization Button");
@@ -116,7 +122,21 @@ public class ReviewAndSubmit {
 	
 	public ReviewAndSubmit verifyOrgInfo()
 	{
-		System.out.println("KUCH KUCH TO HOGA"+divOrgInfo.get(1).findElements(By.tagName("div")).get(2).findElements(By.tagName("dl")).get(0).findElement(By.tagName("dd")));
+		
 		return this;
 	}
+
+	public ProviderInformationEFTERAEnroll clickEditLink()
+	{
+		Element.click(edtlnk, "Edit Hyperlink");
+		String expectedURL="billingServiceInformationBSEnroll";
+		Browser.verifyURL(testConfig, expectedURL);
+		
+		return new ProviderInformationEFTERAEnroll(testConfig).verifyEditable();
+		 
+		
+	}
+	
+	
+
 }

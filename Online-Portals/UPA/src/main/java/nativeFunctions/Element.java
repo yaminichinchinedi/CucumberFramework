@@ -33,6 +33,31 @@ import main.java.reporting.LogTemp;
 	 * @Argument-WebElement,data to be entered, 
 	 * description and name of element
 	 */
+	 
+	 public static void clearData(WebElement element, String namOfElement)
+	 {
+		 try{
+				element.clear();
+				LogTemp.Comment(namOfElement+" " +"has been cleared successfully");
+				}
+					 
+		 catch(NoSuchElementException e)
+			{
+				Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
+			}
+			
+			catch(ElementNotVisibleException e)
+			{
+				Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+			}
+		 catch(Exception e)
+			{
+				LogTemp.Comment("Can not clear the element" + " " + namOfElement);
+				e.printStackTrace();
+			}
+		 
+	 }
+	 
 	public static void enterData(WebElement element,String data, String description,String namOfElement)
 	{
 		try{
@@ -257,7 +282,33 @@ import main.java.reporting.LogTemp;
 	}
 	
 	
-	 
+	
+
+	//Verifies element is present on the page 
+	public static void verifyElementVisiblity(WebElement button,String namOfButton)
+	{
+		try
+		{
+			if(button.isEnabled()== true)
+		
+		 {
+			String successMsg="Verified " + namOfButton + " is enabled";
+			Log.Pass(successMsg);
+		 }
+		else 
+		{
+			String failureMsg=namOfButton + " is not enabled on the page";
+			Log.Fail(failureMsg);
+		}
+	}
+	catch(Exception e)
+	{
+		Log.Fail(namOfButton +" is not present on the page and exception is :" + "<br>" + e);
+			e.printStackTrace();
+	}
+}
+	
+	
 	
 	//Verifies element is present on the page 
 	public static void verifyElementPresent(WebElement element,String namOfElement)
@@ -601,7 +652,10 @@ import main.java.reporting.LogTemp;
 			  return testConfig.driver.findElement(By.linkText(locatorValue));
 		  
 		      case "partialLinkText":
-			  return testConfig.driver.findElement(By.partialLinkText(locatorValue));  
+			  return testConfig.driver.findElement(By.partialLinkText(locatorValue));
+			  
+		      case "className":
+			  return testConfig.driver.findElement(By.className(locatorValue)); 
 		
 		     default:
 		     return null;  

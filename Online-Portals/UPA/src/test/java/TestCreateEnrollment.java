@@ -20,8 +20,10 @@ import main.java.pageObjects.Footer;
 import main.java.pageObjects.HeaderContentValidation;
 import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
+import main.java.pageObjects.ProviderInformationEFTERAEnroll;
 import main.java.pageObjects.ThankYouPage;
 import main.java.pageObjects.UPARegistrationPage;
+import main.java.pageObjects.UXDSPageValidation;
 import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
@@ -634,7 +636,7 @@ public class TestCreateEnrollment extends TestBase{
 		int excelRow=2;
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow(); 
-		beginEnrollmentPage.selectHowYouHeard(option).enrollAs(excelRow).clickContinue().clickContinue().validateBillingService("BSName", "&*min").validateBillingService("Street", "*(*(*").validateBillingService("Street", "PO BOX 7530").validateBillingService("City", "%^&&").validateBillingService("ZipCode", "anjhu").validateBillingService("ZipCode", "70165");
+		beginEnrollmentPage.selectHowYouHeard(option).enrollAs(excelRow).clickContinue().clickContinue().validateBillingService("BSName", "&*min","CONTINUE").validateBillingService("Street", "*(*(*","CONTINUE").validateBillingService("Street", "PO BOX 7530","CONTINUE").validateBillingService("City", "%^&&","CONTINUE").validateBillingService("ZipCode", "anjhu","CONTINUE").validateBillingService("ZipCode", "70165","CONTINUE");
 	}
 		
 	@TestDetails(author="Amit")
@@ -1244,5 +1246,380 @@ public class TestCreateEnrollment extends TestBase{
 			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().verifyFederalW9link();
 			
 		 }
+	
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS001_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Edit option and "
+	      +"TS003_Create Enrollment_BS_Review and Submit - edit Billing Service Information page text is content managed"
+			                    + "TS004_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Previously input data")
+	   public void testUserEnrollmntAsBSClckReiewNSbmtEdit() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().verifyUITextFromDBforBS();
+			
+			
+		 }
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS002_Create Enrollment_BS_Review and Submit - edit Billing Service Information page content matches to UXDS html"
+	      )
+	   public void testUserEnrollmntAsBSClckUXDS() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().verifyContentBSWithUXDS();
+			
+			
+		 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+		 description="US1177082_TS005_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Header")
+	   public void testUserEnrollmntAsBSVerifyHeaders() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink();
+			String BoldFontwthCircle="Billing Service Information";
+			new HeaderContentValidation(testConfig).verifyHeaders(BoldFontwthCircle);
+		}
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS006_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Edit option and "+
+	    		                  "TS007_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Cancel Changes"
+			                   )
+	   public void testUserEnrollmntAsBSVerifyFootButton() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().verifyFooterButton();
+			
+			
+		 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS010_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Error message_Billing Service Name_Street_City_State_Zip_Missing Data "
+			                   )
+	   public void testUserEnrollmntAsBSverifyErrorMsg() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().verifyErrorMsgNull();
+			
+			
+		 }
 
+	//
+	
+
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS011_TS012_TS013_TS014_TS016_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Error message_Billing Service Name_Street_City_State_Zip_Missing Data "
+			                   )
+	   public void testUserEnrollmntAsBSverifySpecChar() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().validateBillingService("BSName", "&*min","SAVE CHANGES").validateBillingService("Street", "*(*(*","SAVE CHANGES").validateBillingService("Street", "PO BOX 7530","SAVE CHANGES").validateBillingService("City", "%^&&","SAVE CHANGES").validateBillingService("ZipCode", "anjhu123","SAVE CHANGES").validateBillingService("ZipCode", "70165","SAVE CHANGES");
+			
+			
+		 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Billing Service",
+	      description="US1177082_TS015_Create Enrollment_BS_Review and Submit - edit Billing Service Information_Error message_Billing Service Name_Street_City_State_Zip_Missing Data "
+			                   )
+	
+	   public void testUserEnrollmntAsBSClckOnSavChng() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRowBS=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRowBS).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().clickContinueToW9().uploadW9().clickEditLink().fillProviderOrgInfo();
+			
+			
+		 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0028_Validate the error message when non numeric data entered for Secondary Administrator Telephone Number."+
+							"TS_0029_Validate the error message when not complete data entered for Secondary Administrator Telephone Number.") 
+	public void testValidateErrMsg() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidProvInfo("Secondary","Incomplete").fillInvalidProvInfo("Secondary","nonNumeric");	
+		
+	 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0030_Validate the error message when data entered in not proper format for Secondary Administrator Email Address.") 
+	public void testValidateEmailErr() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvInfoWrngEmail("Secondary","inpFormatOne").fillProvInfoWrngEmail("Secondary","inpFormatTwo").fillProvInfoWrngEmail("Secondary","inpFormatThree");	
+		
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0031_Validate the error message when data entered for Secondary Administrator Email Address does not match email address.") 
+	public void testValidateCompEmail() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvMailComp("Secondary");	
+		
+	 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0032_Validate the error message when alphanumeric data entered for Secondary Administrator First Name."+
+							"TS_0034_Validate the error message when alphanumeric data entered for Secondary Administrator Middle Name."+
+			"TS_0036_Validate the error message when alphanumeric data entered for Secondary Administrator Last Name.") 
+	public void testValidateErrMsgNames() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvInfoName("Secondary","First Name",Helper.generateRandomAlphaNumericString(5)).fillProvInfoName("Secondary","Middle Name",Helper.generateRandomAlphaNumericString(5)).fillProvInfoName("Secondary","Last Name",Helper.generateRandomAlphaNumericString(5));	
+		
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0033_Validate the error message when special characters entered for Secondary Administrator First Name."+
+							"TS_0035_Validate the error message when special characters entered for Secondary Administrator Middle Name."+
+			"TS_0037_Validate the error message when special characters entered for Secondary Administrator Last Name.") 
+	public void testValidateSecSpCharErrMsgNames() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvInfoName("Secondary","First Name","&*min").fillProvInfoName("Secondary","Middle Name", "*(*(*").fillProvInfoName("Secondary","Last Name", "%^&&");	
+		
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0040_Validate the error message when no data entered for Primary Administrator First Name."+
+										"TS_0041_Validate the error message when no data entered for Primary Administrator Last Name."+
+										"TS_0042_Validate the error message when no data entered for Primary Administrator Telephone Number."+
+										"TS_0043_Validate the error message when no data entered for Primary Administrator Email Address."+
+										"TS_0044_Validate the error message when no data entered for Primary Administrator Re-type Email Address."
+														) 
+	public void testValidateWthBlnkData() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().
+																				fillPrimaryNoDataProvInfo("First Name").
+																				fillPrimaryNoDataProvInfo("Last Name").
+																				fillPrimaryNoDataProvInfo("Email Address").
+																				fillPrimaryNoDataProvInfo("ReType Email Address").
+																				fillPrimaryNoDataProvInfo("Telephone No");	
+		
+	 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0045_Validate the error message when non numeric data entered for Secondary Administrator Telephone Number."+
+							"TS_0046_Validate the error message when not complete data entered for Secondary Administrator Telephone Number.") 
+	public void testValidatePrmErrMsg() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		//beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillInvalidPrmryProvInfo();	
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillInvalidProvInfo("Primary","Incomplete").fillInvalidProvInfo("Primary","nonNumeric");	
+
+		
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0047_Validate the error message when data entered in not proper format for Primary Administrator Email Address.") 
+	public void testValidatePrmryEmailErr() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvInfoWrngEmail("Primary","inpFormatOne").fillProvInfoWrngEmail("Primary","inpFormatTwo").fillProvInfoWrngEmail("Primary","inpFormatThree");
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0048_Validate the error message when data entered for Primary Administrator Email Address does not match email address.") 
+	public void testValidateSecProvEmailComp() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().fillProvMailComp("Primary");	
+		
+	 }
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0049_Validate the error message when alphanumeric data entered for Primary Administrator First Name."+
+							"TS_0051_Validate the error message when alphanumeric data entered for Primary Administrator Middle Name."+
+							"TS_0053_Validate the error message when alphanumeric data entered for Primary Administrator Last Name.") 
+	public void testValidateErrMsgFirstNames() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillProvInfoName("Primary","First Name",Helper.generateRandomAlphaNumericString(5)).fillProvInfoName("Primary","Middle Name",Helper.generateRandomAlphaNumericString(5)).fillProvInfoName("Primary","Last Name",Helper.generateRandomAlphaNumericString(5));
+	 }
+	
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0050_Validate the error message when special characters entered for Primary Administrator First Name."+
+							"TS_0052_Validate the error message when special characters entered for Primary Administrator Middle Name."+
+			"TS_0054_Validate the error message when special characters entered for Primary Administrator Last Name.") 
+	public void testValidatePrmrySpCharErrMsgNames() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().fillProvInfoName("Primary","First Name","&*min").fillProvInfoName("Primary","Middle Name", "*(*(*").fillProvInfoName("Primary","Last Name", "%^&&");
+	 }
+
+	
+	@TestDetails(author="Rahul")
+	@Test(priority=4,groups="Create Enrollment",description="US1247779_TS_0055_Validate the error message when non numeric data entered for Secondary Administrator Telephone Number.")
+							 
+	public void testValidateButtons() throws IOException
+	{
+		String option="Health plan communication";
+		int excelRow=1;
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+		beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue().fillProviderOrgInfo().valiDateButtons();	
+		
+	 }
+	
+	
+	/**
+	 * @author umadhavi
+	 * @throws IOException
+	 */
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=4,groups="Billing Service",description="US1350550-TS_0001_Validate the page upon selection of Continue from the Enrollment Type page for not enrolled TIN.")
+	   public void validatePageForTinNotEnrolled() throws IOException
+		 {
+			String option="Health plan communication";
+			int excelRow=2;
+			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
+			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
+			BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
+			beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().verifyTINStatus();
+		 }
+	
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0003_Validate the layout of the Congratulations, your TIN is eligible for enrollment page.",groups="Billing Service")
+	void validateLayoutForInactiveEnrolledTin() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyContentTinEligibleBSWithUXDS();	
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0004_Validate the content of the Congratulations, your TIN is eligible for enrollment page.",groups="Billing Service")
+	void validateContentForInactiveEnrolledTin() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyContentManagedForTinNotEnrolledBS();	
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0005_Validate the page navigation upon clicking This link.",groups="Billing Service")
+	void validatePageNavigationThisLink() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyW9Form();		
+	}
+	
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_0008/TS_0009",groups="Billing Service")
+	void validatePopUpCancelBSEnrollmentAsNo() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyCancelAndContinueBtn().clickCancel().confirmCancelNo().clickCancel().confirmCancelYes();		
+	}
+
+	@TestDetails(author="Madhavi")
+	@Test(priority=3,description="US1350550-TS_002/TS_006/TS_007")
+	void validateBSEnrollment() throws IOException
+	{
+		int excelRowNo=2;
+		String status = "InactiveUnBlockedTIN";
+		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);       
+		BeginEnrollmentContinue beginEnrollmentContinue = registrationPage.clickEnrollNow().selectHowYouHeard("Health plan communication");		
+		beginEnrollmentContinue.getTin(excelRowNo, status).clickContinue().verifyTINStatus().verifyCancelAndContinueBtn().clickCancel().verifyBSNotEnrolledBtnCancelPopup();	
+	}
+	
 }

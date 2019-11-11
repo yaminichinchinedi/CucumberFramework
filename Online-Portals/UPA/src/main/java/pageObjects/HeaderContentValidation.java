@@ -8,6 +8,7 @@ import main.java.Utils.Helper;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -24,8 +25,13 @@ public class HeaderContentValidation {
 	@FindBy(xpath = "//span[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeaders;
 	
+
 	@FindBy(xpath = "//a[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeadersBS;
+
+	//@FindBy(xpath = "//span[@class='progress-indicator__title']")
+	//List<WebElement> OrgInfoHeadersBS;
+
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	
@@ -51,6 +57,8 @@ public class HeaderContentValidation {
 			Headers=OrgInfoHeaders;
 		else
 			Headers=OrgInfoHeadersBS;
+		if (Headers.size()==0)
+		Log.Fail("Unable to locate Headers path.");
 		for (int i = 0; i < (Headers.size()); i++) {
 			if ( !(Headers.get(i).getText().replace("\n", " ")).equalsIgnoreCase(BoldFontwthCircle) 
 					&& headers.get(i).equalsIgnoreCase((Headers.get(i).getText().replace("\n", " "))))
@@ -71,7 +79,6 @@ public class HeaderContentValidation {
 		 List<String> headersAO = Arrays.asList("Organization Information","Identify Administrators", "Financial Institution Information", "Upload W9", "Review and Submit","Enrollment Submitted");
 		 List<String> headersVO = Arrays.asList("Organization Information","Identify Administrators", "Upload W9", "Review and Submit","Enrollment Submitted");
 		 List<String> headersBS = Arrays.asList("Billing Service Information","Identify Administrators", "Upload W9", "Review and Submit","Enrollment Submitted");
-			
 		 switch(enrollmentInfoPageObj.getTinIdentifier())
 		 {
 		 case "AV":

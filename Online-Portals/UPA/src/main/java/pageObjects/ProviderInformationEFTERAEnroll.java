@@ -1,7 +1,9 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.Color;
 import main.java.nativeFunctions.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -19,10 +22,13 @@ import org.openqa.selenium.support.PageFactory;
 
 
 
+import org.testng.Assert;
+
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -130,11 +136,31 @@ public class ProviderInformationEFTERAEnroll {
 	WebElement errorLink;
 	
 	@FindBy(name="btnCancel")
-	WebElement btnCanclChng;
+	WebElement btnCancel;
 	
 	@FindBy(linkText="SAVE CHANGES")
-	WebElement btnSavChng;
-		
+	WebElement savChanges;
+
+	@FindBy(xpath="//div[@id='bsNameField']/label")
+	WebElement lblbsName;
+	
+	@FindBy(xpath = "//section[1]/p") 
+	WebElement billingServiceInfoReqTxtror;
+	
+	@FindBy(xpath="//div[@class='margin-top-beta']/h4")
+	WebElement billingServiceInfoServiceAddrs;
+	
+	@FindBy(xpath="//div[@class='margin-top-beta']//p")
+	WebElement billingServiceInfoSerAdrsTxt;
+	
+	@FindBy(xpath = "//h2[@class='margin-bottom-beta']") 
+	WebElement billingServiceInfoIdentInfo;
+	
+	@FindBy(xpath = "//*[@class='lg']") 
+	WebElement billingServiceInfoIdentifiers;
+	
+	@FindBy(xpath = "//ul[@class='tin-list']//div/span") 
+	WebElement billingServiceInfoTin;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
 
@@ -186,7 +212,13 @@ public class ProviderInformationEFTERAEnroll {
 		
 //		Element.click(chkOther, "Other sub checkbox");
 
-		Element.click(btnContinue, "Continue button");
+	//	Element.click(btnContinue, "Continue button");
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+
+		//Same xpath has been used both for Continue and save changes button.
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']/footer/a[1]"), "Continue/Save Changes Button");
+		else
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
@@ -196,6 +228,7 @@ public class ProviderInformationEFTERAEnroll {
 		Element.click(btnContinue, "Continue Button");
 		return new ValidateEFTERAProviderInfo(testConfig);
 	}
+
 
 	public ProviderInformationEFTERAEnroll verifyUITextFromDB()  
 	{
@@ -218,6 +251,35 @@ public class ProviderInformationEFTERAEnroll {
 		Element.verifyElementPresent(lblBusinessAddress, "Business Address Label");
 		Element.verifyElementPresent(btnContinue, "Continue button");
 		Element.verifyElementPresent(btnCancelEnrollment, "Continue button");
+		return this;
+		
+	}
+	
+	public ProviderInformationEFTERAEnroll verifyUITextFromDBforBS() throws IOException  
+	{
+		int sqlRowNo=165;
+		
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		Element.expectedWait(lblbsName, testConfig, "Billing Service Name", "Billing Service Name");
+		
+		
+		String BSInfoReqTxtror=dataTest.get(1).get("TEXT_VAL")+"\n"+dataTest.get(2).get("TEXT_VAL")+"() "+dataTest.get(3).get("TEXT_VAL");
+		
+		Helper.compareEquals(testConfig, "BS Info Req. Text", billingServiceInfoReqTxtror.getText(), BSInfoReqTxtror);
+		
+		Helper.compareEquals(testConfig, "Billing Service Name", lblbsName.getText(), dataTest.get(4).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Billing Service Name", billingServiceInfoServiceAddrs.getText(), dataTest.get(5).get("TEXT_VAL"));
+		
+		String BSInfoSerAdrsTxt=dataTest.get(6).get("TEXT_VAL")+" "+dataTest.get(7).get("TEXT_VAL")+dataTest.get(8).get("TEXT_VAL");
+		Helper.compareEquals(testConfig, "BS Info Address Text", billingServiceInfoSerAdrsTxt.getText(), BSInfoSerAdrsTxt);
+		
+		Helper.compareEquals(testConfig, "BS Identifier Info.", billingServiceInfoIdentInfo.getText(), dataTest.get(9).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "BS Identifiers", billingServiceInfoIdentifiers.getText(), dataTest.get(10).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Billing Service TIN", billingServiceInfoTin.getText(), dataTest.get(11).get("TEXT_VAL"));
+		
 		return this;
 		
 	}
@@ -333,7 +395,10 @@ public class ProviderInformationEFTERAEnroll {
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for State dropdown" , expectedColor, Color.fromString(drpDwnState.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-		Element.verifyTextPresent(zipCode1.findElement(By.xpath("following-sibling::p")), expectedText);
+		
+		//Element.verifyTextPresent(zipCode1.findElement(By.xpath("//following-sibling::p")), expectedText);
+		Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//*[@id='EFTERAenrBSForm']/section[1]/div[3]/div[2]/fieldset/div/p")), expectedText);
+		//Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//div[id='bsZipField']//following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(zipCode1.getCssValue("border-top-color")).asHex());
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(zipCode2.getCssValue("border-top-color")).asHex());
 		
@@ -357,7 +422,7 @@ public class ProviderInformationEFTERAEnroll {
 		return this;
 	}
 	
-	public  ProviderInformationEFTERAEnroll validateBillingService(String field,String data) throws IOException {
+	public  ProviderInformationEFTERAEnroll validateBillingService(String field,String data,String ButtonType) throws IOException {
 		WebElement ele=null;
 		switch(field)
 		{
@@ -383,7 +448,19 @@ public class ProviderInformationEFTERAEnroll {
 				break;
 		}
 		fillBillingServiceInfo(field);
+
+		if (ButtonType.equalsIgnoreCase("CONTINUE"))
 		Element.click(btnContinue, "Continue button");
+		
+		else
+		{
+		Element.click(savChanges, "Save Changes button");
+		Element.verifyElementVisiblity(btnCancel, "Cancel Button");
+		
+		}
+		
+		
+		
 		verifyBSError(ele);
 		return this;
 
@@ -432,15 +509,6 @@ public class ProviderInformationEFTERAEnroll {
 		
 	}
 	
-	public ProviderInformationEFTERAEnroll verifyEditable()
-	{
-		Helper.compareEquals(testConfig, "Organisation Name", enrollmentInfoPageObj.getBusinessName(),providerName.getAttribute("value"));
-		Helper.compareEquals(testConfig, "City", enrollmentInfoPageObj.getCity(),city.getAttribute("value"));
-		Helper.compareEquals(testConfig, "Street", enrollmentInfoPageObj.getStreet(),street.getAttribute("value"));
-		Helper.compareEquals(testConfig, "State", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
-		Helper.compareEquals(testConfig, "Zip Code", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
-		return this;
-	}
 	
 	public ProviderInformationEFTERAEnroll verifyCanclSavChangeBtns()
 	{
@@ -455,4 +523,119 @@ public class ProviderInformationEFTERAEnroll {
 		return new ReviewAndSubmit(testConfig);
 	}
 	
+
+	public ProviderInformationEFTERAEnroll verifyEditable(){
+		
+		//Comparision of various fields with previous input
+		
+		Helper.compareEquals(testConfig, "BS Name Value comparision", enrollmentInfoPageObj.getBusinessName(), bsName.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Street Value comparision", enrollmentInfoPageObj.getStreet(), street.getAttribute("value"));
+		Helper.compareEquals(testConfig, "City Value comparision", enrollmentInfoPageObj.getCity(), city.getAttribute("value"));
+		Helper.compareEquals(testConfig, "State Value comparision", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
+		Helper.compareEquals(testConfig, "zip code Value comparision", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
+		
+		//Checking of editable criteria
+		if (    (bsName.getAttribute("readonly") == null)&&
+				(street.getAttribute("readonly")== null) &&
+				(city.getAttribute("readonly")== null) &&
+				(drpDwnState.getAttribute("readonly")==null) && 
+				(zipCode1.getAttribute("readonly")== null)
+				)
+		Log.Pass("Billing service fields are editable.");
+		else
+		Log.Fail("Billing service fields are readOnly.");
+		return this;
+	}
+	public void verifyFooterButton()
+	{
+		Element.verifyElementPresent(btnCancel, "Cancel Changes Button");
+		Element.verifyElementPresent(savChanges, "Save Changes Button");
+		
+		Element.click(btnCancel, "Cancel Changes Button");
+		String expectedURL="cancelBSReviewSubmit";
+		Browser.verifyURL(testConfig, expectedURL);
+			}
+	
+	public void verifyClickSaveChanges()
+	{
+		
+		if (savChanges.isDisplayed() && savChanges.isEnabled())
+		{
+		Log.Pass("Save changes button are present on webpage");
+		savChanges.click();
+		
+		}
+		else
+			Log.Fail("Either Cancel changes or Save changes button or Both are not present on webpage");
+	}
+	public void verifyErrorMsgNull()
+	{
+		Element.clearData(bsName,  "Billing Service Name"); 
+		Element.clearData(street,  "Street Field ");
+		Element.clearData(city,  "City Field ");
+		Element.clearData(bsName,  "Billing Service Name");
+
+		 Element.selectByVisibleText(drpDwnState, "Select State", "default select state option");
+		 Element.clearData(zipCode1,  "Zip Code1 field");
+		 Element.clearData(zipCode2,  "Zip Code2 field");
+
+		
+		Element.click(savChanges, "Save Changes Button");
+		
+		
+		List <String> expectedErrorMsgs;
+		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
+		 expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
+		for(int i=0;i<expectedErrorMsgs.size();i++)
+		{
+			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
+		}
+		verifyMissingDataErrorMsg();
+		
+	}
+	
+	public void verifyContentBSWithUXDS() throws IOException
+	{
+
+		ArrayList<String> listUI = new ArrayList<String>();
+		ArrayList<String> listUXDS = new ArrayList<String>();
+		listUI.add(testConfig.driver.findElement(By.className("progress-indicator__container")).getText());
+		listUI.add(testConfig.driver.findElement(By.xpath("//h1 [text()='Billing Service Information']")).getText());
+		listUI.add( billingServiceInfoReqTxtror.getText());
+		listUI.add( lblbsName.getText());
+		listUI.add( billingServiceInfoServiceAddrs.getText());
+		listUI.add( billingServiceInfoSerAdrsTxt.getText());
+		listUI.add( billingServiceInfoIdentInfo.getText());
+		listUI.add( billingServiceInfoIdentifiers.getText());
+		listUI.add(billingServiceInfoTin.getText());
+
+		
+		new UXDSPageValidation(testConfig,"Enrollment BS Billing Service");
+		
+		
+		listUXDS.add(Element.findElement(testConfig, "className", "progress-indicator__container").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//h1 [text()='Billing Service Information']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//form//p").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//label [text()='Billing Service Name']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//div[@class='margin-top-beta']/h4").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//div[@class='margin-top-beta']//p").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//h2 [text()='Billing Service Identifiers Information']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//strong [text()='Billing Service Identifiers']").getText());
+		listUXDS.add(Element.findElement(testConfig, "xpath", "//span [text()='Billing Service TIN ']").getText());
+	
+		Helper.compareEquals(testConfig, "UI and UXDS comparision", listUXDS, listUI);
+		if (listUI.equals(listUXDS))
+		{
+			Log.Pass( "matches in both UI and UXDS");
+		}
+		else
+		{
+			Log.Fail( "matches in both UI and UXDS");
+		}
+		
+
+	//	return this;
+	}
+	
+
 }
