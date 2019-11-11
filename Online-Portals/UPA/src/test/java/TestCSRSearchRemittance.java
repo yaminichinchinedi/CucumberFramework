@@ -7,12 +7,9 @@ import java.text.ParseException;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.LoginCSR;

@@ -409,6 +409,7 @@ public class ValidateEFTERAProviderInfo {
 		break;
 		}
 		
+		}
 	}
 	
 	public ValidateEFTERAProviderInfo verifyDupEmailError(String provType) throws IOException

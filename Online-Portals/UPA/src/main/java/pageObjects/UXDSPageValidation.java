@@ -23,9 +23,6 @@ public class UXDSPageValidation   {
 	@FindBy(linkText="Enrollment HO Identify Administrators")
 	WebElement EnrollHOIdentifyAdmin;
 
-	@FindBy(linkText="Enrollment BS Billing Service")
-	WebElement EnrollBS;
-	
 	@FindBy(xpath="/html/body/section[1]/fieldset/section[4]/ul[1]/li[29]/a")
 	WebElement TinElligibleBSUXDS;
 

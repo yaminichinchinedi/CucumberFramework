@@ -77,7 +77,7 @@ public class BeginEnrollment {
 	@FindBy(xpath="//form[@id='EFTERAenrForm']/div/div/div/span[2]")
 	WebElement beginEnrlmntQuesOnline;
 	
-	@FindBy(linkText="CANCEL ENROLLMENT")
+	@FindBy(linkText="Cancel Enrollment")
 	WebElement btnCancelEnrollment;
 	
 	@FindBy(linkText="Privacy Policy")

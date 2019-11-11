@@ -32,7 +32,7 @@ private TestBase testConfig;
 	}
 	
 	public UploadW9 clickContinue() {
-//		chooseACHVCP();
+		chooseACHVCP();
 		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig, btnContinue, "Continue");
 		return new UploadW9(testConfig) ;

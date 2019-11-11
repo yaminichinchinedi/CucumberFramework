@@ -512,14 +512,14 @@ public class ProviderInformationEFTERAEnroll {
 	
 	public ProviderInformationEFTERAEnroll verifyCanclSavChangeBtns()
 	{
-		Element.verifyElementPresent(btnCanclChng, "CANCEL CHANGES button");
-		Element.verifyElementPresent(btnSavChng, "SAVE CHANGES button");
+		Element.verifyElementPresent(btnCancel, "CANCEL CHANGES button");
+		Element.verifyElementPresent(savChanges, "SAVE CHANGES button");
 		return this;
 	}
 	
 	public ReviewAndSubmit clickCanclChangBtn()
 	{
-		Element.click(btnCanclChng, "CANCEL CHANGES button");
+		Element.click(btnCancel, "CANCEL CHANGES button");
 		return new ReviewAndSubmit(testConfig);
 	}
 	

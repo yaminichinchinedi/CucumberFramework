@@ -127,9 +127,6 @@ public class SearchRemittanceSearchCriteria {
 	WebElement btnSearch;
 	Map dataRequiredForSearch;
 	
-	@FindBy(linkText="Home")
-	WebElement home;
-	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
 		this.testConfig=testConfig;

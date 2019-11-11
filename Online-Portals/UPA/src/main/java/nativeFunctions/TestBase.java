@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -57,7 +58,7 @@ import main.java.reporting.LogTemp;
 
 public class TestBase {
 
-	public static WebDriver driver;
+	public WebDriver driver;
 	static String driverPath = "D:\\chromedriver\\";
 	public static HashMap<String, TestDataReader> testDataReaderHashMap = new HashMap<String, TestDataReader>();
 	public static HashMap<Integer, HashMap<String, String>> genericErrors = new HashMap<Integer, HashMap<String, String>>();
@@ -222,18 +223,7 @@ public class TestBase {
 		
 		//For handling pop up -Loading of unpacked extensions is disabled by the administrator
 		options.setExperimentalOption("useAutomationExtension", false);
-		
-		options.addArguments("enable-automation");
-		//options.addArguments("--headless");
-		//options.addArguments("--window-size=1920,1080");
-		options.addArguments("--no-sandbox");
-		options.addArguments("--disable-extensions");
-		options.addArguments("--dns-prefetch-disable");
-		options.addArguments("--disable-gpu");
-		
-		
-		//WebDriver driver = new ChromeDriver(options);
-		 driver = new ChromeDriver(options);
+		WebDriver driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
 	}
@@ -355,6 +345,7 @@ public class TestBase {
 	{
 		setDriver(runtimeProperties.getProperty("BrowserType"));
 		LogTemp.Comment("Running on environment" + System.getProperty("env"));
+		testConfig.putRunTimeProperty("createDt",Helper.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
 	}
 	
 	@BeforeMethod()	
@@ -383,12 +374,14 @@ public class TestBase {
 	public void endTest(ITestResult iTestResult)
 	{
 		Log.endTest(iTestResult);
+		String testClass=iTestResult.getTestClass().getName().replace("test.java.", "");
+		testConfig.putRunTimeProperty("testClass", testClass);
 
 	}
 	
 	@AfterTest
 	public void tearDown() {
-    //Browser.closeBrowser(testConfig);
+    Browser.closeBrowser(testConfig);
 		
 	}	
 	
@@ -409,15 +402,15 @@ public class TestBase {
 	{
 	}
 
-	@AfterClass()
-	public void deinit()
-	{
-		deinitializeData();
-	}
-	
-	public void deinitializeData()
-	{
-	}
+//	@AfterClass()
+//	public void deinit()
+//	{
+//		deinitializeData();
+//	}
+//	
+//	public void deinitializeData()
+//	{
+//	}
 	
 
 
