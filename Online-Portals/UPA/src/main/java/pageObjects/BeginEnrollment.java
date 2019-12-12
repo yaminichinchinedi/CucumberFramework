@@ -65,10 +65,10 @@ public class BeginEnrollment {
 	@FindBy(id="text1")
 	WebElement otherRadioTextBox;
 	
-	@FindBy(linkText="NO")
+	@FindBy(linkText="No")
 	WebElement btnCancelEnrollmentNo;
 	
-	@FindBy(linkText="YES")
+	@FindBy(linkText="Yes")
 	WebElement btnCancelEnrollmentYes;	
 	
 	@FindBy(xpath="//ul[@class='unstyled-list']//li")
