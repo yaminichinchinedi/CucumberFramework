@@ -489,4 +489,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	
 		  return this;
 	}
+	
+	public FinancialInstitutionInfoPage clickYestoNPI()
+	{
+		  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
+		  return this;
+	}
 }
