@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
+    <classes>
+      <class name="main.java.Runner.DemoTestNGRunner">
+        <methods>
+          <include name="feature" invocation-numbers="0"/>
+          <include name="setUpClass"/>
+          <include name="setupTestMethod"/>
+          <include name="endTest"/>
+          <include name="afterClass"/>
+          <include name="tearDown"/>
+          <include name="init"/>
+          <include name="tearDownClass"/>
+          <include name="tearUp"/>
+          <include name="setUpReportingConfig"/>
+        </methods>
+      </class> <!-- main.java.Runner.DemoTestNGRunner -->
+    </classes>
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

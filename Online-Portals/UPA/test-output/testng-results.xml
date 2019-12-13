@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="95" total="96" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
     <line>
       <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
@@ -19,20 +19,38 @@
     <line>
       <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
     </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="43853" started-at="2019-09-04T11:32:58Z" finished-at="2019-09-04T11:33:42Z">
+  <suite name="Default suite" duration-ms="66643" started-at="2019-12-13T09:48:41Z" finished-at="2019-12-13T09:49:48Z">
     <groups>
-      <group name="Create Enrollment">
-        <method signature="TestCreateEnrollment.testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472]" name="testValiDateButtons" class="test.java.TestCreateEnrollment"/>
-      </group> <!-- Create Enrollment -->
+      <group name="cucumber">
+        <method signature="DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" class="main.java.Runner.DemoTestNGRunner"/>
+      </group> <!-- cucumber -->
     </groups>
-    <test name="Default test" duration-ms="43853" started-at="2019-09-04T11:32:58Z" finished-at="2019-09-04T11:33:42Z">
-      <class name="test.java.TestCreateEnrollment">
-        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="setUpReportingConfig" is-config="true" duration-ms="327" started-at="2019-09-04T17:02:58Z" finished-at="2019-09-04T17:02:58Z">
+    <test name="Default test" duration-ms="66643" started-at="2019-12-13T09:48:41Z" finished-at="2019-12-13T09:49:48Z">
+      <class name="main.java.Runner.DemoTestNGRunner">
+        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setUpReportingConfig" is-config="true" duration-ms="293" started-at="2019-12-13T15:18:41Z" finished-at="2019-12-13T15:18:41Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpReportingConfig -->
-        <test-method status="PASS" signature="tearUp()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="tearUp" is-config="true" duration-ms="8837" started-at="2019-09-04T17:02:58Z" finished-at="2019-09-04T17:03:07Z">
+        <test-method status="PASS" signature="tearUp()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearUp" is-config="true" duration-ms="8599" started-at="2019-12-13T15:18:41Z" finished-at="2019-12-13T15:18:50Z">
           <reporter-output>
             <line>
               <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
@@ -48,45 +66,85 @@
             </line>
           </reporter-output>
         </test-method> <!-- tearUp -->
-        <test-method status="PASS" signature="init()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="init" is-config="true" duration-ms="0" started-at="2019-09-04T17:03:07Z" finished-at="2019-09-04T17:03:07Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="init" is-config="true" duration-ms="0" started-at="2019-12-13T15:18:50Z" finished-at="2019-12-13T15:18:50Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="setupTestMethod" is-config="true" duration-ms="98" started-at="2019-09-04T17:03:07Z" finished-at="2019-09-04T17:03:07Z">
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setUpClass" is-config="true" duration-ms="1159" started-at="2019-12-13T15:18:50Z" finished-at="2019-12-13T15:18:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setupTestMethod" is-config="true" duration-ms="29" started-at="2019-12-13T15:18:51Z" finished-at="2019-12-13T15:18:51Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void test.java.TestCreateEnrollment.testValiDateButtons() throws java.io.IOException]]>
+                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setupTestMethod -->
-        <test-method status="PASS" signature="testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472]" name="testValiDateButtons" duration-ms="33939" started-at="2019-09-04T17:03:07Z" description="US1247779_TS_0055_Validate the error message when non numeric data entered for Secondary Administrator Telephone Number." finished-at="2019-09-04T17:03:41Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- testValiDateButtons -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="endTest" is-config="true" duration-ms="554" started-at="2019-09-04T17:03:41Z" finished-at="2019-09-04T17:03:42Z">
+        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" duration-ms="55310" started-at="2019-12-13T15:18:51Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2019-12-13T15:19:47Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=testValiDateButtons status=SUCCESS method=TestCreateEnrollment.testValiDateButtons()[pri:4, instance:test.java.TestCreateEnrollment@b9f472] output={null}]]]>
+                <![CDATA[Create Enrollment HO Financial Institution Information Continue from Identify Administrators]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- feature -->
+        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="endTest" is-config="true" duration-ms="619" started-at="2019-12-13T15:19:47Z" finished-at="2019-12-13T15:19:47Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=feature status=SUCCESS method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3] output=<font color='Orange'>Running on Environment : Stage</font></br>]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
-        <test-method status="PASS" signature="deinit()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="deinit" is-config="true" duration-ms="0" started-at="2019-09-04T17:03:42Z" finished-at="2019-09-04T17:03:42Z">
+        <test-method status="PASS" signature="afterClass(org.testng.ITestContext)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="afterClass" is-config="true" duration-ms="3" started-at="2019-12-13T15:19:47Z" finished-at="2019-12-13T15:19:47Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@783105]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- deinit -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.java.TestCreateEnrollment@b9f472]" name="tearDown" is-config="true" duration-ms="366" started-at="2019-09-04T17:03:42Z" finished-at="2019-09-04T17:03:42Z">
+        </test-method> <!-- afterClass -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearDown" is-config="true" duration-ms="640" started-at="2019-12-13T15:19:47Z" finished-at="2019-12-13T15:19:48Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- test.java.TestCreateEnrollment -->
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearDownClass" is-config="true" duration-ms="135" started-at="2019-12-13T15:19:48Z" finished-at="2019-12-13T15:19:48Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- main.java.Runner.DemoTestNGRunner -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
