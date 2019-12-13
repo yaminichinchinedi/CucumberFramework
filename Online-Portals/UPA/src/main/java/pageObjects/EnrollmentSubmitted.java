@@ -97,7 +97,7 @@ public class EnrollmentSubmitted  {
 	public EnrollmentSubmitted validateEnrollmentInfo() throws IOException
 	{
 		int sqlRowNo;
-
+		testConfig.putRunTimeProperty("tin",enrollmentInfoPageObj.getTin());
 		//For BS
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 		{

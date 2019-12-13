@@ -26,7 +26,7 @@ public class HeaderContentValidation {
 	List<WebElement> OrgInfoHeaders;
 	
 
-	@FindBy(xpath = "//a[@class='progress-indicator__title']")
+	@FindBy(xpath = "//span[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeadersBS;
 
 	//@FindBy(xpath = "//span[@class='progress-indicator__title']")

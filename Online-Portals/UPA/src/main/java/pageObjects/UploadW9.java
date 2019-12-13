@@ -163,4 +163,12 @@ public void verifyClckNo() {
 		Browser.verifyURL(testConfig, expectedURL);
 
 	}
+	
+	public void clickBackButton() {
+		
+		if(enrollmentInfoObj.getTinIdentifier().equals("AO")) {
+		Element.click(OrgInfoFooters.get(1), "Back Button");
+		}
+		Browser.verifyURL(testConfig, "backEFTERAFinancialInfoNPI.do");
+	}
 }

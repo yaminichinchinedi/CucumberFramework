@@ -70,7 +70,8 @@ String actualcopyright=null;
 int cpyrghtlngth=0;
 Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 if( (testConfig.driver.getCurrentUrl().toLowerCase().contains("providerefteraenroll")) ||
-(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraproviderinfo"))
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraproviderinfo")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validatebsbillingserviceinfo"))
 )
 {
 Element.expectedWait(cpyrightwthoutnobr, testConfig, "CopyRight Element without nobr", "CopyRight Element");
@@ -83,21 +84,20 @@ Element.expectedWait(cpyright, testConfig, "CopyRight Element with nobr", "CopyR
 actualcopyright=cpyright.getText();
 }
 
-cpyrghtlngth=actualcopyright.length();
+//cpyrghtlngth=actualcopyright.length();
 
+/*if(cpyrghtlngth != 10)
+actualcopyright=actualcopyright.substring(2);*/
 
-
-if(cpyrghtlngth != 10)
-actualcopyright=actualcopyright.substring(2);
-
-
-
+if(actualcopyright.charAt(0)!='2') {
+	actualcopyright=actualcopyright.substring(2);
+}
 int year=Calendar.getInstance().get(Calendar.YEAR);
-String expectedcopyright=year+" Optum";
+String expectedcopyright=year+" Payment Solutions and Optum Pay are provided/made possible by Optum Financial Services and its subsidiary Optum Bank, Inc., Member FDIC";
+String expectedOptumText=" Payment Solutions and Optum Pay are provided/made possible by Optum Financial Services and its subsidiary Optum Bank, Inc., Member FDIC";
 String stryear=actualcopyright.substring(0, 4);
-String optum=actualcopyright.substring(5);
-
-if ( (Integer.parseInt(stryear)==year) && (optum.equalsIgnoreCase("optum")) )
+String optum=actualcopyright.substring(4);
+if ( (Integer.parseInt(stryear)==year) && (optum.trim().equalsIgnoreCase(expectedOptumText.trim())) )
 Log.Pass("Passed Copyright Comparision" + " " + ":" + ""  + "Expected was :" +" " + expectedcopyright  + "and Actual is :" +" " +actualcopyright );
 
 

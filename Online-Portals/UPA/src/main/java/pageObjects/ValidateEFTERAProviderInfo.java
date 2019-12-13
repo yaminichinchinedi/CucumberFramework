@@ -3,6 +3,7 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,8 +69,26 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(id="sendAlertsContact1")
 	WebElement firstProvMobAlert;
 	
+	@FindBy(id="emailmailContactOne")
+	WebElement emailAdr;
+	
+	@FindBy(id="verifyEmailContactOne")
+	WebElement verifyEmailaddr;
+	
+	@FindBy(id="emailcontact2")
+	WebElement emailAdr2;
+	
+	@FindBy(id="verifyemailContact2")
+	WebElement verifyEmailaddr2;
+	
 	@FindBy(name="verifyEmailContact1")
 	WebElement verifyFirstProvEmail;
+	
+	@FindBy(id="telephoneNumberContact1")
+	WebElement telephoneNumberContact1;
+	
+	@FindBy(id="telephoneContact2")
+	WebElement telephoneNumberContact2;
 	
 	//Second Provider Details
 	
@@ -99,7 +118,31 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="verifyEmailContact2")
 	WebElement verifySecondProvEmail;
 	
+	@FindBy(name="mobileAlertCheckedContact1")
+	WebElement mobileAlertCheckedContact1;
+	
+	@FindBy(name="mobileAlertCheckedContact2")
+	WebElement mobileAlertCheckedContact2;
+	
+	@FindBy(name="mobilePhone1Contact1")
+	WebElement mobilePhone1Contact1;
+	
+	@FindBy(name="mobilePhone2Contact1")
+	WebElement mobilePhone2Contact1;
+	
+	@FindBy(name="mobilePhone3Contact1")
+	WebElement mobilePhone3Contact1;
+	
 	@FindBy(name="mobilePhone1Contact2")
+	WebElement mobilePhone1Contact2;
+	
+	@FindBy(name="mobilePhone2Contact2")
+	WebElement mobilePhone2Contact2;
+	
+	@FindBy(name="mobilePhone3Contact2")
+	WebElement mobilePhone3Contact2;
+	
+@FindBy(name="mobilePhone1Contact2")
 	WebElement SecProvMobField1;
 	
 	@FindBy(name="mobilePhone2Contact2")
@@ -164,6 +207,72 @@ public class ValidateEFTERAProviderInfo {
 	
 	@FindBy(xpath="//section//form/div[4]/div[1]/div")
 	List<WebElement> divCnclEnrlmnt;
+		
+	@FindBy(name="btnCancel")
+	WebElement btnCancel;
+	
+	@FindBy(linkText="SAVE CHANGES")
+	WebElement savChanges;
+	
+	@FindBy(xpath = "//span[@class='progress-indicator__title']")
+	List <WebElement> BSInfoHeaders;
+	
+	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/legend/h1")
+	WebElement identifyAdminHeader;
+	
+	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/p[1]")
+	WebElement identifyMemberAdmin;
+	
+	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/p[2]")
+	WebElement additionalMemberText;
+	
+	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/h4/strong")
+	WebElement primaryAdminInfoHeader;
+	
+	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/h4/strong")
+	WebElement primaryAdminInfoSubHeader;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/h4/strong")
+	WebElement secondaryAdminInfoHeader;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/p")
+	WebElement secondaryAdminInfoSubHeader;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[1]/strong")
+	WebElement  accountAdministrators;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[1]/ul/li[1]")
+	WebElement  accountAdminList1;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[1]/ul/li[2]")
+	WebElement  accountAdminList2;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[1]/ul/li[3]")
+	WebElement  accountAdminList3;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/p[3]")
+	WebElement  requiredFields;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/fieldset[2]/div/div/div/label/span")
+	WebElement  futureUpdateChecbox;
+	
+	@FindBy(xpath ="/.//*[@id='EFTERAenrBSForm']/section[1]/fieldset/fieldset[2]/div/div/div/label/span")
+	WebElement primaryfutureUpdateinfo;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/fieldset[2]/div/div/div/label/span")
+	WebElement secondaryfutureUpdateinfo;
+		
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[3]/div[2]/label[1]")
+	WebElement  primaryEmailAdressInfo;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/div[3]/div[2]/label[2]")
+	WebElement  primaryRetypeEmailAdressInfo;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/div[2]/div[2]/label[1]")
+	WebElement  secondaryEmailAdressInfo;
+	
+	@FindBy(xpath =".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/div[2]/div[2]/label[2]")
+	WebElement  secondaryRetypeEmailAdressInfo;
 	
 	@FindBy(xpath="//div[@class='error']//h4")
 	WebElement errorHeader;
@@ -194,6 +303,24 @@ public class ValidateEFTERAProviderInfo {
 	
 	@FindBy(xpath="//*[@id='yesnoprimary']//div[2]/label")
 	WebElement rdoBtnNoPri;
+	
+	@FindBy(xpath="//div[@class='error']//ul//li")
+	List <WebElement> individualErrors;
+	
+	@FindBy(xpath="//div[@class='modal-container help-modal fixed-modal']//div[@class=' help-modal-content float-left']//p")
+	WebElement alertFrequencyPopup;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrBSForm']/section[1]/fieldset/fieldset[2]/div/div/div/label/span/a")
+	WebElement primaryLearnAlertFrequencyLink;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrBSForm']/section[2]/fieldset/fieldset[2]/div/div/div/label/span/a")
+	WebElement secondaryLearnAlertFrequencyLink;
+	
+	@FindBy(xpath=".//*[@id='EFTERAenrBSForm']/div[3]/div[1]/div[3]/a")
+	WebElement closeTipButton;
+	
+	@FindBy(xpath="//a[@class='button--secondary enrollment-container-footer__btn-margin float-right']")
+	WebElement backBtn;
 	
 	HashMap<Integer,HashMap<String,String>> pageData=null;
 
@@ -1299,5 +1426,369 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareContains(testConfig, "Cancel Enrollment Button", "CANCEL ENROLLMENT", cancelEnrol);
 	}
 	
+    public ValidateEFTERAProviderInfo verifyEditable(){
+		
+	
+	       Helper.compareEquals(testConfig, "First Name Value comparision", enrollmentInfoPageObj.getFrstName(), firstProvFName.getAttribute("value"));
+	       Helper.compareEquals(testConfig, "Last Value comparision", enrollmentInfoPageObj.getLstName(), firstProvLName.getAttribute("value"));
+	       Helper.compareEquals(testConfig, "Phone No Field 1 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(0,3),firstProvPhField1.getAttribute("value"));
+		   Helper.compareEquals(testConfig, "Phone No Field 2 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(3,6),firstProvPhField2.getAttribute("value"));
+		   Helper.compareEquals(testConfig, "Phone No Field 3 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(6,10),firstProvPhField3.getAttribute("value"));
+		   Helper.compareEquals(testConfig, "Email Address ",  enrollmentInfoPageObj.getEmail(),firstProvEmail.getAttribute("value"));
+		   Helper.compareEquals(testConfig, "Re type Email Address",enrollmentInfoPageObj.getEmail(),verifyFirstProvEmail.getAttribute("value"));	
+			
+		if (    (firstProvFName.getAttribute("readonly") == null)&&
+				(firstProvLName.getAttribute("readonly")== null) &&
+				(firstProvPhField1.getAttribute("readonly")== null) &&
+				(firstProvPhField2.getAttribute("readonly")==null) && 
+				(firstProvPhField3.getAttribute("readonly")== null)&&
+				(firstProvEmail.getAttribute("readonly")== null)&&
+				(verifyFirstProvEmail.getAttribute("readonly")== null)
+				)
+		Log.Pass("Billing service fields are editable.");
+		else
+		Log.Fail("Billing service fields are readOnly.");
+		return this;
+	}
+    
+    public void valiDateButtonsIdenityAdmn()
+    
+	{
+		Helper.compareContains(testConfig, "Save Changes", "SAVE CHANGES", savChanges.getText());
+		Helper.compareContains(testConfig, "Cancel Changes", "Cancel Changes", btnCancel.getAttribute("value"));
+		Element.verifyElementNotPresent(backBtn, "BACK");
+	}
+    
+    public void clickCancel()
+	{
+		Element.click(btnCancel, "Continue");
+		
+	}
+	
+   
+    
+    public void verifyContentBSWithUXDS() throws IOException
+	{
+
+    	ArrayList<String> listUXDS = new ArrayList<String>();
+		
+    	ArrayList<String> listUI = new ArrayList<String>();
+		listUI.add(identifyAdminHeader.getText());
+		listUI.add(identifyMemberAdmin.getText());
+		listUI.add( additionalMemberText.getText());
+		listUI.add( primaryAdminInfoHeader.getText());
+		listUI.add( primaryAdminInfoSubHeader.getText());
+		listUI.add( secondaryAdminInfoHeader.getText());
+		listUI.add( secondaryAdminInfoSubHeader.getText());
+
+		
+		new UXDSPageValidation(testConfig,"Enrollment BS Identify Administrators");
+		
+		
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[1]/fieldset/legend/h1").getText()); //Identify Administrators
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[1]/fieldset/p[1]").getText()); //Please identify at least one member of the billing service who will serve as administrator on the account.
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[1]/fieldset/p[2]").getText()); //If you have additional members of your organization who need basic access to only view payment information, they can be added as a General Access user by an Administrator using the Manage Users tab of the EPS portal.
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[1]/fieldset/h4/strong").getText()); // Primary Administrator Information
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[1]/fieldset/p[4]").getText());  // The primary administrator should be an individual responsible for daily and routine matters.
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[2]/fieldset/h4/strong").getText()); // Secondary Administrator Information
+		listUXDS.add(Element.findElement(testConfig, "xpath", "/html/body/section/main/form/section[2]/fieldset/p").getText()); //The secondary administrator should be someone in your Finance or Account area responsible for provider client management.
+		
+	
+		Helper.compareEquals(testConfig, "UI and UXDS comparision", listUXDS, listUI);
+		if (listUI.equals(listUXDS))
+		{
+			Log.Pass( "matches in both UI and UXDS");
+		}
+		else
+		{
+			Log.Fail( "matches in both UI and UXDS");
+		}
+		
+
+	//	return this;
+	}
+	
+	
+    
+    public void verifyTextBSWithContentPage() throws IOException
+	{
+    	
+        int sqlRowNo=172;
+		
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
+		Helper.compareEquals(testConfig, "Identify Administrators ", identifyAdminHeader.getText(), dataTest.get(48).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "BS secondary Admin Sub Info", secondaryAdminInfoSubHeader.getText(), dataTest.get(1).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Account Admin List2", accountAdminList2.getText(), dataTest.get(2).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Identify Admin Sub header", identifyMemberAdmin.getText(), dataTest.get(3).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Secondary Admin Header", secondaryAdminInfoHeader.getText(),dataTest.get(23).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Primary Admin Header", primaryAdminInfoHeader.getText(),dataTest.get(39).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Account Admin List3", accountAdminList3.getText(), dataTest.get(43).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Account Admin List1", accountAdminList1.getText(), dataTest.get(45).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Account Administrators may: ", accountAdministrators.getText(), dataTest.get(46).get("TEXT_VAL"));
+		
+		String requiredFileds=dataTest.get(41).get("TEXT_VAL")+" () "+dataTest.get(40).get("TEXT_VAL");
+		
+		Helper.compareEquals(testConfig, "All fields marked with an asterisk (*) are required.: ", requiredFields.getText(), requiredFileds);
+		
+		Helper.compareEquals(testConfig, "Additional members Text ", additionalMemberText.getText(), dataTest.get(42).get("CLOBVALFROM"));
+		
+		Helper.compareEquals(testConfig, "Primary Future Update Information  ",primaryfutureUpdateinfo.getText(),dataTest.get(31).get("CLOBVALFROM")+" "+dataTest.get(30).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Secondary Future Update Information  ",secondaryfutureUpdateinfo.getText(),dataTest.get(31).get("CLOBVALFROM")+" "+dataTest.get(30).get("TEXT_VAL"));
+		
+		Helper.compareEquals(testConfig, "Primary Email Addr Information  ",primaryEmailAdressInfo.getText(),dataTest.get(27).get("CLOBVALFROM"));
+		
+		String primaryRetypeEmailInfo=dataTest.get(26).get("TEXT_VAL")+" "+dataTest.get(25).get("TEXT_VAL")+" "+dataTest.get(24).get("TEXT_VAL");
+		
+		Helper.compareEquals(testConfig, "Primary Retype Email Addr Information ",primaryRetypeEmailAdressInfo.getText(),primaryRetypeEmailInfo);
+		
+		Helper.compareEquals(testConfig, "Secondary Email Addr Information  ",secondaryEmailAdressInfo.getText(),dataTest.get(27).get("CLOBVALFROM"));
+		
+		Helper.compareEquals(testConfig, "Secondary Retype Email Addr Information ",secondaryRetypeEmailAdressInfo.getText(),primaryRetypeEmailInfo);
+		
+		
+	}
+    
+    public void verifyErrorMsgNull()
+	{
+    	clearPrimaryAdminFields();
+		Element.click(savChanges, "Save Changes Button");
+		
+		List <String> expectedErrorMsgs;
+		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
+		 expectedErrorMsgs=Arrays.asList("- Identify Administrators - First Name - Primary Administrator","- Identify Administrators - Last Name - Primary Administrator","- Identify Administrators - Telephone Number - Primary Administrator","- Identify Administrators - Email - Primary Administrator","- Identify Administrators - Verify Email - Primary Administrator");
+		for(int i=0;i<expectedErrorMsgs.size();i++)
+		{
+			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
+		}
+		
+		verifyMissingDataErrorMsgPrimary();
+		
+	}
+    
+	public void verifyMissingDataErrorMsgPrimary()
+	{
+		String expectedText="Missing Data";
+		String expectedColor="#c21926";
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary First Name..");
+		Element.verifyTextPresent(firstProvFName.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in First name box" , expectedColor, Color.fromString(firstProvFName.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Last Name..");
+		Element.verifyTextPresent(firstProvLName.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Last name box" , expectedColor, Color.fromString(firstProvLName.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Phone Number filed1 ..");
+		Element.verifyTextPresent(telephoneNumberContact1.findElement(By.xpath("div[3]/p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 1 box" , expectedColor, Color.fromString(firstProvPhField1.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Phone Number filed2..");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 2 box" , expectedColor, Color.fromString(firstProvPhField2.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Phone Number filed3..");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 3 box" , expectedColor, Color.fromString(firstProvPhField3.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Email Address ..");
+		Element.verifyTextPresent(emailAdr.findElement(By.xpath("p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Primary Email text box" , expectedColor, Color.fromString(firstProvEmail.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Primary Retype Email Address ..");
+		Element.verifyTextPresent(verifyEmailaddr.findElement(By.xpath("div/p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Retype Primary Email text box" , expectedColor, Color.fromString(verifyFirstProvEmail.getCssValue("border-top-color")).asHex());
+		
+		
+	}
+	
+	public void verifyErrorMsgsHyperlink() {
+		
+		clearPrimaryAdminFields();
+		Element.click(savChanges, "Save Changes Button");
+
+		for (int i= 1; i <= individualErrors.size(); i++) {
+
+			WebElement links = Element.findElement(testConfig,"xpath","//div[@class='error']//ul//li["+i+"]//a");
+			String expectedURL=links.getAttribute("href");
+			Element.click(links,links.getText());
+			Browser.verifyURL(testConfig, expectedURL);
+		}
+	}
+	
+	public void clearPrimaryAdminFields() {
+		
+		Element.clearData(firstProvFName,  "First Name"); 
+		Element.clearData(firstProvLName,  "Last Name");
+		Element.clearData(firstProvPhField1,  "Ph Filed 1");
+		Element.clearData(firstProvPhField2,  "Ph Filed 2");
+		Element.clearData(firstProvPhField3,  "Ph Filed 3");
+		Element.clearData(firstProvEmail,  "Primary Email Address");
+		Element.clearData(verifyFirstProvEmail,  "Retype Email Address");
+
+	}
+	
+	public void verifyMissingDataErrorMsgSecondary()
+	{
+		String expectedText="Missing Data";
+		String expectedColor="#c21926";
+		
+		Log.Comment("Enter Secondary Provider First Name..");
+		Element.enterData(secondProvFName, fName,"Enter First name of Second provider as: "+ fName,"secondProvFirstName");
+		Element.click(savChanges, "Save Changes Button");
+
+		Log.Comment("Verifying Error Msg is displayed for Secondary Last Name..");
+		Element.verifyTextPresent(secondProvLName.findElement(By.xpath("../following-sibling::p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Last name box" , expectedColor, Color.fromString(secondProvLName.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Secondary Phone Number filed1 ..");
+		Element.verifyTextPresent(telephoneNumberContact2.findElement(By.xpath("../div[2]/p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 1 box" , expectedColor, Color.fromString(secondProvPhField1.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Secondary Phone Number filed2..");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 2 box" , expectedColor, Color.fromString(secondProvPhField2.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Secondary Phone Number filed3..");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Ph filed 3 box" , expectedColor, Color.fromString(secondProvPhField3.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Secondary Email Address ..");
+		Element.verifyTextPresent(emailAdr2.findElement(By.xpath("p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Secondary Email text box" , expectedColor, Color.fromString(secondProvEmail.getCssValue("border-top-color")).asHex());
+		
+		Log.Comment("Verifying Error Msg is displayed for Secondary Retype Email Address ..");
+		Element.verifyTextPresent(verifyEmailaddr2.findElement(By.xpath("p")), expectedText);
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Retype Secondary Email text box" , expectedColor, Color.fromString(verifySecondProvEmail.getCssValue("border-top-color")).asHex());
+		
+		clearPrimaryAdminFields();
+		Element.click(savChanges, "Save Changes Button");
+		verifyMissingDataErrorMsgPrimary();
+	}
+	
+	
+	public void ValidateInvalidPhnNumbers(String provType,String InpdataType) {
+		    String Telno=null;
+		    fillInvalidPhoneNumber(provType, InpdataType);
+		    Element.click(savChanges, "Save Changes Button");
+			if (provType.equals("Secondary"))
+			Telno=Element.findElement(testConfig, "xpath", "//fieldset[@class='margin-bottom-beta'][1]//p").getText();
+
+			if (provType.equals("Primary"))
+			Telno=Element.findElement(testConfig, "xpath", "//div[@id='telephoneNumberContact1']/div[3]/p").getText();
+			
+			Helper.compareEquals(testConfig, "phone no comparision", Telno, "Invalid Data");
+	}
+	
+	public ValidateEFTERAProviderInfo ValidateInvalidEmailAddr(String inputFormat,String inputType) {
+		
+		
+		String ProvEmailAdr=null;
+		if (inputFormat.equals("inpFormatOne")){
+		 ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "");
+		 	}
+		if (inputFormat.equals("inpFormatTwo")){
+			ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "abc.com");
+		}
+		if (inputFormat.equals("inpFormatThree")){
+			 ProvEmailAdr=Helper.getUniqueEmailId().replaceAll("@abc.com", "@xyzcom");
+		}
+		WebElement errorRetypeEmail=null;
+		if (inputType.equals("Email")) {
+			
+			Element.enterData(firstProvEmail, ProvEmailAdr, "Enter Primary email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmail");
+			Element.enterData(secondProvEmail, ProvEmailAdr, "Enter Secondary email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmail");
+			Element.click(savChanges, "Save Changes Button");
+			errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailmailContactOne']/p");
+			Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+			errorRetypeEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailcontact2']/p");
+			Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+	
+		}else if(inputType.equals("RetypeEmail")) {
+			
+			Element.enterData(verifyFirstProvEmail, ProvEmailAdr, "Enter Retype Primary email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmailAdr");
+			Element.enterData(verifySecondProvEmail, ProvEmailAdr, "Enter Retype Secondary email address of " + inputType + " provider"+ProvEmailAdr,"ProvEmailAdr");
+			Element.click(savChanges, "Save Changes Button");
+			
+			errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyemailContact2']/p");
+			Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+			errorRetypeEmail=Element.findElement(testConfig, "xpath", "//*[@id='verifyEmailContactOne']/div/p");
+			Element.verifyTextPresent(errorRetypeEmail, "Invalid Data");
+		}
+		
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo verifyMobileAlertEnabled(String prvoiderType) {
+		
+		switch(prvoiderType)
+		{
+		  case "Primary":
+		  {
+			
+			Element.enterData(mobilePhone1Contact1, phNo,"Entered first three digits of phone number as :" + phNo ,"firstProvPhField1");
+			Element.enterData(mobilePhone2Contact1, phNo,"Entered second three digits of phone number as :" + phNo,"firstProvPhField2");
+			Element.enterData(mobilePhone3Contact1, phNoLstField,"Entered last four digits of phone number as :" + phNoLstField ,"firstProvPhField3");
+			Log.Comment("Primary Mobile Alert is enabled.."+mobileAlertCheckedContact1.isEnabled());
+			
+			break;
+		   }
+		  case "Secondary":
+		  {
+		   Element.enterData(mobilePhone1Contact2, phNo, "Entered first three digits of phone number as :" + phNo,"secondProvPhField1");
+		   Element.enterData(mobilePhone2Contact2, phNo, "Entered second three digits of phone number as :" + phNo,"secondProvPhField2");
+		   Element.enterData(mobilePhone3Contact2, phNoLstField, "Entered last four digits of phone number as :" + phNoLstField,"secondProvPhField3");
+		   Log.Comment("Secondary Mobile Alert is enabled.."+mobileAlertCheckedContact2.isEnabled());
+		   
+		   break;
+		  } 
+	     }
+		return this;
+	}
+	
+	public ValidateEFTERAProviderInfo ValidateAlertFrquencyPopup(String inputType) throws IOException {
+	
+		int sqlRowNo=173;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		String expectedText=dataTest.get(15).get("CLOBVALFROM").trim();
+		expectedText=expectedText.replaceAll("[\r\n]+", "").replaceAll("^ +| +$|( )+", "$1");
+		if(inputType.equals("Primary"))
+			Element.click(primaryLearnAlertFrequencyLink, "Primary Learn Alert Frequency Link ");
+		else
+			Element.click(secondaryLearnAlertFrequencyLink, "Secondary Learn Alert Frequency Link ");
+		
+		Element.verifyTextPresent(alertFrequencyPopup, expectedText);
+		Element.click(closeTipButton, "closeTip Button");
+		return this;
+	}
+	
+	public void fillIdentifyInfoSaveChanges() {
+		
+		fillPrimaryProvInfo();
+		Element.clickByJS(testConfig, savChanges, "Clicked Save Changes");
+		String expectedURL="/validateBillingServiceContacts.do?fromReview=Y";
+     	Browser.verifyURL(testConfig, expectedURL);
+	}
+	
+	public void VerifyCancelButtonDisbaled() {
+		
+		clearPrimaryAdminFields();
+		Element.click(savChanges, "Save Changes Button");
+		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
+		if(btnCancel.isDisplayed())
+			Log.Comment("Cancel Button is Disabled.");
+		fillIdentifyInfoSaveChanges();
+	}
+	
+	public void validateClearAdminInfoLink() {
+		
+		Element.verifyElementNotPresent(divClrAdminInfo, "Clear Administration Information Link");
+		
+	}
 	
 }

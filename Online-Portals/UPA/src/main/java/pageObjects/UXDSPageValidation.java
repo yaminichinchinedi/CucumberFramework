@@ -25,7 +25,9 @@ public class UXDSPageValidation   {
 
 	@FindBy(xpath="/html/body/section[1]/fieldset/section[4]/ul[1]/li[29]/a")
 	WebElement TinElligibleBSUXDS;
-
+	
+	@FindBy(xpath="/html/body/section[1]/fieldset/section[4]/ul[1]/li[25]/a")
+	WebElement BSIdentifyAdminUXDS;
 	
 	protected TestBase testConfig;
 	
@@ -59,7 +61,13 @@ public class UXDSPageValidation   {
 		Browser.wait(testConfig, 3);
 		Browser.verifyURL(testConfig, "enrollment-tin-eligible_bs.html");
 		}
-
+		
+		if (targetElement.equalsIgnoreCase("Enrollment BS Identify Administrators"))
+		{	
+		Element.click(BSIdentifyAdminUXDS, "Enrollment BS Identify Administrators");
+		Browser.wait(testConfig, 3);
+		Browser.verifyURL(testConfig, "enrollment-bs-billing-service-identify-admins.html");
+		}
 	}
 	
 	

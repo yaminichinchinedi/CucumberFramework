@@ -72,7 +72,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(xpath = "//input[@name='finInstTinNpiAcctYorN'][2]")
 	WebElement rdoNPINo;
 
-	@FindBy(linkText="Continue")
+	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
@@ -94,7 +94,7 @@ public class FinancialInstitutionInfoPageNPI{
 	
 
 	public UploadW9 clickContinue() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.clickByJS(testConfig, btnContinue, "CONTINUE");
 		return new UploadW9(testConfig) ;
 	}
 	
