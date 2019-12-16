@@ -17,7 +17,7 @@ public class CreateEnrlFinInsRevSubmit extends TestBase{
 	ReviewAndSubmit reviewAndSubmit= null;
 	SelectPaymentMethods selectPaymentMethods=null;
 	
-	@Then("^User fills all the information on Identify Administrators page and click continue$")
+	@Then("^User fills all the information on Identify Administrators page and click continue to Fin Ins$")
 	public void user_fills_all_the_information_on_Identify_Administrators_page_and_click_continue() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		//FinancialInstitutionInfoPage financialInstitutionInfoPage=new FinancialInstitutionInfoPage(testConfig);

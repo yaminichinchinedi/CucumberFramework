@@ -14,7 +14,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Vaidate Edit option next to each field on Review and Submit page 
@@ -27,7 +27,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -40,7 +40,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -54,7 +54,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -68,7 +68,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -82,7 +82,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then User Navigates Back to Financial Institution Information Page from Review and Submit Page
@@ -96,7 +96,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -111,7 +111,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AV        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue to AV
   Then User clicks Continue on Select Payment Methods Page
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
@@ -126,7 +126,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -140,7 +140,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -155,7 +155,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -169,7 +169,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
@@ -183,7 +183,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|     AO        |
 											
   Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
+  Then User fills all the information on Identify Administrators page and click continue to Fin Ins
   Then User fills all the information on Financial Institution Information page and click continue
   Then User navigates to Uploadw9 page and click on continue button on financial Institution Page
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
