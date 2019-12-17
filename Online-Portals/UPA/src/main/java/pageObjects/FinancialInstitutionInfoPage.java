@@ -255,7 +255,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-	  Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
+	 // Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
 	  enrollmentInfoPageObj.setFinState(stateName);
 	  enrollmentInfoPageObj.setFinCity(cityName);
 	  enrollmentInfoPageObj.setFinZip(zipCode);

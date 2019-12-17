@@ -25,7 +25,7 @@ public class CrtEnrlmntCommonStepDef extends TestBase {
 	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
 	ValidateEFTERAProviderInfo validateEFTERAProviderInfo=null;
 
-	@Given("^User navigates to UPA Sys application$")
+	/*@Given("^User navigates to UPA Sys application$")
 	public void user_navigates_to_UPA_Sys_application() throws Throwable {
 		registrationPage = new UPARegistrationPage(testConfig);
 	    
@@ -64,5 +64,5 @@ public class CrtEnrlmntCommonStepDef extends TestBase {
 		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfo();
 	    
 	}
-	
+	*/
 }

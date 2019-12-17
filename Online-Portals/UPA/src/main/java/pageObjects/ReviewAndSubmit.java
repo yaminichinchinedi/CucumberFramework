@@ -232,11 +232,16 @@ public class ReviewAndSubmit {
 	
 	  public ReviewAndSubmit verifyEditLinks() {
 		 
-		  
 		  if(enrollmentInfoPageObj.getEnrollType().equals("BS")) {
+				 
 			  Element.verifyElementPresent(identifyedtlnkBS,"EDIT");
 			  Element.verifyElementPresent(edtlnk,"EDIT");
+		  }if(enrollmentInfoPageObj.getEnrollType().equals("HO")) {
+			 
+			  Element.verifyElementPresent(identifyedtlnk,"EDIT");
+			  Element.verifyElementPresent(edtlnk,"EDIT");
 		  }else {
+			 
 			  Element.verifyElementPresent(edtlnk,"EDIT");
 			  Element.verifyElementPresent(identifyedtlnk,"EDIT");
 			  Element.verifyElementPresent(finInfoEdit,"EDIT");

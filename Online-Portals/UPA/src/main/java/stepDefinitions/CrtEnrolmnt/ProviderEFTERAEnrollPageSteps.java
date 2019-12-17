@@ -81,7 +81,7 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 //	}
 
 	
-	/*@Then("^Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page$")
+	@Then("^Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page$")
 	public void select_Enrollment_Type_and_Clicks_Continue_button_of_Enrollment_TIN_Eligible_page (DataTable table) throws Throwable {
 	   
 		
@@ -97,7 +97,7 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		else if (EnrolmntTyp.equals("VO"))
 		excelRow=4;
 		providerEFTERAEnrollPage=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue();
-	}*/
+	}
 	
 	@Then("^user selects as \"(.*)\" and  Clicks continue button of Enrollment TIN Eligible page$")
 	public void select_Enrollment_Type_as_and_Clicks_Continue_button_of_Enrollment_TIN_Eligible_page (String  EnrolmntTyp) throws Throwable {

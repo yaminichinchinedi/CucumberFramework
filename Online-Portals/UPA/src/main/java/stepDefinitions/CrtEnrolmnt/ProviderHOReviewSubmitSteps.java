@@ -6,7 +6,7 @@ import main.java.pageObjects.EnrollmentSubmitted;
 import main.java.pageObjects.HeaderContentValidation;
 import main.java.pageObjects.ReviewAndSubmit;
 
-public class CrtEnrlProviderReviewSubmit extends TestBase {
+public class ProviderHOReviewSubmitSteps extends TestBase {
 	
 	ReviewAndSubmit reviewAndSubmit=null;
 	EnrollmentSubmitted enrollmentSubmitted=null;

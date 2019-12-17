@@ -28,6 +28,7 @@ private TestBase testConfig;
 
 	public void chooseACHVCP()
 	{
+		drpPaytyp=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']//div[2]//table//tr/td[1]//tr[1]/td[2]/select");
 		Element.selectVisibleText(drpPaytyp, "VCP", "Choose VCP Option");
 	}
 	

@@ -20,7 +20,7 @@ import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 
-public class CreateEnrlmntBSIdentifyEdit extends TestBase{
+public class BillingServEditIdentifyAdminSteps extends TestBase{
 
 	String option="Health plan communication";
 	int excelRow=0;
@@ -56,8 +56,8 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
 		uploadW9=validateEFTERAProviderInfo.fillPrimaryProvInfo().clickContinueToW9();
 	}
 	
-	@Then("^User navigates to Uploadw(\\d+) page and click on continue button$")
-	public void user_navigates_to_Uploadw_page_and_click_on_continue_button(int arg1) throws Throwable {
+	@Then("^User navigates to UploadWNine page and click on continue button$")
+	public void user_navigates_to_Uploadw_page_and_click_on_continue_button() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		//reviewAndSubmit=new ReviewAndSubmit(testConfig);
 		reviewAndSubmit=uploadW9.uploadW9();
@@ -109,14 +109,14 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
 	}
 
 
-	@Then("^click on Save changes button and validate Form and error messages$")
+	@Then("^Click on Save changes button and validate Form and error messages$")
 	public void click_on_Save_changes_button_and_validate_Form_and_error_messages() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	
 		validateEFTERAProviderInfo.verifyErrorMsgNull();
 	}
 	
-	@Then("^click on save changes button and Validate Error hyperlinks$")
+	@Then("^Click on save changes button and Validate Error hyperlinks$")
 	public void click_on_save_changes_button_and_Validate_Error_hyperlinks() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		
@@ -124,14 +124,14 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
 	}
 	
 
-    @Then("^click on save changes button and Validate Error message for both Primary and Secondary Admin Fields$")
+    @Then("^Click on save changes button and Validate Error message for both Primary and Secondary Admin Fields$")
     public void click_on_save_changes_button_and_Validate_Error_message_for_both_Primary_and_Secondary_Admin_Fields() throws Throwable {
     // Write code here that turns the phrase above into concrete actions
    
     	validateEFTERAProviderInfo.verifyMissingDataErrorMsgSecondary();
     }
     
-    @Then("^enter invalid data for Primary Admin and validate error message$")
+    @Then("^Enter invalid data for Primary Admin and validate error message$")
     public void enter_invalid_data_for_Primary_Admin_and_validate_error_message() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     	
@@ -139,7 +139,7 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
     	validateEFTERAProviderInfo.ValidateInvalidPhnNumbers("Primary", "Incomplete");
     }
 
-    @Then("^enter invalid data for Secondary Admin and validate error message$")
+    @Then("^Enter invalid data for Secondary Admin and validate error message$")
     public void enter_invalid_data_for_Secondary_Admin_and_validate_error_message() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     	
@@ -147,14 +147,14 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
     	validateEFTERAProviderInfo.ValidateInvalidPhnNumbers("Secondary", "Incomplete");
     }
 
-    @Then("^enter invalid email  address for Primary and Secondary Admin and validate error message$")
+    @Then("^Enter invalid email  address for Primary and Secondary Admin and validate error message$")
     public void enter_invalid_email_address_for_Primary_and_Secondary_Admin_and_validate_error_message() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 
     	validateEFTERAProviderInfo.ValidateInvalidEmailAddr("inpFormatOne","Email").ValidateInvalidEmailAddr("inpFormatTwo","Email")/*.ValidateInvalidEmailAddr("inpFormatThree","Email")*/;
     }
 
-    @Then("^enter invalid Retype email address for Primary and Secondary Admin and validate error message$")
+    @Then("^Enter invalid Retype email address for Primary and Secondary Admin and validate error message$")
     public void enter_invalid_Retype_email_address_for_Primary_and_Secondary_Admin_and_validate_error_message() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 
@@ -162,7 +162,7 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
     
     }
     
-    @Then("^enter mobile number for Primary Admin and validate Text alert checkbox$")
+    @Then("^Enter mobile number for Primary Admin and validate Text alert checkbox$")
     public void enter_mobile_number_for_Primary_Admin_and_validate_Text_alert_checkbox() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     
@@ -177,7 +177,7 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
     	validateEFTERAProviderInfo.ValidateAlertFrquencyPopup("Primary").ValidateAlertFrquencyPopup("Secondary");
     }
     
-    @Then("^fill new information and click on save changes and displayed on Review and Submit page$")
+    @Then("^Fill new information and click on save changes and displayed on Review and Submit page$")
     public void fill_new_information_and_click_on_save_changes_and_displayed_on_Review_and_Submit_page() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 
@@ -199,7 +199,7 @@ public class CreateEnrlmntBSIdentifyEdit extends TestBase{
     	validateEFTERAProviderInfo.validateClearAdminInfoLink();
     }
 
-    @Then("^validate the Footer Information$")
+    @Then("^Validate the Footer Information on this page$")
     public void validate_the_Footer_Information() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 
