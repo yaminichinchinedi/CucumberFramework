@@ -11,7 +11,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 	ReviewAndSubmit reviewAndSubmit=null;
 	EnrollmentSubmitted enrollmentSubmitted=null;
 	
-	@Then("^Vaidate Headers in Review and Submit page$")
+	@Then("^Vaidates Headers in Review and Submit page$")
 	public void vaidate_Headers_in_Review_and_Submit_page() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -20,7 +20,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		
 	}
 	
-	@Then("^Vaidate Edit Links on Review and Submit page$")
+	@Then("^Vaidates Edit Links on Review and Submit page$")
 	public void vaidate_Edit_Links_on_Review_and_Submit_page() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -29,7 +29,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		
 	}
 	
-	@Then("^Vaidate Terms and condition Pdf download$")
+	@Then("^Vaidates Terms and condition Pdf download$")
 	public void vaidate_Terms_and_condition_Pdf_download() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 	
@@ -45,7 +45,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.fillAuthorizedEnrollersInfo();
 	}
 	
-	@Then("^Validate Submit button is enabled when Terms & conditions is clicked$")
+	@Then("^Validates Submit button is enabled when Terms & conditions is clicked$")
 	public void validate_Submit_button_is_enabled_when_Terms_conditions_is_clicked() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -53,7 +53,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.verifySubmitEnrollButton();
 	}
 	
-	@Then("^Validate Cancel Enrollment, Back and Submit Enrollment options display$")
+	@Then("^Validates Cancel Enrollment, Back and Submit Enrollment options display$")
 	public void validate_Cancel_Enrollment_Back_and_Submit_Enrollment_options_display() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -61,7 +61,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.verifyReviewSubmitPageButtons();
 	}
 	
-	@Then("^Validate Back button functionality$")
+	@Then("^Validates Back button functionality$")
 	public void validate_Back_button_functionality() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -77,7 +77,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.verifyCancelEnrollmentFlow();
 	}
 	
-	@Then("^Validate Error Messages on Review and Submit Page$")
+	@Then("^Validates Error Messages on Review and Submit Page$")
 	public void validate_Error_Messages_on_Review_and_Submit_Page() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -85,7 +85,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.verifyErrorMsgNull();
 	}
 	
-	@Then("^Validate Invalid Data Error Messages on Review and Submit Page$")
+	@Then("^Validates Invalid Data Error Messages on Review and Submit Page$")
 	public void validate_Invalid_Data_Error_Messages_on_Review_and_Submit_Page() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
@@ -102,7 +102,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.VerifyEmailInvalidDataError("inpFormatOne","RetypeEmail").VerifyEmailInvalidDataError("inpFormatTwo","RetypeEmail");
 	}
 
-	@Then("^Validate the Data saved in Database on submit of Enrollment$")
+	@Then("^Validates the Data saved in Database on submit of Enrollment$")
 	public void validate_the_Data_saved_in_Database_on_submit_of_Enrollment() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 
