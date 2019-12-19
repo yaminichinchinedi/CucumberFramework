@@ -15,7 +15,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Vaidate Headers in Review and Submit page 
+  And Vaidates Headers in Review and Submit page 
   
   @TC02
   Scenario: TS03_Create Enrollment_HO_Review and Submit page_Edit button
@@ -23,7 +23,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Vaidate Edit Links on Review and Submit page 
+  And Vaidates Edit Links on Review and Submit page 
   
   @TC03
   Scenario: TS04_Create Enrollment_HO_Review and Submit page_T&C
@@ -31,7 +31,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Vaidate Terms and condition Pdf download
+  And Vaidates Terms and condition Pdf download
   
   @TC04
   Scenario: TS05_Create Enrollment_HO_Review and Submit page_Authorized Enroller
@@ -47,7 +47,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Submit button is enabled when Terms & conditions is clicked
+  And Validates Submit button is enabled when Terms & conditions is clicked
   
    @TC06
   Scenario: TS07_Create Enrollment_HO_Review and Submit page_Cancel_Back_Submit buttons
@@ -55,7 +55,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Cancel Enrollment, Back and Submit Enrollment options display
+  And Validates Cancel Enrollment, Back and Submit Enrollment options display
   
   @TC07
   Scenario: TS08_Create Enrollment_HO_Review and Submit page_Back functionality
@@ -63,7 +63,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Back button functionality
+   And Validates Back button functionality
   
   @TC08
   Scenario: TS09/TS010/TS011_Create Enrollment_HO_Review and Submit page_Cancel Enrollment Popup
@@ -78,7 +78,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Error Messages on Review and Submit Page
+  And Validates Error Messages on Review and Submit Page
   
   @TC10
   Scenario: TS015-TS020_Create Enrollment_HO_Review and Submit page_Error Messaging_Hyperlink Display
@@ -86,7 +86,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Invalid Data Error Messages on Review and Submit Page
+  And Validates Invalid Data Error Messages on Review and Submit Page
   
   @TC11
   Scenario: TS021-TS024_Create Enrollment_HO_Review and Submit page_Error Messaging_Email_No Data
@@ -94,7 +94,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate Invalid Data Error Messages for Email Address on Review and Submit Page
+  And Validates Invalid Data Error Messages for Email Address on Review and Submit Page
   
   @TC12
   Scenario: TS25_Create Enrollment_HO_Review and Submit page_Confirm Data
@@ -102,4 +102,4 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
-  Then Validate the Data saved in Database on submit of Enrollment
+  And Validates the Data saved in Database on submit of Enrollment

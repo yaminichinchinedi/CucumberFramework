@@ -75,7 +75,7 @@ public class BillingServEditIdentifyAdminSteps extends TestBase{
 		validateEFTERAProviderInfo=validateEFTERAProviderInfo.verifyEditable();
 	}
 	
-	@Then("^Validate only Cancel and Save Changes options are displayed on  Identify Administrators page$")
+	@Then("^Validates only Cancel and Save Changes options are displayed on  Identify Administrators page$")
 	public void validate_only_Cancel_and_Save_Changes_options_are_displayed_on_Identify_Administrators_page() throws Throwable {
 		
 		validateEFTERAProviderInfo.valiDateButtonsIdenityAdmn();
@@ -89,19 +89,19 @@ public class BillingServEditIdentifyAdminSteps extends TestBase{
 	
 	}
 
-	@Then("^Validate all the headers from the Identify Administrators page$")
+	@Then("^Validates all the headers from the Identify Administrators page$")
 	public void validate_all_the_headers_from_the_Identify_Administrators_page() throws IOException{
 
 		new HeaderContentValidation(testConfig).verifyHeaders("Identify Administrators");
 	}
 	
-	@Then("^Validate page content matches to UXDS html$")
+	@Then("^Validates page content matches to UXDS html$")
 	public void validate_page_content_matches_to_UXDS_html() throws Throwable {
 
 		validateEFTERAProviderInfo.verifyContentBSWithUXDS();
 	}
 	
-	@Then("^Validate page text is content managed$")
+	@Then("^Validates page text is content managed$")
 	public void validate_page_text_is_content_managed() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		
@@ -177,7 +177,7 @@ public class BillingServEditIdentifyAdminSteps extends TestBase{
     	validateEFTERAProviderInfo.ValidateAlertFrquencyPopup("Primary").ValidateAlertFrquencyPopup("Secondary");
     }
     
-    @Then("^Fill new information and click on save changes and displayed on Review and Submit page$")
+    @Then("^Fills new information and click on save changes and displayed on Review and Submit page$")
     public void fill_new_information_and_click_on_save_changes_and_displayed_on_Review_and_Submit_page() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 
@@ -185,14 +185,14 @@ public class BillingServEditIdentifyAdminSteps extends TestBase{
     	reviewAndSubmit.verifySavedChangesIdentifyAdmin();
     }
     
-    @Then("^Validate Cancel button is disabled in case errors are seen on Identify Admin page$")
+    @Then("^Validates Cancel button is disabled in case errors are seen on Identify Admin page$")
     public void validate_Cancel_button_is_disabled_in_case_errors_are_seen_on_Identify_Admin_page() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
     	
     	validateEFTERAProviderInfo.VerifyCancelButtonDisbaled();
     }
     
-    @Then("^Validate Clear Administrator Information field is hidden when editing the administrator Information$")
+    @Then("^Validates Clear Administrator Information field is hidden when editing the administrator Information$")
     public void validate_Clear_Administrator_Information_field_is_hidden_when_editing_the_administrator_Information() throws Throwable {
         // Write code here that turns the phrase above into concrete actions
 

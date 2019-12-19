@@ -93,7 +93,7 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.VerifyInvalidDataError();
 	}
 	
-	@Then("^Validate Invalid Data Error Messages for Email Address on Review and Submit Page$")
+	@Then("^Validates Invalid Data Error Messages for Email Address on Review and Submit Page$")
 	public void validate_Invalid_Data_Error_Messages_for_Email_Address_on_Review_and_Submit_Page() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 

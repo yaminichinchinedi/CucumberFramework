@@ -35,7 +35,7 @@ public class FinancialInsInfoRevSubmitSteps extends TestBase{
 		reviewAndSubmit=uploadW9.uploadW9();
 	}
 	
-	@Then("^Vaidate Edit option next to each field on Review and Submit page$")
+	@Then("^Vaidates Edit option next to each field on Review and Submit page$")
 	public void vaidate_Edit_option_next_to_each_field_on_Review_and_Submit_page() throws Throwable {
 
 		reviewAndSubmit.verifyEditLinks();
@@ -47,20 +47,20 @@ public class FinancialInsInfoRevSubmitSteps extends TestBase{
 		reviewAndSubmit.clickFinancialInfoEditLink();
 	}
 	
-	@Then("^Validate buttons on Edit Financial Institution Information Page$")
+	@Then("^Validates buttons on Edit Financial Institution Information Page$")
 	public void validate_buttons_on_Edit_Financial_Institution_Information_Page() throws Throwable {
 
 		financialInstitutionInfoPage.validateFinInforButtons();
 	}
 	
-	@Then("^Click on Cancel changes button and validate no changes are saved$")
+	@Then("^Clicks on Cancel changes button and validate no changes are saved$")
 	public void click_on_Cancel_changes_button_and_validate_no_changes_are_saved() throws Throwable {
 
 		financialInstitutionInfoPage.clickCancelChanges();
 		reviewAndSubmit.verifyCancelChangesFinancialInfoEdit();
 	}
 	
-	@Then("^Click on link Where can i find a financial institution's routing number\\? and validate the popup message$")
+	@Then("^Clicks on link Where can i find a financial institution's routing number\\? and validate the popup message$")
 	public void click_on_link_Where_can_i_find_a_financial_institution_s_routing_number_and_validate_the_popup_message() throws Throwable {
 
 		financialInstitutionInfoPage.validateRoutingNumberPopup();
@@ -73,13 +73,13 @@ public class FinancialInsInfoRevSubmitSteps extends TestBase{
 		uploadW9.clickBackButton();
 	}
 	
-	@Then("^Click on link How do i manage multiple NPI bank accounts and validate the popup message$")
+	@Then("^Clicks on link How do i manage multiple NPI bank accounts and validate the popup message$")
 	public void click_on_link_How_do_i_manage_multiple_NPI_bank_accounts_and_validate_the_popup_message() throws Throwable {
 	   
 		financialInstitutionInfoPage.validateMultipleNPIPopup();
 	}
 	
-	@Then("^Validate Headers on Financial Information page$")
+	@Then("^Validates Headers on Financial Information page$")
 	public void validate_Headers_on_Financial_Information_page() throws Throwable {
 		
 		new HeaderContentValidation(testConfig).verifyHeaders("Financial Institution Information");
@@ -97,25 +97,25 @@ public class FinancialInsInfoRevSubmitSteps extends TestBase{
 		uploadW9=selectPaymentMethods.clickContinue();
 	}
 
-	@Then("^Validate Cancel button is disabled when click on edit for voided/blank letter document$")
+	@Then("^Validates Cancel button is disabled when click on edit for voided/blank letter document$")
 	public void validate_Cancel_button_is_disabled_when_click_on_edit_for_voided_blank_letter_document() throws Throwable {
 
 		financialInstitutionInfoPage.validateCancelChanges();
 	}
 
-	@Then("^Validate Missing data Error messages for Financial Institution Fields on click on save changes button$")
+	@Then("^Validates Missing data Error messages for Financial Institution Fields on click on save changes button$")
 	public void validate_Missing_data_Error_messages_for_Financial_Institution_Fields_on_click_on_save_changes_button() throws Throwable {
 
 		financialInstitutionInfoPage.verifyErrorMsg();
 	}
 	
-	@Then("^Validate Invalid data Error messages for Financial Institution Fields on click on save changes button$")
+	@Then("^Validates Invalid data Error messages for Financial Institution Fields on click on save changes button$")
 	public void validate_Invalid_data_Error_messages_for_Financial_Institution_Fields_on_click_on_save_changes_button() throws Throwable {
 
 		financialInstitutionInfoPage.validateInvalidDataErrorMsg();
 	}
 	
-	@Then("^Validate Non numeric data Error messages for Financial Institution Fields on click on save changes button$")
+	@Then("^Validates Non numeric data Error messages for Financial Institution Fields on click on save changes button$")
 	public void validate_Non_numeric_data_Error_messages_for_Financial_Institution_Fields_on_click_on_save_changes_button() throws Throwable {
 
 		financialInstitutionInfoPage.validateNonNumericErrorMsg();

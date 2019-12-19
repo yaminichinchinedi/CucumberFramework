@@ -27,7 +27,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
   Then User navigates to ReviewAndSubmit page and click on edit icon
-  Then Validate only Cancel and Save Changes options are displayed on  Identify Administrators page
+  And Validates only Cancel and Save Changes options are displayed on  Identify Administrators page
   
   @TC03
   Scenario: TS006_Create Enrollment_HO_Review and Submit - edit Organization Information_Cancel Changes
@@ -45,7 +45,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
   Then User navigates to ReviewAndSubmit page and click on edit icon
-  Then  Validate all the headers from the Identify Administrators page
+  And  Validates all the headers from the Identify Administrators page
    
    @TC05
   Scenario: TS002_Validate that Identify Administrators page content matches to UXDS html
@@ -54,7 +54,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User navigates to UploadWNine page and click on continue button
   Then User navigates to ReviewAndSubmit page and click on edit icon
-  Then  Validate page content matches to UXDS html 
+  And Validates page content matches to UXDS html 
    
    @TC06 
    Scenario: TS003_Validate that Identify Administrators page text is content managed
@@ -63,7 +63,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
    Then User navigates to Identity Administrators page and fill all fields and click on continue button
    Then User navigates to UploadWNine page and click on continue button
    Then User navigates to ReviewAndSubmit page and click on edit icon
-   Then  Validate page text is content managed 
+   And  Validates page text is content managed 
      
    @TC07
    Scenario: TS008_Validate form and error messaging on click of Save Changes button
@@ -137,7 +137,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
       Then User navigates to Identity Administrators page and fill all fields and click on continue button
       Then User navigates to UploadWNine page and click on continue button
       Then User navigates to ReviewAndSubmit page and click on edit icon
-      Then Fill new information and click on save changes and displayed on Review and Submit page 
+      And Fills new information and click on save changes and displayed on Review and Submit page 
       
     @TC15
    Scenario: TS017_Validate Cancel button disabled functionality in case errors are seen on Identify Admin page
@@ -146,7 +146,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
      Then User navigates to Identity Administrators page and fill all fields and click on continue button
      Then User navigates to UploadWNine page and click on continue button
      Then User navigates to ReviewAndSubmit page and click on edit icon
-     Then Validate Cancel button is disabled in case errors are seen on Identify Admin page  
+     And Validates Cancel button is disabled in case errors are seen on Identify Admin page  
       
     @TC16
    Scenario: TS018_Validate that the Clear Administrator Information field is hidden when editing the administrator Information.
@@ -155,5 +155,5 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
      Then User navigates to Identity Administrators page and fill all fields and click on continue button
      Then User navigates to UploadWNine page and click on continue button
      Then User navigates to ReviewAndSubmit page and click on edit icon
-     Then Validate Clear Administrator Information field is hidden when editing the administrator Information
+     And Validates Clear Administrator Information field is hidden when editing the administrator Information
        
