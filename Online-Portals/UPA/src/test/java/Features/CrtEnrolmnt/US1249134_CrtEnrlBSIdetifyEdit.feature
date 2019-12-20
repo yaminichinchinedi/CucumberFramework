@@ -29,7 +29,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   And Validates only Cancel and Save Changes options are displayed on  Identify Administrators page
   
-  @TC03
+  @TC03 @Rerun
   Scenario: TS006_Create Enrollment_HO_Review and Submit - edit Organization Information_Cancel Changes
     
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -47,7 +47,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   And  Validates all the headers from the Identify Administrators page
    
-   @TC05
+   @TC05 @Rerun
   Scenario: TS002_Validate that Identify Administrators page content matches to UXDS html
   
   Then User navigates to Billing service information page and fill all fields and click on continue button

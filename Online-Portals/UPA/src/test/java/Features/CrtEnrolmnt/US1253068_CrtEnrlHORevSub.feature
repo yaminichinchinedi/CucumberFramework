@@ -33,7 +33,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to UploadWNine page and click on continue button
   And Vaidates Terms and condition Pdf download
   
-  @TC04
+  @TC04 @Rerun
   Scenario: TS05_Create Enrollment_HO_Review and Submit page_Authorized Enroller
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -96,7 +96,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User navigates to UploadWNine page and click on continue button
   And Validates Invalid Data Error Messages for Email Address on Review and Submit Page
   
-  @TC12
+  @TC12 @Rerun
   Scenario: TS25_Create Enrollment_HO_Review and Submit page_Confirm Data
   
   Then User navigates to Billing service information page and fill all fields and click on continue button

@@ -17,7 +17,7 @@ Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
   Then User navigates to UploadWNine page and click on continue button
   And Vaidates Headers in Review and Submit page
 
-  @TC02
+  @TC02 @Rerun
   Scenario: TS03_Create Enrollment_BS_Review and Submit page_Edit button
   
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -81,7 +81,7 @@ Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
   Then User navigates to UploadWNine page and click on continue button
   And Validates the Data saved in Database on submit of Enrollment
   
-  @TC010
+  @TC010 @Rerun
   Scenario: TS012/TS013/TS014_Create Enrollment_BS_Review and Submit page_Error Messaging_Hyperlink Display
   
   Then User navigates to Billing service information page and fill all fields and click on continue button

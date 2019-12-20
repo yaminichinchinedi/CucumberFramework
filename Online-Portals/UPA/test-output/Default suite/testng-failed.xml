@@ -5,7 +5,7 @@
     <classes>
       <class name="main.java.Runner.DemoTestNGRunner">
         <methods>
-          <include name="feature" invocation-numbers="0"/>
+          <include name="feature" invocation-numbers="0 2 3"/>
           <include name="setUpClass"/>
           <include name="setupTestMethod"/>
           <include name="endTest"/>

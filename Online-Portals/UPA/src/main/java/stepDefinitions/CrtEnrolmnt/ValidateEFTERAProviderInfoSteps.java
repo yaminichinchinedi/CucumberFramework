@@ -20,7 +20,7 @@ import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 
-public class BillingServEditIdentifyAdminSteps extends TestBase{
+public class ValidateEFTERAProviderInfoSteps extends TestBase{
 
 	String option="Health plan communication";
 	int excelRow=0;
