@@ -1,4 +1,4 @@
-
+#Author: Madhavi Upputuri
 @US1249134
 Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Review and Submit
 
@@ -29,7 +29,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   And Validates only Cancel and Save Changes options are displayed on  Identify Administrators page
   
-  @TC03 @Rerun
+  @TC03
   Scenario: TS006_Create Enrollment_HO_Review and Submit - edit Organization Information_Cancel Changes
     
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -47,14 +47,14 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   And  Validates all the headers from the Identify Administrators page
    
-   @TC05 @Rerun
-  Scenario: TS002_Validate that Identify Administrators page content matches to UXDS html
+  # @TC05
+  #Scenario: TS002_Validate that Identify Administrators page content matches to UXDS html
   
-  Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User navigates to Identity Administrators page and fill all fields and click on continue button
-  Then User navigates to UploadWNine page and click on continue button
-  Then User navigates to ReviewAndSubmit page and click on edit icon
-  And Validates page content matches to UXDS html 
+  #Then User navigates to Billing service information page and fill all fields and click on continue button
+  #Then User navigates to Identity Administrators page and fill all fields and click on continue button
+  #Then User navigates to UploadWNine page and click on continue button
+  #Then User navigates to ReviewAndSubmit page and click on edit icon
+  #And Validates page content matches to UXDS html 
    
    @TC06 
    Scenario: TS003_Validate that Identify Administrators page text is content managed

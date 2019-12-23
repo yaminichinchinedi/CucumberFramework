@@ -93,7 +93,7 @@ import main.java.reporting.LogTemp;
         },
         dryRun=false,
         strict=true,
-        tags={"@Rerun"}
+        tags={"@US1048094"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

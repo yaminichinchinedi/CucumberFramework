@@ -1,4 +1,5 @@
-@US1048094
+#Author: Madhavi Upputuri
+ @US1048094
 Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
 
   Background: Create Enrollment_BS_Review and Submit 
@@ -17,7 +18,7 @@ Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
   Then User navigates to UploadWNine page and click on continue button
   And Vaidates Headers in Review and Submit page
 
-  @TC02 @Rerun
+  @TC02
   Scenario: TS03_Create Enrollment_BS_Review and Submit page_Edit button
   
   Then User navigates to Billing service information page and fill all fields and click on continue button

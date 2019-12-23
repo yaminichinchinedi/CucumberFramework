@@ -236,7 +236,8 @@ public class ReviewAndSubmit {
 				 
 			  Element.verifyElementPresent(identifyedtlnkBS,"EDIT");
 			  Element.verifyElementPresent(edtlnk,"EDIT");
-		  }if(enrollmentInfoPageObj.getEnrollType().equals("HO")) {
+		  }
+		  else if(enrollmentInfoPageObj.getEnrollType().equals("HO")) {
 			 
 			  Element.verifyElementPresent(identifyedtlnk,"EDIT");
 			  Element.verifyElementPresent(edtlnk,"EDIT");
