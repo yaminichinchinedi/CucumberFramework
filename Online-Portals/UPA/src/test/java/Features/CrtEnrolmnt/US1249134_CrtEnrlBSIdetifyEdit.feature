@@ -121,7 +121,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
      Then User navigates to ReviewAndSubmit page and click on edit icon
      Then Enter mobile number for Primary Admin and validate Text alert checkbox
       
-    @TC13
+    @TC13 @Rerun
    Scenario: TS015_Validate Learn about alert frequency for both Primary & Secondary Admin
      
      Then User navigates to Billing service information page and fill all fields and click on continue button

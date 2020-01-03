@@ -1753,7 +1753,7 @@ public class ValidateEFTERAProviderInfo {
 	
 	public ValidateEFTERAProviderInfo ValidateAlertFrquencyPopup(String inputType) throws IOException {
 	
-		int sqlRowNo=173;
+		int sqlRowNo=172;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		String expectedText=dataTest.get(15).get("CLOBVALFROM").trim();
 		expectedText=expectedText.replaceAll("[\r\n]+", "").replaceAll("^ +| +$|( )+", "$1");
