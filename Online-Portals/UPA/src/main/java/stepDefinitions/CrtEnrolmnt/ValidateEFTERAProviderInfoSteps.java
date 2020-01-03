@@ -29,26 +29,14 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase{
 	BeginEnrollmentContinue beginEnrollmentContinuePage=null;
 	ValidateEnrollmentTypePage validateEnrollmentTypePage=null;
 	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
-	ValidateEFTERAProviderInfo validateEFTERAProviderInfo=null;
+	//ValidateEFTERAProviderInfo validateEFTERAProviderInfo=null;
 	UploadW9 uploadW9=null;
 	ReviewAndSubmit reviewAndSubmit=null;
 	ProviderInformationEFTERAEnroll providerInformationEFTERAEnroll=null;
 	
 	
-	/*@Then("^User navigates to Enrollment Eligible TIN  page and click on continue$")
-	public void user_navigates_to_Enrollment_Eligible_TIN_page_and_click_on_continue() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-		ValidateEnrollmentTypePage validateEnrollmentTypePage=new ValidateEnrollmentTypePage(testConfig);
-		providerEFTERAEnrollPage=validateEnrollmentTypePage.verifyTINStatus().clickContinue();
-	}*/
 
-	@Then("^User navigates to Billing service information page and fill all fields and click on continue button$")
-	public void user_navigates_to_Billing_service_information_page_and_fill_all_fields_and_click_on_continue_button() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-		providerInformationEFTERAEnroll=new ProviderInformationEFTERAEnroll(testConfig);
-		validateEFTERAProviderInfo=providerInformationEFTERAEnroll.fillProviderOrgInfo();
-	}
-
+	ValidateEFTERAProviderInfo validateEFTERAProviderInfo=new ValidateEFTERAProviderInfo(testConfig);
 	@Then("^User navigates to Identity Administrators page and fill all fields and click on continue button$")
 	public void user_navigates_to_Identity_Administrators_page_and_fill_all_fields_and_click_on_continue_button() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
@@ -199,10 +187,5 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase{
     	validateEFTERAProviderInfo.validateClearAdminInfoLink();
     }
 
-    @Then("^Validate the Footer Information on this page$")
-    public void validate_the_Footer_Information() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
 
-    	new Footer(testConfig).validateFooterContents(testConfig);
-    }
 }
