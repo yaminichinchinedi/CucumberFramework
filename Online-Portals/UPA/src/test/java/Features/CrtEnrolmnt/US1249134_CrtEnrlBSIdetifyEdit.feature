@@ -59,22 +59,22 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
    Then User uploads the WNine form and click continue
    Then User navigates to ReviewAndSubmit page and click on edit icon
    And  Validates page text is content managed 
-     
+     @Rerun1
    Scenario: TS008_Validate form and error messaging on click of Save Changes button
      
    Then User navigates to Billing service information page and fill all fields and click on continue button
    Then User navigates to Identity Administrators page and fill all fields and click on continue button
    Then User uploads the WNine form and click continue
    Then User navigates to ReviewAndSubmit page and click on edit icon
-   Then Click on Save changes button and validate Form and error messages
- 
+   Then Click on Save changes/Continue button and validate Form and error messages
+ @Rerun1
    Scenario: TS009_Validate Error hyperlink on click of Save Changes
   
    Then User navigates to Billing service information page and fill all fields and click on continue button
    Then User navigates to Identity Administrators page and fill all fields and click on continue button
    Then User uploads the WNine form and click continue
    Then User navigates to ReviewAndSubmit page and click on edit icon
-   Then Click on save changes button and Validate Error hyperlinks 
+   Then Click on Save changes/Continue button and Validate Error hyperlinks 
      
    Scenario: TS010_Validate error message Missing Data for both Primary & Secondary Admin fields
     

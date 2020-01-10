@@ -124,14 +124,14 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase{
 	}
 
 
-	@Then("^Click on Save changes button and validate Form and error messages$")
-	public void click_on_Save_changes_button_and_validate_Form_and_error_messages() throws Throwable {
-		valdtEFETRAProvInfo.verifyErrorMsgNull();
-	}
 	
-	@Then("^Click on save changes button and Validate Error hyperlinks$")
-	public void click_on_save_changes_button_and_Validate_Error_hyperlinks() throws Throwable {
+	@Then("^Click on Save changes/Continue button and Validate Error hyperlinks$")
+	public void click_on_Save_changes_Continue_button_and_Validate_Error_hyperlinks() throws Throwable {
 		valdtEFETRAProvInfo.verifyErrorMsgsHyperlink();
+	}
+	@Then("^Click on Save changes/Continue button and validate Form and error messages$")
+	public void click_on_Save_changes_Continue_button_and_validate_Form_and_error_messages() throws Throwable {
+		valdtEFETRAProvInfo.verifyErrorMsgNull();
 	}
 	
 
