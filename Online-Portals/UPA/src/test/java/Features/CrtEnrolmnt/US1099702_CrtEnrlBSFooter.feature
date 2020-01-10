@@ -1,7 +1,6 @@
 #Author: Madhavi Upputuri
 @US1099702
 Feature: US1099702_Create Enrollment- Billing Service - Footer Information
-
   Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information
  
   Given User navigates to UPA Sys Test application
@@ -17,5 +16,5 @@ Feature: US1099702_Create Enrollment- Billing Service - Footer Information
   Then Validate the Footer Information on this page 
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then Validate the Footer Information on this page 
-  Then User navigates to UploadWNine page and click on continue button
+  Then User uploads the WNine form and click continue
   Then Validate the Footer Information on this page 

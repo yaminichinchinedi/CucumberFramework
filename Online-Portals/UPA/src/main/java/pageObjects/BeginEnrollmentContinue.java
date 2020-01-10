@@ -3,6 +3,7 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,13 +50,13 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='enrollment']/div/a[2]")
 	WebElement btnContinueBS;
 
-	@FindBy(xpath=".//*[@id='enrollment3']/div/a[1]")
+	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancelEnrollment;
 
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]/div[3]/a[2]")
+	@FindBy(linkText="NO")
 	WebElement btnCancelEnrollmentNoOptn;
 
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]/div[3]/a[1]")
+	@FindBy(linkText="YES")
 	WebElement btnCancelEnrollmentYesOptn;
 
 	@FindBy(xpath=".//*[@id='enrollment2']/div/a[1]")
@@ -117,7 +118,13 @@ public class BeginEnrollmentContinue {
 
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div/div[1]")
 	WebElement popUpCnclEnrlmnt;
-
+	
+	@FindBy(xpath="//label[@for='tin']")
+	WebElement lblTin;
+	
+	@FindBy(id="changemyanswerbs")
+	WebElement lnkChngBS;
+	
 	String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
 	ViewPaymentsDataProvider dataProvider;
@@ -215,9 +222,17 @@ public class BeginEnrollmentContinue {
 	public BeginEnrollmentContinue clickRdoHealthOrg()
 	{
 		Element.click(rdoHealthcare,"HealthCare Organisation type");
+		enrollmentInfoObj.setEnrollType("HO");
 		return this;
 	}
 
+	public BeginEnrollmentContinue clickRdoBS()
+	{
+		Element.click(rdoBillingService,"BS type");
+		enrollmentInfoObj.setEnrollType("BS");
+		return this;
+	}
+	
 	public BeginEnrollmentContinue clickRdoAO()
 	{
 		Element.click(rdoAchOnly,"ACH only payment type");
@@ -300,21 +315,26 @@ public class BeginEnrollmentContinue {
 
 	public BeginEnrollmentContinue verifyChangeLink()
 	{
-		clickRdoHealthOrg();
-		verifyChangeLinkFunctionality(lnkChangeOption);
-
-		clickRdoHealthOrg();
-		clickRdoAO(); 
-		verifyChangeLinkFunctionality(lnkChangeOption2);
-
-		clickRdoVO();
-		verifyChangeLinkFunctionality(lnkChangeOption2);
-
-		clickRdoAV();
-		verifyChangeLinkFunctionality(lnkChangeOption2);
+		if(enrollmentInfoObj.getEnrollType().equals("HO"))
+		{
+			clickRdoHealthOrg();
+			verifyChangeLinkFunctionality(lnkChangeOption);
+	
+			clickRdoHealthOrg();
+			clickRdoAO(); 
+			verifyChangeLinkFunctionality(lnkChangeOption2);
+	
+			clickRdoVO();
+			verifyChangeLinkFunctionality(lnkChangeOption2);
+	
+			clickRdoAV();
+			verifyChangeLinkFunctionality(lnkChangeOption2);
+		}
+		else
+			verifyChangeLinkFunctionality(lnkChngBS);
+		
 		return this;
 	}
-
 
 	/**
 	 * verifies the pop up on choosing VO or AV as payment option
@@ -353,13 +373,14 @@ public class BeginEnrollmentContinue {
 	 */
 	public BeginEnrollmentContinue verifyErrorMsg()
 	{
+		if(enrollmentInfoObj.getEnrollType().equals("HO"))
+		{
 		clickRdoHealthOrg().clickRdoAO();
 		Element.click(btnContinue, "Continue");
 		errorMsg=Element.findElement(testConfig, "id", "tinerror1");
-
 		Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
 		Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errorMsg.getText());
-
+		
 		Element.enterData(txtBoxTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
 		Element.click(btnContinue, "Continue");
 		Browser.wait(testConfig, 2);
@@ -374,7 +395,7 @@ public class BeginEnrollmentContinue {
 		Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
 
 
-		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: abc888ui","txtBoxTin");
+		Element.enterData(txtBoxTin,"&{{-*-}}&", "Entered unique tin number as: &{{-*-}}&","txtBoxTin");
 		Element.click(btnContinue, "Continue");
 		errorMsg=Element.findElement(testConfig, "id", "tinerror1");
 		Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
@@ -400,6 +421,42 @@ public class BeginEnrollmentContinue {
 		Log.Comment("\nTurning off the captcha - in FINAL Block");
 		sqlRowNo=155;
 		DataBase.executeUpdateQuery(testConfig, sqlRowNo);
+		}
+		}
+		else{
+			Element.click(btnContinue, "Continue");
+			errorMsg=Element.findElement(testConfig, "id", "radioError");
+			Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+			Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Selection", errorMsg.getText());
+			
+			rdoBillingTin=Element.findElement(testConfig, "id", "tin");
+			Element.clickByJS(testConfig, rdoBillingTin, "Billing Tin");
+			Element.enterData(txtBoxBSTin,"0011", "Entered unique tin number as: 0011","txtBoxTin");
+			Element.click(btnContinue, "Continue");
+			Browser.wait(testConfig, 2);
+			errorMsg=Element.findElement(testConfig, "id", "tinerror");
+			Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
+			Element.enterData(txtBoxBSTin,"abc888ui", "Entered unique tin number as: abc888ui","txtBoxTin");
+			Element.click(btnContinue, "Continue");
+
+			errorMsg=Element.findElement(testConfig, "id", "tinerror");
+			Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+			Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+			
+			Element.enterData(txtBoxBSTin,"", "Entered unique tin number as: ","txtBoxTin");
+			Element.click(btnContinue, "Continue");
+
+			errorMsg=Element.findElement(testConfig, "id", "tinerror");
+			Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+			Helper.compareEquals(testConfig, "ERROR MSG", "Missing Data", errorMsg.getText());
+
+			Element.enterData(txtBoxBSTin,"&{{-*-}}&", "Entered unique tin number as: &{{-*-}}& ","txtBoxTin");
+			Element.click(btnContinue, "Continue");
+			errorMsg=Element.findElement(testConfig, "id", "tinerror");
+			Element.expectedWait(errorMsg, testConfig, "Error Message", "Error Message");
+			Helper.compareEquals(testConfig, "ERROR MSG", "Invalid Data", errorMsg.getText());
+
 		}
 		return this;
 	}
@@ -454,6 +511,26 @@ public class BeginEnrollmentContinue {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		this.tinNumber=dataProvider.getBSTinForStatus(status);
 		enrollAs(excelRowNo);
+		return this;
+	}
+	
+	public BeginEnrollmentContinue verifyTinRdo()
+	{
+		Element.verifyElementPresent(lblTin, "Radio box for TIN");
+		Element.verifyElementPresent(txtBoxBSTin, "Input box for BS TIN");
+		return this;
+	}
+	
+	public BeginEnrollmentContinue verifyCnclEnrlmntPoppUptxt() throws IOException
+	{
+		clickCancelEnrollment();
+		int sqlRowNo=107;
+		HashMap<Integer,HashMap<String,String>> pageData=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
+		Helper.compareEquals(testConfig, "CANCEL ENROLLMENT POPUP BOX", pageData.get(14).get("TEXT_VAL")+"\n"+
+		pageData.get(15).get("TEXT_VAL")+"\n"+pageData.get(16).get("TEXT_VAL")+"\n"+
+		pageData.get(18).get("TEXT_VAL").toUpperCase()+" "+pageData.get(17).get("TEXT_VAL").toUpperCase(),		
+		popUpCnclEnrlmnt.getText());
 		return this;
 	}
 

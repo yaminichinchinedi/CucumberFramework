@@ -1077,7 +1077,7 @@ public class TestCreateEnrollment extends TestBase{
 		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 		BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
 		BeginEnrollmentContinue beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);
-		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().validateSecondaryAdminFields("ScndProvFName", "").validateSecondaryAdminFields("ScndProvLName", "").validateSecondaryAdminFields("ScndProvPhnNo", "").validateSecondaryAdminFields("ScndProvEmail", "").validateSecondaryAdminFields("ScndProvReEmail", "");
+		beginEnrollmentContinuePage.enrollAs(excelRowNo).clickContinue().clickContinue().fillProviderOrgInfo().fillPrimaryProvInfo().validateAdminInfoFields("ScndProvFName", "").validateAdminInfoFields("ScndProvLName", "").validateAdminInfoFields("ScndProvPhnNo", "").validateAdminInfoFields("ScndProvEmail", "").validateAdminInfoFields("ScndProvReEmail", "");
 	 }
 	
 	@TestDetails(author="Amit")

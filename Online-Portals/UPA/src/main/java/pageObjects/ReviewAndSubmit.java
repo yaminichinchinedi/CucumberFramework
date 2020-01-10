@@ -54,23 +54,47 @@ public class ReviewAndSubmit {
 	WebElement phField3;
 	
 
-	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div[1]/a")
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[1]/a")
 	WebElement btnEditOrg;
 	
-	@FindBy(xpath="//*[@id='EFTERAregForm']//div[2]/div")
-	List<WebElement> divOrgInfo;
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[2]/dl[1]/dd")
+	WebElement tinOrgInfo;
 	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[3]/dl[1]/dd")
+	WebElement BSNameOrgInfo;
 	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[3]/dl[2]/dd")
+	WebElement provTypOrgInfo;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[4]/dl[1]/dd")
+	WebElement BSAddOrgInfo;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[2]/div[4]/dl[2]/dd")
+	WebElement mrktTypOrgInfo;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[3]/div[2]/dl[1]/dd")
+	WebElement adminName;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[3]/div[3]/dl[1]/dd")
+	WebElement adminNumber;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[3]/div[5]/dl[1]/dd")
+	WebElement adminEmail;
 
 	@FindBy(xpath = "//a[@class='button--primary-hover float-right margin-top-delta margin-top-delta margin-bottom-delta']")
     WebElement edtlnk;
-	
+
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[3]/div[1]/a")
+	WebElement edtAdmInfo;
+
+	@FindBy(xpath="//form[@id='EFTERAregForm']//div[4]/div[1]/a")
+	WebElement edtFinInfo;
+
 	@FindBy(xpath = ".//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a")
     WebElement identifyedtlnk;
 	
 	@FindBy(xpath = ".//*[@id='EFTERAenrBSForm']//section/fieldset/div[3]/div[1]/a")
     WebElement identifyedtlnkBS;
-	
 	
 	@FindBy(xpath = ".//*[@id='EFTERAregForm']//section/fieldset/div[4]/div[1]/a")
 	WebElement finInfoEdit;
@@ -192,6 +216,11 @@ public class ReviewAndSubmit {
 	
 	public ReviewAndSubmit verifyOrgInfo()
 	{
+		Helper.compareEquals(testConfig, "Organisation Name", enrollmentInfoPageObj.getBusinessName(),BSNameOrgInfo.getText());
+		Helper.compareEquals(testConfig, "Org Address", enrollmentInfoPageObj.getStreet()+"\n"+enrollmentInfoPageObj.getCity()+", "+enrollmentInfoPageObj.getStateName()+"\n"+enrollmentInfoPageObj.getZipCode(),BSAddOrgInfo.getText());
+		Helper.compareEquals(testConfig, "Tin",enrollmentInfoPageObj.getTin() ,tinOrgInfo.getText());
+		Helper.compareEquals(testConfig, "Provider Type",enrollmentInfoPageObj.getProvType() ,provTypOrgInfo.getText());
+		Helper.compareEquals(testConfig, "Market Type",enrollmentInfoPageObj.getMrktType() ,mrktTypOrgInfo.getText());
 		
 		return this;
 	}
@@ -203,8 +232,6 @@ public class ReviewAndSubmit {
 		Browser.verifyURL(testConfig, expectedURL);
 		
 		return new ProviderInformationEFTERAEnroll(testConfig).verifyEditable();
-		 
-		
 	}
 	public void clickIdentifyEditLink()
 	{
@@ -223,6 +250,24 @@ public class ReviewAndSubmit {
 		Helper.compareEquals(testConfig, "First Name",enrollmentInfoPageObj.getEmail(),primaryEmailAddr.getText());
 	}
 	
+	public ValidateEFTERAProviderInfo clickEditAdminInfo()
+	{
+		Element.verifyElementPresent(btnEditOrg, "Edit Organization Information");
+		Element.verifyElementPresent(edtAdmInfo, "Edit Administrator Information");
+		Element.verifyElementPresent(edtAdmInfo, "Edit Financial Information");
+		Element.click(edtAdmInfo, "Edit Admin Information");
+		return new ValidateEFTERAProviderInfo(testConfig);
+	}
+	
+	public ReviewAndSubmit verifyAdminInfo()
+	{
+		Helper.compareEquals(testConfig, "Primary Contact First Name", enrollmentInfoPageObj.getFrstName()+" "+enrollmentInfoPageObj.getLstName(),adminName.getText());
+		Helper.compareEquals(testConfig, "Primary Contact Email",enrollmentInfoPageObj.getEmail(),adminEmail.getText());
+		Helper.compareEquals(testConfig, "Primary Contact Phone Number",enrollmentInfoPageObj.getPhnNumbr(),adminNumber.getText().replace("-", ""));
+		
+		return this;
+	}
+
 	public void verifyCancelChangesIdentifyAdminEdit() {
 		
 		String expectedURL="cancelBSReviewSubmit.do";
@@ -289,7 +334,6 @@ public class ReviewAndSubmit {
 			  Browser.verifyURL(testConfig, "submissionInformationBSEnroll.do");
 		  else
 			  Browser.verifyURL(testConfig, "UploadW9EFTERAEnroll");
-		 // return new UploadW9(testConfig);
 		  
 	  }
 	  

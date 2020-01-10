@@ -58,7 +58,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(xpath = "//input[@name='finInstAccTypeNPI'][2]")
 	WebElement rdoSavings;
 	
-	@FindBy(id="uploads[0]")
+	@FindBy(id="file")
 	WebElement btnBrowse;
 	
 	// //div[4]/div[1]/div/div/div[1]/div[2]/div/label

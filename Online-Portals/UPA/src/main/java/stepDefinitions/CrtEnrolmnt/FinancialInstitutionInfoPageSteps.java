@@ -12,6 +12,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
 import main.java.pageObjects.FinancialInstitutionInfoPage;
+import main.java.pageObjects.FinancialInstitutionInfoPageNPI;
 import main.java.pageObjects.HeaderContentValidation;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
 import main.java.pageObjects.ReviewAndSubmit;
@@ -20,83 +21,14 @@ import main.java.pageObjects.UPARegistrationPage;
 import main.java.pageObjects.UploadW9;
 import main.java.pageObjects.ValidateEFTERAProviderInfo;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
-//import main.java.stepDefinitions.support.Hook;
-//import main.java.stepDefinitions.support.SuperStepDef;
 
 public class FinancialInstitutionInfoPageSteps extends TestBase {
 
 	
 	String option="Health plan communication";
 	int excelRow=1;
-	UPARegistrationPage registrationPage=null;
-	BeginEnrollment beginEnrollmentPage=null;
-	
-	ValidateEnrollmentTypePage validateEnrollmentTypePage=null;
-	//ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
-	ValidateEFTERAProviderInfo validateEFTERAProviderInfo=null;
-	//TestBase testConfig=null;
-	FinancialInstitutionInfoPage financialInstitutionInfoPage=null;
-	//SuperStepDef supdup=null;
-	
-	UploadW9 uploadW9=null;
-	ReviewAndSubmit reviewAndSubmit= null;
-	SelectPaymentMethods selectPaymentMethods=null;
-	
-	
-//	public CrtEnrlmntValiDateFinStepDef(Hook hook) {
-//		super(hook);
-//		
-//	}
-	
-//	@Before
-//	public void init(){
-//	testConfig=new DemoTestNGRunner();
-//	}
-	
-//	@Given("^User navigates to UPA Sys Test application$")
-//	public void user_navigates_to_UPA_Sys_Test_application () throws Throwable {
-//		
-//		
-//		registrationPage = new UPARegistrationPage(testConfig);
-//	    
-//	}
-//
-//	@When("^User Clicks on Enroll Now from the landing page$")
-//	public void user_Clicks_on_Enroll_Now_from_the_landing_page() throws Throwable {
-//	   
-//		 beginEnrollmentPage=  registrationPage.clickEnrollNow();   
-//	}
-//
-//	@Then("^User Select a How you heard option and  click on Continue button$")
-//	public void user_Select_a_How_you_heard_option_and_click_on_Continue_button() throws Throwable {
-//		 beginEnrollmentContinuePage= beginEnrollmentPage.selectHowYouHeard(option);  
-//	    
-//	}
-	
-
-	
-//	@Then("^Select Enrollment Type as AO and  Clicks continue button of Enrollment TIN Eligible page$")
-//	public void select_Enrollment_Type_as_AO_and_Clicks_Continue_button_of_Enrollment_TIN_Eligible_page () throws Throwable {
-//	   
-//		
-//		BeginEnrollmentContinue beginEnrollmentContinuePage=new BeginEnrollmentContinue(testConfig);
-//		providerEFTERAEnrollPage=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue();
-//	    
-//	}
-
-//	@Then("^User fills all the information  and click on Continue$")
-//	public void user_fills_all_the_information_and_click_on_Continue() throws Throwable {
-//		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
-//		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfo();
-//	    
-//	}
-
-
-	@Then("^User fills all the information on Identify Administrators page and click continue$")
-	public void user_fills_all_the_information_on_Identify_Administrators_page_and_click_continue() throws Throwable {
-		validateEFTERAProviderInfo=new ValidateEFTERAProviderInfo(testConfig);
-		financialInstitutionInfoPage=validateEFTERAProviderInfo.fillPrimaryProvInfo().clickContinue();
-	}
+	FinancialInstitutionInfoPage financialInstitutionInfoPage=new FinancialInstitutionInfoPage(testConfig);
+	FinancialInstitutionInfoPageNPI financialInstitutionNPI=null;
 	
 	@Then("^It is Validated that Financial Institution Information page text is content managed$")
 	public void it_is_Validated_that_Financial_Institution_Information_page_text_is_content_managed() throws Throwable {
@@ -166,58 +98,42 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 		financialInstitutionInfoPage.fillFinancialInstWrngInfo("uploadFile");
 	}
 	
-	@Then("^User give blank Give blank Bank Name,Street,City,State,Zip,Telephone,Routing Number,Account Number,Voided Check/Bank Letter and clicks on continue$")
-	public void user_give_blank_Give_blank_Bank_Name_Street_City_State_Zip_Telephone_Routing_Number_Account_Number_Voided_Check_Bank_Letter_and_clicks_on_continue() throws Throwable {
-	    
+	@Then("^User fills all the information on Financial Institution Information page and click continue NPI$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_NPI() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfo().clickYestoNPI().clickContinueNPI();
+	}
+
+	@Then("^User fills all the information of Financial Institution Information NPI page and click continue\\.$")
+	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
+		financialInstitutionNPI=new FinancialInstitutionInfoPageNPI(testConfig);
+		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinueAV();
 	}
 	
 	@Then("^User fills all the information on Financial Institution Information page and click continue$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue() throws Throwable {
-		uploadW9 =financialInstitutionInfoPage.fillFinancialInstInfo().clickContinue();
+		financialInstitutionInfoPage.fillFinancialInstInfo().clickContinue();
 	}
-	
-	@Then("^User navigates to UploadWnine page and click on continue button on financial Institution Page$")
-	public void user_navigates_to_Uploadw_page_and_click_on_continue_button_on_financial_Institution_Page() throws Throwable {
 
-		reviewAndSubmit=uploadW9.uploadW9();
-	}
-	
-	@Then("^Vaidates Edit option next to each field on Review and Submit page$")
-	public void vaidate_Edit_option_next_to_each_field_on_Review_and_Submit_page() throws Throwable {
-
-		reviewAndSubmit.verifyEditLinks();
-	}
-	
-	@Then("^Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page$")
-	public void click_on_Edit_on_financial_Institution_Section_and_validate_user_navigates_to_Financial_Institution_Information_Page() throws Throwable {
-
-		reviewAndSubmit.clickFinancialInfoEditLink();
+	@Then("^User fills all the information on Financial Institution Information page and click continue AV$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_AV() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfo().clickContinueAV();  
 	}
 	
 	@Then("^Validates buttons on Edit Financial Institution Information Page$")
 	public void validate_buttons_on_Edit_Financial_Institution_Information_Page() throws Throwable {
 
-		financialInstitutionInfoPage.validateFinInforButtons();
+		financialInstitutionInfoPage.validateCanclSaveButtons();
 	}
 	
-	@Then("^Clicks on Cancel changes button and validate no changes are saved$")
-	public void click_on_Cancel_changes_button_and_validate_no_changes_are_saved() throws Throwable {
-
+	@Then("^Clicks on Cancel Changes button on Financial Institution Page\\.$")
+	public void clicks_on_Cancel_Changes_button_on_Financial_Institution_Page() throws Throwable {
 		financialInstitutionInfoPage.clickCancelChanges();
-		reviewAndSubmit.verifyCancelChangesFinancialInfoEdit();
 	}
 	
 	@Then("^Clicks on link Where can i find a financial institution's routing number\\? and validate the popup message$")
 	public void click_on_link_Where_can_i_find_a_financial_institution_s_routing_number_and_validate_the_popup_message() throws Throwable {
 
 		financialInstitutionInfoPage.validateRoutingNumberPopup();
-	}
-	
-	@Then("^User Navigates Back to Financial Institution Information Page from Review and Submit Page$")
-	public void user_Navigates_Back_to_Financial_Institution_Information_Page_from_Review_and_Submit_Page() throws Throwable {
-
-		reviewAndSubmit.validateBackButton();
-		uploadW9.clickBackButton();
 	}
 	
 	@Then("^Clicks on link How do i manage multiple NPI bank accounts and validate the popup message$")
@@ -235,13 +151,7 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	@Then("^User fills all the information on Financial Institution Information page and click continue to AV$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_to_AV() throws Throwable {
 
-		selectPaymentMethods =financialInstitutionInfoPage.fillFinancialInstInfo().clickContinueAV();
-	}
-	
-	@Then("^User clicks Continue on Select Payment Methods Page$")
-	public void user_clicks_Continue_on_Select_Payment_Methods_Page() throws Throwable {
-		
-		uploadW9=selectPaymentMethods.clickContinue();
+		financialInstitutionInfoPage.fillFinancialInstInfo().clickContinueAV();
 	}
 
 	@Then("^Validates Cancel button is disabled when click on edit for voided/blank letter document$")
@@ -268,12 +178,9 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 		financialInstitutionInfoPage.validateNonNumericErrorMsg();
 	}
 	
-	@Then("^User should navigae to Review and Submit Page upon Entering valid information with changes reflecting$")
-	public void user_should_navigae_to_Review_and_Submit_Page_upon_Entering_valid_information_with_changes_reflecting() throws Throwable {
-
+	@Then("^User should navigate to Review and Submit Page upon Entering valid information$")
+	public void user_should_navigate_to_Review_and_Submit_Page_upon_Entering_valid_information() throws Throwable {
 		financialInstitutionInfoPage.VerifyValidFinInstInfo();
-		reviewAndSubmit.verifySavedChangesFinInsInfo();
-
 	}
 	
 }

@@ -4,7 +4,8 @@ import java.util.List;
 
 import main.java.pageObjects.UPARegistrationPage;
 import cucumber.api.DataTable;
-//import cucumber.api.java.Before;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -16,7 +17,6 @@ import main.java.pageObjects.BeginEnrollmentContinue;
 //import main.java.stepDefinitions.support.SuperStepDef;
 import main.java.pageObjects.ProviderEFTERAEnrollPage;
 
-
 public class BeginEnrollmentContinueSteps extends TestBase {
 
 	String option="Health plan communication";
@@ -25,12 +25,6 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	BeginEnrollment beginEnrollmentPage=null;
 	BeginEnrollmentContinue beginEnrollmentContinuePage=null;
 	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
-	//TestBase testConfig=null;
-	//SuperStepDef supdef=null;
-	
-//	 public CrtEnrlflow(Hook hook) {
-//		super(hook);
-//	}
 	
 	@Given("^User navigates to UPA Sys Test application$")
 	public void user_navigates_to_UPA_Sys_Test_application () throws Throwable {
@@ -51,6 +45,34 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 		beginEnrollmentContinuePage=beginEnrollmentPage.selectHowYouHeard(option); 
 	}
 	
-	//
 	
+	@Then("^Select Enrollment Type as BS$")
+	public void select_Enrollment_Type_as_BS() throws Throwable {
+		beginEnrollmentContinuePage.clickRdoBS();
+	}
+	
+	@Then("^Verify option to Select TIN/SSN is there and input box is present\\.$")
+	public void verify_option_to_Select_TIN_SSN_is_there_and_input_box_is_present() throws Throwable {
+	    beginEnrollmentContinuePage.verifyTinRdo();
+	}
+	
+	@And("^Verify Change Link is Present for BS\\.$")
+	public void verify_Change_Link_is_Present_for_BS() throws Throwable {
+	   beginEnrollmentContinuePage.verifyChangeLink();
+	}
+	
+	@Then("^Click Cancel Enrollment button and Verify its functionality\\.$")
+	public void click_Cancel_Enrollment_button_and_Verify_its_functionality() throws Throwable {
+	    beginEnrollmentContinuePage.verifyCancelEnrollmentFunctionality();
+	}
+	
+	@Then("^Enter Incorrect Tin and Verify Error msgs\\.$")
+	public void enter_Incorrect_Tin_and_Verify_Error_msgs() throws Throwable {
+	    beginEnrollmentContinuePage.verifyErrorMsg();
+	}
+	
+	@Then("^Click Cancel Enrollment button and Verify its content\\.$")
+	public void click_Cancel_Enrollment_button_and_Verify_its_content() throws Throwable {
+		beginEnrollmentContinuePage.verifyCnclEnrlmntPoppUptxt();
+	}
 }

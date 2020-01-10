@@ -79,7 +79,7 @@ public class EnrollmentSubmitted  {
 	String subjectData=null;
 	static Map data=null;
 	static HashMap<Integer,HashMap<String,String>> dataTest=null;
-	public EnrollmentSubmitted(TestBase testConfig) throws IOException 
+	public EnrollmentSubmitted(TestBase testConfig) 
 	{
 		String expectedURL = "/validateEFTERASubmit";
 		this.testConfig = testConfig;	

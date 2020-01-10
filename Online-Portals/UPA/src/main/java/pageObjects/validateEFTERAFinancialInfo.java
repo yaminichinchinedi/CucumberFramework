@@ -58,7 +58,14 @@ public class validateEFTERAFinancialInfo {
 		String expectedURL = "/validateEFTERAProviderContact";
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+		String actualURL=Browser.getURL(testConfig);
+		if(actualURL.contains("validateEFTERAProviderContact"))
+			Browser.verifyURL(testConfig, expectedURL);
+		else if(actualURL.contains("backefterafinancialinfonpi"))
+		{
+			expectedURL="/backefterafinancialinfonpi";
+			Browser.verifyURL(testConfig, expectedURL);
+		}
 		//Helper.compareContains(testConfig, "URL", expected,testConfig.driver.getCurrentUrl());
 	}
 	

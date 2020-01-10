@@ -17,6 +17,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
@@ -69,6 +70,9 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(id="sendAlertsContact1")
 	WebElement firstProvMobAlert;
 	
+	@FindBy(id="sendAlertsContact2")
+	WebElement scndProvMobAlert;
+
 	@FindBy(id="emailmailContactOne")
 	WebElement emailAdr;
 	
@@ -95,7 +99,8 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="firstNameContact2")
 	WebElement secondProvFName;
 	
-	@FindBy(name="middleNameContact2")
+//	@FindBy(name="middleNameContact2")
+	@FindBy(xpath="//input[@name='middleNameContact2']")
 	WebElement secondProvMName;
 	
 	@FindBy(name="lastNameContact2")
@@ -142,7 +147,7 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(name="mobilePhone3Contact2")
 	WebElement mobilePhone3Contact2;
 	
-@FindBy(name="mobilePhone1Contact2")
+	@FindBy(name="mobilePhone1Contact2")
 	WebElement SecProvMobField1;
 	
 	@FindBy(name="mobilePhone2Contact2")
@@ -304,6 +309,12 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(xpath="//*[@id='yesnoprimary']//div[2]/label")
 	WebElement rdoBtnNoPri;
 	
+	@FindBy(name="btnCancel")
+	WebElement btnCnclChng;
+	
+	@FindBy(linkText="SAVE CHANGES")
+	WebElement btnSavChng;
+	
 	@FindBy(xpath="//div[@class='error']//ul//li")
 	List <WebElement> individualErrors;
 	
@@ -328,7 +339,7 @@ public class ValidateEFTERAProviderInfo {
 	String fName=Helper.generateRandomAlphabetsString(5);
 	String lName=Helper.generateRandomAlphabetsString(5);
 	String secondProvEmailAdr=Helper.getUniqueEmailId();
-	String firstProvEmailAdr=Helper.getUniqueEmailId();
+	String firstProvEmailAdr=Helper.getUniqueEmailId().replace("@abc.com", "27@abc.com");
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
 	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
 	
@@ -345,7 +356,7 @@ public class ValidateEFTERAProviderInfo {
 			expectedURL="/validateBSbillingServiceInfo";
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+//		Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	public ValidateEFTERAProviderInfo validateContinueButtonfunctionality()
@@ -428,6 +439,12 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "check box is not disabled",null,firstProvMobAlert.getAttribute("disabled") );
 		Element.enterData(firstProvMobField3, "89","Entered last four digits of phone number as : 89"  ,"firstProvMobField3");
 		Helper.compareEquals(testConfig, "", "true", firstProvMobAlert.getAttribute("disabled"));
+		
+		fillMobileCntct("Secondary");
+		Helper.compareEquals(testConfig, "check box is not disabled",null,scndProvMobAlert.getAttribute("disabled") );
+		Element.enterData(SecProvMobField3, "89","Entered last four digits of phone number as : 00"  ,"SecProvMobField3");
+		Helper.compareEquals(testConfig, "", "true", scndProvMobAlert.getAttribute("disabled"));
+		
 		return this;
 	}
 
@@ -731,13 +748,14 @@ public class ValidateEFTERAProviderInfo {
 	}
 		
 	
-	public void fillSecondProvInfo()
+	public  ValidateEFTERAProviderInfo fillSecondProvInfo()
 	{
 		Element.enterData(secondProvFName, fName,"Enter First name of Second provider as: "+ fName,"secondProvFirstName");
 		Element.enterData(secondProvLName, lName,"Enter Last name of Second provider as : "+ lName,"secondProvLastName");
 		fillPhoneNumber("Secondary");
 		Element.enterData(secondProvEmail, secondProvEmailAdr, "Enter email address of Second provider","secondProvEmail");
 		Element.enterData(verifySecondProvEmail, secondProvEmailAdr, "Retype email address of Second provider","verifySecondProvEmail");
+		return this;
 	}
 	
 	public ValidateEFTERAProviderInfo fillProvInfoWrngEmail(String inputType,String  inputFormat)
@@ -1130,7 +1148,7 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareContains(testConfig, "Alert Pop Up Heading",divFrqncyPopUp.get(0).findElement(By.tagName("h4")).getText(),pageData.get(32).get("TEXT_VAL"));
 		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(1).findElement(By.tagName("p")).getText(),pageData.get(33).get("CLOBVAL").trim().replace("\n", "").replaceAll("( )+", " "));
 		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(2).findElement(By.tagName("a")).getText(),pageData.get(34).get("TEXT_VAL").toUpperCase());
-		Element.click(lnkClosTip, "Click close tip on Pop Up");
+		Element.click(lnkClosTip, "Close TIP on Pop Up");
 		Element.verifyElementNotPresent(lnkClosTip, "Alert frequency PopUp");
 		return this;
 	}
@@ -1344,13 +1362,50 @@ public class ValidateEFTERAProviderInfo {
 		return this;
 	}
 	
-	public  ValidateEFTERAProviderInfo validateSecondaryAdminFields(String field,String data) throws IOException {
+	public  ValidateEFTERAProviderInfo validateAdminInfoFields(String field,String data) throws IOException {
 		WebElement ele=null;
 		switch(field)
 		{
+			case "FrstProvFName":
+				Element.enterData(firstProvFName, data, "Enter provider First name as :" + data,"providerFName");
+				ele=firstProvFName;
+				break;
+			case "FrstProvLName":
+				Element.enterData(firstProvLName, data, "Enter provider Last name as :" + data,"providerLName");
+				ele=firstProvLName;
+				break;
+			case "FrstProvMName":
+				Element.enterData(firstProvMName, data, "Enter provider Middle name as :" + data,"providerMName");
+				ele=firstProvMName;
+				break;
+			case "FrstProvPhnNo":
+				Element.enterData(firstProvPhField1,  data, "Enter phone no filed1 as :" + data,"PhNo1");
+				Element.enterData(firstProvPhField2,  data, "Enter phone no filed2 as :" + data,"PhNo2");
+				Element.enterData(firstProvPhField3,  data, "Enter phone no filed3 as :" + data,"PhNo3");
+				ele=firstProvPhField1;
+				break;
+			case "FrstProvEmail":
+				Element.enterData(firstProvEmail, data, "Enter Scnd Prov Email","First Prov Email");
+				ele=firstProvEmail;
+				break;
+			case "FrstProvReEmail":
+				Element.enterData(verifyFirstProvEmail, data,"Enter Sec Prov ReEmail" + data,"First Prov ReEmail");
+				ele=verifyFirstProvEmail;
+				break;
+				
+			case "FrstProvEmailSame":
+				Element.enterData(firstProvEmail, data, "Enter First Prov Email: "+data,"First Prov Email");
+				Element.enterData(verifyFirstProvEmail, data,"Enter First Prov ReEmail: " + data,"First Prov ReEmail");
+				ele=firstProvEmail;
+				break;	
+				
 			case "ScndProvFName":
 				Element.enterData(secondProvFName, data, "Enter provider First name as :" + data,"providerFName");
 				ele=secondProvFName;
+				break;
+			case "ScndProvMName":
+				Element.enterData(secondProvMName, data, "Enter provider Middle name as :" + data,"providerMName");
+				ele=secondProvMName;
 				break;
 			case "ScndProvLName":
 				Element.enterData(secondProvLName, data, "Enter provider Last name as : " + data,"providerLName");
@@ -1370,16 +1425,53 @@ public class ValidateEFTERAProviderInfo {
 				Element.enterData(verifySecondProvEmail, data,"Enter Sec Prov ReEmail" + data,"Sec Prov ReEmail");
 				ele=verifySecondProvEmail;
 				break;
+				
+			case "ScndProvEmailSame":
+				Element.enterData(secondProvEmail, data, "Enter Scnd Prov Email: "+data,"Sec Prov Email");
+				Element.enterData(verifySecondProvEmail, data,"Enter Sec Prov ReEmail: " + data,"Sec Prov ReEmail");
+				ele=verifySecondProvEmail;
+				break;
 		}
-		fillSecondProvInfo(field);
-		Element.click(btnContinue, "Continue button");
-		verifySecAdminError(ele);
+		fillProvInfo(field);
+		try
+		{
+			if(btnContinue.isDisplayed())
+				Element.click(btnContinue, "Continue button");
+			else 
+				Element.clickByJS(testConfig, btnSavChng, "SAVE CHANGE BUTTON");
+		}
+		catch(NoSuchElementException e)
+		{
+			String successMsg="Verified Continue Button is not present on the page";
+			Log.Pass(successMsg);
+			Element.clickByJS(testConfig, btnSavChng, "SAVE CHANGE BUTTON");
+			Helper.compareEquals(testConfig, "Cancel Change button is disabled", "true", btnCnclChng.getAttribute("disabled"));
+		}
+		verifyAdminError(ele);
 		return this;
 
 	}
 	
-	public  ValidateEFTERAProviderInfo fillSecondProvInfo(String field) throws IOException {
+	public  ValidateEFTERAProviderInfo fillProvInfo(String field) throws IOException {
 		String provName = Helper.generateRandomAlphabetsString(5);
+		
+		if(!field.equals("FrstProvFName"))
+			Element.enterData(firstProvFName, provName, "Enter provider Firts name as :" + provName,"providerFName");
+		if(!field.equals("FrstProvLName"))
+			Element.enterData(firstProvLName, provName, "Enter provider Last name as :" + provName,"providerLName");
+		if(!field.equals("FrstProvMName"))
+			Element.enterData(firstProvMName, provName, "Enter provider Middle name as :" + provName,"providerLName");
+		if(!field.equals("FrstProvPhnNo"))
+		{
+			Element.enterData(firstProvPhField1, phNo , "Enter First Prov Phone No1 :" + phNo,"PhNo1");
+			Element.enterData(firstProvPhField2, phNo,  "Enter First Prov Phone No2 :" + phNo,"PhNo2");
+			Element.enterData(firstProvPhField3, phNoLstField,  "Enter First Prov Phone No3 :" + phNoLstField,"PhNo3");
+		}
+		if(!field.equals("FrstProvEmail") && !field.equals("FrstProvEmailSame"))
+			Element.enterData(firstProvEmail,firstProvEmailAdr , "Enter First Prov Email: "+firstProvEmailAdr,"email");
+		if(!field.equals("FrstProvReEmail") && !field.equals("FrstProvEmailSame"))
+			Element.enterData(verifyFirstProvEmail, firstProvEmailAdr,"Enter First Prov ReEmail: "+firstProvEmailAdr ,"Re-Email");
+		
 		
 		if(!field.equals("ScndProvFName"))
 			Element.enterData(secondProvFName, provName, "Enter provider Firts name as :" + provName,"providerFName");
@@ -1391,26 +1483,68 @@ public class ValidateEFTERAProviderInfo {
 			Element.enterData(secondProvPhField2, phNo,  "Enter sec Prov Phone No2 :" + phNo,"PhNo2");
 			Element.enterData(secondProvPhField3, phNoLstField,  "Enter sec Prov Phone No3 :" + phNoLstField,"PhNo3");
 		}
-		if(!field.equals("ScndProvEmail"))
+		if(!field.equals("ScndProvEmail") && !field.equals("ScndProvEmailSame"))
 			Element.enterData(secondProvEmail,secondProvEmailAdr , "Enter Sec Prov Email: "+secondProvEmailAdr,"email");
-		if(!field.equals("ScndProvReEmail"))
-			Element.enterData(verifySecondProvEmail, secondProvEmailAdr,"Enter Sec Prov ReEmail: "+secondProvEmailAdr ,"EeEmail");
+		if(!field.equals("ScndProvReEmail") && !field.equals("ScndProvEmailSame"))
+			Element.enterData(verifySecondProvEmail, secondProvEmailAdr,"Enter Sec Prov ReEmail: "+secondProvEmailAdr ,"Re-Email");
 		
 		return this;
 	}	
 
-	public void verifySecAdminError(WebElement element)
+	public void verifyAdminError(WebElement element)
 	{
 		String errorMsg="Missing Data";
-		if(element.equals(secondProvFName)||element.equals(secondProvLName))
-			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("../following-sibling::p")).getText(),errorMsg);
+		
+		if(element.equals(firstProvFName))
+			if(element.findElement(By.xpath("//div[@id='firstNmContact1']/following-sibling::p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='firstNmContact1']/following-sibling::p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='firstNmContact1']/following-sibling::p")).getText(),"Invalid Data");
+		else if(element.equals(firstProvMName))
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='middleNmContact1']/p")).getText(),"Invalid Data");
+		else if(element.equals(firstProvLName))
+			if(element.findElement(By.xpath("//div[@id='lastNmContact1']/following-sibling::p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='lastNmContact1']/following-sibling::p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='lastNmContact1']/following-sibling::p")).getText(),"Invalid Data");
+		else if(element.equals(firstProvPhField1))
+			if(element.findElement(By.xpath("//div[@id='telephoneNumberContact1']//p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='telephoneNumberContact1']//p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='telephoneNumberContact1']//p")).getText(),"Invalid Data");
+		else if(element.equals(firstProvEmail))
+			if(element.findElement(By.xpath("//div[@id='emailmailContactOne']/p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='emailmailContactOne']/p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='emailmailContactOne']/p")).getText(),"Invalid Data");
+		else if(element.equals(verifyFirstProvEmail)) 
+			if(element.findElement(By.xpath("//div[@id='verifyEmailContactOne']//p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='verifyEmailContactOne']//p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='verifyEmailContactOne']//p")).getText(),"Invalid Data");
+		
+		
+		// SECONDARY CONTACTS ERROR
+		
+		else if(element.equals(secondProvFName)||element.equals(secondProvLName))
+			if(element.findElement(By.xpath("../following-sibling::p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("../following-sibling::p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("../following-sibling::p")).getText(),"Invalid Data");
 		else if(element.equals(secondProvPhField1))
-			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//section[2]//fieldset[1]/div[2]/p")).getText(),errorMsg);
+			if(element.findElement(By.xpath("//section[2]//fieldset[1]/div[2]/p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//section[2]//fieldset[1]/div[2]/p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//section[2]//fieldset[1]/div[2]/p")).getText(),"Invalid Data");
 		else if(element.equals(secondProvEmail))
-			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//*[@id='emailcontact2']/p")).getText(),errorMsg);
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='emailcontact2']/p")).getText(),errorMsg);
+		else if(element.equals(secondProvMName))
+			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='middleNmContact2']//p")).getText(),"Invalid Data");
 		else 
-			Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//*[@id='verifyemailContact2']/p")).getText(),errorMsg);
-			
+			if(element.findElement(By.xpath("//div[@id='verifyemailContact2']/p")).getText().contains("Missing"))
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='verifyemailContact2']/p")).getText(),errorMsg);
+			else
+				Helper.compareEquals(testConfig, "Error Msg",element.findElement(By.xpath("//div[@id='verifyemailContact2']/p")).getText(),"Invalid Data");
 		Element.verifyElementPresent(errorLink, "Error link");
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted" , "#c21926", Color.fromString(element.getCssValue("border-top-color")).asHex());
 		
@@ -1426,32 +1560,45 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareContains(testConfig, "Cancel Enrollment Button", "CANCEL ENROLLMENT", cancelEnrol);
 	}
 	
-    public ValidateEFTERAProviderInfo verifyEditable(){
+	public ValidateEFTERAProviderInfo verifyEditables()
+	{
+		Helper.compareEquals(testConfig, "Primary Provider First Name", enrollmentInfoPageObj.getFrstName(), firstProvFName.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Primary Provider Last Name", enrollmentInfoPageObj.getLstName(), firstProvLName.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Primary Provider Email", enrollmentInfoPageObj.getEmail(),firstProvEmail.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Primary Provider ReEmail", enrollmentInfoPageObj.getEmail(),verifyFirstProvEmail.getAttribute("value"));
+		Helper.compareEquals(testConfig, "Primary Provider Phone Number", enrollmentInfoPageObj.getPhnNumbr(),firstProvPhField1.getAttribute("value")+firstProvPhField2.getAttribute("value")+firstProvPhField3.getAttribute("value"));
 		
-	
-	       Helper.compareEquals(testConfig, "First Name Value comparision", enrollmentInfoPageObj.getFrstName(), firstProvFName.getAttribute("value"));
-	       Helper.compareEquals(testConfig, "Last Value comparision", enrollmentInfoPageObj.getLstName(), firstProvLName.getAttribute("value"));
-	       Helper.compareEquals(testConfig, "Phone No Field 1 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(0,3),firstProvPhField1.getAttribute("value"));
-		   Helper.compareEquals(testConfig, "Phone No Field 2 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(3,6),firstProvPhField2.getAttribute("value"));
-		   Helper.compareEquals(testConfig, "Phone No Field 3 ", enrollmentInfoPageObj.getPhnNumbr().toString().substring(6,10),firstProvPhField3.getAttribute("value"));
-		   Helper.compareEquals(testConfig, "Email Address ",  enrollmentInfoPageObj.getEmail(),firstProvEmail.getAttribute("value"));
-		   Helper.compareEquals(testConfig, "Re type Email Address",enrollmentInfoPageObj.getEmail(),verifyFirstProvEmail.getAttribute("value"));	
-			
-		if (    (firstProvFName.getAttribute("readonly") == null)&&
-				(firstProvLName.getAttribute("readonly")== null) &&
-				(firstProvPhField1.getAttribute("readonly")== null) &&
-				(firstProvPhField2.getAttribute("readonly")==null) && 
-				(firstProvPhField3.getAttribute("readonly")== null)&&
-				(firstProvEmail.getAttribute("readonly")== null)&&
-				(verifyFirstProvEmail.getAttribute("readonly")== null)
-				)
-		Log.Pass("Billing service fields are editable.");
+		
+		if(firstProvFName.getAttribute("readonly") == null&& firstProvLName.getAttribute("readonly") == null&&
+		firstProvEmail.getAttribute("readonly") == null&& verifyFirstProvEmail.getAttribute("readonly") == null&&
+		firstProvPhField1.getAttribute("readonly") == null&& firstProvPhField2.getAttribute("readonly") == null && firstProvPhField3.getAttribute("readonly") == null)
+			Log.Pass("Identify Admin Fields are Editable");
 		else
-		Log.Fail("Billing service fields are readOnly.");
+			Log.failure("Identify Admin Fields are not Editable");
+			
 		return this;
 	}
-    
-    public void valiDateButtonsIdenityAdmn()
+	
+	public ValidateEFTERAProviderInfo verifyCanclSaveBtn()
+	{
+		Element.verifyElementPresent(btnCnclChng, "CANCEL CHANGE BUTTON");
+		Element.verifyElementPresent(btnSavChng, "SAVE CHANGE BUTTON");
+		return this;
+	}
+	
+	public ReviewAndSubmit clickCanclChngBtn()
+	{
+		Element.click(btnCnclChng, "CANCEL CHANGE BUTTON");
+		return new ReviewAndSubmit(testConfig);
+	}
+	
+	public ReviewAndSubmit clickSaveChngBtn()
+	{
+		Element.click(btnSavChng, "SAVE CHANGE BUTTON");
+		return new ReviewAndSubmit(testConfig);
+	}
+	
+    public void validateCanclSaveBtn()
     
 	{
 		Helper.compareContains(testConfig, "Save Changes", "SAVE CHANGES", savChanges.getText());
@@ -1785,7 +1932,7 @@ public class ValidateEFTERAProviderInfo {
 		fillIdentifyInfoSaveChanges();
 	}
 	
-	public void validateClearAdminInfoLink() {
+	public void validateClearAdminInfoHidden() {
 		
 		Element.verifyElementNotPresent(divClrAdminInfo, "Clear Administration Information Link");
 		

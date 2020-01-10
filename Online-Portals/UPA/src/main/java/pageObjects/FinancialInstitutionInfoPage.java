@@ -65,10 +65,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 
 	@FindBy(id="checking")
 	WebElement chkAcnt;
-	
-	//@FindBy(xpath = "//input[@name='finInstTinAcctType'][2]")
-	//WebElement rdoSavings;
-	
+	@FindBy(xpath = "//input[@name='finInstTinAcctType'][2]")
+	WebElement rdoSavings;
 	@FindBy(id="savings")
 	WebElement SavingAcnt;
 	
@@ -180,7 +178,14 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		String expectedURL = "/validateEFTERAProviderContact";
 		this.testConfig = testConfig;	
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, expectedURL);
+		String actualURL=Browser.getURL(testConfig);
+		if(actualURL.contains("validateEFTERAProviderContact"))
+			Browser.verifyURL(testConfig, expectedURL);
+		else if(actualURL.contains("backefterafinancialinfonpi"))
+		{
+			expectedURL="/backefterafinancialinfonpi";
+			Browser.verifyURL(testConfig, expectedURL);
+		}
 	}
 	
 
@@ -255,7 +260,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-	 // Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
 	  enrollmentInfoPageObj.setFinState(stateName);
 	  enrollmentInfoPageObj.setFinCity(cityName);
 	  enrollmentInfoPageObj.setFinZip(zipCode);
@@ -550,7 +554,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  return this;
 	}
 	
-    public void validateFinInforButtons()
+    public void validateCanclSaveButtons()
     
 	{
 		Helper.compareContains(testConfig, "Save Changes", "SAVE CHANGES", saveChanges.getText());
@@ -559,7 +563,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     
     public void clickCancelChanges() {
 		Element.clickByJS(testConfig, btnCancel, "btnCancel");
-		//return new UploadW9(testConfig) ;
 	}
     
     public void validateRoutingNumberPopup() throws IOException {

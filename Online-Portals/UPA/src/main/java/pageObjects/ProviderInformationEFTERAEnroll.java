@@ -53,6 +53,9 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "zip1")
 	WebElement zipCode1;
 	
+	@FindBy(name="npi")
+	WebElement npi;
+	
 	@FindBy(name = "zip2")
 	WebElement zipCode2;
 	
@@ -80,7 +83,7 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(linkText = "CANCEL ENROLLMENT")
 	WebElement btnCancelEnrollment;
 
-	@FindBy(name = "npi")
+	@FindBy(xpath = "//div[@id='prvnpi']/label")
 	WebElement txtNPI;
 	
 	@FindBy(name = "bsName")
@@ -101,8 +104,20 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath = "//h4[@class='provider-address']")
 	WebElement lblBusinessAddress;
 	
-	@FindBy(xpath = "//label[@for='provider-name']//span")
+	@FindBy(xpath = "//label[@for='provider-name']")
 	WebElement lblBusinessName;
+	
+	@FindBy(xpath = "//label[@for='street']")
+	WebElement lblStreet;
+	
+	@FindBy(xpath = "//label[@for='city']")
+	WebElement lblCity;
+	
+	@FindBy(xpath = "//label[@for='state']")
+	WebElement lblState;
+	
+	@FindBy(xpath = "//div[@id='prvstate']//legend")
+	WebElement lblZip;
 	
 	@FindBy(xpath = "//span[@class='progress-indicator__title']")
 	List <WebElement> OrgInfoHeaders;
@@ -110,6 +125,8 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(xpath ="//div[@class='modal modal-cancel-activation']//div")
 	WebElement divCancelEnrollment;
 	
+	@FindBy(xpath="//section[1]/fieldset/p")
+	WebElement txtBusinessAddress;
 	
 	@FindBy(xpath="//div[@class='modal modal-cancel-activation']//div//div[@class='exit-modal-header float-left']")
 	WebElement txtCancelEnrollmentPopUp;
@@ -161,6 +178,22 @@ public class ProviderInformationEFTERAEnroll {
 	
 	@FindBy(xpath = "//ul[@class='tin-list']//div/span") 
 	WebElement billingServiceInfoTin;
+	
+	@FindBy(xpath="//section[1]//h1")
+	WebElement pageHeader;
+	
+	@FindBy(xpath="//section[2]//h2")
+	WebElement provHeader;
+	
+	@FindBy(xpath="//section[2]//h4")
+	WebElement provSubHeader;
+	
+	@FindBy(id="prvtype")
+	WebElement prvType;
+	
+	@FindBy(id="provSpecialty")
+	WebElement prvSpeciallity;
+	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 
 
@@ -334,6 +367,7 @@ public class ProviderInformationEFTERAEnroll {
 	public ProviderInformationEFTERAEnroll fillBusinessName(String name)
 	{
 		Element.enterData(providerName, name, "Enter Business Name as : " +name , "Business Name");
+		enrollmentInfoPageObj.setBusinessName(name);
 		return this;
 	}
 	
@@ -370,7 +404,7 @@ public class ProviderInformationEFTERAEnroll {
 		if(enrollmentInfoPageObj.getEnrollType().contains("BS"))
 		{
 			Element.verifyTextPresent(bsName.findElement(By.xpath("../following-sibling::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted in provider text box" , expectedColor, Color.fromString(bsName.getCssValue("border-top-color")).asHex());
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted in Business Name text box" , expectedColor, Color.fromString(bsName.getCssValue("border-top-color")).asHex());
 		}
 		else
 		{
@@ -383,21 +417,31 @@ public class ProviderInformationEFTERAEnroll {
 		}
 		
 		Log.Comment("Verifying Error Msg is displayed for Street..");
-		Element.verifyTextPresent(street.findElement(By.xpath("../following-sibling::p")), expectedText);
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.verifyTextPresent(street.findElement(By.xpath("../following-sibling::p")), expectedText);
+		else
+			Element.verifyTextPresent(Element.findElement(testConfig,"xpath","//div[@id='prvstreet']/div[1]/div/p"), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in Street text box" , expectedColor, Color.fromString(street.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for City..");
-		Element.verifyTextPresent(city.findElement(By.xpath("../following-sibling::p")), expectedText);
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.verifyTextPresent(city.findElement(By.xpath("../following-sibling::p")), expectedText);
+		else
+			Element.verifyTextPresent(Element.findElement(testConfig,"xpath","//div[@id='prvstreet']/div[2]/div/p"), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(city.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for State dropdown..");
-		Element.verifyTextPresent(drpDwnState.findElement(By.xpath("../following-sibling::p")), expectedText);
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.verifyTextPresent(drpDwnState.findElement(By.xpath("../following-sibling::p")), expectedText);
+		else
+			Element.verifyTextPresent(Element.findElement(testConfig,"xpath","//div[@id='prvstate']/div//p"), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for State dropdown" , expectedColor, Color.fromString(drpDwnState.getCssValue("border-top-color")).asHex());
 		
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-		
-		//Element.verifyTextPresent(zipCode1.findElement(By.xpath("//following-sibling::p")), expectedText);
-		Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//*[@id='EFTERAenrBSForm']/section[1]/div[3]/div[2]/fieldset/div/p")), expectedText);
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//form[@id='EFTERAenrBSForm']//fieldset//p")), expectedText);
+		else
+			Element.verifyTextPresent(Element.findElement(testConfig,"xpath","//div[@id='prvstate']/fieldset//p"), expectedText);
 		//Element.verifyTextPresent(testConfig.driver.findElement(By.xpath("//div[id='bsZipField']//following-sibling::p")), expectedText);
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(zipCode1.getCssValue("border-top-color")).asHex());
 		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(zipCode2.getCssValue("border-top-color")).asHex());
@@ -426,10 +470,18 @@ public class ProviderInformationEFTERAEnroll {
 		WebElement ele=null;
 		switch(field)
 		{
-			case "BSName":
+		case "BSName":
+			if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			{
 				Element.enterData(bsName, data, "Enter provider name as :" + data,"providerName");
 				ele=bsName;
-				break;
+			}
+			else
+			{
+				Element.enterData(providerName, data, "Enter provider name as :" + data,"providerName");
+				ele=providerName;
+			}
+			break;
 			case "Street":
 				Element.enterData(street, data, "Enter street name as : " + data,"street");
 				ele=street;
@@ -443,8 +495,12 @@ public class ProviderInformationEFTERAEnroll {
 				ele=drpDwnState;
 				break;
 			case "ZipCode":
-				Element.enterData(zipCode1, data,"Entered zip code in first textbox as" + data,"zipCode1");
+				Element.enterData(zipCode1, data,"Entered zip code in first textbox as: " + data,"zipCode1");
 				ele=zipCode1;
+				break;
+			case "NPI":
+				Element.enterData(npi, data,"Entered npi as: " + data,"NPI");
+				ele=npi;
 				break;
 		}
 		fillBillingServiceInfo(field);
@@ -455,12 +511,10 @@ public class ProviderInformationEFTERAEnroll {
 		else
 		{
 		Element.click(savChanges, "Save Changes button");
-		Element.verifyElementVisiblity(btnCancel, "Cancel Button");
 		
+		Helper.compareEquals(testConfig, "Cancel Button Disabled", "true", btnCancel.getAttribute("disabled"));
+	    //Element.verifyElementVisiblity(btnCancel, "Cancel Button");
 		}
-		
-		
-		
 		verifyBSError(ele);
 		return this;
 
@@ -473,7 +527,10 @@ public class ProviderInformationEFTERAEnroll {
 		TestDataReader data= testConfig.cacheTestDataReaderObject("FinancialInfo");
 	
 		if(!field.equals("BSName"))
-			Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+			if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+				Element.enterData(bsName, provName, "Enter provider name as :" + provName,"providerName");
+			else 
+				Element.enterData(providerName, provName, "Enter provider name as :" + provName,"providerName");
 		if(!field.equals("Street"))
 			Element.enterData(street, streetName, "Enter street name as : " + streetName,"street");
 		if(!field.equals("City"))
@@ -499,9 +556,13 @@ public class ProviderInformationEFTERAEnroll {
 		{
 			if(error.getText().contains("Special"))
 				Element.verifyTextPresent(error, "Special characters not allowed");
-			else
+			else if(error.getText().contains("P.O."))
 				Element.verifyTextPresent(error, "P.O. Boxes are not accepted");
+			else
+				Element.verifyTextPresent(error, "PO Boxes are not accepted");
 		}
+		else if(element.equals(npi))
+			Element.verifyTextPresent(error, "Enter a valid 10 digit NPI");
 		else
 			Element.verifyTextPresent(error, "Special characters not allowed");
 		Element.verifyElementPresent(errorLink, "Error links");
@@ -527,23 +588,35 @@ public class ProviderInformationEFTERAEnroll {
 	public ProviderInformationEFTERAEnroll verifyEditable(){
 		
 		//Comparision of various fields with previous input
-		
-		Helper.compareEquals(testConfig, "BS Name Value comparision", enrollmentInfoPageObj.getBusinessName(), bsName.getAttribute("value"));
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
+			Helper.compareEquals(testConfig, "BS Name Value comparision", enrollmentInfoPageObj.getBusinessName(), bsName.getAttribute("value"));
+		else
+			Helper.compareEquals(testConfig, "BS Name Value comparision", enrollmentInfoPageObj.getBusinessName(), providerName.getAttribute("value"));
 		Helper.compareEquals(testConfig, "Street Value comparision", enrollmentInfoPageObj.getStreet(), street.getAttribute("value"));
 		Helper.compareEquals(testConfig, "City Value comparision", enrollmentInfoPageObj.getCity(), city.getAttribute("value"));
 		Helper.compareEquals(testConfig, "State Value comparision", enrollmentInfoPageObj.getStateName(),drpDwnState.getAttribute("value"));
 		Helper.compareEquals(testConfig, "zip code Value comparision", enrollmentInfoPageObj.getZipCode(),zipCode1.getAttribute("value"));
 		
 		//Checking of editable criteria
-		if (    (bsName.getAttribute("readonly") == null)&&
+		if(enrollmentInfoPageObj.getEnrollType().equals("BS") &&
+				(bsName.getAttribute("readonly") == null)&&
 				(street.getAttribute("readonly")== null) &&
 				(city.getAttribute("readonly")== null) &&
 				(drpDwnState.getAttribute("readonly")==null) && 
 				(zipCode1.getAttribute("readonly")== null)
 				)
-		Log.Pass("Billing service fields are editable.");
+				Log.Pass("Billing service fields are editable.");
+		else if(enrollmentInfoPageObj.getEnrollType().equals("HO")&&
+				(providerName.getAttribute("readonly") == null)&&
+				(street.getAttribute("readonly")== null) &&
+				(city.getAttribute("readonly")== null) &&
+				(drpDwnState.getAttribute("readonly")==null) && 
+				(zipCode1.getAttribute("readonly")== null))
+			Log.Pass("Organization Information fields are editable.");
 		else
-		Log.Fail("Billing service fields are readOnly.");
+				Log.Fail("Billing service fields are readOnly.");
+		
+		
 		return this;
 	}
 	public void verifyFooterButton()
@@ -570,26 +643,30 @@ public class ProviderInformationEFTERAEnroll {
 	}
 	public void verifyErrorMsgNull()
 	{
-		Element.clearData(bsName,  "Billing Service Name"); 
+		List <String> expectedErrorMsgs=null;
+		if(enrollmentInfoPageObj.getEnrollType().contains("HO"))
+		{
+			Element.clearData(providerName,  "Provider Service Name"); 
+			Element.click(chkOther, "Other Check Button");
+			expectedErrorMsgs=Arrays.asList("- Organization Information - Business Name","- Organization Information - Street","- Organization Information - City","- Organization Information - State","- Organization Information - Zip Code","- Organization Information - Provider Type/Market Type");
+		}
+		else
+		{
+			Element.clearData(bsName,  "Billing Service Name"); 
+			expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
+		}
 		Element.clearData(street,  "Street Field ");
 		Element.clearData(city,  "City Field ");
-		Element.clearData(bsName,  "Billing Service Name");
-
-		 Element.selectByVisibleText(drpDwnState, "Select State", "default select state option");
-		 Element.clearData(zipCode1,  "Zip Code1 field");
-		 Element.clearData(zipCode2,  "Zip Code2 field");
-
-		
+		Element.selectByVisibleText(drpDwnState, "Select State", "default select state option");
+		Element.clearData(zipCode1,  "Zip Code1 field");
+		Element.clearData(zipCode2,  "Zip Code2 field");
 		Element.click(savChanges, "Save Changes Button");
 		
 		
-		List <String> expectedErrorMsgs;
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
-		 expectedErrorMsgs=Arrays.asList("- Billing Service Information - Billing Service Name","- Billing Service Information - Billing Service Address Street","- Billing Service Information - Billing Service City","- Billing Service Information - Billing Service State","- Billing Service Information - Billing Service Zip Code");
+		 
 		for(int i=0;i<expectedErrorMsgs.size();i++)
-		{
 			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
-		}
 		verifyMissingDataErrorMsg();
 		
 	}
@@ -632,10 +709,51 @@ public class ProviderInformationEFTERAEnroll {
 		{
 			Log.Fail( "matches in both UI and UXDS");
 		}
-		
-
-	//	return this;
+	}
+	public ReviewAndSubmit clickSaveBtn()
+	{
+		Element.click(savChanges, "SAVE CHANGES button");
+		return new ReviewAndSubmit(testConfig);
 	}
 	
+	public ProviderInformationEFTERAEnroll verifyCanclChangBtnDsabl()
+	{
+		Helper.compareEquals(testConfig, "Cancel Change button is disabled", "true", btnCancel.getAttribute("disabled"));
+		return this;
+	}
+	
+	public ProviderInformationEFTERAEnroll verifyPageContentManaged() throws IOException
+	{
+		int sqlRowNo=173;
+		HashMap<Integer,HashMap<String,String>> pageData=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		
+		Helper.compareEquals(testConfig, "Header",pageData.get(1).get("TEXT_VAL"),pageHeader.getText());
+		Helper.compareEquals(testConfig, "Business Info Text", pageData.get(17).get("TEXT_VAL").toString()+"() "+
+				pageData.get(16).get("TEXT_VAL").toString(), txtBusinessOrgInfo.getText());
+		Helper.compareEquals(testConfig, "Business Name", pageData.get(15).get("TEXT_VAL").toString(), lblBusinessName.getText());
+		Helper.compareEquals(testConfig, "Page Content ID", pageData.get(12).get("TEXT_VAL").replace("<br>", "").replace(" Avoid", "Avoid").toString(), txtTaxIdInfo.getText().replace("\n", ""));
+		Helper.compareEquals(testConfig, "Business Address", pageData.get(10).get("TEXT_VAL").toString(), lblBusinessAddress.getText());
+		Helper.compareEquals(testConfig, "Street", pageData.get(14).get("TEXT_VAL").toString(), lblStreet.getText());
+		Helper.compareEquals(testConfig, "City", pageData.get(13).get("TEXT_VAL").toString(), lblCity.getText());
+		Helper.compareEquals(testConfig, "State", pageData.get(9).get("TEXT_VAL").toString(), lblState.getText());
+		Helper.compareEquals(testConfig, "Zip", pageData.get(8).get("TEXT_VAL").toString(), lblZip.getText());
+		Helper.compareEquals(testConfig, "Business Address Text", pageData.get(11).get("CLOBVAL").replace("<strong>", "").replace("</strong>", "").toString(), txtBusinessAddress.getText());
+		Helper.compareEquals(testConfig, "Provider Header",pageData.get(7).get("TEXT_VAL"),provHeader.getText());
+		Helper.compareEquals(testConfig, "Provider SubHeader",pageData.get(6).get("TEXT_VAL"),provSubHeader.getText());
+		Helper.compareEquals(testConfig, "Provider Federal Text", pageData.get(5).get("TEXT_VAL").toString(), txtProvFederalInfo.getText());
+		Helper.compareEquals(testConfig, "NPI text", pageData.get(4).get("TEXT_VAL").toString(), txtNPI.getText());
+		
+		sqlRowNo=177;
+		testConfig.putRunTimeProperty("mktTyp","PT");
+		HashMap<Integer,HashMap<String,String>> contentTbl=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		Helper.compareEquals(testConfig, "Provider Type",pageData.get(3).get("TEXT_VAL")+"\n"+contentTbl.get(1).get("MKT_TYP_DESC")+"\n"+contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(2).get("MKT_TYP_DESC"),prvType.getText());
+		
+		testConfig.putRunTimeProperty("mktTyp","PR");
+		contentTbl=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		Helper.compareEquals(testConfig, "Provider Type Speciality", pageData.get(2).get("TEXT_VAL")+"\n"+contentTbl.get(1).get("MKT_TYP_DESC")+"\n"+contentTbl.get(2).get("MKT_TYP_DESC")+"\n"+
+		contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(4).get("MKT_TYP_DESC")+"\n"+contentTbl.get(5).get("MKT_TYP_DESC")+"\n"+contentTbl.get(6).get("MKT_TYP_DESC"),prvSpeciallity.getText());
+		
+		return this;
+	}
 
 }
