@@ -189,6 +189,56 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase{
     	valdtEFETRAProvInfo.validateClearAdminInfoHidden();
     }
 
+	@Then("^User clicks on hyperlink CLEAR ADMINISTRATOR INFORMATION$")
+	public void User_clicks_on_hyperlink_CLEAR_ADMINISTRATOR_INFORMATION() throws Throwable {
+		valdtEFETRAProvInfo.clickClrAdminitration();
+	}
 
+@Then("^User validates Cancel Enrollment, Back and Continue options is displayed at the bottom of the Identify Administrators Page\\.$")
+public void user_validates_Cancel_Enrollment_Back_and_Continue_options_is_displayed_at_the_bottom_of_the_Identify_Administrators_Page() throws Throwable {
+    
+	
+	valdtEFETRAProvInfo.valiDateButtons();
 }
 
+@Then("^User Clicks on Back button and navigates to Billing Service Information Page\\.$")
+public void user_Clicks_on_Back_button_and_navigates_to_Billing_Service_Information_Page() throws Throwable {
+	valdtEFETRAProvInfo.clickBSBackBtn();
+}
+@Then("^User Clicks on Cancel button and a popup appears with Are you sure you want to cancel your Optum Pay enrollment application\\? with Yes and No$")
+public void user_Clicks_on_Cancel_button_and_a_popup_appears_with_Are_you_sure_you_want_to_cancel_your_EPS_enrollment_application_with_Yes_and_No() throws Throwable {
+    
+	valdtEFETRAProvInfo.clickCancelEnrlmnt(); 
+}
+
+@When("^User Clicks on No button and user is back to Organization Information page\\.$")
+public void user_Clicks_on_No_button_and_user_is_back_to_Organization_Information_page() throws Throwable {
+    
+	valdtEFETRAProvInfo.clickNoCancelEnrlmnt();
+}
+
+@When("^User Clicks on Yes button and user is on Optum Pay landing page\\.$")
+public void user_Clicks_on_Yes_button_and_user_is_on_EPS_landing_page() throws Throwable {
+    
+	valdtEFETRAProvInfo.clickYesCancelEnrlmnt();
+}
+
+@Then("^User navigates to Identity Administrators page and fill  details for \"([^\"]*)\" with incorrect/improper \"([^\"]*)\" and click on continue button$")
+public void user_navigates_to_Identity_Administrators_page_and_fill_details_fields_for_with_incorrect_improper_and_click_on_continue_button(String ProviderType , String InputField) throws Throwable {
+if (InputField.equals("Telephone No"))
+{
+	valdtEFETRAProvInfo.fillPrimaryProvInfo().fillInvalidProvInfo(ProviderType,"Incomplete").fillInvalidProvInfo(ProviderType,"nonNumeric");
+	
+}
+else if (InputField.equals("Email Address"))
+{
+	valdtEFETRAProvInfo.fillPrimaryProvInfo().fillProvInfoWrngEmail(ProviderType,"inpFormatOne").fillProvInfoWrngEmail(ProviderType,"inpFormatTwo");
+}
+}
+
+@Then("^User navigates to Identity Administrators page and fill all  details  for \"([^\"]*)\" details with not matching Email and Retype Email and click on continue button$")
+public void user_navigates_to_Identity_Administrators_page_and_fill_all_details_for_details_with_not_matching_Email_and_Retype_Email_and_click_on_continue_button(String ProviderType) throws Throwable {
+	valdtEFETRAProvInfo.fillPrimaryProvInfo().fillProvMailComp(ProviderType);
+}
+
+}

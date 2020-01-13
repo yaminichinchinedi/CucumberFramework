@@ -1707,9 +1707,14 @@ public class ValidateEFTERAProviderInfo {
     
     public void verifyErrorMsgNull()
 	{
-    	clearPrimaryAdminFields();
-		Element.click(savChanges, "Save Changes Button");
-		
+    	  if ( testConfig.driver.getCurrentUrl().contains("validateBSbillingServiceInfo"))
+    	  Element.click(btnContinue, "Continue");
+    	
+      else
+    	{
+    	  clearPrimaryAdminFields();
+    	Element.click(savChanges, "Save Changes Button");
+    	}
 		List <String> expectedErrorMsgs;
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
 		 expectedErrorMsgs=Arrays.asList("- Identify Administrators - First Name - Primary Administrator","- Identify Administrators - Last Name - Primary Administrator","- Identify Administrators - Telephone Number - Primary Administrator","- Identify Administrators - Email - Primary Administrator","- Identify Administrators - Verify Email - Primary Administrator");
@@ -1758,9 +1763,16 @@ public class ValidateEFTERAProviderInfo {
 	
 	public void verifyErrorMsgsHyperlink() {
 		
-		clearPrimaryAdminFields();
-		Element.click(savChanges, "Save Changes Button");
-
+		
+		if ( testConfig.driver.getCurrentUrl().contains("validateBillingServiceContacts"))	  
+		Element.click(btnContinue, "Continue");
+	    	
+	      else
+	    	{
+	    	  clearPrimaryAdminFields();
+	    	Element.click(savChanges, "Save Changes Button");
+	    	}
+		
 		for (int i= 1; i <= individualErrors.size(); i++) {
 
 			WebElement links = Element.findElement(testConfig,"xpath","//div[@class='error']//ul//li["+i+"]//a");
@@ -1937,5 +1949,38 @@ public class ValidateEFTERAProviderInfo {
 		Element.verifyElementNotPresent(divClrAdminInfo, "Clear Administration Information Link");
 		
 	}
+	
+	
+	public void clickClrAdminitration () throws IOException
+	{
+		Element.click(btnCrlAdmnInfo, "Clear Administrator Information");
+		Browser.wait(testConfig, 2);
+		
+		int sqlRowNo=166;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		String expectedText=dataTest.get(40).get("TEXT_VAL");
+		pageForm=Element.findElements(testConfig, "xpath", "//form[@id='EFTERAregForm']/section");
+		String actualText=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAenrBSForm']/div[5]/div[1]/div[1]/h4").getText();
+        Helper.compareEquals(testConfig, "Comparision of Clear Admin Header", expectedText, actualText);
+	
+        Element.click(btnNo, "No Button");	
+        Browser.wait(testConfig, 2);
+        Element.click(btnCrlAdmnInfo, "Clear Administrator Information");
+		Browser.wait(testConfig, 2);
+		
+		Element.click(btnYes, "Yes Button");
+		Browser.verifyURL(testConfig, "clearBillingServiceContacts.do");
+}
+
+	
+	public void clickBSBackBtn()
+	{
+		Element.click(btnBack, "Clicked Back Button");
+		Browser.verifyURL(testConfig, "billingServiceInformationBSEnroll");
+	}
+	
+	
+
+	
 	
 }
