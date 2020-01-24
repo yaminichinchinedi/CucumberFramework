@@ -132,7 +132,7 @@ public class Browser
 						"return document.readyState").equals("complete");
 			}
 		};
-		WebDriverWait wait = new WebDriverWait(driver,60);
+		WebDriverWait wait = new WebDriverWait(driver,120,600);
 		wait.until(pageLoadCondition);
 		}
 		catch(Exception e)

@@ -103,11 +103,11 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 		financialInstitutionInfoPage.fillFinancialInstInfo().clickYestoNPI().clickContinueNPI();
 	}
 
-	@Then("^User fills all the information of Financial Institution Information NPI page and click continue\\.$")
-	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
-		financialInstitutionNPI=new FinancialInstitutionInfoPageNPI(testConfig);
-		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinueAV();
-	}
+//	@Then("^User fills all the information of Financial Institution Information NPI page and click continue\\.$")
+//	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
+//		financialInstitutionNPI=new FinancialInstitutionInfoPageNPI(testConfig);
+//		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinueAV();
+//	}
 	
 	@Then("^User fills all the information on Financial Institution Information page and click continue$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue() throws Throwable {
