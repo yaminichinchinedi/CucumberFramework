@@ -430,7 +430,8 @@ public class ManageUsers extends AddUserDetails  {
 	public void verifyTinGridSorting()
 	{		
 		 ArrayList<String> actualHeadersList=new ArrayList<String>();
-		 ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","remove tin/npi"));
+		// ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","remove tin/npi"));
+		 ArrayList<String> expectedHeaderList=new ArrayList<>(Arrays.asList("tin", "provider name", "tin access level","npi","npi name","email notification","delete user"));
 	     List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
 		 List<WebElement> tinGridRowHeader=tinGridRows.get(0).findElements(By.xpath("//th"));
 

@@ -76,8 +76,8 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(id="no")
 	WebElement rdoNPINo;
 
-	@FindBy(linkText="CONTINUE")
-	WebElement btnContinue;
+	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/a[1]")
+	WebElement btnContinueSavChng;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
 	WebElement txtSecurity;
@@ -118,6 +118,9 @@ public class FinancialInstitutionInfoPageNPI{
 	
 	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancEnroll;
+	
+	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/input")
+	WebElement btnCancChng;
 	
 	@FindBy(linkText="YES")
 	WebElement btnYes;
@@ -190,12 +193,12 @@ public class FinancialInstitutionInfoPageNPI{
 	}
 	
 	public UploadW9 clickContinue() {
-		Element.clickByJS(testConfig, btnContinue, "CONTINUE");
+		Element.clickByJS(testConfig, btnContinueSavChng, "CONTINUE");
 		return new UploadW9(testConfig) ;
 	}
 	
 	public SelectPaymentMethods clickContinueAV() {
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.clickByJS(testConfig, btnContinueSavChng, "Continue");
 		return new SelectPaymentMethods(testConfig) ;
 	}
 	public FinancialInstitutionInfoPageNPI clickEditlink(){
@@ -224,7 +227,6 @@ public class FinancialInstitutionInfoPageNPI{
 		  String routingNo =data.GetData(rowNo, "RoutingNumber");
 		  String accountNo =data.GetData(rowNo, "AccountNumber");
 		 String NonNumericData= Helper.generateRandomAlphabetsString(4);
-		
 		switch(InputField)
 		{
 		case "NpiNumber":
@@ -253,6 +255,10 @@ public class FinancialInstitutionInfoPageNPI{
 			phNo="34";
 			phNoLstField="287";
 			break;
+		case "NonNumericPhone":
+			phNo= Helper.generateRandomAlphabetsString(3);
+			phNoLstField=NonNumericData;
+			break;	
 		case "financialInstCity":
 			cityName="";
 				break;
@@ -390,7 +396,13 @@ public class FinancialInstitutionInfoPageNPI{
 			Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("..//following-sibling::p")), expectedInvalidText);
 			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , expectedColor, Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
 			break;
-		
+			
+		case "NonNumericPhone":
+			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  Telephone...");
+			Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("..//following-sibling::p")), expectedInvalidText);
+			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , expectedColor, Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
+			break;
+			
 		case "financialInstZipCode":
 		Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
 		Element.verifyTextPresent(finInstZip1.findElement(By.xpath("..//following::p[1]")), expectedText);
@@ -444,8 +456,9 @@ public class FinancialInstitutionInfoPageNPI{
 			break;
 		case "NonPdfUpload" :
 		Log.Comment("Verifying Error Msg is displayed for Voided Check");
-		Element.verifyTextPresent(finInstNPIFile.findElement(By.xpath("..//following-sibling::p")), "File Format must be 'PDF','JPEG','GIF' or 'PNG'");
-		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(finInstNPIFile.getCssValue("border-top-color")).asHex());
+		WebElement nonPdf=Element.findElement(testConfig, "xpath", "//div[@id='npiUploadDoc']/div/div[3]/p");
+		Element.verifyTextPresent(nonPdf, "File Format must be 'PDF', 'JPEG', 'GIF' or 'PNG'");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(nonPdf.getCssValue("border-top-color")).asHex());
 		break;
 		
 		}
@@ -466,9 +479,10 @@ public class FinancialInstitutionInfoPageNPI{
         Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
 		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
 		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-//		enrollmentInfoPageObj.setFinInstName(financialInstName);
-//		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
-//		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
+		enrollmentInfoPageObj.setFinInstName(financialInstName);
+		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
+		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
+		enrollmentInfoPageObj.setNpi(npiNumber);
 		fillFinancialInstInfoFromExcel();
 		Browser.wait(testConfig, 2);
 		uploadBankLetterPdfWithAcceptance();
@@ -577,13 +591,13 @@ public class FinancialInstitutionInfoPageNPI{
 	public  FinancialInstitutionInfoPageNPI clickContinueNPI() {
 		
 		Browser.wait(testConfig, 2);
-		Element.clickByJS(testConfig, btnContinue, "Continue for NPI");
+		Element.clickByJS(testConfig, btnContinueSavChng, "Continue/Save Changes for NPI");
 		return new FinancialInstitutionInfoPageNPI(testConfig);
 	}
 	
 	public void verifyButtons()
 	{
-		Element.verifyElementPresent(btnContinue, "Continue Button");
+		Element.verifyElementPresent(btnContinueSavChng, "Continue Button");
 		Element.verifyElementPresent(btnBack, "Back Button");
 		Element.verifyElementPresent(btnCancEnroll, "Cancel Enrollment Button");
 		
@@ -591,7 +605,7 @@ public class FinancialInstitutionInfoPageNPI{
 		Browser.verifyURL(testConfig, "backEFTERAFinancialInfoNPI.do");
 		Browser.wait(testConfig, 2);
 		//Browser.forward(testConfig);
-		Element.click(btnContinue, "Continue Button");
+		Element.click(btnContinueSavChng, "Continue Button");
 		Browser.wait(testConfig, 1);
 		Element.click(btnCancEnroll, "Cancel Enroll Button");
 		Browser.wait(testConfig, 1);
@@ -610,7 +624,7 @@ public class FinancialInstitutionInfoPageNPI{
 	
 	public void verifyErrors()
 	{
-		Element.clickByJS(testConfig, btnContinue, "Continue");
+		Element.clickByJS(testConfig, btnContinueSavChng, "Continue");
 		ArrayList <String> errNames=new ArrayList<String>();
 		errNames.add("- Financial Information - National Provider Identifier(NPI)");
 		errNames.add("- Financial Information - Financial Institution/Bank Name");
@@ -705,6 +719,36 @@ public class FinancialInstitutionInfoPageNPI{
 			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(finInstNPIFile.getCssValue("border-top-color")).asHex());
 	}
 	
+	public void verifyChangeButtons()
+	{
+		Element.verifyElementPresent(btnContinueSavChng, "Save Changes Button");
+		
+		Element.verifyElementPresent(btnCancChng, "Cancel Changes Button");
+		
+		Element.click(btnCancChng, "Cancel Changes Button");
+		Browser.verifyURL(testConfig, "cancelReviewSubmit.do");
+	}
 	
+	public void verifyUploadedDoc(){
+		clickEditlink();
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"),"Entered path of another pdf file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"), "btnBrowse");
+		Browser.wait(testConfig,2);
+		Element.verifyElementNotEnaled(btnCancChng, "Cancel Changes Button");
+		Element.click(btnContinueSavChng, "Save Changes Button");
+		}
+	public void validateInvaidInfo()
+	{
+		Element.enterData(finInstName, "&min*", "Special Char in FII-NPI name", "finInstName");
+		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
+		Browser.wait(testConfig, 2);
+		Element.verifyElementNotEnaled(btnCancChng, "Cancel Changes Button");
+		Element.enterData(finInstName, "QWERTY", "Valid data for Fin Institution", "finInstName");
+		enrollmentInfoPageObj.setFinInstName("QWERTY");
+		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
+	}
 	
+	public void verifyEditable(){
+		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstNPINo.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstName.getAttribute("readonly"));
+	}
 }

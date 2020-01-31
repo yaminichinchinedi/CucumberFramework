@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
- 
+ @US1247822 
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
@@ -8,7 +8,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS_001
-@US1247822
+
   Scenario: TS_0001_Validate the navigation upon selection of Continue from Financial Institution Information page.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -128,7 +128,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     
     
      #TS_019,21 to 28,37,38
-    
+   
     Scenario: TS_0020_to_0028_37_38 Validate the error message when non-numeric data entered.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

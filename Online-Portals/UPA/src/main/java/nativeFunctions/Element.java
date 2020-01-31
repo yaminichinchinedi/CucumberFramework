@@ -309,6 +309,32 @@ import main.java.reporting.LogTemp;
 }
 	
 	
+	//Verifies element is disabled on the page 
+		public static void verifyElementNotEnaled(WebElement button,String namOfButton)
+		{
+			try
+			{
+				if(!button.isEnabled()== true)
+			
+			 {
+				String successMsg="Verified " + namOfButton + " is disabled";
+				Log.Pass(successMsg);
+			 }
+			else 
+			{
+				String failureMsg=namOfButton + " is enabled on the page";
+				Log.Fail(failureMsg);
+			}
+		}
+		catch(Exception e)
+		{
+			Log.Fail(namOfButton +" is not present on the page and exception is :" + "<br>" + e);
+				e.printStackTrace();
+		}
+	}
+		
+		
+	
 	
 	//Verifies element is present on the page 
 	public static void verifyElementPresent(WebElement element,String namOfElement)

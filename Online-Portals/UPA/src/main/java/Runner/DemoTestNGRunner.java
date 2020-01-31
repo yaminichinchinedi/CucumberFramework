@@ -1,6 +1,8 @@
 package main.java.Runner;
 
 import cucumber.api.CucumberOptions;
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.testng.TestNGCucumberRunner;
 import cucumber.api.testng.CucumberFeatureWrapper;
 import main.java.nativeFunctions.TestBase;
@@ -15,6 +17,10 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
  
+
+
+
+
 
 
 
@@ -47,6 +53,8 @@ import java.util.concurrent.TimeUnit;
 import org.hamcrest.Description;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -93,7 +101,7 @@ import main.java.reporting.LogTemp;
         },
         dryRun=false,
         strict=true,
-        tags={"@US1048094"}
+        tags={"@US1247822"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;
@@ -118,5 +126,23 @@ public class DemoTestNGRunner extends TestBase {
     @AfterSuite(alwaysRun = true)
     public void tearDownClass() throws Exception {
         testNGCucumberRunner.finish();
+    }
+    
+    
+    @After
+    public void afterhook(Scenario scn) {
+
+    try {
+    if(scn.isFailed())
+    {
+    scn.write("Browser Type: " + runtimeProperties.getProperty("BrowserType"));
+    scn.write("Execution Environment: " + System.getProperty("env"));
+    final byte[] screenshot = ((TakesScreenshot) testConfig.driver).getScreenshotAs(OutputType.BYTES);	
+    // to embed screen shot to cucumber report :
+    scn.embed(screenshot, "image/png"); // ... and embed it in	
+    }
+
+    } catch (Exception e) {}
+
     }
 }

@@ -22,7 +22,10 @@ public class ReviewAndSubmitSteps extends TestBase {
 	public void validate_Edit_option_appears_next_to_Oranization_Information() throws Throwable {
 		reviewAndSubmit.clickEditOrgButton();
 	}
-	
+	@Then("^User validateds multiple Edit option on Review and Submit Page$")
+	public void user_validateds_multiple_Edit_option_on_Review_and_Submit_Page() throws Throwable {
+		reviewAndSubmit.verifyEditHyperLinks();
+	}
 	@And("^Validate User is  redirected to Review and Submit Page and No changes are saved\\.$")
 	public void validate_User_is_redirected_to_Review_and_Submit_Page_and_No_changes_are_saved() throws Throwable {
 	    reviewAndSubmit.verifyOrgInfo();
@@ -143,4 +146,30 @@ public class ReviewAndSubmitSteps extends TestBase {
 		reviewAndSubmit.verifySavedChangesIdentifyAdmin();
 	}
 	
+	@Then("^User clicks on Financial Institution Information NPI page Edit link$")
+	public void user_clicks_on_Financial_Institution_Information_NPI_page_Edit_link() throws Throwable {
+		reviewAndSubmit.clickEditNPI();
+	}
+	@Then("^User clicks on Financial Institution Information NPI page remove link and validate it is removed\\.$")
+	public void user_clicks_on_Financial_Institution_Information_NPI_page_remove_link_and_validate_it_is_removed() throws Throwable {
+		reviewAndSubmit.clickRemoveNPI();
+	}
+	@Then("^User verifies that uploaded document is present on Review and Submit Page$")
+	public void user_verifies_that_uploaded_document_is_present_on_Review_and_Submit_Page() throws Throwable {
+		reviewAndSubmit.verifyUpldDoc("FIINPI");
+	}
+	
+	@Then("^User verifies content of FII-NPI on Review and Submit Page$")
+    public void user_verifies_content_of_FII_NPI_on_Review_and_Submit_Page() throws Throwable {
+		reviewAndSubmit.verifyFIINPICOntent();
+	}
+	@Then("^User fills valid information on FII NPI page and click Save Changes, an verifies changes on Review Submit Page$")
+	public void user_fills_valid_information_on_FII_NPI_page_and_click_Save_Changes_an_verifies_changes_on_Review_Submit_Page() throws Throwable {
+		reviewAndSubmit.verifyFIINPICOntent();
+	}
+	
+	@Then("^User verifies that uploaded document is present on Review and Submit Page on TIN Section$")
+	public void user_verifies_that_uploaded_document_is_present_on_Review_and_Submit_Page_on_TIN_Section() throws Throwable {
+		reviewAndSubmit.verifyUpldDoc("FII");
+	}
 }

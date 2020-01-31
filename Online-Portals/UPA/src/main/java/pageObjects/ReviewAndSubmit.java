@@ -154,6 +154,9 @@ public class ReviewAndSubmit {
 	@FindBy(xpath=".//*[@id='EFTERAregForm']//section/fieldset/div[4]/div[3]/dl[1]/dd")
 	WebElement finInstName;
 	
+	@FindBy(xpath="//a[@class='button--primary-hover float-right margin-top-delta margin-top-delta margin-bottom-delta']")
+	List <WebElement> edtlnks;
+	
 	private TestBase testConfig;
 	
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
@@ -518,4 +521,61 @@ public class ReviewAndSubmit {
 			Helper.compareEquals(testConfig, "Account Number",enrollmentInfoPageObj.getFinAcntNo(),finAccountNumber.getText()); 
 			Helper.compareEquals(testConfig, "Institution Name",enrollmentInfoPageObj.getFinInstName(),finInstName.getText());
 		}
+	public void verifyEditHyperLinks()
+	{
+		
+	Element.verifyElementPresent(edtlnks.get(0),"Org Info EDIT");
+	Element.verifyElementPresent(edtlnks.get(1),"Identify Admin EDIT");
+	Element.verifyElementPresent(edtlnks.get(2),"Tin Information EDIT");
+	Element.verifyElementPresent(edtlnks.get(3),"NPI FII EDIT");
+	Element.verifyElementPresent(edtlnks.get(4),"NPI FII REMOVE");
+	}
+	
+	public void clickEditNPI()
+	{
+		Element.click(edtlnks.get(3), "NPI FII Edit Link");
+	}
+	public void  clickRemoveNPI(){
+		Element.click(edtlnks.get(4), "NPI FII Remove Link");
+		List<WebElement>Uploaded=Element.findElements(testConfig, "linkText", "Uploaded Voided Check");
+		if(edtlnks.size()==3 || Uploaded.size()==1)
+		{
+			Log.Pass("Finantial Institute Info-NPI Details deleted and Uploaded Voided Check of NPI is not present.");
+		}
+		else
+		{
+			Log.Fail("Finantial Institute Info-NPI Details not deleted.");
+		}
+	}
+	
+	public void verifyUpldDoc(String verifyDocLocation){
+		
+		String pdfData=System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath");
+		String pdfDataonPage="";
+		if (verifyDocLocation == "FIINPI")
+		 pdfDataonPage=Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/section/fieldset/div[5]/div[4]/dl[2]/dd/a").getText();
+		
+		else if (verifyDocLocation == "FII")
+			 pdfDataonPage=Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/section/fieldset/div[4]/div[4]/dl[2]/dd/a").getText();
+				
+		if (pdfData.contains(pdfDataonPage))
+		{
+			Log.Pass("pdf uploaded and is on Review and submit Page");
+		}
+		else
+		{
+			Log.Fail("Uploaded doc is not on Review and Submit Page");
+		}
+		
+	}
+	public void verifyFIINPICOntent()
+	{
+		String fIIName=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section/fieldset/div[5]/div[3]/dl[1]/dd").getText();
+		String nPINo=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section/fieldset/div[5]/div[2]/dl[1]/dd").getText();
+		
+		Helper.compareContains(testConfig, "FII-NPI Name", enrollmentInfoPageObj.getFinInstName(), fIIName);
+		Helper.compareContains(testConfig, "FII-NPI NPI No", enrollmentInfoPageObj.getNpi(), nPINo);
+
+	}
+	
 }

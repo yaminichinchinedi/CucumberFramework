@@ -183,4 +183,19 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 		financialInstitutionInfoPage.VerifyValidFinInstInfo();
 	}
 	
+	@Then("^User validates fiels are editables on Financial Institution Information page$")
+	public void user_validates_fiels_are_editables_on_Financial_Institution_Information_page() throws Throwable {
+		financialInstitutionInfoPage.verifyEditable();
+	}
+	
+	@Then("^User clicks on edit link of Account information section and reupload any other document$")
+	public void user_clicks_on_edit_link_of_Account_information_section_and_reupload_any_other_document() throws Throwable {
+		financialInstitutionInfoPage.verifyUploadedDoc();
+	}
+	
+	@Then("^User give alphanumeric No in Telphone no fiels and click on save changes button$")
+	public void user_give_alphanumeric_No_in_Telphone_no_fiels_and_click_on_save_changes_button() throws Throwable {
+		financialInstitutionInfoPage.fillFIIwithNonNumericPhone();
+	}
+	
 }

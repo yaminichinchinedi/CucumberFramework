@@ -33,7 +33,7 @@ Scenario: Fills the relevent Info with AV Enroll Typ
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+    Then User fills all the information of Financial Institution Information NPI page and click continue for AV.
 
 #TS13
 Scenario: Fills the relevent Info with AV Enroll Typ

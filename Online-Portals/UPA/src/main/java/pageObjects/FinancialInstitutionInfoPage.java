@@ -206,6 +206,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return new SelectPaymentMethods(testConfig) ;
 	}
 	
+	
+	
 	public FinancialInstitutionInfoPage fillFinancialInstInfo() throws IOException
 	{
 		String expectedText="To help ensure the security of your account, you must enter a physical address for your financial institution. PO Boxes are not allowed.";
@@ -772,4 +774,45 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     	Browser.verifyURL(testConfig, "validateEFTERAFinancialInfo.do?fromReview=Y");
     	
     }
+    
+    public void verifyEditable(){
+		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstStreet.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstName.getAttribute("readonly"));
+	}
+    
+	public void verifyUploadedDoc(){
+		Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"),"Entered path of another pdf file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"), "btnBrowse");
+		Browser.wait(testConfig,2);
+		Element.clickByJS(testConfig, saveChanges, "Save Changes Button");
+		}
+	
+	public FinancialInstitutionInfoPage fillFIIwithNonNumericPhone() throws IOException
+	{
+		Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
+		String financialInstName = Helper.generateRandomAlphabetsString(4);
+		String financialInstStreet = Helper.generateRandomAlphabetsString(5);
+		String phNo = Helper.generateRandomAlphabetsString(3);
+		String phNoLstField =Helper.generateRandomAlphabetsString(4);
+		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
+		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
+        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
+		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
+		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
+		enrollmentInfoPageObj.setFinInstName(financialInstName);
+		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
+		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
+		fillFinancialInstInfoFromExcel();
+		Browser.wait(testConfig, 2);
+		uploadBankLetterPdfWithAcceptance();
+		Element.clickByJS(testConfig, saveChanges, "Continue");
+		
+		Log.Comment("Verifying Error Msg is displayed for Finantial Institution  Telephone...");
+		Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("..//following-sibling::p")), "Invalid Data");
+		Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , "#c21926", Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
+
+		return this;
+	}
+	
+	
 }

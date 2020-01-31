@@ -10,6 +10,12 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	@Then("^User fills all the information of Financial Institution Information NPI page and click continue\\.$")
 	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
 		
+		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinue();
+	}
+	
+	@Then("^User fills all the information of Financial Institution Information NPI page and click continue for AV\\.$")
+	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue_for_AV() throws Throwable {
+		
 		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinueAV();
 	}
 	
@@ -37,6 +43,9 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_NPI() throws Throwable {
 		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickNPIYes().clickContinueNPI();
 	}
+	
+	
+
 	@Then("^User validates functionality of different buttons like Back,cancel enrollment,Continue\\(Yes/No on Continue\\) by clicking\\.$")
 	public void user_validates_functionality_of_different_buttons_like_Back_cancel_enrollment_Continue_Yes_No_on_Continue_by_clicking() throws Throwable {
 	 	financialInstitutionNPI.verifyButtons();
@@ -59,15 +68,17 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstroutingNo")
 							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstaccountNo")
 							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")
-							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonPdfUpload")
+							  .fillInsufficientFinancialInstInfoForNPI("NonPdfUpload")
 							   ;
 	}
 	
 	@Then("^User validates various input field by giving nonnumeric data input and clicking continue button\\.$")
 	public void user_validates_various_input_field_by_giving_nonnumeric_data_input_and_clicking_continue_button() throws Throwable {
 		financialInstitutionNPI.fillInsufficientFinancialInstInfoForNPI("NonNumericNPI")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericPhone")
 		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericroutingNo")
 		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericAccountNo");
+		
 		  
 	}
 	
@@ -90,5 +101,62 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 		financialInstitutionNPI.verifyUIContentFromDB();
 	}
 
+	@Then("^User verifies that FII-NPI fields are editables$")
+	public void user_verifies_that_FII_NPI_fields_are_editables() throws Throwable {
+		financialInstitutionNPI.verifyEditable();
+	}
+	@Then("^User fills all the information on Financial Institution Information NPI page and click Save Changes$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_NPI_page_and_click_Save_Changes() throws Throwable {
+		financialInstitutionNPI.clickEditlink().fillFinancialInstInfoForNPI().clickContinueNPI(); 
+	}
+	
+	@Then("^User validates the Cancel Changes and Save changes buttons,click on Cancel Changes button$")
+	public void user_validates_the_Cancel_Changes_and_Save_changes_buttons_click_on_Cancel_Changes_button() throws Throwable {
+		financialInstitutionNPI.verifyChangeButtons();
+	}
+	
+	@Then("^User clicks on Edit link to upload doc and validates Cancel button is disabled$")
+	public void user_clicks_on_Edit_link_to_upload_doc_validates_Cancel_button_is_disabled() throws Throwable {
+		financialInstitutionNPI.verifyUploadedDoc();
+	}
+	@Then("^User fills invalid information on FII NPI page and click Save Changes, an error will be there and Cancel Changes button is disabled$")
+	public void user_fills_invalid_information_on_FII_NPI_page_and_click_Save_Changes_an_error_will_be_there_and_Cancel_Changes_button_is_disabled() throws Throwable {
+		financialInstitutionNPI.validateInvaidInfo();
+	}
+	
+	@Then("^User validates various input field by giving blank input and clicking Save Changes button\\.$")
+	public void user_validates_various_input_field_by_giving_blank_input_and_clicking_Save_Changes_button() throws Throwable {
+		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NpiNumber").clickContinueNPI()
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstName")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstStreet")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstCity")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstState")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstZipCode")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("PhoneNo")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstroutingNo")
+		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstaccountNo")
+		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")
+		   ;
+	}
+
+	@Then("^User validates various input field by giving nonnumeric data input and clicking Save Changes button\\.$")
+	public void user_validates_various_input_field_by_giving_nonnumeric_data_input_and_clicking_Save_Changes_button() throws Throwable {
+		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericNPI")
+			.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericPhone")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericroutingNo")
+		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericAccountNo");
+		  
+	}
+
+	@Then("^User validates error messages by giving PO BOX No in Street field,Invalid zip/state code,incomplete phoneno and click on Save Change\\.$")
+	public void user_validates_error_messages_by_giving_PO_BOX_No_in_Street_field_Invalid_zip_state_code_incomplete_phoneno_and_click_on_Save_Change() throws Throwable {
+		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("POBoxNoInStreet")
+		.clickEditlink().fillInsufficientFinancialInstInfoForNPI("AlphaZipCode")
+		.clickEditlink().fillInsufficientFinancialInstInfoForNPI("UnMatchedAddress")
+		.clickEditlink().fillInsufficientFinancialInstInfoForNPI("IncompPhoneNo")
+		;
+		
+	}
+	 
 	
 }

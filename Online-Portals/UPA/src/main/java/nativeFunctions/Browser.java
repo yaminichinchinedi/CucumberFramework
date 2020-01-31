@@ -132,6 +132,17 @@ public class Browser
 						"return document.readyState").equals("complete");
 			}
 		};
+		
+		//WebDriverWait wait = new WebDriverWait(driver,60);
+				//for (int i=0; i<15; i++){ 
+		            //try {
+		             //Thread.sleep(500);
+		             //}catch (InterruptedException e) {} 
+		            //To check page ready state.
+		            //if (((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete")){ 
+		            //	break; 
+		            //}   
+		           //}	
 		WebDriverWait wait = new WebDriverWait(driver,120,600);
 		wait.until(pageLoadCondition);
 		}
