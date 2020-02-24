@@ -1,6 +1,6 @@
 #Author: Amit Kushwah
 
-@US1425410
+@CreateEnrollment @US1425410
 Feature: Create Enrollment - Select Payment Methods
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment

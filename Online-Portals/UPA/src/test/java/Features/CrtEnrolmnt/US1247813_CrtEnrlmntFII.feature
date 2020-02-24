@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
-@US1247813
+@CreateEnrollment @US1247813
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment

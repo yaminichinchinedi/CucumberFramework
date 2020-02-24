@@ -1,5 +1,5 @@
 #Author: Madhavi Upputuri
-@US1099702
+@CreateEnrollment @US1099702
 Feature: US1099702_Create Enrollment- Billing Service - Footer Information
   Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information
  

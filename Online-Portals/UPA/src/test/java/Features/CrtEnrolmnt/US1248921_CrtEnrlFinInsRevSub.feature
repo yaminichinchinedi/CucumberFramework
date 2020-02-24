@@ -1,5 +1,6 @@
 #Author: Madhavi Upputuri
-@US1248921
+
+@CreateEnrollment @US1248921
 Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institution Information
 
   Background: Create Enrollment_HO_Review and Submit 

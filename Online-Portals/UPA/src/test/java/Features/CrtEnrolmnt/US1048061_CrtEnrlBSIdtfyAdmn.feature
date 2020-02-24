@@ -1,5 +1,6 @@
 #Author: Rahul Krishna
-@US1048061
+
+@CreateEnrollment @US1048061
 Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
 
   Background: Create Enrollment BS Enrollment Type to Identify Administrators page

@@ -1,5 +1,6 @@
 #Author: Madhavi Upputuri
-@US1249134
+
+@CreateEnrollment @US1249134
 Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Review and Submit
 
   Background: Create Enrollment_BS_Review and Submit 
