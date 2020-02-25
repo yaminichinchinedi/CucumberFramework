@@ -310,7 +310,7 @@ import main.java.reporting.LogTemp;
 	
 	
 	//Verifies element is disabled on the page 
-		public static void verifyElementNotEnaled(WebElement button,String namOfButton)
+		public static void verifyElementNotEnabled(WebElement button,String namOfButton)
 		{
 			try
 			{

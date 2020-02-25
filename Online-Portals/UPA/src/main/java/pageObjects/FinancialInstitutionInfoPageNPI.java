@@ -733,7 +733,7 @@ public class FinancialInstitutionInfoPageNPI{
 		clickEditlink();
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"),"Entered path of another pdf file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
-		Element.verifyElementNotEnaled(btnCancChng, "Cancel Changes Button");
+		Element.verifyElementNotEnabled(btnCancChng, "Cancel Changes Button");
 		Element.click(btnContinueSavChng, "Save Changes Button");
 		}
 	public void validateInvaidInfo()
@@ -741,7 +741,7 @@ public class FinancialInstitutionInfoPageNPI{
 		Element.enterData(finInstName, "&min*", "Special Char in FII-NPI name", "finInstName");
 		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
 		Browser.wait(testConfig, 2);
-		Element.verifyElementNotEnaled(btnCancChng, "Cancel Changes Button");
+		Element.verifyElementNotEnabled(btnCancChng, "Cancel Changes Button");
 		Element.enterData(finInstName, "QWERTY", "Valid data for Fin Institution", "finInstName");
 		enrollmentInfoPageObj.setFinInstName("QWERTY");
 		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
