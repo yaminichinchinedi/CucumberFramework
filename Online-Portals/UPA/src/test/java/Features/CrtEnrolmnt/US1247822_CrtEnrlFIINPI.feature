@@ -127,7 +127,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User validates various input field by giving blank input and clicking continue button.	
     
     
-     #TS_019,21 to 28,37,38
+     #TS_020 to 28,37,38
    
     Scenario: TS_0020_to_0028_37_38 Validate the error message when non-numeric data entered.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
