@@ -165,26 +165,20 @@ public class BeginEnrollmentContinue {
 				break;
 
 			case "VO":	
-				//Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
-				// 	Changes might be reverted after some time	
-
-//				clickRdoVO();
-//				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
-//				testConfig.putRunTimeProperty("enrollmentType", "VO");
-//				enrollmentInfoObj.setTinIdentifier("VO");
-//				enrollmentInfoObj.setTin(tinNumber);
-//				break;
-				
-				//Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
-				// 	Changes might be reverted after some time	
+				clickRdoVO();
+				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "VO");
+				enrollmentInfoObj.setTinIdentifier("VO");
+				enrollmentInfoObj.setTin(tinNumber);
+				break;
 
 			case "AV":
-//				clickRdoAV();
-//				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
-//				testConfig.putRunTimeProperty("enrollmentType", "AV");
-//				enrollmentInfoObj.setTinIdentifier("AV");
-//				enrollmentInfoObj.setTin(tinNumber);
-//				break;
+				clickRdoAV();
+				Element.enterData(txtBoxTin,tinNumber, "Entered unique tin number as: " + tinNumber,"txtBoxTin");
+				testConfig.putRunTimeProperty("enrollmentType", "AV");
+				enrollmentInfoObj.setTinIdentifier("AV");
+				enrollmentInfoObj.setTin(tinNumber);
+				break;
 
 			default:
 				Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				 
@@ -329,13 +323,13 @@ public class BeginEnrollmentContinue {
 			clickRdoHealthOrg();
 			clickRdoAO(); 
 			verifyChangeLinkFunctionality(lnkChangeOption2);
-	//Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
-	// 	Changes might be reverted after some time	
-//			clickRdoVO();
-//			verifyChangeLinkFunctionality(lnkChangeOption2);
-//	
-//			clickRdoAV();
-//			verifyChangeLinkFunctionality(lnkChangeOption2);
+		//Changes made by Rahul on 26Feb2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
+		// 	Changes might be reverted after some time
+		//clickRdoVO();
+		//verifyChangeLinkFunctionality(lnkChangeOption2);
+
+		//clickRdoAV();
+		//verifyChangeLinkFunctionality(lnkChangeOption2);
 		}
 		else
 			verifyChangeLinkFunctionality(lnkChngBS);

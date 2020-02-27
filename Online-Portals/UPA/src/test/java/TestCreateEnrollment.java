@@ -106,7 +106,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1202167--TS008 + TS009 =Validates navigation upon selection of VCP and healthOrg/TS009 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
+	@Test(enabled=false,priority=4,description="US1202167--TS008 + TS009 =Validates navigation upon selection of VCP and healthOrg/TS009 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
 	public void testChooseVCP() throws IOException
 	 {
 		String option="Health plan communication";
@@ -117,7 +117,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 
 	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1202167--TS010 Validates navigation upon selection of I agree option on VCP pop up ",groups="Provider")
+	@Test(enabled=false,priority=4,description="US1202167--TS010 Validates navigation upon selection of I agree option on VCP pop up ",groups="Provider")
 	public void testEnrollAsVCP() throws IOException
 	 {
 		String option="Health plan communication";
@@ -130,7 +130,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1202167--TS011/TS014 Validates navigation upon selection of I agree option on ACH and VCP pop up",groups="Provider")
+	@Test(enabled=false,priority=4,description="US1202167--TS011/TS014 Validates navigation upon selection of I agree option on ACH and VCP pop up",groups="Provider")
 	public void testEnrollAsVCPandACH() throws IOException
 	 {
 		String option="Health plan communication";
@@ -142,7 +142,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 
 	@TestDetails(author="Amit")
-	@Test(priority=4,description="US1202167--TS012/TS013 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
+	@Test(enabled=false,priority=4,description="US1202167--TS012/TS013 Validates navigation upon clicking Cancel on VCP PopUp Box",groups="Provider")
 	public void testChooseVCPandACH() throws IOException
 	 {
 		String option="Health plan communication";
@@ -360,7 +360,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 
 	@TestDetails(author="Avneet")
-	@Test(priority=3,description="US1350108_TS04_TIN does not exists on EPS_AV",groups="Provider")
+	@Test(enabled=false,priority=3,description="US1350108_TS04_TIN does not exists on EPS_AV",groups="Provider")
 	void testTINNotEnrolledVO()throws IOException
 	{
 		int excelRowNo=4;
@@ -372,7 +372,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 
 	@TestDetails(author="Avneet")
-	@Test(priority=3,description="US1350108_TS05_TIN does not exists on EPS_VO",groups="Provider")
+	@Test(enabled=false,priority=3,description="US1350108_TS05_TIN does not exists on EPS_VO",groups="Provider")
 	void testTINNotEnrolledAV()throws IOException
 	{
 		int excelRowNo=3;
@@ -384,7 +384,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 
 	@TestDetails(author="Avneet")
-	@Test(priority=3,description="US1350108_TS06_Content Managed",groups="Provider")
+	@Test(enabled=false,priority=3,description="US1350108_TS06_Content Managed",groups="Provider")
 	void testContentManaged()throws IOException
 	{
 		int excelRowNo=3;
@@ -396,7 +396,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 
 	@TestDetails(author="Avneet")
-	@Test(priority=3,description="US1350108_TS07_UXDS match",groups="Provider")
+	@Test(enabled=false,priority=3,description="US1350108_TS07_UXDS match",groups="Provider")
 	void testUXDSMatch()throws IOException
 	{
 		int excelRowNo=3;
@@ -652,7 +652,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1033935 -TS002_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AV enrollment") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1033935 -TS002_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_AV enrollment") 
 	public void testPDFVerificationforVCP() throws IOException
 	{
 		String option="Health plan communication";
@@ -664,7 +664,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1033935 -TS003_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_VO enrollment") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1033935 -TS003_Create Enrollment_HO_Enrollment Submitted_Print Completed Enrollment Form_VO enrollment") 
 	public void testPDFVerificationforACHandVCP() throws IOException
 	{
 		String option="Health plan communication";
@@ -765,7 +765,7 @@ public class TestCreateEnrollment extends TestBase{
 	 */
 	
 	@TestDetails(author="Rahul")
-	@Test(priority=4,description="US1033910-TS005 Validate the header display for AV ( Enrollment Submitted ) Page",groups="Provider")
+	@Test(enabled=false,priority=4,description="US1033910-TS005 Validate the header display for AV ( Enrollment Submitted ) Page",groups="Provider")
 	public void testHeaderDisplayforAV() throws IOException
 	 {
 		String option="Health plan communication";
@@ -782,7 +782,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	@TestDetails(author="Rahul")
-	@Test(priority=4,description="US1033910-TS006 Validate the header display for VO ( Enrollment Submitted ) Page",groups="Provider") 
+	@Test(enabled=false,priority=4,description="US1033910-TS006 Validate the header display for VO ( Enrollment Submitted ) Page",groups="Provider") 
 	public void testHeaderDisplayforVO() throws IOException
 	{
 		String option="Health plan communication";
@@ -800,7 +800,7 @@ public class TestCreateEnrollment extends TestBase{
 	 * @throws IOException
 	 */
 	@TestDetails(author="Rahul")
-	@Test(priority=4,description="TS_00007_The PDF display  for the user to download or view or print their enrollment form",groups="Provider") 
+	@Test(enabled=false,priority=4,description="TS_00007_The PDF display  for the user to download or view or print their enrollment form",groups="Provider") 
 	public void testDownloadEnrollmentForm() throws IOException
 	{
 		String option="Health plan communication";
@@ -828,7 +828,7 @@ public class TestCreateEnrollment extends TestBase{
 	
 	
 	@TestDetails(author="Rahul")
-	@Test(priority=4,description="US1033910-TS009/0010 Option displays to Exit Enrollment and When click on Exit Enrollment button Navigate  to EPS Landing page.",groups="Provider") 
+	@Test(enabled=false,priority=4,description="US1033910-TS009/0010 Option displays to Exit Enrollment and When click on Exit Enrollment button Navigate  to EPS Landing page.",groups="Provider") 
 	public void testVerifyExitEnrollemnt() throws IOException
 	{
 		String option="Health plan communication";
@@ -953,7 +953,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0001_Validate the navigation upon selection of Continue from Organization Information page."
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0001_Validate the navigation upon selection of Continue from Organization Information page."
 			+ "/TS_0004_Validate the error message when all the Secondary Admin fields are left empty."
 			+ "/TS007-TS013/Validate the action upon clicking on Learn About Frequency/Clear Secondary Information Pop Up box and Yes and No button Functionality on these box"
 			+ "TS022") 
@@ -973,7 +973,7 @@ public class TestCreateEnrollment extends TestBase{
 	 */
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0002_Validate the layout of the Identify Administrators page.") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0002_Validate the layout of the Identify Administrators page.") 
 	public void testAdministratorsPageUXDS() throws IOException
 	{
 		String option="Health plan communication";
@@ -985,7 +985,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0003_Validate the content of the Identify Administrators page.") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0003_Validate the content of the Identify Administrators page.") 
 	public void testAdministratorsPageContent() throws IOException
 	{
 		String option="Health plan communication";
@@ -997,7 +997,7 @@ public class TestCreateEnrollment extends TestBase{
 	}
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0005_Validate the Mobile Phone Number field is mandatory or not If Send text alerts boxed is unchecked."
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0005_Validate the Mobile Phone Number field is mandatory or not If Send text alerts boxed is unchecked."
 			+ "/TS_0006_Validate the Mobile Phone Number field is mandatory or not If Send text alerts boxed is checked.") 
 	public void testAdministratorsPageMobileAlert() throws IOException
 	{
@@ -1010,7 +1010,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0014_Validate the navigation upon selection of Back button."
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0014_Validate the navigation upon selection of Back button."
 			+ "/TS015") 
 	public void testAdministratorsPageContinuebtnErrors() throws IOException
 	{
@@ -1023,7 +1023,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0016_Validate the content of the Pop Up box upon click of Cancel Enrollment button."
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0016_Validate the content of the Pop Up box upon click of Cancel Enrollment button."
 			+ "/TS_0017_Validate the page navigation upon clicking No button on Cancel Popup.") 
 	public void testAdministratorsPageCancelEnrlmnt() throws IOException
 	{
@@ -1036,7 +1036,7 @@ public class TestCreateEnrollment extends TestBase{
 	 }
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS_0018_Validate the page navigation upon clicking Yes button on Cancel Popup.") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS_0018_Validate the page navigation upon clicking Yes button on Cancel Popup.") 
 	public void testAdministratorsPageCancelEnrlmntYesBtn() throws IOException
 	{
 		String option="Health plan communication";
@@ -1057,7 +1057,10 @@ public class TestCreateEnrollment extends TestBase{
 		int excelRowNo=1;
 		for(;excelRowNo<=4;excelRowNo++)
 		{
-			if(excelRowNo==2)
+			//Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
+			// 	Changes might be reverted after some time
+			//if(excelRowNo==2)
+				if(excelRowNo==2||excelRowNo==3||excelRowNo==4)
 				continue;
 			UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 			BeginEnrollment beginEnrollmentPage=  registrationPage.clickEnrollNow();
@@ -1069,7 +1072,7 @@ public class TestCreateEnrollment extends TestBase{
 	
 	
 	@TestDetails(author="Amit")
-	@Test(priority=4,groups="Provider",description="US1247779 -TS023-TS027/Validate error msgs when No data entered for Secondary Administrators FirstName/SecondName/Email/ReEmail/Telephone") 
+	@Test(enabled=false,priority=4,groups="Provider",description="US1247779 -TS023-TS027/Validate error msgs when No data entered for Secondary Administrators FirstName/SecondName/Email/ReEmail/Telephone") 
 	public void testSecondaryAdminInfo() throws IOException
 	{
 		String option="Health plan communication";

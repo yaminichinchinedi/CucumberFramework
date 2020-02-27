@@ -78,7 +78,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information on Financial Institution Information NPI page and click continue NPI.
     
     #TS_11,#TS_12
-    	Scenario Outline: TS_0011_TS_012_Validate the headers on Identify Administrator page for AO and AV TIN.
+    @Retest11
+    Scenario Outline: TS_0011_TS_012_Validate the headers on Identify Administrator page for AO and AV TIN.
     Then user selects as "<EnrollmentType>" and  Clicks continue button of Enrollment TIN Eligible page
 											      
     Then User fills all the information  and click on Continue
@@ -89,7 +90,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Examples:
     												| EnrollmentType  |
 											      |      AO         |
-											      |			 AV					|
+											 #     |			 AV					|
 											      
 											      
 		     #TS_013 #TS_014 #TS_015 #TS_016 #TS_017
