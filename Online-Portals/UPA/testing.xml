@@ -5,9 +5,9 @@
 		<!-- listener class-name="org.uncommons.reportng.HTMLReporter" /-->
 		<!-- listener class-name="org.uncommons.reportng.HTMLReporter" /-->
 	</listeners>
-	<!--test name="Create Enrollment">
+	<test name="Create Enrollment">
 		<classes> 
 		<class name="main.java.Runner.DemoTestNGRunner" />
 		</classes>
-	</test-->
+	</test>
 </suite>
