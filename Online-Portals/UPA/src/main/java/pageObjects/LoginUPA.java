@@ -3,9 +3,11 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.util.Map;
 
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 import org.apache.xpath.operations.Or;
 import org.openqa.selenium.WebElement;
@@ -19,16 +21,11 @@ public class LoginUPA {
 	
 	
 	
-	@FindBy(id="usnamefield" )
-	WebElement txtboxUserName;
 	
-	@FindBy(id="pwdfield")
-	WebElement txtboxPwd;
-	
-	//@FindBy(linkText="SIGN IN WITH EPS ID")
-	
-    @FindBy(linkText="SIGN IN WITH EPS ID" )
-	WebElement btnLogin;
+	@FindBy(xpath = "//input[@id='userNameId_input']") WebElement txtboxUserName;
+	@FindBy(xpath = "//input[@id='passwdId_input']") WebElement txtboxPwd;
+	@FindBy(xpath = "//input[@id='SignIn']") WebElement btnLogin;
+
     
     @FindBy(xpath="//font[@class='errors']")
 	private WebElement txtErrorMsg;
@@ -39,6 +36,7 @@ public class LoginUPA {
     @FindBy(linkText="ACTIVATE")
     public WebElement btnActivate;
     
+   @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
 	
 	
     @FindBy(id="tabHome")
@@ -61,6 +59,25 @@ public class LoginUPA {
 		
         
 	}
+	
+	
+	public UPAHomePage doLoginUPA(String userType)
+	{
+
+	   Element.click(clickUPASignIn, "Click On Sign In UPA");
+	   String env=System.getProperty("env");
+       Browser.wait(testConfig, 5);
+       id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
+       password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
+       testConfig.putRunTimeProperty("id", id);
+	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
+	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
+	   Element.clickByJS(testConfig,btnLogin,"click Login button");
+	   Browser.wait(testConfig, 7);
+	   return new UPAHomePage(testConfig); 
+	 }
+	
+	
 	
 	//Deafult constructor
 	public LoginUPA() 
@@ -128,5 +145,22 @@ public class LoginUPA {
 	{
 		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
 	}
+	
+	
+	public void UPARegistrationPage(TestBase testConfig) throws IOException
+    {
+
+          //this.testConfig=testConfig;          
+          Browser.dismissAlert(testConfig);
+
+           testConfig.driver.navigate().to(System.getProperty("URL"));
+          Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
+          PageFactory.initElements(testConfig.driver, this);
+          Browser.waitForLoad(testConfig.driver);
+          //Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
+    }
+	
+	
+	
 	
 }

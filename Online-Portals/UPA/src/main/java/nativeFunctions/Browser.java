@@ -633,4 +633,11 @@ public class Browser
 		
 			
 	}
-}
+	
+	public static void explicitWait(TestBase testConfig)
+	{
+		WebDriverWait wait = new WebDriverWait(testConfig.driver,10);
+	}
+	
+	
+ }

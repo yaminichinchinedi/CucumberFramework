@@ -19,7 +19,14 @@ import main.java.reporting.Log;
 import main.java.nativeFunctions.TestBase;
 
 public class DataBase
+
 {
+	public static Connection con;
+	static Statement statement = null;
+	static ResultSet rs;
+	
+	
+	
 	public enum DatabaseType
 	{
 		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test(6);
@@ -1001,5 +1008,41 @@ public class DataBase
 		String query = sqlData.GetData(sqlRow, "Query");
 		return query;
 	}
+	
+	
+	
+	public synchronized static List<String> executeQuery(String query,String... sColumn) throws SQLException {
+		String sb = "";
+		List<String> alist=new ArrayList<String>();
+		try {
+			
+		
+			statement = con.createStatement();
+			con.createStatement();
+			statement.setQueryTimeout(1200);
+			
+	
+			
+			
+			rs = statement.executeQuery(query);
+			while(rs.next()){
+				for(String sData:sColumn){
+					sb=sb+rs.getString(sData);
+					if(!sData.equalsIgnoreCase(sColumn[sColumn.length-1])){
+					sb=sb+",";
+					}
+				}
+				alist.add(sb);
+				sb="";
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return alist;
+
+	
+	
+	}
+	
 	
 }

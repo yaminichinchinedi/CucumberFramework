@@ -729,4 +729,37 @@ import main.java.reporting.LogTemp;
  }*/
 
 
+public boolean isSorted(List<String> list)
+{
+	    boolean sorted = true;        
+	    for (int i = 1; i < list.size(); i++) {
+	        if (list.get(i-1).compareTo(list.get(i)) > 0) sorted = false;
+}
+
+	    return sorted;
+	}
+
+//public static void verifyElementNotEnabled(WebElement button,String namOfButton)
+//{
+//try
+//{
+//if(!button.isEnabled()== true)
+//
+//{
+//String successMsg="Verified " + namOfButton + " is disabled";
+//Log.Pass(successMsg);
+//}
+//else 
+//{
+//String failureMsg=namOfButton + " is enabled on the page";
+//Log.Fail(failureMsg);
+//}
+//}
+//catch(Exception e)
+//{
+//Log.Fail(namOfButton +" is not present on the page and exception is :" + "<br>" + e);
+//e.printStackTrace();
+//}
+//}
+
 }

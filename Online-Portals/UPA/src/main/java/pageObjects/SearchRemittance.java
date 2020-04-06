@@ -5,6 +5,7 @@ import groovy.transform.AutoClone;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -26,10 +28,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Reporter;
 import org.xml.sax.SAXException;
 
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
+
+//import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.sFTPAccess;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
@@ -124,6 +132,15 @@ public class SearchRemittance extends paymentSummary {
 	@FindBy(id = "paymentNbr_1")
 	WebElement paymentNbr1;
 	
+	@FindBy(xpath="//span[contains(@id,'epra')]//img")
+	WebElement imgEPRApdf;
+	
+	@FindBy(xpath = "//td[@class='commenlink' and @id='homeId']/a[1]") WebElement HomeBtn;
+	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement SrchRemit;
+	@FindBy(xpath = "//input[@name='providerTIN']") WebElement EnterTIN;
+	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement SearchBtn;
+	
+	
 	private TestBase testConfig;
 	static int flag=0;
 	List<ArrayList<String>> listOfPatients=new ArrayList<ArrayList<String>>();
@@ -132,7 +149,7 @@ public class SearchRemittance extends paymentSummary {
 		super(testConfig,true);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
+		//Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
 		
 	}
 	
@@ -1297,4 +1314,236 @@ public class SearchRemittance extends paymentSummary {
 		testConfig.putRunTimeProperty("dspl_nbr", paymentNbr1.getText());
 		return new RemittanceDetail(testConfig);
 	}
+
+	public SearchRemittance verifyEpraPdfIcon(String srchType)
+	{
+		String filedir=System.getProperty("user.dir")+"\\Downloads";
+		File fileDirectory=new File(filedir);
+//		Element.verifyElementPresent(imgEPRApdf, "EPRA PDF ICON");
+		Helper.purgeDirectory(fileDirectory);
+//		Element.click(imgEPRApdf, "Epra PDF icon");
+		clickEpraPDFlink(srchType);
+		Browser.wait(testConfig, 5);
+		Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));
+		return this;
+	}
+	
+	public SearchRemittance clickEpraPDFlink(String srchType)
+	{
+		String actualPaymntNo="";
+		String expectedPaymntNo="";
+		boolean found=false;
+		if(srchType.equals("byDOPAndNpi"))
+		{
+			//expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+			
+			System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
+	    	
+	    	expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+	    	
+	    	String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			
+			searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+		}
+		else if(srchType.equals("byElectronicPaymentNo"))
+		{
+			expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+			expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+		}
+		
+		WebElement popUp=null;
+		WebElement lnkEpraPdf=null;
+		int totalNoOfPages=getNumberOfPages();		
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    	    if(testConfig.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+			      actualPaymntNo=actualPaymntNo.replace("\n", "");
+			      if(actualPaymntNo.contains(expectedPaymntNo))
+			       {	
+			    	  found=true;
+			    	  if(srchType.equals("byDOPAndNpi"))
+			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
+			    	  else if(srchType.equals("byElectronicPaymentNo"))
+			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
+			    	  Browser.wait(testConfig, 5);
+				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
+				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
+				     Browser.wait(testConfig, 10);
+				     System.setProperty("expectedPaymntNo", expectedPaymntNo);
+    	             break;   
+				   }
+		        }
+		     }
+    	    if(found==true)break;
+    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
+				 int pageToBeClicked=pageNo+1;
+				 Log.Comment("Non ePRA payment not found on page number " + pageNo);
+				 
+				 Element.findElement(testConfig,"xpath","//body/div/table/tbody/tr/td/table/tbody/tr/td/form/table/tbody/tr[7]/td[1]/span[1]/a["+ pageToBeClicked +"]").click();
+				 //Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+				 Log.Comment("Clicked Page number : " + pageToBeClicked);
+				 Browser.waitForLoad(testConfig.driver);
+			     }
+   	    
+			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
+				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+			       Element.click(lnkNextPage,"Next Link");
+			       Browser.waitForLoad(testConfig.driver);
+			       Browser.wait(testConfig,3);
+			       
+			    }
+			  else
+			     Log.Warning("Could not find nonEpra payment on any of the pages, please execute test case manually", testConfig);
+		    }
+		 
+		return this;
+	}
+	
+	
+	public SearchRemittance verifyUsrEvntLog()
+	{
+		int sqlRowNo=207;
+		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		
+		Log.Comment("The Data from User Event Log Table is:" + data);
+		Helper.compareContains(testConfig, "EPRA is downloaded",testConfig.getRunTimeProperty("tin"), data.get("EVNT_MSG").toString());
+		//Helper.compareContains(testConfig, "EPRA is downloaded",testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER"), data.get("EVNT_MSG").toString());
+		//Helper.compareContains(testConfig, "EPRA is downloaded", "DataAccess:SUCCESS:Protected Data Access: :Payment Summary(PrintEPRA):P:", data.get("EVNT_MSG").toString());
+		return this;
+	}
+	
+	public SearchRemittance verifyNoEpraPdfIcon()
+	{
+		Element.verifyElementNotPresent(imgEPRApdf, "EPRA PDF ICON");
+		Element.verifyElementNotPresent(lnkEpraPDF, "EPRA PDF link");
+		return this;
+	}
+	
+	
+	
+	public SearchRemittance verifyUsrEvntLogRemitDetail()
+	{
+	
+	    
+		int sqlRowNo=207;
+		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("The Data from User Event Log Table is:" + data);
+		Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
+		
+		return this;
+	}
+	
+	
+	public SearchRemittance verifyUsrEvntLogForSrchRemit(String userType)
+	{
+//		String env=System.getProperty("env");
+//	    String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
+//	    testConfig.putRunTimeProperty("id", id);
+	    
+		System.getProperty("id");
+		System.out.println(System.getProperty("id"));
+	    int sqlRowNo=207;
+		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("The Data from User Event Log Table is:" + data);
+		//Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
+		Helper.compareContains(testConfig, "EPRA is downloaded", System.getProperty("id"), data.get("EVNT_MSG").toString());
+	    
+		return this;
+		
+	}
+	
+	public SearchRemittance verifyUsrEvntLogRemitDetailCSR(String userType)
+	{
+		
+		String env=System.getProperty("env");
+	    String id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
+	    testConfig.putRunTimeProperty("id", id);
+	    
+	    int sqlRowNo=207;
+		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("The Data from User Event Log Table is:" + data);
+		Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
+		
+		
+		return this;
+	
+	}
+	
+	public SearchRemittance verifyfileinNASDrive() throws SftpException, JSchException
+	{
+		
+		sFTPAccess obj_FTPaccess = new sFTPAccess();	
+		//Connecting to sFTP location
+		obj_FTPaccess.connect();	
+		//Calling isFileAvailable function to validate file presence
+
+		//srchRemittance.getPDFfileName();
+		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
+		
+		String TIN = System.getProperty("tin");
+		
+		Log.Comment("Tin retrieved from other class is:" + TIN);
+
+		Log.Comment("/home/ppsstg/stg/erapdf/pdf/"+System.getProperty("tin").substring(0,2)+"/"+System.getProperty("tin")+"/",System.getProperty("PDFFileName"));
+		Log.Comment("/home/ppsstg/stg/erapdf/pdf/"+System.getProperty("tin").substring(0,2)+"/"+System.getProperty("tin")+"/"+System.getProperty("PDFFileName"));
+		
+		System.out.println((obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/erapdf/pdf/"+System.getProperty("tin").substring(0,2)+"/"+System.getProperty("tin")+"/",System.getProperty("PDFFileName"))));
+		
+		
+		
+		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/erapdf/pdf/"+System.getProperty("tin").substring(0,2)+"/"+System.getProperty("tin")+"/"+"" ,System.getProperty("PDFFileName")))
+		{
+		System.out.print("*(((------File Available*");
+		System.out.print("*(((------File PDFFileName*"+System.getProperty("PDFFileName")+"---");
+		obj_FTPaccess.DeleteFile("/home/ppsstg/stg/erapdf/pdf/"+System.getProperty("tin").substring(0,2)+"/"+System.getProperty("tin")+"/",System.getProperty("PDFFileName"));
+		Log.Comment("/******** Deleted File from NAS DRIVE *********/");
+		
+	}
+		
+		
+		//Closing sFTP connection
+		obj_FTPaccess.Closeconnection();
+		
+		//Deleting CONSL_PAY_NBR row from EPRA_STATUS Table 
+		
+		int sqlRowNo=209;
+		String expectedPaymntNo="";
+		expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
+		DataBase.executeDeleteQuery(testConfig, 212);
+		System.out.println(DataBase.executeDeleteQuery(testConfig, 1));
+		Browser.wait(testConfig, 3);
+		
+		
+		return this;
+		
+	}
+	
+	public paymentSummary verifyppraStatus(String expectedStatus) 
+	 {
+		int sqlRowNo=229;//34;		
+		Map ppraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + ppraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, ppraStatusTbl.get("REQ_STS").toString());
+		return this;
+		
+	 } 
+	
+	public paymentSummary getPDFfileName() 
+	 {
+		int sqlRowNo=178;//34;
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		String str ;
+		System.out.print("----Converted-PDFFIleName-->"+epraStatusTbl.get("PDF_FL_NM"));
+		System.setProperty("PDFFileName", (String) epraStatusTbl.get("PDF_FL_NM"));
+	
+		return this;
+		
+	 } 
 }

@@ -17,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.xml.sax.SAXException;
@@ -33,14 +34,13 @@ import main.java.reporting.Log;
 
 public class SearchRemittanceSearchCriteria {
 	
-	private TestBase testConfig;
+	TestBase testConfig=TestBase.getInstance();
 	private ViewPaymentsDataProvider dataProvider;
 	
 	@FindBy(id="checkNumberInputId")
 	WebElement checkNumber;
 	
-	@FindBy(id="paymentNumberInputId")
-	WebElement paymentNumber;
+	//@FindBy(id="paymentNumberInputId") WebElement paymentNumber;
 	
 	@FindBy(id="paymentNbrTypeSelection")
 	WebElement paymentNumberType;
@@ -59,6 +59,9 @@ public class SearchRemittanceSearchCriteria {
 	
 	@FindBy(name="searchRemittance")
 	WebElement btnSearchRemittance;
+	
+	@FindBy(xpath = "//input[@name='paymentNumber']") WebElement paymentNumber;
+	
 	
 	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[3]/td[5]/a[2]/img")
 	WebElement dosTo;
@@ -123,14 +126,28 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(name="taxIdNbr")
 	WebElement txtboxTinNo;
 	
+	@FindBy(xpath="//td[contains(text(),'TIN:')]") WebElement tinnum1;
+	
+	
+	@FindBy(xpath="//input[@id='startDateOfPaymentId']") WebElement startDOPDate;
+	@FindBy(xpath="//input[@id='endDateOfPaymentId']") WebElement endDOPDate;
+	
+	@FindBy(id="startDateOfPaymentId")
+	WebElement dopFromDate;
+	
+	@FindBy(id="endDateOfPaymentId")
+	WebElement dopToDate;
+	
+	
+	
 	@FindBy(xpath=".//*[@class='Subheaderbold']//input[2]")
 	WebElement btnSearch;
 	Map dataRequiredForSearch;
 	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
-		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+//		testConfig=this.testConfig;
+		PageFactory.initElements(this.testConfig.driver, this);
 		try{
 			txtboxTinNo.getText();
 		}
@@ -144,21 +161,127 @@ public class SearchRemittanceSearchCriteria {
 			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
 	}
 	
-	public SearchRemittance doSearch(String criteriaType) throws ParseException {
+	public SearchRemittance doSearch(String criteriaType) throws ParseException 
+	{
+		
+
 		
 		String date="";
 		Map srchData=null;
+		int sqlRow = 0;
+		
+		Log.Comment(testConfig.getRunTimeProperty("suite"));
+		
+		
+		
+		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
+	    	{
+	    		 sqlRow = 204;
+	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	    		System.out.println(dataRequiredForSearch);
+	    	}        
+	    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
+	    	{
+	    		 sqlRow = 205;
+	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	    		
+	    		System.out.println(dataRequiredForSearch);
+	    	}
+	    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+	    	{
+	    		 sqlRow = 204;
+	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	    		
+	    		System.out.println(dataRequiredForSearch);
+	    	}
+	    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+	    	{
+	    		 sqlRow = 205;
+	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	    		
+	    		System.out.println(dataRequiredForSearch);
+	    	}
+		
+		  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+    	  {
+    		 sqlRow = 204;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	  }
+		
+		 else if("EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+  	     {
+  		  sqlRow = 205;
+  		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+  		
+  		   System.out.println(dataRequiredForSearch);
+  	     }
+		
+		else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
+ 	     {
+ 		  sqlRow = 212;
+ 		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+ 		
+ 		   System.out.println(dataRequiredForSearch);
+ 	     }
+		
+		
+		else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+	     {
+		  sqlRow = 217;
+		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		   System.out.println(dataRequiredForSearch);
+	     }
+		
+		else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 sqlRow = 218;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+		else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 sqlRow = 219;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+		
+		else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 sqlRow = 210;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+
+	     else		 
+	     {	
+	   		dataRequiredForSearch=dataProvider(criteriaType);
+	   		System.out.println(dataRequiredForSearch);
+	     }
+		
 		
 		switch(criteriaType)
 		 {
-		    case "byElectronicPaymentNo":
+		 case "byElectronicPaymentNo":  
 		    {
-		    	dataRequiredForSearch=dataProvider(criteriaType);
-		    	
+
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");
+		    	
+
+		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	
+		    	
+		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	System.out.println(System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString()));
+		    	
 		    	
 		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
@@ -198,11 +321,9 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOP":
 		    {
-		    	int sqlRow = 42;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+
 		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 
-		    	
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
@@ -216,97 +337,166 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOPAndAccountNo":
 		    {
-		    	int sqlRow = 42;
-		    	String acntNo;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
-				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-		    	Element.enterData(accountNo, acntNo, "Enter patient account no as : "+acntNo, "Account Number");
-		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//
-		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
-		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
-		    	testConfig.putRunTimeProperty("value", acntNo);	
-		    	testConfig.putRunTimeProperty("fromDate",date);
-		    	testConfig.putRunTimeProperty("toDate",date);
 		    	
+                 Element.enterData(accountNo, dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Enter patient account no as : "+dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Account Number");
+		    	
+		    	
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+		    	
+
+		    	testConfig.putRunTimeProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_ACCT_NBR").toString());
 		    	break;
 		    }
 		    
 		    
 		    case "byDOP&SubscriberID":
 		    {
-		    	int sqlRow = 43;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	String sbscrId=srchData.get("SBSCR_ID").toString();
+//		    	sqlRow = 43;
+//		    	System.getProperty("tin");
+//			    testConfig.putRunTimeProperty("tin", System.getProperty("tin"));
+//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String sbscrId=dataRequiredForSearch.get("SBSCR_ID").toString();
 		    	
-		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
 		    	testConfig.putRunTimeProperty("value", sbscrId);
 		    	
 		    	
-				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
-		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
-		    	
-		    	
+				
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+         		
+
 		    	break;
 		    }
 		    
-		    case "byDOPAndNpi":
+
+		  case "byDOPAndNpi":
 		    {
-		    	int sqlRow = 44;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	String fromDate=Helper.addDays(srchData.get("SETL_DT").toString(), -10);
-		    	System.out.println(fromDate);
-		    	testConfig.putRunTimeProperty("fromDate",fromDate);
-		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
-		    	testConfig.putRunTimeProperty("value", srchData.get("PROV_NPI_NBR").toString());
 		    	
-		    		
+		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	
+		    	System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PROV_NPI_NBR").toString());
+		    	
 		    	Element.clickByJS(testConfig,NPI, "NPItext box");
-		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ srchData.get("PROV_NPI_NBR").toString(), "NPI");
-		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer dropdown");//
+		    	Element.enterData(NPI, dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "NPI");
+		    	
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+		    	
 		    	break;
 		    }
 		    
 		    case "byDOPAndClaimNo":
 		    {
-		    	int sqlRow = 45;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+//		    	 sqlRow = 45;
+//		    	 System.getProperty("tin");
+//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
-		    	testConfig.putRunTimeProperty("value", srchData.get("CLM_NBR").toString());
+		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("CLM_NBR").toString());
 				
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
-		    	Element.enterData(claimNumber, srchData.get("CLM_NBR").toString(), "Enter claim no as : "+srchData.get("CLM_NBR").toString(), "Claim Number");
-		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
+		    	Element.enterData(claimNumber, dataRequiredForSearch.get("CLM_NBR").toString(), "Enter claim no as : "+dataRequiredForSearch.get("CLM_NBR").toString(), "Claim Number");
 		    	
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+		    	
+		    
 		    	break;		    	
 		    }
 		    
 		    case "byDOPAndPatientNm":
 		    {
-		    	int sqlRow = 46;
-		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		    	 sqlRow = 46;
+//		    	 System.getProperty("tin");
+//		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
-		    	testConfig.putRunTimeProperty("value", srchData.get("PTNT_FST_NM").toString());
+		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_FST_NM").toString());
 		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
-		    	testConfig.putRunTimeProperty("value1", srchData.get("PTNT_LST_NM").toString());
-		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("PTNT_LST_NM").toString());
+		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	
-				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");					
-		    	Element.enterData(patientFirstName, srchData.get("PTNT_FST_NM").toString(), "Enter First Name as : "+srchData.get("PTNT_FST_NM").toString(), "First Name");
-		    	Element.enterData(patientLastName, srchData.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+srchData.get("PTNT_LST_NM").toString(), "Last Name");
-		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
+									
+		    	Element.enterData(patientFirstName, dataRequiredForSearch.get("PTNT_FST_NM").toString(), "Enter First Name as : "+dataRequiredForSearch.get("PTNT_FST_NM").toString(), "First Name");
+		    	Element.enterData(patientLastName, dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Last Name");
+		    	
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+         		
+
 		    	break;		    	
 		    }
 		    
@@ -320,9 +510,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("setl_dt"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	
-//		    	clickFromDateIcon(criteriaType).setDate(Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.getCurrentDate("MM/dd/yyyy"), criteriaType);
-		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		        Element.click(zeroPaymentClaims, "Zero Payment Claims");
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
 		    	
 		    	break;		    	
@@ -330,7 +518,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndAcntNo":
 		    {
-		    	int sqlRow = 58;
+		    	 sqlRow = 58;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	String acntNo;
@@ -355,7 +543,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndSubscriberId":
 		    {
-		    	int sqlRow = 157;
+		    	 sqlRow = 157;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	String sbscrId;
@@ -386,7 +574,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndNpi":
 		    {
-		    	int sqlRow = 59;
+		    	 sqlRow = 59;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -408,7 +596,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndClaimNo":
 		    {
-		    	int sqlRow = 60;
+		    	 sqlRow = 60;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	String clmNo;
@@ -433,7 +621,7 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndZeroPaymentClaims":
 		    {
-		    	int sqlRow = 60;
+		    	 sqlRow = 60;
 		    	String dosFrom = null;
 		    	String dosTo = null;
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -506,9 +694,480 @@ public class SearchRemittanceSearchCriteria {
 		    	break;
 		    	
 		    case "byDOPAndRenderingProvider":
-		    	int sqlRow = 70;
+//		    	 sqlRow = 70;
+//		    	 srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		    	String renderingProv=srchData.get("LST_NM").toString(); 
+//		    	renderingProv=renderingProv.replace(" null", "");
+//		    	
+		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
+		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("LST_NM").toString());
+		    	
+		    	
+				
+		    	Element.enterData(renderingProvName, dataRequiredForSearch.get("LST_NM").toString(), "Filling Rendering Provider Name: "+dataRequiredForSearch.get("LST_NM").toString(), "Rendering Prov");
+		    	
+		    	
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	}
+		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    	}
+		    	
+
+	 			break;
+			 case "byHCPayment_Number":
+				{
+					Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+					Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+					Element.enterData(paymentNumber, System.getProperty("CONSL_PAY_NBR"), "Enter Electronic payment number as: " +System.getProperty("CONSL_PAY_NBR"), "payment number");
+					break;
+				}	
+	 	
+		    case "byHCDOPAndNpi":
+			{
+				Element.clickByJS(testConfig,NPI, "NPItext box");
+				Element.enterData(NPI, System.getProperty("NPI"), "Filling NPI No: "+ System.getProperty("NPI"), "NPI");
+				Element.enterData(dopFromDate, System.getProperty("DOPFromDate"), "DoP From Date", "NPI");
+				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");   
+				break;	    	
+			}		
+		    default:
+		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
+		 }
+		
+		return clickSearchBtn();
+	
+	}
+	
+	
+	
+	public SearchRemittance doSearchForPayer(String criteriaType) throws ParseException {
+		
+		String date="";
+		Map srchData=null;
+		int sqlRow;
+		
+		Log.Comment(testConfig.getRunTimeProperty("suite"));
+		
+		switch(criteriaType)
+		 {
+		 case "byElectronicPaymentNo":  
+		    {
+		    	if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		 sqlRow = 210;
+		    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	}        
+		    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		 sqlRow = 205;
+		    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	}
+		    	else		    		
+		    		dataRequiredForSearch=dataProvider(criteriaType);
+		    	
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
+		    	
+		    	
+		    	//testConfig.putRunTimeProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    }
+		    
+		    case "byCheckNo":
+		    {
+		    	dataRequiredForSearch=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber, dataRequiredForSearch.get("UCONSL_PAY_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("UCONSL_PAY_NBR").toString(), "payment number");
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("key1", "CHECK_NUMBER");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("UCONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;		    	
+		    }
+		    
+		    case "byDOS":
+		    {
+		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
+		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
+		    	
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
+		    	System.out.println(Helper.changeDateFormat(testConfig, fromDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",Helper.changeDateFormat(testConfig, fromDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.changeDateFormat(testConfig, toDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
+		    	
+		    	break;		    	
+		    }
+		    
+		    case "byDOP":
+		    {
+		    	 sqlRow = 42;
+		    	 
 		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	String renderingProv=srchData.get("LST_NM").toString(); ///srchData.get("FST_NM").toString()+" "+srchData.get("MIDL_NM").toString()+" "+
+		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+                clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		        date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+		    	testConfig.putRunTimeProperty("fromDate",date);
+		    	testConfig.putRunTimeProperty("toDate",date);
+		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
+		    	testConfig.putRunTimeProperty("value", "ALL");		    	
+		    	
+		    	break;	
+		    }
+		    
+		    case "byDOPAndAccountNo":
+		    {
+		    	 sqlRow = 42;
+		    	String acntNo;
+		    	
+		    	System.getProperty("tin");
+		    	testConfig.putRunTimeProperty("tin", System.getProperty("tin"));
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(accountNo, acntNo, "Enter patient account no as : "+acntNo, "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+		    	testConfig.putRunTimeProperty("value", acntNo);	
+		    	testConfig.putRunTimeProperty("fromDate",date);
+		    	testConfig.putRunTimeProperty("toDate",date);
+		    	
+		    	break;
+		    }
+		    
+		    
+		    case "byDOP&SubscriberID":
+		    {
+		    	sqlRow = 43;
+		    	System.getProperty("tin");
+			    testConfig.putRunTimeProperty("tin", System.getProperty("tin"));
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String sbscrId=srchData.get("SBSCR_ID").toString();
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", sbscrId);
+		    	
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	
+		    	
+		    	
+		    	break;
+		    }
+		    
+
+		  case "byDOPAndNpi":
+		    {
+		    	
+		    	if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		 sqlRow = 204;
+		    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    		
+		    	}
+		    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))){
+		    		 sqlRow = 205;
+		    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	}
+		    	else		    		
+		    		dataRequiredForSearch=dataProvider(criteriaType);
+
+		    	
+		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	
+		    	System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
+		    	
+		    
+		    	if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgenerated".equals(testConfig.getRunTimeProperty("suite")))
+		    	{
+		    		sqlRow = 208;
+			    	dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			    	String fromDate=Helper.addDays(dataRequiredForSearch.get("SETL_DT").toString(), -10);
+			    	System.out.println(fromDate);
+			    	testConfig.putRunTimeProperty("fromDate",fromDate);
+			    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+			    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
+			    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PROV_NPI_NBR").toString());
+			    	
+			    	
+			    	
+			    		
+			    	Element.clickByJS(testConfig,NPI, "NPItext box");
+			    	Element.enterData(NPI, dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "NPI");
+			    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
+			    	
+		    	}
+		    	
+		    	else
+		    	{
+		    		Log.Comment("Page didnt display correctly");
+		    	}
+		    	 
+		    	
+		    	break;
+		    }
+		    
+		    case "byDOPAndClaimNo":
+		    {
+		    	 sqlRow = 45;
+		    	 System.getProperty("tin");
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", srchData.get("CLM_NBR").toString());
+				
+		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
+		    	Element.enterData(claimNumber, srchData.get("CLM_NBR").toString(), "Enter claim no as : "+srchData.get("CLM_NBR").toString(), "Claim Number");
+		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
+		    	
+		    	
+		    	break;		    	
+		    }
+		    
+		    case "byDOPAndPatientNm":
+		    {
+		    	 sqlRow = 46;
+		    	 System.getProperty("tin");
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
+		    	testConfig.putRunTimeProperty("value", srchData.get("PTNT_FST_NM").toString());
+		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
+		    	testConfig.putRunTimeProperty("value1", srchData.get("PTNT_LST_NM").toString());
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");					
+		    	Element.enterData(patientFirstName, srchData.get("PTNT_FST_NM").toString(), "Enter First Name as : "+srchData.get("PTNT_FST_NM").toString(), "First Name");
+		    	Element.enterData(patientLastName, srchData.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+srchData.get("PTNT_LST_NM").toString(), "Last Name");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	
+		    	break;		    	
+		    }
+		    
+		    case "byDOPAndZeroPaymentClaims":
+		    {   
+		    	
+		    	testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
+		    	testConfig.putRunTimeProperty("value", "Y");
+		    	testConfig.putRunTimeProperty("fromDate",testConfig.getRunTimeProperty("setl_dt"));
+		    	testConfig.putRunTimeProperty("toDate", testConfig.getRunTimeProperty("setl_dt"));
+		    	
+		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("setl_dt"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		        Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		    	
+		    	
+		    	break;		    	
+		    }
+		    
+		    case "byDOSAndAcntNo":
+		    {
+		    	 sqlRow = 58;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String acntNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
+		    	
+		    	dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				
+		    	Element.enterData(accountNo, acntNo, "Filling patient account no: "+acntNo, "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+		    	testConfig.putRunTimeProperty("value", acntNo);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDOSAndSubscriberId":
+		    {
+		    	 sqlRow = 157;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String sbscrId;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	sbscrId=srchData.get("SBSCR_ID").toString();
+		    	try {
+					dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+					
+				} catch (ParseException e) {
+					
+					e.printStackTrace();
+				}
+		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	
+		    	
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", sbscrId);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDOSAndNpi":
+		    {
+		    	 sqlRow = 59;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				
+		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Enter NPI No as : "+srchData.get("PROV_NPI_NBR").toString(), "NPI");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", srchData.get("PROV_NPI_NBR").toString());
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDOSAndClaimNo":
+		    {
+		    	 sqlRow = 60;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	String clmNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	clmNo=srchData.get("CLM_NBR").toString();
+		    	
+		    	dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				
+		    	Element.enterData(claimNumber, clmNo, "Filling claim no: "+clmNo, "Claim Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("fromDate", srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", clmNo);
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
+		    }
+		    
+		    case "byDOSAndZeroPaymentClaims":
+		    {
+		    	 sqlRow = 60;
+		    	String dosFrom = null;
+		    	String dosTo = null;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	
+		    	dosFrom=Helper.changeDateFormat(srchData.get("CLM_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				dosTo=Helper.changeDateFormat(srchData.get("CLM_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		    	
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("CLM_STRT_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("CLM_END_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
+		    	testConfig.putRunTimeProperty("value", "Y");
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;		    	
+		    }
+		    
+		    case "DD":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber,srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	
+		    	break;
+		    	
+		    case "byElectronicPaymenForACH":
+		    case "byElectronicPaymenForCHK":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	
+		    	break;
+		    	
+		    case "byElectronicPaymenForNON":
+		    case "byElectronicPaymentForVCP":
+		    	srchData=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
+		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
+		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
+		    	
+		    	testConfig.putRunTimeProperty("typeDescription",srchData.get("TYP_DESC").toString());
+		    	testConfig.putRunTimeProperty("paymentMethCode",srchData.get("PAY_METH_CD").toString());
+		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
+		    	break;
+		    
+		    case "byCheckNoOfConslPayDtl":
+		    	dataRequiredForSearch=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHK_NBR").toString(), "payment number");
+		    	testConfig.putRunTimeProperty("key1", "CHK_NBR");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHK_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    	
+		    case "byCheckNoOfReoriginNacha":
+		    	dataRequiredForSearch=dataProvider(criteriaType);
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHECK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHECK_NBR").toString(), "payment number");
+		    	testConfig.putRunTimeProperty("key1", "CHECK_NBR");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHECK_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    	
+		    case "byDOPAndRenderingProvider":
+		    	 sqlRow = 70;
+		    	 srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String renderingProv=srchData.get("LST_NM").toString(); 
 		    	renderingProv=renderingProv.replace(" null", "");
 		    	
 		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
@@ -520,7 +1179,7 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(renderingProvName, renderingProv, "Filling Rendering Provider Name: "+renderingProv, "Rendering Prov");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
+		    	
 	 			break;
 		    default:
 		    	Log.Comment("Criteria Type " + criteriaType + " not found");		
@@ -637,16 +1296,32 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittanceSearchCriteria setDate(String date, String criteriaType)
 	{
+		
+		
+		if(BrowserType.CHROME.contains("chrome"))
+		{
+			
+		
 		for(int i =0;i<3;i++){
+			
 			if(!(Browser.getNoOfWindowHandles(testConfig)<2))
 				break;
 			else
 				clickFromDateIcon(criteriaType);			   
 		}
 		
+		
 		String oldWindow=Browser.switchToNewWindow(testConfig, "/calendar.html");
 		selectDate(testConfig,date);
 		Browser.switchToParentWindow(testConfig,oldWindow);
+		
+		}
+		else
+		{
+			selectDateForIE(testConfig,date);
+		}
+		
+		
 		return this;
 	}
 	
@@ -735,6 +1410,32 @@ public class SearchRemittanceSearchCriteria {
 	    Element.clickByJS(testConfig, dateToBeClicked, "date to be clicked");
 	    return this;
 	}
+	
+	
+	public SearchRemittanceSearchCriteria selectDateForIE(TestBase testConfig, String requiredDate)
+	{
+	    String curr[] = Helper.getCurrentDate("MM/dd/yyyy").split("/");
+	    String req[] = requiredDate.split("/");
+
+//	    int currDate = Integer.parseInt(curr[0]);
+	    int reqDate = Integer.parseInt(req[1]);
+	    int currMonth = Integer.parseInt(curr[0]);
+	    int reqMonth = Integer.parseInt(req[0]);
+	    int currYr = Integer.parseInt(curr[2]);
+	    int reqYr = Integer.parseInt(req[2]);
+	    String date=String.valueOf(reqDate);
+	    String monthAndYearInCal[]={};
+
+	    
+	    monthAndYearInCal=monthYearInCal.getText().split(" ");
+	    Log.Comment("Date to be selected is : " +  testConfig.driver.findElement(By.xpath("//a//font[contains(text()," + "'" + date + "'"+ ")"+ " " + "and @color='#000000']")).getText() + monthAndYearInCal[0] + monthAndYearInCal[1] );
+	    String dateToBeClicked=Element.findElement(testConfig, "xpath", "//a//font[contains(text()," + "'" + date + "'"+ ")"+ " " + "and @color='#000000']").getText();
+	    System.out.println(dateToBeClicked);
+	    Element.enterData(startDOPDate, dateToBeClicked, "Start Date", "Start Date");
+	    //Element.clickByJS(testConfig, dateToBeClicked, "date to be clicked");
+	    return this;
+	}
+	
 	
 	//amit
 	

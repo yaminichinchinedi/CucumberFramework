@@ -92,40 +92,7 @@
 			
 			
 			
-			<!-- Cucumber reporting plugin-->
-			  <plugin>
-                <groupId>net.masterthought</groupId>
-                <artifactId>maven-cucumber-reporting</artifactId>
-                <version>4.10.0</version>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <projectName>EPS-Automation</projectName>
-                            <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
-                            <skip>false</skip>
-                            <!-- output directory for the generated report -->
-                            <outputDirectory>target/cucumber-reports/advance-reports</outputDirectory>
-                           
-                            <jsonFiles>
-                                <!-- supports wildcard or name pattern -->
-                                <param>target/cucumber-reports/advance-reports/EPSAutomationResults.json</param>
-                            </jsonFiles>
-
-                            <parallelTesting>false</parallelTesting>
-
-					        <includes>
-					          <include>**/CucumberRunnerTest.java</include>
-					        </includes>
-					    
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+			
 			
 		</plugins>
 
@@ -182,6 +149,43 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>4.3.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.3.0.RELEASE</version>
+		</dependency>
+		
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->		
+	<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>4.3.0.RELEASE</version>
+    </dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.2.6.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.7</version>
 		</dependency>
 <dependency>
 <groupId>com.jayway.restassured</groupId>
@@ -392,11 +396,7 @@
             </exclusions>
         </dependency>
 		<!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
-		<dependency>
-			<groupId>net.masterthought</groupId>
-			<artifactId>cucumber-reporting</artifactId>
-			<version>4.10.0</version>
-		</dependency>
+		
 
 	</dependencies>
 </project>

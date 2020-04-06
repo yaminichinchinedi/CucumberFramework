@@ -61,7 +61,13 @@ public class CSRHomePage {
 	WebElement addTin;
 	
 	
-	@FindBy(xpath="//td[contains(text(),'You are logged in to support : All Payers')]") 
+//	@FindBy(xpath="//td[contains(text(),'You are logged in to support :')]") 
+//	WebElement txtloggedIn;
+	
+//	@FindBy(xpath="//td[contains(text(),'You are logged in to support')]")  
+//		WebElement txtloggedIn; 
+
+	@FindBy(css=".productName") 
 	WebElement txtloggedIn;
 	
 	@FindBy(xpath="//input[@value='Add TIN/NPI']")
@@ -74,15 +80,21 @@ public class CSRHomePage {
 	@FindBy(xpath="//input[@value='Save']")
 	WebElement btnSaveUser;
 	
-	@FindBy(linkText="Search Remittance")
-    WebElement lnkSearchRemittance;
+//	@FindBy(linkText="Search Remittance")
+//    WebElement lnkSearchRemittance;
+	
+	
+	
+	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
+	WebElement lnkSearchRemittance;
 	
 	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
+		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
+		Browser.wait(testConfig, 7);
 	}
 
 	public SearchTinPage clickManageUsersLink()
@@ -92,7 +104,7 @@ public class CSRHomePage {
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
-    {
+    {      Browser.wait(testConfig, 7);
            Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
     }

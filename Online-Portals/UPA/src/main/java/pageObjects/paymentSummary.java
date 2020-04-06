@@ -40,6 +40,7 @@ import main.java.reporting.LogTemp;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -77,6 +78,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	WebElement divSearchResults;
 	
 	@FindBy(xpath=".//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr")
+	
+
 	List<WebElement> searchResultRows;
 	
 	@FindBy(xpath="//td[@class='errors']")
@@ -133,6 +136,20 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//*[@id=\"paymentsummaryform\"]/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[1]/th[13]/a")
 	WebElement lnkArchive;
 	
+	@FindBy(xpath="//span[contains(@title,'ePRA in process')]")
+	WebElement mousehoverEPRA;
+	
+	
+	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[1]") WebElement payerUI;
+	
+	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumremit;
+	
+	@FindBy(xpath = "//a[@id = 'paymentNbr_1']") WebElement paymntnumHeader;
+	
+	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
+	
+	Map dataRequiredForSearch;
+	
 
 	public SearchRemittance searchRemittance;
 
@@ -141,7 +158,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 
 	
 	
-	private TestBase testConfig;
+	private TestBase testConfig=TestBase.getInstance();
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	PaymentSummaryFislService service = null;
@@ -149,7 +166,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary(TestBase testConfig)
 	{
 		super(testConfig);
-		this.testConfig=testConfig;
+//		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		
 		service = new PaymentSummaryFislService();
@@ -169,13 +186,13 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary(TestBase testConfig,String filter)
 	{
 		super(testConfig);
-		this.testConfig=testConfig;
+//		this.testConfig=testConfig;
 	}
 	
 	
 
 	public paymentSummary(TestBase testConfig,boolean flag) {
-		this.testConfig=testConfig;
+//		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
 
@@ -205,82 +222,386 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
-	public paymentSummary clickEpraPDFLink()
-	{
-		String actualPaymntNo="";
-		String expectedPaymntNo=testConfig.getRunTimeProperty("displayPaymentNo");
-		WebElement popUp=null;
-		
-		int totalNoOfPages=getNumberOfPages();
-    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
-    	
-    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
-		 {  
-    	    if(testConfig.driver.getPageSource().contains(expectedPaymntNo)) 
-		     {
-		       for(int i=1;i<searchResultRows.size();i++)
-		        {
-			      actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-			      actualPaymntNo=actualPaymntNo.replace("\n", "");
-			
-			      if(actualPaymntNo.contains(expectedPaymntNo))
-			       {	
-				     WebElement lnkEpraPdf = searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("a")).get(1);
-				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
-				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
-					
-				     String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
-				     Browser.switchToParentWindow(testConfig,oldWindow);
-				     Browser.browserRefresh(testConfig);
-				
-				     WebElement txtEpraPDf=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.tagName("span")).get(1);
-				     Element.expectedWait(txtEpraPDf, testConfig, "PDF Text for Epra", "PDF Text for Epra");
-				     Browser.scrollTillAnElement(testConfig, txtEpraPDf, "Epra PDF text is found for Display Consolidated No. :" + actualPaymntNo);
-				     Browser.wait(testConfig, 2);
-				
-		             Element.onMouseHover(testConfig, txtEpraPDf, "Hover mouse over PDF link that has become text now");	        
-		             try{
-		             popUp=searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1);}
-		             catch(Exception e){
-		            	 Element.expectedWait(searchResultRows.get(i).findElements(By.tagName("td")).get(10).findElements(By.xpath("//span[contains(@title,'ePRA in process')]")).get(1), testConfig, "hover pop up", "hover pop up");
-		             }
-    	             Helper.compareEquals(testConfig, "Hover message on PDF", "ePRA in process, please wait for completion", popUp.getAttribute("title"));
-    	            
-    	             break;   
-				   }
-		       }
-		     }
-    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
-				 int pageToBeClicked=pageNo+1;
-				 Log.Comment("Non ePRA payment not found on page number " + pageNo);
-				 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
-				 Log.Comment("Clicked Page number : " + pageToBeClicked);
-				 Browser.waitForLoad(testConfig.driver);
-			     }
-   	    
-			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
-				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
-			       Element.click(lnkNextPage,"Next Link");
-			       Browser.waitForLoad(testConfig.driver);
-			       Browser.wait(testConfig,3);
-			       
-			    }
-			  else
-			     Log.Warning("Could not find nonEpra payment on any of the pages, please execute test case manually", testConfig);
-		    }
-		return this;
-    }
-	
+	public paymentSummary clickEpraPDFLink(String srchType)
+    {
+          String actualPaymntNo="";
+          String expectedPaymntNo="";
+          boolean found=false;
+          if(srchType.equals("byDOPAndNpiUPA"))
+          {
+                expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+                
+                System.setProperty("paymentNum", expectedPaymntNo);
+                searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+          }
+          else if(srchType.equals("byElectronicPaymentNo"))
+          {
+                expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+                System.setProperty("paymentNum", expectedPaymntNo);
+                searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+          
+          }
+          
+          else if(srchType.equals("byDOPAndNpi"))
+          {
+        	 Browser.wait(testConfig, 7);
+      	     String ui_Payer = payerUI.getText();
+      	     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+      	     expectedPaymntNo = paymentNo1.getText();
+      		 String paymentNum = paymentNo1.getText();
+      		 Log.Comment("The First Payment Number displayed is:" + expectedPaymntNo);
+      		 Browser.wait(testConfig, 5);
+      		 int sqlRowNo = 184;
+      		 testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+      		 Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+      		 Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+      		
+      		 if(null == payerSchema)
+      		 {
+      			sqlRowNo = 203;
+      			testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+      			Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+      			String payerSchemaUI = (payerSchema1.toString()).substring(14,19);
+      			Log.Comment("Payer Schema is :" + payerSchemaUI);
+      			sqlRowNo = 185;
+      			testConfig.putRunTimeProperty("paymentNum",paymentNum);
+      			Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+      			String paymentNumDB2 = (paymentNumDB1.toString());
+      			String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);
+      			String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+      			Log.Comment("The CONSL_PAY_NBR is :" + paymentNumDB);
+                Log.Comment("The expected Payment No is:" + expectedPaymntNo);
+                searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+             }
+      		 
+      		 Log.Comment("The expected Payment No is:" + expectedPaymntNo);
+      		 searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+           }
+          
+          WebElement popUp=null;
+          WebElement lnkEpraPdf=null;
+          int totalNoOfPages=getNumberOfPages();          
+          Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    
+    for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+    {  
+       if(testConfig.driver.getPageSource().toString().contains(expectedPaymntNo))
+        {
+           for(int i=1;i<searchResultRows.size();i++)
+           {
+              actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+              actualPaymntNo=actualPaymntNo.replace("\n", "");
+              if(actualPaymntNo.contains(expectedPaymntNo))
+              {    
+                found=true;
+                if(srchType.equals("byDOPAndNpi"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+                else if(srchType.equals("byElectronicPaymentNo"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+                else if(srchType.equals("byDOPAndNpiUPA"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+       Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+       Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf Link");
+       Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
+       String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
+       WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
+            
+      Browser.switchToParentWindow(testConfig,oldWindow);
+      Browser.wait(testConfig, 5);
+
+       break; 
+       }
+      }
+     }
+     
+    if(found==true)break;
+    else if(pageNo%10!=0 && pageNo<totalNoOfPages)
+    {  
+       int pageToBeClicked=pageNo+1;
+       Log.Comment("Non ePRA payment not found on page number " + pageNo);
+       Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+       Log.Comment("Clicked Page number : " + pageToBeClicked);
+       Browser.waitForLoad(testConfig.driver);
+     }
+     
+    else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+    {
+       Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+       Element.click(lnkNextPage,"Next Link");
+       Browser.waitForLoad(testConfig.driver);
+       Browser.wait(testConfig,3);
+     }
+    
+    else
+        Log.Warning("Could not find nonEpra payment on any of the pages, please execute test case manually", testConfig);
+      }
+	return searchRemittance;
+          
+ }
+          
+
 	
 	public paymentSummary verifyEpraStatus(String expectedStatus) 
 	 {
-		int sqlRowNo=34;
-		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+         Browser.browserRefresh(testConfig);
+		
+		if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+				||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			
+			int sqlRowNo=204;
+			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			String paymentNumDB = System.getProperty("paymentNum");
+			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+			
+			sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))
+				||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			int sqlRowNo=205;
+			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			String paymentNumDB = System.getProperty("paymentNum");
+			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+			
+			sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			
+			int sqlRowNo=217;
+			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+			String paymentNumDB = System.getProperty("paymentNum");
+			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+			
+			sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		
+		else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			
+			System.getProperty("CONSL_PAY_NBR");
+			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+
+			int sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		
+		else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			
+			System.getProperty("CONSL_PAY_NBR");
+			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+			
+			int sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		
+		
+		else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			
+			System.getProperty("CONSL_PAY_NBR");
+			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+			
+			int sqlRowNo=206;
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+		}
+		
 		return this;
 		
+		
 	 } 
+	
+	
+	
+	public paymentSummary getPDFfileNameEPRA() 
+	 {
+		
+		int sqlRowNo=206;
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		System.out.print("----Converted-PDFFIleName-->"+epraStatusTbl.get("PDF_FL_NM"));
+		System.setProperty("PDFFileName", (String) epraStatusTbl.get("PDF_FL_NM"));
+		
+		return this;
+	}
 
+	
+	public paymentSummary verifyEpraClaimCntAndPriority()
+	{
+		String expectedPaymntNo="";
+		Browser.wait(testConfig, 7);
+		String ui_Payer = payerUI.getText();
+	    Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+	    testConfig.putRunTimeProperty("ui_Payer", ui_Payer);
+	    String paymentNum = paymentNo1.getText();
+		Log.Comment("The First Payment Number displayed is:" + paymentNum);
+        Log.Comment("Payer Name in UI is:" + ui_Payer);
+	    int sqlRowNo = 184;
+	    testConfig.getRunTimeProperty("ui_Payer");
+		Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+        Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+		
+        if(null == payerSchema)
+		{
+		  sqlRowNo = 203;
+		  testConfig.getRunTimeProperty("ui_Payer");
+	  	  Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		  String payerSchemaUI = (payerSchema1.toString()).substring(14,19);
+		  Log.Comment("Payer Schema is :" + payerSchemaUI);
+		  sqlRowNo = 185;
+		  testConfig.putRunTimeProperty("paymentNum",paymentNum);
+		  Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	      String paymentNumDB2 = (paymentNumDB1.toString());
+	      String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);
+		  String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+		  Log.Comment("The CONSL_PAY_NBR is :" + paymentNumDB);
+		  
+		  sqlRowNo=206;
+		  testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+		  Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		   if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+			else
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+		   }
+			
+		 else
+		 {
+			String payerSchemaUI = (payerSchema.toString()).substring(14, 19);
+			Log.Comment("Payer Schema is :" + payerSchemaUI);
+			
+			sqlRowNo = 185;
+			testConfig.putRunTimeProperty("paymentNum",paymentNum);
+			Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			String paymentNumDB2 = paymentNumDB1.toString();
+			String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);
+   		    String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+			Log.Comment("The CONSL_PAY_NBR is :" + paymentNumDB);
+			
+			sqlRowNo=206;
+		    testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			
+			if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+			else
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+         }
+
+		return this;
+	}
+	
+	
+	
+	
+	public paymentSummary verifyEpraClaimCntAndPrioritySrch()
+	{
+
+		
+		if("EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
+				||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
+		{	
+		
+			int sqlRowNo = 205;
+			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			String paymentNumDB = dataRequiredForSearch.get("CONSL_PAY_NBR").toString();
+			sqlRowNo=206;
+			testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				
+			if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+			else
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+		}
+		else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+		{
+			int sqlRowNo = 204;
+			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			String paymentNumDB = dataRequiredForSearch.get("CONSL_PAY_NBR").toString();
+			sqlRowNo=206;
+			testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				
+			if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+			else
+				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+		}
+
+		return this;
+		
+}
+	
+		
+public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
+{
+		
+	    String expectedPaymntNo="";
+	    Browser.wait(testConfig, 7);
+	    String paymentnumUI = paymentNumremit.getText();
+		String paymentNum = paymentnumUI.substring(paymentnumUI.lastIndexOf(":")+1, paymentnumUI.length()).trim();
+		Log.Comment("The Payment No in Remit Page is:" + paymentNum);
+			
+		int sqlRowNo = 185;
+		testConfig.putRunTimeProperty("paymentNum",paymentNum);
+		Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String paymentNumDB2 = (paymentNumDB1.toString());
+		String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);		
+		String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+		Log.Comment("The CONSL_PAY_NBR is :" + paymentNumDB);
+			
+		sqlRowNo=206;
+		testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			
+		if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+			Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+		else
+			Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+
+	   return this;
+		
+
+}
+	
+	
+	
+
+public paymentSummary verifyEpraDownloadStatus(String expectedStatus)
+{
+	
+	
+	int sqlRowNo=206;
+	String expectedPaymntNo="";
+	expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
+	Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+	Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("DOWNLOADED").toString());
+	return this;
+
+}
 	
 	
 	/**
@@ -290,48 +611,49 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 * and verifies that a pop appears and 
 	 * verifies in it
 	 */
-    public void verifyFailedPaymentPopUp() 
-     {	
-    	String paymentStatus="";
-    	int totalNoOfPages=getNumberOfPages();
-    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+public void verifyFailedPaymentPopUp() 
+{	
+    String paymentStatus="";
+   	int totalNoOfPages=getNumberOfPages();
+    Log.Comment("Total No. of pages are :" + totalNoOfPages);
     	
-    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
-		 {  
-    	    if(testConfig.driver.getPageSource().contains("Failed")) 
-		     {
-			   for(int i=1;i<searchResultRows.size();i++)
-			    {	
-				   paymentStatus=searchResultRows.get(i).findElements(By.tagName("td")).get(7).getText();
-				  paymentStatus=paymentStatus.replace("\n", "");
-				  if(paymentStatus.equals("Failed")) 
-				    {
-				      Element.onMouseHover(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(7), "Failed Payment with payment number : " + searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText());
-				      //add for text verification in pop up
-				      break;
-				    }
-			    } 
-		     }
+    for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+    {  
+       if(testConfig.driver.getPageSource().contains("Failed")) 
+	    {
+	       for(int i=1;i<searchResultRows.size();i++)
+		   {	
+		      paymentStatus=searchResultRows.get(i).findElements(By.tagName("td")).get(7).getText();
+			  paymentStatus=paymentStatus.replace("\n", "");
+			  if(paymentStatus.equals("Failed")) 
+				{
+				    Element.onMouseHover(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(7), "Failed Payment with payment number : " + searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText());
+				     break;
+				 }
+			 } 
+		}
 			  
-    	    else if(pageNo%10!=0 && pageNo<totalNoOfPages){  
-				 int pageToBeClicked=pageNo+1;
-				 Log.Comment("Failed payment not found on page number " + pageNo);
-				 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
-				 Log.Comment("Clicked Page number : " + pageToBeClicked);
-				 Browser.waitForLoad(testConfig.driver);
-			     }
+       else if(pageNo%10!=0 && pageNo<totalNoOfPages)
+       {  
+		   int pageToBeClicked=pageNo+1;
+		   Log.Comment("Failed payment not found on page number " + pageNo);
+		   Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+		   Log.Comment("Clicked Page number : " + pageToBeClicked);
+		   Browser.waitForLoad(testConfig.driver);
+	   }
     	    
-			  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages){
-				   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
-			       Element.click(lnkNextPage,"Next Link");
-			       Browser.waitForLoad(testConfig.driver);
-			       Browser.wait(testConfig,3);
-			       
-			    }
-			  else
-			     Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
-		    }
-     }
+	  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+	  {
+	      Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+		  Element.click(lnkNextPage,"Next Link");
+	      Browser.waitForLoad(testConfig.driver);
+		  Browser.wait(testConfig,3);
+	  }
+	 
+	  else
+		   Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
+   }
+ }
 	      
 	
     
@@ -2241,7 +2563,214 @@ public class paymentSummary extends ViewPaymentsDataProvider{
     	return this;
 	}
 	
+	
+	public RemittanceDetail clickPaymentNumber(String srchType)
+	{
+		
+        String actualPaymntNo="";
+		String expectedPaymntNo="";
+		boolean found=false;
+		int i=1;
+
+		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 int sqlRow = 204;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		System.out.println(dataRequiredForSearch);
+    	}        
+    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
+    	{
+    		 int sqlRow = 205;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 int sqlRow = 204;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 int sqlRow = 205;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+	
+	  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+	  {
+		 int sqlRow = 204;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	  }
+	
+	 else if("EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
+	     {
+		  int sqlRow = 205;
+		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		   System.out.println(dataRequiredForSearch);
+	     }
+	
+	else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
+	     {
+		  int sqlRow = 212;
+		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		   System.out.println(dataRequiredForSearch);
+	     }
+	
+	
+	else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+     {
+	   int sqlRow = 217;
+	  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	
+	   System.out.println(dataRequiredForSearch);
+     }
+		
+	else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+	  {
+		 int sqlRow = 218;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	  }	
+		
+	else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+	  {
+		 int sqlRow = 219;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	  }	
+		
+	else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+	  {
+		 int sqlRow = 210;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	  }	
+    
+		
+		if(srchType.equals("byDOPAndNpi")) 
+		{
+			expectedPaymntNo = dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
+			System.out.println("The expected Payment no is:" + expectedPaymntNo);
+			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+			
+		}
+		else if(srchType.equals("byElectronicPaymentNo"))
+		{
+			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
+			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+		}
+		else 
+		{
+			i=2;		
+			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
+			searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//tr");
+		}
+    		
+		
+    		
+		int totalNoOfPages=getNumberOfPages();		
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    		
+    		if(srchType.equals("byDOPAndNpi")) 
+    		{
+    			expectedPaymntNo = dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+    			
+    			System.out.println("The expected Payment no is:" + expectedPaymntNo);
+    			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+    			//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/div/table/tbody/tr");
+    		}
+    		else if(srchType.equals("byElectronicPaymentNo"))
+    		{
+    			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+    			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+    		}
+    		else 
+    		{
+    			i=2;		
+    			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+    			searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//tr");
+    		}
+    		
+    	    if(testConfig.driver.getPageSource().toString().contains(expectedPaymntNo) && !found) 
+		     {
+		       for(;i<searchResultRows.size();i++)
+		        {
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   actualPaymntNo=actualPaymntNo.replace("\n", "");
+		    	   
+		    	   
+		    	   System.out.println("The Actual Payment no is:" + actualPaymntNo);
+		    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
+		    	   
+			      if(actualPaymntNo.contains(expectedPaymntNo))
+			      {	
+			    	  
+			    	  System.out.println("The Actual Payment no is:" + actualPaymntNo);
+			    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
+			    	   WebElement lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));
+			    	 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
+					 Element.clickByJS(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText());
+					 found=true;
+					 break; 
+			       }
+		        }
+		     }
+    	    if(found==true )
+    	    	break;
+    	    
+			      else if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			      {  
+						 int pageToBeClicked=pageNo+1;
+						 Log.Comment("Payment Number not found on page number " + pageNo);
+						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
+						 Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+						 Log.Comment("Clicked Page number : " + pageToBeClicked);
+						 Browser.waitForLoad(testConfig.driver);
+
+					     }
+		   	    
+					  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+					  {
+						   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+					       Element.click(lnkNextPage,"Next Link");
+					       Browser.waitForLoad(testConfig.driver);
+					       Browser.wait(testConfig,3);
+
+			          }
+					  else
+						  Log.Fail("Unable to identify Payment Number");
+					  
+				    }
+		
+
+		return new RemittanceDetail(testConfig);
+	
+		
+	}
 }
+        
+
+
+
+
+
+
 
 
 
