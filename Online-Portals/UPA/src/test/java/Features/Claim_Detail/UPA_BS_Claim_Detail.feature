@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@UPACLaimDetail13  @UPARegression
+@UPAClaimDetail  @UPARegression
 Feature: UPA BS Claim Detail
 
 Scenario Outline: Claim Detail UI Functionality and Data Check

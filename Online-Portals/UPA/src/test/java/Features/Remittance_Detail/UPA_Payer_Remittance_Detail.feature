@@ -1,7 +1,7 @@
 #Author: Athyusha Thota
 
-@UPACLaimDetail1  @UPARegression
-Feature: UPA Remittance Detail Provider
+@UPARemitDetail  @UPARegression
+Feature: UPA Remittance Detail Payer
 
  
 Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
@@ -19,7 +19,6 @@ Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
      And Check Adj Reason Code Pop Up
      And Verify FISL Response for COB Only Filter Claim
      And Verify FISL Response for Reversal Only Filter Claim
- #    And Validate Download, Print, Return buttons in Remit Page for Payer
 
 Examples: 
         |    Search Criteria     |       credentials        |  

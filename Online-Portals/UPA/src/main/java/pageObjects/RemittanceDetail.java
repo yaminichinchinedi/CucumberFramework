@@ -1692,7 +1692,8 @@ public void verifyCOBFilterClaimOption() throws Exception
 public void verifyCOBFilterClaimData() throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-    String ui_Payer = payerUI.getText();
+	Browser.wait(testConfig, 7);
+        String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
 	Element.click(paymentNo1, "Payment No");

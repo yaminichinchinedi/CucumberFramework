@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@UPACLaimDetail1  @UPARegression
+@UPARemitDetail  @UPARegression
 Feature: UPA Remittance Detail Billing Service
 
 
@@ -86,9 +86,9 @@ Scenario Outline: Remittance Detail Tricare Validation for BS
      
 Examples:
 
-         |    Search Criteria     |   credentials     |
-         |       Tricare          |   BS_Admin        | 
-         |       Tricare          |   BS_Gen          |           
+         |    Search Criteria        |   credentials     |
+         |       Tricare_BS          |   BS_Admin        | 
+         |       Tricare_BS          |   BS_Gen          |           
           
 
         
