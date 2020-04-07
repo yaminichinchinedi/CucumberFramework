@@ -90,7 +90,7 @@ import main.java.reporting.LogTemp;
 
 
 @CucumberOptions(
-        features = "src/test/java/Features/CrtEnrolmnt",
+        features = "src/test/java/Features",
         glue = {"main/java/stepDefinitions"},
         monochrome=true,
         plugin = { "pretty",
