@@ -1,9 +1,7 @@
 #Author: Athyusha Thota
 
-@CSRClaimDetail   @CSRRegression
+@CSRClaimDetail    @CSRRegression
 Feature: CSR Claim Detail
-
-
 
 Scenario Outline: Claim Detail UI Functionality 
 
@@ -22,24 +20,24 @@ Examples:
 
         |    Search Criteria     |   credentials     |
         |      RemitDetail       |      Super        |
-        |      RemitDetail       |      RO           |
-        |      RemitDetail       |     ROPPRA        |         
+        |      RemitDetail       |      RW           |
+#       |      RemitDetail       |      RO           |         
         
-        
+       
 Scenario Outline: Claim Detail Tricare Functionality
 
-     Given User navigates to UPA portal and enters "<credentials>" and login
-     And User enters tin for UPA "<Search Criteria>"
-     Then User clicks on Search Remittance link for UPA
-     And Enter Electronic Number for Tricare Masking Criteria
-     And Validate Tricare Masking for Claim Detail Page
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Search Remittance link
+    And User enters tin for Tricare Masking Criteria
+    And Enter Electronic Number for Tricare Masking Criteria
+    And Validate Tricare Masking
      
 Examples:
 
-        |    Search Criteria     |   credentials     |
-        |      Tricare           |    Super          |
-        |      Tricare           |    RO             |
-        |      RemitDetail       |     ROPPRA        |
+         |   credentials     |
+         |    Super          |
+         |    RW             |
+#        |    RO             |
         
         
         
