@@ -208,6 +208,13 @@ public class SearchTinPageViewPayments {
 	        	 break;
 	          }
 	         
+            case "Tricare_BS":
+	         {
+	        	 Element.enterData(tinDrpDwn, tin, "Entering TIN", "Entering TIN");
+		         Element.click(srchBtn, "Search Button");
+	        	 break;
+	          }
+	         
             case "Multiple PLB":
 	         {
 	        	 Element.enterData(tinDrpDwn, tin, "Entering TIN", "Entering TIN");
