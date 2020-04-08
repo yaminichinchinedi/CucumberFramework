@@ -3656,7 +3656,7 @@ public void enterElectronicNumForTricareMaskCriteria() throws Exception
 
 public void verifyTricareMasking() throws Exception
 {
-	
+	Browser.wait(testConfig, 10);
     Element.click(paymentNo1, "Payment Number");
 	Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
 	String subscrbrID = subscriberUI1.getText();
