@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.ViewPaymentsDataProvider;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -115,10 +116,10 @@ public class SearchTinPageViewPayments {
 	         
             case "Tricare_BS":
 	         {       
-			 Element.clearData(tinDrpDwn, "clearing any previous TIN");
-                         Browser.wait(testConfig, 3);
-                         Element.enterData(tinDrpDwn, tin, "Enter Tin", "Enter Tin");
-	        	 Element.click(srchBtn, "Search Button");
+			         Element.clearData(tinDrpDwn, "clearing any previous TIN");
+                     Browser.wait(testConfig, 7);
+                     Element.enterData(tinDrpDwn, tin, "Enter Tin", "Enter Tin");
+	        	     Element.click(srchBtn, "Search Button");
 	        	 
 	        	 //Element.enterData(tinDrpDwn, tin, "Entering Tricare TIN", "Entering Tricare TIN");
 		         break;
