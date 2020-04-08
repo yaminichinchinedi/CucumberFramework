@@ -114,8 +114,10 @@ public class SearchTinPageViewPayments {
 	          }
 	         
             case "Tricare_BS":
-	         {
-	        	 Element.enterData(tinDrpDwn, tin, "Enter Tin", "Enter Tin");
+	         {       
+			 Element.clearData(tinDrpDwn, "clearing any previous TIN");
+                         Browser.wait(testConfig, 3);
+                         Element.enterData(tinDrpDwn, tin, "Enter Tin", "Enter Tin");
 	        	 Element.click(srchBtn, "Search Button");
 	        	 
 	        	 //Element.enterData(tinDrpDwn, tin, "Entering Tricare TIN", "Entering Tricare TIN");
