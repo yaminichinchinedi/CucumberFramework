@@ -161,6 +161,8 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//input[@value='Return to Search Results']") WebElement returnbtn;
 	@FindBy(xpath = "//b[contains(text(),'Your PDF is now available. To access your document')]") WebElement msg;
 	@FindBy(xpath = "//td[contains(text(),'Subscriber Name')]") WebElement subscrbrName;
+	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement remitpaymnthead;
+	
 	
 	@FindBy(xpath="//span[contains(@id,'ppra')]//img") WebElement pPRAPDFImage;
 	
@@ -3657,7 +3659,11 @@ public void enterElectronicNumForTricareMaskCriteria() throws Exception
 public void verifyTricareMasking() throws Exception
 {
 	Browser.wait(testConfig, 10);
+	
+	Boolean remitpaymntheadUI = remitpaymnthead.isDisplayed();
+	Helper.compareEquals(testConfig, "Payment Number Header check for Tricare", true, remitpaymntheadUI);
     Element.click(paymentNo1, "Payment Number");
+    Browser.wait(testConfig, 5);
 	Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
 	String subscrbrID = subscriberUI1.getText();
 	Log.Comment("Subscriber ID in UI:" + subscrbrID);
