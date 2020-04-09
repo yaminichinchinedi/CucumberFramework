@@ -200,7 +200,12 @@ public class SearchTinPageViewPayments {
 	        	 Element.click(submitBtn, "Search Button");
 		         break;
 	          }
-	       
+	        case "EPRABSViewPay":
+	         { 
+	        	 Element.enterData(bstinDrpDwn, tin, "Entering BS TIN", "Entering BS TIN");
+	        	 Element.click(submitBtn, "Search Button");
+		         break;
+	          }
             case "Tricare":
 	         {
 	        	 Element.enterData(tinDrpDwn, tin, "Entering TIN", "Entering TIN");

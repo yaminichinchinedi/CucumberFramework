@@ -1352,7 +1352,12 @@ public class SearchRemittance extends paymentSummary {
 			String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
-		
+		else if(srchType.equals("viewPayments"))
+		{
+			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+			expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+			Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
+		}
 		WebElement popUp=null;
 		WebElement lnkEpraPdf=null;
 		int totalNoOfPages=getNumberOfPages();		
@@ -1363,16 +1368,26 @@ public class SearchRemittance extends paymentSummary {
 		     {
 		       for(int i=1;i<searchResultRows.size();i++)
 		        {
-		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	 if(srchType.equals("viewPayments"))
+				{
+				String xpath="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
+				actualPaymntNo= Element.findElement(testConfig, "xpath", xpath).getText();
+				}
+				  else{
+				  actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			      actualPaymntNo=actualPaymntNo.replace("\n", "");
-			      if(actualPaymntNo.contains(expectedPaymntNo))
+				  }
+				 if(actualPaymntNo.contains(expectedPaymntNo))
 			       {	
 			    	  found=true;
 			    	  if(srchType.equals("byDOPAndNpi"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
 			    	  else if(srchType.equals("byElectronicPaymentNo"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
-			    	  Browser.wait(testConfig, 5);
+			    	  else if(srchType.equals("viewPayments"))
+			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  
+					  
+					  Browser.wait(testConfig, 5);
 				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
 				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);

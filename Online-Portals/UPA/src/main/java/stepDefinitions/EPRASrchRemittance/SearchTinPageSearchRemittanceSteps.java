@@ -56,6 +56,12 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 //		srchTinPage.enterTinUPA(searchBy);
 //	}
 	
+	
+	@Then("^User enters tin for UPA View Payments Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
+	public void user_enters_tin_for_UPA_View_Payments_Page_for_and_through_and_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable 
+	{
+		user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_and_through_and_click_on_continue_button(priority,searchBy,usertype);
+	}
 	@Then("^User enters tin for UPA Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
 	public void user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_and_through_and_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable {
 	    

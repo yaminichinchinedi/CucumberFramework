@@ -804,6 +804,11 @@ public String getTinForPaymentType(String paymentType)
 			break;
 		}	
 		
+			case "EPRABSViewPay":
+		{
+			sqlRowNo = 218;
+			break;	
+		}
 		
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
@@ -818,7 +823,12 @@ public String getTinForPaymentType(String paymentType)
  		   try{
  		    Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
  		    testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
- 		    }
+ 		    if((paymentType.equalsIgnoreCase("EPRA"))|| (paymentType.equalsIgnoreCase("EPRABSViewPay")) )
+ 		   {   
+ 		    testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+ 		    testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
+ 		   } 
+		   }
  		  catch(Exception e)
  		  {
  			testConfig.putRunTimeProperty("AlreadyFailed","yes");
