@@ -26,7 +26,7 @@ Examples:
         |    Search Criteria     |   credentials     |
         |      RemitDetail       |      Super        |
         |      RemitDetail       |      RW           |
-        |      RemitDetail       |     ROPPRA        |
+        |      RemitDetail       |      RO           |
         
        
 Scenario Outline: Remittance Detail UI and FISL Sort Validations
@@ -43,7 +43,7 @@ Examples:
          |     Search Criteria    |   credentials   |
          |      RemitDetail       |      Super      |
          |      RemitDetail       |      RW         |
-         |      RemitDetail       |     ROPPRA      |
+         |      RemitDetail       |      RO         |
 
 
 Scenario Outline: Remittance Detail multiple PLB Adjustments 
@@ -59,7 +59,7 @@ Examples:
          |   credentials   |
          |     Super       |
          |     RW          |
-         |     ROPPRA      |
+         |     RO          |
   
   
 Scenario Outline: Remittance Detail PLB Adjustments 
@@ -76,7 +76,7 @@ Examples:
          |   credentials   |
          |     Super       |
          |     RW          |
-         |     ROPPRA      |
+         |     RO          |
                    
 
 Scenario Outline: Remittance Detail Tricare Validation
@@ -92,7 +92,7 @@ Examples:
          |   credentials   |
          |     Super       | 
          |     RW          | 
-         |     ROPPRA      |
+         |     RO          |
          
 
 

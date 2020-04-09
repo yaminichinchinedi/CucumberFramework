@@ -21,7 +21,7 @@ Examples:
         |    Search Criteria     |   credentials     |
         |      RemitDetail       |      Super        |
         |      RemitDetail       |      RW           |
-#       |      RemitDetail       |      RO           |         
+        |      RemitDetail       |      RO           |         
         
        
 Scenario Outline: Claim Detail Tricare Functionality
@@ -37,7 +37,7 @@ Examples:
          |   credentials     |
          |    Super          |
          |    RW             |
-#        |    RO             |
+         |    RO             |
         
         
         
