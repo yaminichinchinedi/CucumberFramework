@@ -405,90 +405,105 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 {
          Browser.browserRefresh(testConfig);
 		
-		if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
-				||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			
-			int sqlRowNo=204;
-			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			String paymentNumDB = System.getProperty("paymentNum");
-			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
-			
-			sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))
-				||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			int sqlRowNo=205;
-			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			String paymentNumDB = System.getProperty("paymentNum");
-			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
-			
-			sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			
-			int sqlRowNo=217;
-			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-			String paymentNumDB = System.getProperty("paymentNum");
-			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
-			
-			sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		
-		else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			
-			System.getProperty("CONSL_PAY_NBR");
-			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+         if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
+ 				||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+ 			
+// 			int sqlRowNo=204;
+// 			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+// 			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+// 			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
+ 		else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))
+ 				||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+// 			int sqlRowNo=205;
+// 			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+// 			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+// 			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+ 			
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
+ 		else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+ 			
+// 			int sqlRowNo=217;
+// 			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+// 			testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+// 			System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+ 			
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
+ 		
+ 		else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+ 			
+// 			System.getProperty("CONSL_PAY_NBR");
+// 			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+ 			
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
 
-			int sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		
-		else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			
-			System.getProperty("CONSL_PAY_NBR");
-			System.out.println(System.getProperty("CONSL_PAY_NBR"));
-			
-			int sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		
-		
-		else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			
-			System.getProperty("CONSL_PAY_NBR");
-			System.out.println(System.getProperty("CONSL_PAY_NBR"));
-			
-			int sqlRowNo=206;
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
-			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
-		}
-		
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
+ 		
+ 		else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+ 			
+// 			System.getProperty("CONSL_PAY_NBR");
+// 			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
+ 		
+ 		
+ 		else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+ 		{
+ 			
+// 			System.getProperty("CONSL_PAY_NBR");
+// 			System.out.println(System.getProperty("CONSL_PAY_NBR"));
+ 			
+ 			String paymentNumDB = System.getProperty("paymentNum");
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			
+ 			int sqlRowNo=206;
+ 			testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+ 			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+ 			Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+ 			System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString());
+ 		}
 		return this;
 		
 		
@@ -649,6 +664,20 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		return this;
 		
 }
+	
+	
+public paymentSummary verifyEpraStatusSrchRemit(String expectedStatus) 
+{
+       Browser.browserRefresh(testConfig);
+       String paymentNumDB = System.getProperty("payNum");
+		int sqlRowNo=206;
+		testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
+		System.setProperty("CONSL_PAY_NBR", epraStatusTbl.get("CONSL_PAY_NBR").toString()); 
+       
+   		return this;
+}  
 	
 		
 public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
@@ -2693,7 +2722,7 @@ public void verifyFailedPaymentPopUp()
     		
     		System.out.println(dataRequiredForSearch);
     	}
-    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite")))
+    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
     	{
     		 int sqlRow = 205;
     		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -2709,7 +2738,7 @@ public void verifyFailedPaymentPopUp()
 		System.out.println(dataRequiredForSearch);
 	  }
 	
-	 else if("EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
+	 else if("EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
 	     {
 		  int sqlRow = 205;
 		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
@@ -2719,7 +2748,7 @@ public void verifyFailedPaymentPopUp()
 	
 	else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
 	     {
-		  int sqlRow = 212;
+		  int sqlRow = 210;
 		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		
 		   System.out.println(dataRequiredForSearch);
@@ -2777,6 +2806,7 @@ public void verifyFailedPaymentPopUp()
 		{
 			i=2;		
 			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+			System.setProperty("DSPL_CONSL_PAY_NBR", expectedPaymntNo);
 			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
 			searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='SearchHeader']//tr");
 		}
@@ -2794,19 +2824,12 @@ public void verifyFailedPaymentPopUp()
     			
     			System.out.println("The expected Payment no is:" + expectedPaymntNo);
     			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
-    			//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/div/table/tbody/tr");
     		}
     		else if(srchType.equals("byElectronicPaymentNo"))
     		{
     			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
     			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
     		}
-			else if(srchType.equals("viewPayments"))
-			{
-				searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
-				expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
-				Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
-			}		
     		else 
     		{
     			i=2;		
@@ -2818,38 +2841,23 @@ public void verifyFailedPaymentPopUp()
 		     {
 		       for(;i<searchResultRows.size();i++)
 		        {
-		    	   if(srchType.equals("viewPayments"))
-				   {					   
-				  String xpath="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
-   	               actualPaymntNo= Element.findElement(testConfig, "xpath", xpath).getText();
-					}
-					else
-					{	
-					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
-					}
+
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   actualPaymntNo=actualPaymntNo.replace("\n", "");
+		    	   
 		    	   
 		    	   System.out.println("The Actual Payment no is:" + actualPaymntNo);
 		    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
-		    	   WebElement lnkPaymntNo=null;
+		    	   
 			      if(actualPaymntNo.contains(expectedPaymntNo))
 			      {	
 			    	  
 			    	  System.out.println("The Actual Payment no is:" + actualPaymntNo);
-			    	  System.out.println("The expected Payment no is:" + expectedPaymntNo);
-			    	 if(srchType.equals("viewPayments"))
-					 {	 
-					String xpath1="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
-					  lnkPaymntNo=Element.findElement(testConfig, "xpath", xpath1);
-					}
-					else{
-					  lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
-					}
-					 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
+			    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
+			    	  WebElement lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));
+			    	 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
 					 Element.clickByJS(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText());
 					 found=true;
-					 Browser.wait(testConfig, 10);
-
 					 break; 
 			       }
 		        }
@@ -2862,12 +2870,7 @@ public void verifyFailedPaymentPopUp()
 						 int pageToBeClicked=pageNo+1;
 						 Log.Comment("Payment Number not found on page number " + pageNo);
 						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
-			
-						 if(srchType.equals("viewPayments"))
-						Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
-						else
-						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
-	
+						 Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
 						 Log.Comment("Clicked Page number : " + pageToBeClicked);
 						 Browser.waitForLoad(testConfig.driver);
 
@@ -2888,6 +2891,7 @@ public void verifyFailedPaymentPopUp()
 		
 
 		return new RemittanceDetail(testConfig);
+	
 	
 		
 	}

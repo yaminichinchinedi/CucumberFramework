@@ -33,6 +33,13 @@ public class SearchRemittanceSteps extends TestBase{
 		srchRemittance.verifyEpraClaimCntAndPrioritySrch();
 	}
 	
+	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Search Remit Page$")
+	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Search_Remit_Page() throws Throwable {
+	    
+		Browser.wait(testConfig, 8);
+		srchRemittance.verifyEpraStatusSrchRemit("C");
+	}
+	
 	@Then("^validate Claim_Count and Priority is set accordingly based on \"([^\"]*)\"$")
 	public void validate_Claim_Count_and_Priority_is_set_accordingly_based_on(String srchCriteria) throws Throwable {
 	    

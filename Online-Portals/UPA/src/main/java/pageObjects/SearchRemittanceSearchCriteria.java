@@ -173,97 +173,96 @@ public class SearchRemittanceSearchCriteria {
 		Log.Comment(testConfig.getRunTimeProperty("suite"));
 		
 		
-		
 		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
-	    	{
-	    		 sqlRow = 204;
-	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-	    		System.out.println(dataRequiredForSearch);
-	    	}        
-	    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
-	    	{
-	    		 sqlRow = 205;
-	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-	    		
-	    		System.out.println(dataRequiredForSearch);
-	    	}
-	    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
-	    	{
-	    		 sqlRow = 204;
-	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-	    		
-	    		System.out.println(dataRequiredForSearch);
-	    	}
-	    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
-	    	{
-	    		 sqlRow = 205;
-	    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-	    		
-	    		System.out.println(dataRequiredForSearch);
-	    	}
-		
-		  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-    	  {
+    	{
+    		 sqlRow = 204;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		System.out.println(dataRequiredForSearch);
+    	}        
+    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
+    	{
+    		 sqlRow = 205;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+    	{
     		 sqlRow = 204;
     		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
     		
     		System.out.println(dataRequiredForSearch);
-    	  }
+    	}
+    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+    	{
+    		 sqlRow = 205;
+    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+    		
+    		System.out.println(dataRequiredForSearch);
+    	}
+	
+	  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+	  {
+		 sqlRow = 204;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		
-		 else if("EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-  	     {
-  		  sqlRow = 205;
-  		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-  		
-  		   System.out.println(dataRequiredForSearch);
-  	     }
-		
-		else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
- 	     {
- 		  sqlRow = 212;
- 		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
- 		
- 		   System.out.println(dataRequiredForSearch);
- 	     }
-		
-		
-		else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+		System.out.println(dataRequiredForSearch);
+	  }
+	
+	 else if("EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
 	     {
-		  sqlRow = 217;
+		  sqlRow = 205;
 		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		
 		   System.out.println(dataRequiredForSearch);
 	     }
+	
+	else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
+	     {
+		  sqlRow = 210;
+		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		
-		else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 218;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-		else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 219;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-		
-		else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 210;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-
-	     else		 
-	     {	
-	   		dataRequiredForSearch=dataProvider(criteriaType);
-	   		System.out.println(dataRequiredForSearch);
+		   System.out.println(dataRequiredForSearch);
 	     }
+	
+	
+	else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+     {
+	  sqlRow = 217;
+	  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	
+	   System.out.println(dataRequiredForSearch);
+     }
+	
+	else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+	{
+		 sqlRow = 218;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		
+		System.out.println(dataRequiredForSearch);
+	}
+	else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+	{
+		 sqlRow = 219;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	}
+	
+	else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+	{
+		 sqlRow = 210;
+		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		
+		System.out.println(dataRequiredForSearch);
+	}
+
+     else		 
+     {	
+   		dataRequiredForSearch=dataProvider(criteriaType);
+   		System.out.println(dataRequiredForSearch);
+     }
+	
 		
 		switch(criteriaType)
 		 {
@@ -274,19 +273,16 @@ public class SearchRemittanceSearchCriteria {
 		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-		    	
-
 		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-		    	
-		    	
 		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	System.out.println(System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString()));
-		    	
-		    	
 		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
 		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	
 		    	break;
 		    }
 		    
@@ -338,12 +334,11 @@ public class SearchRemittanceSearchCriteria {
 		    case "byDOPAndAccountNo":
 		    {
 		    	
-                 Element.enterData(accountNo, dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Enter patient account no as : "+dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Account Number");
+		    	Element.enterData(accountNo, dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Enter patient account no as : "+dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Account Number");
 		    	
-		    	
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+                if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
-		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+		    			||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
 		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
          		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
@@ -356,7 +351,9 @@ public class SearchRemittanceSearchCriteria {
 		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
 		    	}
 		    	
-
+                System.setProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+                System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+                System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
@@ -373,14 +370,16 @@ public class SearchRemittanceSearchCriteria {
 //		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	String sbscrId=dataRequiredForSearch.get("SBSCR_ID").toString();
 		    	
+		    	Element.enterData(subscriberID, dataRequiredForSearch.get("SBSCR_ID").toString(), "Enter Subscriber ID no as : "+dataRequiredForSearch.get("SBSCR_ID").toString(), "Subscriber ID");
+		    	
 		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
 		    	testConfig.putRunTimeProperty("value", sbscrId);
-		    	
-		    	
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 				
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
@@ -400,10 +399,12 @@ public class SearchRemittanceSearchCriteria {
 		    }
 		    
 
-		  case "byDOPAndNpi":
+		    case "byDOPAndNpi":
 		    {
 		    	
 		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	
+		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	
 		    	System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
 		    	
@@ -411,11 +412,13 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
 		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PROV_NPI_NBR").toString());
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	
 		    	Element.clickByJS(testConfig,NPI, "NPItext box");
 		    	Element.enterData(NPI, dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "NPI");
 		    	
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
@@ -442,11 +445,13 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
 		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("CLM_NBR").toString());
-				
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
 		    	Element.enterData(claimNumber, dataRequiredForSearch.get("CLM_NBR").toString(), "Enter claim no as : "+dataRequiredForSearch.get("CLM_NBR").toString(), "Claim Number");
 		    	
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
@@ -461,7 +466,6 @@ public class SearchRemittanceSearchCriteria {
 		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
 		    	}
 		    	
-		    
 		    	break;		    	
 		    }
 		    
@@ -476,12 +480,13 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("PTNT_LST_NM").toString());
 		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	
-									
 		    	Element.enterData(patientFirstName, dataRequiredForSearch.get("PTNT_FST_NM").toString(), "Enter First Name as : "+dataRequiredForSearch.get("PTNT_FST_NM").toString(), "First Name");
 		    	Element.enterData(patientLastName, dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Last Name");
 		    	
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
@@ -698,18 +703,17 @@ public class SearchRemittanceSearchCriteria {
 //		    	 srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 //		    	String renderingProv=srchData.get("LST_NM").toString(); 
 //		    	renderingProv=renderingProv.replace(" null", "");
-//		    	
-		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
 		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("LST_NM").toString());
-		    	
-		    	
+		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 				
 		    	Element.enterData(renderingProvName, dataRequiredForSearch.get("LST_NM").toString(), "Filling Rendering Provider Name: "+dataRequiredForSearch.get("LST_NM").toString(), "Rendering Prov");
 		    	
 		    	
-		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite"))
+		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
@@ -723,9 +727,9 @@ public class SearchRemittanceSearchCriteria {
 		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
 		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
 		    	}
-		    	
 
 	 			break;
+	 			
 			 case "byHCPayment_Number":
 				{
 					Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");

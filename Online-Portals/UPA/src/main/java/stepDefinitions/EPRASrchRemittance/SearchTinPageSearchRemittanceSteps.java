@@ -32,31 +32,7 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		}
 		srchTinPage.enterTin(searchBy).clickSearchBtn();
 	}
-	
-//	@Then("^User enters tin for UPA Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
-//	public void user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_and_click_on_continue_button(String priority, String searchBy) throws Throwable {
-//	   
-//		if(searchBy.equals("EPRA"))
-//			testConfig.putRunTimeProperty("suite", "EPRA");
-//		
-//		else if(searchBy.equals("EPRAgenerated"))
-//			testConfig.putRunTimeProperty("suite", "EPRAgenerated");
-//		if(priority.equals("1"))
-//		{
-//			testConfig.putRunTimeProperty("claimRange1", "1");
-//			testConfig.putRunTimeProperty("claimRange2", "10");
-//			testConfig.putRunTimeProperty("priority", "1");
-//		}
-//		else if(priority.equals("2"))
-//		{
-//			testConfig.putRunTimeProperty("claimRange1", "80");
-//			testConfig.putRunTimeProperty("claimRange2", "100");
-//			testConfig.putRunTimeProperty("priority", "2");
-//		}
-//		srchTinPage.enterTinUPA(searchBy);
-//	}
-	
-	
+
 	@Then("^User enters tin for UPA View Payments Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
 	public void user_enters_tin_for_UPA_View_Payments_Page_for_and_through_and_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable 
 	{
@@ -112,7 +88,7 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		
 		else if(searchBy.equals("EPRABSGen"))
 			testConfig.putRunTimeProperty("suite", "EPRABSGen");
-		
+		                         
 		else if(searchBy.equals("EPRAgeneratedBSAdmin"))
 			testConfig.putRunTimeProperty("suite", "EPRAgeneratedBSAdmin");
 		
