@@ -1,10 +1,11 @@
 #Author: Amit Kushwah
 #PPS.4012 job should be running to execute these test cases.
+# If any scripts fail due to unable to find payment number then it is an expected Prod Issue
 
 @CSREPRASrchRemit  @CSRRegression
 Feature: Search Remittance Payment Number 
 
-
+@CSR
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
