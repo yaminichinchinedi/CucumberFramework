@@ -1,5 +1,7 @@
-#Author: Amit Kushwah
+#Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
+# The query is fecthing data for EPRA Generated related payment Numbers, so not getting Print request and able to see print available
+# Few test cases may fail due to existing PROD issue (Issue: It may not identify Payment Number)
 
 @UPASrchRemitEPRA  @UPARegression
 Feature: Search Remittance Payment Number 
@@ -19,7 +21,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	And validate record is inserted in User_Event_Log for Remittance Detail
 	
 	
-	Examples:
+Examples:
 	
 						|		Search Criteria			     |			    credentials			  |			priority		|			searchBy		      |   usertype  |
 			  		|	byElectronicPaymentNo	     |					BS_Admin				  |					1				|			EPRABSAdmin				|    BS       |
@@ -49,11 +51,9 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 						|	byDOPAndPatientNm			     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
 						|	byDOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
 						|	byDOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-			  		|	byDOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+			      |	byDOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
 			
 			
-
-
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to UPA portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link for UPA

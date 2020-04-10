@@ -12,9 +12,9 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Then User clicks on Search Remittance link for UPA
   Then User enters "<Search Criteria>" and click on search button.
 	And User validates EPRA pdf link is present and clicks on EPRA when "<Search Criteria>" and validate a new window is open with appropriate Text and Hover msg is displayed.
-	And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-	And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
 	And validate PDF link is changed to PDF icon and is enabled and is downloadable for "<Search Criteria>".
+	And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
+	And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
 	And validate download status is set to Y in Ole.EPRA_STATUS
   And validate record is inserted in User_Event_Log for "<usertype>"
  
@@ -42,7 +42,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
   Then User enters "<Search Criteria>" and click on search button.
   And validate PDF icon is enabled and is downloadable for "<Search Criteria>".
   And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-  And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+  And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
 	And validate download status is set to Y in Ole.EPRA_STATUS
 	And validate record is inserted in User_Event_Log for "<usertype>"
 	

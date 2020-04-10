@@ -1,5 +1,6 @@
-#Author: Amit Kushwah
+#Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
+# Few test cases may fail due to existing PROD issue (It may not identify payment number)
 
 @UPASrchRemitEPRA  @UPARegression
 Feature: Search Remittance Payment Number 
@@ -52,7 +53,6 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 			  		|	byDOPAndRenderingProvider  |			    PROV_Gen  				|					2				|			EPRAPROVGen		 |    PROV       |
 			
 			
-
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to UPA portal and enters "<credentials>" and login
 	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button
@@ -68,31 +68,31 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Examples:
 	
 						|		Search Criteria			     |			    credentials			  |			priority		|			searchBy		                  |   usertype    |
-			  		|	byElectronicPaymentNo	     |					PROV_Admin				|					1				|			EPRAgeneratedProvAdmin		    |    PROV       |
-						|	byElectronicPaymentNo	     |					PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-					  |			byDOPAndNpi		         |					PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-			      |			byDOPAndNpi		         |					PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-				    |	byDOPAndAccountNo			     |					PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-		    		|	byDOPAndAccountNo			     |					PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOP&SubscriberID		     |					PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOP&SubscriberID		     |					PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOPAndClaimNo				     | 				  PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOPAndClaimNo				     | 				  PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOPAndPatientNm			     |					PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOPAndPatientNm			     |					PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-						|	byDOPAndRenderingProvider  |			    PROV_Admin				|					1				|			EPRAgeneratedProvAdmin				|    PROV       |
-			  		|	byDOPAndRenderingProvider  |			    PROV_Admin				|					2				|			EPRAgeneratedProvAdmin				|    PROV       |
-			  		|	byElectronicPaymentNo	     |					PROV_Gen   				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byElectronicPaymentNo	     |					PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-					  |			byDOPAndNpi		         |					PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-			      |			byDOPAndNpi		         |					PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-					  |	byDOPAndAccountNo			     |					PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-		    		|	byDOPAndAccountNo			     |					PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOP&SubscriberID		     |					PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOP&SubscriberID		     |					PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOPAndClaimNo				     | 				  PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOPAndClaimNo				     | 				  PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOPAndPatientNm			     |					PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOPAndPatientNm			     |					PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
-						|	byDOPAndRenderingProvider  |			    PROV_Gen  				|					1				|			EPRAgeneratedProvGen				  |    PROV       |
-			  		|	byDOPAndRenderingProvider  |			    PROV_Gen  				|					2				|			EPRAgeneratedProvGen				  |    PROV       |
+			  		|	byElectronicPaymentNo	     |					PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin		    |    PROV       |
+						|	byElectronicPaymentNo	     |					PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+					  |			byDOPAndNpi		         |					PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+			      |			byDOPAndNpi		         |					PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+				    |	byDOPAndAccountNo			     |					PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+		    		|	byDOPAndAccountNo			     |					PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOP&SubscriberID		     |					PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOP&SubscriberID		     |					PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOPAndClaimNo				     | 				  PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOPAndClaimNo				     | 				  PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOPAndPatientNm			     |					PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOPAndPatientNm			     |					PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+						|	byDOPAndRenderingProvider  |			    PROV_Admin				|					1				|			EPRAgeneratedPROVAdmin				|    PROV       |
+			  		|	byDOPAndRenderingProvider  |			    PROV_Admin				|					2				|			EPRAgeneratedPROVAdmin				|    PROV       |
+			  		|	byElectronicPaymentNo	     |					PROV_Gen   				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byElectronicPaymentNo	     |					PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+					  |			byDOPAndNpi		         |					PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+			      |			byDOPAndNpi		         |					PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+					  |	byDOPAndAccountNo			     |					PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+		    		|	byDOPAndAccountNo			     |					PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOP&SubscriberID		     |					PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOP&SubscriberID		     |					PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOPAndClaimNo				     | 				  PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOPAndClaimNo				     | 				  PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOPAndPatientNm			     |					PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOPAndPatientNm			     |					PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |
+						|	byDOPAndRenderingProvider  |			    PROV_Gen  				|					1				|			EPRAgeneratedPROVGen				  |    PROV       |
+			  		|	byDOPAndRenderingProvider  |			    PROV_Gen  				|					2				|			EPRAgeneratedPROVGen				  |    PROV       |

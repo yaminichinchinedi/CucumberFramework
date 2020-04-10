@@ -101,7 +101,7 @@ import main.java.reporting.LogTemp;
         },
         dryRun=false,
         strict=true,
-        tags={"@US1247822"}
+        tags={"@CSREPRASrchRemitDtl"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

@@ -12,13 +12,14 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button
 	Then User enters "<Search Criteria>" and click on search button.
 	And User validates EPRA pdf link is present and clicks on EPRA when "<Search Criteria>" and validate a new window is open with appropriate Text and Hover msg is displayed.
-	And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-	And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
 	And validate PDF link is changed to PDF icon and is enabled and is downloadable for "<Search Criteria>".
+	And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
+	And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
 	And validate download status is set to Y in Ole.EPRA_STATUS
   And validate record is inserted in User_Event_Log for "<usertype>"
+  
 
-	Examples:
+Examples:
 						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		    |   usertype  |
 						|	byElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRABSAdmin			|     BS      |
 						|	byElectronicPaymentNo	|			 BS_Admin  					|					2				|			EPRABSAdmin			|     BS      |
@@ -38,15 +39,14 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Then User clicks on Search Remittance link for UPA
 	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button
 	Then User enters "<Search Criteria>" and click on search button.
-  And validate PDF icon is enabled and is downloadable for "<Search Criteria>".
+	And validate PDF icon is enabled and is downloadable for "<Search Criteria>".
   And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-	And validate Entry exist in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+	And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
 	And validate download status is set to Y in Ole.EPRA_STATUS
-	And validate record is inserted in User_Event_Log.
 	And validate record is inserted in User_Event_Log for "<usertype>"
 	
-	
-	Examples:
+
+Examples:
 						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		          |   usertype  |
 						|	byElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRAgeneratedBSAdmin	|    BS       |
 						|	byElectronicPaymentNo	|			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
