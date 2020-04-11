@@ -1,7 +1,7 @@
 #Author: Amit Kushwah
 #PPS.4012 job should be running to execute these test cases.
 
-@UPASrchRemitEPRA  @UPARegression
+@UPASrchRemitEPRA1  @UPARegression
 Feature: Search Remittance Payment Number 
 
 

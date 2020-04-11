@@ -16,7 +16,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^User validates EPRA pdf link is present and clicks on EPRA when \"([^\"]*)\" and validate a new window is open with appropriate Text and Hover msg is displayed\\.$")
 	public void user_validates_EPRA_pdf_link_is_present_and_clicks_on_EPRA_when_and_validate_a_new_window_is_open_with_appropriate_Text_and_Hover_msg_is_displayed(String srchCriteria) throws Throwable {
 		
-		srchRemittance.clickEpraPDFLink(srchCriteria);
+		srchRemittance.clickEpraPDFLinkSrchRemit(srchCriteria);
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly\\.$")
@@ -31,13 +31,6 @@ public class SearchRemittanceSteps extends TestBase{
 	   
 		Browser.wait(testConfig, 5);
 		srchRemittance.verifyEpraClaimCntAndPrioritySrch();
-	}
-	
-	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Search Remit Page$")
-	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Search_Remit_Page() throws Throwable {
-	    
-		Browser.wait(testConfig, 8);
-		srchRemittance.verifyEpraStatusSrchRemit("C");
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly based on \"([^\"]*)\"$")
@@ -56,12 +49,12 @@ public class SearchRemittanceSteps extends TestBase{
 		//srchRemittance.getPDFfileNameEPRA();
 	}
 	
-	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with appropriate status for Consol_Pay_Nbr$")
-	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_appropriate_status_for_Consol_Pay_Nbr() throws Throwable {
+	
+	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Search Remit Page$")
+	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Search_Remit_Page() throws Throwable {
+	    
 		Browser.wait(testConfig, 8);
-		srchRemittance.verifyEpraStatus("viewPayments",10);
-		srchRemittance.getPDFfileNameEPRA();
-		
+		srchRemittance.verifyEpraStatusSrchRemit("C");
 	}
 	
 	@Then("^validate PDF link is changed to PDF icon and is enabled and is downloadable for \"([^\"]*)\"\\.$")
@@ -141,7 +134,6 @@ public class SearchRemittanceSteps extends TestBase{
 	    
 		srchRemittance.verifyUsrEvntLogRemitDetailCSR(userType);
 	}
-
 	@Then("^User validates EPRA file is present in NAS Drive and delete it in both EPRA_STATUS Table, Nas Drive$")
 	public void user_validates_EPRA_file_is_present_in_NAS_Drive_and_delete_it_in_both_EPRA_STATUS_Table_Nas_Drive() throws Throwable {
 	    

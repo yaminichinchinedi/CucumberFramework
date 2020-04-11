@@ -1,7 +1,7 @@
-#Author: Amit Kushwah
+#Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 
-@UPASrchRemitEPRA  @UPARegression
+@UPASrchRemitEPRAPayer  @UPARegression
 Feature: Search Remittance Payment Number 
 
 # there is no data for NPI and Rendering Provider Name
@@ -25,8 +25,8 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 						|		Search Criteria			     |			    credentials			  |			priority		|			searchBy		        |   usertype     |
 			  		|	byElectronicPaymentNo	     |					PAY_Admin				  |					1				|			EPRAPayerAdmin			|    Payer       |
 						|	byElectronicPaymentNo	     |					PAY_Admin  				|					2				|			EPRAPayerAdmin			|    Payer       |
-				#	  |			byDOPAndNpi		         |					PAY_Admin  				|					1				|			EPRAPayerAdmin			|    Payer       |
-			  #   |			byDOPAndNpi		         |					PAY_Admin  				|					2				|			EPRAPayerAdmin			|    Payer       |
+					  |			byDOPAndNpi		         |					PAY_Admin  				|					1				|			EPRAPayerAdmin			|    Payer       |
+			      |			byDOPAndNpi		         |					PAY_Admin  				|					2				|			EPRAPayerAdmin			|    Payer       |
 					  |	byDOPAndAccountNo			     |					PAY_Admin  				|					1				|			EPRAPayerAdmin			|    Payer       |
 		    		|	byDOPAndAccountNo			     |					PAY_Admin  				|					2				|			EPRAPayerAdmin			|    Payer       |
 						|	byDOP&SubscriberID		     |					PAY_Admin  				|					1				|			EPRAPayerAdmin			|    Payer       |

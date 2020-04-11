@@ -222,6 +222,96 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 	
 	
+	
+	public paymentSummary clickEpraPDFLinkSrchRemit(String srchType)
+    {
+          String actualPaymntNo="";
+          String expectedPaymntNo="";
+          boolean found=false;
+          if(srchType.equals("byDOPAndNpi"))
+          {
+                expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+                
+                System.setProperty("paymentNum", expectedPaymntNo);
+                searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+          }
+          else if(srchType.equals("byElectronicPaymentNo"))
+          {
+                expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+                System.setProperty("paymentNum", expectedPaymntNo);
+                searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+          
+          }
+          
+
+          WebElement popUp=null;
+          WebElement lnkEpraPdf=null;
+          int totalNoOfPages=getNumberOfPages();          
+          Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    
+    for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+    {  
+       if(testConfig.driver.getPageSource().toString().contains(expectedPaymntNo))
+        {
+           for(int i=1;i<searchResultRows.size();i++)
+           {
+
+           	 
+           	     actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+                 actualPaymntNo=actualPaymntNo.replace("\n", "");
+
+                 Log.Comment("Actual Payment No is:" + actualPaymntNo);
+                 Log.Comment("Expected Payment No is:" + expectedPaymntNo);
+           	  
+              if(actualPaymntNo.equals(expectedPaymntNo))
+              {    
+                found=true;
+                if(srchType.equals("byDOPAndNpi"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+                else if(srchType.equals("byElectronicPaymentNo"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+                else if(srchType.equals("byDOPAndNpiUPA"))
+                   lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[1]");
+       Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+       Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf Link");
+       Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
+       String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
+       WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
+            
+      Browser.switchToParentWindow(testConfig,oldWindow);
+      Browser.wait(testConfig, 5);
+
+       break;
+         }
+      }
+     }
+     
+    if(found==true)break;
+    else if(pageNo%10!=0 && pageNo<totalNoOfPages)
+    {  
+       int pageToBeClicked=pageNo+1;
+       Log.Comment("Non ePRA payment not found on page number " + pageNo);
+       Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+       Log.Comment("Clicked Page number : " + pageToBeClicked);
+       Browser.waitForLoad(testConfig.driver);
+     }
+     
+    else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+    {
+       Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+       Element.click(lnkNextPage,"Next Link");
+       Browser.waitForLoad(testConfig.driver);
+       Browser.wait(testConfig,3);
+     }
+    
+    else
+        Log.Fail("Could not find nonEpra payment on any of the pages, please execute test case manually");
+      }
+	return searchRemittance;
+          
+ }
+	
+	
 	public paymentSummary clickEpraPDFLink(String srchType)
     {
           String actualPaymntNo="";
