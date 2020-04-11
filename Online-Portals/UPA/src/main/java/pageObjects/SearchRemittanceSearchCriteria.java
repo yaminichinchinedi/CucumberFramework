@@ -427,7 +427,7 @@ public class SearchRemittanceSearchCriteria {
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
-		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
 		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
 		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");

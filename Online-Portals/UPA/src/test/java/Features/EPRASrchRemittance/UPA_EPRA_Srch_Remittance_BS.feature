@@ -1,8 +1,8 @@
 #Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 
-@UPASrchRemitEPRA1  @UPARegression
-Feature: Search Remittance Payment Number 
+@UPASrchRemitEPRABS @UPASrchRemitEPRA1  @UPARegression
+Feature: UPA_EPRA_Srch_Remittance_BS 
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
