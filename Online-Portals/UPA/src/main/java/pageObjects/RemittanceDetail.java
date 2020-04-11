@@ -4105,7 +4105,7 @@ public void verifyRemittancePageDataUPA() throws Exception
 public RemittanceDetail clickPrintRequestButton()
 {
 Element.verifyElementPresent(btnPrint, "Print Request Button");
-	
+	Browser.wait(testConfig, 7);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
