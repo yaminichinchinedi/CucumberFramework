@@ -1,8 +1,9 @@
 #Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
+# Few test Cases May fail due to existing PROD issue
 
-@UPASrchRemitEPRA1  @UPARegression
-Feature: Search Remittance Payment Number 
+@UPASrchRemitEPRA12 @UPASrchRemitEPRA1  @UPARegression
+Feature: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Number 
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
@@ -34,7 +35,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	
 
 
-Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
+Scenario Outline: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Number P1 & P2 Already Existing
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
 	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button

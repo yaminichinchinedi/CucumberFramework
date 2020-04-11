@@ -719,40 +719,18 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary verifyEpraClaimCntAndPrioritySrch()
 	{
 
-		
-		if("EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
-				||"EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedProvGen".equals(testConfig.getRunTimeProperty("suite")))
-		{	
-		
-			int sqlRowNo = 205;
-			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			String paymentNumDB = dataRequiredForSearch.get("CONSL_PAY_NBR").toString();
-			sqlRowNo=206;
-			testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-				
-			if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
-				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
-			else
-				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
-		}
-		else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-		{
-			int sqlRowNo = 204;
-			dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-			String paymentNumDB = dataRequiredForSearch.get("CONSL_PAY_NBR").toString();
-			sqlRowNo=206;
-			testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
-			Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-				
-			if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
-				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
-			else
-				Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
-		}
+		String paymentNumDB = System.getProperty("payNum");
+		int sqlRowNo=206;
+		testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
+		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		if(Integer.parseInt(epraStatusTbl.get("CLAIM_CNT").toString())<=75)
+			Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "1", epraStatusTbl.get("PRIORITY").toString());
+		else
+			Helper.compareEquals(testConfig, "Priority in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), "2", epraStatusTbl.get("PRIORITY").toString());
+	
 
 		return this;
-		
+
 }
 	
 	
