@@ -119,22 +119,22 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then Validate all the Headers from FII page in case of AO and AV Enrollment type
     
      #TS_13
- 
-    Scenario: TS_0013_Validate Headers for AV Enrollment Type
-    
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-										      | Enrollment Type |
-										      |       AV        |
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-		Then User fills all the information of Financial Institution Information NPI page and click continue for AV.
-    Then User clicks Continue on Select Payment Methods Page
-    Then User uploads the WNine form and click continue
-    Then User validateds multiple Edit option on Review and Submit Page 
-    And User clicks on Financial Institution Information NPI page Edit link
-    And User verifies that FII-NPI fields are editables
-    Then Validate all the Headers from FII page in case of AO and AV Enrollment type
+ #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
+ #   Scenario: TS_0013_Validate Headers for AV Enrollment Type
+ #   
+ #   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+#										      | Enrollment Type |
+#										      |       AV        |
+#    Then User fills all the information  and click on Continue
+#    Then User fills all the information on Identify Administrators page and click continue
+#    Then User fills all the information on Financial Institution Information page and click continue NPI
+#		Then User fills all the information of Financial Institution Information NPI page and click continue for AV.
+#    Then User clicks Continue on Select Payment Methods Page
+#    Then User uploads the WNine form and click continue
+#    Then User validateds multiple Edit option on Review and Submit Page 
+#    And User clicks on Financial Institution Information NPI page Edit link
+#    And User verifies that FII-NPI fields are editables
+#    Then Validate all the Headers from FII page in case of AO and AV Enrollment type
     
     
 

@@ -16,23 +16,23 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
 
-
+#Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
 #TS_002
-  Scenario: Fills the relevent Info with AV Enroll Typ
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-												   | Enrollment Type |
-												   | 			AV        |
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
+#  Scenario: Fills the relevent Info with AV Enroll Typ
+#    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+#												   | Enrollment Type |
+#												   | 			AV        |
+#    Then User fills all the information  and click on Continue
+#    Then User fills all the information on Identify Administrators page and click continue
 
 
 #TS_003
-  Scenario: Fills the relevent Info with VO Enroll Typ
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-											      | Enrollment Type |
-											      |      VO         |
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
+#  Scenario: Fills the relevent Info with VO Enroll Typ
+#    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+#											      | Enrollment Type |
+#											      |      VO         |
+#    Then User fills all the information  and click on Continue
+#    Then User fills all the information on Identify Administrators page and click continue
 
 #TS_004
   #Scenario: Checking UI Content matches with UXDS Page
@@ -44,7 +44,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 
 
 #TS_005
-
+@test121
   Scenario: Checking UI Content matches with DB 
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -125,7 +125,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Examples:
     												| EnrollmentType  |
 											      |      AO         |
-											      |			 AV					|
+											     # |			 AV					|
 											      
 					#TS_014 #TS_015						      
 	Scenario Outline: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
@@ -140,7 +140,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Examples:
     												| EnrollmentType  |
 											      |      AO         |
-											      |			 AV					|
+											  #    |			 AV					|
 											      
 											      
 		#TS_016 #TS_017 #TS_018

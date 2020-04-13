@@ -126,20 +126,21 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
   And User validates fiels are editables on Financial Institution Information page
   And Validates Headers on Financial Information page
   						
-	Scenario: TS_0012_Validate the headers on Financial Information page for AV TIN.
+#Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen	
+#	Scenario: TS_0012_Validate the headers on Financial Information page for AV TIN.
 	
-	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-											|Enrollment Type|
-											|     AV        |
+#	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+#											|Enrollment Type|
+#											|     AV        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue to AV
-  Then User clicks Continue on Select Payment Methods Page
-  Then User uploads the WNine form and click continue
-  Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
- And User validates fiels are editables on Financial Institution Information page
-  And Validates Headers on Financial Information page
+#  Then User navigates to Billing service information page and fill all fields and click on continue button
+#  Then User fills all the information on Identify Administrators page and click continue
+#  Then User fills all the information on Financial Institution Information page and click continue to AV
+#  Then User clicks Continue on Select Payment Methods Page
+#  Then User uploads the WNine form and click continue
+#  Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
+# And User validates fiels are editables on Financial Institution Information page
+#  And Validates Headers on Financial Information page
   
 								
 	#TS_014 015 is covered in US1463317 TS_015 
