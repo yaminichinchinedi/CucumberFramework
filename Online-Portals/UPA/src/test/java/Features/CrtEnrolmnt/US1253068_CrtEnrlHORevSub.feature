@@ -10,7 +10,8 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User Select a How you heard option and  click on Continue button
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
-											|     VO        |
+											#|     VO        |
+											|     BS        |
 	Scenario: TS01/TS02_Create Enrollment_HO_Review and Submit page
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button
