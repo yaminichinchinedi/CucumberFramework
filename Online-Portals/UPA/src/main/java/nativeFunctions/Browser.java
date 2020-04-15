@@ -152,6 +152,23 @@ public class Browser
 		}
 	}
   
+  
+	
+	//Synchronization method to wait for page status to reach ready state
+	public static void checkPageReadyState(WebDriver driver) {
+	JavascriptExecutor js = (JavascriptExecutor)driver;
+	for (int i =0;i<60; i++) {
+	try {
+	Thread.sleep(1000);
+	} catch (InterruptedException e) {
+	}
+	//To check if page is in ready state.
+	if (js.executeScript("return document.readyState").toString().equals("complete")) {
+	break;
+	}
+	}
+	}
+	
 
 	public static void wait(TestBase testConfig,int seconds)
 	{ 

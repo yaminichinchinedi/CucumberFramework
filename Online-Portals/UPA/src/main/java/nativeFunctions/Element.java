@@ -739,6 +739,22 @@ public boolean isSorted(List<String> list)
 	    return sorted;
 	}
 
+public static void waitForPresenceOfElementLocated(TestBase testConfig,By locator, long timeOut) {
+	WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
+	wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+}
+public static boolean waitForPresenceOfAllElements(TestBase testConfig,By locator, long timeOut) {
+ WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
+	wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
+	return true;
+}
+
+public static boolean waitForElementTobeClickAble(TestBase testConfig,WebElement elt, long timeOut) {
+ WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
+	wait.until(ExpectedConditions.elementToBeClickable(elt));
+	return true;
+}
+
 //public static void verifyElementNotEnabled(WebElement button,String namOfButton)
 //{
 //try

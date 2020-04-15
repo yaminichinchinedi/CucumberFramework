@@ -561,8 +561,10 @@ public class ValidateEFTERAProviderInfo {
 	   String expHeaderMsg="Optum Pay Enrollment - Confirm Existing User";
 	   String expMsg=fillProvInfoWithDupEmail(provType);
 	   Element.click(btnContinue, "Continue");
-	   
-	   Element.verifyTextPresent(exitingUserHeaderMsg,expHeaderMsg);
+	   Browser.checkPageReadyState(testConfig.driver);
+	   //Element.fluentWait(testConfig, exitingUserHeaderMsg, 120, 5, "Optum Pay Enrollment text");
+	   Element.waitForPresenceOfElementLocated(testConfig, By.xpath(".//form[@class='enrollment-content float-left']/section/fieldset/div/div/h4/strong"), 120);
+	   Element.verifyTextPresent(exitingUserHeaderMsg,expHeaderMsg.trim());
 	   Element.verifyElementPresent(btnYesOnExsistingEmailPage, "Yes BTN");
 	   Element.verifyElementPresent(btnNoOnExsistingEmailPage, "NO BTN");
 	  
@@ -588,7 +590,9 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(11).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[5]//h4")).getText());
 		
 		Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(12).get("TEXT_VAL")+" "+dataTest.get(13).get("TEXT_VAL")+" "+dataTest.get(14).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[5]//thead")).getText());
-		Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(18).get("TEXT_VAL")+"\n"+dataTest.get(17).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[6]")).getText());
+		//Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(18).get("TEXT_VAL")+"\n"+dataTest.get(17).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[6]")).getText());
+		//Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(17).get("TEXT_VAL")+"\n"+dataTest.get(18).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[6]")).getText());
+		Helper.compareEquals(testConfig, "Compare page Data",dataTest.get(17).get("TEXT_VAL"),page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']/section/fieldset/div[6]/div[1]/p")).getText());
 		Helper.compareEquals(testConfig, "Yes No Radio  Button",dataTest.get(19).get("TEXT_VAL")+"\n"+dataTest.get(20).get("TEXT_VAL")
 				+"\n"+dataTest.get(19).get("TEXT_VAL")+"\n"+dataTest.get(20).get("TEXT_VAL")
 				,page.findElement(By.xpath("//*[@id='EFTERAenrBSForm']//div[7]")).getText());
@@ -676,6 +680,7 @@ public class ValidateEFTERAProviderInfo {
 		String existingEmail=enrolledProviderTable.get("EMAIL_ADR_TXT").toString().trim();
 		testConfig.putRunTimeProperty("email", existingEmail);
 		
+		Browser.checkPageReadyState(testConfig.driver);
 		fillPrimaryProvInfo();
 		if(provType.equals("Primary"))
 		 {
@@ -798,7 +803,7 @@ public class ValidateEFTERAProviderInfo {
 		Element.click(btnContinue, "Continue");
 		
 		
-		if (inputType.equals("Secondary"))
+		if (inputType.equals("Secondary")&& (inputFormat.equals("inpFormatOne")|| inputFormat.equals("inpFormatTwo")  )  )
 		{
 		WebElement errorEmail=Element.findElement(testConfig, "xpath", "//div[@id='emailcontact2']/p");
 		Element.verifyTextPresent(errorEmail, "Invalid Data");
@@ -874,12 +879,12 @@ public class ValidateEFTERAProviderInfo {
 		String alphaNumChar="[a-zA-Z0-9]*";
 		int flag=1;
 		
-		if (data.matches(alphaNumChar))
+		if (data.matches(alphaNumChar) && ( inputField.equals("First Name")||inputField.equals("Last Name")))
 		flag=2;
-		
-		
+
+		Browser.checkPageReadyState(this.testConfig.driver);
 		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
-		if (inputType.equals("Secondary"))
+		if (inputType.equals("Secondary") && tmpProv.size()== 0)
 		{
 		ArrayList <WebElement> secProv=new ArrayList<WebElement>();
 		secProv.add(secondProvFName);
@@ -889,7 +894,7 @@ public class ValidateEFTERAProviderInfo {
 		secProv.add(verifySecondProvEmail);
 		tmpProv=secProv;
 		}
-		if (inputType.equals("Primary"))
+		if (inputType.equals("Primary")&& tmpProv.size()== 0)
 		{
 		ArrayList <WebElement> prmProv=new ArrayList<WebElement>();
 		prmProv.add(firstProvFName);
@@ -899,7 +904,10 @@ public class ValidateEFTERAProviderInfo {
 		prmProv.add(verifyFirstProvEmail);
 		tmpProv=prmProv;
 		}
-		
+		String fName=Helper.generateRandomAlphabetsString(5);
+		String mName=Helper.generateRandomAlphabetsString(5);
+		String lName=Helper.generateRandomAlphabetsString(5);
+		String secondProvEmailAdr=Helper.getUniqueEmailId();
 		
 		switch(inputField)
 		{
@@ -914,15 +922,18 @@ public class ValidateEFTERAProviderInfo {
 		break;
 		case "Last Name":
 		Element.enterData(tmpProv.get(0), fName,"Enter First name of Second provider as: "+ fName,"ProvFirstName");
-		secondProvMName.clear();
+		//secondProvMName.clear();
+		Element.enterData(tmpProv.get(1), mName,"Enter Middle name of Second provider as: "+ mName,"ProvMName");
 		Element.enterData(tmpProv.get(2), data,"Enter Last name of Second provider as : "+ data,"ProvLastName");
 		break;
 		}
 		fillPhoneNumber(inputType);
 		Element.enterData(tmpProv.get(3), secondProvEmailAdr, "Enter email address of Second provider","ProvEmail");
 		Element.enterData(tmpProv.get(4), secondProvEmailAdr, "Retype email address of Second provider","verifyProvEmail");
-		Element.click(btnContinue, "Continue");
 		
+		Element.waitForPresenceOfElementLocated(testConfig, By.linkText("CONTINUE"), 120);
+		//Element.click(btnContinue, "Continue");
+		Element.clickByJS(testConfig, Element.findElement(testConfig, "linkText", "CONTINUE"), "Continue Button");
 		if (flag ==1)
 		verifyBSNames( inputType,inputField);
 		if (flag==2)

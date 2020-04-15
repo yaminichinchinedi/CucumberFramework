@@ -87,6 +87,9 @@ public class EnrollmentSubmitted  {
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			expectedURL="/validateBSSubmit";
 	
+		Browser.checkPageReadyState(testConfig.driver);
+		Element.waitForPresenceOfElementLocated(this.testConfig,By.linkText("Print Completed Enrollment Form"),120);
+		
 		Element.expectedWait(lnkPrintPdf, testConfig, "Print Completed Enrollment Form", "Print Completed Enrollment Form");
 		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
 		

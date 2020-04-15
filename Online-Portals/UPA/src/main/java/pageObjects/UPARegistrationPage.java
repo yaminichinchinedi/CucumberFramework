@@ -9,6 +9,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -57,7 +58,9 @@ public class UPARegistrationPage{
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
-		Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
+		//Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
+		Element.waitForPresenceOfElementLocated(testConfig, By.linkText("SIGN IN WITH OPTUM ID"), 120);
+		
 	}
 	
 	public void clickAndVerifyOptumLogo()

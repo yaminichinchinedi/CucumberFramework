@@ -138,9 +138,10 @@ public class BeginEnrollment {
 		else if(option.equals("Other"))
 			Element.click(rdoOther, "Other");
 		
-		clickContinue();
-		return new BeginEnrollmentContinue(testConfig);
-			
+//		clickContinue();
+//		return new BeginEnrollmentContinue(testConfig);
+		BeginEnrollmentContinue beginEnrollmentContinue=clickContinue();
+		return  beginEnrollmentContinue;
 	}
 	
 	public BeginEnrollmentContinue clickContinue()
