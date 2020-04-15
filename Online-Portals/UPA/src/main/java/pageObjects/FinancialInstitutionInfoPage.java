@@ -512,8 +512,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	
 	public FinancialInstitutionInfoPage verifyUITextFromDB() throws IOException  
 	{
-		int sqlRowNo=172;
-		
+		//int sqlRowNo=172;
+		int sqlRowNo=240;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		
 		
