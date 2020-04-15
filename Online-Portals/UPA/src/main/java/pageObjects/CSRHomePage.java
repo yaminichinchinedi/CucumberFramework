@@ -88,6 +88,8 @@ public class CSRHomePage {
 	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
 	WebElement lnkSearchRemittance;
 	
+	@FindBy(linkText="Common Reports")
+    WebElement lnkComnRerts;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -115,5 +117,9 @@ public class CSRHomePage {
            return new SearchTinPageSearchRemittance(testConfig);
     }
 
-	
+    public SelectReportsPage clickCommonReportsLink()
+    {
+           Element.clickByJS(testConfig,lnkComnRerts, "Common Report Link");
+           return new SelectReportsPage(testConfig);
+    }
 }

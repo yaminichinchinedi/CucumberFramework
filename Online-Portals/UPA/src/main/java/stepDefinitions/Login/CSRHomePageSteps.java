@@ -41,17 +41,14 @@ public class CSRHomePageSteps extends TestBase{
 		   homePage.clickSearchRemittanceLink();
 	    }
 	
-
-	   
-		
-		
-	
-		
-		
-		@Then("^User clicks on Search Remittance link$")
+	   @Then("^User clicks on Search Remittance link$")
 		public void user_clicks_on_Search_Remittance_link() throws Throwable {
 			homePage.clickSearchRemittanceLink();
 		}
-		
+	   
+	   @Then("^User clicks on Common Reports link$")
+		public void user_clicks_on_Common_Reports_link() throws Throwable {
+			homePage.clickCommonReportsLink(); 
+		}
 
 }
