@@ -755,15 +755,15 @@ public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
 	String paymentNum="";
     String paymentnumUI="";
     Browser.wait(testConfig, 7);
-   if ( srchType.equals("viewPayments"))
-   {
-	   paymentNum=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
-   }
-   else
-   {
+//   if ( srchType.equals("viewPayments"))
+//   {
+//	   paymentNum=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+//   }
+//   else
+//   {
     paymentnumUI = paymentNumremit.getText();
 	paymentNum = paymentnumUI.substring(paymentnumUI.lastIndexOf(":")+1, paymentnumUI.length()).trim();
-   }
+  // }
 	Log.Comment("The Payment No in Remit Page is:" + paymentNum);
 		
 	int sqlRowNo = 185;
@@ -2870,6 +2870,12 @@ public void verifyFailedPaymentPopUp()
 			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
+		else if(srchType.equals("viewPayments"))
+		{
+			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
+			//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+		}
 		else 
 		{
 			i=2;		
@@ -2898,6 +2904,13 @@ public void verifyFailedPaymentPopUp()
     			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
     			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
     		}
+			else if(srchType.equals("viewPayments"))
+			{
+				searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+				//expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+				expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+				Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
+			}		
     		else 
     		{
     			i=2;		
@@ -2909,23 +2922,38 @@ public void verifyFailedPaymentPopUp()
 		     {
 		       for(;i<searchResultRows.size();i++)
 		        {
-
-		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-		    	   actualPaymntNo=actualPaymntNo.replace("\n", "");
-		    	   
+		    	   if(srchType.equals("viewPayments"))
+				   {					   
+				  String xpath="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
+   	               actualPaymntNo= Element.findElement(testConfig, "xpath", xpath).getText();
+					}
+					else
+					{	
+					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
+					}
 		    	   
 		    	   System.out.println("The Actual Payment no is:" + actualPaymntNo);
 		    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
-		    	   
+		    	   WebElement lnkPaymntNo=null;
 			      if(actualPaymntNo.contains(expectedPaymntNo))
 			      {	
 			    	  
 			    	  System.out.println("The Actual Payment no is:" + actualPaymntNo);
-			    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
-			    	  WebElement lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));
-			    	 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
+			    	  System.out.println("The expected Payment no is:" + expectedPaymntNo);
+			    	 if(srchType.equals("viewPayments"))
+					 {	 
+					String xpath1="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
+					  lnkPaymntNo=Element.findElement(testConfig, "xpath", xpath1);
+					}
+					else{
+					  lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
+					}
+					 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
 					 Element.clickByJS(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText());
 					 found=true;
+					 Browser.wait(testConfig, 10);
+
 					 break; 
 			       }
 		        }
@@ -2938,7 +2966,12 @@ public void verifyFailedPaymentPopUp()
 						 int pageToBeClicked=pageNo+1;
 						 Log.Comment("Payment Number not found on page number " + pageNo);
 						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
-						 Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+			
+						 if(srchType.equals("viewPayments"))
+						Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+						else
+						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+	
 						 Log.Comment("Clicked Page number : " + pageToBeClicked);
 						 Browser.waitForLoad(testConfig.driver);
 

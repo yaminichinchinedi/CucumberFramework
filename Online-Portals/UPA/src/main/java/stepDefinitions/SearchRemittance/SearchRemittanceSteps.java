@@ -16,7 +16,11 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^User validates EPRA pdf link is present and clicks on EPRA when \"([^\"]*)\" and validate a new window is open with appropriate Text and Hover msg is displayed\\.$")
 	public void user_validates_EPRA_pdf_link_is_present_and_clicks_on_EPRA_when_and_validate_a_new_window_is_open_with_appropriate_Text_and_Hover_msg_is_displayed(String srchCriteria) throws Throwable {
 		
+		if (srchCriteria.equals("viewPayments"))
+		srchRemittance.clickEpraPDFLink(srchCriteria);
+		else
 		srchRemittance.clickEpraPDFLinkSrchRemit(srchCriteria);
+			
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly\\.$")
@@ -57,6 +61,13 @@ public class SearchRemittanceSteps extends TestBase{
 		srchRemittance.verifyEpraStatusSrchRemit("C");
 	}
 	
+	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with appropriate status for Consol_Pay_Nbr$")
+	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_appropriate_status_for_Consol_Pay_Nbr() throws Throwable {
+		Browser.wait(testConfig, 8);
+		srchRemittance.verifyEpraStatus("viewPayments",10);
+		srchRemittance.getPDFfileNameEPRA();
+		
+	}
 	@Then("^validate PDF link is changed to PDF icon and is enabled and is downloadable for \"([^\"]*)\"\\.$")
 	public void validate_PDF_link_is_changed_to_PDF_icon_and_is_enabled_and_is_downloadable_for(String srchBy) throws Throwable {
 		

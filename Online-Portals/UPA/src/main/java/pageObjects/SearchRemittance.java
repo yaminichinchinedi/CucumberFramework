@@ -1377,7 +1377,8 @@ public class SearchRemittance extends paymentSummary {
 				  actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			      actualPaymntNo=actualPaymntNo.replace("\n", "");
 				  }
-				 if(actualPaymntNo.contains(expectedPaymntNo))
+				 //if(actualPaymntNo.contains(expectedPaymntNo))
+				 if(actualPaymntNo.equals(expectedPaymntNo))
 			       {	
 			    	  found=true;
 			    	  if(srchType.equals("byDOPAndNpi"))

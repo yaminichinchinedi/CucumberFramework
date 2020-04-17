@@ -376,7 +376,7 @@ public class TestBase {
 
 	}
 
-	@BeforeTest
+	//@BeforeTest
 	public void tearUp() {
 		LogTemp.Comment("** TearUp1---" + System.getProperty("BrowserType"));
 		if (System.getProperty("BrowserType") == null) {
@@ -421,7 +421,7 @@ public class TestBase {
 
 	}
 
-	@AfterTest
+	//@AfterTest
 	public void tearDown() {
 		 Browser.closeBrowser(testConfig);
 

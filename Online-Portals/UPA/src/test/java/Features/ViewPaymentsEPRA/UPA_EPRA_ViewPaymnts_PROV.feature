@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@PROVEPRAViewPay
+
 Feature: View Payments EPRA Prov
 
 #TF41923 01-22
@@ -12,7 +12,7 @@ Feature: View Payments EPRA Prov
    
 #Note: If any error comes due to unable to identify payment number then that is due to existing PT ticket:PRB0764346 
 #In EPRA portion payment No is not getting identified on pages due to some issue          
- 
+
 Scenario Outline: TS_001,010,012--View Payments EPRA Provider
 	
 	   Given User navigates to UPA portal and enters "<credentials>" and login
@@ -38,7 +38,7 @@ Examples:
   
   
   
-   
+    
   Scenario Outline: TS_001,010,012--View Payments EPRA Provider Payment No click
 	
 	    Given User navigates to UPA portal and enters "<credentials>" and login
@@ -49,7 +49,8 @@ Examples:
 			And User clicks on print request button present on Remittance Detail screen.
 			And User clicks on Print Available button on Remittance Detail screen.
 			And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>"
-			And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+			#And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+			And validate new Entry is created in Ole.EPRA_STATUS with appropriate status for Consol_Pay_Nbr
 			And validate download status is set to Y in Ole.EPRA_STATUS
 			And validate record is inserted in User_Event_Log for Remittance Detail   
 	
@@ -61,7 +62,7 @@ Examples:
             # |       PROV_Gen         |		  1	  |	EPRA	 |			PROV			|		viewPayments				|
             
             
-            
+  @PROVEPRAViewPay          
 Scenario Outline: TS_001,010,012--View Payments EPRA BS
 	
 		 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -95,7 +96,8 @@ Scenario Outline: TS_001,010,012--View Payments EPRA BS Payment No click
 			And User clicks on print request button present on Remittance Detail screen.
 			And User clicks on Print Available button on Remittance Detail screen.
 			And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>"
-			And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+			#And validate new Entry is created in Ole.EPRA_STATUS with C status for Consol_Pay_Nbr
+			And validate new Entry is created in Ole.EPRA_STATUS with appropriate status for Consol_Pay_Nbr
 			And validate download status is set to Y in Ole.EPRA_STATUS
 			And validate record is inserted in User_Event_Log for Remittance Detail
 
