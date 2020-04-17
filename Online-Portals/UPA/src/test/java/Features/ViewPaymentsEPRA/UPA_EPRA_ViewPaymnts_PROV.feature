@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-
+  @PROVEPRAViewPay
 Feature: View Payments EPRA Prov
 
 #TF41923 01-22
@@ -62,7 +62,7 @@ Examples:
             # |       PROV_Gen         |		  1	  |	EPRA	 |			PROV			|		viewPayments				|
             
             
-  @PROVEPRAViewPay          
+          
 Scenario Outline: TS_001,010,012--View Payments EPRA BS
 	
 		 Given User navigates to UPA portal and enters "<credentials>" and login
