@@ -192,9 +192,11 @@ System.out.println("Exception from Switch window method - " + e);
 
 	public void validtErrMsgNoData() throws IOException
 	{
-		//validtSurveyResponseFile("today");
-		//String actual=Element.findElement(testConfig, "xpath", "//td[@class='errors']/td/li/font").getText();
-		String actual=Element.findElement(testConfig, "css", "font.errors").getText();
+		Browser.wait(testConfig, 5);
+		//String actual1=Element.findElement(testConfig, "xpath", "//tr[@class='errors']/td/li/font").getText();
+		//WebElement actual12=Element.findElement(testConfig, "css", "html body div#contentId table tbody tr td div.report_content form div#errors table tbody tr.errors td li font.errors");
+		String actual=Element.findElement(testConfig, "xpath", "//font[contains(text(),'Your Search Return No Data.')]").getText();
+		//String actual=actual12.getAttribute("value");
 		String expected="Your Search Return No Data.";
 		Helper.compareEquals(testConfig, "Error msg comparision", expected, actual);
 	}
