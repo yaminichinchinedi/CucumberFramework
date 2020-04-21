@@ -7,7 +7,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
   ######################################################################################################################################
     
 
-  @CSR_ErrorScenario_NPISearch
+  @CSR_ErrorScenario_NPISearch1
   Scenario Outline: Login to CSR Application to validate error scenario for NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
@@ -75,7 +75,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-    Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
+    Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
