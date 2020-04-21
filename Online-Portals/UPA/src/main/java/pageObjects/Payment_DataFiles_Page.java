@@ -29,7 +29,9 @@ public class Payment_DataFiles_Page extends TestBase
 	WebElement InValidTINmsg;
 	@FindBy(xpath = "//li[@class='activeclass']") 
 	WebElement CreateDataBundle;
-	@FindBy(xpath = "//td[@class='subheader']") 
+	@FindBy(xpath = "//td[@class='subheader']")
+	WebElement SubHeaderCreate;
+	@FindBy(xpath = "(//td[@class='subheader'])[2]") 
 	WebElement SubHeader;
 	@FindBy(xpath = "//td[contains(text(),'The Payment Data File feature enables faster and e')]")
 	WebElement PageText;
@@ -65,7 +67,7 @@ public class Payment_DataFiles_Page extends TestBase
 	WebElement RallyPayer;
 	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
 	WebElement SelectedRallyPayer;
-	@FindBy(xpath = "select[@name='availablePayers']/option[contains(text(),'Rally Pay Member Payments')]") 
+	@FindBy(xpath = "//select[@name='availablePayers']/option[contains(text(),'Rally Pay Member Payments')]") 
 	WebElement AvailablePayer;
 	@FindBy(xpath = "//input[@value='     Submit     ']")
 	WebElement btnSubmit;
@@ -175,7 +177,7 @@ public class Payment_DataFiles_Page extends TestBase
 
 	public Payment_DataFiles_Page verifyAllValuesinCreateBundlePage() throws Exception
 	{
-		String subheader = SubHeader.getText().trim();
+		String subheader = SubHeaderCreate.getText().trim();
 		testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";

@@ -47,7 +47,7 @@ Examples:
 				|    		Search Criteria         |       credentials        |    
         |        Billing Service        |       	BS_Admin         |
         
-@TC004, @smoke_UPA
+@TC004  @UPASanity  @UPADataBundleSanity
 	Scenario Outline: Data Bundle Submission : EPRAs
   Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
 	When User clicks on Data Bundle Tab for Billing Service

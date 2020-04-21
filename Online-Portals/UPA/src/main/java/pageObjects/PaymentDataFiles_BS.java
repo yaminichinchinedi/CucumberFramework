@@ -144,8 +144,8 @@ public class PaymentDataFiles_BS extends TestBase{
 		testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TAX_ID_NBR").toString().trim());
 		testConfig.putRunTimeProperty("Setl_dt", paymentdetails.get("SETL_DT").toString().trim());*/
 		
-		String Prov_tin_nbr = "133757370";
-		String Setl_dt = "2020-01-17";
+		String Prov_tin_nbr = "860841271";
+		String Setl_dt = "2020-04-09";
 		
 		testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
 		testConfig.putRunTimeProperty("Setl_dt", Setl_dt);
@@ -395,6 +395,7 @@ public class PaymentDataFiles_BS extends TestBase{
 
 	public PaymentDataFiles_BS verifyErrorForPayerSelection() throws Exception
 	{
+		Browser.wait(testConfig, 3);
 		String date1 = currentDate();
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date1, "To Date: "+date1, "todate");
