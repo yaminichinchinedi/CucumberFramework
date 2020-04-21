@@ -171,7 +171,8 @@ public class SearchRemittanceSearchCriteria {
 		int sqlRow = 0;
 		
 		Log.Comment(testConfig.getRunTimeProperty("suite"));
-		
+		if(!(criteriaType.equalsIgnoreCase("byHCDOPAndNpi") ||criteriaType.equalsIgnoreCase("byHCPayment_Number")))
+		{
 		
 		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
     	{
@@ -262,6 +263,7 @@ public class SearchRemittanceSearchCriteria {
    		dataRequiredForSearch=dataProvider(criteriaType);
    		System.out.println(dataRequiredForSearch);
      }
+		}
 	
 		
 		switch(criteriaType)

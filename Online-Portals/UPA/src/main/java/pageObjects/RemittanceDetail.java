@@ -162,7 +162,7 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//b[contains(text(),'Your PDF is now available. To access your document')]") WebElement msg;
 	@FindBy(xpath = "//td[contains(text(),'Subscriber Name')]") WebElement subscrbrName;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement remitpaymnthead;
-	
+	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a") WebElement PPRAPDFHyperlink;
 	
 	@FindBy(xpath="//span[contains(@id,'ppra')]//img") WebElement pPRAPDFImage;
 	
@@ -4589,14 +4589,17 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
+		Browser.wait(testConfig, 6);
+		
+		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
+			
 		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
-		{
-			System.out.print("pdf link is availabe");
-			//testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).click();
-			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");
+		{			
+			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");			
 		}			
+		
 		//Element.click(pPRALink, "PDF Print Link");
-		return this;	
+		return this;		
 	}
     
 	public RemittanceDetail isPDFAvailable(String Status) throws InterruptedException

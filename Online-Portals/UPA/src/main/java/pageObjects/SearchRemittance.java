@@ -1545,15 +1545,35 @@ public class SearchRemittance extends paymentSummary {
 	public paymentSummary verifyppraStatus(String expectedStatus) 
 	 {
 		int sqlRowNo=229;//34;		
-		Map ppraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Map ppraStatusTbl = null;	
+		for(int i=0;i<20;i++)
+		{
+			try
+			{
+				ppraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				System.out.print("Value status--->"+ppraStatusTbl.get("REQ_STS").toString());
+				System.out.print("Value status--->"+expectedStatus);
+				if(ppraStatusTbl.get("REQ_STS").toString().contains(expectedStatus)){
+					break;				
+				}
+			}
+			catch(Exception ex)
+			{
+				
+			}
+			
+		}
+		//ppraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		
+				
 		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + ppraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, ppraStatusTbl.get("REQ_STS").toString());
-		return this;
+		return this;		
 		
 	 } 
 	
 	public paymentSummary getPDFfileName() 
 	 {
-		int sqlRowNo=178;//34;
+		int sqlRowNo=229;//34;
 		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		String str ;
 		System.out.print("----Converted-PDFFIleName-->"+epraStatusTbl.get("PDF_FL_NM"));

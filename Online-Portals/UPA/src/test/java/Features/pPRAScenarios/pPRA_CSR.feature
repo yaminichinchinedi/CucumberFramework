@@ -1,69 +1,42 @@
 #Sample Feature Definition Template
-@CSRpPRA @CSRRegression_
+@CSRpPRA @CSRRegression
 Feature: pPRA Validation for CSR Applicatin with different user groups
 
   ######################################################################################################################################
   ##################################################################CSR Scenarios#######################################################
   ######################################################################################################################################
-  
-  @CSR_ErrorScenario_NPISearch1212
-  Scenario Outline: Login to CSR Application to validate error scenario for NPI search
-    Given User navigates to CSR portal and enters "<User>" and login
-    Then User clicks on Search Remittance link
-    Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
-    Then User clicks on PDF Link
-    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
-    Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
     
-    Examples: 
-      | Priority | User  | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status |
-      | P1       | Super | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |
-
-  @CSR_ErrorScenario_NPISearch1212
-  Scenario Outline: Login to CSR Application to validate error scenario for NPI search
-    Given User navigates to CSR portal and enters "<User>" and login
-    Then User clicks on Search Remittance link
-    Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
-    Then User clicks on PDF Link
-    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
-    Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
-    
-    Examples: 
-      | Priority | User  | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status |
-      | P1       | Super | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |
 
   @CSR_ErrorScenario_NPISearch
   Scenario Outline: Login to CSR Application to validate error scenario for NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
+    Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
 
     Examples: 
-      | Priority | User   | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status |
-      | P1       | Super  | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |
-      | P1       | Super  | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |
-      | P2       | Super  | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P2       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
-      | P1       | RW     | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |
-      | P1       | RW     | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |
-      | P2       | RW     | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P2       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
-      | P1       | ROPPRA | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |
-      | P1       | ROPPRA | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |
-      | P2       | ROPPRA | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P2       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
-      | P3       | Super  | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P3       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
-      | P3       | RW     | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P3       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
-      | P3       | ROPPRA | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |
-      | P3       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |
+      | Priority | User   | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status |Disp_Consol_Pay_Nmbr|
+      | P1       | Super  | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |1TR10374493				 |
+      | P1       | Super  | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |1SG05438158|
+      | P2       | Super  | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P2       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
+      | P1       | RW     | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |1TR10374493|
+      | P1       | RW     | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |1SG05438158|
+      | P2       | RW     | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P2       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
+      | P1       | ROPPRA | 320474882 | byHCDOPAndNpi |      1440517535 | 1578933396 | 10/31/2019 | 10/31/2019 | E      |1TR10374493|
+      | P1       | ROPPRA | 480905931 | byHCDOPAndNpi |      1439039532 | 1659356442 | 06/24/2019 | 06/24/2019 | E      |1SG05438158|
+      | P2       | ROPPRA | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P2       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
+      | P3       | Super  | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P3       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
+      | P3       | RW     | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P3       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
+      | P3       | ROPPRA | 391678306 | byHCDOPAndNpi |      1440564451 | 1427271378 | 01/17/2020 | 01/17/2020 | E      |1TR10401483|
+      | P3       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      |1SG05325263|
 
  
   @CSR_ErrorScenario_ConsolPayNumberSearch
