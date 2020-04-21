@@ -59,7 +59,7 @@ Feature: CSR_Data Bundle_Regression
       | Credentials |
       | 		Super 	|
       
- 	@TC005, @smoke_CSR
+ 	 @TC005  @CSRDataBundeSanity  @CSRSanity
    Scenario Outline: Data Bundle Submission : EPRAs
    	Given User navigates to CSR portal and enters "<Credentials>" and login
  	 	When  User clicks on Payment Data Files Link

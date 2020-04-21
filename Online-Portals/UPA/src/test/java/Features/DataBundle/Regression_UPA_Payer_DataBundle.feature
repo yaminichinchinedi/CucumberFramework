@@ -30,7 +30,7 @@ Feature: UPA_Payer_Data Bundle_Regression
         |        Payer           |       PAY_Admin	        |
         
 
-@TC003, @smoke_UPA
+@TC003   @UPASanity  @UPADataBundleSanity
 	Scenario Outline: Data Bundle Submission : EPRAs
   Given User navigates to UPA portal and enters "<credentials>" to login as Payer
 	When User clicks on Data Bundle Tab for Payer
