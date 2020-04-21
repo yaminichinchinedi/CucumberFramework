@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import java.util.Map.Entry;
 
 import org.openqa.selenium.By;
@@ -1479,10 +1480,58 @@ if(null == payerSchema)
     	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 	
     String amountChargedUI1 = amntChargedUI.getText();
-    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-    String amountChargedUI = Double.toString(amountChargedUI4);
+    String amountChargedUI = "";
+    if(amountChargedUI1.contains("-"))
+    {
+
+    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    	{
+    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    		
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+    		System.out.println(amountChargedUI);
+    	}
+    	
+    	else if (amountChargedUI1.contains("$")) 
+    	{
+		 
+    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	  amountChargedUI = Double.toString(amountChargedUI4);
+    	  System.out.println(amountChargedUI3);
+		}
+    	else if (amountChargedUI1.contains(",")) {
+    		
+    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+	    	System.out.println(amountChargedUI3);
+			
+		}
+    }
+    
+    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+   
+    else if(amountChargedUI1.contains("$"))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
+    else if(amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
     Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
     String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
@@ -1540,7 +1589,7 @@ if(null == payerSchema)
 		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 		        Log.Comment("The Product Name from FISL is :" + productNameDB);
 		        if(!productNameDB.equalsIgnoreCase("0"))
-		          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+		        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
             }
          }
      }
@@ -1653,11 +1702,61 @@ if(!lastNameDB.equalsIgnoreCase("0"))
 	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 
 String amountChargedUI1 = amntChargedUI.getText();
-String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-String amountChargedUI = Double.toString(amountChargedUI4);
+String amountChargedUI = "";
+if(amountChargedUI1.contains("-"))
+{
+
+	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+	{
+		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+		System.out.println(amountChargedUI);
+	}
+	
+	else if (amountChargedUI1.contains("$")) 
+	{
+	 
+	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	  amountChargedUI = Double.toString(amountChargedUI4);
+	  System.out.println(amountChargedUI3);
+	}
+	else if (amountChargedUI1.contains(",")) {
+		
+		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+    	System.out.println(amountChargedUI3);
+		
+	}
+}
+
+else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains("$"))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
 Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+
+
 String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
 Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -1715,7 +1814,7 @@ else
 	        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 	        Log.Comment("The Product Name from FISL is :" + productNameDB);
 	        if(!productNameDB.equalsIgnoreCase("0"))
-	          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+	        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
         }
      }
  }
@@ -1875,22 +1974,59 @@ public void verifyCOBFilterClaimData() throws Exception
 	  		
 	  	    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
-		    if(amountChargedUI1.contains(","))
+		   
+		    if(amountChargedUI1.contains("-"))
 		    {
-			    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-			    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-			    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-			    amountChargedUI = Double.toString(amountChargedUI4);
+
+		    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    	{
+		    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    		
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+		    		System.out.println(amountChargedUI);
+		    	}
+		    	
+		    	else if (amountChargedUI1.contains("$")) 
+		    	{
+				 
+		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	  amountChargedUI = Double.toString(amountChargedUI4);
+		    	  System.out.println(amountChargedUI3);
+				}
+		    	else if (amountChargedUI1.contains(",")) {
+		    		
+		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+			    	System.out.println(amountChargedUI3);
+					
+				}
 		    }
+		    
+		    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
+		   
 		    else if(amountChargedUI1.contains("$"))
-		    {     
-		    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
-		    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-		         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
 		    }
 		    
+		    else if(amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
 		    
-	  	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+		    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
 	  	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -1955,7 +2091,7 @@ public void verifyCOBFilterClaimData() throws Exception
       			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
       			        Log.Comment("The Product Name from FISL is :" + productNameDB);
       			        if(!productNameDB.equalsIgnoreCase("0"))
-      			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+      			        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
       	      }
       	         }
       	     }
@@ -2069,22 +2205,59 @@ public void verifyCOBFilterClaimData() throws Exception
   		
   	    String amountChargedUI1 = amntChargedUI.getText();
 	    String amountChargedUI = "";
-	    if(amountChargedUI1.contains(","))
+	    
+	    if(amountChargedUI1.contains("-"))
 	    {
-		    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-		    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-		    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-		    amountChargedUI = Double.toString(amountChargedUI4);
+
+	    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+	    	{
+	    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+	    		
+	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    		amountChargedUI = Double.toString(amountChargedUI4);
+	    		System.out.println(amountChargedUI);
+	    	}
+	    	
+	    	else if (amountChargedUI1.contains("$")) 
+	    	{
+			 
+	    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+	    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    	  amountChargedUI = Double.toString(amountChargedUI4);
+	    	  System.out.println(amountChargedUI3);
+			}
+	    	else if (amountChargedUI1.contains(",")) {
+	    		
+	    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    		amountChargedUI = Double.toString(amountChargedUI4);
+		    	System.out.println(amountChargedUI3);
+				
+			}
 	    }
+	    
+	    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+	    {
+	    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+	    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    	amountChargedUI = Double.toString(amountChargedUI4);
+	    }
+	   
 	    else if(amountChargedUI1.contains("$"))
-	    {     
-	    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
-	    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-	         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
+	    {
+	    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    	amountChargedUI = Double.toString(amountChargedUI4);
 	    }
 	    
+	    else if(amountChargedUI1.contains(","))
+	    {
+	    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	    	amountChargedUI = Double.toString(amountChargedUI4);
+	    }
 	    
-  	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
   	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
   	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
   	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -2149,7 +2322,7 @@ public void verifyCOBFilterClaimData() throws Exception
   			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
   			        Log.Comment("The Product Name from FISL is :" + productNameDB);
   			        if(!productNameDB.equalsIgnoreCase("0"))
-  			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+  			        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
   	      }
   	         }
   	     }
@@ -2311,22 +2484,60 @@ public void verifyReversalFilterClaimData() throws Exception
 	  	 
 	  	    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
-		    if(amountChargedUI1.contains(","))
+		    
+		    if(amountChargedUI1.contains("-"))
 		    {
-			    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-			    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-			    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-			    amountChargedUI = Double.toString(amountChargedUI4);
+
+		    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    	{
+		    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    		
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+		    		System.out.println(amountChargedUI);
+		    	}
+		    	
+		    	else if (amountChargedUI1.contains("$")) 
+		    	{
+				 
+		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	  amountChargedUI = Double.toString(amountChargedUI4);
+		    	  System.out.println(amountChargedUI3);
+				}
+		    	else if (amountChargedUI1.contains(",")) {
+		    		
+		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+			    	System.out.println(amountChargedUI3);
+					
+				}
 		    }
+		    
+		    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
+		   
 		    else if(amountChargedUI1.contains("$"))
-		    {     
-		    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
-		    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-		         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
 		    }
 		    
+		    else if(amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
 		    
-	  	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+		    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+		    
 	  	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -2391,7 +2602,7 @@ public void verifyReversalFilterClaimData() throws Exception
     			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
     			        Log.Comment("The Product Name from FISL is :" + productNameDB);
     			        if(!productNameDB.equalsIgnoreCase("0"))
-    			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+    			        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
     	      }
     	         }
     	     }
@@ -2505,22 +2716,61 @@ public void verifyReversalFilterClaimData() throws Exception
 	  	
 	        String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
-		    if(amountChargedUI1.contains(","))
+		    
+		    if(amountChargedUI1.contains("-"))
 		    {
-			    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-			    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-			    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-			    amountChargedUI = Double.toString(amountChargedUI4);
+
+		    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    	{
+		    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    		
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+		    		System.out.println(amountChargedUI);
+		    	}
+		    	
+		    	else if (amountChargedUI1.contains("$")) 
+		    	{
+				 
+		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	  amountChargedUI = Double.toString(amountChargedUI4);
+		    	  System.out.println(amountChargedUI3);
+				}
+		    	else if (amountChargedUI1.contains(",")) {
+		    		
+		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    		amountChargedUI = Double.toString(amountChargedUI4);
+			    	System.out.println(amountChargedUI3);
+					
+				}
 		    }
+		    
+		    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
+		   
 		    else if(amountChargedUI1.contains("$"))
-		    {     
-		    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
-		    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-		         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
 		    }
 		    
+		    else if(amountChargedUI1.contains(","))
+		    {
+		    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		    	amountChargedUI = Double.toString(amountChargedUI4);
+		    }
 		    
-	  	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+		    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+
+		    
 	  	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -2585,7 +2835,7 @@ public void verifyReversalFilterClaimData() throws Exception
     			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
     			        Log.Comment("The Product Name from FISL is :" + productNameDB);
     			        if(!productNameDB.equalsIgnoreCase("0"))
-    			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+    			        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
     	      }
     	         }
     	     }
@@ -3585,21 +3835,11 @@ public void verifySortByRendPrvdrLastName() throws Exception
 					rendrngLastNameUI4.add(result);
 					
 				 }
-				 
-//				 else if(lastNames!= "")
-//				 {
-//					String result = lastNames.trim();
-//					Log.Comment(result);
-//					rendrngLastNameUI.add(result);
-//					
-//				 }
+
 		}
 		
 		ArrayList<String> rendrngLastNameUI1 = new ArrayList<String>(); 
-		
-		//
-        
-        
+
         for (String element : rendrngLastNameUI4) { 
 
          if (!rendrngLastNameUI1.contains(element)) { 
@@ -3608,10 +3848,12 @@ public void verifySortByRendPrvdrLastName() throws Exception
          } 
      } 
 		
-            //String rendrngLastNameUI = rendrngLastNameUI1.toString().trim();
-            
-            
+        StringBuffer sb = new StringBuffer();
         
+        for (String s : rendrngLastNameUI1) {
+           sb.append(s);
+          }
+        String rendrngLastNameUI = sb.toString();
               
 //		
 //		boolean sort = new Element().isSorted(rendrngLastNameUI);
@@ -3652,8 +3894,19 @@ public void verifySortByRendPrvdrLastName() throws Exception
 	                         "</ns17:EpsClaimsRequest>";
 		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	    Map<String, List<String>> response = new ReadTagsfromFISLResponse().getNodesXML(getResponse);
-	    ArrayList<String> rendrngLastNameDB = (ArrayList<String>) response.get("epsRenderingProviders");
-		Helper.compareEquals(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI1, rendrngLastNameDB);
+	    ArrayList<String> rendrngLastNameDB1 = (ArrayList<String>) response.get("epsRenderingProviders");
+	    
+	  //  List<String> rendrngLastNameDB1 = rendrngLastNameDB2.stream().distinct().collect(Collectors.toList()); 
+	    
+	    StringBuffer sb1 = new StringBuffer();
+	      
+	      for (String s : rendrngLastNameDB1) {
+	         sb.append(s);
+	        }
+	      String rendrngLastNameDB = sb.toString();
+	      
+		Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI, rendrngLastNameDB);
+		
 	    String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
 	}
 	
@@ -3689,8 +3942,18 @@ public void verifySortByRendPrvdrLastName() throws Exception
 	                         "</ns17:EpsClaimsRequest>";
 	  String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	  Map<String, List<String>> response = new ReadTagsfromFISLResponse().getNodesXML(getResponse);
-	  ArrayList<String> rendrngLastNameDB = (ArrayList<String>) response.get("epsRenderingProviders");
-	  Helper.compareEquals(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI1, rendrngLastNameDB);
+	  ArrayList<String> rendrngLastNameDB2 = (ArrayList<String>) response.get("epsRenderingProviders");
+	  List<String> rendrngLastNameDB1 = rendrngLastNameDB2.stream().distinct().collect(Collectors.toList()); 
+	  
+	  StringBuffer sb1 = new StringBuffer();
+      
+      for (String s : rendrngLastNameDB1) {
+         sb.append(s);
+         sb.append(" ");
+      }
+      String rendrngLastNameDB = sb.toString();
+	  
+	  Helper.compareEquals(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI, rendrngLastNameDB);
 	  String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
 		
 	}

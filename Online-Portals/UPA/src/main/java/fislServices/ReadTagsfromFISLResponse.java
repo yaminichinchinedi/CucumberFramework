@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -179,7 +180,13 @@ public class ReadTagsfromFISLResponse {
             } 
         } 
   
-        map.put("epsRenderingProviders", resultList10);
+        HashSet<String> listToSet = new HashSet<String>(resultList10);
+        
+        List<String> listWithoutDuplicates = new ArrayList<String>(listToSet);
+        
+        System.out.println(listWithoutDuplicates);
+        
+        map.put("epsRenderingProviders", listWithoutDuplicates);
         
       
       //  map.put("epsRenderingProviders", resultList2);
