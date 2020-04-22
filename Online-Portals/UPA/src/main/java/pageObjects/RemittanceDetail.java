@@ -3928,18 +3928,18 @@ public void verifySortByRendPrvdrLastName() throws Exception
 	                         "</ns17:EpsClaimsRequest>";
 	  String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	  Map<String, List<String>> response = new ReadTagsfromFISLResponse().getNodesXML(getResponse);
-	  ArrayList<String> rendrngLastNameDB2 = (ArrayList<String>) response.get("epsRenderingProviders");
-	  List<String> rendrngLastNameDB1 = rendrngLastNameDB2.stream().distinct().collect(Collectors.toList()); 
-	  
+	  ArrayList<String> rendrngLastNameDB1 = (ArrayList<String>) response.get("epsRenderingProviders");
 	  StringBuffer sb1 = new StringBuffer();
-      
-      for (String s : rendrngLastNameDB1) {
-         sb.append(s);
-         sb.append(" ");
-      }
-      String rendrngLastNameDB = sb.toString();
+	      
+	      for (String s : rendrngLastNameDB1) {
+	         sb.append(s);
+	        }
+	      String rendrngLastNameDB = sb.toString();
+	      
+		Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI, rendrngLastNameDB);
 	  
-	  Helper.compareEquals(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", rendrngLastNameUI, rendrngLastNameDB);
+	  
+
 	  String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
 		
 	}
