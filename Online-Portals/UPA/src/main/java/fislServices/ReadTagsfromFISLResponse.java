@@ -95,9 +95,7 @@ public class ReadTagsfromFISLResponse {
 			 
 		}
 		
-		
-
-
+	
        ArrayList<String> resultList9 = new ArrayList<String>(); 
         
         // Traverse through the first list 
@@ -105,25 +103,14 @@ public class ReadTagsfromFISLResponse {
   
             // If this element is not present in newList 
             // then add it 
-            if (!resultList9.contains(element)) { 
-                
-            	
-            	if(element.contains(" "))
-            	{
-                	resultList9 = (ArrayList<String>) element.subSequence(element.indexOf(" ")+ 1, element.length());
-                	resultList9.add(element);
-                	System.out.println(resultList9);
-            	}
-            	else
-            	{
+            if (!resultList1.contains(element)) { 
+
             	resultList9.add(element);
-            	}
+            	
             } 
         } 
   
         map.put("personLastName", resultList9);
-		
-		//map.put("personLastName", resultList1);
 		map.put("PatientAccountNumber", resultList5);
 		
 		

@@ -3742,16 +3742,23 @@ public void verifySortByPatientLastName() throws Exception
 			  StringBuffer sb1 = new StringBuffer();
 		      
 		      for (String s : patientLastNamesFISL1) {
+		    	 
 		         sb.append(s);
 		         sb.append(";");
 		        }
-		      String patientLastNamesFISL = sb.toString();
-			  
-			  
+		      String patientLastNamesFISL3 = sb.toString();
+		      
+		      if(patientLastNamesFISL3.contains(" "))
+		      {
+		    	  String patientLastNamesFISL = patientLastNamesFISL3.substring(patientLastNamesFISL3.indexOf(" ")+1, patientLastNamesFISL3.length());
+		    	  Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
+		      }
+		      else
+		      {
+		    	  String patientLastNamesFISL = sb.toString(); 
+		    	  Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
+		      }
 		      //Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
-				Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
-		      
-		      
 		      String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
         }
 	
@@ -3797,14 +3804,23 @@ public void verifySortByPatientLastName() throws Exception
 				         sb.append(s);
 				         sb.append(";");
 				        }
-				      String patientLastNamesFISL = sb.toString();
-					  
-					  
-				      //Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
-						Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
+				      
+					      String patientLastNamesFISL3 = sb.toString();
+					      
+					      if(patientLastNamesFISL3.contains(" "))
+					      {
+					    	  String patientLastNamesFISL = patientLastNamesFISL3.substring(patientLastNamesFISL3.indexOf(" ")+1, patientLastNamesFISL3.length());
+					    	  Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
+					      }
+					      else
+					      {
+					    	  String patientLastNamesFISL = sb.toString(); 
+					    	  Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
+					      }
+					      //Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
+					      String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
 				   
-				        String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
-	}
+		}
 }
     
 }
