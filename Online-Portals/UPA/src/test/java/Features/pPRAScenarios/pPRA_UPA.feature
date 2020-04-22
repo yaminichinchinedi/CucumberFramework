@@ -99,7 +99,7 @@ Feature: UPA PPRA Scenarios
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
     Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
@@ -123,7 +123,7 @@ Feature: UPA PPRA Scenarios
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
@@ -149,7 +149,7 @@ Feature: UPA PPRA Scenarios
     Then User clicks on Search Remittance link for UPA
     Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
@@ -167,7 +167,7 @@ Feature: UPA PPRA Scenarios
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 

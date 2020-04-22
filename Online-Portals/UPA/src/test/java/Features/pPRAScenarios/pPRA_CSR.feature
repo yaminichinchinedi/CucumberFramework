@@ -77,7 +77,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
     Then Enter Tin "<Tin>" and select serach button
     Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
@@ -142,7 +142,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
     Then Enter Tin "<Tin>" and select serach button
     Then User selects "<Type>" with value "<Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
-    Then User validates pPRA file is "<FileStatus>"
+    #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
