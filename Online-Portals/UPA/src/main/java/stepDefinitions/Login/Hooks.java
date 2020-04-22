@@ -22,6 +22,7 @@ public class Hooks extends TestBase{
 	public void Aftertest()
 	{
 		System.out.print("**After hooks----->");
+		//Closing browser
 		obj_TB.tearDown();
 	}
 	
