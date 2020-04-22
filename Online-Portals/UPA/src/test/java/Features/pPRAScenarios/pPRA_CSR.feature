@@ -1,5 +1,5 @@
 #Sample Feature Definition Template
-@CSRpPRA @CSRRegression
+@CSRpPRARegression @CSRRegression
 Feature: pPRA Validation for CSR Applicatin with different user groups
 
   ######################################################################################################################################
@@ -135,12 +135,12 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | P3       | RW     | 560963485 | byHCPayment_Number |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P3       | RW     | 410797853 | byHCPayment_Number | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
 
-  @CSR_PDFDoesnotExist_ConsolPayNumber
+  @CSR_PDFDoesnotExist_NPI
   Scenario Outline: Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" with value "<Consol_Pay_Nmbr>" and click on search button.
+     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -148,15 +148,12 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
 
     Examples: 
       | Priority | User   | Tin       | Type          | Disp_Consol_Pay_Nmbr | Consol_Pay_Nmbr | FileStatus | Status | Date_NAS   | NPI        | Date       |
-      | P1       | Super  | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | Super  | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | Super  | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | Super  | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
-      | P1       | ROPPRA | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | ROPPRA | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | ROPPRA | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | ROPPRA | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
-      | P1       | RW     | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | RW     | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | RW     | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | RW     | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
@@ -181,15 +178,12 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
 
     Examples: 
       | Priority | User   | Tin       | Type          | Disp_Consol_Pay_Nmbr | Consol_Pay_Nmbr | FileStatus | Status | Date_NAS   | NPI        | FromDate   |
-      | P1       | Super  | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | Super  | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | Super  | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | Super  | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
-      | P1       | ROPPRA | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | ROPPRA | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | ROPPRA | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | ROPPRA | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
-      | P1       | RW     | 541494969 | byHCDOPAndNpi |           1357393681 |      1357393681 | Present    | C      | 06.14.2018 |            | 06/14/2018 |
       | P1       | RW     | 571004971 | byHCDOPAndNpi | 1SG05444672          |      1439046523 | Present    | C      | 06.24.2019 | 1083787006 | 06/24/2019 |
       | P2       | RW     | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P2       | RW     | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |

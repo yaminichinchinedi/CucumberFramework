@@ -5,15 +5,13 @@
     <classes>
       <class name="main.java.Runner.DemoTestNGRunner">
         <methods>
-          <include name="feature" invocation-numbers="0 2 3"/>
+          <include name="feature" invocation-numbers="0"/>
           <include name="setUpClass"/>
           <include name="setupTestMethod"/>
           <include name="endTest"/>
           <include name="afterClass"/>
-          <include name="tearDown"/>
           <include name="init"/>
           <include name="tearDownClass"/>
-          <include name="tearUp"/>
           <include name="setUpReportingConfig"/>
         </methods>
       </class> <!-- main.java.Runner.DemoTestNGRunner -->

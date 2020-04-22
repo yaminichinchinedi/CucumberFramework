@@ -1,5 +1,5 @@
 #Author: prashant_chaudahry@optum.com
-@UPApPRA @UPARegression_
+@UPApPRARegression @UPARegression
 Feature: UPA PPRA Scenarios 
 
   @UPA_Provider_ErrorScenario

@@ -1,995 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="3" ignored="0" total="4" passed="1">
+<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
   <reporter-output>
+    <line>
+      <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+    </line>
     <line>
       <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
     </line>
     <line>
       <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>** TearUp1---null</font></br>]]>
+    </line>
+    <line>
+      <![CDATA[<font color='Black'>** Browser value is  : null</font></br>]]>
     </line>
     <line>
       <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Orange'>Browser on which test suite is running is : chrome</font></br>]]>
-    </line>
-    <line>
       <![CDATA[<font color='Black'>Launching google chrome..</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
+      <![CDATA[<font color='Black'>testSuite null</font></br>]]>
     </line>
     <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-    </line>
-    <line>
-      <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+      <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
     </line>
     <line>
       <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
@@ -998,95 +74,233 @@
       <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
     </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2869043" started-at="2019-12-19T13:51:39Z" finished-at="2019-12-19T14:39:28Z">
+  <suite name="Default suite" duration-ms="287415" started-at="2020-04-22T08:40:00Z" finished-at="2020-04-22T08:44:47Z">
     <groups>
       <group name="cucumber">
-        <method signature="DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" class="main.java.Runner.DemoTestNGRunner"/>
+        <method signature="DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="feature" class="main.java.Runner.DemoTestNGRunner"/>
       </group> <!-- cucumber -->
     </groups>
-    <test name="Default test" duration-ms="2869043" started-at="2019-12-19T13:51:39Z" finished-at="2019-12-19T14:39:28Z">
+    <test name="Default test" duration-ms="287415" started-at="2020-04-22T08:40:00Z" finished-at="2020-04-22T08:44:47Z">
       <class name="main.java.Runner.DemoTestNGRunner">
-        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setUpReportingConfig" is-config="true" duration-ms="556" started-at="2019-12-19T19:21:39Z" finished-at="2019-12-19T19:21:39Z">
+        <test-method status="PASS" signature="setUpReportingConfig()[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="setUpReportingConfig" is-config="true" duration-ms="1246" started-at="2020-04-22T14:09:59Z" finished-at="2020-04-22T14:10:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpReportingConfig -->
-        <test-method status="PASS" signature="tearUp()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearUp" is-config="true" duration-ms="11585" started-at="2019-12-19T19:21:39Z" finished-at="2019-12-19T19:21:51Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="init" is-config="true" duration-ms="3" started-at="2020-04-22T14:10:00Z" finished-at="2020-04-22T14:10:00Z">
           <reporter-output>
             <line>
-              <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
+              <![CDATA[<font color='Black'>testSuite null</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Orange'>Browser on which test suite is running is : chrome</font></br>]]>
+              <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="setUpClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="setUpClass" is-config="true" duration-ms="5663" started-at="2020-04-22T14:10:00Z" finished-at="2020-04-22T14:10:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="setupTestMethod" is-config="true" duration-ms="86" started-at="2020-04-22T14:10:08Z" finished-at="2020-04-22T14:10:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupTestMethod -->
+        <test-method status="FAIL" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="feature" duration-ms="215744" started-at="2020-04-22T14:10:08Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2020-04-22T14:13:44Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[pPRA Validation for CSR Applicatin with different user groups]]>
+              </value>
+            </param>
+          </params>
+          <exception class="cucumber.runtime.CucumberException">
+            <message>
+              <![CDATA[org.openqa.selenium.TimeoutException: timeout
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 60.19 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'LHTU05CG7493V87', ip: '10.233.236.162', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\pchaud19\AppData\Local\Temp\scoped_dir26376_31131}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=80.0.3987.163, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1a83d3c0da4ef6b0a4fb8611b0049b8]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[cucumber.runtime.CucumberException: org.openqa.selenium.TimeoutException: timeout
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 60.19 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'LHTU05CG7493V87', ip: '10.233.236.162', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\pchaud19\AppData\Local\Temp\scoped_dir26376_31131}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=80.0.3987.163, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1a83d3c0da4ef6b0a4fb8611b0049b8
+	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
+	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:118)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+Caused by: org.openqa.selenium.TimeoutException: timeout
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 60.19 seconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'LHTU05CG7493V87', ip: '10.233.236.162', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\pchaud19\AppData\Local\Temp\scoped_dir26376_31131}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=80.0.3987.163, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1a83d3c0da4ef6b0a4fb8611b0049b8
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.get(RemoteWebDriver.java:364)
+	at org.openqa.selenium.remote.RemoteWebDriver$RemoteNavigation.to(RemoteWebDriver.java:945)
+	at main.java.pageObjects.UPARegistrationPage.<init>(UPARegistrationPage.java:57)
+	at main.java.stepDefinitions.Login.UPAHomePageSteps.user_navigates_to_UPA_portal_and_enters_and_login(UPAHomePageSteps.java:27)
+	at ✽.Given User navigates to UPA portal and enters "PROVPPRA" and login(pPRAScenarios/Sanity_pPRA.feature:103)
+]]>
+            </full-stacktrace>
+          </exception> <!-- cucumber.runtime.CucumberException -->
+          <reporter-output>
+            <line>
+              <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>** TearUp1---null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>** Browser value is  : null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Starting execution ..</font></br>]]>
             </line>
             <line>
               <![CDATA[<font color='Black'>Launching google chrome..</font></br>]]>
             </line>
             <line>
-              <![CDATA[<font color='Black'>Running on environmentStage</font></br>]]>
+              <![CDATA[<font color='Black'>testSuite null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>BrowserType null</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
+            </line>
+            <line>
+              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
             </line>
           </reporter-output>
-        </test-method> <!-- tearUp -->
-        <test-method status="PASS" signature="setUpClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setUpClass" is-config="true" duration-ms="1782" started-at="2019-12-19T19:21:51Z" finished-at="2019-12-19T19:21:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUpClass -->
-        <test-method status="PASS" signature="init()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="init" is-config="true" duration-ms="0" started-at="2019-12-19T19:21:51Z" finished-at="2019-12-19T19:21:51Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- init -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setupTestMethod" is-config="true" duration-ms="50" started-at="2019-12-19T19:21:53Z" finished-at="2019-12-19T19:21:53Z">
+        </test-method> <!-- feature -->
+        <test-method status="FAIL" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="endTest" is-config="true" duration-ms="63050" started-at="2020-04-22T14:13:44Z" finished-at="2020-04-22T14:14:47Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
+                <![CDATA[[TestResult name=feature status=FAILURE method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0] output=<font color='Black'>testSuite null</font></br>]]]>
               </value>
             </param>
           </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setupTestMethod -->
-        <test-method status="FAIL" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" duration-ms="774616" started-at="2019-12-19T19:21:53Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2019-12-19T19:34:48Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[US1048094_Create Enrollment- Billing Service - Review and Submit]]>
-              </value>
-            </param>
-          </params>
-          <exception class="cucumber.runtime.CucumberException">
+          <exception class="org.openqa.selenium.TimeoutException">
             <message>
-              <![CDATA[java.lang.AssertionError: EDIT is not present on the page and exception is :<br>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a"}
-  (Session info: chrome=78.0.3904.97)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.05 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+              <![CDATA[timeout
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 60.01 seconds
 Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
+System info: host: 'LHTU05CG7493V87', ip: '10.233.236.162', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e
-*** Element info: {Using=xpath, value=.//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a}]]>
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\pchaud19\AppData\Local\Temp\scoped_dir26376_31131}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=80.0.3987.163, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1a83d3c0da4ef6b0a4fb8611b0049b8]]>
             </message>
             <full-stacktrace>
-              <![CDATA[cucumber.runtime.CucumberException: java.lang.AssertionError: EDIT is not present on the page and exception is :<br>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a"}
-  (Session info: chrome=78.0.3904.97)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.05 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+              <![CDATA[org.openqa.selenium.TimeoutException: timeout
+  (Session info: chrome=80.0.3987.163)
+  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 60.01 seconds
 Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
+System info: host: 'LHTU05CG7493V87', ip: '10.233.236.162', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e
-*** Element info: {Using=xpath, value=.//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a}
-	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
-	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:110)
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\pchaud19\AppData\Local\Temp\scoped_dir26376_31131}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=80.0.3987.163, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d1a83d3c0da4ef6b0a4fb8611b0049b8
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:694)
+	at org.openqa.selenium.remote.RemoteWebDriver.getScreenshotAs(RemoteWebDriver.java:382)
+	at main.java.reporting.Log.captureScreenshot(Log.java:162)
+	at main.java.reporting.Log.PageInfo(Log.java:143)
+	at main.java.reporting.Log.Fail(Log.java:81)
+	at main.java.reporting.Log.endTest(Log.java:70)
+	at main.java.nativeFunctions.TestBase.endTest(TestBase.java:416)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
 	at java.lang.reflect.Method.invoke(Unknown Source)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:723)
 	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
 	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
 	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
@@ -1103,1250 +317,20 @@ Session ID: c93ac4e1f9df1e89ef43604b962e281e
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: java.lang.AssertionError: EDIT is not present on the page and exception is :<br>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":".//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a"}
-  (Session info: chrome=78.0.3904.97)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.05 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e
-*** Element info: {Using=xpath, value=.//*[@id='EFTERAregForm']//section/fieldset/div[3]/div[1]/a}
-	at org.testng.Assert.fail(Assert.java:93)
-	at main.java.reporting.Log.failure(Log.java:124)
-	at main.java.reporting.Log.Fail(Log.java:114)
-	at main.java.nativeFunctions.Element.verifyElementPresent(Element.java:332)
-	at main.java.pageObjects.ReviewAndSubmit.verifyEditLinks(ReviewAndSubmit.java:246)
-	at main.java.stepDefinitions.CrtEnrolmnt.ReviewAndSubmitSteps.vaidate_Edit_Links_on_Review_and_Submit_page(ReviewAndSubmitSteps.java:28)
-	at ?.And Vaidates Edit Links on Review and Submit page(US1048094_CrtEnrlBSRevSubmit.feature:26)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
 ]]>
             </full-stacktrace>
-          </exception> <!-- cucumber.runtime.CucumberException -->
-          <reporter-output>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- feature -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="endTest" is-config="true" duration-ms="972" started-at="2019-12-19T19:34:48Z" finished-at="2019-12-19T19:34:49Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=feature status=FAILURE method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3] output=<font color='Orange'>Running on Environment : Stage</font></br>]]]>
-              </value>
-            </param>
-          </params>
+          </exception> <!-- org.openqa.selenium.TimeoutException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endTest -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setupTestMethod" is-config="true" duration-ms="0" started-at="2019-12-19T19:34:49Z" finished-at="2019-12-19T19:34:49Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setupTestMethod -->
-        <test-method status="PASS" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" duration-ms="188125" started-at="2019-12-19T19:34:49Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2019-12-19T19:37:57Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[US1099702_Create Enrollment- Billing Service - Footer Information]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- feature -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="endTest" is-config="true" duration-ms="215" started-at="2019-12-19T19:37:57Z" finished-at="2019-12-19T19:37:57Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=feature status=SUCCESS method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3] output=<font color='Orange'>Running on Environment : Stage</font></br>]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- endTest -->
-        <test-method status="FAIL" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" duration-ms="1016037" started-at="2019-12-19T19:37:57Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2019-12-19T19:54:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[US1249134_Create Enrollment- Billing Service Identify Administrators Review and Submit]]>
-              </value>
-            </param>
-          </params>
-          <exception class="cucumber.runtime.CucumberException">
-            <message>
-              <![CDATA[java.lang.AssertionError: Failed comparison of Browser URL
-Expected was : viewbillingservicecontacts.do?fromreview=y&bsadminedit=n 
-Actual is : https://stage-myservices.optumhealthpaymentservices.com/validatebssubmitinfo.do]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[cucumber.runtime.CucumberException: java.lang.AssertionError: Failed comparison of Browser URL
-Expected was : viewbillingservicecontacts.do?fromreview=y&bsadminedit=n 
-Actual is : https://stage-myservices.optumhealthpaymentservices.com/validatebssubmitinfo.do
-	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
-	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:110)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: java.lang.AssertionError: Failed comparison of Browser URL
-Expected was : viewbillingservicecontacts.do?fromreview=y&bsadminedit=n 
-Actual is : https://stage-myservices.optumhealthpaymentservices.com/validatebssubmitinfo.do
-	at org.testng.Assert.fail(Assert.java:93)
-	at main.java.reporting.Log.failure(Log.java:124)
-	at main.java.reporting.Log.Fail(Log.java:114)
-	at main.java.reporting.Log.Fail(Log.java:203)
-	at main.java.nativeFunctions.Browser.verifyURL(Browser.java:480)
-	at main.java.pageObjects.ReviewAndSubmit.clickIdentifyEditLink(ReviewAndSubmit.java:213)
-	at main.java.stepDefinitions.CrtEnrolmnt.ValidateEFTERAProviderInfoSteps.user_navigates_to_ReviewAndSubmit_page_and_click_on_edit_icon(ValidateEFTERAProviderInfoSteps.java:69)
-	at ?.Then User navigates to ReviewAndSubmit page and click on edit icon(US1249134_CrtEnrlBSIdetifyEdit.feature:38)
-]]>
-            </full-stacktrace>
-          </exception> <!-- cucumber.runtime.CucumberException -->
-          <reporter-output>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>First Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Last Name has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 1 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 2 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Ph Filed 3 has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Primary Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Retype Email Address has been cleared successfully</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- feature -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setupTestMethod" is-config="true" duration-ms="0" started-at="2019-12-19T19:37:57Z" finished-at="2019-12-19T19:37:57Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setupTestMethod -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="endTest" is-config="true" duration-ms="282" started-at="2019-12-19T19:54:53Z" finished-at="2019-12-19T19:54:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=feature status=FAILURE method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3] output=<font color='Orange'>Running on Environment : Stage</font></br>]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- endTest -->
-        <test-method status="PASS" signature="setupTestMethod(java.lang.reflect.Method)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="setupTestMethod" is-config="true" duration-ms="0" started-at="2019-12-19T19:54:53Z" finished-at="2019-12-19T19:54:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void main.java.Runner.DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setupTestMethod -->
-        <test-method status="FAIL" signature="feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="feature" duration-ms="874368" started-at="2019-12-19T19:54:53Z" description="Runs Cucumber Feature" data-provider="features" finished-at="2019-12-19T20:09:28Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[US1253068_Create Enrollment- Review and Submit - show the page and test buttons edit- remove not tested QA]]>
-              </value>
-            </param>
-          </params>
-          <exception class="cucumber.runtime.CucumberException">
-            <message>
-              <![CDATA[java.lang.AssertionError: Element 'radio button ACH only payment type   is Not found on page and timeout happened
-org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on XP (c93ac4e1f9df1e89ef43604b962e281e)] -> xpath: //a[@value='AO']] (tried for 60 second(s) with 500 MILLISECONDS interval)
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[cucumber.runtime.CucumberException: java.lang.AssertionError: Element 'radio button ACH only payment type   is Not found on page and timeout happened
-org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on XP (c93ac4e1f9df1e89ef43604b962e281e)] -> xpath: //a[@value='AO']] (tried for 60 second(s) with 500 MILLISECONDS interval)
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e
-	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
-	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:110)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: java.lang.AssertionError: Element 'radio button ACH only payment type   is Not found on page and timeout happened
-org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on XP (c93ac4e1f9df1e89ef43604b962e281e)] -> xpath: //a[@value='AO']] (tried for 60 second(s) with 500 MILLISECONDS interval)
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'LHTU05CG7425K9C', ip: '10.198.82.109', os.name: 'Windows 10', os.arch: 'x86', os.version: '10.0', java.version: '1.8.0_211'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\rkrish38\AppData\Local\Temp\scoped_dir39876_31737}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=78.0.3904.97, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c93ac4e1f9df1e89ef43604b962e281e
-	at org.testng.Assert.fail(Assert.java:93)
-	at main.java.reporting.Log.failure(Log.java:124)
-	at main.java.reporting.Log.Fail(Log.java:114)
-	at main.java.nativeFunctions.Element.expectedWait(Element.java:111)
-	at main.java.pageObjects.BeginEnrollmentContinue.enrollAs(BeginEnrollmentContinue.java:148)
-	at main.java.stepDefinitions.CrtEnrolmnt.ProviderEFTERAEnrollPageSteps.select_Enrollment_Type_and_Clicks_Continue_button_of_Enrollment_TIN_Eligible_page(ProviderEFTERAEnrollPageSteps.java:99)
-	at ?.Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page(US1253068_CrtEnrlHORevSub.feature:9)
-]]>
-            </full-stacktrace>
-          </exception> <!-- cucumber.runtime.CucumberException -->
-          <reporter-output>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Orange'>Running on Environment : Stage</font></br>]]>
-            </line>
-            <line>
-              <![CDATA[<font color='Black'>Running test Suite for: UPA</font></br>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- feature -->
-        <test-method status="PASS" signature="endTest(org.testng.ITestResult)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="endTest" is-config="true" duration-ms="364" started-at="2019-12-19T20:09:28Z" finished-at="2019-12-19T20:09:28Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=feature status=FAILURE method=DemoTestNGRunner.feature(cucumber.api.testng.CucumberFeatureWrapper)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3] output=<font color='Orange'>Running on Environment : Stage</font></br>]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- endTest -->
-        <test-method status="PASS" signature="afterClass(org.testng.ITestContext)[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="afterClass" is-config="true" duration-ms="3" started-at="2019-12-19T20:09:28Z" finished-at="2019-12-19T20:09:28Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[org.testng.TestRunner@6ff1cb]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="SKIP" signature="afterClass(org.testng.ITestContext)[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="afterClass" is-config="true" duration-ms="0" started-at="2020-04-22T14:14:47Z" finished-at="2020-04-22T14:14:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterClass -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearDown" is-config="true" duration-ms="179" started-at="2019-12-19T20:09:28Z" finished-at="2019-12-19T20:09:28Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@10143d3]" name="tearDownClass" is-config="true" duration-ms="158" started-at="2019-12-19T20:09:28Z" finished-at="2019-12-19T20:09:29Z">
+        <test-method status="PASS" signature="tearDownClass()[pri:0, instance:main.java.Runner.DemoTestNGRunner@7b49cea0]" name="tearDownClass" is-config="true" duration-ms="128" started-at="2020-04-22T14:14:47Z" finished-at="2020-04-22T14:14:48Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
