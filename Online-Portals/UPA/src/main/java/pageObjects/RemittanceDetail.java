@@ -1878,9 +1878,7 @@ public void verifyCOBFilterClaimData() throws Exception
 	Element.click(paymentNo1, "Payment No");
 	Browser.wait(testConfig, 5);
 	
-	String paymentNum1 = paymentNo.getText();
-	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
-	Log.Comment("The First  Payment Number displayed is:" + paymentNum);
+	
 	Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
     Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
     Log.Comment("Filter Claims Dropdown selected - COB Only");
@@ -1898,6 +1896,11 @@ public void verifyCOBFilterClaimData() throws Exception
 	  	testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
 	  	Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	  	Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+	  	
+	  	
+	  	String paymentNum1 = paymentNo.getText();
+		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+		Log.Comment("The First  Payment Number displayed is:" + paymentNum);
 	  	
 	  	if(null == payerSchema)
 	  	{
@@ -2386,18 +2389,13 @@ public void verifyReversalFilterClaimData() throws Exception
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
 	Element.click(paymentNo1, "Payment No");
-	
-	String paymentNum1 = paymentNo.getText();
-	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
-	Log.Comment("The First  Payment Number displayed is:" + paymentNum);
-    Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
+	Browser.wait(testConfig, 5);
+	Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
     Element.selectVisibleText(filterClaims,"Reversal Only","Claim Filter DropDown");
     Log.Comment("Filter Claims Dropdown selected - Reversal Only");
     
     Browser.wait(testConfig, 5);
     
-
-
     if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
     {
 		List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
@@ -2406,6 +2404,10 @@ public void verifyReversalFilterClaimData() throws Exception
 	  	testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
 	  	Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	  	Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+	  	
+	  	String paymentNum1 = paymentNo.getText();
+		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+		Log.Comment("The First  Payment Number displayed is:" + paymentNum);
 	  	
 	  	if(null == payerSchema)
 	  	{
