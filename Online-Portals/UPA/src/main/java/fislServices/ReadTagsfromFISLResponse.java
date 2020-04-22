@@ -38,6 +38,7 @@ public class ReadTagsfromFISLResponse {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, List<String>> getNodesXML(String getResponse) throws SAXException, IOException, ParserConfigurationException {
 		// TODO Auto-generated method stub
 		
@@ -94,9 +95,7 @@ public class ReadTagsfromFISLResponse {
 			 
 		}
 		
-		
-
-
+	
        ArrayList<String> resultList9 = new ArrayList<String>(); 
         
         // Traverse through the first list 
@@ -104,15 +103,14 @@ public class ReadTagsfromFISLResponse {
   
             // If this element is not present in newList 
             // then add it 
-            if (!resultList9.contains(element)) { 
-  
-            	resultList9.add(element); 
+            if (!resultList1.contains(element)) { 
+
+            	resultList9.add(element);
+            	
             } 
         } 
   
         map.put("personLastName", resultList9);
-		
-		//map.put("personLastName", resultList1);
 		map.put("PatientAccountNumber", resultList5);
 		
 		
