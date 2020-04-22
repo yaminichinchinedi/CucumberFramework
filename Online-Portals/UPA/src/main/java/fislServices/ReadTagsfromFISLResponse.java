@@ -38,6 +38,7 @@ public class ReadTagsfromFISLResponse {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public Map<String, List<String>> getNodesXML(String getResponse) throws SAXException, IOException, ParserConfigurationException {
 		// TODO Auto-generated method stub
 		
@@ -105,8 +106,18 @@ public class ReadTagsfromFISLResponse {
             // If this element is not present in newList 
             // then add it 
             if (!resultList9.contains(element)) { 
-  
-            	resultList9.add(element); 
+                
+            	
+            	if(element.contains(" "))
+            	{
+                	resultList9 = (ArrayList<String>) element.subSequence(element.indexOf(" ")+ 1, element.length());
+                	resultList9.add(element);
+                	System.out.println(resultList9);
+            	}
+            	else
+            	{
+            	resultList9.add(element);
+            	}
             } 
         } 
   

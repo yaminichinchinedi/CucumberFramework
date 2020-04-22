@@ -3591,7 +3591,7 @@ public void verifyPLBAdjOnlyPayer() throws Exception
     
 }
 
-public void verifySortByPatientLastName() throws Exception  
+public void verifySortByPatientLastName() throws Exception
 {
 	String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
@@ -3667,6 +3667,25 @@ public void verifySortByPatientLastName() throws Exception
             } 
         } 
 		
+           ArrayList<String> patientLastNamesUI = new ArrayList<String>(); 
+
+           for (String element : patientLastNamesUI1) { 
+
+            if (!patientLastNamesUI.contains(element)) { 
+
+            	patientLastNamesUI.add(element); 
+            } 
+        } 
+   		
+           StringBuffer sb = new StringBuffer();
+           
+           for (String s : patientLastNamesUI) {
+              sb.append(s);
+              sb.append(";");
+             }
+           String patientLastNameui = sb.toString();
+           
+           
               // String patientLastNamesUI = patientLastNamesUI1.toString();
 		
 //				boolean sort = new Element().isSorted(patientLastNames);
@@ -3718,8 +3737,19 @@ public void verifySortByPatientLastName() throws Exception
 			  
 			  Map<String, List<String>> response = new ReadTagsfromFISLResponse().getNodesXML(getResponse);
 			  
-			  ArrayList<String> patientLastNamesFISL = (ArrayList<String>) response.get("personLastName");
-		      Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
+			  ArrayList<String> patientLastNamesFISL1 = (ArrayList<String>) response.get("personLastName");
+			  
+			  StringBuffer sb1 = new StringBuffer();
+		      
+		      for (String s : patientLastNamesFISL1) {
+		         sb.append(s);
+		         sb.append(";");
+		        }
+		      String patientLastNamesFISL = sb.toString();
+			  
+			  
+		      //Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
+				Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
 		      
 		      
 		      String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
@@ -3759,11 +3789,21 @@ public void verifySortByPatientLastName() throws Exception
 				   String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 				   Map<String, List<String>> response = new ReadTagsfromFISLResponse().getNodesXML(getResponse);
 				   
-				  
-				   ArrayList<String> patientLastNamesFISL = (ArrayList<String>) response.get("personLastName");
-				   Helper.compareEquals(testConfig, "Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
+				  ArrayList<String> patientLastNamesFISL1 = (ArrayList<String>) response.get("personLastName");
+					  
+					  StringBuffer sb1 = new StringBuffer();
+				      
+				      for (String s : patientLastNamesFISL1) {
+				         sb.append(s);
+				         sb.append(";");
+				        }
+				      String patientLastNamesFISL = sb.toString();
+					  
+					  
+				      //Helper.compareEquals(testConfig,"Comparing Patient List Name from UI and FISL", patientLastNamesUI1, patientLastNamesFISL);
+						Helper.compareContains(testConfig,  "Comparing Rendering Provider Last Names from UI and FISL", patientLastNameui, patientLastNamesFISL);
 				   
-				   String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
+				        String fileDeleteResponse = new ReadTagsfromFISLResponse().deleteFileData();
 	}
 }
     
@@ -3838,6 +3878,7 @@ public void verifySortByRendPrvdrLastName() throws Exception
         
         for (String s : rendrngLastNameUI1) {
            sb.append(s);
+           sb.append(";");
           }
         String rendrngLastNameUI = sb.toString();
               
@@ -3888,6 +3929,7 @@ public void verifySortByRendPrvdrLastName() throws Exception
 	      
 	      for (String s : rendrngLastNameDB1) {
 	         sb.append(s);
+	         sb.append(";");
 	        }
 	      String rendrngLastNameDB = sb.toString();
 	      
