@@ -95,7 +95,7 @@ Feature: UPA PPRA Scenarios
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
+    Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -141,7 +141,7 @@ Feature: UPA PPRA Scenarios
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
+    Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -178,7 +178,7 @@ Feature: UPA PPRA Scenarios
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
+    Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
