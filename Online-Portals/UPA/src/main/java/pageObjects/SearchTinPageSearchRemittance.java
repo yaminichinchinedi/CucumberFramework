@@ -167,7 +167,7 @@ public class SearchTinPageSearchRemittance {
         		 System.out.println("*-------enterTinUPA 2");
             	 Element.selectVisibleText(tinDrpDwn,paymentType+" - Enrolled","TIN Selection from Dropdown");
             	 System.out.println("*****enterTinUPA 3");
-                 Log.Comment("TIN selected: 020619423 - Enrolled");
+                
         	 }
         	 else if(System.getProperty("User").equalsIgnoreCase("BS") || System.getProperty("User").equalsIgnoreCase("PA"))
         	 {

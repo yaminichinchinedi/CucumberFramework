@@ -5,7 +5,7 @@ Feature: UPA PPRA Scenarios
   @UPA_Provider_ErrorScenario
   Scenario Outline: Provider Login to CSR Application to validate error scenario for NPI search
     Given User navigates to UPA portal and enters "<User>" and login
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
     Then User clicks on PDF Link
@@ -24,7 +24,7 @@ Feature: UPA PPRA Scenarios
   @UPA_Provider_ErrorScenario
   Scenario Outline: Provider Login to CSR Application to validate error scenario for ConsolPayNumber search
     Given User navigates to UPA portal and enters "<User>" and login
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
@@ -44,7 +44,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service Login to CSR Application to validate error scenario for NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -69,7 +69,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service Login to CSR Application to validate error scenario for ConsolPayNumber search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -94,7 +94,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf does not exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
@@ -117,7 +117,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
@@ -139,7 +139,7 @@ Feature: UPA PPRA Scenarios
 
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with Payment number search
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User clicks on PDF Link
@@ -157,7 +157,7 @@ Feature: UPA PPRA Scenarios
 
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with NPI search
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
@@ -177,7 +177,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf already exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "Type" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -201,7 +201,7 @@ Feature: UPA PPRA Scenarios
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf already not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
