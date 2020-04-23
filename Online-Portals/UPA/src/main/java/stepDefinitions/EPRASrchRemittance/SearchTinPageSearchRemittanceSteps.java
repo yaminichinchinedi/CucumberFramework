@@ -122,12 +122,13 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		Browser.wait(testConfig, 10);
 		System.out.println("*****Tin dropdown  debug point 1");
 		int sqlRowNo=230;//34;		
-		System.out.print("***ID selected is -->"+testConfig.getRunTimeProperty("UserID"));
-		testConfig.putRunTimeProperty("UserID",testConfig.getRunTimeProperty("UserID"));
+		//System.out.print("***ID selected is -->"+testConfig.getRunTimeProperty("UserID"));
+		testConfig.putRunTimeProperty("UserID",testConfig.getRunTimeProperty("id"));
 		Map portalUser=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		String User;
 		User = (String) portalUser.get("USER_TYP");
-		
+		System.setProperty("User", User);
+		System.out.println("**User-->"+User);
 		//testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		if(searchBy.equals("EPRA"))
 		testConfig.putRunTimeProperty("suite", "EPRA");
@@ -144,8 +145,8 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		testConfig.putRunTimeProperty("claimRange1", "80");
 		testConfig.putRunTimeProperty("claimRange2", "100");
 		testConfig.putRunTimeProperty("priority", "2");
-		}
-		System.out.println("*****Tin dropdown  1");
+		}		
+		System.setProperty("Tin", searchBy);
 		srchTinPage.enterTinUPA(searchBy);	
 	
 	}
