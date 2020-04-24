@@ -1,9 +1,9 @@
-#Author: Amit Kushwah
+#Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 # If any scripts fail due to unable to find payment number then it is an expected Prod Issue
 
-@CSREPRASrchRemitDtl  @CSRRegression
-Feature: Search Remittance Payment Number 
+@CSREPRASrchRemitDtl  @CSRRegression @CSRSrchRemittanceEPRA
+Feature: CSR_EPRA_Srch_Remittance_RemittanceDetail
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
