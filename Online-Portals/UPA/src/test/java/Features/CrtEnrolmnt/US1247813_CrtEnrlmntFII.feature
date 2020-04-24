@@ -8,7 +8,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS_001
-
+@UPASanity
   Scenario: Fills the relevent Info with AO Enroll Typ
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -44,7 +44,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 
 
 #TS_005
-@test121
+@UPASanity
   Scenario: Checking UI Content matches with DB 
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

@@ -68,6 +68,7 @@ Feature: Create Enrollment - Select Payment Methods
 #    Then User fills all the information on Identify Administrators page and click continue to W9
 
 #TS04
+@UPASanity
 Scenario: Fills the relevent Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

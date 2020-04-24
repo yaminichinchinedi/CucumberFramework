@@ -10,14 +10,14 @@ Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
-																				
+	@UPASanity																			
   Scenario: TS01/TS02_Create Enrollment_BS_Review and Submit page_Header
   
   Then User navigates to Billing service information page and fill all fields and click on continue button
   Then User navigates to Identity Administrators page and fill all fields and click on continue button
   Then User uploads the WNine form and click continue
   And Vaidates Headers in Review and Submit page
-
+@UPASanity
   Scenario: TS03_Create Enrollment_BS_Review and Submit page_Edit button
   
   Then User navigates to Billing service information page and fill all fields and click on continue button

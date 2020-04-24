@@ -7,7 +7,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS_001,TS_003
-
+@UPASanity
   Scenario: TS_0001/003_Validate Edit and Remove option Option next to each field on Review and Submit page.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -23,7 +23,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 
     
 #TS_002 #TS_0034
-
+@UPASanity
   Scenario: TS_02/09/34_Validate navigation of click Edit button on NPI section and content on Review and Submit page
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -55,6 +55,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     
    #TS_005 depricated  
     #TS_06,07
+    @UPASanity
     Scenario: TS_0006/007_Validate the buttons on the page and Navigatin on click of Cancel changes Button.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

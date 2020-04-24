@@ -11,7 +11,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
-    
+   @UPASanity 
   Scenario: TS001/TS004_Create Enrollment_BS_Review and Submit - edit Identify Administrators_Edit option
   
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -20,6 +20,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   Then User navigates to Organization information page and validate fields are editable
   
+  @UPASanity
   Scenario: TS005_Create Enrollment_BS_Review and Submit - edit Identify Administrators_Cancel and Save Changes
    
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -52,7 +53,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   #Then User uploads the WNine form and click continue
   #Then User navigates to ReviewAndSubmit page and click on edit icon
   #And Validates page content matches to UXDS html 
-   
+   @UPASanity
    Scenario: TS003_Validate that Identify Administrators page text is content managed
    
    Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -60,7 +61,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
    Then User uploads the WNine form and click continue
    Then User navigates to ReviewAndSubmit page and click on edit icon
    And  Validates page text is content managed 
-     @Rerun1
+     
    Scenario: TS008_Validate form and error messaging on click of Save Changes button
      
    Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -68,7 +69,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
    Then User uploads the WNine form and click continue
    Then User navigates to ReviewAndSubmit page and click on edit icon
    Then Click on Save changes/Continue button and validate Form and error messages
- @Rerun1
+ 
    Scenario: TS009_Validate Error hyperlink on click of Save Changes
   
    Then User navigates to Billing service information page and fill all fields and click on continue button

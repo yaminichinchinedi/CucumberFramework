@@ -8,7 +8,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS_001
-
+@UPASanity
   Scenario: TS_0001_Validate the navigation upon selection of Continue from Financial Institution Information page.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -19,7 +19,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information of Financial Institution Information NPI page and click continue.
 
   #TS_003
-	
+	@UPASanity
   Scenario: TS_0003_Validate the content of the Add NPI Bank Account page
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

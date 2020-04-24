@@ -1,6 +1,7 @@
 #Author: Madhavi Upputuri
 @CreateEnrollment @US1099702
 Feature: US1099702_Create Enrollment- Billing Service - Footer Information
+  @UPASanity
   Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information
  
   Given User navigates to UPA Sys Test application
