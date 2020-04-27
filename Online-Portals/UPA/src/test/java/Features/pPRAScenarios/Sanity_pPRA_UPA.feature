@@ -92,7 +92,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
       | P1       | PayerPPRA | 270923713 |      1362310252 |           1362310252 | byHCPayment_Number | N/A | 07/09/2018 | 07.09.2018 | Present    | C      |
 
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with Payment number search
-    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
+    Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
@@ -106,7 +106,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
       | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCPayment_Number | N/A | 07/09/2018 | 07.09.2018 | Present    | C      |
 
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with NPI search
-    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
+    Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
