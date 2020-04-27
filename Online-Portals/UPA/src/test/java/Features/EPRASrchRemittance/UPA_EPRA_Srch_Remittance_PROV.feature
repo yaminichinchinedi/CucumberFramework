@@ -3,7 +3,7 @@
 # Few test Cases May fail due to existing PROD issue
 
 @UPAProvSrchEPRA @UPASrchRemitEPRA1  @UPARegression
-Feature: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Number 
+Feature: UPA_EPRA_Srch_Remittance_PROV 
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
