@@ -12,6 +12,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
 											|Enrollment Type|
 											#|     VO        |
 											|     BS        |
+	@UPASanity										
 	Scenario: TS01/TS02_Create Enrollment_HO_Review and Submit page
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -19,6 +20,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User uploads the WNine form and click continue
   And Vaidates Headers in Review and Submit page 
   
+  @UPASanity
   Scenario: TS03_Create Enrollment_HO_Review and Submit page_Edit button
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button

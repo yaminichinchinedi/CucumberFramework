@@ -8,7 +8,8 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
   Then User Select a How you heard option and  click on Continue button
-																	
+	
+	@UPASanity																
 	Scenario: TS_0001_Validate Edit Option next to each field on Review and Submit page.
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
@@ -20,7 +21,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
   Then User uploads the WNine form and click continue
   And Validates Edit option next to each field on Review and Submit page 
   
-  					
+  @UPASanity					
 	Scenario: TS_0002_Validate the navigation upon selection of Edit button next to  Financial Information section on Review and Submit page.
 	
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page

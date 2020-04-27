@@ -8,6 +8,7 @@ Feature: Create Enrollment - Review and Submit -edit Identify Administrator Info
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS01, TS02, TS04, TS05, TS06,TS07,TS08,TS09,TS10,TS11,TS12,TS17,TS36,TS37
+@UPASanity
 Scenario: Fills the relevent Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

@@ -8,12 +8,14 @@ Feature: Create Enrollment - Review and Submit -edit Organization Information
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS01#TS02#TS011
+@UPASanity
   Scenario: Fills the relevent Info with BS Enroll Typ
    Then Select Enrollment Type as BS
 	 Then Verify option to Select TIN/SSN is there and input box is present.
 	 And Verify Change Link is Present for BS.
 	 
 #TS04#TS05#TS011
+@UPASanity
   Scenario: Fills the relevent Info with BS Enroll Typ
    Then Select Enrollment Type as BS
 	 Then Click Cancel Enrollment button and Verify its functionality.

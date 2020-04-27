@@ -9,6 +9,7 @@ Feature: Create Enrollment - Review and Submit -edit Organization Information
     Then User Select a How you heard option and  click on Continue button
     
 #TS_001#TS_04#TS_005 #TS_06#TS_07#TS_08
+@UPASanity
   Scenario: Fills the relevant Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -55,7 +56,7 @@ Feature: Create Enrollment - Review and Submit -edit Organization Information
 		
 		
 #TS_013 #TS_015-TS_18
-
+@UPASanity
   Scenario: Fills the relevant Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

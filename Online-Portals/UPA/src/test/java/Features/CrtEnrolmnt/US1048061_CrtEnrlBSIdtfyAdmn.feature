@@ -8,7 +8,7 @@ Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
     When User Clicks on Enroll Now from the landing page
     Then User Select a How you heard option and  click on Continue button
 #TS_001
-
+@UPASanity
   Scenario: TS_00001_Upon selection of Continue from the TIN eligibility status page, user navigates to the Organization Information page
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -16,7 +16,7 @@ Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
     Then User navigates to Billing service information page and fill all fields and click on continue button
     
     #TS_003
-	
+	@UPASanity
   Scenario: TS_00003_Page text is content managed
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

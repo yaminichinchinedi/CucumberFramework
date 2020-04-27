@@ -1,10 +1,10 @@
 
 #Author:Rahul Krishna
-@US1132023 @CSRCreateEnrollment
+ @CSRCreateEnrollment
 Feature: Enrollment Redesign-Surver Response Reporting
 
 #TC_01,02,03,04
-
+@CSRSanity
 Scenario: Enrollment Redesign-Surver Response Reporting for CSR
 
 Given User navigates to CSR portal and enters "Super" and login
@@ -30,7 +30,7 @@ When Provide from date  greater than To date
 Then Error Message FromDate can not exceed ToDate should be displayed
 
 #TC_07,08,09,10
-
+@US1132023
 Scenario Outline: Enrollment Redesign-Verify Excel file generation
 
 Given User navigates to CSR portal and enters "Super" and login

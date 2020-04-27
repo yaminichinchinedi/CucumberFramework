@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@UPAClaimDetail  @UPARegression
+@UPAClaimDetail  @UPARegression  @UPASanity
 Feature: UPA Provider Claim Detail
 
 
