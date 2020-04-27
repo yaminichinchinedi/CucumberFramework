@@ -101,7 +101,7 @@ import main.java.reporting.LogTemp;
         },
         dryRun=false,
         strict=true,
-        tags={"@CSRSrchRemittanceEPRA"}
+        tags={"@UPAProvSrchEPRA"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

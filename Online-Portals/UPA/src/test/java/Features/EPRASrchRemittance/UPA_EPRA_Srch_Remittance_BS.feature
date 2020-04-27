@@ -1,7 +1,7 @@
 #Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 
-@UPASrchRemitEPRABS @UPASrchRemitEPRA1  @UPARegression
+@UPABSSrchEPRA @UPASrchRemitEPRA1  @UPARegression
 Feature: UPA_EPRA_Srch_Remittance_BS 
 
 
