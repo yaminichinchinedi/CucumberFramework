@@ -164,13 +164,16 @@ public class SearchTinPageSearchRemittance {
         	 System.out.print("------>User is--->"+System.getProperty("User"));
         	 if(System.getProperty("User").equalsIgnoreCase("P"))
         	 {
+        		 
         		 System.out.println("*-------enterTinUPA 2");
+        		 Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//select[@id='taxIndNbrId']"), 20);
             	 Element.selectVisibleText(tinDrpDwn,paymentType+" - Enrolled","TIN Selection from Dropdown");
             	 System.out.println("*****enterTinUPA 3");
                 
         	 }
         	 else if(System.getProperty("User").equalsIgnoreCase("BS") || System.getProperty("User").equalsIgnoreCase("PA"))
-        	 {
+        	 {        		 
+        		 Element.waitForPresenceOfElementLocated(testConfig,By.name("taxIdNbr"), 20);
         		 Element.enterData(txtTinnumber,paymentType, "Enter Tin as : " +paymentType, "Tin Textbox");
         		 Element.click(btnSearch, "Tin Search button");        		 
         		 
