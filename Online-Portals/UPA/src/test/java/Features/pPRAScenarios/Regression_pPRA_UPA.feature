@@ -14,12 +14,12 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | Priority | User         | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
-      | P1       | ProviderPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |
-      | P1       | ProviderPPRA | 480905931 |      1439039532 | 1SG05438158        | 1659356442 | 06/24/2019 | byHCDOPAndNpi | E      |
-      | P2       | ProviderPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
-      | P2       | ProviderPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
-      | P3       | ProviderPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
-      | P3       | ProviderPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
+      | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |
+      | P1       | PROVPPRA | 480905931 |      1439039532 | 1SG05438158        | 1659356442 | 06/24/2019 | byHCDOPAndNpi | E      |
+      | P2       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
+      | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
+      | P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
+      | P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
 
   @UPA_Provider_ErrorScenario
   Scenario Outline: Provider Login to CSR Application to validate error scenario for ConsolPayNumber search
@@ -33,12 +33,12 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | Priority | User         | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
-      | P1       | ProviderPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |
-      | P1       | ProviderPPRA | 480905931 |      1439039532 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
-      | P2       | ProviderPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
-      | P2       | ProviderPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
-      | P3       | ProviderPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
-      | P3       | ProviderPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
+      | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |
+      | P1       | PROVPPRA | 480905931 |      1439039532 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
+      | P2       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
+      | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
+      | P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
+      | P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
 
   @UPA_Payer_BS_ErrorScenario
   Scenario Outline: Payer and Billing Service Login to CSR Application to validate error scenario for NPI search
@@ -149,11 +149,11 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | Priority | User         | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
-      | P1       | ProviderPPRA | 270923713 |    1362310252 |         1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
-      | P1       | ProviderPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
-      | P2       | ProviderPPRA | 311369596 |    1413435888 |         1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
-      | P2       | ProviderPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
-      | P3       | ProviderPPRA | 043228346 |    1408098556 |         1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
+      | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
+      | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
+      | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
 
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
@@ -167,11 +167,11 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | Priority | User         | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type          | NPI        | Dates      | Date_NAS   |
-      | P1       | ProviderPPRA | 270923713 |    1362310252 |         1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 |
-      | P1       | ProviderPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 |
-      | P2       | ProviderPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
-      | P2       | ProviderPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
-      | P3       | ProviderPPRA | 043228346 |    1408098556 |         1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 |
+      | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 |
+      | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 |
+      | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
+      | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
+      | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 |
 
   #######Payer and Billing Service already exist exist##########
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf already exist with Payment number search
