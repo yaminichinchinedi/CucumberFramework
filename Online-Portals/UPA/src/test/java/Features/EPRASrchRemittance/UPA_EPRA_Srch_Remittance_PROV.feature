@@ -2,8 +2,8 @@
 #PPS.4012 job should be running to execute these test cases.
 # Few test Cases May fail due to existing PROD issue
 
-@UPASrchRemitEPRA12 @UPASrchRemitEPRA1  @UPARegression
-Feature: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Number 
+@UPAProvSrchEPRA @UPASrchRemitEPRA1  @UPARegression
+Feature: UPA_EPRA_Srch_Remittance_PROV 
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete

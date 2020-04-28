@@ -2,7 +2,7 @@
 #PPS.4012 job should be running to execute these test cases.
 
 @UPASrchRemitEPRAPayer  @UPARegression
-Feature: Search Remittance Payment Number 
+Feature: UPA_EPRA_Srch_Remittance_RemittanceDetail_Payer 
 
 # there is no data for NPI and Rendering Provider Name
 
