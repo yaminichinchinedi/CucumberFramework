@@ -91,6 +91,7 @@ Feature: UPA PPRA Scenarios
       | P3       | BSPPRA    | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
 
   #######Payer and Billing Service PDF does not exist##########
+  
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf does not exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
@@ -107,14 +108,16 @@ Feature: UPA PPRA Scenarios
       | P1       | PayerPPRA | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P3       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | PayerPPRA | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
       | P1       | BSPPRA    | 270923713 |      1362310252 |           1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
       | P1       | BSPPRA    | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | BSPPRA    | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P3       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | BSPPRA    | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
 
-  Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with Payment number search
+Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
@@ -131,6 +134,8 @@ Feature: UPA PPRA Scenarios
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
+      | P3       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+
 
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
@@ -148,13 +153,16 @@ Feature: UPA PPRA Scenarios
       | P1       | PayerPPRA | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P3       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | PayerPPRA | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
       | P1       | BSPPRA    | 270923713 |      1362310252 |           1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
       | P1       | BSPPRA    | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | BSPPRA    | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | BSPPRA    | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
+      | P3       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
 
+  
   Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
@@ -172,8 +180,11 @@ Feature: UPA PPRA Scenarios
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
       | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
       | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 |
+      | P3       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
+
 
   #######Payer and Billing Service already exist exist##########
+  
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf already exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
@@ -192,12 +203,14 @@ Feature: UPA PPRA Scenarios
       | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | PayerPPRA | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
+      | P3       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P1       | BSPPRA    | 270923713 |      1362310252 |           1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
       | P1       | BSPPRA    | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | BSPPRA    | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | BSPPRA    | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
-
+      | P3       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      
   Scenario Outline: Provider-Validation of ppra scenario where PDf already exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
@@ -208,14 +221,15 @@ Feature: UPA PPRA Scenarios
     When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
     Then User Delete PDf file placed over NAS drive  for date "<Date_NAS>"
-
-    Examples: 
+    
+      Examples: 
       | Priority | User     | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type          | NPI        | Dates      | Date_NAS   |
       | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 |
       | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 |
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
       | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
       | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 |
+      | P3       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
 
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf already not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
@@ -240,8 +254,9 @@ Feature: UPA PPRA Scenarios
       | P2       | BSPPRA    | 311369596 |      1413435888 |           1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | BSPPRA    | 043228346 |      1408098556 |           1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
-
-  Scenario Outline: Provider-Validation of ppra scenario where PDf already not exist with NPI search
+      | P3       | BSPPRA    | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      
+       Scenario Outline: Provider-Validation of ppra scenario where PDf already not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
@@ -251,11 +266,12 @@ Feature: UPA PPRA Scenarios
     When Validate PDF file placed over NAS Drive for date "<Date>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
     Then User Delete PDf file placed over NAS drive  for date "<Date_NAS>"
-
-    Examples: 
+    
+     Examples: 
       | Priority | User     | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type          | NPI        | Dates      | Date_NAS   |
       | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 |
       | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 |
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
       | P2       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
       | P3       | PROVPPRA | 043228346 |    1408098556 |         1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 |
+      | P3       | PROVPPRA | 752536818 |    1439047278 | 1SG05444624        | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 |
