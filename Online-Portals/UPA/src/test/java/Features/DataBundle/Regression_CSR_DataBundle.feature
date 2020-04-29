@@ -1,6 +1,6 @@
 #Author: Sahil D Sharma
 
-@CSRDataBundle @CSRRegression
+@CSRDataBundle @CSRRegression   @BothCSRUPAScenarios
 Feature: CSR_Data Bundle_Regression
 
 	@TC001						
