@@ -1,5 +1,5 @@
 #Author: Madhavi Upputuri
-@CreateEnrollment @US1099702
+@CreateEnrollment @US1099702 @BothCSRUPAScenarios @UPARegression
 Feature: US1099702_Create Enrollment- Billing Service - Footer Information
   @UPASanity
   Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information

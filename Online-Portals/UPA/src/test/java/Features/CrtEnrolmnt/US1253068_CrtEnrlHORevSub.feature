@@ -1,6 +1,6 @@
 #Author: Madhavi Upputuri
 
-@CreateEnrollment @US1253068
+@CreateEnrollment @US1253068 @BothCSRUPAScenarios @UPARegression
 Feature: US1253068_Create Enrollment- Review and Submit - show the page and test buttons edit- remove not tested QA
 
   Background: Create Enrollment_HO_Review and Submit 

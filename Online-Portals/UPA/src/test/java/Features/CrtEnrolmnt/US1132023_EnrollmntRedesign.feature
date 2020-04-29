@@ -1,6 +1,6 @@
 
 #Author:Rahul Krishna
- @CSRCreateEnrollment
+ @CSRCreateEnrollment @BothCSRUPAScenarios @CSRRegression
 Feature: Enrollment Redesign-Surver Response Reporting
 
 #TC_01,02,03,04

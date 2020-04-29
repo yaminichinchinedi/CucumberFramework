@@ -1,5 +1,5 @@
 #Author: Madhavi Upputuri
-@CreateEnrollment @US1048094
+@CreateEnrollment @US1048094 @BothCSRUPAScenarios @UPARegression
 Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
 
   Background: Create Enrollment_BS_Review and Submit 

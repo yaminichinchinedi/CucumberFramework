@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
-@CreateEnrollment @US1048061
+@CreateEnrollment @US1048061 @BothCSRUPAScenarios @UPARegression
 Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
 
   Background: Create Enrollment BS Enrollment Type to Identify Administrators page

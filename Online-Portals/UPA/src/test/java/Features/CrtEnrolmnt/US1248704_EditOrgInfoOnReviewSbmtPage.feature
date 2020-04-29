@@ -1,6 +1,6 @@
 #Author: Amit Kushwah
 
-@CreateEnrollment @US1248704
+@CreateEnrollment @US1248704 @BothCSRUPAScenarios @UPARegression
 Feature: Create Enrollment - Review and Submit -edit Organization Information
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment

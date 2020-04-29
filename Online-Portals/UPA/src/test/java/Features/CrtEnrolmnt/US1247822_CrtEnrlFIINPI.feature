@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
-@CreateEnrollment @US1247822 
+@CreateEnrollment @US1247822 @BothCSRUPAScenarios @UPARegression
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
