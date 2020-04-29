@@ -1,6 +1,6 @@
 #Author: Sahil D Sharma
 
-@UPADataBundle  @UPARegression
+@UPADataBundle  @UPARegression   @BothCSRUPAScenarios
 Feature: UPA_Provider_Data Bundle_Regression
 
 	@TC001				

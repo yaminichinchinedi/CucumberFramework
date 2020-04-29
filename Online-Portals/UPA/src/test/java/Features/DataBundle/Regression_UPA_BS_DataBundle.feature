@@ -1,6 +1,6 @@
 #Author: Sahil D Sharma
 
- @UPADataBundle  @UPARegression
+ @UPADataBundle  @UPARegression    @BothCSRUPAScenarios
 Feature: UPA_Billing_Service_Data Bundle_Regression
 
 	@TC001								
