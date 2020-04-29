@@ -248,6 +248,7 @@ Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist 
       | P1       | PayerPPRA | 571004971 |      1439046523 | 1SG05444672          | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
       | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+      | P3       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P3       | PayerPPRA | 043228346 |      1408098556 |           1408098556 | byHCDOPAndNpi | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
       | P1       | BSPPRA    | 270923713 |      1362310252 |           1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
       | P1       | BSPPRA    | 571004971 |      1439046523 | 1SG05444672          | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
