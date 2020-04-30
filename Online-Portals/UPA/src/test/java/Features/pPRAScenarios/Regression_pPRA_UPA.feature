@@ -213,8 +213,8 @@ Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist 
       
   Scenario Outline: Provider-Validation of ppra scenario where PDf already exist with Payment number search
     Given User navigates to UPA portal and enters "<User>" and login
-    Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
+    Then User clicks on Search Remittance link for UPA
     Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -259,8 +259,8 @@ Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist 
       
        Scenario Outline: Provider-Validation of ppra scenario where PDf already not exist with NPI search
     Given User navigates to UPA portal and enters "<User>" and login
+   	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
