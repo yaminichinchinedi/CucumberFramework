@@ -9,13 +9,12 @@ import cucumber.api.java.Before;
 import main.java.nativeFunctions.*;
 
 public class Hooks extends TestBase{
-	TestBase obj_TB = new TestBase();
+	
 	
 	@Before
 	public void Beforetest()
 	{
-		System.out.print("**Before hooks----->");
-		obj_TB.tearUp();
+		System.out.print("**Before hooks----->");		
 	}
 
 	@After
@@ -23,7 +22,7 @@ public class Hooks extends TestBase{
 	{
 		System.out.print("**After hooks----->");
 		//Closing browser
-		obj_TB.tearDown();
+		testConfig.tearDown();
 	}
 	
 	 @After

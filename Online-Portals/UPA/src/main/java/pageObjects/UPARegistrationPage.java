@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.util.Properties;
 
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
@@ -14,7 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class UPARegistrationPage{
+public class UPARegistrationPage extends TestBase{
 	
 	//Declare Page objects and methods
 	
@@ -50,9 +51,19 @@ public class UPARegistrationPage{
 	
 	public UPARegistrationPage(TestBase testConfig) 
 	{
-
-		this.testConfig=testConfig;		
+		
+		this.testConfig=testConfig;
+		System.setProperty("Application", "UPA");
+		testConfig.tearUp();
 		Browser.dismissAlert(testConfig);
+		System.setProperty("testSuite", "UPA_Regression");
+		if (System.getProperty("env") == null) {
+				testConfig.urlHeper(runtimeProperties.getProperty("env"));		}
+		else
+		{
+			testConfig.urlHeper(System.getProperty("env"));
+		}
+		
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		PageFactory.initElements(testConfig.driver, this);

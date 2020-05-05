@@ -1,5 +1,5 @@
 #Sample Feature Definition Template
-@CSRpPRARegression @CSRRegression
+@CSRpPRARegression @CSRRegression @BothCSRUPAScenarios
 Feature: pPRA Validation for CSR Applicatin with different user groups
 
   ######################################################################################################################################

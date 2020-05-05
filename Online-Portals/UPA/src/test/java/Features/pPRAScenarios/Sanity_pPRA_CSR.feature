@@ -6,7 +6,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
   ##################################################################CSR Scenarios#######################################################
   ######################################################################################################################################
   #@CSR_ErrorScenario_NPISearch, CSR_ErrorScenario_ConsolPayNumberSearch
-  @CSR_ErrorScenario
+  @CSR_ErrorScenario_Test
   Scenario Outline: Login to CSR Application to validate error scenario for NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link

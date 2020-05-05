@@ -144,7 +144,7 @@ public class TestBase {
 		return testConfig;
 	}
 
-	private void urlHeper(String env) {
+	public void urlHeper(String env) {
 
 		System.setProperty("Database", env);
 		System.setProperty("UserActiveURL", runtimeProperties.getProperty("UPAURLActive_" + env));
@@ -202,22 +202,20 @@ public class TestBase {
 			LogTemp.Comment("Starting execution ..");
 		}
 		if (Execution_Env.equalsIgnoreCase("Local")) {
+			DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
 				driver = initChromeDriver();
-				break;
-			case "FF":
-				driver = initFirefoxDriver();
-				break;
+				break;			
 			case "IE":
-				DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
+				caps = DesiredCapabilities.internetExplorer();
 				caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 				caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
 				caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
 				caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
 				caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
 				caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-				String v = caps.getVersion().toString();
+				//String v = caps.getVersion().toString();
 				caps.setCapability("disable-popup-blocking", true);
 				System.setProperty("webdriver.ie.driver",
 						System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
@@ -225,6 +223,54 @@ public class TestBase {
 				driver.manage().deleteAllCookies();
 				driver.manage().window().maximize();
 				LogTemp.Comment("Launched IE browser-- : " + browserType);
+				break;
+			case "CSRIEUPAIE":
+				if(System.getProperty("Application").contains("UPA"))
+				{
+					driver = initChromeDriver();
+				}
+				else if(System.getProperty("Application").contains("CSR"))
+				{
+					caps = DesiredCapabilities.internetExplorer();
+					caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+					caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+					caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+					caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+					caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+					caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
+					//String v = caps.getVersion().toString();
+					caps.setCapability("disable-popup-blocking", true);
+					System.setProperty("webdriver.ie.driver",
+							System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
+					driver = new InternetExplorerDriver(caps);
+					driver.manage().deleteAllCookies();
+					driver.manage().window().maximize();
+					LogTemp.Comment("Launched IE browser-- : " + browserType);
+				}
+				break;
+			case "CSRIEUPAChrome":
+				if(System.getProperty("Application").contains("UPA"))
+				{
+					driver = initChromeDriver();
+				}
+				else if(System.getProperty("Application").contains("CSR"))
+				{
+					caps = DesiredCapabilities.internetExplorer();
+					caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+					caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+					caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+					caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+					caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+					caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
+					//String v = caps.getVersion().toString();
+					caps.setCapability("disable-popup-blocking", true);
+					System.setProperty("webdriver.ie.driver",
+							System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
+					driver = new InternetExplorerDriver(caps);
+					driver.manage().deleteAllCookies();
+					driver.manage().window().maximize();
+					LogTemp.Comment("Launched IE browser-- : " + browserType);
+				}
 				break;
 			default:
 				Log.Comment("browser : " + browserType + " is invalid, Launching Firefox as browser of choice..");
@@ -239,6 +285,28 @@ public class TestBase {
 				driver = SetdriveronSauce(browserType);
 				break;
 			case "IE":
+				driver = SetdriveronSauce(browserType);
+				break;
+			case "CSRIEUPAIE":
+				if(System.getProperty("Application").contains("CSR"))
+				{
+					driver = SetdriveronSauce("IE");
+				}
+				else if( System.getProperty("Application").contains("UPA"))
+				{
+					driver = SetdriveronSauce("chrome");
+				}
+				driver = SetdriveronSauce(browserType);
+				break;
+			case "CSRIEUPAChrome":
+				if(System.getProperty("Application").contains("CSR"))
+				{
+					driver = SetdriveronSauce("IE");
+				}
+				else if( System.getProperty("Application").contains("UPA"))
+				{
+					driver = SetdriveronSauce("chrome");
+				}
 				driver = SetdriveronSauce(browserType);
 				break;
 			}
@@ -378,9 +446,10 @@ public class TestBase {
 
 	//@BeforeTest
 	public void tearUp() {
-		LogTemp.Comment("** TearUp1---" + System.getProperty("BrowserType"));
+		//LogTemp.Comment("** TearUp1---" + System.getProperty("BrowserType"));
 		if (System.getProperty("BrowserType") == null) {
 			LogTemp.Comment("** Browser value is  : null");
+			LogTemp.Comment("** Browser value is  : "+runtimeProperties.getProperty("BrowserType"));
 			setDriver(runtimeProperties.getProperty("BrowserType"));
 		} else {
 			LogTemp.Comment("** Browser value is not null" + System.getProperty("BrowserType"));
@@ -527,7 +596,7 @@ public class TestBase {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			LogTemp.Comment("Launched IE browser-- : " + Browser);
+			LogTemp.Comment("Launched browser-- : " + Browser);
 		} else if (Browser.equalsIgnoreCase("chrome")) {
 			
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
@@ -542,7 +611,7 @@ public class TestBase {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			LogTemp.Comment("Launched IE browser-- : " + Browser);
+			LogTemp.Comment("Launched browser-- : " + Browser);
 		}
 
 		return driver;

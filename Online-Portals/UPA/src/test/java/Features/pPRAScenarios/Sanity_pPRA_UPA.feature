@@ -6,7 +6,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
   ##################################################################CSR Scenarios#######################################################
   ######################################################################################################################################
   ##UPA Sanity#######
-  @UPA_Provider_ErrorScenario1102_Thur1
+  @CSR_ErrorScenario_Test
   Scenario Outline: Provider Login to CSR Application to validate error scenario for NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
