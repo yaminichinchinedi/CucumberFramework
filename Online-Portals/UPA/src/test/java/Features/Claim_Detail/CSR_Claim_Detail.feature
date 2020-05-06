@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@CSRClaimDetail    @CSRRegression @CSRSanity
+@CSRClaimDetail    @CSRRegression @CSRSanity @BothCSRUPAScenarios
 Feature: CSR Claim Detail
 
 Scenario Outline: Claim Detail UI Functionality 

@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
- @CSRRemitDetail   @CSRRegression @CSRSanity
+ @CSRRemitDetail   @CSRRegression @CSRSanity @BothCSRUPAScenarios
 Feature: CSR Remittance Detail
 
 
