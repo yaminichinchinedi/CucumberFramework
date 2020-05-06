@@ -98,6 +98,7 @@ public void verifyAllOtherDrpDwns() throws Exception
 
     for(String s: arr)
     {
+    	Browser.wait(testConfig, 5);
         Element.selectVisibleText(quickSearch,s,"Quick Search from View Payments");
         Browser.wait(testConfig, 5);
         
