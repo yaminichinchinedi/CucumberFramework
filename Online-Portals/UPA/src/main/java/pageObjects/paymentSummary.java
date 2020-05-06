@@ -172,19 +172,19 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 //		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		
-		service = new PaymentSummaryFislService();
-		
-		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
-		
-		if(drpDwnQuickSearch!=null)
-			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
-		else
-		if(txtBoxPayerTin!=null)
-			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
-		else if(txtBoxBSTin !=null)
-			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
-		else if(txtBoxProvTin!=null)
-			Element.verifyElementPresent(txtBoxProvTin, "Provider tin text box");
+//		service = new PaymentSummaryFislService();
+//		
+//		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
+//		
+//		if(drpDwnQuickSearch!=null)
+//			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+//		else
+//		if(txtBoxPayerTin!=null)
+//			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
+//		else if(txtBoxBSTin !=null)
+//			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
+//		else if(txtBoxProvTin!=null)
+//			Element.verifyElementPresent(txtBoxProvTin, "Provider tin text box");
 			
 		
 	}
