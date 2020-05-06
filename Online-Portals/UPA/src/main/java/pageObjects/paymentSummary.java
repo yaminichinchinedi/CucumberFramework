@@ -105,6 +105,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	@FindBy(name = "payerProvTin")
 	WebElement txtBoxPayerTin;
+	
+	@FindBy(name = "providerTIN")
+	WebElement txtBoxProvTin;
 
 	@FindBy(name = "btnSearch")
 	WebElement btnSearch;
@@ -180,6 +183,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
 		else if(txtBoxBSTin !=null)
 			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
+		else if(txtBoxProvTin!=null)
+			Element.verifyElementPresent(txtBoxProvTin, "Provider tin text box");
+			
 		
 	}
 	
