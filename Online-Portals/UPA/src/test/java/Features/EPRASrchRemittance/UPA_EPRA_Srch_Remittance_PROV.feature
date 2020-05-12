@@ -2,9 +2,8 @@
 #PPS.4012 job should be running to execute these test cases.
 # Few test Cases May fail due to existing PROD issue
 
-@UPAProvSrchEPRA @UPASrchRemitEPRA1  @UPARegression
+@UPAProvSrchEPRA  @UPASrchRemitEPRA1  @UPARegression
 Feature: UPA_EPRA_Srch_Remittance_PROV 
-
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
@@ -22,19 +21,18 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
   
 	
 	Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		     |   usertype      |
-						|	byElectronicPaymentNo	|			 PROV_Admin		      |					1				|			EPRAPROVAdmin		 |    PROV_Admin   |
-						|	byElectronicPaymentNo	|			 PROV_Admin					|					2				|			EPRAPROVAdmin		 |    PROV_Admin   |
-						|	    byDOPAndNpi	      |			 PROV_Admin    		  |					1				|			EPRAPROVAdmin		 |    PROV_Admin   |
-						|	    byDOPAndNpi	      |			 PROV_Admin					|					2				|			EPRAPROVAdmin		 |    PROV_Admin   |
-						|	byElectronicPaymentNo	|			 PROV_Gen 		      |					1				|			EPRAPROVGen			 |    PROV_Gen     |
-						|	byElectronicPaymentNo	|			 PROV_Gen 					|					2				|			EPRAPROVGen			 |    PROV_Gen     |
-						|	    byDOPAndNpi	      |			 PROV_Gen     		  |					1				|			EPRAPROVGen			 |    PROV_Gen     |
-						|	    byDOPAndNpi	      |			 PROV_Gen 					|					2				|			EPRAPROVGen			 |    PROV_Gen     |
-
-	
+						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		     |   usertype  |
+						|	byElectronicPaymentNo	|			 PROV_Admin		      |					1				|			EPRAPROVAdmin		 |    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Admin					|					2				|			EPRAPROVAdmin		 |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Admin    		  |					1				|			EPRAPROVAdmin		 |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Admin					|					2				|			EPRAPROVAdmin		 |    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Gen 		      |					1				|			EPRAPROVGen			 |    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Gen 					|					2				|			EPRAPROVGen			 |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Gen     		  |					1				|			EPRAPROVGen			 |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Gen 					|					2				|			EPRAPROVGen			 |    PROV     |
 
 
+						
 Scenario Outline: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Number P1 & P2 Already Existing
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
@@ -49,14 +47,14 @@ Scenario Outline: UPA_EPRA_Srch_Remittance_PROV --> Search Remittance Payment Nu
 	
 
 	Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		              |   usertype        |
-						|	byElectronicPaymentNo	|			 PROV_Admin		      |					1				|			EPRAgeneratedPROVAdmin		|    PROV_Admin     |
-						|	byElectronicPaymentNo	|			 PROV_Admin					|					2				|			EPRAgeneratedPROVAdmin		|    PROV_Admin     |
-						|	    byDOPAndNpi	      |			 PROV_Admin    		  |					1				|			EPRAgeneratedPROVAdmin		|    PROV_Admin     |
-						|	    byDOPAndNpi	      |			 PROV_Admin					|					2				|			EPRAgeneratedPROVAdmin		|    PROV_Admin     |
-						|	byElectronicPaymentNo	|			 PROV_Gen 		      |					1				|			EPRAgeneratedPROVGen		  |    PROV_Gen       |
-						|	byElectronicPaymentNo	|			 PROV_Gen 					|					2				|			EPRAgeneratedPROVGen		  |    PROV_Gen       |
-						|	    byDOPAndNpi	      |			 PROV_Gen     		  |					1				|			EPRAgeneratedPROVGen	    |    PROV_Gen       |
-						|	    byDOPAndNpi	      |			 PROV_Gen 					|					2				|			EPRAgeneratedPROVGen	    |    PROV_Gen       |
+						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		              |   usertype  |
+						|	byElectronicPaymentNo	|			 PROV_Admin		      |					1				|			EPRAgeneratedPROVAdmin		|    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Admin					|					2				|			EPRAgeneratedPROVAdmin		|    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Admin    		  |					1				|			EPRAgeneratedPROVAdmin		|    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Admin					|					2				|			EPRAgeneratedPROVAdmin		|    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Gen 		      |					1				|			EPRAgeneratedPROVGen		  |    PROV     |
+						|	byElectronicPaymentNo	|			 PROV_Gen 					|					2				|			EPRAgeneratedPROVGen		  |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Gen     		  |					1				|			EPRAgeneratedPROVGen	    |    PROV     |
+						|	    byDOPAndNpi	      |			 PROV_Gen 					|					2				|			EPRAgeneratedPROVGen	    |    PROV     |
 														
 																		

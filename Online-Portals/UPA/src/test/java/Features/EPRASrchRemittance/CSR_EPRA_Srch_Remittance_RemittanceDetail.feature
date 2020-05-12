@@ -9,7 +9,8 @@ Feature: CSR_EPRA_Srch_Remittance_RemittanceDetail
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
-	Then User enters tin on Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+	#Then User enters tin on Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+	Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button
 	Then User enters "<Search Criteria>" and click on search button.
 	And User clicks on Payment Number when "<Search Criteria>" and validate Remittance Detail page is opened.
 	And User clicks on print request button present on Remittance Detail screen.
@@ -22,56 +23,56 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	
 	Examples:
 	
-						|		Search Criteria			    |			credentials			|			priority		|			searchBy		|
-			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRA				|
-				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRA				|
-						|			byDOPAndNpi				    |					Super				|					1				|			EPRA				|
-			      |			byDOPAndNpi				    |					Super				|					2				|			EPRA				|
-					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRA				|
-		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRA				|
-						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRA				|
-			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRA				|
-			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRA				|
-			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRA				|
-			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRA				|
-			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRA				|
-			    	|	byElectronicPaymentNo	    |					RO				  |					1				|			EPRA				|
-			    	|	byElectronicPaymentNo	    |					RO				  |					2				|			EPRA				|
-			    	|			byDOPAndNpi				    |					RO			  	|					1				|			EPRA				|
-			    	|			byDOPAndNpi				    |					RO				  |					2				|			EPRA				|
-			   	  |	byDOPAndAccountNo			    |					RO				  |					1				|			EPRA				|
-			     	|	byDOPAndAccountNo			    |					RO				  |					2				|			EPRA				|
-			     	|	byDOP&SubscriberID		    |					RO				  |					1				|			EPRA				|
-			    	|	byDOP&SubscriberID		    |					RO				  |					2				|			EPRA				| 
-			    	|	byDOPAndClaimNo				    |  				RO				  |					1				|			EPRA				|
-			    	|	byDOPAndClaimNo				    |  				RO				  |					2				|			EPRA				| 
-			    	|	byDOPAndPatientNm			    |					RO				  |					1				|			EPRA				|
-			    	|	byDOPAndPatientNm			    |					RO				  |					2				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |				  RO				  |					1				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |				  RO				  |					2				|			EPRA				|
-			    	|	byElectronicPaymentNo	    |					RW				  |					1				|			EPRA				|
-				  	|	byElectronicPaymentNo	    |					RW				  |					2				|			EPRA				|
-				  	|			byDOPAndNpi				    |					RW				  |					1				|			EPRA				|
-				  	|			byDOPAndNpi				    |					RW				  |					2				|			EPRA				|
-				  	|	byDOPAndAccountNo			    |					RW				  |					1				|			EPRA				|
-			    	|	byDOPAndAccountNo			    |					RW				  |					2				|			EPRA				|
-				  	|	byDOP&SubscriberID		    |					RW				  |					1				|			EPRA				|
-			    	|	byDOP&SubscriberID		    |					RW				  |					2				|			EPRA				|
-			    	|	byDOPAndClaimNo				    |  				RW				  |					1				|			EPRA				|
-			    	|	byDOPAndClaimNo				    |  				RW				  |					2				|			EPRA				|
-			    	|	byDOPAndPatientNm			    |					RW				  |					1				|			EPRA				|
-			    	|	byDOPAndPatientNm			    |					RW				  |					2				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |				  RW				  |					1				|			EPRA				|
-			    	|	byDOPAndRenderingProvider |				  RW				  |					2				|			EPRA				|
-			    
-			    
+						|		Search Criteria			    |			credentials			|			priority		|			searchBy		|usertype    |
+			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRA				| PROV       |
+				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRA				| PROV       |
+						|			byDOPAndNpi				    |					Super				|					1				|			EPRA				| PROV       |
+			      |			byDOPAndNpi				    |					Super				|					2				|			EPRA				| PROV       |
+					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRA				| PROV       |
+		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRA				| PROV       |
+						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRA				| PROV       |
+			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRA				| PROV       |
+			    	|	byElectronicPaymentNo	    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	byElectronicPaymentNo	    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|			byDOPAndNpi				    |					RO			  	|					1				|			EPRA				| PROV       |
+			    	|			byDOPAndNpi				    |					RO				  |					2				|			EPRA				| PROV       |
+			   	  |	byDOPAndAccountNo			    |					RO				  |					1				|			EPRA				| PROV       |
+			     	|	byDOPAndAccountNo			    |					RO				  |					2				|			EPRA				| PROV       |
+			     	|	byDOP&SubscriberID		    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	byDOP&SubscriberID		    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    |  				RO				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    |  				RO				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |				  RO				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |				  RO				  |					2				|			EPRA				| PROV       |
+			    	|	byElectronicPaymentNo	    |					RW				  |					1				|			EPRA				| PROV       |
+				  	|	byElectronicPaymentNo	    |					RW				  |					2				|			EPRA				| PROV       |
+				  	|			byDOPAndNpi				    |					RW				  |					1				|			EPRA				| PROV       |
+				  	|			byDOPAndNpi				    |					RW				  |					2				|			EPRA				| PROV       |
+				  	|	byDOPAndAccountNo			    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndAccountNo			    |					RW				  |					2				|			EPRA				| PROV       |
+				  	|	byDOP&SubscriberID		    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	byDOP&SubscriberID		    |					RW				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    |  				RW				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				    |  				RW				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndPatientNm			    |					RW				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |				  RW				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndRenderingProvider |				  RW				  |					2				|			EPRA				| PROV       |
+
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
-	Then User enters tin on Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+	#Then User enters tin on Search Remittance Tin Page for "<priority>" and "<searchBy>" click on continue button
+	Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button
 	Then User enters "<Search Criteria>" and click on search button.
 	And User clicks on Payment Number when "<Search Criteria>" and validate Remittance Detail page is opened.
 	And User clicks on Print Available button on Remittance Detail screen.
@@ -82,49 +83,49 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	
 	Examples:
 	
-						|		Search Criteria			    |			credentials			|			priority		|			searchBy		        |
-			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRAgenerated		    |
-				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRAgenerated				|
-						|			byDOPAndNpi				    |					Super				|					1				|			EPRAgenerated				|
-			      |			byDOPAndNpi				    |					Super				|					2				|			EPRAgenerated				|
-					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRAgenerated				|
-		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRAgenerated				|
-						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRAgenerated				|
-			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRAgenerated				|
-			    	|	byElectronicPaymentNo	    |						RO				|					1				|			EPRAgenerated				|
-			    	|	byElectronicPaymentNo	    |						RO				|					2				|			EPRAgenerated				|
-			    	|			byDOPAndNpi				    |						RO				|					1				|			EPRAgenerated				|
-			    	|			byDOPAndNpi				    |						RO				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndAccountNo			    |						RO				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndAccountNo			    |						RO				|					2				|			EPRAgenerated				|
-			    	|	byDOP&SubscriberID		    |						RO				|					1				|			EPRAgenerated				|
-			    	|	byDOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				| 
-			    	|	byDOPAndClaimNo				    |  					RO				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndClaimNo				    |  					RO				|					2				|			EPRAgenerated				| 
-			    	|	byDOPAndPatientNm			    |						RO				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndPatientNm			    |						RO				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |				    RO				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |				    RO				|					2				|			EPRAgenerated				|
-			    	|	byElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|
-				  	|	byElectronicPaymentNo	    |						RW				|					2				|			EPRAgenerated				|
-				  	|			byDOPAndNpi				    |						RW				|					1				|			EPRAgenerated				|
-				  	|			byDOPAndNpi				    |						RW				|					2				|			EPRAgenerated				|
-				  	|	byDOPAndAccountNo			    |						RW				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndAccountNo			    |						RW				|					2				|			EPRAgenerated				|
-				  	|	byDOP&SubscriberID		    |						RW				|					1				|			EPRAgenerated				|
-			    	|	byDOP&SubscriberID		    |						RW				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndClaimNo				    |  					RW				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndClaimNo				    |  					RW				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndPatientNm			    |						RW				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|
-			    	|	byDOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|
+						|		Search Criteria			    |			credentials			|			priority		|			searchBy		        |usertype   |
+			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRAgenerated		    |PROV       |		
+				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+						|			byDOPAndNpi				    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			      |			byDOPAndNpi				    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byElectronicPaymentNo	    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byElectronicPaymentNo	    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|			byDOPAndNpi				    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|			byDOPAndNpi				    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndAccountNo			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndAccountNo			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOP&SubscriberID		    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    |  					RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    |  					RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |				    RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |				    RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|	byElectronicPaymentNo	    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|			byDOPAndNpi				    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|			byDOPAndNpi				    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|	byDOPAndAccountNo			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndAccountNo			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|	byDOP&SubscriberID		    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|	byDOP&SubscriberID		    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    |  					RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				    |  					RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|PROV       |		
 			    
 
 

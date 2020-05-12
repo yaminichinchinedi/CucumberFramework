@@ -28,7 +28,7 @@ public class ViewPaymentsDataProvider {
 	@FindBy(xpath = "//input[@name='billingProvTin']") WebElement bstinDrpDwn;
 	@FindBy(xpath = "//input[@name='btnSearch']") WebElement submitBtn;
 	
-	
+	Map dataRequiredForSearch;
 	
 	
 	public ViewPaymentsDataProvider(TestBase testConfig) {
@@ -764,7 +764,7 @@ case "EPRA":
 			break;
 		}
 		
-		case "Multiple PLB":
+		case "Multiple_PLB":
 		{
 			sqlRowNo = 200;
 			break;
@@ -836,12 +836,44 @@ case "EPRA":
  		   try{
  		    Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
  		    testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
- 		    if((paymentType.equalsIgnoreCase("EPRA"))|| (paymentType.equalsIgnoreCase("EPRABSViewPay")) )
- 		   {   
+// 		    if((paymentType.equalsIgnoreCase("EPRAViewPay"))|| (paymentType.equalsIgnoreCase("EPRABSViewPay")) )
+ 		   if(paymentType.equalsIgnoreCase("EPRAViewPay") )
+ 		     		   {   
  		    testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
- 		    testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
+ 		   // testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
  		   } 
-		   }
+ 		   
+ 		   else if(paymentType.equalsIgnoreCase("EPRAPROVAdmin")||paymentType.equalsIgnoreCase("EPRAPROVGen")||paymentType.equalsIgnoreCase("EPRAgeneratedPROVAdmin")
+ 				      ||paymentType.equalsIgnoreCase("EPRAgeneratedPROVGen")||paymentType.equalsIgnoreCase("EPRA")||paymentType.equalsIgnoreCase("EPRAgenerated")
+ 				      ||paymentType.equalsIgnoreCase("EPRABSAdmin")||paymentType.equalsIgnoreCase("EPRABSGen")||paymentType.equalsIgnoreCase("EPRAgeneratedBSAdmin")
+ 				      ||paymentType.equalsIgnoreCase("EPRAgeneratedBSGen")||paymentType.equalsIgnoreCase("EPRAPayerAdmin")||paymentType.equalsIgnoreCase("EPRAPayerGen")
+ 				      ||paymentType.equalsIgnoreCase("EPRAPayergeneratedAdmin")||paymentType.equalsIgnoreCase("EPRAPayergeneratedGen"))
+ 		   {
+ 			    //dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				   System.out.println(tinNumbers);
+				  
+				  System.setProperty("ELECTRONIC_PAYMENT_NUMBER", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+				  System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
+				  
+			      System.setProperty("fromDate",tinNumbers.get("SETL_DT").toString());
+			      System.setProperty("toDate",tinNumbers.get("SETL_DT").toString());
+			      
+			      System.setProperty("prov_npi_nbr",tinNumbers.get("PROV_NPI_NBR").toString());
+			      System.setProperty("pint_acct_nbr",tinNumbers.get("PTNT_ACCT_NBR").toString());
+			      
+			      System.setProperty("sbscr_id",tinNumbers.get("SBSCR_ID").toString());
+			      
+			      System.setProperty("clm_nbr",tinNumbers.get("CLM_NBR").toString());
+			      System.setProperty("ptnt_fst_nm",tinNumbers.get("PTNT_FST_NM").toString());
+			      System.setProperty("ptnt_lst_nm",tinNumbers.get("PTNT_LST_NM").toString());
+			      System.setProperty("lst_nm",tinNumbers.get("LST_NM").toString());
+ 		   }
+ 		   
+ 		   else if(paymentType.equalsIgnoreCase("Multiple_PLB")||paymentType.equalsIgnoreCase("PLB Adj Only"))
+ 		   {
+ 			  System.out.println("The TIN Number is:" + tinNumbers);
+ 		   }
+ 		  }
  		  catch(Exception e)
  		  {
  			testConfig.putRunTimeProperty("AlreadyFailed","yes");
@@ -883,6 +915,45 @@ case "EPRA":
 		Log.Comment("Tin No " + tin + " is already associated with logged in user");
 		return tin;
 	}
+	
+	public String associateTinWithUser(String userType,String tin) 
+	{ 		
+		int sqlRowNo=0;
+		int insertQueryRowNo=0;
+		int isTinAssociated;
+		
+		if(userType.equals("BS"))
+		{
+			sqlRowNo=62;
+			insertQueryRowNo=61;
+		}
+		else if(userType.equals("PROV"))
+		{ 
+			sqlRowNo=28;
+		    insertQueryRowNo=24;
+		}
+		
+		else if(userType.equals("Payer"))
+		{ 
+			Log.Comment("User Type is Payer");
+		}
+		
+		testConfig.putRunTimeProperty("tin", tin);
+		
+		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+		if(isTinAssociated == 0) 
+		 {
+		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+		   Log.Comment("Associated tin " + tin + "With Logged in user");
+		   
+		   testConfig.putRunTimeProperty("TobeDeleted", userType);
+		   }
+		else
+		Log.Comment("Tin No " + tin + " is already associated with logged in user");
+		return tin;
+	}
+	
 	
 	//amit - to be reviewed
 	public String associateTinWithUser(String tin, int sqlRowNo,int insertQueryRowNo)

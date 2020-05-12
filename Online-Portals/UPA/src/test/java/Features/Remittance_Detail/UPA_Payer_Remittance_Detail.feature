@@ -1,9 +1,9 @@
 #Author: Athyusha Thota
 
-@UPARemitDetail  @UPARegression @BothCSRUPAScenarios
+@UPARemitDetail  @UPARegression @BothCSRUPAScenarios 
 Feature: UPA Remittance Detail Payer
 
- 
+ @UPARemitDetailPayer
 Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
 
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -17,13 +17,13 @@ Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
      And Verify Pagination functionality
      And Check RMK Code Pop Up
      And Check Adj Reason Code Pop Up
-     And Verify FISL Response for COB Only Filter Claim
-     And Verify FISL Response for Reversal Only Filter Claim
+     And Verify FISL Response for COB Only Filter Claim for "<usertype>"
+     And Verify FISL Response for Reversal Only Filter Claim for "<usertype>"
 
 Examples: 
-        |    Search Criteria     |       credentials        |  
-        |     Payer_Admin        |       PAY_Admin          |
-        |     Payer_Gen          |       PAY_Gen            |
+        |    Search Criteria     |       credentials        | usertype | 
+        |     Payer_Admin        |       PAY_Admin          | Payer    |
+  #      |     Payer_Gen          |       PAY_Gen           | Payer    |
         
         
 

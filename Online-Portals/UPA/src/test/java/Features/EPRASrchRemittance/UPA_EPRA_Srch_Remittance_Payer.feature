@@ -54,7 +54,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 						|	    byDOPAndNpi	      |			 PAY_Admin					|					2				|			EPRAPayergeneratedAdmin		|    Payer     |
 						|	byElectronicPaymentNo	|			 PAY_Gen  		      |					1				|			EPRAPayergeneratedGen		  |    Payer     |
 						|	byElectronicPaymentNo	|			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen		  |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayergeneratedGen		  |     Payer    |
-						|	    byDOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen	    |     Payer    |
+						|	    byDOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayergeneratedGen		  |    Payer     |
+						|	    byDOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen	    |    Payer     |
 														
 																		

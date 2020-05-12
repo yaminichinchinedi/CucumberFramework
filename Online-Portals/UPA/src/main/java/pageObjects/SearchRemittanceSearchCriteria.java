@@ -171,100 +171,100 @@ public class SearchRemittanceSearchCriteria {
 		int sqlRow = 0;
 		
 		Log.Comment(testConfig.getRunTimeProperty("suite"));
-		if(!(criteriaType.equalsIgnoreCase("byHCDOPAndNpi") ||criteriaType.equalsIgnoreCase("byHCPayment_Number")))
-		{
-		
-		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 204;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		System.out.println(dataRequiredForSearch);
-    	}        
-    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
-    	{
-    		 sqlRow = 205;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 204;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
-    	{
-    		 sqlRow = 205;
-    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-    		
-    		System.out.println(dataRequiredForSearch);
-    	}
-	
-	  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-	  {
-		 sqlRow = 204;
-		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		System.out.println(dataRequiredForSearch);
-	  }
-	
-	 else if("EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
-	     {
-		  sqlRow = 205;
-		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		   System.out.println(dataRequiredForSearch);
-	     }
-	
-	else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
-	     {
-		  sqlRow = 210;
-		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		   System.out.println(dataRequiredForSearch);
-	     }
-	
-	
-	else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
-     {
-	  sqlRow = 217;
-	  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-	
-	   System.out.println(dataRequiredForSearch);
-     }
-	
-	else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
-	{
-		 sqlRow = 218;
-		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		System.out.println(dataRequiredForSearch);
-	}
-	else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
-	{
-		 sqlRow = 219;
-		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		System.out.println(dataRequiredForSearch);
-	}
-	
-	else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
-	{
-		 sqlRow = 210;
-		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		
-		System.out.println(dataRequiredForSearch);
-	}
-
-     else		 
-     {	
-   		dataRequiredForSearch=dataProvider(criteriaType);
-   		System.out.println(dataRequiredForSearch);
-     }
-		}
-	
+//		if(!(criteriaType.equalsIgnoreCase("byHCDOPAndNpi") ||criteriaType.equalsIgnoreCase("byHCPayment_Number")))
+//		{
+//		
+//		if("EPRA".equals(testConfig.getRunTimeProperty("suite")))
+//    	{
+//    		 sqlRow = 204;
+//    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//    		System.out.println(dataRequiredForSearch);
+//    	}        
+//    	else if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))) 
+//    	{
+//    		 sqlRow = 205;
+//    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//    		
+//    		System.out.println(dataRequiredForSearch);
+//    	}
+//    	else if("EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+//    	{
+//    		 sqlRow = 204;
+//    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//    		
+//    		System.out.println(dataRequiredForSearch);
+//    	}
+//    	else if("EPRAgeneratedProvAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
+//    	{
+//    		 sqlRow = 205;
+//    		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//    		
+//    		System.out.println(dataRequiredForSearch);
+//    	}
+//	
+//	  else if("EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+//	  {
+//		 sqlRow = 204;
+//		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		System.out.println(dataRequiredForSearch);
+//	  }
+//	
+//	 else if("EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite")))
+//	     {
+//		  sqlRow = 205;
+//		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		   System.out.println(dataRequiredForSearch);
+//	     }
+//	
+//	else if("EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite")))
+//	     {
+//		  sqlRow = 210;
+//		  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		   System.out.println(dataRequiredForSearch);
+//	     }
+//	
+//	
+//	else if("EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite")))
+//     {
+//	  sqlRow = 217;
+//	  dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//	
+//	   System.out.println(dataRequiredForSearch);
+//     }
+//	
+//	else if("EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABSGen".equals(testConfig.getRunTimeProperty("suite")))
+//	{
+//		 sqlRow = 218;
+//		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		System.out.println(dataRequiredForSearch);
+//	}
+//	else if("EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite")))
+//	{
+//		 sqlRow = 219;
+//		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		System.out.println(dataRequiredForSearch);
+//	}
+//	
+//	else if("EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
+//	{
+//		 sqlRow = 210;
+//		dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+//		
+//		System.out.println(dataRequiredForSearch);
+//	}
+//
+//     else		 
+//     {	
+//   		dataRequiredForSearch=dataProvider(criteriaType);
+//   		System.out.println(dataRequiredForSearch);
+//     }
+//		}
+//	
 		
 		switch(criteriaType)
 		 {
@@ -274,16 +274,21 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
 		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
-		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-		    	System.out.println(System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString()));
-		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	
+		    	String dspl_consl_pay_nbr = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+		    	System.out.println(dspl_consl_pay_nbr);
+		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
+		    	System.setProperty("paymentNum", dspl_consl_pay_nbr);
+//		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
+//		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+//		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+//		    	System.out.println(System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString()));
+//		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
+//		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+//		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	
 		    	break;
 		    }
@@ -335,31 +340,34 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOPAndAccountNo":
 		    {
+		    	String pint_acct_nbr = System.getProperty("pint_acct_nbr");
+		    	Element.enterData(accountNo, pint_acct_nbr, "Enter patient account no as : "+pint_acct_nbr, "Account Number");
 		    	
-		    	Element.enterData(accountNo, dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Enter patient account no as : "+dataRequiredForSearch.get("PTNT_ACCT_NBR").toString(), "Account Number");
+		    	String fromDate =  System.getProperty("fromDate");
+		    	String toDate =  System.getProperty("toDate");
 		    	
                 if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
 		    	
-                System.setProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-                System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-                System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	testConfig.putRunTimeProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
-		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_ACCT_NBR").toString());
+//                System.setProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//                System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//                System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("CONSL_PAY_NBR", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+//		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_ACCT_NBR").toString());
 		    	break;
 		    }
 		    
@@ -370,30 +378,34 @@ public class SearchRemittanceSearchCriteria {
 //		    	System.getProperty("tin");
 //			    testConfig.putRunTimeProperty("tin", System.getProperty("tin"));
 //		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	String sbscrId=dataRequiredForSearch.get("SBSCR_ID").toString();
+		    	//String sbscrId=dataRequiredForSearch.get("SBSCR_ID").toString();
 		    	
-		    	Element.enterData(subscriberID, dataRequiredForSearch.get("SBSCR_ID").toString(), "Enter Subscriber ID no as : "+dataRequiredForSearch.get("SBSCR_ID").toString(), "Subscriber ID");
+		    	String sbscrId = System.getProperty("sbscr_id");
+		    	String fromDate =  System.getProperty("fromDate");
+		    	String toDate =  System.getProperty("toDate");
 		    	
-		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
-		    	testConfig.putRunTimeProperty("value", sbscrId);
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	Element.enterData(subscriberID, sbscrId, "Enter Subscriber ID no as : "+sbscrId, "Subscriber ID");
+		    	
+//		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+//		    	testConfig.putRunTimeProperty("value", sbscrId);
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 				
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
          		
 
@@ -403,36 +415,44 @@ public class SearchRemittanceSearchCriteria {
 
 		    case "byDOPAndNpi":
 		    {
+		    	  String dspl_consl_pay_nbr = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+		    	//System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	
-		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	//testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	
-		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	//System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
 		    	
-		    	System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
+//		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+		    	  
+//		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
+//		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PROV_NPI_NBR").toString());
 		    	
-		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("key", "NATIONAL_PROVIDER_IDENTIFIER");
-		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PROV_NPI_NBR").toString());
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	
+		    	
+		    	String prov_npi_nbr = System.getProperty("prov_npi_nbr");
+		    	String fromDate = System.getProperty("fromDate");
+		    	String toDate = System.getProperty("toDate");
 		    	
 		    	Element.clickByJS(testConfig,NPI, "NPItext box");
-		    	Element.enterData(NPI, dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ dataRequiredForSearch.get("PROV_NPI_NBR").toString(), "NPI");
+		    	Element.enterData(NPI, prov_npi_nbr, "Filling NPI No: "+ prov_npi_nbr, "NPI");
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
 		    	
 		    	break;
@@ -443,29 +463,35 @@ public class SearchRemittanceSearchCriteria {
 //		    	 sqlRow = 45;
 //		    	 System.getProperty("tin");
 //		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
-		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("CLM_NBR").toString());
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
+//		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("CLM_NBR").toString());
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	
+		    	String clm_nbr = System.getProperty("clm_nbr");
+		    	String fromDate = System.getProperty("fromDate");
+		    	String toDate = System.getProperty("toDate");
+		    	
+		    	
 		    	
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
-		    	Element.enterData(claimNumber, dataRequiredForSearch.get("CLM_NBR").toString(), "Enter claim no as : "+dataRequiredForSearch.get("CLM_NBR").toString(), "Claim Number");
+		    	Element.enterData(claimNumber, clm_nbr, "Enter claim no as : "+clm_nbr, "Claim Number");
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
 		    	
 		    	break;		    	
@@ -476,31 +502,36 @@ public class SearchRemittanceSearchCriteria {
 //		    	 sqlRow = 46;
 //		    	 System.getProperty("tin");
 //		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
-		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_FST_NM").toString());
-		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("PTNT_LST_NM").toString());
-		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
+//		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_FST_NM").toString());
+//		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
+//		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("PTNT_LST_NM").toString());
+//		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
 		    	
-		    	Element.enterData(patientFirstName, dataRequiredForSearch.get("PTNT_FST_NM").toString(), "Enter First Name as : "+dataRequiredForSearch.get("PTNT_FST_NM").toString(), "First Name");
-		    	Element.enterData(patientLastName, dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+dataRequiredForSearch.get("PTNT_LST_NM").toString(), "Last Name");
+		    	String ptnt_fst_nm = System.getProperty("ptnt_fst_nm");
+		    	String ptnt_lst_nm = System.getProperty("ptnt_lst_nm");
+		    	String fromDate = System.getProperty("fromDate");
+		    	String toDate = System.getProperty("toDate");
+		    	
+		    	Element.enterData(patientFirstName, ptnt_fst_nm, "Enter First Name as : "+ptnt_lst_nm, "First Name");
+		    	Element.enterData(patientLastName, ptnt_lst_nm, "Enter Last Name as: "+ptnt_lst_nm, "Last Name");
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
          		
 
@@ -706,28 +737,35 @@ public class SearchRemittanceSearchCriteria {
 //		    	String renderingProv=srchData.get("LST_NM").toString(); 
 //		    	renderingProv=renderingProv.replace(" null", "");
 //		    	testConfig.putRunTimeProperty("fromDate",dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
-		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
-		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("LST_NM").toString());
-		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	testConfig.putRunTimeProperty("toDate", dataRequiredForSearch.get("SETL_DT").toString());
+//		    	testConfig.putRunTimeProperty("key", "RENDERING_PROVIDER");
+//		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("LST_NM").toString());
+//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
+		    	
+		    	
+		    	String lst_nm = System.getProperty("lst_nm");
+		    	String fromDate = System.getProperty("fromDate");
+		    	String toDate = System.getProperty("toDate");
+		    	
+		    	
 				
-		    	Element.enterData(renderingProvName, dataRequiredForSearch.get("LST_NM").toString(), "Filling Rendering Provider Name: "+dataRequiredForSearch.get("LST_NM").toString(), "Rendering Prov");
+		    	Element.enterData(renderingProvName, lst_nm, "Filling Rendering Provider Name: "+lst_nm, "Rendering Prov");
 		    	
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
 		    	||"EPRAgeneratedBSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedBSGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVAdmin".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    	Element.enterData(startDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
-         		Element.enterData(endDOPDate, Helper.changeDateFormat(dataRequiredForSearch.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
+		    	Element.enterData(startDOPDate, Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), "Start Date", "Start Date");
+         		Element.enterData(endDOPDate, Helper.changeDateFormat(toDate, "yyyy-mm-dd", "mm/dd/yyyy"), "End Date", "End Date");
 		    	}
 		    	else if("EPRA".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayerAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayerGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRABSAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRABGen".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayer".equals(testConfig.getRunTimeProperty("suite")))
 		    	{
-		    		Element.enterData(startDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
-		    		Element.enterData(endDOPDate, dataRequiredForSearch.get("SETL_DT").toString(), "Start Date", "Start Date");
+		    		Element.enterData(startDOPDate, fromDate, "Start Date", "Start Date");
+		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
 
 	 			break;

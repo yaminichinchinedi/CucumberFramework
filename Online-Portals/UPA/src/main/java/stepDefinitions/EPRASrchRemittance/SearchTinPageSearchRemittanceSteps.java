@@ -2,6 +2,7 @@ package main.java.stepDefinitions.EPRASrchRemittance;
 
 import java.util.Map;
 
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Browser;
@@ -109,6 +110,78 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		}
 		srchTinPage.enterTinUPA(searchBy, usertype);
 	}
+	
+	@Then("^User enters tin for CSR Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" click on continue button$")
+	public void user_enters_tin_for_CSR_Search_Remittance_Tin_Page_for_and_through_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable {
+	    
+		if(searchBy.equals("EPRA"))
+			testConfig.putRunTimeProperty("suite", "EPRA");
+		
+		else if(searchBy.equals("EPRAgenerated"))
+			testConfig.putRunTimeProperty("suite", "EPRAgenerated");
+		
+		else if(searchBy.equals("EPRAPayer"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayer");
+		
+		else if(searchBy.equals("EPRAPayergenerated"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayergenerated");
+		
+		else if(searchBy.equals("EPRAPROVAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAPROVAdmin");
+		
+		else if(searchBy.equals("EPRAgeneratedProvAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedProvAdmin");
+		
+		else if(searchBy.equals("EPRAgeneratedPROVAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedPROVAdmin");
+		
+		else if(searchBy.equals("EPRAPROVGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAPROVGen");
+		
+		else if(searchBy.equals("EPRAgeneratedProvGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedProvGen");
+		
+		else if(searchBy.equals("EPRAgeneratedPROVGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedPROVGen");
+		
+		else if(searchBy.equals("EPRAPayerAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayerAdmin");
+		
+		else if(searchBy.equals("EPRAPayerGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayerGen");
+		
+	    else if(searchBy.equals("EPRAPayergeneratedAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayergeneratedAdmin");
+		
+		else if(searchBy.equals("EPRAPayergeneratedGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAPayergeneratedGen");
+		
+		else if(searchBy.equals("EPRABSAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRABSAdmin");
+		
+		else if(searchBy.equals("EPRABSGen"))
+			testConfig.putRunTimeProperty("suite", "EPRABSGen");
+		                         
+		else if(searchBy.equals("EPRAgeneratedBSAdmin"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedBSAdmin");
+		
+		else if(searchBy.equals("EPRAgeneratedBSGen"))
+			testConfig.putRunTimeProperty("suite", "EPRAgeneratedBSGen");
+		
+		if(priority.equals("1"))
+		{
+			testConfig.putRunTimeProperty("claimRange1", "1");
+			testConfig.putRunTimeProperty("claimRange2", "10");
+			testConfig.putRunTimeProperty("priority", "1");
+		}
+		else if(priority.equals("2"))
+		{
+			testConfig.putRunTimeProperty("claimRange1", "80");
+			testConfig.putRunTimeProperty("claimRange2", "100");
+			testConfig.putRunTimeProperty("priority", "2");
+		}
+		srchTinPage.enterTinCSR(searchBy, usertype);
+	}
 
 	@Then("^Enter Tin \"([^\"]*)\" and select serach button$")
 	public void enter_Tin_and_select_serach_button(String Data) throws Throwable {
@@ -151,5 +224,10 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	
 	}
 	
+	@Given("^User enters tin for UPA Search Remittance Tin Page for \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
+	public void user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_through_and_click_on_continue_button(String searchBy,String usertype) throws Throwable {
+	   
+		srchTinPage.enterTinUPA(searchBy, usertype);
+	}
 	
 }

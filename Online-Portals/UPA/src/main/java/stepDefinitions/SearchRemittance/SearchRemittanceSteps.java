@@ -26,21 +26,21 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate Claim_Count and Priority is set accordingly\\.$")
 	public void validate_Claim_Count_and_Priority_is_set_accordingly() throws Throwable {
 		
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraClaimCntAndPriority();
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly based on \"([^\"]*)\" for Search Remit Page$")
 	public void validate_Claim_Count_and_Priority_is_set_accordingly_based_on_for_Search_Remit_Page(String arg1) throws Throwable {
 	   
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraClaimCntAndPrioritySrch();
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly based on \"([^\"]*)\"$")
 	public void validate_Claim_Count_and_Priority_is_set_accordingly_based_on(String srchCriteria) throws Throwable {
 	    
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraClaimCntAndPriority(srchCriteria);
 	}
 
@@ -48,7 +48,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Consol_Pay_Nbr$")
 	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Consol_Pay_Nbr() throws Throwable {
 		
-		Browser.wait(testConfig, 8);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraStatus("C");
 		//srchRemittance.getPDFfileNameEPRA();
 	}
@@ -57,7 +57,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Search Remit Page$")
 	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Search_Remit_Page() throws Throwable {
 	    
-		Browser.wait(testConfig, 8);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraStatusSrchRemit("C");
 	}
 	
@@ -72,14 +72,14 @@ public class SearchRemittanceSteps extends TestBase{
 	public void validate_PDF_link_is_changed_to_PDF_icon_and_is_enabled_and_is_downloadable_for(String srchBy) throws Throwable {
 		
 		Browser.browserRefresh(testConfig);
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraPdfIcon(srchBy);
 	}
 
 	@Then("^validate download status is set to Y in Ole\\.EPRA_STATUS$")
 	public void validate_download_status_is_set_to_Y_in_Ole_EPRA_STATUS() throws Throwable {
 		
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraDownloadStatus("Y");
 	}
 
@@ -98,7 +98,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate PDF icon is enabled and is downloadable for \"([^\"]*)\"\\.$")
 	public void validate_PDF_icon_is_enabled_and_is_downloadable_for(String srchBy) throws Throwable {
 		
-		Browser.wait(testConfig, 10);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraPdfIcon(srchBy);
 		//srchRemittance.verifyEpraDownloadStatus("Y");
 	}
@@ -106,7 +106,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate PDF icon is enabled and is downloadable\\.$")
 	public void validate_PDF_icon_is_enabled_and_is_downloadable() throws Throwable {
 		
-		Browser.wait(testConfig, 10);
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraDownloadStatus("Y");
 	}
 	

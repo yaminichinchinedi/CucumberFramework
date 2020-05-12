@@ -1323,7 +1323,7 @@ public class SearchRemittance extends paymentSummary {
 		Helper.purgeDirectory(fileDirectory);
 //		Element.click(imgEPRApdf, "Epra PDF icon");
 		clickEpraPDFlink(srchType);
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));
 		return this;
 	}
@@ -1339,17 +1339,17 @@ public class SearchRemittance extends paymentSummary {
 			
 			System.out.println(System.getProperty("ELECTRONIC_PAYMENT_NUMBER"));
 	    	
-	    	expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-	    	
-	    	String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			 System.setProperty("paymentNum", expectedPaymntNo);
 			
 			searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		}
 		else if(srchType.equals("byElectronicPaymentNo"))
 		{
-			expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+			//expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 			expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-			String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
+			 System.setProperty("paymentNum", expectedPaymntNo);
+			//String paymentNum = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
 		else if(srchType.equals("viewPayments"))
@@ -1388,11 +1388,11 @@ public class SearchRemittance extends paymentSummary {
 			    	  else if(srchType.equals("viewPayments"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  
 					  
-					  Browser.wait(testConfig, 5);
+					  Browser.wait(testConfig, 2);
 				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
 				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
-				     Browser.wait(testConfig, 10);
+				     Browser.wait(testConfig, 2);
 				     System.setProperty("expectedPaymntNo", expectedPaymntNo);
     	             break;   
 				   }
@@ -1427,12 +1427,19 @@ public class SearchRemittance extends paymentSummary {
 	public SearchRemittance verifyUsrEvntLog()
 	{
 		int sqlRowNo=207;
+		testConfig.getRunTimeProperty("id");
+		//System.out.println("Login id is:"+testConfig.getRunTimeProperty("id"));
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		
 		Log.Comment("The Data from User Event Log Table is:" + data);
-		Helper.compareContains(testConfig, "EPRA is downloaded",testConfig.getRunTimeProperty("tin"), data.get("EVNT_MSG").toString());
+		Helper.compareContains(testConfig, "EPRA is downloaded",testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
 		//Helper.compareContains(testConfig, "EPRA is downloaded",testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER"), data.get("EVNT_MSG").toString());
 		//Helper.compareContains(testConfig, "EPRA is downloaded", "DataAccess:SUCCESS:Protected Data Access: :Payment Summary(PrintEPRA):P:", data.get("EVNT_MSG").toString());
+		Browser.wait(testConfig, 3);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("PROV"))
+		DataBase.executeDeleteQuery(testConfig, 25);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("BS"))
+		DataBase.executeDeleteQuery(testConfig, 221);
 		return this;
 	}
 	
@@ -1448,12 +1455,17 @@ public class SearchRemittance extends paymentSummary {
 	public SearchRemittance verifyUsrEvntLogRemitDetail()
 	{
 	
-	    
+		System.getProperty("id");
+		System.out.println(System.getProperty("id"));
 		int sqlRowNo=207;
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		Log.Comment("The Data from User Event Log Table is:" + data);
 		Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
-		
+		Browser.wait(testConfig, 3);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("PROV"))
+		DataBase.executeDeleteQuery(testConfig, 25);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("BS"))
+		DataBase.executeDeleteQuery(testConfig, 221);
 		return this;
 	}
 	
@@ -1471,7 +1483,11 @@ public class SearchRemittance extends paymentSummary {
 		Log.Comment("The Data from User Event Log Table is:" + data);
 		//Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
 		Helper.compareContains(testConfig, "EPRA is downloaded", System.getProperty("id"), data.get("EVNT_MSG").toString());
-	    
+		Browser.wait(testConfig, 3);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("PROV"))
+		DataBase.executeDeleteQuery(testConfig, 25);
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("BS"))
+		DataBase.executeDeleteQuery(testConfig, 221);
 		return this;
 		
 	}
@@ -1481,14 +1497,18 @@ public class SearchRemittance extends paymentSummary {
 		
 		String env=System.getProperty("env");
 	    String id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
-	    testConfig.putRunTimeProperty("id", id);
+	    
 	    
 	    int sqlRowNo=207;
+	    testConfig.putRunTimeProperty("id", id);
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		Log.Comment("The Data from User Event Log Table is:" + data);
 		Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"), data.get("EVNT_MSG").toString());
-		
-		
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("PROV"))
+			DataBase.executeDeleteQuery(testConfig, 25);
+			if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("BS"))
+			DataBase.executeDeleteQuery(testConfig, 221);
+			
 		return this;
 	
 	}

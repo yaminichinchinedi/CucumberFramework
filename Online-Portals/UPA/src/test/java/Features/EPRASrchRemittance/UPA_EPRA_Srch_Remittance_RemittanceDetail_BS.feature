@@ -6,6 +6,7 @@
 @UPASrchRemitEPRA  @UPARegression @UPABSSrchRemittanceEPRA
 Feature: UPA_EPRA_Srch_Remittance_RemittanceDetail_BS 
 
+
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to UPA portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link for UPA
@@ -51,7 +52,6 @@ Examples:
 						|	byDOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
 						|	byDOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
 			      |	byDOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-			
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to UPA portal and enters "<credentials>" and login

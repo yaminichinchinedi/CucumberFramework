@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.ViewPaymentsDataProvider;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -33,6 +34,10 @@ public class SearchTinPageSearchRemittance {
 	@FindBy(xpath = "//input[@name='taxIdNbr']") WebElement bstinDrpDwn;
 	@FindBy(xpath = "//input[@name='taxIdNbr']") WebElement payertinDrpDwn;
 	@FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
+	@FindBy(xpath = "//ul[@id='tabmenu']/li[2]") WebElement archiveBtn;
+	@FindBy(xpath = "//ul[@id='tabmenu']/li[1]") WebElement currentBtn;
+	
+	
 	
 	//TestBase testConfig=TestBase.getInstance();
 	
@@ -67,7 +72,8 @@ public class SearchTinPageSearchRemittance {
   
   	public SearchTinPageSearchRemittance enterTinUPA(String paymentType, String usertype)
       {
-  		    String tin=getTin(paymentType);
+  		    //String tin=getTin(paymentType);
+  		    String tin=getTinUPA(paymentType,usertype);
   		    System.setProperty("tin", tin); 
   		
   		    switch(usertype) 
@@ -84,6 +90,10 @@ public class SearchTinPageSearchRemittance {
           }
       case "PROV":
          {   
+        	 Element.click(archiveBtn, "Archive Button");
+        	 Element.click(currentBtn, "Current Button");
+        	 //Browser.browserRefresh(testConfig);
+        	 //Browser.browserRefresh(testConfig);
         	 Element.selectVisibleText(tinDrpDwn,tin +" - Enrolled","TIN Selection from Dropdown");
         	 break;
           }  
@@ -117,6 +127,38 @@ public class SearchTinPageSearchRemittance {
       }
   		return this; 
       }
+  	
+  	
+  	public SearchTinPageSearchRemittance enterTinCSR(String paymentType, String usertype)
+    {
+		    String tin=getTinCSR(paymentType);
+		    System.setProperty("tin", tin); 
+		
+		    switch(usertype) 
+		 {
+		 
+    case "PROV":
+       {   
+      	 //Element.selectVisibleText(txtboxTinNo,tin,"Enter TIN in CSR");
+      	 Element.enterData(txtboxTinNo, tin, "Enter TIN", "Enter TIN in CSR");
+      	 Element.click(submitBtn, "Click Search Button");
+      	 break;
+        }  
+    case "BS":
+       {
+      	 Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+      	 Element.click(submitBtn, "Click Search Button");
+      	 break;
+        }
+   case "Payer":
+       {
+      	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+      	 Element.click(submitBtn, "Click Search Button");
+      	 break;
+        }
+    }
+		return this; 
+    }
 	
 	public SearchRemittanceSearchCriteria clickSearchBtn()
     {
@@ -125,6 +167,96 @@ public class SearchTinPageSearchRemittance {
     }
 	
 	public String getTin(String paymentType)
+	{
+		
+		WebElement homeTab=Element.findElement(testConfig, "id", "tabHome");
+		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
+		
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+        
+		dataProvider.associateTinWithUser("PROV",tin);
+		dataProvider.associateTinWithUser("BS",tin);
+		
+		//dataProvider.associateTinWithUser(userType,tin);
+		List <String> tinList=Element.getAllOptionsInSelect(testConfig,tinDrpDwn);
+		String Enrolledtin=tin+" - Enrolled";
+		
+		if((!tinList.contains(Enrolledtin))){
+		   Element.click(homeTab, "home Tab");
+		   Browser.waitForLoad(testConfig.driver);
+		   Browser.wait(testConfig, 3);
+		   Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown", "Tin dropdown"); 
+		 }
+		
+		Element.selectByVisibleText(tinDrpDwn,Enrolledtin, "Tin is : "  + Enrolledtin);
+		Browser.waitForLoad(testConfig.driver);
+		//return dataProvider.getTinForPaymentType(paymentType);
+		return tin;
+	}
+	
+	
+	
+	
+	public String getTinUPA(String paymentType, String userType)
+	{
+		
+		WebElement homeTab=Element.findElement(testConfig, "id", "tabHome");
+		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
+		
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+        
+		//dataProvider.associateTinWithUser("PROV",tin);
+		//dataProvider.associateTinWithUser("BS",tin);
+		
+		//dataProvider.associateTinWithUser(userType,tin);
+		
+		dataProvider.associateTinWithUser(userType,tin);
+		if(userType=="PROV")
+		{
+			//dataProvider.associateTinWithUser(userType,tin);
+			List <String> tinList=Element.getAllOptionsInSelect(testConfig,tinDrpDwn);
+		   
+			String Enrolledtin=tin+" - Enrolled";
+		  if((!tinList.contains(Enrolledtin))){
+		   Element.click(homeTab, "home Tab");
+		   Browser.waitForLoad(testConfig.driver);
+		   Browser.wait(testConfig, 3);
+		   Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown", "Tin dropdown"); 
+		 }
+		
+		Element.selectByVisibleText(tinDrpDwn,Enrolledtin, "Tin is : "  + Enrolledtin);
+		}
+		
+		else if (userType=="BS")
+		{
+			//dataProvider.associateTinWithUser(userType,tin);
+			String Enrolledtin = tin;
+			if((!tin.contains(Enrolledtin))){
+				Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+				Element.click(submitBtn, "Click Search Button");
+		}
+		}
+			
+			else if(userType=="Payer")
+        {
+	        String Enrolledtin = tin;
+	         if((!tin.contains(Enrolledtin))){
+	        	 
+	        	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+	        	 Element.click(submitBtn, "Click Search Button");
+		     }
+		
+		}
+		Browser.waitForLoad(testConfig.driver);
+		//return dataProvider.getTinForPaymentType(paymentType);
+		
+		
+		return tin;
+	}
+	
+	public String getTinCSR(String paymentType)
 	{
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		return dataProvider.getTinForPaymentType(paymentType);

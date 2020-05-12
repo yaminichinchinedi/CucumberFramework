@@ -30,9 +30,6 @@ Examples:
 						|	    byDOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRABSGen				|     BS      |
 						|	    byDOPAndNpi	      |			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
 
-	
-
-
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 
 	Given User navigates to UPA portal and enters "<credentials>" and login

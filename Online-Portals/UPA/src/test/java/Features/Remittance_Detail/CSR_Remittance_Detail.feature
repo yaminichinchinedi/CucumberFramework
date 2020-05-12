@@ -1,10 +1,10 @@
 #Author: Athyusha Thota
 
- @CSRRemitDetail   @CSRRegression @CSRSanity @BothCSRUPAScenarios
+@CSRRemitDetail   @CSRRegression @CSRSanity @BothCSRUPAScenarios
 Feature: CSR Remittance Detail
 
 
- 
+  
 Scenario Outline: Remittance Detail UI Functionality and FISL Data Validations
 
      Given User navigates to CSR portal and enters "<credentials>" and login
@@ -25,8 +25,8 @@ Examples:
 
         |    Search Criteria     |   credentials     |
         |      RemitDetail       |      Super        |
-        |      RemitDetail       |      RW           |
-        |      RemitDetail       |      RO           |
+ #       |      RemitDetail       |      RW           |
+ #       |      RemitDetail       |      RO           |
         
        
 Scenario Outline: Remittance Detail UI and FISL Sort Validations

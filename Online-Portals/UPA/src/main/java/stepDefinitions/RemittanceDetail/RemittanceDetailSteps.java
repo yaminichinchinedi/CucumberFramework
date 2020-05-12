@@ -73,10 +73,16 @@ public class RemittanceDetailSteps extends TestBase {
     	remitDetail.verifyCOBFilterClaimData();
     }
 
-    @When("^Verify FISL Response for Reversal Only Filter Claim$")
-	public void verify_FISL_Response_for_Reversal_Only_Filter_Claim() throws Throwable {
-    	
-    	remitDetail.verifyReversalFilterClaimData();
+    @Then("^Verify FISL Response for COB Only Filter Claim for \"([^\"]*)\"$")
+    public void verify_FISL_Response_for_COB_Only_Filter_Claim_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifyCOBFilterClaimData(usertype);
+    }
+    
+    @Then("^Verify FISL Response for Reversal Only Filter Claim for \"([^\"]*)\"$")
+    public void verify_FISL_Response_for_Reversal_Only_Filter_Claim_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifyReversalFilterClaimData(usertype);
     }
     
     @When("^Validate Payment with Multiple PLB Adjustments$")
@@ -222,5 +228,16 @@ public class RemittanceDetailSteps extends TestBase {
 		remitDetail.enterElectronicNumForPLBOnlyPayer();
 	}
 
+	@Then("^click Payment Number in Search Remit Page$")
+	public void click_Payment_Number_in_Search_Remit_Page() throws Throwable {
+	   
+		remitDetail.clickPayNum();
+	}
+	
+//	@Then("^click Return Button based on \"([^\"]*)\"$")
+//	public void click_Return_Button_based_on(String usertype) throws Throwable {
+//	   
+//		remitDetail.clickReturnBtn(usertype);
+//	}
 
 }
