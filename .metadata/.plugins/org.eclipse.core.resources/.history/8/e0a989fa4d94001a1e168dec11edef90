@@ -542,9 +542,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution Type of Ac", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctType']/div/p[1]/label")).getText(), dataTest.get(35).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[2]/fieldset/div[4]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//div[@id='secondportiontohide']/div[2]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
-
+		Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[2]/fieldset/div[4]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
+		
 		Helper.compareEquals(testConfig, "Finantial Institution Msg File", (Element.findElement(testConfig, "xpath", "//div[@id='uploadVC']/p")).getText(), dataTest.get(17).get("TEXT_VAL")+dataTest.get(15).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution NPI bank AC", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinNpiAcctYorN']/div/p[1]/label")).getText(), dataTest.get(14).get("TEXT_VAL"));
 	
