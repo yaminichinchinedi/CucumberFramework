@@ -163,9 +163,13 @@ public class FinancialInstitutionInfoPageNPI{
 		Helper.compareEquals(testConfig, "Finantial Institution Information for your NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/div[3]/h4/strong")).getText(), dataTest.get(31).get("TEXT_VAL"));
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Bank Name", (finInstName.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(30).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution address", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/h4/strong")).getText(), dataTest.get(29).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information address Text", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/p")).getText(), dataTest.get(28).get("TEXT_VAL")+"\n"+dataTest.get(27).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution address", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/h4/strong")).getText(), dataTest.get(29).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution address", (Element.findElement(testConfig, "xpath", "//div[@id='div1']/fieldset/h4/strong")).getText(), dataTest.get(29).get("TEXT_VAL"));
+
 		
+		//Helper.compareEquals(testConfig, "Finantial Institution Information address Text", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/p")).getText(), dataTest.get(28).get("TEXT_VAL")+"\n"+dataTest.get(27).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Information address Text", (Element.findElement(testConfig, "xpath", "//*[@id='div1']/fieldset/p")).getText(), dataTest.get(28).get("TEXT_VAL")+"\n"+dataTest.get(27).get("TEXT_VAL"));
+
 		Helper.compareEquals(testConfig, "Finantial Institution Street", (finInstStreet.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(26).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution City", (finInstCity.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(25).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution State", (finInstState.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(24).get("TEXT_VAL"));
