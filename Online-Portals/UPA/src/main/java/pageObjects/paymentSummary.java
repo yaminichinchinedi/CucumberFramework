@@ -381,6 +381,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
           {
                 searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
                 expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+               if ( expectedPaymntNo.length()>=15)
+            	   expectedPaymntNo= expectedPaymntNo.substring(0, 15);
                 Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
                 //expectedPaymntNo=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[4]").getText();
                 
@@ -409,8 +411,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			 actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
              actualPaymntNo=actualPaymntNo.replace("\n", "");
 			 }
-			  //if(actualPaymntNo.contains(expectedPaymntNo))
-			  if(actualPaymntNo.equals(expectedPaymntNo))
+			  if(actualPaymntNo.contains(expectedPaymntNo))
+			 // if(actualPaymntNo.equals(expectedPaymntNo))
               {    
                 found=true;
                 if(srchType.equals("byDOPAndNpi"))
@@ -2911,11 +2913,10 @@ public void verifyFailedPaymentPopUp()
 			System.setProperty("DSPL_CONSL_PAY_NBR", expectedPaymntNo);
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
-		else if(srchType.equals("viewPayments"))
+		else if(srchType.equals("EPRAViewPay") || srchType.equals("EPRABSViewPay"))
 		{
-			expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
-			//System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
-			System.setProperty("DSPL_CONSL_PAY_NBR", expectedPaymntNo);
+			expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
 			//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
 		else 
@@ -2947,11 +2948,13 @@ public void verifyFailedPaymentPopUp()
     			//expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
     			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
     		}
-			else if(srchType.equals("viewPayments"))
+			else if(srchType.equals("EPRAViewPay")|| srchType.equals("EPRABSViewPay") )
 			{
 				searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
-				//expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
-				expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+				expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+				//expectedPaymntNo=dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString();
+				 if ( expectedPaymntNo.length()>=15)
+	            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
 				Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
 			}		
     		else 
@@ -2965,7 +2968,8 @@ public void verifyFailedPaymentPopUp()
 		     {
 		       for(;i<searchResultRows.size();i++)
 		        {
-		    	   if(srchType.equals("viewPayments"))
+		    	   //if(srchType.equals("viewPayments"))
+		    	   if(srchType.equals("EPRAViewPay")|| srchType.equals("EPRABSViewPay") )	   
 				   {					   
 				  String xpath="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
    	               actualPaymntNo= Element.findElement(testConfig, "xpath", xpath).getText();
@@ -2982,11 +2986,12 @@ public void verifyFailedPaymentPopUp()
 			      if(actualPaymntNo.contains(expectedPaymntNo))
 			      {	
 			    	  
-			    	  System.out.println("The Actual Payment no is:" + actualPaymntNo);
-			    	  System.out.println("The expected Payment no is:" + expectedPaymntNo);
-			    	 if(srchType.equals("viewPayments"))
+			    	 // System.out.println("The Actual Payment no is:" + actualPaymntNo);
+			    	 // System.out.println("The expected Payment no is:" + expectedPaymntNo);
+			    	// if(srchType.equals("viewPayments"))
+			    	 if(srchType.equals("EPRAViewPay")|| srchType.equals("EPRABSViewPay") )	 
 					 {	 
-					String xpath1="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]";
+					String xpath1="//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/a";
 					  lnkPaymntNo=Element.findElement(testConfig, "xpath", xpath1);
 					}
 					else{
@@ -3010,7 +3015,8 @@ public void verifyFailedPaymentPopUp()
 						 Log.Comment("Payment Number not found on page number " + pageNo);
 						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
 			
-						 if(srchType.equals("viewPayments"))
+						//if(srchType.equals("viewPayments"))
+						if(srchType.equals("EPRAViewPay")|| srchType.equals("EPRABSViewPay") )	 
 						Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
 						else
 						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();

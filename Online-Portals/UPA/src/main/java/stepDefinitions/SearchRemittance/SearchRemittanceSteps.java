@@ -65,7 +65,7 @@ public class SearchRemittanceSteps extends TestBase{
 	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_appropriate_status_for_Consol_Pay_Nbr() throws Throwable {
 		Browser.wait(testConfig, 8);
 		srchRemittance.verifyEpraStatus("viewPayments",10);
-		srchRemittance.getPDFfileNameEPRA();
+		//srchRemittance.getPDFfileNameEPRA();
 		
 	}
 	@Then("^validate PDF link is changed to PDF icon and is enabled and is downloadable for \"([^\"]*)\"\\.$")

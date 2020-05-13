@@ -1356,6 +1356,8 @@ public class SearchRemittance extends paymentSummary {
 		{
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
 			expectedPaymntNo=testConfig.getRunTimeProperty("dspl_consl_pay_nbr");
+			 if ( expectedPaymntNo.length()>=15)
+          	expectedPaymntNo= expectedPaymntNo.substring(0, 15);
 			Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
 		}
 		WebElement popUp=null;
@@ -1377,8 +1379,8 @@ public class SearchRemittance extends paymentSummary {
 				  actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			      actualPaymntNo=actualPaymntNo.replace("\n", "");
 				  }
-				 //if(actualPaymntNo.contains(expectedPaymntNo))
-				 if(actualPaymntNo.equals(expectedPaymntNo))
+				 if(actualPaymntNo.contains(expectedPaymntNo))
+				// if(actualPaymntNo.equals(expectedPaymntNo))
 			       {	
 			    	  found=true;
 			    	  if(srchType.equals("byDOPAndNpi"))
@@ -1388,11 +1390,11 @@ public class SearchRemittance extends paymentSummary {
 			    	  else if(srchType.equals("viewPayments"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  
 					  
-					  Browser.wait(testConfig, 2);
+					  Browser.wait(testConfig, 5);
 				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
 				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
-				     Browser.wait(testConfig, 2);
+				     Browser.wait(testConfig, 5);
 				     System.setProperty("expectedPaymntNo", expectedPaymntNo);
     	             break;   
 				   }

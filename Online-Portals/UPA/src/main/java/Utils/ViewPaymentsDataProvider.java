@@ -82,7 +82,10 @@ public String getTinForPaymentType(String paymentType)
  		   case "generalPayment30Days":
  	 	 		sqlRowNo=129;//37; 
  	 	 		break;
- 	 			
+ 		  case "EPRAViewPay":
+	 	 		sqlRowNo=220;
+	 	 		break;	
+ 	 	 			
  		   case "nonEpraPayment":
  		   { 
  		      testConfig.putRunTimeProperty("paymentNo",getPaymentNoDetails("nonEpraPayment").get("paymentNo").toString());
@@ -841,7 +844,9 @@ case "EPRA":
  		     		   {   
  		    testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
  		   // testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
- 		   } 
+ 		  System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
+				  
+		   } 
  		   
  		   else if(paymentType.equalsIgnoreCase("EPRAPROVAdmin")||paymentType.equalsIgnoreCase("EPRAPROVGen")||paymentType.equalsIgnoreCase("EPRAgeneratedPROVAdmin")
  				      ||paymentType.equalsIgnoreCase("EPRAgeneratedPROVGen")||paymentType.equalsIgnoreCase("EPRA")||paymentType.equalsIgnoreCase("EPRAgenerated")
@@ -946,7 +951,6 @@ case "EPRA":
 		 {
 		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
 		   Log.Comment("Associated tin " + tin + "With Logged in user");
-		   
 		   testConfig.putRunTimeProperty("TobeDeleted", userType);
 		   }
 		else

@@ -72,7 +72,13 @@ public class SearchTinPageSearchRemittance {
   
   	public SearchTinPageSearchRemittance enterTinUPA(String paymentType, String usertype)
       {
-  		    //String tin=getTin(paymentType);
+  		    if (paymentType.equals("EPRAViewPay"))
+			{
+			String tin=getTin(paymentType);
+			System.setProperty("tin", tin);
+			}
+			else
+		 {
   		    String tin=getTinUPA(paymentType,usertype);
   		    System.setProperty("tin", tin); 
   		
@@ -125,6 +131,7 @@ public class SearchTinPageSearchRemittance {
       }  
       
       }
+	}
   		return this; 
       }
   	
@@ -176,7 +183,6 @@ public class SearchTinPageSearchRemittance {
 		String tin=dataProvider.getTinForPaymentType(paymentType);
         
 		dataProvider.associateTinWithUser("PROV",tin);
-		dataProvider.associateTinWithUser("BS",tin);
 		
 		//dataProvider.associateTinWithUser(userType,tin);
 		List <String> tinList=Element.getAllOptionsInSelect(testConfig,tinDrpDwn);

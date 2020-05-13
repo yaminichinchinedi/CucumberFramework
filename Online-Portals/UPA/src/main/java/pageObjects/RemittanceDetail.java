@@ -5248,6 +5248,7 @@ public RemittanceDetail clickPrintButton()
 	Helper.purgeDirectory(fileDirectory);
 	Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
+	Element.waitForElementTobeClickAble(testConfig, btnPrntavailable, 60);
 	Element.click(btnPrntavailable, "Print Available Button");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));

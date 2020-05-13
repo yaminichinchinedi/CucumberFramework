@@ -174,6 +174,41 @@ public void verifyAllOtherDrpDwnsinUPA() throws Exception
 }
 
 
+
+public void verifyAllColumnsViewPay(String TimePeriod) 
+{
+	
+	String[] arr= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+	
+	if (TimePeriod.equals("Last 30 days"))
+	Element.selectVisibleText(quickSearch,"Last 30 days","Quick Search from View Payments");
+	if (TimePeriod.equals("Last 60 days"))
+	Element.selectVisibleText(quickSearch,"Last 60 days","Quick Search from View Payments");
+	if (TimePeriod.equals("Last 90 days"))
+	Element.selectVisibleText(quickSearch,"Last 90 days","Quick Search from View Payments");
+	if (TimePeriod.equals("Last 4-6 months"))
+	Element.selectVisibleText(quickSearch,"Last 4-6 months","Quick Search from View Payments");
+	if (TimePeriod.equals("Last 6-9 months"))
+	Element.selectVisibleText(quickSearch,"Last 6-9 months","Quick Search from View Payments");
+	if (TimePeriod.equals("Last 9-13 months"))
+	Element.selectVisibleText(quickSearch,"Last 9-13 months","Quick Search from View Payments");
+		
+
+		Element.selectVisibleText(marketTyp,"Show All","Market Type from View Payments");
+		Log.Comment("Market Type Dropdown Selected: Show All");
+
+		Element.selectVisibleText(filterDrpDown,"Show All","Filter Payments Dropdown from View Payments");
+		Log.Comment("Filter Payments Dropdown Selected: Show All");
+		Element.selectVisibleText(activeDrpDown,"Show All","Payments type Dropdown from View Payments");
+		Log.Comment("Payments Type Dropdown Selected: Show All");
+//		int sqlRowNo=246;
+//		String tin=System.getProperty("tin");
+//		testConfig.putRunTimeProperty("tin", tin);
+//		 Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		 testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
+}
+
+
 public void verifyAllOtherDrpDwnsinUPAPayer() throws Exception 
 {
 

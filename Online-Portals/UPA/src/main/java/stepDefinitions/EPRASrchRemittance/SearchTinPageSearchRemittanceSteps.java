@@ -5,14 +5,16 @@ import java.util.Map;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchTinPageSearchRemittance;
+import main.java.pageObjects.paymentSummary;
 
 public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	
 	SearchTinPageSearchRemittance srchTinPage=new SearchTinPageSearchRemittance(testConfig);
-		
+	private paymentSummary paysumm;	
 	@Then("^User enters tin on Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
 	public void user_enters_tin_on_Search_Remittance_Tin_Page_for_and_click_on_continue_button(String priority, String searchBy) throws Throwable {
 		if(searchBy.equals("EPRA"))
@@ -34,10 +36,44 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		srchTinPage.enterTin(searchBy).clickSearchBtn();
 	}
 
-	@Then("^User enters tin for UPA View Payments Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
-	public void user_enters_tin_for_UPA_View_Payments_Page_for_and_through_and_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable 
-	{
-		user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_and_through_and_click_on_continue_button(priority,searchBy,usertype);
+	@Then("^User enters tin for UPA View Payments Page for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
+	public void user_enters_tin_for_UPA_View_Payments_Page_for_through_and_click_on_continue_button(String TimePeriod, String priority, String searchBy, String usertype) throws Throwable {
+		
+		 if(searchBy.equals("EPRAViewPay"))
+			testConfig.putRunTimeProperty("suite", "EPRAViewPay");
+		
+		 String split[]=TimePeriod.split(" "); 
+			if(split[split.length-1].contains("days"))
+			{
+				int LastNoOfdays=Integer.parseInt(split[split.length-2]);
+				testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
+				testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+				
+			}
+			
+			else 
+			{
+				String monthRange=(split[split.length-2]);
+				Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
+				testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
+				testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
+
+			}	
+		if(priority.equals("1"))
+		{
+			testConfig.putRunTimeProperty("claimRange1", "1");
+			testConfig.putRunTimeProperty("claimRange2", "10");
+			testConfig.putRunTimeProperty("priority", "1");
+		}
+		else if(priority.equals("2"))
+		{
+			testConfig.putRunTimeProperty("claimRange1", "80");
+			testConfig.putRunTimeProperty("claimRange2", "100");
+			testConfig.putRunTimeProperty("priority", "2");
+		}
+		//srchTinPage.enterTin(searchBy).clickSearchBtn();
+		srchTinPage.enterTinUPA(searchBy, usertype);
+		
 	}
 	@Then("^User enters tin for UPA Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
 	public void user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_and_through_and_click_on_continue_button(String priority,String searchBy,String usertype) throws Throwable {

@@ -25,7 +25,11 @@ public class ViewPaymentsSteps extends TestBase {
         
     	viewPayments.verifyAllOtherDrpDwnsinUPA();
     }
-    
+   
+    @Then("^Validate all other columns in Show All State for \"([^\"]*)\" of UPA View Payments$")
+    public void validate_all_other_columns_in_Show_All_State_for_of_UPA_View_Payments(String TimePeriod) {
+    	viewPayments.verifyAllColumnsViewPay(TimePeriod);
+    }
     @When("^Validate all other columns in Show All State for UPA_Payer$")
     public void validate_all_other_columns_in_Show_All_State_for_UPA_Payer() throws Throwable {
         

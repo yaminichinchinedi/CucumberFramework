@@ -5,6 +5,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -85,7 +86,8 @@ public class UPAHomePage {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//span[contains(text(),'Welcome Screen')]"), 60);
+		//Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
 	}
 
 	public SearchTinPage clickManageUsersLink()

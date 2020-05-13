@@ -1,8 +1,12 @@
 package main.java.stepDefinitions.ViewPayments;
 
+import java.util.Map;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
@@ -51,7 +55,34 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 
 		ViewPaymentsTIN.enterTinForBS(srchCriteria);
 	}
+
+	@When("^User enters tin for BS UPA \"([^\"]*)\" for BS for \"([^\"]*)\",\"([^\"]*)\" and click on continue button$")
+	public void user_enters_tin_for_BS_UPA_for_BS_for_and_click_on_continue_button1(String srchCriteria, String priority,String TimePeriod) throws Throwable {
 	
+			 String split[]=TimePeriod.split(" "); 
+				if(split[split.length-1].contains("days"))
+				{
+					int LastNoOfdays=Integer.parseInt(split[split.length-2]);
+					testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
+					testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+					
+				}
+				
+				else 
+				{
+					String monthRange=(split[split.length-2]);
+					Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
+					testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
+					testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
+
+				}	
+		ViewPaymentsTIN.enterTinForBS(srchCriteria);
+//		int sqlRowNo=246;
+//		String tin=System.getProperty("tin");
+//		testConfig.putRunTimeProperty("tin", tin);
+//		 Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		 testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
+	}
 	@Given("^User enters tin for UPA \"([^\"]*)\" for Payer$")
 	public void user_enters_tin_for_UPA_for_Payer(String srchCriteria) throws Throwable {
 	   
