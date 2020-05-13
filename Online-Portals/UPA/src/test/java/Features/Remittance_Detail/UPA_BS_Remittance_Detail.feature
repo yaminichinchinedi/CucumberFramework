@@ -44,7 +44,6 @@ Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider 
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
      And Enter Electronic Number for Mutliple PLB Adjustments Criteria
      Then Validate Sort By - Patient Last Name
-     And click Return Button based on "<usertype>"
      Then Validate Sort By - Rendering Provider Last Name
 
 Examples:     
