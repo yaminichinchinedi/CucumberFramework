@@ -127,7 +127,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath="//div[@class='modal modal-routing']//div[@class='modal-container lg-modal fixed-modal']")
 	WebElement routingNumberPopup;
 	
-	@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[2]/a")
+	//@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[2]/a")
+	@FindBy(xpath="//*[@id='div2']/section/fieldset/div[2]/a")
+
 	WebElement routingNumberLink;
 
 	@FindBy(xpath="//div[@class='modal modal-routing']//div[@class='modal-container lg-modal fixed-modal']/div[1]/h4")
@@ -139,7 +141,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath="//div[@class='modal modal-routing']//div[@class='modal-container lg-modal fixed-modal']/div[3]/a")
 	WebElement routingPopupClose;
 	
-	@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[5]/div/div/div[3]/a")
+	//@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[5]/div/div/div[3]/a")
+	@FindBy(xpath="//*[@id='finInstTinNpiAcctYorN']/div/div/div[3]/a")
 	WebElement multipleNPILink;
 	
 	@FindBy(xpath="//div[@class='modal modal-tip']//div[@class='modal-container help-modal fixed-modal']")
@@ -157,7 +160,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	@FindBy(xpath = "//span[@class='progress-indicator__title']")
 	List <WebElement> finInsInfoHeaders;
 	
-	@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[4]/div[3]/a[2]")
+	//@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[4]/div[3]/a[2]")
+	@FindBy(xpath="//*[@id='msgFile']/a[2]")
 	WebElement editVoidedCheck;
 	
 	@FindBy(xpath="//div[@class='error']//ul//li")

@@ -183,23 +183,46 @@ public class Browser
 		}
 	}
 	
+//	public static void closeBrowser(TestBase testConfig)
+//	{
+//		try
+//		{
+//			if (testConfig.driver != null)
+//			{
+//				Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+//				testConfig.driver.close();
+//			}
+//		}
+//		catch (UnreachableBrowserException e)
+//		{
+//			Log.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
+//			
+//		}
+//	}
+
 	public static void closeBrowser(TestBase testConfig)
 	{
-		try
-		{
-			if (testConfig.driver != null)
-			{
-				Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
-				testConfig.driver.close();
-			}
-		}
-		catch (UnreachableBrowserException e)
-		{
-			Log.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
-			
-		}
-	}
 
+	try
+	{
+	if (testConfig.driver != null)
+	{
+	Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+	//testConfig.driver.close();
+	testConfig.driver.quit();
+	return;
+	}
+	testConfig.driver.quit();
+	testConfig.driver  = null;
+
+	}
+	catch (UnreachableBrowserException e)
+	{
+	Log.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
+
+	}
+	}
+	
 	
 	public void navigateTo(TestBase testConfig,String url)
 	{
