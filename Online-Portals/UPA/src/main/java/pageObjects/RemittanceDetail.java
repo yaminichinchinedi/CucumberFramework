@@ -52,36 +52,42 @@ import main.java.pageObjects.HomePage;
 
 public class RemittanceDetail {
 	
-	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[1]")
-	WebElement verifyPageLoad;
-	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]")
-	WebElement subscriberID;
-		@FindBy(xpath=".//*[@id='flow1']/table")
-	List<WebElement> plbSegment;
-	//Writing all Locators here
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[1]") WebElement verifyPageLoad;
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]") WebElement subscriberID;
+	@FindBy(xpath=".//*[@id='flow1']/table") List<WebElement> plbSegment;
 	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
-	@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
-	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
-	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
+    @FindBy(name="providerTIN")	WebElement enterTIN;
+	//@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
+    @FindBy(name="btnSubmit")	WebElement searchBtn;
+    //@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
+    @FindBy(id="periodId")	WebElement quickSeacrhDrpDwn;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
+    @FindBy(name="filterPayments")	WebElement filterPaymentsDrpDwn;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
+    @FindBy(id="mktTypeId")	WebElement mrktTypeDrpDwn;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
+    @FindBy(id="payerFilterType")	WebElement payerDrpDwn;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
+    @FindBy(id="archiveFilterType")	WebElement archiveDrpDwn;
+	//@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
 	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
-	@FindBy(xpath = "//td[@class='subheader']") WebElement remitHeader1;
-	@FindBy(xpath = "//span[@class='Subheaderbold']") WebElement orgHeader;
+	@FindBy(id="paymentNbr_1")	WebElement firstPaymentNumber;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
+	@FindBy(className="subheader")	WebElement remitHeader1;
+	//@FindBy(xpath = "//td[@class='subheader']") WebElement remitHeader1;
+	@FindBy(className="Subheaderbold")	WebElement orgHeader;
+	//@FindBy(xpath = "//span[@class='Subheaderbold']") WebElement orgHeader;
 	@FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]") WebElement dosHeader;
 	@FindBy(xpath = "//tbody/tr[@class='columnHeaderText']/td[5]") WebElement renderingHeader;
 	@FindBy(xpath = "//td[contains(text(),'Claim Number')]") WebElement claimnumHeader;
 	@FindBy(xpath = "//div[@id='flow2']//td[7]") WebElement patientpayHeader;
 	@FindBy(xpath = "//td[contains(text(),'Amount Paid')]") WebElement amntpaidHeader;
-	
 	@FindBy(xpath = "//td[starts-with(text(),'Payment Date')]") WebElement paymentDate;
     @FindBy(xpath = "//td[contains(text(),'Payment Type:')]") WebElement paymentType;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumber;
 	@FindBy(xpath = "//td[contains(text(),'NPI')]") WebElement remitNPI;
-	@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
+	@FindBy(name="claimType")	WebElement filterClaims;
+	//@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
 	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
 	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
 	@FindBy(xpath = "//a[contains(text(),'Patient Name')]") WebElement patientName;
@@ -111,10 +117,11 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payernameUI;
-	                 
 	@FindBy(xpath ="//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]")  WebElement payerUI;
-	@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
+	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
+	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
+	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number:')]") WebElement paymentNo;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@class='form']") WebElement printBtn;
@@ -122,21 +129,30 @@ public class RemittanceDetail {
 	//@FindBy(xpath = "//input[@value='Return to Payment Summary']") WebElement returnBtn;
 	//@FindBy(xpath = "//input[@value='Return to Search Results']") WebElement returnBtn1;
 	@FindBy(xpath = "//input[starts-with(@value,'Return to')]") WebElement returnBtn;
-	@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
+	@FindBy(className="subheaderbold")	WebElement totPaidSubHdr;
+	//@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement cob_Msg;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement reversalMsg;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
+	@FindBy(id="periodId")	WebElement quickSearch;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
+	@FindBy(id="mktTypeId")	WebElement marketTyp;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
+	@FindBy(id="payerFilterType")	WebElement payerDrpDown;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='claimType']//option") List<WebElement> filterClaimsOptionUI;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
+	@FindBy(name="filterPayments")	WebElement filterDrpDown;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'First Page')]") WebElement firstPage;
 	@FindBy(xpath = "//a[contains(text(),'Last Page')]") WebElement lastPage;
-	@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
-	@FindBy(xpath = "//td[@id='patientName_1']") WebElement firstPatient;
+	@FindBy(id="outerTable")	WebElement remitOuterTable;
+	//@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
+	@FindBy(id="patientName_1")	WebElement firstPatient;
+	//@FindBy(xpath = "//td[@id='patientName_1']") WebElement firstPatient;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[3]") WebElement amntChargedUI;
-	@FindBy(xpath = "//td[@id='grpPolNo_1']") WebElement grpPolicyUI;
-	@FindBy(xpath = "//td[@id='subscriberID_1']") WebElement subscriberUI1;
+	@FindBy(id="grpPolNo_1")	WebElement grpPolicyUI;
+	//@FindBy(xpath = "//td[@id='grpPolNo_1']") WebElement grpPolicyUI;
+	@FindBy(id="subscriberID_1")	WebElement subscriberUI1;
+	//@FindBy(xpath = "//td[@id='subscriberID_1']") WebElement subscriberUI1;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimHash;
 	@FindBy(xpath = "//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]") WebElement accntNum;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimType;
@@ -146,9 +162,12 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[5]") WebElement provAdjDis;
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement srchRemit;
-	@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
-	@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
-	@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
+	@FindBy(id="paymentNbrTypeSelection")	WebElement payNumdrpdwn;
+	//@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
+	@FindBy(id="paymentNumberInputId")	WebElement elcPayNum;
+	//@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
+	@FindBy(name="searchRemittance")	WebElement srchRemitBtn;
+	//@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotal;
 	@FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]") WebElement adjCodePLB;
 	@FindBy(xpath = "//td[contains(text(),'Reference #')]") WebElement refCodePLB;
@@ -157,7 +176,8 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//div[@id='msgforplb']//span[1]") WebElement claimmsg;
 	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
-	@FindBy(xpath = "//input[@name= 'taxIdNbr']") WebElement prvdrTIN;
+	@FindBy(name="taxIdNbr")	WebElement prvdrTIN;
+	//@FindBy(xpath = "//input[@name= 'taxIdNbr']") WebElement prvdrTIN;
 	@FindBy(xpath = "//input[@value= 'Search']") WebElement srchTINUPA;
 	@FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]") WebElement homeBtnUPA;
 	@FindBy(xpath="//input[@value='Print Request' and @type = 'button']") WebElement btnPrint;
@@ -168,20 +188,11 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//td[contains(text(),'Subscriber Name')]") WebElement subscrbrName;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement remitpaymnthead;
 	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a") WebElement PPRAPDFHyperlink;
-	
 	@FindBy(xpath="//span[contains(@id,'ppra')]//img") WebElement pPRAPDFImage;
-	
-	@FindBy(xpath="//div[@id='hideheader']//table//tr")
-	List<WebElement> pageHeader;
-	
-	@FindBy(xpath="//div[@id='flow1']/table")
-	List<WebElement> pageBody;
-	
-	@FindBy(linkText="RMK Code")
-	WebElement rmkCode;	
-	
-	@FindBy(linkText="Adj Reason Code")
-	WebElement adjCode;	
+	@FindBy(xpath="//div[@id='hideheader']//table//tr") List<WebElement> pageHeader;
+	@FindBy(xpath="//div[@id='flow1']/table") List<WebElement> pageBody;
+	@FindBy(linkText="RMK Code") WebElement rmkCode;	
+	@FindBy(linkText="Adj Reason Code") WebElement adjCode;	
 	
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
@@ -750,7 +761,7 @@ public void verifyRemitPaginationOptions() throws Exception
 		  {
 		  Element.click(remitNext, "Next Button");
 		  Log.Pass("Clicked on Next Button");
-		  Browser.wait(testConfig, 3);
+		  Browser.wait(testConfig, 2);
 		  Element.click(firstPage, "First Page");
 		  }
 		  else
@@ -769,7 +780,7 @@ public void verifyRemitPaginationOptions() throws Exception
     	 if(paginationNo2.isDisplayed())
     	 {
     	    Element.click(paginationNo2, "Pagination");
-    	    Browser.wait(testConfig, 3);
+    	    Browser.wait(testConfig, 2);
 			Element.click(firstPage, "First Page");
 			Log.Pass("Pagination Button functionality working as expected");
     	 }
@@ -788,9 +799,9 @@ public void verifyRemitPaginationOptions() throws Exception
     	 if(lastPage.isDisplayed())
     	 {
     	    Element.click(lastPage, "Last Page");
-			Browser.wait(testConfig, 3);
+			Browser.wait(testConfig, 2);
 			Element.click(firstPage, "First Page");
-			Browser.wait(testConfig, 3);
+			Browser.wait(testConfig, 2);
 			Log.Pass("Last Page Button functionality working as expected");
     	 }
     	 else
@@ -811,7 +822,7 @@ public void verifyRemitPaginationOptions() throws Exception
 public void verifyRMKCode() throws Exception
 {
 		Element.click(rmk_code, "RMK Code");
-		Browser.wait(testConfig,5);
+		Browser.wait(testConfig,2);
 		@SuppressWarnings("unused")
 		String oldWindow=Browser.switchToNewWindow(testConfig,"remarkCode.do");
 	    String rmk_code = remarkCode.getText();
@@ -819,11 +830,13 @@ public void verifyRMKCode() throws Exception
     
        if(("Remark Code").contains(rmk_code))
          {
-		      Browser.wait(testConfig, 7);
+		       Browser.wait(testConfig, 2);
+		      //Element.verifyElementVisiblity(remarkCode, "Remark Code");
 		      Boolean remarkCodeUI = remarkCode.isDisplayed();
 		      Helper.compareEquals(testConfig, "Remark Code is Displayed in Child Window", true, remarkCodeUI);
 		      
-		      Browser.wait(testConfig, 7);
+		      Browser.wait(testConfig, 2);
+		      //Element.verifyElementVisiblity(remarkDesc, "Remark Desc");
 		      Boolean remarkDescUI = remarkDesc.isDisplayed();
 		      Helper.compareEquals(testConfig, "Remark Code Description Header", true, remarkDescUI);
 		      
@@ -858,11 +871,11 @@ public void verifyADJCode() throws Exception
     if(adj_Code.equalsIgnoreCase("Adjustment Code"))
     	
      {
-	    Browser.wait(testConfig, 7);
+	    Browser.wait(testConfig, 2);
         Boolean adjCodeUI = adjustmentCode.isDisplayed();
         Helper.compareEquals(testConfig, "Adjustment Code Description Header", true, adjCodeUI);
       
-    	Browser.wait(testConfig, 7);
+    	Browser.wait(testConfig, 2);
     	Boolean adjustmentDescUI = adjustmentDesc.isDisplayed();
     	Helper.compareEquals(testConfig, "Adjustment Code is Displayed in Child Window", true, adjustmentDescUI);
 
@@ -892,13 +905,11 @@ public void verifyADJCode() throws Exception
 public void verifyRemittancePageData() throws Exception
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -1035,8 +1046,7 @@ public void verifyRemittancePageData() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -1131,7 +1141,7 @@ public void verifyRemittancePageData() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -1266,7 +1276,6 @@ public void verifyRemittancePageData() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
      
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
@@ -1361,7 +1370,7 @@ public void verifyRemittancePageData() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -1389,14 +1398,11 @@ public void verifyRemittancePageData() throws Exception
 public void verifyRemittancePageDataSerachCriteria(String paymentType) throws Exception
 {
 
-Browser.wait(testConfig, 7);
+Browser.wait(testConfig, 2);
 String ui_Payer = payerUI.getText();
 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-
-Browser.wait(testConfig, 5);
 Element.click(paymentNo1, "Payment No");
-Browser.wait(testConfig, 5);
-
+Browser.wait(testConfig, 2);
 String paymentNum1 = paymentNo.getText();
 String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -1527,8 +1533,7 @@ if(null == payerSchema)
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-       Browser.wait(testConfig, 7);
-     
+
     if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
      {
     	 String grpPolicyUI1 = grpPolicyUI.getText();
@@ -1616,7 +1621,7 @@ if(null == payerSchema)
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -1751,7 +1756,7 @@ String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:Charged
 Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 if(!amountChargedDB.equalsIgnoreCase("0"))
    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-   Browser.wait(testConfig, 7);
+
  
 if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
  {
@@ -1841,7 +1846,7 @@ else
  String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
  Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
  if(!amntAllowedDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
 
  /*
  String CopayUI1 = copayUI.getText();
@@ -1875,19 +1880,19 @@ public void verifyCOBFilterClaimOption() throws Exception
 public void verifyCOBFilterClaimData() throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
         String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	
 	
 	Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
     Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
     Log.Comment("Filter Claims Dropdown selected - COB Only");
     
-    Browser.wait(testConfig, 5);
+    Browser.wait(testConfig, 2);
   int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
   
   Log.Comment("Size of the tlist is:" + size);
@@ -2024,8 +2029,7 @@ public void verifyCOBFilterClaimData() throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-               Browser.wait(testConfig, 7);
-	  	     
+
 	  	     
                String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
       	     
@@ -2137,7 +2141,7 @@ public void verifyCOBFilterClaimData() throws Exception
       	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
       	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
       	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
       	   
       	     /*
       	     String CopayUI1 = copayUI.getText();
@@ -2271,9 +2275,7 @@ public void verifyCOBFilterClaimData() throws Exception
   	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
   	    if(!amountChargedDB.equalsIgnoreCase("0"))
   	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-  	     
-  	     
+
            String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
   	     
   	     
@@ -2386,7 +2388,7 @@ public void verifyCOBFilterClaimData() throws Exception
   	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
   	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
   	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
   	   
   	     /*
   	     String CopayUI1 = copayUI.getText();
@@ -2422,20 +2424,20 @@ public void verifyCOBFilterClaimData() throws Exception
 public void verifyReversalFilterClaimData(String usertype) throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
 	
 	if(usertype == "Payer")
 	{
 		 String ui_Payer = payernameUI.getText();
 		 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 		 Element.click(paymentNo1, "Payment No");
-		 Browser.wait(testConfig, 5);
+		 Browser.wait(testConfig, 2);
 
 	Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
     Element.selectVisibleText(filterClaims,"Reversal Only","Claim Filter DropDown");
     Log.Comment("Filter Claims Dropdown selected - Reversal Only");
     
-    Browser.wait(testConfig, 5);
+    Browser.wait(testConfig, 2);
     
     if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
     {
@@ -2571,9 +2573,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-             Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
              String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     	     
     	     
@@ -2686,7 +2686,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
     	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
     	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
     	   
     	     /*
     	     String CopayUI1 = copayUI.getText();
@@ -2822,9 +2822,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-             Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
              String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     	     
     	     
@@ -2929,7 +2927,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
     	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
     	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
     	   
     	     /*
     	     String CopayUI1 = copayUI.getText();
@@ -2968,13 +2966,13 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 		 String ui_Payer = payerUI.getText();
 		 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 		 Element.click(paymentNo1, "Payment No");
-		 Browser.wait(testConfig, 5);
+		 Browser.wait(testConfig, 2);
 
 	Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
    Element.selectVisibleText(filterClaims,"Reversal Only","Claim Filter DropDown");
    Log.Comment("Filter Claims Dropdown selected - Reversal Only");
    
-   Browser.wait(testConfig, 5);
+   Browser.wait(testConfig, 2);
    
    if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
    {
@@ -3110,9 +3108,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-            Browser.wait(testConfig, 7);
-	  	     
-	  	     
+ 
             String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
    	     
    	     
@@ -3225,7 +3221,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
    	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
    	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    	   
    	     /*
    	     String CopayUI1 = copayUI.getText();
@@ -3361,9 +3357,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-            Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
             String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
    	     
    	     
@@ -3468,7 +3462,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
    	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
    	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    	   
    	     /*
    	     String CopayUI1 = copayUI.getText();
@@ -3603,8 +3597,7 @@ public void verifyMultiplePLBAdj() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3632,7 +3625,6 @@ public void verifyMultiplePLBAdj() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3655,8 +3647,7 @@ public void verifyMultiplePLBAdj() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3703,7 +3694,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3726,7 +3717,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
+		
     	sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
@@ -3755,7 +3746,6 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3778,8 +3768,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3884,7 +3873,7 @@ public void verifyPLBAdjOnly() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -3907,7 +3896,7 @@ public void verifyPLBAdjOnly() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
+		
         int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3934,7 +3923,6 @@ public void verifyPLBAdjOnly() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -3958,9 +3946,8 @@ public void verifyPLBAdjOnly() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 202;
+		
+    	int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -3996,7 +3983,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -4019,8 +4006,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-        int sqlRowNo = 202;
+		int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4046,7 +4032,6 @@ public void verifyPLBAdjOnlyUPA() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -4070,9 +4055,8 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 202;
+		
+    	int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4110,7 +4094,7 @@ public void verifyPLBAdjOnlyPayer() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -4134,8 +4118,7 @@ public void verifyPLBAdjOnlyPayer() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-        int sqlRowNo = 216;
+		int sqlRowNo = 216;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4161,7 +4144,6 @@ public void verifyPLBAdjOnlyPayer() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -4185,9 +4167,8 @@ public void verifyPLBAdjOnlyPayer() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 216;
+		
+    	int sqlRowNo = 216;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4209,33 +4190,20 @@ public void verifySortByPatientLastName() throws Exception
 {
 	String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-
-    Element.click(paymentNo1, "Payment Number");
-    
-
+	Element.click(paymentNo1, "Payment Number");
     String paymentNum1 = paymentNo.getText();
     String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
     Log.Comment("The First  Payment Number displayed is:" + paymentNum);
     Element.expectedWait(remitHeader1, testConfig, "Remit Page", "Remit Page");
     List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
-    
-    
-    
     int patientNamesCount = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]")).size();
     Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
 	List<String> patientLastNames = new ArrayList<String>();
-	
-	
-	
 	Log.Comment("Size of Patient Name List is:" + patientNamesCount);
     String patientLastName1 = testConfig.driver.findElement(By.xpath("//td[starts-with(@id,'patientName_1')]")).getText();
-	
 	Log.Comment("Patient Name is:" + patientLastName1);
 	
 	List<String> patientLastNameUI = new ArrayList<String>();
-	
-	
-	
 	if(patientLastName1.isEmpty())
 	{
 		Log.Pass("For this Particular TIN - Patient Names doesn't exists");
@@ -4443,12 +4411,11 @@ public void verifySortByPatientLastName() throws Exception
 
 public void verifyRemittancePageDataUPA(String usertype) throws Exception  
 {
-Browser.wait(testConfig, 7);
+Browser.wait(testConfig, 2);
 if(usertype == "Payer")
 {
 	 String ui_Payer = payernameUI.getText();
 	 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	 
 	 Element.click(paymentNo1, "Payment No");
 		Browser.wait(testConfig, 5);
 
@@ -4585,8 +4552,7 @@ if(null == payerSchema)
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-       Browser.wait(testConfig, 7);
-     
+
      String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
      
      
@@ -4681,7 +4647,7 @@ if(null == payerSchema)
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -4816,8 +4782,6 @@ Log.Comment("The Amount Charged from FISL is :" +amountChargedDB);
 if(!amountChargedDB.equalsIgnoreCase("0"))
    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
- Browser.wait(testConfig, 7);
- 
 String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 
 Log.Comment("Text of Group Policy List is:" + grp);
@@ -4911,7 +4875,7 @@ else
  String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
  Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
  if(!amntAllowedDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
 
  /*
  String CopayUI1 = copayUI.getText();
@@ -4941,7 +4905,7 @@ else
 	 String ui_Payer = payernameUI.getText();
 	 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 	 Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	
 String paymentNum1 = paymentNo.getText();
 String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
@@ -5076,8 +5040,7 @@ if(null == payerSchema)
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-      Browser.wait(testConfig, 7);
-     
+
      String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
      
      
@@ -5172,7 +5135,7 @@ if(null == payerSchema)
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -5307,8 +5270,6 @@ Log.Comment("The Amount Charged from FISL is :" +amountChargedDB);
 if(!amountChargedDB.equalsIgnoreCase("0"))
   Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-Browser.wait(testConfig, 7);
-
 String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 
 Log.Comment("Text of Group Policy List is:" + grp);
@@ -5402,7 +5363,7 @@ Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 if(!amntAllowedDB.equalsIgnoreCase("0"))
-   Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+   Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
 
 /*
 String CopayUI1 = copayUI.getText();
@@ -5431,7 +5392,7 @@ if(!CopayDB.equalsIgnoreCase("0"))
 public void verifySortByRendPrvdrLastName() throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
@@ -5659,13 +5620,12 @@ public void enterElectronicNumForTricareMaskCriteria() throws Exception
 
 public void verifyTricareMasking() throws Exception
 {
-	Browser.wait(testConfig, 10);
+	Browser.wait(testConfig, 3);
 	
 	Boolean remitpaymntheadUI = remitpaymnthead.isDisplayed();
 	Helper.compareEquals(testConfig, "Payment Number Header check for Tricare", true, remitpaymntheadUI);
     Element.click(paymentNo1, "Payment Number");
-    Browser.wait(testConfig, 5);
-	Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
+    Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
 	String subscrbrID = subscriberUI1.getText();
 	Log.Comment("Subscriber ID in UI:" + subscrbrID);
 	String mask = subscrbrID.substring(0, subscrbrID.length()-4);
@@ -5686,13 +5646,11 @@ public void verifyTricareMasking() throws Exception
 public void verifyRemittancePageDataUPA() throws Exception
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -5826,8 +5784,7 @@ public void verifyRemittancePageDataUPA() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -5937,7 +5894,7 @@ public void verifyRemittancePageDataUPA() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedDB);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -6074,8 +6031,6 @@ public void verifyRemittancePageDataUPA() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
-     
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
     Log.Comment("Text of Group Policy List is:" + grp);
@@ -6185,7 +6140,7 @@ public void verifyRemittancePageDataUPA() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -6214,16 +6169,14 @@ public void verifyRemittancePageDataUPA() throws Exception
 public RemittanceDetail clickPrintRequestButton()
 {
 Element.verifyElementPresent(btnPrint, "Print Request Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
 	Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
-	Browser.wait(testConfig, 3);
-	Browser.browserRefresh(testConfig);
-    Element.verifyElementPresent(btnPrntavailable, "Print Available");
+	Element.verifyElementPresent(btnPrntavailable, "Print Available");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	
 	return this;
@@ -6247,7 +6200,7 @@ public RemittanceDetail verifyDownloadWindow()
 {
 	  String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
       Log.Comment("THe PDF Text Message is:" + msg.getText());
-      Browser.wait(testConfig, 3);
+      Browser.wait(testConfig, 2);
      
      
      if(msg.getText().contains("Your PDF is now available"))
@@ -6276,13 +6229,11 @@ public RemittanceDetail verifyDownloadWindow()
 public void verifyRemittancePageDataUPAPayer() throws Exception  
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payernameUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -6416,8 +6367,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -6512,7 +6462,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -6647,8 +6597,6 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
-     
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
     Log.Comment("Text of Group Policy List is:" + grp);
@@ -6742,7 +6690,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -6773,7 +6721,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
-		Browser.wait(testConfig, 6);
+		Browser.wait(testConfig, 2);
 		
 		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
 			
@@ -6824,24 +6772,18 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	public void verifyCOBFilterClaimData(String usertype) throws Exception
 	{
 		Element.click(returnBtn, "Return Button");
-		Browser.wait(testConfig, 7);
-	       
-
-		
-		if(usertype == "Payer")
+		Browser.wait(testConfig, 2);
+	    if(usertype == "Payer")
 		{
 			 String ui_Payer = payernameUI.getText();
 			 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 			 
 			 Element.click(paymentNo1, "Payment No");
-				Browser.wait(testConfig, 5);
-				
-				
-				Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
-			    Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
-			    Log.Comment("Filter Claims Dropdown selected - COB Only");
-			    
-			    Browser.wait(testConfig, 5);
+			 Browser.wait(testConfig, 2);
+			 Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
+		     Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
+			 Log.Comment("Filter Claims Dropdown selected - COB Only");
+			 Browser.wait(testConfig, 2);
 			  int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
 			  
 			  Log.Comment("Size of the tlist is:" + size);
@@ -6978,9 +6920,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 				  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 				  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 				  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-			               Browser.wait(testConfig, 7);
-				  	     
-				  	     
+
 			               String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 			      	     
 			      	     
@@ -7091,7 +7031,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 			      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 			      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-			      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+			      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 			      	   
 			      	     /*
 			      	     String CopayUI1 = copayUI.getText();
@@ -7225,9 +7165,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 			  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 			  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-			           Browser.wait(testConfig, 7);
-			  	     
-			  	     
+
 			           String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 			  	     
 			  	     
@@ -7340,7 +7278,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 			  	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 			  	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-			  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+			  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 			  	   
 			  	     /*
 			  	     String CopayUI1 = copayUI.getText();
@@ -7379,14 +7317,11 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			String ui_Payer = payerUI.getText();
 			Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 			Element.click(paymentNo1, "Payment No");
-			Browser.wait(testConfig, 5);
-			
-			
+			Browser.wait(testConfig, 2);
 			Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
 		    Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
 		    Log.Comment("Filter Claims Dropdown selected - COB Only");
-		    
-		    Browser.wait(testConfig, 5);
+		    Browser.wait(testConfig, 2);
 		  int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
 		  
 		  Log.Comment("Size of the tlist is:" + size);
@@ -7523,9 +7458,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 			  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 			  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-		               Browser.wait(testConfig, 7);
-			  	     
-			  	     
+
 		               String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 		      	     
 		      	     
@@ -7636,7 +7569,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-		      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+		      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and Ui", amntAllowedDB, amntAllowedUI);
 		      	   
 		      	     /*
 		      	     String CopayUI1 = copayUI.getText();
@@ -7770,9 +7703,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 		  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 		  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-		           Browser.wait(testConfig, 7);
-		  	     
-		  	     
+
 		           String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 		  	     
 		  	     
@@ -7885,7 +7816,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		  	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		  	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		  	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-		  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+		  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", accntNumDB, accntNumUI);
 		  	   
 		  	     /*
 		  	     String CopayUI1 = copayUI.getText();
@@ -8176,7 +8107,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 //	      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 //	      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 //	      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-//	      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+//	      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", accntNumDB, accntNumUI);
 //	      	   
 //	      	     /*
 //	      	     String CopayUI1 = copayUI.getText();

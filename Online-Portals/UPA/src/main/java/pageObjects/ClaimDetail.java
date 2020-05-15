@@ -46,22 +46,32 @@ public class ClaimDetail {
 	
 	//Writing all Locators here
 	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
-	@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
-	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
-	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
+	@FindBy(name="providerTIN")	WebElement enterTIN;
+	//@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
+	@FindBy(name="btnSubmit")	WebElement searchBtn;
+	//@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
+	@FindBy(id="periodId")	WebElement quickSeacrhDrpDwn;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
+	@FindBy(name="filterPayments")	WebElement filterPaymentsDrpDwn;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
+	@FindBy(id="mktTypeId")	WebElement mrktTypeDrpDwn;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
+	@FindBy(id="payerFilterType")	WebElement payerDrpDwn;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
+	@FindBy(id="archiveFilterType")	WebElement archiveDrpDwn;
+	//@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
 	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
-	@FindBy(xpath = "//td[@class='subheader']") WebElement claimHeader1;
+	@FindBy(id="paymentNbr_1")	WebElement firstPaymentNumber;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
+	@FindBy(className="subheader")	WebElement claimHeader1;
+	//@FindBy(xpath = "//td[@class='subheader']") WebElement claimHeader1;
 	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
 	@FindBy(xpath = "//td[starts-with(text(),'Payment Date')]") WebElement paymentDate;
     @FindBy(xpath = "//td[contains(text(),'Payment Type:')]") WebElement paymentType;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumber;
 	@FindBy(xpath = "//td[contains(text(),'NPI')]") WebElement  claimNPI;
-	@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
+	@FindBy(name="claimType")	WebElement filterClaims;
+	//@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
 	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
 	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
 	@FindBy(xpath = "//a[contains(text(),'Patient Name')]") WebElement patientName;
@@ -92,31 +102,40 @@ public class ClaimDetail {
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
     @FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]") WebElement payernameUI;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
-	@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
+	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
+	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
+	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number:')]") WebElement paymentno;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@value='Print Request']") WebElement printBtn;
 	@FindBy(xpath = "//input[@value='Return to Payment Summary']") WebElement returnBtn;
-	@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
+	@FindBy(className="subheaderbold")	WebElement totPaidSubHdr;
+	//@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement cob_Msg;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement reversalMsg;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
+	@FindBy(id="periodId")	WebElement quickSearch;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
+	@FindBy(id="mktTypeId")	WebElement marketTyp;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
+	@FindBy(id="payerFilterType")	WebElement payerDrpDown;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='claimType']//option") List<WebElement> filterClaimsOptionUI;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
+	@FindBy(name="filterPayments")	WebElement filterDrpDown;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'First Page')]") WebElement firstPage;
 	@FindBy(xpath = "//a[contains(text(),'Last Page')]") WebElement lastPage;
-	@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
-	@FindBy(xpath = "//td[@id='patientName_']") WebElement firstPatient;
+	@FindBy(id="outerTable") WebElement remitOuterTable;
+	//@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
+	@FindBy(id="patientName_") WebElement firstPatient;
+	//@FindBy(xpath = "//td[@id='patientName_']") WebElement firstPatient;
 	@FindBy(xpath = "//table[1]/tbody[1]/tr[1]/td[1]/div[1]/table[1]/tbody[1]/tr[1]/td[3]") WebElement amntChargedUI;
-	@FindBy(xpath = "//span[@id='grpID_']") WebElement grpPolicyUI;
-	@FindBy(xpath = "//td[@id='subscriberID_']") WebElement subscriberUI1;
+	@FindBy(id="grpID_") WebElement grpPolicyUI;
+	//@FindBy(xpath = "//span[@id='grpID_']") WebElement grpPolicyUI;
+	@FindBy(id="subscriberID_") WebElement subscriberUI1;
+	//@FindBy(xpath = "//td[@id='subscriberID_']") WebElement subscriberUI1;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimHash;
 	@FindBy(xpath = "//span[@id='claimID_']/span[1]") WebElement claimHash1;
-	
-	
 	@FindBy(xpath = "//table[1]/tbody[1]/tr[3]/td[5]/span[1]/span[1]") WebElement claimHashno;
 	@FindBy(xpath = "//table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[3]/td[1]") WebElement accntNum;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimType;
@@ -126,9 +145,12 @@ public class ClaimDetail {
 	@FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[5]") WebElement provAdjDis;
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement srchRemit;
-	@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
-	@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
-	@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
+	@FindBy(id="paymentNbrTypeSelection") WebElement payNumdrpdwn;
+	//@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
+	@FindBy(id="paymentNumberInputId") WebElement elcPayNum;
+	//@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
+	@FindBy(name="searchRemittance") WebElement srchRemitBtn;
+	//@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotal;
 	@FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]") WebElement adjCodePLB;
 	@FindBy(xpath = "//td[contains(text(),'Reference #')]") WebElement refCodePLB;
@@ -155,13 +177,11 @@ public ClaimDetail(TestBase testConfig)
 
 public void verifyClaimDtlPageData() throws Exception
 {
-	
-	Browser.wait(testConfig, 7);
-    String ui_Payer = payerUI.getText();
+	Browser.wait(testConfig, 2);
+	String ui_Payer = payerUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentno.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -307,8 +327,6 @@ public void verifyClaimDtlPageData() throws Exception
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-	     Browser.wait(testConfig, 7);
-	     
 	    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
@@ -512,9 +530,6 @@ public void verifyClaimDtlPageData() throws Exception
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-
-     Browser.wait(testConfig, 7);
-     
   //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
     
     String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
@@ -641,13 +656,12 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 {
 	if(usertype == "Payer")
 	{
-		Browser.wait(testConfig, 7);
+		Browser.wait(testConfig, 2);
 		String ui_Payer = payerUI.getText();
 		//String ui_Payer = payernameUI.getText();
 	    Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-		Browser.wait(testConfig, 5);
 		Element.click(paymentNo1, "Payment No");
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		String paymentNum1 = paymentno.getText();
 		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 		Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -786,10 +800,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 		    if(!amountChargedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-	           Browser.wait(testConfig, 7);
-		    
-		    
-		    
+	
 //		    String amountChargedUI1 = amntChargedUI.getText();
 //		    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
 //		    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
@@ -801,7 +812,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 //		    if(!amountChargedDB.equalsIgnoreCase("0"))
 //		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-		     Browser.wait(testConfig, 7);
 		     
 		    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 		    
@@ -1008,8 +1018,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-	     Browser.wait(testConfig, 7);
-	     
 	  //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
@@ -1135,13 +1143,12 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	else
 		
 	{
-		Browser.wait(testConfig, 7);
+		Browser.wait(testConfig, 2);
 		String ui_Payer = payernameUI.getText();
 		//String ui_Payer = payerUI.getText();
 	    Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-		Browser.wait(testConfig, 5);
 		Element.click(paymentNo1, "Payment No");
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		String paymentNum1 = paymentno.getText();
 		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 		Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -1292,8 +1299,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    if(!amountChargedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-		     Browser.wait(testConfig, 7);
-		     
 		    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 		    
 		    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
@@ -1498,8 +1503,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-	     Browser.wait(testConfig, 7);
-	     
 	  //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
