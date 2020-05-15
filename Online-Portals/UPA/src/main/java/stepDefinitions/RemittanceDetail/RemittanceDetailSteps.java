@@ -234,6 +234,12 @@ public class RemittanceDetailSteps extends TestBase {
 		remitDetail.clickPayNum();
 	}
 	
+	 @Then("^Verify Remittance Detail Online vs FISL Response for \"([^\"]*)\"$")
+	    public void verify_Remittance_Detail_Online_vs_FISL_Response_for(String usertype) throws Throwable {
+	       
+	    	remitDetail.verifyRemittancePageDataUPA(usertype);
+	    }
+	
 //	@Then("^click Return Button based on \"([^\"]*)\"$")
 //	public void click_Return_Button_based_on(String usertype) throws Throwable {
 //	   

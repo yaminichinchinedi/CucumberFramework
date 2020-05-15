@@ -1,3 +1,4 @@
+
 #Author: Athyusha Thota
 
 @UPARemitDetail  @UPARegression @BothCSRUPAScenarios @UPARemitDetailPayer
@@ -22,7 +23,7 @@ Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
 Examples: 
         |    Search Criteria     |       credentials        | usertype | 
         |     Payer_Admin        |       PAY_Admin          | Payer    |
-        |     Payer_Gen          |       PAY_Gen           | Payer    |
+        |     Payer_Gen          |       PAY_Gen            | Payer    |
         
         
 
