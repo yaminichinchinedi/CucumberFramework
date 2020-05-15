@@ -48,9 +48,54 @@ public class TestDataReader {
 	//Overloaded constructor
 	public TestDataReader(TestBase testConfig, String sheetName, String path) throws IOException
 	{
-	readFile(testConfig, sheetName, path);
+		if(path.contains(".xls"))
+			readFilexls(testConfig, sheetName, path);
+		else 
+		readFile(testConfig, sheetName, path);
+	
 	}
  
+	public void readFilexls(TestBase testBaseSetup, String sheetName,String path) throws IOException
+	{
+		this.testConfig = testBaseSetup;
+		int index = path.lastIndexOf("//");
+		
+		if (index != -1)
+			Log.Comment("Read:-'" + path.substring(path.lastIndexOf("//"))+ "', Sheet:- '" + sheetName + "'");
+		else
+			Log.Comment("Read:-'" + path + "', Sheet:- '" + sheetName + "'");
+			
+		filename = path;
+		testData = new ArrayList<List<String>>();
+		HSSFWorkbook workbook = null;
+		HSSFSheet sheet = null;
+				fis = new FileInputStream(filename);
+				workbook = new HSSFWorkbook(fis);
+				sheet = workbook.getSheet(sheetName);
+		
+		  int rowCount = sheet.getLastRowNum()-sheet.getFirstRowNum();
+		  System.out.println("Row count is:"+rowCount);
+		    //Create a loop over all the rows of excel file to read it
+
+		    for (int i = 1; i < rowCount; i++) {
+
+		        Row row = sheet.getRow(i);
+
+		        //Create a loop to print cell values in a row
+
+		        for (int j = 0; j < row.getLastCellNum(); j++) {
+
+		            //Print Excel data in console
+
+		            System.out.print(row.getCell(j).getStringCellValue()+"|| ");
+
+		        }
+
+		        System.out.println();
+		    } 
+				this.sheetName = sheetName;
+
+			}
 	private String convertXSSFCellToString(XSSFCell cell) {
 		String value = null;
 		try {

@@ -207,7 +207,7 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 	String toDate=null;
 	if (inpTyp.equals("Random")){
 	
-	 fromDate = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
+	 fromDate = Helper.getDateBeforeOrAfterDays(-3,"MM/dd/yyyy");
 	 toDate = Helper.getCurrentDate("MM/dd/yyyy");//Todays date
 	}
 	
@@ -257,7 +257,7 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 		//Set the String to Enter
 		  
 		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
-		  StringSelection stringSelection = new StringSelection(downloadFilepath+"\\EmployeeServey_1.xlsx");
+		  StringSelection stringSelection = new StringSelection(downloadFilepath+"\\EmployeeServey_1.xls");
 		//Copy the String to Clipboard
 		  clipboard.setContents(stringSelection, null);
 		  Browser.wait(testConfig, 5);
@@ -282,7 +282,10 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 //	 String responseid=data.GetData(rowNo, "Response ID");
 //	 System.out.println("Value of Response Id is:"+responseid);
 	
-	
+	Browser.wait(testConfig, 20);
+	String downloadFullFile=downloadFilepath+"\\EmployeeServey_1.xls";
+	String sheetName="Enrollment Survey";
+	 testConfig.cacheTestDataReaderObject(testConfig,sheetName,downloadFullFile);
 	
 }
 
