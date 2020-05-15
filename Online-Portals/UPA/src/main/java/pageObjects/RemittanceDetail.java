@@ -52,36 +52,42 @@ import main.java.pageObjects.HomePage;
 
 public class RemittanceDetail {
 	
-	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[1]")
-	WebElement verifyPageLoad;
-	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]")
-	WebElement subscriberID;
-		@FindBy(xpath=".//*[@id='flow1']/table")
-	List<WebElement> plbSegment;
-	//Writing all Locators here
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[1]") WebElement verifyPageLoad;
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]") WebElement subscriberID;
+	@FindBy(xpath=".//*[@id='flow1']/table") List<WebElement> plbSegment;
 	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
-	@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
-	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
-	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
+    @FindBy(name="providerTIN")	WebElement enterTIN;
+	//@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
+    @FindBy(name="btnSubmit")	WebElement searchBtn;
+    //@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
+    @FindBy(id="periodId")	WebElement quickSeacrhDrpDwn;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
+    @FindBy(name="filterPayments")	WebElement filterPaymentsDrpDwn;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
+    @FindBy(id="mktTypeId")	WebElement mrktTypeDrpDwn;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
+    @FindBy(id="payerFilterType")	WebElement payerDrpDwn;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
+    @FindBy(id="archiveFilterType")	WebElement archiveDrpDwn;
+	//@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
 	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
-	@FindBy(xpath = "//td[@class='subheader']") WebElement remitHeader1;
-	@FindBy(xpath = "//span[@class='Subheaderbold']") WebElement orgHeader;
+	@FindBy(id="paymentNbr_1")	WebElement firstPaymentNumber;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
+	@FindBy(className="subheader")	WebElement remitHeader1;
+	//@FindBy(xpath = "//td[@class='subheader']") WebElement remitHeader1;
+	@FindBy(className="Subheaderbold")	WebElement orgHeader;
+	//@FindBy(xpath = "//span[@class='Subheaderbold']") WebElement orgHeader;
 	@FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]") WebElement dosHeader;
 	@FindBy(xpath = "//tbody/tr[@class='columnHeaderText']/td[5]") WebElement renderingHeader;
 	@FindBy(xpath = "//td[contains(text(),'Claim Number')]") WebElement claimnumHeader;
 	@FindBy(xpath = "//div[@id='flow2']//td[7]") WebElement patientpayHeader;
 	@FindBy(xpath = "//td[contains(text(),'Amount Paid')]") WebElement amntpaidHeader;
-	
 	@FindBy(xpath = "//td[starts-with(text(),'Payment Date')]") WebElement paymentDate;
     @FindBy(xpath = "//td[contains(text(),'Payment Type:')]") WebElement paymentType;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumber;
 	@FindBy(xpath = "//td[contains(text(),'NPI')]") WebElement remitNPI;
-	@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
+	@FindBy(name="claimType")	WebElement filterClaims;
+	//@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
 	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
 	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
 	@FindBy(xpath = "//a[contains(text(),'Patient Name')]") WebElement patientName;
@@ -111,10 +117,11 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payernameUI;
-	                 
 	@FindBy(xpath ="//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]")  WebElement payerUI;
-	@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
-	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
+	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
+	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
+	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
+	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number:')]") WebElement paymentNo;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@class='form']") WebElement printBtn;
@@ -122,21 +129,30 @@ public class RemittanceDetail {
 	//@FindBy(xpath = "//input[@value='Return to Payment Summary']") WebElement returnBtn;
 	//@FindBy(xpath = "//input[@value='Return to Search Results']") WebElement returnBtn1;
 	@FindBy(xpath = "//input[starts-with(@value,'Return to')]") WebElement returnBtn;
-	@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
+	@FindBy(className="subheaderbold")	WebElement totPaidSubHdr;
+	//@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement cob_Msg;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement reversalMsg;
-	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
-	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
-	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
+	@FindBy(id="periodId")	WebElement quickSearch;
+	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
+	@FindBy(id="mktTypeId")	WebElement marketTyp;
+	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
+	@FindBy(id="payerFilterType")	WebElement payerDrpDown;
+	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='claimType']//option") List<WebElement> filterClaimsOptionUI;
-	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
+	@FindBy(name="filterPayments")	WebElement filterDrpDown;
+	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'First Page')]") WebElement firstPage;
 	@FindBy(xpath = "//a[contains(text(),'Last Page')]") WebElement lastPage;
-	@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
-	@FindBy(xpath = "//td[@id='patientName_1']") WebElement firstPatient;
+	@FindBy(id="outerTable")	WebElement remitOuterTable;
+	//@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
+	@FindBy(id="patientName_1")	WebElement firstPatient;
+	//@FindBy(xpath = "//td[@id='patientName_1']") WebElement firstPatient;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[3]") WebElement amntChargedUI;
-	@FindBy(xpath = "//td[@id='grpPolNo_1']") WebElement grpPolicyUI;
-	@FindBy(xpath = "//td[@id='subscriberID_1']") WebElement subscriberUI1;
+	@FindBy(id="grpPolNo_1")	WebElement grpPolicyUI;
+	//@FindBy(xpath = "//td[@id='grpPolNo_1']") WebElement grpPolicyUI;
+	@FindBy(id="subscriberID_1")	WebElement subscriberUI1;
+	//@FindBy(xpath = "//td[@id='subscriberID_1']") WebElement subscriberUI1;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimHash;
 	@FindBy(xpath = "//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]") WebElement accntNum;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimType;
@@ -146,9 +162,12 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[5]") WebElement provAdjDis;
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement srchRemit;
-	@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
-	@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
-	@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
+	@FindBy(id="paymentNbrTypeSelection")	WebElement payNumdrpdwn;
+	//@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
+	@FindBy(id="paymentNumberInputId")	WebElement elcPayNum;
+	//@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
+	@FindBy(name="searchRemittance")	WebElement srchRemitBtn;
+	//@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotal;
 	@FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]") WebElement adjCodePLB;
 	@FindBy(xpath = "//td[contains(text(),'Reference #')]") WebElement refCodePLB;
@@ -157,7 +176,8 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//div[@id='msgforplb']//span[1]") WebElement claimmsg;
 	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
-	@FindBy(xpath = "//input[@name= 'taxIdNbr']") WebElement prvdrTIN;
+	@FindBy(name="taxIdNbr")	WebElement prvdrTIN;
+	//@FindBy(xpath = "//input[@name= 'taxIdNbr']") WebElement prvdrTIN;
 	@FindBy(xpath = "//input[@value= 'Search']") WebElement srchTINUPA;
 	@FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]") WebElement homeBtnUPA;
 	@FindBy(xpath="//input[@value='Print Request' and @type = 'button']") WebElement btnPrint;
@@ -168,20 +188,11 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//td[contains(text(),'Subscriber Name')]") WebElement subscrbrName;
 	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement remitpaymnthead;
 	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a") WebElement PPRAPDFHyperlink;
-	
 	@FindBy(xpath="//span[contains(@id,'ppra')]//img") WebElement pPRAPDFImage;
-	
-	@FindBy(xpath="//div[@id='hideheader']//table//tr")
-	List<WebElement> pageHeader;
-	
-	@FindBy(xpath="//div[@id='flow1']/table")
-	List<WebElement> pageBody;
-	
-	@FindBy(linkText="RMK Code")
-	WebElement rmkCode;	
-	
-	@FindBy(linkText="Adj Reason Code")
-	WebElement adjCode;	
+	@FindBy(xpath="//div[@id='hideheader']//table//tr") List<WebElement> pageHeader;
+	@FindBy(xpath="//div[@id='flow1']/table") List<WebElement> pageBody;
+	@FindBy(linkText="RMK Code") WebElement rmkCode;	
+	@FindBy(linkText="Adj Reason Code") WebElement adjCode;	
 	
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
@@ -750,7 +761,7 @@ public void verifyRemitPaginationOptions() throws Exception
 		  {
 		  Element.click(remitNext, "Next Button");
 		  Log.Pass("Clicked on Next Button");
-		  Browser.wait(testConfig, 3);
+		  Browser.wait(testConfig, 2);
 		  Element.click(firstPage, "First Page");
 		  }
 		  else
@@ -769,7 +780,7 @@ public void verifyRemitPaginationOptions() throws Exception
     	 if(paginationNo2.isDisplayed())
     	 {
     	    Element.click(paginationNo2, "Pagination");
-    	    Browser.wait(testConfig, 3);
+    	    Browser.wait(testConfig, 2);
 			Element.click(firstPage, "First Page");
 			Log.Pass("Pagination Button functionality working as expected");
     	 }
@@ -788,9 +799,9 @@ public void verifyRemitPaginationOptions() throws Exception
     	 if(lastPage.isDisplayed())
     	 {
     	    Element.click(lastPage, "Last Page");
-			Browser.wait(testConfig, 3);
+			Browser.wait(testConfig, 2);
 			Element.click(firstPage, "First Page");
-			Browser.wait(testConfig, 3);
+			Browser.wait(testConfig, 2);
 			Log.Pass("Last Page Button functionality working as expected");
     	 }
     	 else
@@ -811,7 +822,7 @@ public void verifyRemitPaginationOptions() throws Exception
 public void verifyRMKCode() throws Exception
 {
 		Element.click(rmk_code, "RMK Code");
-		Browser.wait(testConfig,5);
+		Browser.wait(testConfig,2);
 		@SuppressWarnings("unused")
 		String oldWindow=Browser.switchToNewWindow(testConfig,"remarkCode.do");
 	    String rmk_code = remarkCode.getText();
@@ -819,11 +830,13 @@ public void verifyRMKCode() throws Exception
     
        if(("Remark Code").contains(rmk_code))
          {
-		      Browser.wait(testConfig, 7);
+		       Browser.wait(testConfig, 2);
+		      //Element.verifyElementVisiblity(remarkCode, "Remark Code");
 		      Boolean remarkCodeUI = remarkCode.isDisplayed();
 		      Helper.compareEquals(testConfig, "Remark Code is Displayed in Child Window", true, remarkCodeUI);
 		      
-		      Browser.wait(testConfig, 7);
+		      Browser.wait(testConfig, 2);
+		      //Element.verifyElementVisiblity(remarkDesc, "Remark Desc");
 		      Boolean remarkDescUI = remarkDesc.isDisplayed();
 		      Helper.compareEquals(testConfig, "Remark Code Description Header", true, remarkDescUI);
 		      
@@ -858,11 +871,11 @@ public void verifyADJCode() throws Exception
     if(adj_Code.equalsIgnoreCase("Adjustment Code"))
     	
      {
-	    Browser.wait(testConfig, 7);
+	    Browser.wait(testConfig, 2);
         Boolean adjCodeUI = adjustmentCode.isDisplayed();
         Helper.compareEquals(testConfig, "Adjustment Code Description Header", true, adjCodeUI);
       
-    	Browser.wait(testConfig, 7);
+    	Browser.wait(testConfig, 2);
     	Boolean adjustmentDescUI = adjustmentDesc.isDisplayed();
     	Helper.compareEquals(testConfig, "Adjustment Code is Displayed in Child Window", true, adjustmentDescUI);
 
@@ -892,13 +905,11 @@ public void verifyADJCode() throws Exception
 public void verifyRemittancePageData() throws Exception
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -1035,8 +1046,7 @@ public void verifyRemittancePageData() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -1131,7 +1141,7 @@ public void verifyRemittancePageData() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -1266,7 +1276,6 @@ public void verifyRemittancePageData() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
      
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
@@ -1361,7 +1370,7 @@ public void verifyRemittancePageData() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -1389,14 +1398,11 @@ public void verifyRemittancePageData() throws Exception
 public void verifyRemittancePageDataSerachCriteria(String paymentType) throws Exception
 {
 
-Browser.wait(testConfig, 7);
+Browser.wait(testConfig, 2);
 String ui_Payer = payerUI.getText();
 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-
-Browser.wait(testConfig, 5);
 Element.click(paymentNo1, "Payment No");
-Browser.wait(testConfig, 5);
-
+Browser.wait(testConfig, 2);
 String paymentNum1 = paymentNo.getText();
 String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -1527,8 +1533,7 @@ if(null == payerSchema)
     Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-       Browser.wait(testConfig, 7);
-     
+
     if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
      {
     	 String grpPolicyUI1 = grpPolicyUI.getText();
@@ -1616,7 +1621,7 @@ if(null == payerSchema)
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -1751,7 +1756,7 @@ String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:Charged
 Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 if(!amountChargedDB.equalsIgnoreCase("0"))
    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-   Browser.wait(testConfig, 7);
+
  
 if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
  {
@@ -1841,7 +1846,7 @@ else
  String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
  Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
  if(!amntAllowedDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
 
  /*
  String CopayUI1 = copayUI.getText();
@@ -1875,19 +1880,19 @@ public void verifyCOBFilterClaimOption() throws Exception
 public void verifyCOBFilterClaimData() throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
         String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	
 	
 	Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
     Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
     Log.Comment("Filter Claims Dropdown selected - COB Only");
     
-    Browser.wait(testConfig, 5);
+    Browser.wait(testConfig, 2);
   int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
   
   Log.Comment("Size of the tlist is:" + size);
@@ -2024,8 +2029,7 @@ public void verifyCOBFilterClaimData() throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-               Browser.wait(testConfig, 7);
-	  	     
+
 	  	     
                String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
       	     
@@ -2137,7 +2141,7 @@ public void verifyCOBFilterClaimData() throws Exception
       	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
       	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
       	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
       	   
       	     /*
       	     String CopayUI1 = copayUI.getText();
@@ -2271,9 +2275,7 @@ public void verifyCOBFilterClaimData() throws Exception
   	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
   	    if(!amountChargedDB.equalsIgnoreCase("0"))
   	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-  	     
-  	     
+
            String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
   	     
   	     
@@ -2386,7 +2388,7 @@ public void verifyCOBFilterClaimData() throws Exception
   	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
   	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
   	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
   	   
   	     /*
   	     String CopayUI1 = copayUI.getText();
@@ -2422,20 +2424,20 @@ public void verifyCOBFilterClaimData() throws Exception
 public void verifyReversalFilterClaimData(String usertype) throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
 	
 	if(usertype == "Payer")
 	{
 		 String ui_Payer = payernameUI.getText();
 		 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 		 Element.click(paymentNo1, "Payment No");
-		 Browser.wait(testConfig, 5);
+		 Browser.wait(testConfig, 2);
 
 	Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
     Element.selectVisibleText(filterClaims,"Reversal Only","Claim Filter DropDown");
     Log.Comment("Filter Claims Dropdown selected - Reversal Only");
     
-    Browser.wait(testConfig, 5);
+    Browser.wait(testConfig, 2);
     
     if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
     {
@@ -2571,9 +2573,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-             Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
              String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     	     
     	     
@@ -2686,7 +2686,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
     	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
     	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
     	   
     	     /*
     	     String CopayUI1 = copayUI.getText();
@@ -2822,9 +2822,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-             Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
              String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     	     
     	     
@@ -2929,7 +2927,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
     	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
     	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+    	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
     	   
     	     /*
     	     String CopayUI1 = copayUI.getText();
@@ -2968,13 +2966,13 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 		 String ui_Payer = payerUI.getText();
 		 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 		 Element.click(paymentNo1, "Payment No");
-		 Browser.wait(testConfig, 5);
+		 Browser.wait(testConfig, 2);
 
 	Element.expectedWait(filterClaims, testConfig, "Filter Dropdown", "Filter Dropdown");
    Element.selectVisibleText(filterClaims,"Reversal Only","Claim Filter DropDown");
    Log.Comment("Filter Claims Dropdown selected - Reversal Only");
    
-   Browser.wait(testConfig, 5);
+   Browser.wait(testConfig, 2);
    
    if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
    {
@@ -3110,9 +3108,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-            Browser.wait(testConfig, 7);
-	  	     
-	  	     
+ 
             String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
    	     
    	     
@@ -3225,7 +3221,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
    	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
    	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    	   
    	     /*
    	     String CopayUI1 = copayUI.getText();
@@ -3361,9 +3357,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 	  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-            Browser.wait(testConfig, 7);
-	  	     
-	  	     
+
             String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
    	     
    	     
@@ -3468,7 +3462,7 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
    	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
    	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+   	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
    	   
    	     /*
    	     String CopayUI1 = copayUI.getText();
@@ -3603,8 +3597,7 @@ public void verifyMultiplePLBAdj() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3632,7 +3625,6 @@ public void verifyMultiplePLBAdj() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3655,8 +3647,7 @@ public void verifyMultiplePLBAdj() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3703,7 +3694,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3726,7 +3717,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
+		
     	sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
@@ -3755,7 +3746,6 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -3778,8 +3768,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	sqlRowNo = 190;
+		sqlRowNo = 190;
     	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3884,7 +3873,7 @@ public void verifyPLBAdjOnly() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -3907,7 +3896,7 @@ public void verifyPLBAdjOnly() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
+		
         int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -3934,7 +3923,6 @@ public void verifyPLBAdjOnly() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -3958,9 +3946,8 @@ public void verifyPLBAdjOnly() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 202;
+		
+    	int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -3996,7 +3983,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -4019,8 +4006,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-        int sqlRowNo = 202;
+		int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4046,7 +4032,6 @@ public void verifyPLBAdjOnlyUPA() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
     	
     	int size = list.size();
@@ -4070,9 +4055,8 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 202;
+		
+    	int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4110,7 +4094,7 @@ public void verifyPLBAdjOnlyPayer() throws Exception
     	Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
-    	Browser.wait(testConfig, 7);
+    	
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -4134,8 +4118,7 @@ public void verifyPLBAdjOnlyPayer() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-        int sqlRowNo = 216;
+		int sqlRowNo = 216;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4161,7 +4144,6 @@ public void verifyPLBAdjOnlyPayer() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	Browser.wait(testConfig, 7);
     	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
     	
     	int size = list.size();
@@ -4185,9 +4167,8 @@ public void verifyPLBAdjOnlyPayer() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The PLB Adjustment Only Data from UI is" + plb_UI);
-		Browser.wait(testConfig, 7);
-    	
-		int sqlRowNo = 216;
+		
+    	int sqlRowNo = 216;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
         for (int i = 1; i <= plb_DB1.size(); i++) 
@@ -4209,33 +4190,20 @@ public void verifySortByPatientLastName() throws Exception
 {
 	String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-
-    Element.click(paymentNo1, "Payment Number");
-    
-
+	Element.click(paymentNo1, "Payment Number");
     String paymentNum1 = paymentNo.getText();
     String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
     Log.Comment("The First  Payment Number displayed is:" + paymentNum);
     Element.expectedWait(remitHeader1, testConfig, "Remit Page", "Remit Page");
     List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
-    
-    
-    
     int patientNamesCount = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]")).size();
     Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
 	List<String> patientLastNames = new ArrayList<String>();
-	
-	
-	
 	Log.Comment("Size of Patient Name List is:" + patientNamesCount);
     String patientLastName1 = testConfig.driver.findElement(By.xpath("//td[starts-with(@id,'patientName_1')]")).getText();
-	
 	Log.Comment("Patient Name is:" + patientLastName1);
 	
 	List<String> patientLastNameUI = new ArrayList<String>();
-	
-	
-	
 	if(patientLastName1.isEmpty())
 	{
 		Log.Pass("For this Particular TIN - Patient Names doesn't exists");
@@ -4440,10 +4408,991 @@ public void verifySortByPatientLastName() throws Exception
 }
 
 
+
+public void verifyRemittancePageDataUPA(String usertype) throws Exception  
+{
+Browser.wait(testConfig, 2);
+if(usertype == "Payer")
+{
+	 String ui_Payer = payernameUI.getText();
+	 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+	 Element.click(paymentNo1, "Payment No");
+		Browser.wait(testConfig, 5);
+
+String paymentNum1 = paymentNo.getText();
+String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+Log.Comment("The First Payment Number displayed is:" + paymentNum);
+List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
+Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
+for(WebElement patientNamesUI :patientNames) 
+{
+	Log.Comment(patientNamesUI.getText());
+}
+ 
+int sqlRowNo = 184;
+testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+
+if(null == payerSchema)
+{
+	
+	sqlRowNo = 203;
+	testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+	Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	
+	String payerSchemaUI = (payerSchema1.toString()).substring(14,19);
+	Log.Comment("Payer Schema is :" + payerSchemaUI);
+	
+    sqlRowNo = 185;
+	testConfig.putRunTimeProperty("paymentNum",paymentNum);
+	Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String paymentNumDB2 = (paymentNumDB1.toString());
+	String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);
+	String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+	Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
+    
+	sqlRowNo = 186;
+	testConfig.putRunTimeProperty("paymentNum",paymentNum);
+	Map orginDate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String orginDateDB1 = orginDate.toString();
+	String orginDateDB2 = orginDateDB1.substring(1, orginDateDB1.length() - 1);
+	String orginDateDB3 = orginDateDB2.substring(11,orginDateDB2.length());
+	String orginDateDB = orginDateDB3.replaceAll("-", "");
+	Log.Comment("The Settlement Date is :" + orginDateDB);
+	String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
+	Log.Comment("The Final String is :" + finalidentifier);
+	
+	
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+            "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+            "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+            "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
+            "</ns17:EpsClaimsRequest>";
+	
+	
+	String getResponse=new FISLConnection2().getEraResponse1(requestXml);
+	
+	String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
+	Log.Comment("FISL Patient First Name is:" + firstNameDB);
+    String firstPatientUI1 = firstPatient.getText();
+    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
+    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
+    Log.Comment("Online Patient First Name is:" + firstPatientUI);
+    if(!firstNameDB.equalsIgnoreCase("0"))
+    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+	
+    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
+	Log.Comment("FISL Patient Last Name is:" + lastNameDB);
+    String lastPatientUI1 = firstPatient.getText();
+    
+    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
+
+    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
+    if(!lastNameDB.equalsIgnoreCase("0"))
+    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+	
+    
+    String amountChargedUI1 = amntChargedUI.getText();
+    String amountChargedUI = "";
+    
+    if(amountChargedUI1.contains("-"))
+    {
+
+    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    	{
+    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    		
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+    		System.out.println(amountChargedUI);
+    	}
+    	
+    	else if (amountChargedUI1.contains("$")) 
+    	{
+		 
+    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	  amountChargedUI = Double.toString(amountChargedUI4);
+    	  System.out.println(amountChargedUI3);
+		}
+    	else if (amountChargedUI1.contains(",")) {
+    		
+    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+	    	System.out.println(amountChargedUI3);
+			
+		}
+    }
+    
+    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+   
+    else if(amountChargedUI1.contains("$"))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
+    else if(amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
+    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
+    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+    if(!amountChargedDB.equalsIgnoreCase("0"))
+       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+
+     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
+     
+     
+     Log.Comment("Size of Group[ Policy List is:" + grp);
+    
+     
+     if(!grp.contains(""))
+     {
+    	 String grpPolicyUI1 = grpPolicyUI.getText();
+    	 if(grpPolicyUI1.contains("/"))
+    	 {
+             String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
+         	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
+         	 
+         	 if(grpPolicyOnline.length()!=0)
+         	 {
+         		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+	             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+	             if(!grpPolicyDB.equalsIgnoreCase("0"))
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+         	 }
+         	 
+         	 else
+         	 {
+         	 
+         		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+         	 }
+         }
+    	 else
+    	 {
+    		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
+    		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+             if(!grpPolicyDB.equalsIgnoreCase("0"))
+              	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+         }
+      }
+    else
+    {
+       Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+    }
+
+     if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
+     {
+    	 
+    	 String grpPolicyUI1 = grpPolicyUI.getText();
+     
+        if(grpPolicyUI1.contains("/"))
+         {
+     
+           if(!grpPolicyUI1.isEmpty())
+            {
+		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+		        Log.Comment("Product Name from UI is :" + productNameUI);
+		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
+		        Log.Comment("The Product Name from FISL is :" + productNameDB);
+		        if(!productNameDB.equalsIgnoreCase("0"))
+		        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+      }
+         }
+     }
+     
+     else
+     {
+       Log.Comment("The Product Name doesnt exists for this Criteria");
+     }
+     
+     String subscrbrUI = subscriberUI1.getText();
+     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+     if(!subscrbrDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+   
+     String claimHashUI = claimHash.getText();
+     Log.Comment("Claim # from UI is :" + claimHashUI);
+     String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
+     Log.Comment("Claim # from FISL is :" + claimTypeDB);
+     if(!claimTypeDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+  	 
+     String accntNumUI = accntNum.getText();
+     Log.Comment("Account Number from UI is :" + accntNumUI);
+     String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
+     Log.Comment("Account Number from FISL is :" + accntNumDB);
+     if(!accntNumDB.equalsIgnoreCase("0"))
+       	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+    
+     String amntAllowedUI1 = amntallowed.getText();
+     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
+     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
+     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+     if(!amntAllowedDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
+   
+     /*
+     String CopayUI1 = copayUI.getText();
+     String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
+     Log.Comment("Copay Amount from UI is :" + CopayUI);
+     String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
+     Log.Comment("Copay Amount from FISL is :" + CopayDB);
+     if(!CopayDB.equalsIgnoreCase("0"))
+         Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
+       */
+//     String patientrespUI1 = patientresp.getText();
+//     String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
+//     double patientrespU3 = Double.parseDouble(patientrespUI2);
+//	 String patientrespUI = Double.toString(patientrespU3);
+//     Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
+//     String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
+//     Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
+//     if(!patientrespDB.equalsIgnoreCase("0"))
+//         Helper.compareEquals(testConfig, "Comparing Patient Responsibility Amount UI and DB", patientrespDB, patientrespUI);
+//
+}
+
+else
+	
+{
+	String payerSchemaUI = (payerSchema.toString()).substring(14, 19);
+    Log.Comment("Payer Schema is :" + payerSchemaUI);
+
+sqlRowNo = 185;
+testConfig.putRunTimeProperty("paymentNum",paymentNum);
+Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+String paymentNumDB2 = paymentNumDB1.toString();
+String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);
+String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
+
+sqlRowNo = 186;
+testConfig.putRunTimeProperty("paymentNum",paymentNum);
+Map orginDate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+String orginDateDB1 = orginDate.toString();
+String orginDateDB2 = orginDateDB1.substring(1, orginDateDB1.length() - 1);
+String orginDateDB3 = orginDateDB2.substring(11,orginDateDB2.length());
+String orginDateDB = orginDateDB3.replaceAll("-","");
+Log.Comment("The Settlement Date is :" + orginDateDB);
+String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
+Log.Comment("The Final String is :" + finalidentifier);
+
+String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+                     "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+                     "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+                     "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
+                     "</ns17:EpsClaimsRequest>";
+
+String getResponse=new FISLConnection2().getEraResponse1(requestXml);
+
+String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
+Log.Comment("FISL Patient First Name is:" + firstNameDB);
+String firstPatientUI1 = firstPatient.getText();
+String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
+String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
+Log.Comment("Online Patient First Name is:" + firstPatientUI);
+if(!firstNameDB.equalsIgnoreCase("0"))
+	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+
+String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
+Log.Comment("FISL Patient Last Name is:" + lastNameDB);
+String lastPatientUI1 = firstPatient.getText();
+
+String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
+
+Log.Comment("Online Patient Last Name is :" + lastPatientUI);
+if(!lastNameDB.equalsIgnoreCase("0"))
+	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+
+String amountChargedUI1 = amntChargedUI.getText();
+String amountChargedUI = "";
+
+if(amountChargedUI1.contains("-"))
+{
+
+	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+	{
+		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+		System.out.println(amountChargedUI);
+	}
+	
+	else if (amountChargedUI1.contains("$")) 
+	{
+	 
+	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	  amountChargedUI = Double.toString(amountChargedUI4);
+	  System.out.println(amountChargedUI3);
+	}
+	else if (amountChargedUI1.contains(",")) {
+		
+		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+    	System.out.println(amountChargedUI3);
+		
+	}
+}
+
+else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains("$"))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+Log.Comment("The Amount Charged from UI is :" + amountChargedUI); 
+String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
+Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+if(!amountChargedDB.equalsIgnoreCase("0"))
+   Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+
+String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
+
+Log.Comment("Text of Group Policy List is:" + grp);
+ 
+ if(!grp.contains(""))
+ {
+	 String grpPolicyUI1 = grpPolicyUI.getText();
+	 if(grpPolicyUI1.contains("/"))
+	 {
+         String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
+     	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
+     	 
+     	 if(grpPolicyOnline.length()!=0)
+     	 {
+     		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+             if(!grpPolicyDB.equalsIgnoreCase("0"))
+             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+     	 }
+     	 
+     	 else
+     	 {
+     	 
+     		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+     	 }
+     }
+	 else
+	 {
+		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
+		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+         Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+         if(!grpPolicyDB.equalsIgnoreCase("0"))
+          	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+     }
+  }
+else
+{
+   Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+}
+ 
+
+ if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
+ {
+	 
+	 String grpPolicyUI1 = grpPolicyUI.getText();
+ 
+    if(grpPolicyUI1.contains("/"))
+     {
+ 
+       if(!grpPolicyUI1.isEmpty())
+        {
+	        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+	        Log.Comment("Product Name from UI is :" + productNameUI);
+	        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
+	        Log.Comment("The Product Name from FISL is :" + productNameDB);
+	        if(!productNameDB.equalsIgnoreCase("0"))
+	        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+  }
+     }
+ }
+ 
+ else
+ {
+   Log.Comment("The Product Name doesnt exists for this Criteria");
+ }
+ 
+ String subscrbrUI = subscriberUI1.getText();
+ Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+ String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+ Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+ if(!subscrbrDB.equalsIgnoreCase("0"))
+    Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+
+ String claimHashUI = claimHash.getText();
+ Log.Comment("Claim # from UI is :" + claimHashUI);
+ String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
+ Log.Comment("Claim # from FISL is :" + claimTypeDB);
+ if(!claimTypeDB.equalsIgnoreCase("0"))
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", claimTypeDB, claimHashUI);
+	 
+ String accntNumUI = accntNum.getText();
+ Log.Comment("Account Number from UI is :" + accntNumUI);
+ String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
+ Log.Comment("Account Number from FISL is :" + accntNumDB);
+ if(!accntNumDB.equalsIgnoreCase("0"))
+   	Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+
+ String amntAllowedUI1 = amntallowed.getText();
+ String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
+ Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
+ String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+ Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+ if(!amntAllowedDB.equalsIgnoreCase("0"))
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
+
+ /*
+ String CopayUI1 = copayUI.getText();
+ String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
+ Log.Comment("Copay Amount from UI is :" + CopayUI);
+ String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
+ Log.Comment("Copay Amount from FISL is :" + CopayDB);
+ if(!CopayDB.equalsIgnoreCase("0"))
+     Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
+   */ 
+// String patientrespUI1 = patientresp.getText();
+// String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
+// double patientrespU3 = Double.parseDouble(patientrespUI2);
+// String patientrespUI = Double.toString(patientrespU3);
+// Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
+// String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
+// Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
+// if(!patientrespDB.equalsIgnoreCase("0"))
+//     Helper.compareEquals(testConfig, "Comparing Patient Responsibilty UI and DB", patientrespDB, patientrespUI);
+
+}
+}
+
+else
+{
+
+	 String ui_Payer = payernameUI.getText();
+	 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+	 Element.click(paymentNo1, "Payment No");
+	Browser.wait(testConfig, 2);
+	
+String paymentNum1 = paymentNo.getText();
+String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+Log.Comment("The First Payment Number displayed is:" + paymentNum);
+List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
+Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
+for(WebElement patientNamesUI :patientNames) 
+{
+	Log.Comment(patientNamesUI.getText());
+}
+ 
+int sqlRowNo = 184;
+testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+
+if(null == payerSchema)
+{
+	
+	sqlRowNo = 203;
+	testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+	Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	
+	String payerSchemaUI = (payerSchema1.toString()).substring(14,19);
+	Log.Comment("Payer Schema is :" + payerSchemaUI);
+	
+    sqlRowNo = 185;
+	testConfig.putRunTimeProperty("paymentNum",paymentNum);
+	Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String paymentNumDB2 = (paymentNumDB1.toString());
+	String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);
+	String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+	Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
+    
+	sqlRowNo = 186;
+	testConfig.putRunTimeProperty("paymentNum",paymentNum);
+	Map orginDate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String orginDateDB1 = orginDate.toString();
+	String orginDateDB2 = orginDateDB1.substring(1, orginDateDB1.length() - 1);
+	String orginDateDB3 = orginDateDB2.substring(11,orginDateDB2.length());
+	String orginDateDB = orginDateDB3.replaceAll("-", "");
+	Log.Comment("The Settlement Date is :" + orginDateDB);
+	String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
+	Log.Comment("The Final String is :" + finalidentifier);
+	
+	
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+           "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+           "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+           "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
+           "</ns17:EpsClaimsRequest>";
+	
+	
+	String getResponse=new FISLConnection2().getEraResponse1(requestXml);
+	
+	String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
+	Log.Comment("FISL Patient First Name is:" + firstNameDB);
+    String firstPatientUI1 = firstPatient.getText();
+    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
+    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
+    Log.Comment("Online Patient First Name is:" + firstPatientUI);
+    if(!firstNameDB.equalsIgnoreCase("0"))
+    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+	
+    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
+	Log.Comment("FISL Patient Last Name is:" + lastNameDB);
+    String lastPatientUI1 = firstPatient.getText();
+    
+    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
+
+    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
+    if(!lastNameDB.equalsIgnoreCase("0"))
+    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+	
+    
+    String amountChargedUI1 = amntChargedUI.getText();
+    String amountChargedUI = "";
+    
+    if(amountChargedUI1.contains("-"))
+    {
+
+    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    	{
+    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    		
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+    		System.out.println(amountChargedUI);
+    	}
+    	
+    	else if (amountChargedUI1.contains("$")) 
+    	{
+		 
+    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	  amountChargedUI = Double.toString(amountChargedUI4);
+    	  System.out.println(amountChargedUI3);
+		}
+    	else if (amountChargedUI1.contains(",")) {
+    		
+    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    		amountChargedUI = Double.toString(amountChargedUI4);
+	    	System.out.println(amountChargedUI3);
+			
+		}
+    }
+    
+    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+   
+    else if(amountChargedUI1.contains("$"))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
+    else if(amountChargedUI1.contains(","))
+    {
+    	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+    	amountChargedUI = Double.toString(amountChargedUI4);
+    }
+    
+    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
+    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+    if(!amountChargedDB.equalsIgnoreCase("0"))
+       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+
+     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
+     
+     
+     Log.Comment("Size of Group[ Policy List is:" + grp);
+    
+     
+     if(!grp.contains(""))
+     {
+    	 String grpPolicyUI1 = grpPolicyUI.getText();
+    	 if(grpPolicyUI1.contains("/"))
+    	 {
+             String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
+         	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
+         	 
+         	 if(grpPolicyOnline.length()!=0)
+         	 {
+         		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+	             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+	             if(!grpPolicyDB.equalsIgnoreCase("0"))
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+         	 }
+         	 
+         	 else
+         	 {
+         	 
+         		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+         	 }
+         }
+    	 else
+    	 {
+    		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
+    		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+             if(!grpPolicyDB.equalsIgnoreCase("0"))
+              	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+         }
+      }
+    else
+    {
+       Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+    }
+
+     if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
+     {
+    	 
+    	 String grpPolicyUI1 = grpPolicyUI.getText();
+     
+        if(grpPolicyUI1.contains("/"))
+         {
+     
+           if(!grpPolicyUI1.isEmpty())
+            {
+		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+		        Log.Comment("Product Name from UI is :" + productNameUI);
+		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
+		        Log.Comment("The Product Name from FISL is :" + productNameDB);
+		        if(!productNameDB.equalsIgnoreCase("0"))
+		        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+      }
+         }
+     }
+     
+     else
+     {
+       Log.Comment("The Product Name doesnt exists for this Criteria");
+     }
+     
+     String subscrbrUI = subscriberUI1.getText();
+     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+     if(!subscrbrDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+   
+     String claimHashUI = claimHash.getText();
+     Log.Comment("Claim # from UI is :" + claimHashUI);
+     String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
+     Log.Comment("Claim # from FISL is :" + claimTypeDB);
+     if(!claimTypeDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+  	 
+     String accntNumUI = accntNum.getText();
+     Log.Comment("Account Number from UI is :" + accntNumUI);
+     String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
+     Log.Comment("Account Number from FISL is :" + accntNumDB);
+     if(!accntNumDB.equalsIgnoreCase("0"))
+       	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+    
+     String amntAllowedUI1 = amntallowed.getText();
+     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
+     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
+     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+     if(!amntAllowedDB.equalsIgnoreCase("0"))
+        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
+   
+     /*
+     String CopayUI1 = copayUI.getText();
+     String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
+     Log.Comment("Copay Amount from UI is :" + CopayUI);
+     String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
+     Log.Comment("Copay Amount from FISL is :" + CopayDB);
+     if(!CopayDB.equalsIgnoreCase("0"))
+         Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
+       */
+//     String patientrespUI1 = patientresp.getText();
+//     String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
+//     double patientrespU3 = Double.parseDouble(patientrespUI2);
+//	 String patientrespUI = Double.toString(patientrespU3);
+//     Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
+//     String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
+//     Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
+//     if(!patientrespDB.equalsIgnoreCase("0"))
+//         Helper.compareEquals(testConfig, "Comparing Patient Responsibility Amount UI and DB", patientrespDB, patientrespUI);
+//
+}
+
+else
+	
+{
+	String payerSchemaUI = (payerSchema.toString()).substring(14, 19);
+    Log.Comment("Payer Schema is :" + payerSchemaUI);
+
+sqlRowNo = 185;
+testConfig.putRunTimeProperty("paymentNum",paymentNum);
+Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+String paymentNumDB2 = paymentNumDB1.toString();
+String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);
+String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
+
+sqlRowNo = 186;
+testConfig.putRunTimeProperty("paymentNum",paymentNum);
+Map orginDate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+String orginDateDB1 = orginDate.toString();
+String orginDateDB2 = orginDateDB1.substring(1, orginDateDB1.length() - 1);
+String orginDateDB3 = orginDateDB2.substring(11,orginDateDB2.length());
+String orginDateDB = orginDateDB3.replaceAll("-","");
+Log.Comment("The Settlement Date is :" + orginDateDB);
+String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
+Log.Comment("The Final String is :" + finalidentifier);
+
+String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+                    "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+                    "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+                    "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
+                    "</ns17:EpsClaimsRequest>";
+
+String getResponse=new FISLConnection2().getEraResponse1(requestXml);
+
+String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
+Log.Comment("FISL Patient First Name is:" + firstNameDB);
+String firstPatientUI1 = firstPatient.getText();
+String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
+String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
+Log.Comment("Online Patient First Name is:" + firstPatientUI);
+if(!firstNameDB.equalsIgnoreCase("0"))
+	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+
+String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
+Log.Comment("FISL Patient Last Name is:" + lastNameDB);
+String lastPatientUI1 = firstPatient.getText();
+
+String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
+
+Log.Comment("Online Patient Last Name is :" + lastPatientUI);
+if(!lastNameDB.equalsIgnoreCase("0"))
+	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+
+String amountChargedUI1 = amntChargedUI.getText();
+String amountChargedUI = "";
+
+if(amountChargedUI1.contains("-"))
+{
+
+	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+	{
+		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+		
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+		System.out.println(amountChargedUI);
+	}
+	
+	else if (amountChargedUI1.contains("$")) 
+	{
+	 
+	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	  amountChargedUI = Double.toString(amountChargedUI4);
+	  System.out.println(amountChargedUI3);
+	}
+	else if (amountChargedUI1.contains(",")) {
+		
+		String amountChargedUI3 = amountChargedUI1.replace(",", "");
+		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+		amountChargedUI = Double.toString(amountChargedUI4);
+    	System.out.println(amountChargedUI3);
+		
+	}
+}
+
+else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains("$"))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+else if(amountChargedUI1.contains(","))
+{
+	String amountChargedUI3 = (amountChargedUI1.replace("$", ""));
+	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
+	amountChargedUI = Double.toString(amountChargedUI4);
+}
+
+Log.Comment("The Amount Charged from UI is :" + amountChargedUI); 
+String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
+Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+if(!amountChargedDB.equalsIgnoreCase("0"))
+  Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+
+String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
+
+Log.Comment("Text of Group Policy List is:" + grp);
+
+if(!grp.contains(""))
+{
+	 String grpPolicyUI1 = grpPolicyUI.getText();
+	 if(grpPolicyUI1.contains("/"))
+	 {
+        String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
+    	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
+    	 
+    	 if(grpPolicyOnline.length()!=0)
+    	 {
+    		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+             if(!grpPolicyDB.equalsIgnoreCase("0"))
+             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+    	 }
+    	 
+    	 else
+    	 {
+    	 
+    		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+    	 }
+    }
+	 else
+	 {
+		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
+		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+        Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+        if(!grpPolicyDB.equalsIgnoreCase("0"))
+         	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+    }
+ }
+else
+{
+  Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+}
+
+
+if(testConfig.driver.findElements(By.xpath("//td[@id='grpPolNo_1']")).size() != 0)
+{
+	 
+	 String grpPolicyUI1 = grpPolicyUI.getText();
+
+   if(grpPolicyUI1.contains("/"))
+    {
+
+      if(!grpPolicyUI1.isEmpty())
+       {
+	        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+	        Log.Comment("Product Name from UI is :" + productNameUI);
+	        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
+	        Log.Comment("The Product Name from FISL is :" + productNameDB);
+	        if(!productNameDB.equalsIgnoreCase("0"))
+	        	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+ }
+    }
+}
+
+else
+{
+  Log.Comment("The Product Name doesnt exists for this Criteria");
+}
+
+String subscrbrUI = subscriberUI1.getText();
+Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+if(!subscrbrDB.equalsIgnoreCase("0"))
+   Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+
+String claimHashUI = claimHash.getText();
+Log.Comment("Claim # from UI is :" + claimHashUI);
+String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
+Log.Comment("Claim # from FISL is :" + claimTypeDB);
+if(!claimTypeDB.equalsIgnoreCase("0"))
+   Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", claimTypeDB, claimHashUI);
+	 
+String accntNumUI = accntNum.getText();
+Log.Comment("Account Number from UI is :" + accntNumUI);
+String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
+Log.Comment("Account Number from FISL is :" + accntNumDB);
+if(!accntNumDB.equalsIgnoreCase("0"))
+  	Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+
+String amntAllowedUI1 = amntallowed.getText();
+String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
+Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
+String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+if(!amntAllowedDB.equalsIgnoreCase("0"))
+   Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
+
+/*
+String CopayUI1 = copayUI.getText();
+String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
+Log.Comment("Copay Amount from UI is :" + CopayUI);
+String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
+Log.Comment("Copay Amount from FISL is :" + CopayDB);
+if(!CopayDB.equalsIgnoreCase("0"))
+    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
+  */ 
+//String patientrespUI1 = patientresp.getText();
+//String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
+//double patientrespU3 = Double.parseDouble(patientrespUI2);
+// String patientrespUI = Double.toString(patientrespU3);
+//Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
+//String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
+//Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
+//if(!patientrespDB.equalsIgnoreCase("0"))
+//    Helper.compareEquals(testConfig, "Comparing Patient Responsibilty UI and DB", patientrespDB, patientrespUI);
+}
+}
+}
+
+
+
 public void verifySortByRendPrvdrLastName() throws Exception
 {
 	Element.click(returnBtn, "Return Button");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
 	Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
@@ -4671,13 +5620,12 @@ public void enterElectronicNumForTricareMaskCriteria() throws Exception
 
 public void verifyTricareMasking() throws Exception
 {
-	Browser.wait(testConfig, 10);
+	Browser.wait(testConfig, 3);
 	
 	Boolean remitpaymntheadUI = remitpaymnthead.isDisplayed();
 	Helper.compareEquals(testConfig, "Payment Number Header check for Tricare", true, remitpaymntheadUI);
     Element.click(paymentNo1, "Payment Number");
-    Browser.wait(testConfig, 5);
-	Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
+    Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
 	String subscrbrID = subscriberUI1.getText();
 	Log.Comment("Subscriber ID in UI:" + subscrbrID);
 	String mask = subscrbrID.substring(0, subscrbrID.length()-4);
@@ -4698,13 +5646,11 @@ public void verifyTricareMasking() throws Exception
 public void verifyRemittancePageDataUPA() throws Exception
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payerUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -4838,8 +5784,7 @@ public void verifyRemittancePageDataUPA() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -4949,7 +5894,7 @@ public void verifyRemittancePageDataUPA() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedDB);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -5086,8 +6031,6 @@ public void verifyRemittancePageDataUPA() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
-     
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
     Log.Comment("Text of Group Policy List is:" + grp);
@@ -5197,7 +6140,7 @@ public void verifyRemittancePageDataUPA() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -5226,16 +6169,14 @@ public void verifyRemittancePageDataUPA() throws Exception
 public RemittanceDetail clickPrintRequestButton()
 {
 Element.verifyElementPresent(btnPrint, "Print Request Button");
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
 	Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
-	Browser.wait(testConfig, 3);
-	Browser.browserRefresh(testConfig);
-    Element.verifyElementPresent(btnPrntavailable, "Print Available");
+	Element.verifyElementPresent(btnPrntavailable, "Print Available");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	
 	return this;
@@ -5259,7 +6200,7 @@ public RemittanceDetail verifyDownloadWindow()
 {
 	  String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
       Log.Comment("THe PDF Text Message is:" + msg.getText());
-      Browser.wait(testConfig, 3);
+      Browser.wait(testConfig, 2);
      
      
      if(msg.getText().contains("Your PDF is now available"))
@@ -5288,13 +6229,11 @@ public RemittanceDetail verifyDownloadWindow()
 public void verifyRemittancePageDataUPAPayer() throws Exception  
 {
 	
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 2);
     String ui_Payer = payernameUI.getText();
     Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-	
-	Browser.wait(testConfig, 5);
 	Element.click(paymentNo1, "Payment No");
-	Browser.wait(testConfig, 5);
+	Browser.wait(testConfig, 2);
 	String paymentNum1 = paymentNo.getText();
 	String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
 	Log.Comment("The First Payment Number displayed is:" + paymentNum);
@@ -5428,8 +6367,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-           Browser.wait(testConfig, 7);
-	     
+
 	     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 	     
 	     
@@ -5524,7 +6462,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 	   
 	     /*
 	     String CopayUI1 = copayUI.getText();
@@ -5659,8 +6597,6 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-     Browser.wait(testConfig, 7);
-     
     String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
     
     Log.Comment("Text of Group Policy List is:" + grp);
@@ -5754,7 +6690,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
      String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
      Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
      if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
+        Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -5785,7 +6721,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
-		Browser.wait(testConfig, 6);
+		Browser.wait(testConfig, 2);
 		
 		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
 			
@@ -5836,24 +6772,18 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	public void verifyCOBFilterClaimData(String usertype) throws Exception
 	{
 		Element.click(returnBtn, "Return Button");
-		Browser.wait(testConfig, 7);
-	       
-
-		
-		if(usertype == "Payer")
+		Browser.wait(testConfig, 2);
+	    if(usertype == "Payer")
 		{
 			 String ui_Payer = payernameUI.getText();
 			 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 			 
 			 Element.click(paymentNo1, "Payment No");
-				Browser.wait(testConfig, 5);
-				
-				
-				Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
-			    Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
-			    Log.Comment("Filter Claims Dropdown selected - COB Only");
-			    
-			    Browser.wait(testConfig, 5);
+			 Browser.wait(testConfig, 2);
+			 Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
+		     Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
+			 Log.Comment("Filter Claims Dropdown selected - COB Only");
+			 Browser.wait(testConfig, 2);
 			  int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
 			  
 			  Log.Comment("Size of the tlist is:" + size);
@@ -5990,9 +6920,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 				  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 				  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 				  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-			               Browser.wait(testConfig, 7);
-				  	     
-				  	     
+
 			               String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 			      	     
 			      	     
@@ -6103,7 +7031,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 			      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 			      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-			      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+			      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 			      	   
 			      	     /*
 			      	     String CopayUI1 = copayUI.getText();
@@ -6237,9 +7165,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 			  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 			  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-			           Browser.wait(testConfig, 7);
-			  	     
-			  	     
+
 			           String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 			  	     
 			  	     
@@ -6352,7 +7278,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 			  	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 			  	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-			  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+			  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
 			  	   
 			  	     /*
 			  	     String CopayUI1 = copayUI.getText();
@@ -6391,14 +7317,11 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			String ui_Payer = payerUI.getText();
 			Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 			Element.click(paymentNo1, "Payment No");
-			Browser.wait(testConfig, 5);
-			
-			
+			Browser.wait(testConfig, 2);
 			Element.selectVisibleText(filterClaims,"COB Only","Claim Filter DropDown");
 		    Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
 		    Log.Comment("Filter Claims Dropdown selected - COB Only");
-		    
-		    Browser.wait(testConfig, 5);
+		    Browser.wait(testConfig, 2);
 		  int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
 		  
 		  Log.Comment("Size of the tlist is:" + size);
@@ -6535,9 +7458,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 			  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 			  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-		               Browser.wait(testConfig, 7);
-			  	     
-			  	     
+
 		               String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 		      	     
 		      	     
@@ -6648,7 +7569,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-		      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+		      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and Ui", amntAllowedDB, amntAllowedUI);
 		      	   
 		      	     /*
 		      	     String CopayUI1 = copayUI.getText();
@@ -6782,9 +7703,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		  	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 		  	    if(!amountChargedDB.equalsIgnoreCase("0"))
 		  	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-		           Browser.wait(testConfig, 7);
-		  	     
-		  	     
+
 		           String grp = testConfig.driver.findElement(By.xpath("//td[@id='grpPolNo_1']")).getText();
 		  	     
 		  	     
@@ -6897,7 +7816,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		  	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		  	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		  	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-		  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+		  	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", accntNumDB, accntNumUI);
 		  	   
 		  	     /*
 		  	     String CopayUI1 = copayUI.getText();
@@ -7188,7 +8107,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 //	      	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 //	      	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 //	      	     if(!amntAllowedDB.equalsIgnoreCase("0"))
-//	      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+//	      	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", accntNumDB, accntNumUI);
 //	      	   
 //	      	     /*
 //	      	     String CopayUI1 = copayUI.getText();

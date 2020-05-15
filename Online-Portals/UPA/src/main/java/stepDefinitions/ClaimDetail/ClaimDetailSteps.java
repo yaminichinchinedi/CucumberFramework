@@ -18,6 +18,12 @@ public class ClaimDetailSteps extends TestBase {
     	claimDetail.verifyClaimDtlPageData();
     }
     
+    @Then("^Verify Claim Detail UI vs FISL Response for \"([^\"]*)\"$")
+    public void verify_Claim_Detail_UI_vs_FISL_Response_for(String usertype) throws Throwable {
+    
+    	claimDetail.verifyClaimDtlPageData(usertype);
+    }
+    
     @Then("^Validate all Headers in the Page for Claim Detail Page$")
     public void validate_all_Headers_in_the_Page_for_Claim_Detail_Page() throws Throwable {
         
