@@ -341,8 +341,8 @@ public void verifyPayNumHypherLinkClaimDtlUPA() throws Exception
 	Boolean payerHeaderUI = payerHeader.isDisplayed();
 	Helper.compareEquals(testConfig, "Payer Header", true, payerHeaderUI);
 	
-	Boolean payDateHeaderUI = payDateHeader.isDisplayed();
-	Helper.compareEquals(testConfig, "Payment Date Header", true, payDateHeaderUI);
+//	Boolean payDateHeaderUI = payDateHeader.isDisplayed();
+//	Helper.compareEquals(testConfig, "Payment Date Header", true, payDateHeaderUI);
 	
 	Boolean npiHeaderUI = npiHeader.isDisplayed();
 	Helper.compareEquals(testConfig, "NPI Header", true, npiHeaderUI);
@@ -380,8 +380,8 @@ public void verifyPayNumHypherLinkClaimDtlUPA() throws Exception
 	Boolean printBtnUI = printBtn.isDisplayed();
 	Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
 	
- 	Boolean saveBtnUI = saveBtn.isDisplayed();
-	Helper.compareEquals(testConfig, "Save Button", true, saveBtnUI);
+// 	Boolean saveBtnUI = saveBtn.isDisplayed();
+//	Helper.compareEquals(testConfig, "Save Button", true, saveBtnUI);
 
 	
 }
