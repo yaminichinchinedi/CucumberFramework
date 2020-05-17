@@ -3,6 +3,7 @@
 @UPAClaimDetail  @UPARegression  @UPASanity @BothCSRUPAScenarios @UPAClaimDetailProv
 Feature: UPA Provider Claim Detail
 
+
 Scenario Outline: Claim Detail UI Functionality and Data Check
 
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -19,12 +20,12 @@ Scenario Outline: Claim Detail UI Functionality and Data Check
 
 Examples:
 
-        |    searchBy            |       credentials        |usertype   |  
-        |     Multiple_PLB       |       PROV_Admin         |PROV       |
-        |     Multiple_PLB       |       PROV_Gen           |PROV       |
+        |    searchBy                     |       credentials        |usertype   |  
+        |     Multiple_PLB_ProvAdmin      |       PROV_Admin         |PROV       |
+        |     Multiple_PLB_ProvGen        |       PROV_Gen           |PROV       |
         
              
-
+ 
 Scenario Outline: Claim Detail Tricare Functionality
 
      Given User navigates to UPA portal and enters "<credentials>" and login

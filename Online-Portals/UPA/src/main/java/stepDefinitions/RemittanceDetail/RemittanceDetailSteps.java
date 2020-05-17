@@ -116,17 +116,31 @@ public class RemittanceDetailSteps extends TestBase {
     }
 
     
-    @When("^Validate Sort By - Patient Last Name$")
-    public void validate_Sort_By_Patient_Last_Name() throws Throwable {
-       
-    	remitDetail.verifySortByPatientLastName();
+//    @When("^Validate Sort By - Patient Last Name$")
+//    public void validate_Sort_By_Patient_Last_Name() throws Throwable {
+//       
+//    	remitDetail.verifySortByPatientLastName();
+//    }
+//    
+    @Then("^Validate Sort By - Patient Last Name for \"([^\"]*)\"$")
+    public void validate_Sort_By_Patient_Last_Name_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifySortByPatientLastName(usertype);
     }
+
+//    
+//    @Then("^Validate Sort By - Rendering Provider Last Name$")
+//    public void validate_Sort_By_Rendering_Provider_Last_Name() throws Throwable {
+//       
+//    	remitDetail.verifySortByRendPrvdrLastName();
+//    }
     
-    @Then("^Validate Sort By - Rendering Provider Last Name$")
-    public void validate_Sort_By_Rendering_Provider_Last_Name() throws Throwable {
-       
-    	remitDetail.verifySortByRendPrvdrLastName();
+    @Then("^Validate Sort By - Rendering Provider Last Name for \"([^\"]*)\"$")
+    public void validate_Sort_By_Rendering_Provider_Last_Name_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifySortByRendPrvdrLastName(usertype);
     }
+
     
     @When("^Validate Tricare Masking$")
     public void validate_Tricare_Masking() throws Throwable {
