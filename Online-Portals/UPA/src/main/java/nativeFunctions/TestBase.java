@@ -384,6 +384,17 @@ public class TestBase {
 		return driver;
 	}
 
+	public void cacheTestDataReaderObject(TestBase testbase,String sheetName, String path)
+	{
+		
+			try {
+				testDataReaderObj = new TestDataReader(testbase,sheetName,path);
+			} catch (IOException e) {
+				e.printStackTrace();
+				Log.failure("Test Case Failed due to IO Exception");
+			}
+	}
+	
 	public TestDataReader cacheTestDataReaderObject(String sheetName) throws IOException {
 		if (testDataReaderHashMap.get(sheetName) == null) {
 			testDataReaderObj = new TestDataReader(this, sheetName);
@@ -492,7 +503,7 @@ public class TestBase {
 
 	//@AfterTest
 	public void tearDown() {
-		 Browser.closeBrowser(testConfig);
+		 Browser.closeBrowser(testConfig);		 
 
 	}
 
