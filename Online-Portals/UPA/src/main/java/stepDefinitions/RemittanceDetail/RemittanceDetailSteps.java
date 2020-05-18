@@ -152,6 +152,13 @@ public class RemittanceDetailSteps extends TestBase {
     public void user_enters_tin_for_Mutliple_PLB_Adjustments_Criteria() throws Throwable {
         
     	remitDetail.enterTINMultiplePLBAdj();
+    	
+    }
+    
+    @Then("^User enter tin for CSR Search Remittance Page for \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
+    public void user_enter_tin_for_CSR_Search_Remittance_Page_for_through_and_click_on_continue_button(String searchBy,String usertype) throws Throwable {
+       
+    	remitDetail.enterTinCSR(searchBy, usertype);
     }
     
     @Then("^User enters tin for Mutliple PLB Adjustments Criteria for UPA$")

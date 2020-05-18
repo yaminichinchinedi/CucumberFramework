@@ -39,6 +39,7 @@ import org.openqa.selenium.JavascriptExecutor;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.fislServices.FISLConnection2;
 import main.java.fislServices.ReadTagsfromFISLResponse;
 import main.java.nativeFunctions.Browser;
@@ -178,7 +179,6 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//div[@id='msgforplb']//span[1]") WebElement claimmsg;
 	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
-	@FindBy(name="taxIdNbr")	WebElement prvdrTIN;
 	//@FindBy(xpath = "//input[@name= 'taxIdNbr']") WebElement prvdrTIN;
 	@FindBy(xpath = "//input[@value= 'Search']") WebElement srchTINUPA;
 	@FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]") WebElement homeBtnUPA;
@@ -196,8 +196,14 @@ public class RemittanceDetail {
 	@FindBy(linkText="RMK Code") WebElement rmkCode;	
 	@FindBy(linkText="Adj Reason Code") WebElement adjCode;	
 	@FindBy(xpath = "//span[contains(text(),'DRG Code')]") WebElement drgCode;
+	@FindBy(name="taxIdNbr") WebElement prvdrTIN;
+	@FindBy(name="providerTIN") WebElement txtboxTinNo;
+	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement bstinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement payertinDrpDwn;
+    @FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
 	
-	
+	private ViewPaymentsDataProvider dataProvider;
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
 	
@@ -3785,7 +3791,42 @@ public void enterTINMultiplePLBAdj() throws Exception
     Element.click(searchBtn, "Search");
 }
 
+public RemittanceDetail enterTinCSR(String paymentType, String usertype)
+{
+	    String tin=getTinCSR(paymentType);
+	    System.setProperty("tin", tin); 
+	
+	    switch(usertype) 
+	 {
+	 
+case "PROV":
+   {   
+  	 //Element.selectVisibleText(txtboxTinNo,tin,"Enter TIN in CSR");
+  	 Element.enterData(txtboxTinNo, tin, "Enter TIN", "Enter TIN in CSR");
+  	 Element.click(submitBtn, "Click Search Button");
+  	 break;
+    }  
+case "BS":
+   {
+  	 Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+  	 Element.click(submitBtn, "Click Search Button");
+  	 break;
+    }
+case "Payer":
+   {
+  	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+  	 Element.click(submitBtn, "Click Search Button");
+  	 break;
+    }
+}
+	return this; 
+}
 
+private String getTinCSR(String paymentType) {
+	
+	dataProvider=new ViewPaymentsDataProvider(testConfig);
+	return dataProvider.getTinForPaymentType(paymentType);
+}
 
 public void enterTINMultiplePLBAdjUPA() throws Exception
 {

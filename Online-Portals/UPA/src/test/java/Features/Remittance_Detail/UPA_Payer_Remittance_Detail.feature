@@ -33,8 +33,8 @@ Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider 
      When Click on View Payments Link for UPA 
      And User enters tin for UPA "<Search Criteria>" for Payer
      And Validate all other columns in Show All State for UPA_Payer
-     Then Validate Sort By - Patient Last Name
-     Then Validate Sort By - Rendering Provider Last Name
+     Then Validate Sort By - Patient Last Name for "<usertype>" 
+     Then Validate Sort By - Rendering Provider Last Name for "<usertype>" 
 
 Examples:     
        

@@ -1,6 +1,7 @@
 #Author: Athyusha Thota
 
 @UPAClaimDetail  @UPARegression @BothCSRUPAScenarios @UPAClaimDetailBS
+
 Feature: UPA BS Claim Detail
 
 
