@@ -20,9 +20,9 @@ Scenario Outline: Claim Detail UI Functionality and Data Check
 
 Examples:
 
-        |    searchBy            |       credentials      |usertype   |  
-        |     Multiple_PLB       |       BS_Admin         |BS       |
-        |     Multiple_PLB       |       BS_Gen           |BS       |
+          |        searchBy                |       credentials      | usertype   |  
+          |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+  #       |        Multiple_PLB_BSGen      |       BS_Gen           |  BS        |
              
 
 Scenario Outline: Claim Detail Tricare Functionality

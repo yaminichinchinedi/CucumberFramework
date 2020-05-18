@@ -270,7 +270,7 @@ public void verifyClaimDtlPageData() throws Exception
 	    		
 	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    		amountChargedUI = Double.toString(amountChargedUI4);
-	    		System.out.println(amountChargedUI);
+	    	    Log.Comment(amountChargedUI);
 	    	}
 	    	
 	    	else if (amountChargedUI1.contains("$")) 
@@ -279,14 +279,14 @@ public void verifyClaimDtlPageData() throws Exception
 	    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 	    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    	  amountChargedUI = Double.toString(amountChargedUI4);
-	    	  System.out.println(amountChargedUI3);
+	    	  Log.Comment(amountChargedUI);
 			}
 	    	else if (amountChargedUI1.contains(",")) {
 	    		
 	    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    		amountChargedUI = Double.toString(amountChargedUI4);
-		    	System.out.println(amountChargedUI3);
+		    	Log.Comment(amountChargedUI);
 				
 			}
 	    }
@@ -380,12 +380,12 @@ public void verifyClaimDtlPageData() throws Exception
 	    
 	          if(!grpPolicyUI1.isEmpty())
 	           {
-			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
 			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 			        Log.Comment("The Product Name from FISL is :" + productNameDB);
 			        if(!productNameDB.equalsIgnoreCase("0"))
-			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
 	     }
 	        }
 	    }
@@ -583,7 +583,7 @@ public void verifyClaimDtlPageData() throws Exception
     
           if(!grpPolicyUI1.isEmpty())
            {
-		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 		        Log.Comment("Product Name from UI is :" + productNameUI);
 		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 		        Log.Comment("The Product Name from FISL is :" + productNameDB);
@@ -715,9 +715,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	                "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
 	                "</ns17:EpsClaimsRequest>";
 			
-			System.out.println(requestXml);
-			
-			
 			String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 			
 			String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
@@ -752,7 +749,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    		
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-		    		System.out.println(amountChargedUI);
+		    		Log.Comment(amountChargedUI);
 		    	}
 		    	
 		    	else if (amountChargedUI1.contains("$")) 
@@ -761,14 +758,14 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    	  amountChargedUI = Double.toString(amountChargedUI4);
-		    	  System.out.println(amountChargedUI3);
+		    	  Log.Comment(amountChargedUI);
 				}
 		    	else if (amountChargedUI1.contains(",")) {
 		    		
 		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-			    	System.out.println(amountChargedUI3);
+			    	Log.Comment(amountChargedUI);
 					
 				}
 		    }
@@ -866,12 +863,12 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    
 		          if(!grpPolicyUI1.isEmpty())
 		           {
-				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 				        Log.Comment("Product Name from UI is :" + productNameUI);
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 				        Log.Comment("The Product Name from FISL is :" + productNameDB);
 				        if(!productNameDB.equalsIgnoreCase("0"))
-				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
 		     }
 		        }
 		    }
@@ -962,8 +959,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	                         "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
 	                         "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
 	                         "</ns17:EpsClaimsRequest>";
-		System.out.println(requestXml);
-		
 		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 		
 		String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
@@ -1071,7 +1066,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    
 	          if(!grpPolicyUI1.isEmpty())
 	           {
-			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 			        Log.Comment("The Product Name from FISL is :" + productNameDB);
@@ -1237,7 +1232,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    		
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-		    		System.out.println(amountChargedUI);
+		    		Log.Comment(amountChargedUI);
 		    	}
 		    	
 		    	else if (amountChargedUI1.contains("$")) 
@@ -1246,14 +1241,14 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    	  amountChargedUI = Double.toString(amountChargedUI4);
-		    	  System.out.println(amountChargedUI3);
+		    	  Log.Comment(amountChargedUI);
 				}
 		    	else if (amountChargedUI1.contains(",")) {
 		    		
 		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-			    	System.out.println(amountChargedUI3);
+		    		Log.Comment(amountChargedUI);
 					
 				}
 		    }
@@ -1352,12 +1347,12 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    
 		          if(!grpPolicyUI1.isEmpty())
 		           {
-				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
 				        Log.Comment("Product Name from UI is :" + productNameUI);
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 				        Log.Comment("The Product Name from FISL is :" + productNameDB);
 				        if(!productNameDB.equalsIgnoreCase("0"))
-				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI.replace("\n","").trim());
+				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
 		     }
 		        }
 		    }
@@ -1556,13 +1551,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    
 	          if(!grpPolicyUI1.isEmpty())
 	           {
-			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim();
+			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
 			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 			        Log.Comment("The Product Name from FISL is :" + productNameDB);
 			        if(!productNameDB.equalsIgnoreCase("0"))
-			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
-	     }
+			        	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
+			    }
 	        }
 	    }
 	    

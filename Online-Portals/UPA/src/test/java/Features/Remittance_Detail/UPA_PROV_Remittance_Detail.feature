@@ -1,7 +1,8 @@
 #Author: Athyusha Thota
 
-@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios @UPARemitDetailprov
+@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios 
 Feature: UPA Remittance Detail Provider
+
 
 Scenario Outline: Remittance Detail UI and FISL Validations for Provider User
 
@@ -20,9 +21,9 @@ Scenario Outline: Remittance Detail UI and FISL Validations for Provider User
      And Verify FISL Response for Reversal Only Filter Claim for "<usertype>"
      
 Examples: 
-        |    searchBy            |       credentials        |usertype   |  
-        |     Multiple_PLB       |       PROV_Admin         |PROV       |
-        |     Multiple_PLB       |       PROV_Gen           |PROV       |
+        |    searchBy                   |       credentials        |usertype   |  
+        |     Multiple_PLB_ProvAdmin    |       PROV_Admin         |PROV       |
+        |     Multiple_PLB_ProvGen      |       PROV_Gen           |PROV       |
         
         
 
@@ -32,17 +33,17 @@ Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider 
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
      Then User clicks on Search Remittance link for UPA
      And Enter Electronic Number for Mutliple PLB Adjustments Criteria
-     Then Validate Sort By - Patient Last Name
-     Then Validate Sort By - Rendering Provider Last Name
+     Then Validate Sort By - Patient Last Name for "<usertype>" 
+     Then Validate Sort By - Rendering Provider Last Name for "<usertype>" 
 
 Examples:     
        
-         |    searchBy           |       credentials      | usertype   |
-         |     Multiple_PLB      |       PROV_Admin       | PROV       |
-         |     Multiple_PLB      |       PROV_Gen         | PROV       |
+        |    searchBy                   |       credentials        |usertype   |  
+        |     Multiple_PLB_ProvAdmin    |       PROV_Admin         |PROV       |
+        |     Multiple_PLB_ProvGen      |       PROV_Gen           |PROV       |
 
 
-        
+ @UPARemitDetailprov        
 Scenario Outline: Remittance Detail multiple PLB Adjustments for Provider 
      
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -53,11 +54,11 @@ Scenario Outline: Remittance Detail multiple PLB Adjustments for Provider
 
 Examples:
 
-          |    searchBy            |      credentials         |usertype   |
-          |      Multiple_PLB      |      PROV_Admin          |PROV       |
-          |      Multiple_PLB      |      PROV_Gen            |PROV       |
+        |    searchBy                   |       credentials        |usertype   |  
+        |     Multiple_PLB_ProvAdmin    |       PROV_Admin         |PROV       |
+ #       |     Multiple_PLB_ProvGen      |       PROV_Gen           |PROV       |
           
-                    
+                   
 Scenario Outline: Remittance Detail PLB Adjustments Only for Provider
      
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -68,9 +69,9 @@ Scenario Outline: Remittance Detail PLB Adjustments Only for Provider
      
 Examples:
 
-          |       searchBy         |      credentials      |usertype   |
-          |      PLB Adj Only      |     PROV_Admin        |PROV       |
-          |      PLB Adj Only      |     PROV_Gen          |PROV       |     
+          |       searchBy               |      credentials      |usertype   |
+          |      PLB_Adj_Only_ProvAdmin  |     PROV_Admin        |PROV       |
+#          |      PLB_Adj_Only_ProvGen    |     PROV_Gen          |PROV       |     
           
 
      
