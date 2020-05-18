@@ -182,7 +182,7 @@ public class ReadTagsfromFISLResponse {
         
         List<String> listWithoutDuplicates = new ArrayList<String>(listToSet);
         
-        System.out.println(listWithoutDuplicates);
+       // System.out.println(listWithoutDuplicates);
         
         map.put("epsRenderingProviders", listWithoutDuplicates);
         

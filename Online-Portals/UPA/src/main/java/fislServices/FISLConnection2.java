@@ -147,7 +147,7 @@ public class FISLConnection2 {
 					String.class);
 			responseXml = responseEntity.getBody();
 
-			System.out.println(responseXml);
+			//System.out.println(responseXml);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,7 +170,7 @@ public class FISLConnection2 {
 					String.class);
 			responseXml = responseEntity.getBody();
 
-			System.out.println(responseXml);
+			//System.out.println(responseXml);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
