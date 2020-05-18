@@ -181,27 +181,17 @@ public class TestBase {
 		return driver;
 	}
 
-	private void setDriver(String browserType) {
+	private void setDriver(String browserType)
+	{
 		String Execution_Env;
-		if (System.getProperty("Executionin") == null) {
+		if (System.getProperty("Executionin") == null)
 			Execution_Env = runtimeProperties.getProperty("AutomationExecution");
-		} else {
+		 else 
 			Execution_Env = System.getProperty("Executionin");
-		}
-
 		
-
-		try {
-			if (runtimeProperties.getProperty("testSuite").contains("CSR")
-					|| System.getProperty("testSuite").equalsIgnoreCase("CSR_Regression"))
-				;
-			;// browserType="IE";
-		}
-
-		catch (Exception e) {
-			LogTemp.Comment("Starting execution ..");
-		}
-		if (Execution_Env.equalsIgnoreCase("Local")) {
+		
+		if (Execution_Env.equalsIgnoreCase("Local"))
+		{
 			DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
@@ -222,13 +212,12 @@ public class TestBase {
 				driver = new InternetExplorerDriver(caps);
 				driver.manage().deleteAllCookies();
 				driver.manage().window().maximize();
-				LogTemp.Comment("Launched IE browser-- : " + browserType);
+				LogTemp.Comment("Launched " + browserType );
 				break;
-			case "CSRIEUPAIE":
+				
+			case "CSRIE_UPAIE":
 				if(System.getProperty("Application").contains("UPA"))
-				{
 					driver = initChromeDriver();
-				}
 				else if(System.getProperty("Application").contains("CSR"))
 				{
 					caps = DesiredCapabilities.internetExplorer();
@@ -238,7 +227,7 @@ public class TestBase {
 					caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
 					caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
 					caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-					//String v = caps.getVersion().toString();
+					
 					caps.setCapability("disable-popup-blocking", true);
 					System.setProperty("webdriver.ie.driver",
 							System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
@@ -248,11 +237,11 @@ public class TestBase {
 					LogTemp.Comment("Launched IE browser-- : " + browserType);
 				}
 				break;
+				
 			case "CSRIEUPAChrome":
 				if(System.getProperty("Application").contains("UPA"))
-				{
 					driver = initChromeDriver();
-				}
+			
 				else if(System.getProperty("Application").contains("CSR"))
 				{
 					caps = DesiredCapabilities.internetExplorer();
@@ -262,23 +251,25 @@ public class TestBase {
 					caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
 					caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
 					caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-					//String v = caps.getVersion().toString();
 					caps.setCapability("disable-popup-blocking", true);
-					System.setProperty("webdriver.ie.driver",
-							System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
+					System.setProperty("webdriver.ie.driver",System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
 					driver = new InternetExplorerDriver(caps);
 					driver.manage().deleteAllCookies();
 					driver.manage().window().maximize();
-					LogTemp.Comment("Launched IE browser-- : " + browserType);
+					LogTemp.Comment("Launched " + browserType );
 				}
 				break;
 			default:
-				Log.Comment("browser : " + browserType + " is invalid, Launching Firefox as browser of choice..");
-				driver = initFirefoxDriver();
+				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
+				driver = initChromeDriver();
 			}
 			driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-		} else {
+		}
+		
+		else 
+		
+		{
 			LogTemp.Comment("Execution environment is Saucelab");
 			switch (browserType) {
 			case "chrome":
@@ -289,24 +280,16 @@ public class TestBase {
 				break;
 			case "CSRIEUPAIE":
 				if(System.getProperty("Application").contains("CSR"))
-				{
 					driver = SetdriveronSauce("IE");
-				}
 				else if( System.getProperty("Application").contains("UPA"))
-				{
 					driver = SetdriveronSauce("chrome");
-				}
 				driver = SetdriveronSauce(browserType);
 				break;
 			case "CSRIEUPAChrome":
 				if(System.getProperty("Application").contains("CSR"))
-				{
 					driver = SetdriveronSauce("IE");
-				}
 				else if( System.getProperty("Application").contains("UPA"))
-				{
 					driver = SetdriveronSauce("chrome");
-				}
 				driver = SetdriveronSauce(browserType);
 				break;
 			}
@@ -315,10 +298,8 @@ public class TestBase {
 	}
 
 	private static WebDriver initChromeDriver() {
-		LogTemp.Comment("Launching google chrome..");
-
+		LogTemp.Comment("Launching Google Chrome..");
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
-
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
 
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
@@ -334,8 +315,6 @@ public class TestBase {
 		options.setExperimentalOption("useAutomationExtension", false);
 
 		options.addArguments("enable-automation");
-		// options.addArguments("--headless");
-		// options.addArguments("--window-size=1920,1080");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--dns-prefetch-disable");
@@ -343,47 +322,11 @@ public class TestBase {
 
 		// WebDriver driver = new ChromeDriver(options);
 		driver = new ChromeDriver(options);
-
 		driver.manage().window().maximize();
 		return driver;
 	}
 
-	private static WebDriver initFirefoxDriver() {
-
-		LogTemp.Comment("Launching Firefox browser..");
-		System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
-
-		FirefoxProfile profile = new FirefoxProfile();
-
-		profile.setPreference("browser.download.dir", System.getProperty("user.dir") + "\\Downloads");
-
-		profile.setPreference("browser.download.folderList", 2);
-
-		// Set Preference to not show file download confirmation dialogue using
-		// MIME types Of different file extension types.
-
-		profile.setPreference("browser.download.manager.showWhenStarting", false);
-
-		profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
-		// needed for pdf download
-		profile.setPreference("pdfjs.disabled", true);
-		profile.setPreference("browser.download.useDownloadDir", "false");
-
-		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
-
-		// profile.setPreference("plugin.scan.Acrobat", "999.0");
-		// profile.setPreference("plugin.scan.plid.all", false);
-
-		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-		capabilities.setCapability("firefox_binary", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-		capabilities.setCapability("marionette", true);
-		capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-
-		WebDriver driver = new FirefoxDriver(capabilities);
-		driver.manage().window().maximize();
-		return driver;
-	}
-
+	
 	public void cacheTestDataReaderObject(TestBase testbase,String sheetName, String path)
 	{
 		
@@ -456,25 +399,19 @@ public class TestBase {
 	}
 
 	//@BeforeTest
-	public void tearUp() {
-		//LogTemp.Comment("** TearUp1---" + System.getProperty("BrowserType"));
-		if (System.getProperty("BrowserType") == null) {
-			LogTemp.Comment("** Browser value is  : null");
-			LogTemp.Comment("** Browser value is  : "+runtimeProperties.getProperty("BrowserType"));
+	//If browser type comes null from jenkins, pick up thr browser type from Config.
+	public void tearUp() 
+	{
+		if (System.getProperty("BrowserType") == null)
 			setDriver(runtimeProperties.getProperty("BrowserType"));
-		} else {
-			LogTemp.Comment("** Browser value is not null" + System.getProperty("BrowserType"));
+		else
 			setDriver(System.getProperty("BrowserType"));
-		}
-		// testConfig.putRunTimeProperty("createDt",Helper.getCurrentDate("yyyy-MM-dd
-		// HH:mm:ss"));
 	}
 
 	@BeforeMethod()
 	public void setupTestMethod(Method method) {
 
 		String author;
-		System.out.println("====testConfig" + testConfig);
 		testConfig.putRunTimeProperty("AlreadyFailed", "no");
 		Test test = method.getAnnotation(Test.class);
 		if (test == null)
@@ -486,19 +423,14 @@ public class TestBase {
 		else
 			author = details.author();
 
-		Log logger = new Log(testConfig, method.getName(), test.description(), author);
-		// fetchAppCredentials();
+		new Log(testConfig, method.getName(), test.description(), author);
+		
 
 	}
 
 	@AfterMethod()
 	public void endTest(ITestResult iTestResult) {
 		Log.endTest(iTestResult);
-		// String
-		// testClass=iTestResult.getTestClass().getName().replace("test.java.",
-		// "");
-		// testConfig.putRunTimeProperty("testClass", testClass);
-
 	}
 
 	//@AfterTest
@@ -509,8 +441,6 @@ public class TestBase {
 
 	@BeforeClass()
 	public void init() {
-
-		// Log logger =new Log(testConfig,"BeforeClass");
 		initializeData();
 	}
 
@@ -518,74 +448,7 @@ public class TestBase {
 		testConfig = TestBase.getInstance();
 	}
 
-	// @AfterClass()
-	// public void deinit()
-	// {
-	// deinitializeData();
-	// }
-	//
-	// public void deinitializeData()
-	// {
-	// }
 
-	public void fetchAppCredentials() {
-		String query = "Select * from eps_automation.config;";
-		loginCredentials = new HashMap<String, HashMap<String, String>>();
-		try {
-			ResultSet rs = DataBase.testExecuteSelectQuery(testConfig, query, DatabaseType.Automation);
-			ResultSetMetaData md = rs.getMetaData();
-			int columns = md.getColumnCount();
-
-			while (rs.next()) {
-				HashMap<String, String> row = new HashMap<String, String>(columns);
-				String key = rs.getString("AppName") + rs.getString("UserType") + rs.getString("AccessType")
-						+ rs.getString("Env");
-				row.put("USERNAME", rs.getString("Username"));
-				row.putIfAbsent("PASSWORD", rs.getString("Pwd"));
-				loginCredentials.put(key, row);
-			}
-		} catch (Exception e) {
-			Log.Comment(e.getMessage());
-		}
-
-	}
-
-	@AfterClass()
-	public void afterClass(ITestContext iTestContext) throws UnknownHostException {
-		testConfig.putRunTimeProperty("endDt", Helper.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-		java.net.InetAddress localMachine = java.net.InetAddress.getLocalHost();
-		testConfig.putRunTimeProperty("host", localMachine.getHostName() + "-" + System.getProperty("user.name"));
-
-		System.out.println(iTestContext.getAllTestMethods());
-		testConfig.putRunTimeProperty("passedTests", String.valueOf(iTestContext.getPassedTests().size()));
-		testConfig.putRunTimeProperty("failedTests", String.valueOf(iTestContext.getFailedTests().size()));
-		if (testConfig.getRunTimeProperty("IsAutomationStatRequired").equalsIgnoreCase("Yes"))
-			insertAutomationCount();
-	}
-
-	public void insertAutomationCount() {
-		System.setProperty("Database", "Automation");
-		int sqlRow = 158;
-		DataBase.executeInsertQuery(testConfig, sqlRow);
-
-	}
-
-	// public String getUsername(String appName,String userType,String
-	// accessType,String env){
-	// if(loginCredentials == null || loginCredentials.isEmpty()){
-	// fetchAppCredentials();
-	// }
-	// return
-	// loginCredentials.get(appName+userType+accessType+env).get("USERNAME");
-	// }
-	// public String getPassword(String appName,String userType,String
-	// accessType,String env){
-	// if(loginCredentials == null || loginCredentials.isEmpty()){
-	// fetchAppCredentials();
-	// }
-	// return
-	// loginCredentials.get(appName+userType+accessType+env).get("PASSWORD");
-	// }
 
 	public WebDriver SetdriveronSauce(String Browser) {
 		
@@ -601,14 +464,14 @@ public class TestBase {
 			try {
 				driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
 			LogTemp.Comment("Launched browser-- : " + Browser);
-		} else if (Browser.equalsIgnoreCase("chrome")) {
+		}
+		else if (Browser.equalsIgnoreCase("chrome")) {
 			
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
@@ -628,4 +491,41 @@ public class TestBase {
 		return driver;
 	}
 
+	
+	/*private static WebDriver initFirefoxDriver() {
+
+	LogTemp.Comment("Launching Firefox browser..");
+	System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
+
+	FirefoxProfile profile = new FirefoxProfile();
+
+	profile.setPreference("browser.download.dir", System.getProperty("user.dir") + "\\Downloads");
+
+	profile.setPreference("browser.download.folderList", 2);
+
+	// Set Preference to not show file download confirmation dialogue using
+	// MIME types Of different file extension types.
+
+	profile.setPreference("browser.download.manager.showWhenStarting", false);
+
+	profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
+	// needed for pdf download
+	profile.setPreference("pdfjs.disabled", true);
+	profile.setPreference("browser.download.useDownloadDir", "false");
+
+	profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+
+	// profile.setPreference("plugin.scan.Acrobat", "999.0");
+	// profile.setPreference("plugin.scan.plid.all", false);
+
+	DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+	capabilities.setCapability("firefox_binary", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+	capabilities.setCapability("marionette", true);
+	capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+
+	WebDriver driver = new FirefoxDriver(capabilities);
+	driver.manage().window().maximize();
+	return driver;
+}
+*/
 }

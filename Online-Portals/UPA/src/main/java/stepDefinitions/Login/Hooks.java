@@ -14,13 +14,13 @@ public class Hooks extends TestBase{
 	@Before
 	public void Beforetest()
 	{
-		System.out.print("**Before hooks----->");		
+//		System.out.print("**Before hooks----->");		
 	}
 
 	@After
 	public void Aftertest()
 	{
-		System.out.print("**After hooks----->");
+//		System.out.print("**After hooks----->");
 		//Closing browser
 		testConfig.tearDown();
 	}
