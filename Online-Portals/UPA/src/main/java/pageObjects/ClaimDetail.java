@@ -188,7 +188,7 @@ public void verifyClaimDtlPageData() throws Exception
 	Element.click(claimHash, "Claim Type");
     Browser.wait(testConfig, 3);
 	List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
-	Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
+	
     for(WebElement patientNamesUI :patientNames) 
 	{
     	Log.Comment(patientNamesUI.getText());
@@ -239,21 +239,18 @@ public void verifyClaimDtlPageData() throws Exception
 		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 		
 		String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-		Log.Comment("FISL Patient First Name is:" + firstNameDB);
+		
 	    String firstPatientUI1 = firstPatient.getText();
 	    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-	    Log.Comment("Online Patient First Name is:" + firstPatientUI);
+	    
 	    if(!firstNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-		Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-	    String lastPatientUI1 = firstPatient.getText();
-	    
+		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-	    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
+	    
 	    if(!lastNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 		
@@ -270,8 +267,7 @@ public void verifyClaimDtlPageData() throws Exception
 	    		
 	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    		amountChargedUI = Double.toString(amountChargedUI4);
-	    	    Log.Comment(amountChargedUI);
-	    	}
+	    	 }
 	    	
 	    	else if (amountChargedUI1.contains("$")) 
 	    	{
@@ -279,16 +275,14 @@ public void verifyClaimDtlPageData() throws Exception
 	    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 	    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    	  amountChargedUI = Double.toString(amountChargedUI4);
-	    	  Log.Comment(amountChargedUI);
-			}
+	    	 }
+	    	
 	    	else if (amountChargedUI1.contains(",")) {
 	    		
 	    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 	    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    		amountChargedUI = Double.toString(amountChargedUI4);
-		    	Log.Comment(amountChargedUI);
-				
-			}
+		     }
 	    }
 	    
 	    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
@@ -311,56 +305,37 @@ public void verifyClaimDtlPageData() throws Exception
 	    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 	    	amountChargedUI = Double.toString(amountChargedUI4);
 	    }
-	    
-	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-	    
-	    
-	    
-//	    String amountChargedUI1 = amntChargedUI.getText();
-//	    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-//	    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-//	    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-//	    String amountChargedUI = Double.toString(amountChargedUI4);
-//	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+ 
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
-	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+	    
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-	    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-	    
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
-	    Log.Comment("Text of Group Policy List is:" + grp);
-	    
-	    
-	    if(!grp.contains(""))
+	   if(!grp.contains(""))
 	    {
 	   	 String grpPolicyUI1 = grpPolicyUI.getText();
 	   	 if(grpPolicyUI1.contains("/"))
 	   	 {
 	            String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-	        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
 	        	 
 	        	 if(grpPolicyOnline.length()!=0)
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-		             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
 		             if(!grpPolicyDB.equalsIgnoreCase("0"))
 		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
 	        	 {
-	        	 
-	        		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+	        	    Log.Comment("The Group Policy Number doesnt exists for this Criteria");
 	        	 }
 	        }
 	   	 else
 	   	 {
-	   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
-	   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-	            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+	   		  String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+	            
 	            if(!grpPolicyDB.equalsIgnoreCase("0"))
 	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
 	        }
@@ -381,12 +356,10 @@ public void verifyClaimDtlPageData() throws Exception
 	          if(!grpPolicyUI1.isEmpty())
 	           {
 			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
-			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-			        Log.Comment("The Product Name from FISL is :" + productNameDB);
 			        if(!productNameDB.equalsIgnoreCase("0"))
 			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
-	     }
+	            }
 	        }
 	    }
 	    
@@ -396,31 +369,23 @@ public void verifyClaimDtlPageData() throws Exception
 	    }
 	    
 	    String subscrbrUI = subscriberUI1.getText();
-	    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-	    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
-	    Log.Comment("Claim # from UI is :" + claimHashUI);
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-	    Log.Comment("Claim # from FISL is :" + claimTypeDB);
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
-	    Log.Comment("Account Number from UI is :" + accntNumUI);
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-	    Log.Comment("Account Number from FISL is :" + accntNumDB);
 	    if(!accntNumDB.equalsIgnoreCase("0"))
 	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-	    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-	    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
 	  
@@ -480,26 +445,19 @@ public void verifyClaimDtlPageData() throws Exception
 	String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	
 	String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-	Log.Comment("FISL Patient First Name is:" + firstNameDB);
-    String firstPatientUI1 = firstPatient.getText();
+	String firstPatientUI1 = firstPatient.getText();
     String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
     String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-    Log.Comment("Online Patient First Name is:" + firstPatientUI);
+    
     if(!firstNameDB.equalsIgnoreCase("0"))
     	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 	
     String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-	Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-    String lastPatientUI1 = firstPatient.getText();
-    
+	String lastPatientUI1 = firstPatient.getText();
     String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
     if(!lastNameDB.equalsIgnoreCase("0"))
     	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 	
-    
-    
     String amountChargedUI1 = amntChargedUI.getText();
     String amountChargedUI = "";
     if(amountChargedUI1.contains(","))
@@ -513,12 +471,8 @@ public void verifyClaimDtlPageData() throws Exception
     {     
     	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
     	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
     }
-    
-    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-    
-    
+
     
 //    String amountChargedUI1 = amntChargedUI.getText();
 //    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
@@ -527,44 +481,35 @@ public void verifyClaimDtlPageData() throws Exception
 //    String amountChargedUI = Double.toString(amountChargedUI4);
 //    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
     String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
-    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
+    
     if(!amountChargedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-  //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
+   String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
     
-    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-    
-    Log.Comment("Text of Group Policy List is:" + grp);
-    
-    
-    if(!grp.contains(""))
+   if(!grp.contains(""))
     {
    	 String grpPolicyUI1 = grpPolicyUI.getText();
    	 if(grpPolicyUI1.contains("/"))
    	 {
             String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
         	 
         	 if(grpPolicyOnline.length()!=0)
         	 {
         		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-	             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+	             
 	             if(!grpPolicyDB.equalsIgnoreCase("0"))
 	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
         	 }
         	 
         	 else
         	 {
-        	 
-        		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+        	     Log.Comment("The Group Policy Number doesnt exists for this Criteria");
         	 }
         }
    	 else
    	 {
-   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
-   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
-            if(!grpPolicyDB.equalsIgnoreCase("0"))
+   		    String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+             if(!grpPolicyDB.equalsIgnoreCase("0"))
              	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
         }
      }
@@ -584,13 +529,11 @@ public void verifyClaimDtlPageData() throws Exception
           if(!grpPolicyUI1.isEmpty())
            {
 		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
-		        Log.Comment("Product Name from UI is :" + productNameUI);
 		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-		        Log.Comment("The Product Name from FISL is :" + productNameDB);
 		        if(!productNameDB.equalsIgnoreCase("0"))
 		          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
-     }
-        }
+            }
+         }
     }
     
     else
@@ -599,31 +542,24 @@ public void verifyClaimDtlPageData() throws Exception
     }
     
     String subscrbrUI = subscriberUI1.getText();
-    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
     if(!subscrbrDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
   
     String claimHashUI = claimHash1.getText();
-    Log.Comment("Claim # from UI is :" + claimHashUI);
     String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-    Log.Comment("Claim # from FISL is :" + claimTypeDB);
     if(!claimTypeDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
  	 
     String accntNumUI = accntNum.getText();
-    Log.Comment("Account Number from UI is :" + accntNumUI);
     String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-    Log.Comment("Account Number from FISL is :" + accntNumDB);
     if(!accntNumDB.equalsIgnoreCase("0"))
       	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
    
     String amntAllowedUI1 = amntallowed.getText();
     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+
     if(!amntAllowedDB.equalsIgnoreCase("0"))
        Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
   
@@ -652,7 +588,7 @@ public void verifyClaimDtlPageData() throws Exception
 	
 }
 
-public void verifyClaimDtlPageData(String usertype) throws Exception
+public void verifyClaimDtlPageData(String usertype) throws Exception  
 {
 	if(usertype == "Payer")
 	{
@@ -681,8 +617,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		
 		if(null == payerSchema)
 		{
-			
-			sqlRowNo = 203;
+		    sqlRowNo = 203;
 			testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
 			Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
@@ -708,7 +643,6 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 			String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
 			Log.Comment("The Final String is :" + finalidentifier);
 			
-			
 			String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
 	                "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
 	                "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
@@ -718,38 +652,28 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 			String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 			
 			String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-			Log.Comment("FISL Patient First Name is:" + firstNameDB);
-		    String firstPatientUI1 = firstPatient.getText();
+			String firstPatientUI1 = firstPatient.getText();
 		    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 		    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-		    Log.Comment("Online Patient First Name is:" + firstPatientUI);
+		    
 		    if(!firstNameDB.equalsIgnoreCase("0"))
 		    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 			
 		    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-			Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-		    String lastPatientUI1 = firstPatient.getText();
-		    
+			String lastPatientUI1 = firstPatient.getText();
 		    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-		    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
-		    if(!lastNameDB.equalsIgnoreCase("0"))
+            if(!lastNameDB.equalsIgnoreCase("0"))
 		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 			
-		    
-		    
 		    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
 		    if(amountChargedUI1.contains("-"))
 		    {
-
-		    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
+                if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
 		    	{
 		    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
-		    		
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-		    		Log.Comment(amountChargedUI);
 		    	}
 		    	
 		    	else if (amountChargedUI1.contains("$")) 
@@ -758,16 +682,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    	  amountChargedUI = Double.toString(amountChargedUI4);
-		    	  Log.Comment(amountChargedUI);
-				}
+		    	}
 		    	else if (amountChargedUI1.contains(",")) {
 		    		
 		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-			    	Log.Comment(amountChargedUI);
-					
-				}
+			   }
 		    }
 		    
 		    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
@@ -791,11 +712,8 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	amountChargedUI = Double.toString(amountChargedUI4);
 		    }
 		    
-		    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-		    
 		    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
-		    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
-		    if(!amountChargedDB.equalsIgnoreCase("0"))
+		     if(!amountChargedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 	
 //		    String amountChargedUI1 = amntChargedUI.getText();
@@ -809,44 +727,34 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 //		    if(!amountChargedDB.equalsIgnoreCase("0"))
 //		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-		     
-		    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 		    
 		    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-		    
-		    Log.Comment("Text of Group Policy List is:" + grp);
-		    
-		    
+
 		    if(!grp.contains(""))
 		    {
 		   	 String grpPolicyUI1 = grpPolicyUI.getText();
 		   	 if(grpPolicyUI1.contains("/"))
 		   	 {
 		            String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-		        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
 		        	 
 		        	 if(grpPolicyOnline.length()!=0)
 		        	 {
 		        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-			             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
-			             if(!grpPolicyDB.equalsIgnoreCase("0"))
+			            if(!grpPolicyDB.equalsIgnoreCase("0"))
 			             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
 		        	 }
 		        	 
 		        	 else
 		        	 {
-		        	 
-		        		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+		        	      Log.Comment("The Group Policy Number doesnt exists for this Criteria");
 		        	 }
 		        }
 		   	 else
 		   	 {
-		   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
-		   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-		            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+		            String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		            if(!grpPolicyDB.equalsIgnoreCase("0"))
 		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
-		        }
+		      }
 		     }
 		   else
 		   {
@@ -864,12 +772,10 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		          if(!grpPolicyUI1.isEmpty())
 		           {
 				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
-				        Log.Comment("Product Name from UI is :" + productNameUI);
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-				        Log.Comment("The Product Name from FISL is :" + productNameDB);
-				        if(!productNameDB.equalsIgnoreCase("0"))
+				         if(!productNameDB.equalsIgnoreCase("0"))
 				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
-		     }
+		           }
 		        }
 		    }
 		    
@@ -879,31 +785,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    }
 		    
 		    String subscrbrUI = subscriberUI1.getText();
-		    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
 		    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
 		    if(!subscrbrDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 		  
 		    String claimHashUI = claimHash1.getText();
-		    Log.Comment("Claim # from UI is :" + claimHashUI);
 		    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-		    Log.Comment("Claim # from FISL is :" + claimTypeDB);
 		    if(!claimTypeDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
 		 	 
 		    String accntNumUI = accntNum.getText();
-		    Log.Comment("Account Number from UI is :" + accntNumUI);
 		    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-		    Log.Comment("Account Number from FISL is :" + accntNumDB);
 		    if(!accntNumDB.equalsIgnoreCase("0"))
 		      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
 		   
 		    String amntAllowedUI1 = amntallowed.getText();
 		    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-		    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 		    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-		    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		    if(!amntAllowedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", amntAllowedDB, amntAllowedUI);
 		  
@@ -962,26 +860,18 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 		
 		String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-		Log.Comment("FISL Patient First Name is:" + firstNameDB);
-	    String firstPatientUI1 = firstPatient.getText();
+		String firstPatientUI1 = firstPatient.getText();
 	    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-	    Log.Comment("Online Patient First Name is:" + firstPatientUI);
 	    if(!firstNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-		Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-	    String lastPatientUI1 = firstPatient.getText();
-	    
+		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-	    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
-	    if(!lastNameDB.equalsIgnoreCase("0"))
+        if(!lastNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 		
-	    
-	    
 	    String amountChargedUI1 = amntChargedUI.getText();
 	    String amountChargedUI = "";
 	    if(amountChargedUI1.contains(","))
@@ -995,13 +885,8 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    {     
 	    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
 	    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-	         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
 	    }
-	    
-	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-	    
-	    
-	    
+
 //	    String amountChargedUI1 = amntChargedUI.getText();
 //	    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
 //	    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
@@ -1009,44 +894,32 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 //	    String amountChargedUI = Double.toString(amountChargedUI4);
 //	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
-	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
 
-	  //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-	    
-	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-	    
-	    Log.Comment("Text of Group Policy List is:" + grp);
-	    
-	    
+	   String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
+
 	    if(!grp.contains(""))
 	    {
 	   	 String grpPolicyUI1 = grpPolicyUI.getText();
 	   	 if(grpPolicyUI1.contains("/"))
 	   	 {
 	            String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-	        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
-	        	 
 	        	 if(grpPolicyOnline.length()!=0)
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-		             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
 		             if(!grpPolicyDB.equalsIgnoreCase("0"))
 		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
 	        	 {
-	        	 
-	        		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+	        	    Log.Comment("The Group Policy Number doesnt exists for this Criteria");
 	        	 }
 	        }
-	   	 else
-	   	 {
-	   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
-	   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-	            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
+	   	    else
+	   	    {
+	   		    String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 	            if(!grpPolicyDB.equalsIgnoreCase("0"))
 	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
 	        }
@@ -1067,12 +940,10 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	          if(!grpPolicyUI1.isEmpty())
 	           {
 			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
-			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-			        Log.Comment("The Product Name from FISL is :" + productNameDB);
 			        if(!productNameDB.equalsIgnoreCase("0"))
 			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
-	     }
+	            }
 	        }
 	    }
 	    
@@ -1082,31 +953,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    }
 	    
 	    String subscrbrUI = subscriberUI1.getText();
-	    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-	    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
-	    Log.Comment("Claim # from UI is :" + claimHashUI);
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-	    Log.Comment("Claim # from FISL is :" + claimTypeDB);
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
-	    Log.Comment("Account Number from UI is :" + accntNumUI);
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-	    Log.Comment("Account Number from FISL is :" + accntNumDB);
 	    if(!accntNumDB.equalsIgnoreCase("0"))
 	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-	    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-	    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
 	  
@@ -1201,26 +1064,18 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 			String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 			
 			String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-			Log.Comment("FISL Patient First Name is:" + firstNameDB);
-		    String firstPatientUI1 = firstPatient.getText();
+			String firstPatientUI1 = firstPatient.getText();
 		    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 		    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-		    Log.Comment("Online Patient First Name is:" + firstPatientUI);
 		    if(!firstNameDB.equalsIgnoreCase("0"))
 		    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 			
 		    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-			Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-		    String lastPatientUI1 = firstPatient.getText();
-		    
+			String lastPatientUI1 = firstPatient.getText();
 		    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-		    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
-		    if(!lastNameDB.equalsIgnoreCase("0"))
+            if(!lastNameDB.equalsIgnoreCase("0"))
 		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 			
-		    
-		    
 		    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
 		    if(amountChargedUI1.contains("-"))
@@ -1229,28 +1084,22 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
 		    	{
 		    		String amountChargedUI3 = (amountChargedUI1.replace("$", "")).replace(",", "");
-		    		
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-		    		Log.Comment(amountChargedUI);
-		    	}
+		        }
 		    	
 		    	else if (amountChargedUI1.contains("$")) 
 		    	{
-				 
-		    	  String amountChargedUI3 = amountChargedUI1.replace("$", "");
+				  String amountChargedUI3 = amountChargedUI1.replace("$", "");
 		    	  double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    	  amountChargedUI = Double.toString(amountChargedUI4);
-		    	  Log.Comment(amountChargedUI);
-				}
+		    	}
 		    	else if (amountChargedUI1.contains(",")) {
 		    		
 		    		String amountChargedUI3 = amountChargedUI1.replace(",", "");
 		    		double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    		amountChargedUI = Double.toString(amountChargedUI4);
-		    		Log.Comment(amountChargedUI);
-					
-				}
+		    	}
 		    }
 		    
 		    else if(amountChargedUI1.contains("$") && amountChargedUI1.contains(","))
@@ -1273,11 +1122,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    	double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
 		    	amountChargedUI = Double.toString(amountChargedUI4);
 		    }
-		    
-		    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-		    
-		    
-		    
+
 //		    String amountChargedUI1 = amntChargedUI.getText();
 //		    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
 //		    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
@@ -1290,29 +1135,19 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 //		       Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amountChargedDB, amountChargedUI);
 		    
 		    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
-		    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 		    if(!amountChargedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-
-		    //String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-		    
+            
 		    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-		    
-		    Log.Comment("Text of Group Policy List is:" + grp);
-		    
-		    
 		    if(!grp.contains(""))
 		    {
 		   	 String grpPolicyUI1 = grpPolicyUI.getText();
 		   	 if(grpPolicyUI1.contains("/"))
 		   	 {
 		            String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-		        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
-		        	 
 		        	 if(grpPolicyOnline.length()!=0)
 		        	 {
 		        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-			             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
 			             if(!grpPolicyDB.equalsIgnoreCase("0"))
 			             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
 		        	 }
@@ -1325,10 +1160,8 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		        }
 		   	 else
 		   	 {
-		   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
 		   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-		            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
-		            if(!grpPolicyDB.equalsIgnoreCase("0"))
+		         if(!grpPolicyDB.equalsIgnoreCase("0"))
 		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
 		        }
 		     }
@@ -1348,9 +1181,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		          if(!grpPolicyUI1.isEmpty())
 		           {
 				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
-				        Log.Comment("Product Name from UI is :" + productNameUI);
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-				        Log.Comment("The Product Name from FISL is :" + productNameDB);
 				        if(!productNameDB.equalsIgnoreCase("0"))
 				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
 		     }
@@ -1363,31 +1194,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    }
 		    
 		    String subscrbrUI = subscriberUI1.getText();
-		    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
 		    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
 		    if(!subscrbrDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 		  
 		    String claimHashUI = claimHash1.getText();
-		    Log.Comment("Claim # from UI is :" + claimHashUI);
 		    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-		    Log.Comment("Claim # from FISL is :" + claimTypeDB);
 		    if(!claimTypeDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
 		 	 
 		    String accntNumUI = accntNum.getText();
-		    Log.Comment("Account Number from UI is :" + accntNumUI);
 		    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-		    Log.Comment("Account Number from FISL is :" + accntNumDB);
 		    if(!accntNumDB.equalsIgnoreCase("0"))
 		      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
 		   
 		    String amntAllowedUI1 = amntallowed.getText();
 		    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-		    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 		    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-		    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 		    if(!amntAllowedDB.equalsIgnoreCase("0"))
 		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
 		  
@@ -1447,26 +1270,18 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 		
 		String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
-		Log.Comment("FISL Patient First Name is:" + firstNameDB);
-	    String firstPatientUI1 = firstPatient.getText();
+		String firstPatientUI1 = firstPatient.getText();
 	    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
-	    Log.Comment("Online Patient First Name is:" + firstPatientUI);
 	    if(!firstNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
-		Log.Comment("FISL Patient Last Name is:" + lastNameDB);
-	    String lastPatientUI1 = firstPatient.getText();
-	    
+		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
-
-	    Log.Comment("Online Patient Last Name is :" + lastPatientUI);
-	    if(!lastNameDB.equalsIgnoreCase("0"))
+        if(!lastNameDB.equalsIgnoreCase("0"))
 	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
 		
-	    
-	    
 	    String amountChargedUI1 = amntChargedUI.getText();
 	    String amountChargedUI = "";
 	    if(amountChargedUI1.contains(","))
@@ -1480,30 +1295,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    {     
 	    	 String amountChargedUI2 = amountChargedUI1.replace("$", "");
 	    	 amountChargedUI = amountChargedUI2.substring(0, amountChargedUI2.length()-1);
-	         Log.Comment("Amount Allowed from UI is :" + amountChargedUI);
-	    }
-	    
-	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
-	    
-	    
-	    
-//	    String amountChargedUI1 = amntChargedUI.getText();
-//	    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
-//	    String amountChargedUI3 = amountChargedUI2.replace(",", "").trim();
-//	    double amountChargedUI4 = Double.parseDouble(amountChargedUI3);
-//	    String amountChargedUI = Double.toString(amountChargedUI4);
-//	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+	     }
+
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
-	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
-
-	  //  String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-	    
+        
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
-	    
-	    Log.Comment("Text of Group Policy List is:" + grp);
-	    
 	    
 	    if(!grp.contains(""))
 	    {
@@ -1511,28 +1309,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	   	 if(grpPolicyUI1.contains("/"))
 	   	 {
 	            String grpPolicyOnline = grpPolicyUI1.substring(0, grpPolicyUI1.indexOf("/"));
-	        	 Log.Comment("Group Policy from UI is :" + grpPolicyOnline);
 	        	 
 	        	 if(grpPolicyOnline.length()!=0)
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-		             Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
-		             if(!grpPolicyDB.equalsIgnoreCase("0"))
+		              if(!grpPolicyDB.equalsIgnoreCase("0"))
 		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
 	        	 {
-	        	 
-	        		Log.Comment("The Group Policy Number doesnt exists for this Criteria");
+	        	   Log.Comment("The Group Policy Number doesnt exists for this Criteria");
 	        	 }
 	        }
 	   	 else
 	   	 {
-	   		 Log.Comment("Group Policy from UI is :" + grpPolicyUI1);
-	   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
-	            Log.Comment("The Group Policy from FISL is :" + grpPolicyDB); 
-	            if(!grpPolicyDB.equalsIgnoreCase("0"))
+	   		  String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
+	           if(!grpPolicyDB.equalsIgnoreCase("0"))
 	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
 	        }
 	     }
@@ -1552,9 +1345,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	          if(!grpPolicyUI1.isEmpty())
 	           {
 			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
-			        Log.Comment("Product Name from UI is :" + productNameUI);
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
-			        Log.Comment("The Product Name from FISL is :" + productNameDB);
 			        if(!productNameDB.equalsIgnoreCase("0"))
 			        	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
 			    }
@@ -1567,31 +1358,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    }
 	    
 	    String subscrbrUI = subscriberUI1.getText();
-	    Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-	    Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
-	    Log.Comment("Claim # from UI is :" + claimHashUI);
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
-	    Log.Comment("Claim # from FISL is :" + claimTypeDB);
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
-	    Log.Comment("Account Number from UI is :" + accntNumUI);
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
-	    Log.Comment("Account Number from FISL is :" + accntNumDB);
 	    if(!accntNumDB.equalsIgnoreCase("0"))
 	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-	    Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-	    Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
 	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
 	  
