@@ -428,6 +428,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
                 }
                 Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 			       Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf Link");
+			       
+			       Element.waitForElementTobeClickAble(testConfig, lnkEpraPdf, 60);
 			       Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
 			       String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
 			       WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
@@ -801,10 +803,14 @@ public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
 //	String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
 //	Log.Comment("The CONSL_PAY_NBR is :" + paymentNumDB);
 	
-	
-	
+	String paymentNumDB=null; 
+  if ( srchType.equals("viewPayments"))
+  {
+	  paymentNumDB=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
+  }
+  else	
 	//System.setProperty("paymentNumDB", paymentNumDB);
-	String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
+	 paymentNumDB = System.getProperty("CONSL_PAY_NBR");
 	
 	System.out.println(paymentNumDB);
 	int sqlRowNo=206;
@@ -2998,6 +3004,7 @@ public void verifyFailedPaymentPopUp()
 					  lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
 					}
 					 Browser.scrollTillAnElement(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText()+" found on the page");
+					Element.waitForElementTobeClickAble(testConfig, lnkPaymntNo, 60);
 					 Element.clickByJS(testConfig, lnkPaymntNo, "Payment No. :" + lnkPaymntNo.getText());
 					 found=true;
 					 Browser.wait(testConfig, 5);

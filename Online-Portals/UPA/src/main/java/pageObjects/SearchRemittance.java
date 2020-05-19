@@ -1393,6 +1393,7 @@ public class SearchRemittance extends paymentSummary {
 					  Browser.wait(testConfig, 5);
 				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
+				     Element.waitForElementTobeClickAble(testConfig, lnkEpraPdf, 60);
 				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
 				     Browser.wait(testConfig, 5);
 				     System.setProperty("expectedPaymntNo", expectedPaymntNo);

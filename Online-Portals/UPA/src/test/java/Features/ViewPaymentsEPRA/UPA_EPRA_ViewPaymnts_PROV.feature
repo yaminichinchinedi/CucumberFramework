@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
- 
+  @PROVEPRAViewPay
 Feature: View Payments EPRA Prov
 
 #TF41923 01-22
@@ -42,7 +42,7 @@ Examples:
          
   
   
-   @PROVEPRAViewPay
+  
  
   Scenario Outline: TS_001,010,012--View Payments EPRA Provider Payment No click
 		 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -89,8 +89,8 @@ Scenario Outline: TS_001,010,012--View Payments EPRA BS
 Examples:     
        
          |   		 Payment Type		  |       credentials      |priority |   Search Criteria		|TimePeriod|
-         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
-       #   |        EPRAViewPay  |       BS_Admin         |		1	   |   viewPayments				|Last 60 days|
+      #   |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
+         |        EPRAViewPay  |       BS_Admin         |		1	   |   viewPayments				|Last 60 days|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|
@@ -119,8 +119,8 @@ Scenario Outline: TS_001,010,012--View Payments EPRA BS Payment No click
 Examples:     
        
          |   		 Payment Type		  |       credentials      |priority |   Search Criteria		|TimePeriod|
-         |        EPRAViewPay  	  |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
-       #   |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments			|Last 60 days|
+       #  |        EPRAViewPay  	  |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
+          |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments			|Last 60 days|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
        #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|

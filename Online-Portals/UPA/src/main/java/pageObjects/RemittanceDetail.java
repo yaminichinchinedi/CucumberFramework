@@ -7245,6 +7245,7 @@ public RemittanceDetail clickPrintRequestButton()
 Element.verifyElementPresent(btnPrint, "Print Request Button");
 	Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
+	Element.waitForElementTobeClickAble(testConfig, btnPrint, 60);
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
 	Browser.wait(testConfig, 3);
