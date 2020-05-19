@@ -160,7 +160,7 @@ public class SearchRemittanceSteps extends TestBase{
 		//srchRemittance.verifyppraStatus(Status);
 		if(Status.equalsIgnoreCase("C"))
 		{
-			//srchRemittance.getPDFfileName();
+			srchRemittance.getPDFfileName();
 		}
 }
 	@Then("^Validate PDF file placed over NAS Drive for date \"([^\"]*)\"$")
@@ -169,17 +169,17 @@ public class SearchRemittanceSteps extends TestBase{
 	  
 	    sFTPAccess obj_FTPaccess = new sFTPAccess();		
 		//Connecting to sFTP location
-//		obj_FTPaccess.connect();		
-//		//Calling isFileAvailable function to validate file presence
-//		System.getProperty("Tin").substring(0,2);
-//		srchRemittance.getPDFfileName();
-//		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
-//		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
-//		{
-//			System.out.print("*File Available*");
-//		}
-//		//Closing sFTP connection
-//		obj_FTPaccess.Closeconnection();		
+		obj_FTPaccess.connect();		
+		//Calling isFileAvailable function to validate file presence
+		System.getProperty("Tin").substring(0,2);
+		srchRemittance.getPDFfileName();
+		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
+		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
+		{
+			System.out.print("*File Available*");
+		}
+		//Closing sFTP connection
+		obj_FTPaccess.Closeconnection();		
 	}
 	
 	@Then("^User Delete PDf file placed over NAS drive  for date \"([^\"]*)\"$")
@@ -188,18 +188,18 @@ public class SearchRemittanceSteps extends TestBase{
 		
 		sFTPAccess obj_FTPaccess = new sFTPAccess();		
 		//Connecting to sFTP location
-//		obj_FTPaccess.connect();		
-//		//Calling isFileAvailable function to validate file presence
-//	
-//		//srchRemittance.getPDFfileName();
-//		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
-//		
-//		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
-//		{
-//			obj_FTPaccess.DeleteFile_FileNameAppended("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"/"+System.getProperty("PDFFileName"));
-//		}
-//		//Closing sFTP connection
-//		obj_FTPaccess.Closeconnection();				
+		obj_FTPaccess.connect();		
+		//Calling isFileAvailable function to validate file presence
+	
+		//srchRemittance.getPDFfileName();
+		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
+		
+		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
+		{
+			obj_FTPaccess.DeleteFile_FileNameAppended("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"/"+System.getProperty("PDFFileName"));
+		}
+		//Closing sFTP connection
+		obj_FTPaccess.Closeconnection();				
 		
 	}
 }
