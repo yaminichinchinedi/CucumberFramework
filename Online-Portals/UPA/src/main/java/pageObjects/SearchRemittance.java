@@ -1391,6 +1391,8 @@ public class SearchRemittance extends paymentSummary {
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  
 					  
 					  Browser.wait(testConfig, 5);
+					  Browser.browserRefresh(testConfig);
+					  Browser.wait(testConfig, 3);
 				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
 				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
 				     Element.waitForElementTobeClickAble(testConfig, lnkEpraPdf, 60);
