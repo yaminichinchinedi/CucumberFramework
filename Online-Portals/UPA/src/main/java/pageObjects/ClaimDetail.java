@@ -245,14 +245,14 @@ public void verifyClaimDtlPageData() throws Exception
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
 	    
 	    if(!firstNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient First Name FISL and UI", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
 		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
 	    
 	    if(!lastNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 		
 	    
 	    
@@ -309,7 +309,7 @@ public void verifyClaimDtlPageData() throws Exception
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
 	    
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+	       Helper.compareEquals(testConfig, "Comparing Amounts Charged FISL and UI", amountChargedDB, amountChargedUI);
 
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
@@ -324,7 +324,7 @@ public void verifyClaimDtlPageData() throws Exception
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		             if(!grpPolicyDB.equalsIgnoreCase("0"))
-		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+		             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
@@ -337,7 +337,7 @@ public void verifyClaimDtlPageData() throws Exception
 	   		  String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 	            
 	            if(!grpPolicyDB.equalsIgnoreCase("0"))
-	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
 	        }
 	     }
 	   else
@@ -358,7 +358,7 @@ public void verifyClaimDtlPageData() throws Exception
 			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 			        if(!productNameDB.equalsIgnoreCase("0"))
-			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+			          	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
 	            }
 	        }
 	    }
@@ -371,23 +371,23 @@ public void verifyClaimDtlPageData() throws Exception
 	    String subscrbrUI = subscriberUI1.getText();
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+	       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
 	    if(!accntNumDB.equalsIgnoreCase("0"))
-	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+	      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", accntNumDB, accntNumUI);
 	  
 	   
 	     /*
@@ -456,7 +456,7 @@ public void verifyClaimDtlPageData() throws Exception
 	String lastPatientUI1 = firstPatient.getText();
     String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
     if(!lastNameDB.equalsIgnoreCase("0"))
-    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 	
     String amountChargedUI1 = amntChargedUI.getText();
     String amountChargedUI = "";
@@ -498,7 +498,7 @@ public void verifyClaimDtlPageData() throws Exception
         		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 	             
 	             if(!grpPolicyDB.equalsIgnoreCase("0"))
-	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
         	 }
         	 
         	 else
@@ -510,7 +510,7 @@ public void verifyClaimDtlPageData() throws Exception
    	 {
    		    String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
              if(!grpPolicyDB.equalsIgnoreCase("0"))
-             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
         }
      }
    else
@@ -531,7 +531,7 @@ public void verifyClaimDtlPageData() throws Exception
 		        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 		        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 		        if(!productNameDB.equalsIgnoreCase("0"))
-		          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+		          	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
             }
          }
     }
@@ -544,24 +544,24 @@ public void verifyClaimDtlPageData() throws Exception
     String subscrbrUI = subscriberUI1.getText();
     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
     if(!subscrbrDB.equalsIgnoreCase("0"))
-       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
   
     String claimHashUI = claimHash1.getText();
     String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
     if(!claimTypeDB.equalsIgnoreCase("0"))
-       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
  	 
     String accntNumUI = accntNum.getText();
     String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
     if(!accntNumDB.equalsIgnoreCase("0"))
-      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
    
     String amntAllowedUI1 = amntallowed.getText();
     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 
     if(!amntAllowedDB.equalsIgnoreCase("0"))
-       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", accntNumDB, accntNumUI);
   
     /*
     String CopayUI1 = copayUI.getText();
@@ -604,7 +604,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		Element.click(claimHash, "Claim Type");
 	    Browser.wait(testConfig, 3);
 		List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
-		Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
+		
 	    for(WebElement patientNamesUI :patientNames) 
 		{
 	    	Log.Comment(patientNamesUI.getText());
@@ -657,13 +657,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
 		    
 		    if(!firstNameDB.equalsIgnoreCase("0"))
-		    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+		    	Helper.compareEquals(testConfig, "Comparing Patient First Name FISL and UI", firstNameDB, firstPatientUI);
 			
 		    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
 			String lastPatientUI1 = firstPatient.getText();
 		    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
             if(!lastNameDB.equalsIgnoreCase("0"))
-		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 			
 		    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
@@ -714,7 +714,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    
 		    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
 		     if(!amountChargedDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+		       Helper.compareEquals(testConfig, "Comparing Amounts Charged FISL and UI", amountChargedDB, amountChargedUI);
 	
 //		    String amountChargedUI1 = amntChargedUI.getText();
 //		    String amountChargedUI2  = amountChargedUI1.substring(1, amountChargedUI1.length());
@@ -741,7 +741,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		        	 {
 		        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 			            if(!grpPolicyDB.equalsIgnoreCase("0"))
-			             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+			             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
 		        	 }
 		        	 
 		        	 else
@@ -753,7 +753,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		   	 {
 		            String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		            if(!grpPolicyDB.equalsIgnoreCase("0"))
-		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+		             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
 		      }
 		     }
 		   else
@@ -774,7 +774,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 				         if(!productNameDB.equalsIgnoreCase("0"))
-				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+				          	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
 		           }
 		        }
 		    }
@@ -787,23 +787,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    String subscrbrUI = subscriberUI1.getText();
 		    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
 		    if(!subscrbrDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+		       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
 		  
 		    String claimHashUI = claimHash1.getText();
 		    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
 		    if(!claimTypeDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+		       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
 		 	 
 		    String accntNumUI = accntNum.getText();
 		    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
 		    if(!accntNumDB.equalsIgnoreCase("0"))
-		      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+		      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
 		   
 		    String amntAllowedUI1 = amntallowed.getText();
 		    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 		    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		    if(!amntAllowedDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", amntAllowedDB, amntAllowedUI);
+		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", amntAllowedDB, amntAllowedUI);
 		  
 		   
 		     /*
@@ -864,13 +864,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
 	    if(!firstNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient First Name FISL and UI", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
 		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
         if(!lastNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 		
 	    String amountChargedUI1 = amntChargedUI.getText();
 	    String amountChargedUI = "";
@@ -895,7 +895,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 //	    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+	       Helper.compareEquals(testConfig, "Comparing Amounts Charged FISL and UI", amountChargedDB, amountChargedUI);
 
 	   String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 
@@ -909,7 +909,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		             if(!grpPolicyDB.equalsIgnoreCase("0"))
-		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+		             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
@@ -921,7 +921,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	   	    {
 	   		    String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 	            if(!grpPolicyDB.equalsIgnoreCase("0"))
-	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
 	        }
 	     }
 	   else
@@ -942,7 +942,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 			        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n", "");
 			        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 			        if(!productNameDB.equalsIgnoreCase("0"))
-			          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+			          	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
 	            }
 	        }
 	    }
@@ -955,23 +955,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    String subscrbrUI = subscriberUI1.getText();
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+	       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
 	    if(!accntNumDB.equalsIgnoreCase("0"))
-	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+	      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", accntNumDB, accntNumUI);
 	  
 	    /*
 	    String CopayUI1 = copayUI.getText();
@@ -1013,7 +1013,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		Element.click(claimHash, "Claim Type");
 	    Browser.wait(testConfig, 3);
 		List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
-		Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/");
+		
 	    for(WebElement patientNamesUI :patientNames) 
 		{
 	    	Log.Comment(patientNamesUI.getText());
@@ -1068,13 +1068,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 		    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
 		    if(!firstNameDB.equalsIgnoreCase("0"))
-		    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+		    	Helper.compareEquals(testConfig, "Comparing Patient First Name FISL and UI", firstNameDB, firstPatientUI);
 			
 		    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
 			String lastPatientUI1 = firstPatient.getText();
 		    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
             if(!lastNameDB.equalsIgnoreCase("0"))
-		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+		    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 			
 		    String amountChargedUI1 = amntChargedUI.getText();
 		    String amountChargedUI = "";
@@ -1136,7 +1136,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    
 		    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>"));
 		    if(!amountChargedDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+		       Helper.compareEquals(testConfig, "Comparing Amounts Charged FISL and UI", amountChargedDB, amountChargedUI);
             
 		    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 		    if(!grp.contains(""))
@@ -1149,7 +1149,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		        	 {
 		        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 			             if(!grpPolicyDB.equalsIgnoreCase("0"))
-			             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+			             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
 		        	 }
 		        	 
 		        	 else
@@ -1162,7 +1162,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		   	 {
 		   		 String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		         if(!grpPolicyDB.equalsIgnoreCase("0"))
-		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+		             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
 		        }
 		     }
 		   else
@@ -1183,7 +1183,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 				        String productNameUI = (grpPolicyUI1.substring(grpPolicyUI1.indexOf("/")+1, grpPolicyUI1.length())).trim().replace("\n","");
 				        String productNameDB = getResponse.substring(getResponse.indexOf("<ns4:ProductName>")+17, getResponse.indexOf("</ns4:ProductName>"));
 				        if(!productNameDB.equalsIgnoreCase("0"))
-				          	Helper.compareEquals(testConfig, "Comparing Product Name UI and FISL", productNameDB, productNameUI);
+				          	Helper.compareEquals(testConfig, "Comparing Product Name FISL and UI", productNameDB, productNameUI);
 		     }
 		        }
 		    }
@@ -1196,23 +1196,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 		    String subscrbrUI = subscriberUI1.getText();
 		    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
 		    if(!subscrbrDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+		       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
 		  
 		    String claimHashUI = claimHash1.getText();
 		    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
 		    if(!claimTypeDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+		       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
 		 	 
 		    String accntNumUI = accntNum.getText();
 		    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
 		    if(!accntNumDB.equalsIgnoreCase("0"))
-		      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+		      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
 		   
 		    String amntAllowedUI1 = amntallowed.getText();
 		    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 		    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 		    if(!amntAllowedDB.equalsIgnoreCase("0"))
-		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+		       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", accntNumDB, accntNumUI);
 		  
 		   
 		     /*
@@ -1274,13 +1274,13 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    String firstPatientUI2 = firstPatientUI1.substring(0, firstPatientUI1.indexOf("/"));
 	    String firstPatientUI = firstPatientUI2.substring(0, firstPatientUI2.indexOf(" "));
 	    if(!firstNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient First Name UI and DB", firstNameDB, firstPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient First Name FISL and UI", firstNameDB, firstPatientUI);
 		
 	    String lastNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientLastName>")+21, getResponse.indexOf("</ns0:PatientLastName>"));
 		String lastPatientUI1 = firstPatient.getText();
 	    String lastPatientUI = lastPatientUI1.substring(lastPatientUI1.lastIndexOf(" ")+1, lastPatientUI1.lastIndexOf("/"));
         if(!lastNameDB.equalsIgnoreCase("0"))
-	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name UI and DB", lastNameDB, lastPatientUI);
+	    	Helper.compareEquals(testConfig, "Comparing Patient Last Name FISL and UI", lastNameDB, lastPatientUI);
 		
 	    String amountChargedUI1 = amntChargedUI.getText();
 	    String amountChargedUI = "";
@@ -1299,7 +1299,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 
 	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns0:LineItemChargeAmount>")+26, getResponse.indexOf("</ns0:LineItemChargeAmount>"));
 	    if(!amountChargedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amountChargedDB, amountChargedUI);
+	       Helper.compareEquals(testConfig, "Comparing Amounts Charged FISL and UI", amountChargedDB, amountChargedUI);
         
 	    String grp = testConfig.driver.findElement(By.xpath("//span[@id='grpID_']")).getText();
 	    
@@ -1314,7 +1314,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	        	 {
 	        		String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 		              if(!grpPolicyDB.equalsIgnoreCase("0"))
-		             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyOnline);
+		             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyOnline);
 	        	 }
 	        	 
 	        	 else
@@ -1326,7 +1326,7 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	   	 {
 	   		  String grpPolicyDB = getResponse.substring(getResponse.indexOf("<ns3:GroupIdentifier>")+21, getResponse.indexOf("</ns3:GroupIdentifier>"));
 	           if(!grpPolicyDB.equalsIgnoreCase("0"))
-	             	Helper.compareEquals(testConfig, "Comparing Group Policy UI and DB", grpPolicyDB, grpPolicyUI1);
+	             	Helper.compareEquals(testConfig, "Comparing Group Policy FISL and UI", grpPolicyDB, grpPolicyUI1);
 	        }
 	     }
 	   else
@@ -1360,23 +1360,23 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	    String subscrbrUI = subscriberUI1.getText();
 	    String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
 	    if(!subscrbrDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	       Helper.compareEquals(testConfig, "Comparing Subscriber ID FISL and UI", subscrbrDB, subscrbrUI);
 	  
 	    String claimHashUI = claimHash1.getText();
 	    String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
 	    if(!claimTypeDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Claim Identifier UI and DB", claimTypeDB, claimHashUI);
+	       Helper.compareEquals(testConfig, "Comparing Claim Identifier FISL and UI", claimTypeDB, claimHashUI);
 	 	 
 	    String accntNumUI = accntNum.getText();
 	    String accntNumDB = getResponse.substring(getResponse.indexOf("<ns3:AccountNumber>")+19, getResponse.indexOf("</ns3:AccountNumber>"));
 	    if(!accntNumDB.equalsIgnoreCase("0"))
-	      	Helper.compareEquals(testConfig, "Comparing Account Number UI and DB", accntNumDB, accntNumUI);
+	      	Helper.compareEquals(testConfig, "Comparing Account Number FISL and UI", accntNumDB, accntNumUI);
 	   
 	    String amntAllowedUI1 = amntallowed.getText();
 	    String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 	    String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
 	    if(!amntAllowedDB.equalsIgnoreCase("0"))
-	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts UI and DB", accntNumDB, accntNumUI);
+	       Helper.compareEquals(testConfig, "Comparing Allowed Amounts FISL and UI", accntNumDB, accntNumUI);
 	  
 	    /*
 	    String CopayUI1 = copayUI.getText();
