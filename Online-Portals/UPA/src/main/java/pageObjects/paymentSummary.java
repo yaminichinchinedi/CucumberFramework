@@ -651,6 +651,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	  				
 	  				) 
 	  		{
+	  			Browser.browserRefresh(testConfig);
+	  			Browser.wait(testConfig, 3);
 	  			WebElement txtEpraPDf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]//span[contains(@class,'tip_holder')]");
 	            Element.onMouseHover(testConfig, txtEpraPDf, "PDF link that has become text now");      
 	           // WebElement popUp=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]//span[contains(@title,'ePRA in process')]");
