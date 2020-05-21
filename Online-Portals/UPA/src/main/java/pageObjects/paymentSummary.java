@@ -430,7 +430,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			       Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf Link");
 			       
 			       Element.waitForElementTobeClickAble(testConfig, lnkEpraPdf, 60);
-			       Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
+			       Element.clickByJS(testConfig, lnkEpraPdf, "PDF Link for EPRA");
+			       //Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
 			       String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
 			       WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
 			            
