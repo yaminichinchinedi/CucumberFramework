@@ -961,6 +961,9 @@ case "EPRA":
  		  catch(Exception e)
  		  {
  			testConfig.putRunTimeProperty("AlreadyFailed","yes");
+ 			if(paymentType.equalsIgnoreCase("EPRAViewPay") )
+ 			Log.Fail("No TIN from the above search Criteria,So Test Case failed");
+ 			else
  			Log.FailWarning("No tin with payments from the above query, please execute the test case manually",testConfig);
  		  }
  		

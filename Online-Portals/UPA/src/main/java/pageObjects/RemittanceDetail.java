@@ -7242,7 +7242,8 @@ public void verifyRemittancePageDataUPA() throws Exception
 
 public RemittanceDetail clickPrintRequestButton()
 {
-Element.verifyElementPresent(btnPrint, "Print Request Button");
+	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Request' and @type = 'button']"), 60);
+	Element.verifyElementPresent(btnPrint, "Print Request Button");
 	Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.waitForElementTobeClickAble(testConfig, btnPrint, 60);
@@ -7251,6 +7252,7 @@ Element.verifyElementPresent(btnPrint, "Print Request Button");
 	Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
+	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Available']"), 60);
 	Element.verifyElementPresent(btnPrntavailable, "Print Available");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	
