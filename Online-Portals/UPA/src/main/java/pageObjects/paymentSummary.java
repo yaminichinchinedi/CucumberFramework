@@ -641,10 +641,6 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			expectedStatus="E";	
 		Helper.compareEquals(testConfig, "Status in Epra status for payment number : " + epraStatusTbl.get("CONSL_PAY_NBR"), expectedStatus, epraStatusTbl.get("REQ_STS").toString());
 		
-  		if ( ! epraStatusTbl.get("REQ_STS").toString().equals("C")) 
-  		{
-  			
-  		}
 		if(srchType.equals("viewPayments"))
 	      {
 	    	  
@@ -659,28 +655,15 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	  			WebElement txtEpraPDf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]//span[contains(@class,'tip_holder')]");
 	            Element.onMouseHover(testConfig, txtEpraPDf, "PDF link that has become text now");      
 	           // WebElement popUp=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]//span[contains(@title,'ePRA in process')]");
-	            WebElement popUp=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]/table/tbody/tr/td[3]/span[2]");
-	            String mousehover= popUp.getAttribute("title");
+	           // WebElement popUp=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr[2]/td[11]/table/tbody/tr/td[3]/span[2]");
+	           // String mousehover= popUp.getAttribute("title");
 	            //if (mousehover.equals("ePRA in process, please wait for completion"))
 	            //{
-	            //	Log.Fail("Test Case failed due to EPRA still in running status");
+	            	Log.Fail("Test Case failed due to EPRA still in running status");
 	            //}
 	           // Helper.compareEquals(testConfig, "Mousehover comparision", "ePRA in process, please wait for completion", mousehover);
-	  		int i=0;
-	  		do
-	  		{
-	  		if (mousehover.equals("ePRA in process, please wait for completion"))
-	  			{
-	  			Browser.browserRefresh(testConfig);
-	  			Browser.wait(testConfig, 3);
-	  			i++;
-	  			}
-	  		}
-	  		while(i<3);
-	  	  if ( mousehover !=null && mousehover.equals("ePRA in process, please wait for completion"))
-            {
-            	Log.Fail("Test Case failed due to EPRA still in running status");
-            }
+	  		
+	  	 
 	  		} 
 	  		} 
 		
