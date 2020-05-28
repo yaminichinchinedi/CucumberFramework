@@ -26,16 +26,15 @@ public class SearchTinPageSearchRemittance {
 	@FindBy(name="btnSubmit")
 	public WebElement btnSubmit;
 
-	
-	@FindBy(xpath = "//input[@name='providerTIN']") WebElement txtboxTinNo;
 	@FindBy(xpath = "//select[@id='taxIndNbrId']") WebElement prvdrTIN;
-	
-	@FindBy(xpath = "//select[@id='taxIndNbrId']") WebElement tinDrpDwn;
-	@FindBy(xpath = "//input[@name='taxIdNbr']") WebElement bstinDrpDwn;
-	@FindBy(xpath = "//input[@name='taxIdNbr']") WebElement payertinDrpDwn;
 	@FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
 	@FindBy(xpath = "//ul[@id='tabmenu']/li[2]") WebElement archiveBtn;
 	@FindBy(xpath = "//ul[@id='tabmenu']/li[1]") WebElement currentBtn;
+	@FindBy(name="providerTIN") WebElement txtboxTinNo;
+	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement bstinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement payertinDrpDwn;
+    
 	
 	
 	

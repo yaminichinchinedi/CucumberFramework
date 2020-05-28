@@ -1,8 +1,9 @@
 
 #Author: Athyusha Thota
 
-@UPARemitDetail  @UPARegression @BothCSRUPAScenarios  @UPARemitDetailBS
+@UPARemitDetail  @UPARegression @BothCSRUPAScenarios @UPARemitDetailBS 
 Feature: UPA Remittance Detail Billing Service
+
 
 Scenario Outline: Remittance Detail UI and FISL Validations for BS User
 
@@ -21,9 +22,9 @@ Scenario Outline: Remittance Detail UI and FISL Validations for BS User
      And Verify FISL Response for Reversal Only Filter Claim for "<usertype>"
      
 Examples: 
-         |        searchBy        |       credentials      | usertype   |  
-         |        Multiple_PLB    |       BS_Admin         |  BS        |
-         |        Multiple_PLB    |       BS_Gen           |  BS        |
+         |        searchBy                |       credentials      | usertype   |  
+         |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+   #      |        Multiple_PLB_BSAdmin      |       BS_Gen           |  BS        |
         
         
 Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider for BS
@@ -32,14 +33,14 @@ Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider 
      Then User clicks on Search Remittance link for UPA
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
      And Enter Electronic Number for Mutliple PLB Adjustments Criteria
-     Then Validate Sort By - Patient Last Name
-     Then Validate Sort By - Rendering Provider Last Name
+     Then Validate Sort By - Patient Last Name for "<usertype>" 
+     Then Validate Sort By - Rendering Provider Last Name for "<usertype>" 
 
 Examples:     
        
-         |        searchBy        |       credentials      | usertype   |  
-         |        Multiple_PLB    |       BS_Admin         |  BS        |
-         |        Multiple_PLB    |       BS_Gen           |  BS        |
+         |        searchBy                |       credentials      | usertype   |  
+         |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+       #  |        Multiple_PLB           |       BS_Gen           |  BS        |
             
  
 Scenario Outline: Remittance Detail multiple PLB Adjustments for BS 
@@ -51,10 +52,9 @@ Scenario Outline: Remittance Detail multiple PLB Adjustments for BS
      And Validate Payment with Multiple PLB Adjustments for UPA 
 
 Examples:
-
-          |       searchBy         |      credentials      |usertype   |  
-          |      Multiple_PLB      |      BS_Admin         | BS        |
-          |      Multiple_PLB      |      BS_Gen           | BS        |
+           |        searchBy              |       credentials      | usertype   |  
+           |      Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+   #        |      Multiple_PLB            |       BS_Gen           |  BS        |
           
           
          
@@ -69,8 +69,8 @@ Scenario Outline: Remittance Detail PLB Adjustments Only for BS
 Examples:
 
          |        searchBy        |       credentials      | usertype   |  
-         |        PLB Adj Only    |       BS_Admin         |  BS        |
-         |        PLB Adj Only    |       BS_Gen           |  BS        |
+         |        PLB_Adj_Only_BSAdmin    |       BS_Admin         |  BS        |
+  #       |        PLB Adj Only    |       BS_Gen           |  BS        |
 
 
 Scenario Outline: Remittance Detail Tricare Validation for BS

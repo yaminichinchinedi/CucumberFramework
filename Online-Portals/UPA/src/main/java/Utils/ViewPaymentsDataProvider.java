@@ -773,12 +773,89 @@ case "EPRA":
 			break;
 		}	
 		
+		case "Multiple_PLB_ProvAdmin":
+		{
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
+		case "Multiple_PLB_ProvGen":
+		{
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
+		case "Multiple_PLB_BSAdmin":
+		{
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
+		case "Multiple_PLB_BSGen":
+		{
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Gen"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
 		
 		case "PLB Adj Only":
 		{
 			sqlRowNo = 188;
 			break;
 		}	
+		
+		case "PLB_Adj_Only_ProvAdmin":
+		{
+			env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
+		case "PLB_Adj_Only_ProvGen":
+		{
+			env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
+		case "PLB_Adj_Only_BSAdmin":
+		{
+			env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
+		     System.out.println(id);
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 222;
+			 break;
+		}	
+		
 		
 		
 		case "PLB_Adj_Only_Pay_Admin":
@@ -843,8 +920,8 @@ case "EPRA":
  		   if(paymentType.equalsIgnoreCase("EPRAViewPay") )
  		     		   {   
  		    testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
- 		   // testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
- 		  System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
+ 		    testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+ 		 // System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
 				  
 		   } 
  		   
@@ -856,7 +933,7 @@ case "EPRA":
  		   {
  			    //dataRequiredForSearch = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 				   System.out.println(tinNumbers);
-				  
+				
 				  System.setProperty("ELECTRONIC_PAYMENT_NUMBER", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 				  System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
 				  
@@ -874,14 +951,19 @@ case "EPRA":
 			      System.setProperty("lst_nm",tinNumbers.get("LST_NM").toString());
  		   }
  		   
- 		   else if(paymentType.equalsIgnoreCase("Multiple_PLB")||paymentType.equalsIgnoreCase("PLB Adj Only"))
+ 		   else if(paymentType.equalsIgnoreCase("Multiple_PLB")||paymentType.equalsIgnoreCase("PLB Adj Only")||paymentType.equalsIgnoreCase("PLB_Adj_Only_BSAdmin")
+ 				   ||paymentType.equalsIgnoreCase("Multiple_PLB_BSAdmin")||paymentType.equalsIgnoreCase("Multiple_PLB_ProvAdmin"))
  		   {
- 			  System.out.println("The TIN Number is:" + tinNumbers);
+ 			  System.out.println(tinNumbers);
+ 			  System.setProperty("tin", tinNumbers.get("PROV_TAX_ID_NBR").toString());
  		   }
  		  }
  		  catch(Exception e)
  		  {
  			testConfig.putRunTimeProperty("AlreadyFailed","yes");
+ 			if(paymentType.equalsIgnoreCase("EPRAViewPay") )
+ 			Log.Fail("No TIN from the above search Criteria,So Test Case failed");
+ 			else
  			Log.FailWarning("No tin with payments from the above query, please execute the test case manually",testConfig);
  		  }
  		

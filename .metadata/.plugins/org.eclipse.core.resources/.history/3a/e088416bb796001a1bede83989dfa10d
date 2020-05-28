@@ -1,4 +1,4 @@
-Env=Stage
+Env=Stage2
 testSuite=UPA
 BrowserType=chrome
 AutomationExecution=Local
@@ -19,18 +19,18 @@ UPAURLActive_IMPL=https://ppsp-impl-e-payer10.optumhealthfinancial.com/registrat
 
 	
 CSR_ID_Super_Stage2=pgupt24
-CSR_Pwd_Super_Stage2=Exact@123
+CSR_Pwd_Super_Stage2=Exact@12
 
 
 CSR_ID_Super_Stage=manand10
 CSR_Pwd_Super_Stage=Welcom99
 
 CSR_ID_Super_Stage=pgupt24
-CSR_Pwd_Super_Stage=Exact@123
+CSR_Pwd_Super_Stage=Exact@12
 
 
 CSR_ID_Super_IMPL=pgupt24
-CSR_Pwd_Super_IMPL=Exact@123
+CSR_Pwd_Super_IMPL=Exact@12
 
 
 CSR_ID_ROPPRA_Stage=Rhooda

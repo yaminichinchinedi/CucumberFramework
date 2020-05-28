@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
- 
+@PROVEPRAViewPay @BothCSRUPAScenarios @UPARegression  
 Feature: View Payments EPRA Prov
 
 #TF41923 01-22
@@ -30,19 +30,19 @@ Scenario Outline: TS_001,010,012--View Payments EPRA Provider
 Examples:     
        
              |       credentials      |priority  |		searchBy	 |   usertype     |		Search Criteria|TimePeriod|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 30 days|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 30 days|
              |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 60 days|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 90 days|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 4-6 months|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 6-9 months|
-           #   |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 9-13 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 90 days|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 4-6 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 6-9 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments	| Last 9-13 months|
              #|       PROV_Admin       |     2   |  EPRAViewPay  |		  PROV		  |		viewPayments	|		Last 30 days		|
             
 
          
   
   
-   @PROVEPRAViewPay
+  
  
   Scenario Outline: TS_001,010,012--View Payments EPRA Provider Payment No click
 		 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -62,12 +62,12 @@ Examples:
 	Examples:     
        
              |       credentials      |priority |  searchBy     |   usertype    |		Search Criteria			|TimePeriod|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 30 days|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 30 days|
              |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments			|Last 60 days|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments			|Last 90 days|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 4-6 months|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 6-9 months|
-           #  |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 9-13 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments			|Last 90 days|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 4-6 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 6-9 months|
+             |       PROV_Admin       |     1   |  EPRAViewPay  |			PROV			|		viewPayments				|Last 9-13 months|
             
             
        
@@ -88,13 +88,13 @@ Scenario Outline: TS_001,010,012--View Payments EPRA BS
 
 Examples:     
        
-         |   		 Payment Type		  |       credentials      |priority |   Search Criteria		|TimePeriod|
+         |   		 Payment Type		  |       credentials    |priority |   Search Criteria		|TimePeriod|
          |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
-       #   |        EPRAViewPay  |       BS_Admin         |		1	   |   viewPayments				|Last 60 days|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 9-13 months|
+         |        EPRAViewPay  |       BS_Admin          |		1	   |   viewPayments				|Last 60 days|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 9-13 months|
         
         
         
@@ -120,9 +120,9 @@ Examples:
        
          |   		 Payment Type		  |       credentials      |priority |   Search Criteria		|TimePeriod|
          |        EPRAViewPay  	  |       BS_Admin         |		1	   |   viewPayments				|Last 30 days|
-       #   |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments			|Last 60 days|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|
-       #  |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 9-13 months|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments			|Last 60 days|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 90 days|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 4-6 months|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 6-9 months|
+         |        EPRAViewPay   |       BS_Admin         |		1	   |   viewPayments				|Last 9-13 months|
              

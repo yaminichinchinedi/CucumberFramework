@@ -44,7 +44,7 @@ public class PaymentSummaryFislService {
 							com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentupdateservice_v1_0.ObjectFactory.class,
 							EpsClaimsRequest.class);
 		} catch (JAXBException e) {
-			System.out.println(e.getMessage());
+			//System.out.println(e.getMessage());
 		}
 	}
 
@@ -61,7 +61,7 @@ public class PaymentSummaryFislService {
 				Unmarshaller unmarshaller = ctx.createUnmarshaller();
 				return unmarshaller.unmarshal(xsr);
 			} catch (XMLStreamException e) {
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
 				throw new Exception("Exception occurred while toObject : " + e.getMessage());
 			}
 

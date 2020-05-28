@@ -116,17 +116,31 @@ public class RemittanceDetailSteps extends TestBase {
     }
 
     
-    @When("^Validate Sort By - Patient Last Name$")
-    public void validate_Sort_By_Patient_Last_Name() throws Throwable {
-       
-    	remitDetail.verifySortByPatientLastName();
+//    @When("^Validate Sort By - Patient Last Name$")
+//    public void validate_Sort_By_Patient_Last_Name() throws Throwable {
+//       
+//    	remitDetail.verifySortByPatientLastName();
+//    }
+//    
+    @Then("^Validate Sort By - Patient Last Name for \"([^\"]*)\"$")
+    public void validate_Sort_By_Patient_Last_Name_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifySortByPatientLastName(usertype);
     }
+
+//    
+//    @Then("^Validate Sort By - Rendering Provider Last Name$")
+//    public void validate_Sort_By_Rendering_Provider_Last_Name() throws Throwable {
+//       
+//    	remitDetail.verifySortByRendPrvdrLastName();
+//    }
     
-    @Then("^Validate Sort By - Rendering Provider Last Name$")
-    public void validate_Sort_By_Rendering_Provider_Last_Name() throws Throwable {
-       
-    	remitDetail.verifySortByRendPrvdrLastName();
+    @Then("^Validate Sort By - Rendering Provider Last Name for \"([^\"]*)\"$")
+    public void validate_Sort_By_Rendering_Provider_Last_Name_for(String usertype) throws Throwable {
+        
+    	remitDetail.verifySortByRendPrvdrLastName(usertype);
     }
+
     
     @When("^Validate Tricare Masking$")
     public void validate_Tricare_Masking() throws Throwable {
@@ -138,6 +152,13 @@ public class RemittanceDetailSteps extends TestBase {
     public void user_enters_tin_for_Mutliple_PLB_Adjustments_Criteria() throws Throwable {
         
     	remitDetail.enterTINMultiplePLBAdj();
+    	
+    }
+    
+    @Then("^User enter tin for CSR Search Remittance Page for \"([^\"]*)\" through \"([^\"]*)\" and click on continue button$")
+    public void user_enter_tin_for_CSR_Search_Remittance_Page_for_through_and_click_on_continue_button(String searchBy,String usertype) throws Throwable {
+       
+    	remitDetail.enterTinCSR(searchBy, usertype);
     }
     
     @Then("^User enters tin for Mutliple PLB Adjustments Criteria for UPA$")

@@ -1390,9 +1390,14 @@ public class SearchRemittance extends paymentSummary {
 			    	  else if(srchType.equals("viewPayments"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  
 					  
-					  Browser.wait(testConfig, 5);
-				     Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
-				     Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
+					 Browser.wait(testConfig, 5);
+					// Browser.browserRefresh(testConfig);
+					// Browser.wait(testConfig, 3);
+					 if(srchType.equals("viewPayments"))
+					 Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img"), 60);
+					 Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
+					 Browser.scrollTillAnElement(testConfig, lnkEpraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+				     Element.waitForElementTobeClickAble(testConfig, lnkEpraPdf, 60);
 				     Element.click(lnkEpraPdf, "PDF Link for EPRA for Display Consolidated No. :" + actualPaymntNo);
 				     Browser.wait(testConfig, 5);
 				     System.setProperty("expectedPaymntNo", expectedPaymntNo);

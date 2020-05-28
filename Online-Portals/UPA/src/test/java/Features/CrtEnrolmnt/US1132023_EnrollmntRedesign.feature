@@ -1,6 +1,6 @@
 
 #Author:Rahul Krishna
- @CSRCreateEnrollment @BothCSRUPAScenarios @CSRRegression
+ @CSRCreateEnrollment @BothCSRUPAScenarios @CSRRegression @US1132023
 Feature: Enrollment Redesign-Surver Response Reporting
 
 #TC_01,02,03,04
@@ -30,7 +30,7 @@ When Provide from date  greater than To date
 Then Error Message FromDate can not exceed ToDate should be displayed
 
 #TC_07,08,09,10
-@US1132023
+
 Scenario Outline: Enrollment Redesign-Verify Excel file generation
 
 Given User navigates to CSR portal and enters "Super" and login
@@ -44,9 +44,9 @@ Then Verifies all the fields from excel file and database by running query
 Examples: 
 												| duration  |
    											| Random    |
-											#	| 1 Month   |
-											#	| 12 Months |
-											#	| 13 Months |
+												| 1 Month   |
+										  	| 12 Months |
+												| 13 Months |
 												
 #TC_11
 

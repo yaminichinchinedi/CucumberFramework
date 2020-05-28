@@ -1,13 +1,14 @@
 #Author: Athyusha Thota
 
-@CSRClaimDetail    @CSRRegression @CSRSanity @BothCSRUPAScenarios
+@CSRClaimDetail @CSRRegression @CSRSanity @BothCSRUPAScenarios
 Feature: CSR Claim Detail
 
 Scenario Outline: Claim Detail UI Functionality and Data Check
 
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Search Remittance link
-    And User enters tin for Mutliple PLB Adjustments Criteria
+    And User enter tin for CSR Search Remittance Page for "<searchBy>" through "<usertype>" and click on continue button
+    #And User enters tin for Mutliple PLB Adjustments Criteria
     And Enter Electronic Number for Mutliple PLB Adjustments Criteria
     Then Verify Claim Detail UI vs FISL Response for "<usertype>"
     Then Validate all Headers in the Page for Claim Detail Page
@@ -16,13 +17,12 @@ Scenario Outline: Claim Detail UI Functionality and Data Check
     And Check Adj Reason Code Pop Up
     Then Validate Payment Number Hyper Link in UPA
      
-
 Examples:
-
-        |   credentials     |usertype   |  
-        |      Super        |PROV       |
-        |      RW           |PROV       |
-        |      RO           |PROV       |   
+ 
+        |     searchBy               |   credentials     |usertype   |  
+        |     Multiple_PLB_ProvAdmin |      Super        |PROV       |
+        |     Multiple_PLB_ProvAdmin |      RW           |PROV       |
+        |     Multiple_PLB_ProvAdmin |      RO           |PROV       |   
         
 
 Scenario Outline: Claim Detail Tricare Functionality
