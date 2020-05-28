@@ -34,7 +34,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	@Then("^User Deletes paymentdetail record \"([^\"]*)\" from ole\\.ppra_status_dtl and ole\\.ppra_status table$")
 	public void user_Deletes_paymentdetail_record_from_ole_ppra_status_dtl_and_ole_ppra_status_table(String PaymentNumber) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-		System.setProperty("System.setProperty",PaymentNumber);
+		System.setProperty("PaymentNumber",PaymentNumber);
 		Browser.wait(testConfig, 10); 
 		//
 		int sqlRowNo1=227;
