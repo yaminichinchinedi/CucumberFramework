@@ -7798,7 +7798,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 10);
 		
 		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
 			
