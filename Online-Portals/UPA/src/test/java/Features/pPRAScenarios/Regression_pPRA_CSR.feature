@@ -70,7 +70,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | P3       | ROPPRA | 391678306 | byHCPayment_Number | 1TR10401483          |      1440564451 | E      |
       | P3       | ROPPRA | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
 
-  @CSR_PDFDoesnotExist_ConsolPayNumber
+  @CSR_PDFDoesnotExist_ConsolPayNumberleft
   Scenario Outline: Validation of ppra scenario where PDf does not exist with Payment number search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
@@ -102,7 +102,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | P3       | RW     | 560963485 | byHCPayment_Number |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P3       | RW     | 410797853 | byHCPayment_Number | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
 
-  @CSR_PDFAlreadyExist_ConsolPayNumber
+  @CSR_PDFDoesnotExist_ConsolPayNumberleft
   Scenario Outline: Validation of ppra scenario where PDf Already exist with Payment number search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
@@ -135,12 +135,12 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | P3       | RW     | 560963485 | byHCPayment_Number |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P3       | RW     | 410797853 | byHCPayment_Number | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
 
-  @CSR_PDFDoesnotExist_NPI
+  @CSR_PDFDoesnotExist_ConsolPayNumberleft
   Scenario Outline: Validation of ppra scenario where PDf does not exist with NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+     Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Date>" and todate "<Date>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -164,7 +164,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | P3       | RW     | 560963485 | byHCDOPAndNpi |           1411761291 |      1411761291 | Present    | C      | 06.24.2019 | 1154384568 | 02/15/2019 |
       | P3       | RW     | 410797853 | byHCDOPAndNpi | 1SG05439988          |      1439039989 | Present    | C      | 06.24.2019 | 1215048913 | 06/24/2019 |
 
-  @CSR_PDFAlreadyExist_NPI
+  @CSR_PDFDoesnotExist_ConsolPayNumberleft
   Scenario Outline: Validation of ppra scenario where PDf Already exist with NPI search
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
