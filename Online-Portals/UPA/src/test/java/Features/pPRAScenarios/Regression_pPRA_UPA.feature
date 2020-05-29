@@ -121,14 +121,14 @@ Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist 
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" with value "<Disp_Consol_Pay_Nmbr>" and click on search button.
+    Then User selects "<Type>" with value "<DSPL_CONSL_PAY_NBR>" and click on search button.
     Then User clicks on PDF Link
     #Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then Validate PDF file placed over NAS Drive for date "<Date_NAS>"
 
     Examples: 
-      | Priority | User     | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
+      | Priority | User     | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
       | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCPayment_Number | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
       | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
@@ -223,7 +223,7 @@ Scenario Outline: Provider-Validation of ppra scenario where PDf does not exist 
     Then User Delete PDf file placed over NAS drive  for date "<Date_NAS>"
     
       Examples: 
-      | Priority | User     | Tin       | CONSL_PAY_NBR | DSPL_CONSL_PAY_NBR | Type          | NPI        | Dates      | Date_NAS   |
+      | Priority | User     | Tin       | CONSL_PAY_NBR | Disp_Consol_Pay_Nmbr | Type          | NPI        | Dates      | Date_NAS   |
       | P1       | PROVPPRA | 270923713 |    1362310252 |         1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 |
       | P1       | PROVPPRA | 571004971 |    1439046523 | 1SG05444672        | byHCDOPAndNpi | 1083787006 | 06/24/2019 | 06.24.2019 |
       | P2       | PROVPPRA | 311369596 |    1413435888 |         1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 |
