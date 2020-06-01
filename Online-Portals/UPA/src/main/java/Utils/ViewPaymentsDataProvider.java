@@ -1022,7 +1022,7 @@ case "EPRA":
 		
 		else if(userType.equals("Payer"))
 		{ 
-			Log.Comment("User Type is Payer");
+			sqlRowNo=242;
 		}
 		
 		testConfig.putRunTimeProperty("tin", tin);
