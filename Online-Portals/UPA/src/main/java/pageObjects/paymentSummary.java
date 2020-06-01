@@ -755,7 +755,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary verifyEpraClaimCntAndPrioritySrch()
 	{
 
-		String paymentNumDB = System.getProperty("payNum");
+		String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
 		int sqlRowNo=206;
 		testConfig.putRunTimeProperty("paymentNumDB",paymentNumDB);
 		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
@@ -773,7 +773,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 public paymentSummary verifyEpraStatusSrchRemit(String expectedStatus) 
 {
        Browser.browserRefresh(testConfig);
-       String paymentNumDB = System.getProperty("payNum");
+       String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
 		int sqlRowNo=206;
 		testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
 		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
