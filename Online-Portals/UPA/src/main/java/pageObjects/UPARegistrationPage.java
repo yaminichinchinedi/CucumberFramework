@@ -57,12 +57,10 @@ public class UPARegistrationPage extends TestBase{
 		testConfig.tearUp();
 		Browser.dismissAlert(testConfig);
 		System.setProperty("testSuite", "UPA_Regression");
-		if (System.getProperty("env") == null) {
-				testConfig.urlHeper(runtimeProperties.getProperty("env"));		}
+		if (System.getProperty("env") == null)
+				testConfig.urlHelper(runtimeProperties.getProperty("env"));
 		else
-		{
-			testConfig.urlHeper(System.getProperty("env"));
-		}
+			testConfig.urlHelper(System.getProperty("env"));
 		
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));

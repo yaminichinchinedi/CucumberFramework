@@ -115,22 +115,23 @@ public class TestBase {
 
 		// Getting Jenkins Parameter
 
-		if (System.getProperty("env") == null) {
-			urlHeper(runtimeProperties.getProperty(("Env")));
+		if (System.getProperty("env") == null) 
+			urlHelper(runtimeProperties.getProperty(("Env")));
 
-		}
+		else if (System.getProperty("env").equals("Stage2"))
+			urlHelper("Stage2");
 
-		else if (System.getProperty("env").equals("Stage2")) {
-			urlHeper("Stage2");
-		}
-
-		else if (System.getProperty("env").equals("Stage")) {
-			urlHeper("Stage");
-		}
-
-		else if (System.getProperty("env").equals("IMPL")) {
-			urlHeper("IMPL");
-		}
+		else if (System.getProperty("env").equals("Stage")) 
+			urlHelper("Stage");
+		
+		else if (System.getProperty("env").equals("IMPL")) 
+			urlHelper("IMPL");
+		
+		else if (System.getProperty("env").equals("Test1")) 
+			urlHelper("Test1");
+		else if (System.getProperty("env").equals("Test2"))
+			urlHelper("Test2");
+		
 
 		// testConfig=this;
 	}
@@ -144,21 +145,16 @@ public class TestBase {
 		return testConfig;
 	}
 
-	public void urlHeper(String env) {
+	public void urlHelper(String env) {
 
 		System.setProperty("Database", env);
-		System.setProperty("UserActiveURL", runtimeProperties.getProperty("UPAURLActive_" + env));
 		System.setProperty("env", env);
-		LogTemp.Comment("testSuite " + System.getProperty("testSuite"));
 		LogTemp.Comment("BrowserType " + System.getProperty("BrowserType"));
 		LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
 
 		if (System.getProperty("testSuite") == null) {
-
 			System.setProperty("URL",
 					runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") + "URL_" + env));
-
-			LogTemp.Comment("Running test Suite for: " + runtimeProperties.getProperty("testSuite"));
 
 		} else if (System.getProperty("testSuite").equals("UPA_Regression")) {
 
