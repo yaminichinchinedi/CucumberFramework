@@ -1,17 +1,17 @@
 package main.java.stepDefinitions.SearchRemittance;
 
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import main.java.Utils.sFTPAccess;
+import main.java.Utils.SFTPAccess;
 import main.java.nativeFunctions.Browser;
-import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchRemittance;
+import main.java.reporting.Log;
 
 public class SearchRemittanceSteps extends TestBase{
 	
 	private TestBase testConfig=TestBase.getInstance();
 	SearchRemittance srchRemittance = new SearchRemittance(testConfig);
+	String NASLocation=System.getProperty("NASLocation_"+System.getProperty("env"));
 	
 	@Then("^User validates EPRA pdf link is present and clicks on EPRA when \"([^\"]*)\" and validate a new window is open with appropriate Text and Hover msg is displayed\\.$")
 	public void user_validates_EPRA_pdf_link_is_present_and_clicks_on_EPRA_when_and_validate_a_new_window_is_open_with_appropriate_Text_and_Hover_msg_is_displayed(String srchCriteria) throws Throwable {
@@ -165,39 +165,31 @@ public class SearchRemittanceSteps extends TestBase{
 }
 	@Then("^Validate PDF file placed over NAS Drive for date \"([^\"]*)\"$")
 	public void validate_PDF_file_placed_over_NAS_Drive_for_date(String Date) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
 	  
-	    sFTPAccess obj_FTPaccess = new sFTPAccess();		
 		//Connecting to sFTP location
+	    SFTPAccess obj_FTPaccess = new SFTPAccess();		
 		obj_FTPaccess.connect();		
+		
 		//Calling isFileAvailable function to validate file presence
 		System.getProperty("Tin").substring(0,2);
 		srchRemittance.getPDFfileName();
-		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
-		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
-		{
-			System.out.print("*File Available*");
-		}
+		Log.Pass("File name is : "+ System.getProperty("PDFFileName"));
+		if(obj_FTPaccess.IsFileAvailable(NASLocation+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
+			Log.Pass("File is Available");
+		
 		//Closing sFTP connection
 		obj_FTPaccess.Closeconnection();		
 	}
 	
 	@Then("^User Delete PDf file placed over NAS drive  for date \"([^\"]*)\"$")
 	public void user_Delete_PDf_file_placed_over_NAS_drive_for_date(String Date) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
 		
-		sFTPAccess obj_FTPaccess = new sFTPAccess();		
-		//Connecting to sFTP location
+		SFTPAccess obj_FTPaccess = new SFTPAccess();		
 		obj_FTPaccess.connect();		
-		//Calling isFileAvailable function to validate file presence
-	
 		//srchRemittance.getPDFfileName();
-		System.out.print("----File name using get property-->"+System.getProperty("PDFFileName"));
-		
-		if(obj_FTPaccess.IsFileAvailable("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
-		{
-			obj_FTPaccess.DeleteFile_FileNameAppended("/home/ppsstg/stg/meob/regular/"+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"/"+System.getProperty("PDFFileName"));
-		}
+		Log.Pass("File name using get property  is "+System.getProperty("PDFFileName"));
+		if(obj_FTPaccess.IsFileAvailable(NASLocation+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"",System.getProperty("PDFFileName")))
+			obj_FTPaccess.DeleteFile_FileNameAppended(NASLocation+System.getProperty("Tin").substring(0,2)+"/"+System.getProperty("Tin")+"/"+Date+"/"+System.getProperty("PDFFileName"));
 		//Closing sFTP connection
 		obj_FTPaccess.Closeconnection();				
 		

@@ -14,13 +14,15 @@ import com.jcraft.jsch.SftpException;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class sFTPAccess extends TestBase{
+public class SFTPAccess extends TestBase{
+	
+	String env=System.getProperty("env");
 	
 	private TestBase testConfig = TestBase.getInstance();	
-	String SFTPHOST = testConfig.runtimeProperties.getProperty("SFTPHOST");
-    int SFTPPORT = Integer.parseInt(testConfig.runtimeProperties.getProperty("SFTPPORT"));
-    String SFTPUSER = testConfig.runtimeProperties.getProperty("SFTPUSER");
-    String SFTPPASS = testConfig.runtimeProperties.getProperty("SFTPPASS");
+	String SFTPHOST = testConfig.runtimeProperties.getProperty("SFTPHOST_"+env);
+    int SFTPPORT = Integer.parseInt(testConfig.runtimeProperties.getProperty("SFTPPORT_"+env));
+    String SFTPUSER = testConfig.runtimeProperties.getProperty("SFTPUSER_"+env);
+    String SFTPPASS = testConfig.runtimeProperties.getProperty("SFTPPASS_"+env);
     Session session = null;
     Channel channel = null;
     ChannelSftp channelSftp = null;
@@ -61,11 +63,11 @@ public class sFTPAccess extends TestBase{
 	{
 		
 		boolean fileexist = false;
-		System.out.println("preparing the host information for NAS Drive.");	    
-        System.out.println("Host connected.");
+		Log.Comment("preparing the host information for NAS Drive.");	    
+		Log.Comment("Host connected.");
         channel = session.openChannel("sftp");
         channel.connect();
-        System.out.println("sftp channel opened and connected.");
+        Log.Comment("sftp channel opened and connected.");
         channelSftp = (ChannelSftp) channel;  
 		channelSftp.cd(path);    
 		
@@ -73,11 +75,9 @@ public class sFTPAccess extends TestBase{
          for(int i=0; i<filelist.size();i++){
         	 
              LsEntry entry = (LsEntry) filelist.get(i);
-             System.out.println("*NAS drive file Name:" +entry.getFilename());
-             System.out.println(FileName);
+             Log.Comment("*NAS drive file Name:" +entry.getFilename());
              if(FileName.trim().equalsIgnoreCase(entry.getFilename().trim()))
              {
-                 System.out.println(entry.getFilename());
             	 fileexist =  true;
             	 break;
              }
@@ -101,7 +101,6 @@ public class sFTPAccess extends TestBase{
 	//Deletion of a file
 	public void DeleteFile(String path, String FileName) throws SftpException
 	{
-		System.out.println("sftp Channel exited------>"+FileName.trim());
 		channelSftp.rm(FileName.trim());		  
 	}
 	
@@ -109,18 +108,16 @@ public class sFTPAccess extends TestBase{
 	//Deletion of a file, with file name appended in string
 	public void DeleteFile_FileNameAppended(String FileName) throws SftpException
 	{
-			System.out.println("sftp Channel exited------>"+FileName);
 			channelSftp.rm(FileName);		  
 	}
+	
 	//Closing a connection
 	public void Closeconnection()
 	{
 		 channelSftp.exit();
-	     System.out.println("sftp Channel exited.");
 	     channel.disconnect();
-	     System.out.println("Channel disconnected.");
 	     session.disconnect();
-	     System.out.println("Host Session disconnected.");
+	     Log.Comment("Host Session disconnected.");
 	}
 	
 
