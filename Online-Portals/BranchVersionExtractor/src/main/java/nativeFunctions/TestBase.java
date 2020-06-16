@@ -117,10 +117,10 @@ public class TestBase {
 	
 	public void urlHelper(String env) {
 		System.out.println("Env from jenkins is " + System.getProperty("env"));
-		if (System.getProperty("env") == null) 
+		if (System.getProperty("env") == null ||System.getProperty("env").equalsIgnoreCase("$Env")) 
 			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("Env")+"_VersionURL"));
 		else
-			System.setProperty("URL",System.getProperty(System.getProperty(env)+"_VersionURL"));
+			System.setProperty("URL",runtimeProperties.getProperty(System.getProperty("env")+"_VersionURL"));
 		
 		
 		
