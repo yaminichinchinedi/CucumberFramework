@@ -37,10 +37,10 @@ public class VersionPage {
 	
 	public void verifyDevAndQABranchVersionIsSame()
 	{
-		if(getDevDeployedBranchVersion().equalsIgnoreCase(System.getProperty("QABranchVersion")))
+		if(getDevDeployedBranchVersion().equalsIgnoreCase(System.getProperty("automationBranch")))
 				Log.Pass(" Dev & QA Branch version matches");
 				else
-					Log.Fail("Mismatch between Dev and QA branch , Dev branch is :" +getDevDeployedBranchVersion() + "\n" +  "QA branch is" + System.getProperty("QABranchVersion"));
+					Log.Fail("Mismatch between Dev and QA branch , Dev branch is :" +getDevDeployedBranchVersion() + "\n" +  "Automation branch is" + System.getProperty("automationBranch"));
 	}
 }
 
