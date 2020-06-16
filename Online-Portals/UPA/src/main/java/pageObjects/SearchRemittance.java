@@ -37,7 +37,7 @@ import com.jcraft.jsch.SftpException;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
-import main.java.Utils.sFTPAccess;
+import main.java.Utils.SFTPAccess;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
@@ -1523,7 +1523,7 @@ public class SearchRemittance extends paymentSummary {
 	public SearchRemittance verifyfileinNASDrive() throws SftpException, JSchException
 	{
 		
-		sFTPAccess obj_FTPaccess = new sFTPAccess();	
+		SFTPAccess obj_FTPaccess = new SFTPAccess();	
 		//Connecting to sFTP location
 		obj_FTPaccess.connect();	
 		//Calling isFileAvailable function to validate file presence
