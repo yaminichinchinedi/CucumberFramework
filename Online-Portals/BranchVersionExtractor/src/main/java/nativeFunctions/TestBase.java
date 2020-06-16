@@ -116,11 +116,11 @@ public class TestBase {
 
 	
 	public void urlHelper(String env) {
-		
+		System.out.println("Env from jenkins is " + System.getProperty("env"));
 		if (System.getProperty("env") == null) 
 			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("Env")+"_VersionURL"));
 		else
-			System.setProperty("URL",System.getProperty(env)+"_VersionURL");
+			System.setProperty("URL",System.getProperty(System.getProperty(env)+"_VersionURL"));
 		
 		
 		
@@ -264,40 +264,4 @@ public class TestBase {
 	}
 
 	
-	/*private static WebDriver initFirefoxDriver() {
-
-	LogTemp.Comment("Launching Firefox browser..");
-	System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
-
-	FirefoxProfile profile = new FirefoxProfile();
-
-	profile.setPreference("browser.download.dir", System.getProperty("user.dir") + "\\Downloads");
-
-	profile.setPreference("browser.download.folderList", 2);
-
-	// Set Preference to not show file download confirmation dialogue using
-	// MIME types Of different file extension types.
-
-	profile.setPreference("browser.download.manager.showWhenStarting", false);
-
-	profile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/pdf");
-	// needed for pdf download
-	profile.setPreference("pdfjs.disabled", true);
-	profile.setPreference("browser.download.useDownloadDir", "false");
-
-	profile.setPreference("browser.helperApps.alwaysAsk.force", false);
-
-	// profile.setPreference("plugin.scan.Acrobat", "999.0");
-	// profile.setPreference("plugin.scan.plid.all", false);
-
-	DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-	capabilities.setCapability("firefox_binary", "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-	capabilities.setCapability("marionette", true);
-	capabilities.setCapability(FirefoxDriver.PROFILE, profile);
-
-	WebDriver driver = new FirefoxDriver(capabilities);
-	driver.manage().window().maximize();
-	return driver;
-}
-*/
 }
