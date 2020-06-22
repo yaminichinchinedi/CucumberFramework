@@ -86,22 +86,24 @@ import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
 
 
 @CucumberOptions(
         features = "src/test/java/Features",
         glue = {"main/java/stepDefinitions"},
         monochrome=true,
-        plugin = { "pretty",
-                
-                "html:target/cucumber-reports/cucumber-pretty",
-                "json:target/cucumber-reports/CucumberTestReport.json",
-                "rerun:target/cucumber-reports/rerun.txt"
-        },
+        plugin = { 
+//                
+//                "html:target/cucumber-reports/cucumber-pretty",
+//                "json:target/cucumber-reports/CucumberTestReport.json",
+//                "rerun:target/cucumber-reports/rerun.txt"
+//       
+        
+        
+        "com.cucumber.listener.ExtentCucumberFormatter:"+ "C:/CucumberEditEnrollment/CucumberFramework/Online-Portals/UPA/ExtentReports/ExtentReportResults.html"},
         dryRun=false,
         strict=true,
-        tags={"@UPASrchRemitEPRAPayer"}
+        tags={"@UPAEditEnr6"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

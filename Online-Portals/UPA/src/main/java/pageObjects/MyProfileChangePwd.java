@@ -5,7 +5,7 @@ import java.util.List;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -136,7 +136,7 @@ public class MyProfileChangePwd extends MyProfile{
     public MyProfileChangePwd verifyPwdGuideLines()
     {
     	List<WebElement> pwdGuideLines=pwdGuide.findElements(By.tagName("li"));
-    	LogTemp.Comment("Verifying password guidelines..");
+    	Log.Comment("Verifying password guidelines..");
     	Element.verifyTextPresent(pwdGuideLines.get(0), "be between 8 and 25 characters");
     	Element.verifyTextPresent(pwdGuideLines.get(1), "include at least one upper-case character, one lower-case character and one number");
     	Element.verifyTextPresent(pwdGuideLines.get(2), "be case-sensitive");
