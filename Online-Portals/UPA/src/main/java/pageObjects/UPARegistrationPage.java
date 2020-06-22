@@ -53,16 +53,15 @@ public class UPARegistrationPage extends TestBase{
 	{
 		
 		this.testConfig=testConfig;
-		System.setProperty("Application", "UPA");
-//		testConfig.tearUp();
-		Browser.dismissAlert(testConfig);
+		PageFactory.initElements(testConfig.driver, this);
 		
+		System.setProperty("Application", "UPA");
+		Browser.dismissAlert(testConfig);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
-		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
-		//Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-		Element.waitForPresenceOfElementLocated(testConfig, By.linkText("SIGN IN WITH OPTUM ID"), 120);
+		Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
+		
 		
 	}
 	

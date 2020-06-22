@@ -355,22 +355,7 @@ case "EPRA":
  			 testConfig.putRunTimeProperty("type","ACH");
  			 sqlRowNo=56;
  			 break;
-// 		case "byElectronicPaymenForCHK":
-//			 testConfig.putRunTimeProperty("type","CHK");
-//			 sqlRowNo=56;
-//			 break;
-// 		case "byDOPAndPatientNmForTricare":
-//			 sqlRowNo=63;
-//			 break;
-//			 
-// 		case "byCheckNoOfReoriginNacha":
-// 			sqlRowNo=98;
-// 			break;
-// 			
-// 		case "byCheckNoOfConslPayDtl":
-// 			sqlRowNo=99;
-// 			break;
-//=======
+
  		case "generalPaymentForTIN":
 			sqlRowNo=51; 
 			break;

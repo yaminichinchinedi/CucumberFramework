@@ -109,8 +109,17 @@ public class TestBase extends ReporterClass {
 		else if (System.getProperty("env").equals("Stage2"))
 			urlHelper("Stage2");
 
-		else if (System.getProperty("env").equals("Stage"))
+		else if (System.getProperty("env").equals("Stage")) 
 			urlHelper("Stage");
+		
+		else if (System.getProperty("env").equals("IMPL")) 
+			urlHelper("IMPL");
+		
+		else if (System.getProperty("env").equals("Test1")) 
+			urlHelper("Test1");
+		
+		else if (System.getProperty("env").equals("Test2"))
+			urlHelper("Test2");
 
 		else if (System.getProperty("env").equals("IMPL"))
 			urlHelper("IMPL");
@@ -122,20 +131,20 @@ public class TestBase extends ReporterClass {
 		return testConfig;
 	}
 
-	public void urlHelper(String env) {
+	public void urlHelper(String env) 
+	{
 		System.setProperty("Database", env);
 		System.setProperty("env", env);
 	
-		if (System.getProperty("tagsToRun") == null) {
+		if (System.getProperty("tagsToRun") == null)
 			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") + "URL_" + env));
-//			Log.Comment("Running test Suite for: " + runtimeProperties.getProperty("testSuite"));
 
-		} else if (System.getProperty("tagsToRun").contains("UPA")) 
+		else if (System.getProperty("tagsToRun").contains("UPA")) 
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_" + env));
 
-		else if (System.getProperty("tagsToRun").equals("CSR_Regression")) {
+		else if (System.getProperty("tagsToRun").equals("CSR"))
 			System.setProperty("URL", runtimeProperties.getProperty("CSRURL_" + env));
-		} 
+		
 		else 
 			System.setProperty("URL", runtimeProperties.getProperty("CSRURL_" + env));
 

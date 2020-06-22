@@ -73,8 +73,6 @@ public class LoginCSR extends TestBase {
 	   System.setProperty("Application", "CSR");
 	   testConfig.tearUp();
 	   Browser.dismissAlert(testConfig);
-	   
-		
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
 	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
        PageFactory.initElements(testConfig.driver, this);
