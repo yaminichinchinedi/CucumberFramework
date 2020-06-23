@@ -97,8 +97,6 @@ public class UPARegistrationPage extends TestBase{
 		lnkHeaderHowtoEnroll=Element.findElement(testConfig, "linkText", "How to Enroll");
 		Element.clickByJS(testConfig,lnkHeaderHowtoEnroll,"How to enroll");
 		Element.click(lnkHeaderHowtoEnroll,"How to enroll");
-		
-//		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL.replace(" " , ""), Browser.getURL(testConfig));
 	}
