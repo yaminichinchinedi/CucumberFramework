@@ -53,21 +53,15 @@ public class UPARegistrationPage extends TestBase{
 	{
 		
 		this.testConfig=testConfig;
-		System.setProperty("Application", "UPA");
-		testConfig.tearUp();
-		Browser.dismissAlert(testConfig);
-		System.setProperty("testSuite", "UPA_Regression");
-		if (System.getProperty("env") == null)
-				testConfig.urlHelper(runtimeProperties.getProperty("env"));
-		else
-			testConfig.urlHelper(System.getProperty("env"));
+		PageFactory.initElements(testConfig.driver, this);
 		
+		System.setProperty("Application", "UPA");
+		Browser.dismissAlert(testConfig);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
-		PageFactory.initElements(testConfig.driver, this);
 		Browser.waitForLoad(testConfig.driver);
-		//Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-		Element.waitForPresenceOfElementLocated(testConfig, By.linkText("SIGN IN WITH OPTUM ID"), 120);
+		Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
+		
 		
 	}
 	
@@ -103,8 +97,6 @@ public class UPARegistrationPage extends TestBase{
 		lnkHeaderHowtoEnroll=Element.findElement(testConfig, "linkText", "How to Enroll");
 		Element.clickByJS(testConfig,lnkHeaderHowtoEnroll,"How to enroll");
 		Element.click(lnkHeaderHowtoEnroll,"How to enroll");
-		
-//		Element.click(testConfig,lnkHeaderHowtoEnroll,"How to enroll",60);
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL.replace(" " , ""), Browser.getURL(testConfig));
 	}

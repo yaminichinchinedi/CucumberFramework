@@ -703,8 +703,8 @@ public class DataBase
 			Log.Comment("Exception occured : " + e);
 		}
 
-		testConfig.connection = con;
-		return testConfig.connection;
+		testConfig.DBConnection = con;
+		return testConfig.DBConnection;
 	}
 	
 	/**
