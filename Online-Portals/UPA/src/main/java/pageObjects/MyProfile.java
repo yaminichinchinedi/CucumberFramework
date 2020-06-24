@@ -12,7 +12,6 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

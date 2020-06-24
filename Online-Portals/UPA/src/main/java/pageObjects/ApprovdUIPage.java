@@ -7,7 +7,6 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -33,7 +32,7 @@ protected TestBase testbase;
 	WebDriver driver;
 	public ApprovdUIPage()
 	{
-		    LogTemp.Comment("Launching Firefox browser..");
+		    Log.Comment("Launching Firefox browser..");
 			System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
 			
 			FirefoxProfile profile = new FirefoxProfile();
