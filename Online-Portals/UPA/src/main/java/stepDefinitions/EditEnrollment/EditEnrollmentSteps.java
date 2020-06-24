@@ -112,6 +112,33 @@ public class EditEnrollmentSteps extends TestBase {
     	editEnrollment.verifyNPILevelInfo();
     }
     
+    @When("^Changes banking data$")
+    public void changes_banking_data() throws Throwable {
+    	editEnrollment=maintainEnrollment.clickEditBtn().clickBankAccountTab().clickChangeBankData().fillDetails().clickContinueBank();
+      
+    }
+
+    @When("^Adds a new bank account at Payer Level$")
+    public void adds_a_new_bank_account_at_Payer_Level() throws Throwable {
+       
+    }
+
+    @Then("^Verify at Payer level Bank Name, Bank Address, and Phone Number are  greyed out\\.$")
+    public void verify_at_Payer_level_Bank_Name_Bank_Address_and_Phone_Number_are_greyed_out() throws Throwable {
+      
+    }
+
+    @Then("^Verify Message ?Financial Institution information will be populated from the Federal Reserve based on the routing number data you provide? is displayed above the Bank Information$")
+    public void verify_Message_Financial_Institution_information_will_be_populated_from_the_Federal_Reserve_based_on_the_routing_number_data_you_provide_is_displayed_above_the_Bank_Information() throws Throwable {
+        
+    }
+
+    @When("^User updates the bank account at payer level$")
+    public void user_updates_the_bank_account_at_payer_level() throws Throwable {
+      
+    }
+
+    
     
     
    
