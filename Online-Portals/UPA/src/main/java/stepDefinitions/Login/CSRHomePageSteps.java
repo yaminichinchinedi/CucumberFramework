@@ -6,11 +6,15 @@ import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.LoginCSR;
+import main.java.pageObjects.ManageUsers;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchTinPage;
 
 public class CSRHomePageSteps extends TestBase{
 	
 	CSRHomePage homePage=null;
+	SearchTinPage searchTinPage;
+	ManageUsers manageUsers;
 
 
 	@Given("^User navigates to CSR portal and enters credentials and login$")
@@ -50,5 +54,33 @@ public class CSRHomePageSteps extends TestBase{
 		public void user_clicks_on_Common_Reports_link() throws Throwable {
 			homePage.clickCommonReportsLink(); 
 		}
+	   
+	   @When("^User clicks on Manage Users link$")
+		public void user_clicks_on_Manage_Users_link() throws Throwable {
+		   searchTinPage=homePage.clickManageUsersLink();
+		}
+	   
+	   
+	   @When("^Search for \"([^\"]*)\" with \"([^\"]*)\"$")
+	   public void search_for_with(String userType, String searchCriteria) throws Throwable {
+		   manageUsers=searchTinPage.doSearch(userType, searchCriteria);
+		}
+	   
+	  @Then("^Verify Purged user option state is \"([^\"]*)\"$")
+	   public void verify_Purged_user_option_state_is(String expectedState) throws Throwable {
+		  manageUsers.verifyPurgedUserOptionState(expectedState);
+		}
+	 
+
+	  @Then("^Verify Users List for \"([^\"]*)\" with \"([^\"]*)\" on selecting and deselecting of purge checkbox$")
+	  public void verify_Users_List_for_with_on_selecting_and_deselecting_of_purge_checkbox(String userType, String searchCriteria) throws Throwable {
+		  manageUsers.verifyUserList(userType,searchCriteria);
+	  }
+	  
+	  @Then("^Verify UI Details for Purged \"([^\"]*)\" user$")
+	  public void verify_UI_Details_for_Purged_user(String userType) throws Throwable {
+		  manageUsers.verifyDetailsForPurgedUser(userType);
+	    
+	  }
 
 }
