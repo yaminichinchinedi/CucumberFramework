@@ -184,6 +184,7 @@ public class TestBase {
 			Execution_Env = runtimeProperties.getProperty("AutomationExecution");
 		 else 
 			Execution_Env = System.getProperty("Executionin");
+		   System.out.println("Execution env is " + Execution_Env);
 		
 		
 		if (Execution_Env.equalsIgnoreCase("Local"))
@@ -266,7 +267,7 @@ public class TestBase {
 		else 
 		
 		{
-			LogTemp.Comment("Execution environment is Saucelab");
+			LogTemp.Comment("Execution environment is Saucelabs");
 			switch (browserType) {
 			case "chrome":
 				driver = SetdriveronSauce(browserType);
@@ -447,7 +448,7 @@ public class TestBase {
 
 
 	public WebDriver SetdriveronSauce(String Browser) {
-		
+		System.out.println("inside sauce labs driver settings");
 		String URL = "http://" + "pchaud19" + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
