@@ -191,6 +191,7 @@ public class TestBase {
 			DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
+			case "Chrome":
 				driver = initChromeDriver();
 				break;			
 			case "IE":
