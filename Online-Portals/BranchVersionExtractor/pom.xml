@@ -1,51 +1,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<properties>
-<tagsToRun>Tags</tagsToRun>
-<!--<suiteFile>${TestSuite}</suiteFile>-->
-</properties>
-
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>MavenChk</groupId>
-	<artifactId>MavenChk</artifactId>
+	<groupId>BranchVerisonExtractor</groupId>
+	<artifactId>BranchVerisonExtractor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	
-	  <repositories>
-    <repository>
-      <id>central</id>
-      <name>Central Repository</name>
-      <url>https://repo.maven.apache.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
- 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <name>Central Repository</name>
-      <url>https://repo.maven.apache.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-	
 	<build>
-		<defaultGoal>install</defaultGoal>
+		<!--<defaultGoal>install</defaultGoal>-->
 		<sourceDirectory>src</sourceDirectory>
 
 
 
 		<plugins>		
+			<!--e<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<fork>true</fork>
+					executable>C:\Java\jdk1.8.0_91\bin\javac</executable
+					<executable>C:\Program Files (x86)\Java\jdk1.8.0_91\bin\javac</executable>
+					</configuration>
+			</plugin>-->
+			
+			
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.3</version>
@@ -53,47 +33,8 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<!--executable>C:\Java\jdk1.8.0_91\bin\javac</executable-->
-					<executable>C:\Program Files (x86)\Java\jdk1.8.0_91\bin\javac</executable>
-					</configuration>
-			</plugin>
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
-				<configuration>
-					<forkCount>0</forkCount>
-					<!--<fork>true</fork>
-					<reuseForks>true</reuseForks>
-					<useSystemClassLoader>false</useSystemClassLoader>-->
-					<systemPropertyVariables>
-						<org.uncommons.reportng.escape-output>false</org.uncommons.reportng.escape-output>
-						<org.uncommons.reportng.title>Automation Test Results</org.uncommons.reportng.title>
-					</systemPropertyVariables>
-					
-					<property>
-							<name>usedefaultlisteners</name>
-							<value>false</value> <!-- disabling default listeners is optional -->
-						</property>
-
-						<!-- Setting ReportNG listeners -->
-						<property>
-							<name>listener</name>
-							<value>org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value>
-						</property>
-						
-						<suiteXmlFiles>
-                    <suiteXmlFile>testing.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-					
 				</configuration>
-			</plugin>
-			
-			
-			
-			
-			
+			</plugin>	
 		</plugins>
 
 

@@ -2,48 +2,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <properties>
 <tagsToRun>Tags</tagsToRun>
-<!--<suiteFile>${TestSuite}</suiteFile>-->
 </properties>
 
-
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>MavenChk</groupId>
-	<artifactId>MavenChk</artifactId>
+	<groupId>UPA</groupId>
+	<artifactId>UPA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	
-	  <repositories>
-    <repository>
-      <id>central</id>
-      <name>Central Repository</name>
-      <url>https://repo.maven.apache.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
- 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <name>Central Repository</name>
-      <url>https://repo.maven.apache.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
-	
 	<build>
-		<defaultGoal>install</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
-
-
 
 		<plugins>		
 			<plugin>
@@ -53,9 +20,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<fork>true</fork>
-					<!--executable>C:\Java\jdk1.8.0_91\bin\javac</executable-->
-					<executable>C:\Program Files (x86)\Java\jdk1.8.0_91\bin\javac</executable>
-					</configuration>
+				</configuration>
 			</plugin>
 			
 			<plugin>
