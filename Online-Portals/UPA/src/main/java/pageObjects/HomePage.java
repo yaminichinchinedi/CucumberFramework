@@ -327,9 +327,9 @@ public class HomePage extends LoginUPA {
 	
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
 	{
-		Element.click(maintainEnrlTab, "Maintain Enrollment Tab");
+		Element.expectedWait(maintainEnrlTab, testConfig, "Maintain Enrollment Tab","Maintain Enrollment Tab");
+		Element.clickByJS(testConfig,maintainEnrlTab, "Maintain Enrollment Tab");
 		return new MaintainEnrollment(testConfig);
-
 	}
 
 	public ManageUsers clickManageUsersTab() 

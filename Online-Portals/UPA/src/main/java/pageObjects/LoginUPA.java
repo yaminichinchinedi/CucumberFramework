@@ -50,30 +50,22 @@ public class LoginUPA {
 	
 	private TestBase testConfig;
 	String id, password;
-
+	String env=System.getProperty("env");
+	
 	public LoginUPA(TestBase testConfig) 
 	{
-		
 		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
-		
-        
+		PageFactory.initElements(testConfig.driver, this); 
 	}
 	
 	
 	public UPAHomePage doLoginUPA(String userType)
 	{
-
+	   setUserProperties(userType);
 	   Element.click(clickUPASignIn, "Click On Sign In UPA");
-	   String env=System.getProperty("env");
-       Browser.wait(testConfig, 5);
-       id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
-       password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
-       testConfig.putRunTimeProperty("id", id);
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-	   Browser.wait(testConfig, 7);
 	   return new UPAHomePage(testConfig); 
 	 }
 	
@@ -86,8 +78,10 @@ public class LoginUPA {
 	}
 	
 	
-	public void setUserProperties()
+	public void setUserProperties(String userType)
 	{
+		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
+		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 	}
@@ -107,16 +101,13 @@ public class LoginUPA {
         Element.click(activateAccount, "Activate your account link on registartion page");
         
         if(!txtboxUserName.isDisplayed())
-        {
         	 Element.click(activateAccount, "Activate your account link on registartion page");
-        }
-    
+        
         Element.expectedWait(txtboxUserName, testConfig, "User Name", "User Name textbox");
 		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
 		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
-		setUserProperties();
-		
+		setUserProperties(userType);
 	    return new SplashPage3(testConfig);
 	}
 	
@@ -131,7 +122,6 @@ public class LoginUPA {
 		Element.enterData(txtboxUserName, id, "Correct Username entered as :"+" " + id, "txtboxUserName");	
 		Element.enterData(txtboxPwd, password, "Invalid Password entered :" + " " + password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
-		
 		verifyLoginErrorMessage();
 		
 	}
@@ -145,22 +135,5 @@ public class LoginUPA {
 	{
 		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
 	}
-	
-	
-	public void UPARegistrationPage(TestBase testConfig) throws IOException
-    {
-
-          //this.testConfig=testConfig;          
-          Browser.dismissAlert(testConfig);
-
-           testConfig.driver.navigate().to(System.getProperty("URL"));
-          Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
-          PageFactory.initElements(testConfig.driver, this);
-          Browser.waitForLoad(testConfig.driver);
-          //Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-    }
-	
-	
-	
 	
 }

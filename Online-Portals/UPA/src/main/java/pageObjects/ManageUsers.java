@@ -32,7 +32,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class ManageUsers extends AddUserDetails  {
 	
@@ -197,7 +197,7 @@ public class ManageUsers extends AddUserDetails  {
 			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		   }
 		catch(Exception e){
-			LogTemp.Comment("Finding user List again");
+			Log.Comment("Finding user List again");
 			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		   }
 	   
@@ -209,7 +209,7 @@ public class ManageUsers extends AddUserDetails  {
 		}
 		catch(Exception e)
 		{
-			LogTemp.Comment("Exception occured : " +  e);
+			Log.Comment("Exception occured : " +  e);
 		}
 		return UsersListUI;			
 	}
@@ -523,7 +523,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	public void verifyManageUserUI()
     {
-		LogTemp.Comment("Verifying Resources Link");
+		Log.Comment("Verifying Resources Link");
     	Element.verifyElementPresent(btnAddUser,"Add user");
     	Element.verifyElementPresent(btnSave,"Save");
     	Element.verifyElementPresent(btnCancel,"Cancel");
@@ -561,7 +561,7 @@ public class ManageUsers extends AddUserDetails  {
 		Helper.compareEquals(testConfig, "Ext is Read only", expectedValue, extension.getAttribute("readonly"));
 			}
 		catch (Exception e) {
-			LogTemp.Comment("Extension is empty");
+			Log.Comment("Extension is empty");
 		}
 		Helper.compareEquals(testConfig, "Email field is Read only", expectedValue, email.getAttribute("readonly"));
 		}
