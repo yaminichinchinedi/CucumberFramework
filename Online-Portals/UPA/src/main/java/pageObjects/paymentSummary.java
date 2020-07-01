@@ -36,7 +36,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -1223,7 +1223,7 @@ public void verifyFailedPaymentPopUp()
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -2171,7 +2171,7 @@ public void verifyFailedPaymentPopUp()
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -2865,7 +2865,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			else if(pageNo%10==0 && totalNoOfPages!=2)
 			{
 				Browser.wait(testConfig,1);
-				LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+				Log.Comment("Page Number is multiple of 10..so clicking Next");
 				Element.click(lnkNextPage,"Next Link");
 				Browser.wait(testConfig,3);
 				pageNo++;

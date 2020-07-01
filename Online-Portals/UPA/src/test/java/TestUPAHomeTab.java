@@ -131,7 +131,7 @@ public class TestUPAHomeTab extends TestBase {
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 	    home.verifyWelcomeScreen().verifyAssociatedTins();
 	    home.selectTin();
-	    home.clickMaintainEnrollmentTab().verifyOrgBankAccountInfo().verifyOrgInfoOfSelectedTin();	 
+	    home.clickMaintainEnrollmentTab().verifyOrgBankAccountInfo(accessType).verifyOrgInfoOfSelectedTin();	 
 	  }
 	
 	

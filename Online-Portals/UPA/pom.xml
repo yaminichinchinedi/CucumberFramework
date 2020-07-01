@@ -2,9 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <properties>
 <tagsToRun>Tags</tagsToRun>
-<!--<suiteFile>${TestSuite}</suiteFile>-->
 </properties>
-
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>UPA</groupId>
@@ -267,12 +265,12 @@
     </dependency>-->
     
     
-    <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports -->
+    <!-- https://mvnrepository.com/artifact/com.aventstack/extentreports 
 <dependency>
     <groupId>com.aventstack</groupId>
     <artifactId>extentreports</artifactId>
     <version>3.0.7</version>
-</dependency>
+</dependency>-->
     
 
 <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -349,6 +347,21 @@
             <version>1.0.5</version>
             <scope>test</scope>
         </dependency>
+        
+       <dependency>
+ <groupId>com.vimalselvam</groupId>
+ <artifactId>cucumber-extentsreport</artifactId>
+ <version>3.0.2</version>
+</dependency>
+
+<dependency>
+ <groupId>com.aventstack</groupId>
+ <artifactId>extentreports</artifactId>
+ <version>3.0.7</version>
+</dependency>
+			
+			
+
 			
         <dependency>
             <groupId>info.cukes</groupId>
@@ -362,7 +375,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-		<!-- https://mvnrepository.com/artifact/net.masterthought/cucumber-reporting -->
+		
 		
 
 	</dependencies>

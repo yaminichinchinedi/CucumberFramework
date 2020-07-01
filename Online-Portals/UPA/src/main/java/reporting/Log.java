@@ -30,24 +30,26 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 
-public  class Log  {
+public  class Log extends ExtentTestManager {
 		
-	static com.aventstack.extentreports.ExtentReports report;
+	 static  ExtentReports report;
 	static ExtentHtmlReporter htmlReporter;
-	static com.aventstack.extentreports.ExtentTest logger;
+	
 	
 	private  static TestBase testConfig;
 	static boolean showInHtmlReport=false;
 	
 	//static boolean testAlreadyFailed=true;
 	
-	public Log(TestBase testConfig,String testCaseName,String desc,String author)
+	public Log(TestBase testConfig)
 	{
 		this.testConfig=testConfig;
-		logger=report.createTest(testCaseName,desc);
-		 logger.assignAuthor(author);
 	}
 	
+	public Log()
+	{
+		
+	}
 
 	public static void startTest(ITestNGMethod  method)
 	{
@@ -55,16 +57,16 @@ public  class Log  {
 	}
 	
 	   
-	public static void setReportingConfig()
+	/*public static void setReportingConfig()
 	{
 		report=new ExtentReports();
 		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html");
 		htmlReporter.config().setReportName("Automation Report");
 		report.attachReporter(htmlReporter);
-	}
+	}*/
 	
 	
-	public static void endTest(ITestResult result)
+	/*public static void endTest(ITestResult result)
 	{
 	    if(result.getStatus() == ITestResult.FAILURE) 
 		  Log.Fail(result);
@@ -73,49 +75,65 @@ public  class Log  {
 	    logger.assignCategory(result.getMethod().getGroups());
 	   
 		report.flush();
-	}
+	}*/
 	
-	public static void Fail(ITestResult result) 
+	public synchronized static void flushReport()
+	 {
+	                report.flush();
+	  }
+
+	
+	public synchronized static void Fail(ITestResult result) 
 	{
 		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
 		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
 
 	}
 	
-	public static void skipped(ITestResult result) 
+	public synchronized static void skipped(ITestResult result) 
 	{
-		logger.skip(result.getThrowable());
+		 ExtentTestManager.getTest().skip(result.getThrowable());
 
 	}
 	
 	
-	public static void Comment(String message,String color)
+	public synchronized static void skipped(String result) 
+	{
+		 ExtentTestManager.getTest().skip(result);
+
+	}
+	
+	
+
+	
+	public  synchronized static void Comment(String message,String color)
 	 {
 			/* syso to display message on
 			 screen by calling printToScreen function */
 			printToScreen(message);
 			
 			//This message will be displayed in HTML reports 
-			logger.info(message);
+			if(ExtentTestManager.getTest()!=null)
+			ExtentTestManager.getTest().info(message);
 				
 	}
 			
 	//Overloaded Comment Method for passing color internally
-	public static void Comment(String message)
+	public synchronized static void Comment(String message)
 	 {
 			//System.setProperty("org.uncommons.reportng.escape-output", "false");
 			Comment(message, "Black");
 	}
 		
 		
-	public static void Fail(String message) 
+	public synchronized static void Fail(String message) 
 		{
 		
 			failure(message);
 
 		}
 		
-    public static void failure(String message)
+    public synchronized static void failure(String message)
 	 {
 			testConfig.putRunTimeProperty("AlreadyFailed","yes");
 			//For displaying in console
@@ -139,61 +157,62 @@ public  class Log  {
 				{
 					try 
 					{
-					  Browser.wait(testConfig, 3);
 					  String dest=captureScreenshot(testConfig);
-					  logger.addScreenCaptureFromPath(dest);
-					  logger.fail(message);
+//					  ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
 					} 
 					catch (IOException e) 
 					{
-						
 						e.printStackTrace();
 					}
 				}
 				else 
 				{
 					Log.Comment("Driver is null in Page info method, so unable to take screenshot", "Red");
+					 ExtentTestManager.getTest().fail(message);
 				}
 			}
 		
 		
-		public static String captureScreenshot(TestBase testConfig) throws IOException
+		public synchronized static String captureScreenshot(TestBase testConfig) throws IOException
 		{
 				File sourceFile = ((TakesScreenshot)testConfig.driver).getScreenshotAs(OutputType.FILE);
 				String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		        
 		        String dest = "\\\\nas00912pn\\Apps\\Work\\Priyanka\\p1058\\ErrorScreenshots\\"+"ScreenShot"+timeStamp+".png";
 		        File destination = new File(dest);
 		        FileUtils.copyFile(sourceFile, destination);              
 		        return dest;
 		}
+		
+	
+	
 				
 
 		
-		private static void printToScreen(String message)
+		private  synchronized static void printToScreen(String message)
 		{
 			System.out.println(message);
 		}
 		
 		
 		
-		public static void Pass(String message)
+		public synchronized static void Pass(String message)
 		{
 			printToScreen(message);
-			logger.pass(message);
+			ExtentTestManager.getTest().pass(message);
+			
 		}
 		
-		
-		public static void Warning(String message, TestBase testConfig)
+
+		public synchronized static void Warning(String message, TestBase testConfig)
 		{  
 			printToScreen(message);
-			logger.warning(message);
+			 ExtentTestManager.getTest().warning(message);
 		}
 		
 		public static void FailWarning(String message, TestBase testConfig)
 		{  
 			printToScreen(message);
-			logger.warning(message);
+			ExtentTestManager.getTest().warning(message);
 			Softfailure(message);
 		}
 
@@ -219,17 +238,17 @@ public  class Log  {
 		
 	}
 	
-	public static void Pass (TestBase testConfig, String what, Object expected, Object actual)
+	public synchronized static void Pass (TestBase testConfig, String what, Object expected, Object actual)
 	{
 		
 		Pass("Passed comparison of"+ " " + what + '\n' +"Expected was :" + " " +  expected + " " + '\n' + "Actual is :" + " " + actual);
 		
 	}
 
-	public void logWarning(String message) {
-		logger.warning(message);	
-		
-	}
+//	public void logWarning(String message) {
+//		logger.warning(message);	
+//		
+//	}
 
 
 	public static void Comment(String message, TestBase testConfig) {
@@ -246,7 +265,7 @@ public  class Log  {
 		}
 		
 		//This message will be displayed in HTML reports 
-		logger.info(message);
+		ExtentTestManager.getTest().info(message);
 		
 	}
 		

@@ -49,7 +49,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class SearchRemittance extends paymentSummary {
 	
@@ -893,7 +893,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -982,7 +982,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -1066,7 +1066,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           pageNo++;
 			     }
