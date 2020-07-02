@@ -82,6 +82,7 @@ public class LoginCSR extends TestBase {
        }
 	   
 	   Log.Pass("CSR Launched Successfully with URL" + System.getProperty("URL"));
+	   Element.fluentWait(testConfig, txtboxUserName, 120, 5, "USername Text box");
        
 	}
 	
@@ -187,13 +188,15 @@ public class LoginCSR extends TestBase {
 	   String env=System.getProperty("env");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
-       testConfig.putRunTimeProperty("id", id);
-	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName"); 
-	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-
-	   return new CSRHomePage(testConfig); 
-
+       testConfig.putRunTimeProperty("id", id);      
+       Browser.wait(testConfig, 3);
+       
+       Element.enterDataByJS(testConfig, txtboxUserName, id, "txtboxUserName");
+       Browser.wait(testConfig, 3);
+       Element.enterDataByJS(testConfig, txtboxPwd, password, "txtboxPwd");
+       Browser.wait(testConfig, 3);
+       Element.clickByJS(testConfig,btnLogin,"click Login button");
+       return new CSRHomePage(testConfig);
 	}
 	
    
