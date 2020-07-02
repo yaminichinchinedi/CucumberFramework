@@ -72,7 +72,7 @@ public class LoginCSR extends TestBase {
 	   this.testConfig=testConfig;
 	   PageFactory.initElements(testConfig.driver, this);
 	   System.setProperty("Application", "CSR");
-	   testConfig.tearUp();
+	   //testConfig.tearUp();
 	   Browser.dismissAlert(testConfig);
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
 	   if(System.getProperty("env").equalsIgnoreCase("IMPL"))
