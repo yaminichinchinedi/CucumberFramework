@@ -161,8 +161,6 @@ public class TestBase extends ReporterClass {
 			Execution_Env = runtimeProperties.getProperty("AutomationExecution");
 		 else 
 			Execution_Env = System.getProperty("Executionin");
-		   System.out.println("Execution env is " + Execution_Env);
-		
 		
 		if (Execution_Env.equalsIgnoreCase("Local"))
 		{
@@ -278,24 +276,18 @@ public class TestBase extends ReporterClass {
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
 
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-
 		chromePrefs.put("download.default_directory", downloadFilepath);
-
 		ChromeOptions options = new ChromeOptions();
-
 		options.setExperimentalOption("prefs", chromePrefs);
 
 		// For handling pop up -Loading of unpacked extensions is disabled by
 		// the administrator
 		options.setExperimentalOption("useAutomationExtension", false);
-
 		options.addArguments("enable-automation");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--dns-prefetch-disable");
 		options.addArguments("--disable-gpu");
-
-		// WebDriver driver = new ChromeDriver(options);
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;

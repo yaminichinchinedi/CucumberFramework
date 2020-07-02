@@ -70,12 +70,19 @@ public class LoginCSR extends TestBase {
 	{
 		
 	   this.testConfig=testConfig;
+	   PageFactory.initElements(testConfig.driver, this);
 	   System.setProperty("Application", "CSR");
 	   testConfig.tearUp();
 	   Browser.dismissAlert(testConfig);
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
-       PageFactory.initElements(testConfig.driver, this);
+	   if(System.getProperty("env").equalsIgnoreCase("IMPL"))
+       {
+         Element.clickByJS(testConfig, testConfig.driver.findElement(By.linkText("More information")), "More Information");
+         Element.clickByJS(testConfig, testConfig.driver.findElement(By.id("overridelink")), "Go on to Web Page -not Recommended");
+       }
+	   
+	   Log.Pass("CSR Launched Successfully with URL" + System.getProperty("URL"));
+       
 	}
 	
 	//Default constructor

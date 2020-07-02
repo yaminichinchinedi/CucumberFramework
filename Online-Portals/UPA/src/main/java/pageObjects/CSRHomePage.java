@@ -96,7 +96,6 @@ public class CSRHomePage {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
-		Browser.wait(testConfig, 7);
 	}
 
 	public SearchTinPage clickManageUsersLink()
