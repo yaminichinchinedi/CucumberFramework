@@ -17,6 +17,7 @@ public class Hooks extends TestBase{
 	{
 //		System.out.print("**Before hooks----->");		
 		setupTestMethod(scn);
+		
 	}
 
 //	@After
@@ -32,11 +33,13 @@ public class Hooks extends TestBase{
 		try {
 	     if(scn.isFailed())
 	      {
-	       scn.write("Browser Type: " + runtimeProperties.getProperty("BrowserType"));
-	       scn.write("Execution Environment: " + System.getProperty("env"));
+	    	 System.out.println("Taking screenshot ");
+//	       scn.write("Browser Type: " + runtimeProperties.getProperty("BrowserType"));
+//	       scn.write("Execution Environment: " + System.getProperty("env"));
 	       final byte[] screenshot = ((TakesScreenshot) testConfig.driver).getScreenshotAs(OutputType.BYTES);	
 	       scn.embed(screenshot, "image/png");	
 	      }
+	     
 	    } 
 		
 		catch (Exception e) 
@@ -44,6 +47,7 @@ public class Hooks extends TestBase{
 	    	Log.Fail("Failed to capture screenshot due to exception : " + e);
 	     }
 
+//		testConfig.tearDown();
 	 endTest(scn);
 }
 }
