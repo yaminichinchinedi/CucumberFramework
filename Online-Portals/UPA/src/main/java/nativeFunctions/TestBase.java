@@ -30,6 +30,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -171,21 +172,23 @@ public class TestBase extends ReporterClass {
 				driver = initChromeDriver();
 				break;			
 			case "IE":
-				caps = DesiredCapabilities.internetExplorer();
-				caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-				caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-				caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-				caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
-				caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-				caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-				//String v = caps.getVersion().toString();
-				caps.setCapability("disable-popup-blocking", true);
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
-				driver = new InternetExplorerDriver(caps);
-				driver.manage().deleteAllCookies();
+				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
+				caps1.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+				caps1.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+				caps1.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
+				caps1.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+				caps1.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+	            caps1.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION,true);
+	            caps1.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+	            caps1.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
+	            caps1.setCapability("disable-popup-blocking", true);
+	            caps1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+	            
+	            System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
+	            driver = new InternetExplorerDriver(caps1);
 				driver.manage().window().maximize();
-//				Log.Comment("Launched " + browserType );
+				
 				break;
 				
 			case "CSRIE_UPAIE":
