@@ -105,7 +105,8 @@ public class CSRHomePage {
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
-    {      Browser.wait(testConfig, 7);
+    {
+    	   Element.fluentWait(testConfig, lnkViewPayments, 200, 3, "View Payments");
            Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
     }

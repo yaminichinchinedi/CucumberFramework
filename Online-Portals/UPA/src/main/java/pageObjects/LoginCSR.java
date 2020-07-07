@@ -61,7 +61,11 @@ public class LoginCSR extends TestBase {
 	@FindBy(xpath="//input[@value='Login']")
 	public WebElement btnLogin;
 			
+	@FindBy(linkText="More information")
+    public WebElement lnkMoreInfo;
 	
+	@FindBy(name="overridelink")
+    public WebElement lnkOverride;
 	
 	private TestBase testConfig;
 	String id, password;
@@ -72,14 +76,18 @@ public class LoginCSR extends TestBase {
 	   this.testConfig=testConfig;
 	   PageFactory.initElements(testConfig.driver, this);
 	   System.setProperty("Application", "CSR");
-//	   testConfig.tearUp();
 	   Browser.dismissAlert(testConfig);
 	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	   if(System.getProperty("env").equalsIgnoreCase("IMPL"))
+	  try {
+	   if(lnkMoreInfo!=null && lnkMoreInfo.isDisplayed())
        {
          Element.clickByJS(testConfig, testConfig.driver.findElement(By.linkText("More information")), "More Information");
          Element.clickByJS(testConfig, testConfig.driver.findElement(By.id("overridelink")), "Go on to Web Page -not Recommended");
        }
+	  }
+	  catch (Exception e) {
+		Log.Comment("Security page didnt appear");
+	}
 	   
 	   Log.Pass("CSR Launched Successfully with URL" + System.getProperty("URL"));
 	   Element.fluentWait(testConfig, txtboxUserName, 120, 5, "USername Text box");

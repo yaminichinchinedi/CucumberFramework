@@ -1,8 +1,7 @@
 #Author: vinit_rohela@optum.com
-@CSRManageUser
-Feature: Create Enrollment - CSR Manage User Functionality
+@CSRManageUsers @CSRRegression
+Feature: CSR Manage User Functionality
 
-@CSRManageUser1
   Scenario Outline: CSR Manage User UI Functionality Add new user
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on Manage User Link
@@ -13,9 +12,10 @@ Feature: Create Enrollment - CSR Manage User Functionality
       |      BS         |      Super      |	 Administrator		  |
       |      PAY        |      Super      |	 Administrator		  |
 
+
   Scenario Outline: CSR Manage User UI Functionality Verifies Details
     Given User navigates to CSR portal and enters "<credentials>" and login
-    When Click on Manage User Link
+    When Click on CSRManage User Link
     Then validate User enters "<userType>" to verify acive admin, access level, email check, remove tin "<disabledValue>" and modify email "<email>" and "<firstName>" firstName
     Examples:
       |    userType     |   credentials   |		disabledValue		|   email   |   firstName   |
@@ -28,14 +28,6 @@ Feature: Create Enrollment - CSR Manage User Functionality
     Examples:
       |    userType     |   credentials   |		disabledValue		|
       |      PROV       |      Super      |		disabled			|
-
-#Scenario Outline: CSR Manage User UI Functionality Verifies Details
-     #Given User navigates to CSR portal and enters "<credentials>" and login
-     #When Click on Manage User Link
-     #Then User enters "<userType>" in Manage Users Page and Verifies if a tin has more than one active admin , access level dropdown, email check box & remove tin/npi checkbox "<disabledValue>" is enabled
-     #Examples:
-        #|    userType     |   credentials   |		disabledValue		|
-        #|      PROV       |      Super      |		false				    |
 
   Scenario Outline: CSR Manage User UI Functionality Verifies Details
     Given User navigates to CSR portal and enters "<credentials>" and login
