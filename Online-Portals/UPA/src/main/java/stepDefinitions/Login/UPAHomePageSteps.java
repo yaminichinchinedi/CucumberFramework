@@ -60,7 +60,7 @@ public class UPAHomePageSteps extends TestBase{
    @Then("^Select the TIN for \"([^\"]*)\" UPA Portal$")
 	public void select_the_TIN_for_UPA_Portal(String userType) throws Throwable {
 		if(userType.equalsIgnoreCase("PROV"))
-			homePage.selectTINforUPA();
+			homePage.selectTin();
 	}
 
 	@When("^Click on UPA - My Profile Link$")
