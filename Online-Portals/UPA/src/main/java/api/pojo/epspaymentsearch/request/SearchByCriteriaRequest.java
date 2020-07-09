@@ -1,11 +1,17 @@
 package main.java.api.pojo.epspaymentsearch.request;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import main.java.api.pojo.epsClaimsRequest.request.EpsClaimsRequest;
 import main.java.api.pojo.epsPaymentDetailRequest.request.EpsPaymentDetailRequest;
@@ -39,7 +45,7 @@ import main.java.api.pojo.epsPaymentDetailRequest.request.EpsPaymentDetailReques
 */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SearchByCriteriaRequest", propOrder = {
- "searchCriteria"
+ "searchCriteria",
 })
 @XmlSeeAlso({
     EpsClaimsRequest.class,
@@ -50,6 +56,7 @@ public class SearchByCriteriaRequest {
 
  @XmlElement(name = "SearchCriteria",namespace="http://enterprise.optum.com/schema/cim/common/Service_v1_0", required = true)
  protected SearchCriteria searchCriteria;
+ 
 
  /**
   * Gets the value of the searchCriteria property.
@@ -74,6 +81,7 @@ public class SearchByCriteriaRequest {
  public void setSearchCriteria(SearchCriteria value) {
      this.searchCriteria = value;
  }
+
 
 }
 

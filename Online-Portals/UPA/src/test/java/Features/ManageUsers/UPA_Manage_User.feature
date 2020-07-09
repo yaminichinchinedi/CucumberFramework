@@ -2,8 +2,7 @@
 @UPAManageUsers
 Feature: Create Enrollment - UPA Manage User Functionality
 
-@UPAManageUsers1
-  Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is working correctly on Manage Users Tab
+Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is working correctly on Manage Users Tab
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link

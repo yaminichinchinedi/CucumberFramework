@@ -96,7 +96,6 @@ public class CSRHomePage {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
-		Browser.wait(testConfig, 7);
 	}
 
 	public SearchTinPage clickManageUsersLink()
@@ -106,7 +105,8 @@ public class CSRHomePage {
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
-    {      Browser.wait(testConfig, 7);
+    {
+    	   Element.fluentWait(testConfig, lnkViewPayments, 200, 3, "View Payments");
            Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
     }
