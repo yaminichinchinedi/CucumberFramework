@@ -8,9 +8,11 @@
 	<groupId>UPA</groupId>
 	<artifactId>UPA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
 	<build>
+		<defaultGoal>install</defaultGoal>
 		<sourceDirectory>src</sourceDirectory>
+
+
 
 		<plugins>		
 			<plugin>
@@ -54,10 +56,7 @@
 					
 				</configuration>
 			</plugin>
-			
-			
-			
-			
+		
 			
 		</plugins>
 
