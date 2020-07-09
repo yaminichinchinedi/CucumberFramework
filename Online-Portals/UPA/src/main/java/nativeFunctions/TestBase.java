@@ -163,7 +163,6 @@ public class TestBase extends ReporterClass {
 		 else 
 			Execution_Env = System.getProperty("Executionin");
 		
-		
 		if (Execution_Env.equalsIgnoreCase("Local"))
 		{
 			DesiredCapabilities caps ;
@@ -280,24 +279,18 @@ public class TestBase extends ReporterClass {
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
 
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-
 		chromePrefs.put("download.default_directory", downloadFilepath);
-
 		ChromeOptions options = new ChromeOptions();
-
 		options.setExperimentalOption("prefs", chromePrefs);
 
 		// For handling pop up -Loading of unpacked extensions is disabled by
 		// the administrator
 		options.setExperimentalOption("useAutomationExtension", false);
-
 		options.addArguments("enable-automation");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--dns-prefetch-disable");
 		options.addArguments("--disable-gpu");
-
-		// WebDriver driver = new ChromeDriver(options);
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
@@ -436,7 +429,6 @@ public class TestBase extends ReporterClass {
 
 
 	public WebDriver SetdriveronSauce(String Browser) {
-		
 		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();

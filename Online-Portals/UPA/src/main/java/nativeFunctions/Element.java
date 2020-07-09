@@ -761,9 +761,7 @@ public static boolean waitForElementTobeClickAble(TestBase testConfig,WebElement
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)
 {
 	try{
-		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver)
-	
-	.withTimeout(timeOut, TimeUnit.SECONDS) 			
+		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
     .pollingEvery(pollingTime, TimeUnit.SECONDS) 			
 	.ignoring(NoSuchElementException.class);
 	wait.until(ExpectedConditions.visibilityOf(element));

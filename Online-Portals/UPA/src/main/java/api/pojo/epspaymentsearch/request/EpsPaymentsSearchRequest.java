@@ -25,7 +25,8 @@ import main.java.api.pojo.epspaymentsearch.request.PaymentMadeOnDateRange;
     "subPayerId",
     "paymentMadeOnDateRange",
     "claimServiceDateRange",
-    "epsSecondaryPayerReferenceIdentifiers"
+    "epsSecondaryPayerReferenceIdentifiers",
+    "EPSNationalProviderIdentifiers"
 })
 
 public class EpsPaymentsSearchRequest
@@ -53,7 +54,11 @@ public class EpsPaymentsSearchRequest
     
     @XmlElement(name = "EpsSecondaryPayerReferenceIdentifiers", namespace = "http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
-    protected List<String> epsSecondaryPayerReferenceIdentifiers;
+    protected String epsSecondaryPayerReferenceIdentifiers;
+    
+    @XmlElement(name = "EPSNationalProviderIdentifiers", namespace = "http://enterprise.optum.com/schema/cim/common/Identifier_v1_0", required = true)
+    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
+    protected String EPSNationalProviderIdentifiers;
 
     /**
      * Gets the value of the serviceData property.
@@ -200,12 +205,39 @@ public class EpsPaymentsSearchRequest
     }
 
  
-    public List<String> getEpsSecondaryPayerReferenceIdentifiers() {
+   /* public List<String> getEpsSecondaryPayerReferenceIdentifiers() {
         if (epsSecondaryPayerReferenceIdentifiers == null) {
             epsSecondaryPayerReferenceIdentifiers = new ArrayList<String>();
         }
         return this.epsSecondaryPayerReferenceIdentifiers;
     }
+    
+    public String getEpsSecondaryPayerReferenceIdentifiers() {
+      
+        return this.epsSecondaryPayerReferenceIdentifiers;
+    }
+    */
+    
+    public String getEpsSecondaryPayerReferenceIdentifiers() {
+        
+        return epsSecondaryPayerReferenceIdentifiers;
+    }
+    
+    public String getEPSNationalProviderIdentifiers ()
+    {
+        return EPSNationalProviderIdentifiers;
+    }
 
+    public void setEPSNationalProviderIdentifiers (String EPSNationalProviderIdentifiers)
+    {
+        this.EPSNationalProviderIdentifiers = EPSNationalProviderIdentifiers;
+    }
+
+	public void setEpsSecondaryPayerReferenceIdentifiers(String payerIdentifier) {
+		this.epsSecondaryPayerReferenceIdentifiers= payerIdentifier;
+		
+	}
+
+    
 
 }

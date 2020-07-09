@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns17:EpsPaymentsSearchRequest xmlns="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0" xmlns:ns20="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/Edi835ContentService_v1_0" xmlns:ns21="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0" xmlns:ns10="http://enterprise.optum.com/schema/cim/product/Group_v1_0" xmlns:ns11="http://enterprise.optum.com/schema/cim/provider/Provider_v1_0" xmlns:ns12="http://enterprise.optum.com/schema/cim/common/Payment_v1_0" xmlns:ns13="http://enterprise.optum.com/schema/cim/common/Payee_v1_0" xmlns:ns14="http://enterprise.optum.com/schema/cim/common/Payer_v1_0" xmlns:ns15="http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0" xmlns:ns16="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentDetailService_v1_0" xmlns:ns17="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0" xmlns:ns18="http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentUpdateService_v1_0" xmlns:ns19="http://enterprise.optum.com/schema/cim/common/Service_v1_0" xmlns:ns2="http://enterprise.optum.com/schema/cim/common/Person_v1_0" xmlns:ns3="http://enterprise.optum.com/schema/cim/common/Identifier_v1_0" xmlns:ns4="http://enterprise.optum.com/schema/cim/common/Common_v1_0" xmlns:ns5="http://enterprise.optum.com/schema/cim/common/Code_v1_0" xmlns:ns6="http://enterprise.optum.com/schema/cim/common/Phone_v1_0" xmlns:ns7="http://enterprise.optum.com/schema/cim/common/Contact_v1_0" xmlns:ns8="http://enterprise.optum.com/schema/cim/common/Address_v1_0" xmlns:ns9="http://enterprise.optum.com/schema/cim/member/Member_v1_0">
+    <ns19:SearchCriteria ns19:FromRecord="0" ns19:MaxResult="2001" ns19:SortDirection="DESC" ns19:SortFieldNumber="12">
+    </ns19:SearchCriteria>
+    <ns3:TaxIdentifierNumber>133757370</ns3:TaxIdentifierNumber>
+    <UserRole>PROVIDER</UserRole>
+    <ns4:PaymentMadeOnDateRange>
+<ns4:FromDate>2017-07-18</ns4:FromDate>
+<ns4:ToDate>2017-07-18</ns4:ToDate>
+</ns4:PaymentMadeOnDateRange>
+   <EpsSecondaryPayerReferenceIdentifiers>87726</EpsSecondaryPayerReferenceIdentifiers>
+   <EPSNationalProviderIdentifiers>1538144910</EPSNationalProviderIdentifiers>
+</ns17:EpsPaymentsSearchRequest>
+

@@ -271,26 +271,33 @@ public class SearchRemittanceSearchCriteria {
 		 case "byElectronicPaymentNo":  
 		    {
 
-		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	/*Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
 		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	
 		    	String dspl_consl_pay_nbr = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 		    	System.out.println(dspl_consl_pay_nbr);
 		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
-		    	System.setProperty("paymentNum", dspl_consl_pay_nbr);
-//		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-//		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-//		    	System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-//		    	System.out.println(System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString()));
-//		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
-//		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
-//		    	System.setProperty("paymentNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-//		    	System.setProperty("payNum", dataRequiredForSearch.get("CONSL_PAY_NBR").toString());
-//		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-//		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	System.setProperty("paymentNum", dspl_consl_pay_nbr);*/
+
 		    	
+		    	//Priyanka
+		    	
+                dataRequiredForSearch=dataProvider(criteriaType);
+		    	
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");
+		    	
+		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	break;
+		    	
+		    	
+		    	
 		    }
 		    
 		    case "byCheckNo":
@@ -308,7 +315,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;		    	
 		    }
 		    
-		    case "byDOS":
+		   /* case "byDOS":
 		    {
 		    	String toDateDos = Helper.getCurrentDate("MM/dd/yyyy");
 		    	String fromDateDos = Helper.getDateBeforeOrAfterDays(-30,"MM/dd/yyyy");
@@ -320,13 +327,32 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("toDate", Helper.changeDateFormat(testConfig, toDateDos, "MM/dd/yyyy", "yyyy-MM-dd"));
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");//
 		    	break;		    	
+		    }*/
+		    
+		    case "byDOS":
+		    {
+		    	
+		    	testConfig.putRunTimeProperty("key","MARKET_TYPE");
+		    	testConfig.putRunTimeProperty("value","ALL");
+		    	String fromDateDos =  Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String toDateDos = Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	
+		    	
+		    	//For selecting date into calendar
+		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");//
+		    	break;		    	
 		    }
+		    
+		    
 		    
 		    case "byDOP":
 		    {
-
+		    	sqlRow = 42;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		    	date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 
+		    	
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//		    	
 		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
@@ -338,7 +364,7 @@ public class SearchRemittanceSearchCriteria {
 		    	break;	
 		    }
 		    
-		    case "byDOPAndAccountNo":
+		    /*case "byDOPAndAccountNo":
 		    {
 		    	String pint_acct_nbr = System.getProperty("pint_acct_nbr");
 		    	Element.enterData(accountNo, pint_acct_nbr, "Enter patient account no as : "+pint_acct_nbr, "Account Number");
@@ -370,9 +396,30 @@ public class SearchRemittanceSearchCriteria {
 //		    	testConfig.putRunTimeProperty("value", dataRequiredForSearch.get("PTNT_ACCT_NBR").toString());
 		    	break;
 		    }
+		    */
+		    
+		    //Priyanka
+		    case "byDOPAndAccountNo":
+		    {
+		    	sqlRow = 42;
+		    	String acntNo;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	acntNo=srchData.get("PTNT_ACCT_NBR").toString();
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(accountNo, acntNo, "Enter patient account no as : "+acntNo, "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//
+		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
+		    	testConfig.putRunTimeProperty("value", acntNo);	
+		    	testConfig.putRunTimeProperty("fromDate",date);
+		    	testConfig.putRunTimeProperty("toDate",date);
+		    	
+		    	break;
+		    }
 		    
 		    
-		    case "byDOP&SubscriberID":
+		    /*case "byDOP&SubscriberID":
 		    {
 //		    	sqlRow = 43;
 //		    	System.getProperty("tin");
@@ -410,10 +457,31 @@ public class SearchRemittanceSearchCriteria {
          		
 
 		    	break;
-		    }
+		    }*/
 		    
+		    
+		    case "byDOP&SubscriberID":
+		    {
+		    	sqlRow = 43;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String sbscrId=srchData.get("SBSCR_ID").toString();
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", sbscrId);
+		    	
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
+		    	
+		    	
+		    	break;
+		    }
 
-		    case "byDOPAndNpi":
+		   /* case "byDOPAndNpi":
 		    {
 		    	  String dspl_consl_pay_nbr = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 		    	//System.setProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
@@ -456,9 +524,26 @@ public class SearchRemittanceSearchCriteria {
 		    	}
 		    	
 		    	break;
+		    }*/
+		    
+
+		    case "byDOPAndNpi":
+		    {
+		    	sqlRow = 44;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	String fromDate=Helper.addDays(srchData.get("SETL_DT").toString(), -10);
+		    	
+		    	testConfig.putRunTimeProperty("fromDate",fromDate);
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("NPI", srchData.get("PROV_NPI_NBR").toString());
+		    	Element.clickByJS(testConfig,NPI, "NPItext box");
+		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ srchData.get("PROV_NPI_NBR").toString(), "NPI");
+		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer dropdown");//
+		    	break;
 		    }
 		    
-		    case "byDOPAndClaimNo":
+		    /*case "byDOPAndClaimNo":
 		    {
 //		    	 sqlRow = 45;
 //		    	 System.getProperty("tin");
@@ -495,9 +580,26 @@ public class SearchRemittanceSearchCriteria {
 		    	}
 		    	
 		    	break;		    	
+		    }*/
+		    
+		    case "byDOPAndClaimNo":
+		    {
+		    	sqlRow = 45;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
+		    	testConfig.putRunTimeProperty("value", srchData.get("CLM_NBR").toString());
+				
+		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
+		    	Element.enterData(claimNumber, srchData.get("CLM_NBR").toString(), "Enter claim no as : "+srchData.get("CLM_NBR").toString(), "Claim Number");
+		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
+		    	
+		    	break;		    	
 		    }
 		    
-		    case "byDOPAndPatientNm":
+		    /*case "byDOPAndPatientNm":
 		    {
 //		    	 sqlRow = 46;
 //		    	 System.getProperty("tin");
@@ -536,9 +638,28 @@ public class SearchRemittanceSearchCriteria {
          		
 
 		    	break;		    	
+		    }*/
+		    
+		    case "byDOPAndPatientNm":
+		    {
+		    	sqlRow = 46;
+		    	srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		    	testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
+		    	testConfig.putRunTimeProperty("value", srchData.get("PTNT_FST_NM").toString());
+		    	testConfig.putRunTimeProperty("key1", "PATIENT_LAST_NAME");
+		    	testConfig.putRunTimeProperty("value1", srchData.get("PTNT_LST_NM").toString());
+		    	testConfig.putRunTimeProperty("fromDate",srchData.get("SETL_DT").toString());
+		    	testConfig.putRunTimeProperty("toDate", srchData.get("SETL_DT").toString());
+		    	
+				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");					
+		    	Element.enterData(patientFirstName, srchData.get("PTNT_FST_NM").toString(), "Enter First Name as : "+srchData.get("PTNT_FST_NM").toString(), "First Name");
+		    	Element.enterData(patientLastName, srchData.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+srchData.get("PTNT_LST_NM").toString(), "Last Name");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
+		    	break;		    	
 		    }
 		    
-		    case "byDOPAndZeroPaymentClaims":
+		   /* case "byDOPAndZeroPaymentClaims":
 		    {   
 		    	
 		    	testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
@@ -552,9 +673,43 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
 		    	
 		    	break;		    	
+		    }*/
+		    
+		    case "byDOPAndZeroPaymentClaims":
+		    {   
+		    	
+		    	testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
+		    	testConfig.putRunTimeProperty("value", "Y");
+		    	
+		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	
+		    	break;		    	
 		    }
 		    
-		    case "byDOSAndAcntNo":
+		    
+		    case "byDOPAndMarketType":
+		    {   
+		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.click(testConfig.driver.findElement(By.xpath("//input[@value=" + "'" + testConfig.getRunTimeProperty("value") + "'" + "]")), "Market checkbox :" + testConfig.getRunTimeProperty("value"));
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	break;		    	
+		    }
+		    
+		    case "byDOSAndMarketType":
+		    {   
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.click(testConfig.driver.findElement(By.xpath("//input[@value=" + "'" + testConfig.getRunTimeProperty("value") + "'" + "]")), "Market checkbox :" + testConfig.getRunTimeProperty("value"));
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	break;		    	
+		    }
+		    
+		    /*case "byDOSAndAcntNo":
 		    {
 		    	 sqlRow = 58;
 		    	String dosFrom = null;
@@ -577,9 +732,20 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;
+		    }*/
+		    
+		    case "byDOSAndAcntNo":
+		    {
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	
+		    	Element.enterData(accountNo, testConfig.getRunTimeProperty("value"), "Filling patient account no: "+ testConfig.getRunTimeProperty("value"), "Account Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
 		    }
 		    
-		    case "byDOSAndSubscriberId":
+		    /*case "byDOSAndSubscriberId":
 		    {
 		    	 sqlRow = 157;
 		    	String dosFrom = null;
@@ -608,9 +774,22 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;
+		    }*/
+		    
+		    case "byDOSAndSubscriberId":
+		    {
+
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(subscriberID, testConfig.getRunTimeProperty("value"), "Filling patient subscriber Id: "+testConfig.getRunTimeProperty("value"), "subscriber Id");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
+		    	testConfig.putRunTimeProperty("version", "1.0");
+		    	break;
 		    }
 		    
-		    case "byDOSAndNpi":
+		    /*case "byDOSAndNpi":
 		    {
 		    	 sqlRow = 59;
 		    	String dosFrom = null;
@@ -630,9 +809,23 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;
+		    }*/
+		    
+		    
+		    case "byDOSAndNpi":
+		    {
+		    	
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+				String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+				
+		    	Element.enterData(NPI,testConfig.getRunTimeProperty("NPI"),"Enter NPI No as : "+ testConfig.getRunTimeProperty("NPI"), "NPI");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	
+		    	break;
 		    }
 		    
-		    case "byDOSAndClaimNo":
+		    /*case "byDOSAndClaimNo":
 		    {
 		    	 sqlRow = 60;
 		    	String dosFrom = null;
@@ -655,9 +848,33 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;
+		    }*/
+		    
+		    case "byDOSAndClmNo":
+		    {
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	
+		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
+		    	Element.enterData(claimNumber, testConfig.getRunTimeProperty("value"), "Enter claim no as : "+testConfig.getRunTimeProperty("value"), "Claim Number");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
 		    }
 		    
-		    case "byDOSAndZeroPaymentClaims":
+		    case "byDOSAndPtntNm":
+		    {
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	
+		    	Element.enterData(patientFirstName, testConfig.getRunTimeProperty("value"), "Enter First Name as : "+testConfig.getRunTimeProperty("value"), "First Name");
+		    	Element.enterData(patientLastName, testConfig.getRunTimeProperty("value1"), "Enter Last Name as: "+testConfig.getRunTimeProperty("value1"), "Last Name");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
+		    }
+		    
+		    /*case "byDOSAndZeroPaymentClaims":
 		    {
 		    	 sqlRow = 60;
 		    	String dosFrom = null;
@@ -678,6 +895,16 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;		    	
+		    }*/
+		    
+		    case "byDOSAndZeroPmntClms":
+		    {
+		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
+		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
+		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	break;
 		    }
 		    
 		    case "DD":
@@ -709,7 +936,7 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
 		    	break;
 		    
-		    case "byCheckNoOfConslPayDtl":
+		    /*case "byCheckNoOfConslPayDtl":
 		    	dataRequiredForSearch=dataProvider(criteriaType);
 		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
 		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
@@ -729,9 +956,19 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHECK_NBR").toString());
 		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
 		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;*/
+		    	
+		    case "byCheckNoOfReoriginNacha":
+		    case "byCheckNoOfConslPayDtl":
+		    
+		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
+		    	Element.enterData(checkNumber,testConfig.getRunTimeProperty("value"), "Enter Check No as: " + testConfig.getRunTimeProperty("value"), "payment number");
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
 		    	break;
 		    	
-		    case "byDOPAndRenderingProvider":
+		   /* case "byDOPAndRenderingProvider":
 //		    	 sqlRow = 70;
 //		    	 srchData = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 //		    	String renderingProv=srchData.get("LST_NM").toString(); 
@@ -768,7 +1005,15 @@ public class SearchRemittanceSearchCriteria {
 		    		Element.enterData(endDOPDate, toDate, "Start Date", "Start Date");
 		    	}
 
+	 			break;*/
+	 			
+		    case "byDOPAndRenderingProvider":
+				date=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+		    	Element.enterData(renderingProvName, testConfig.getRunTimeProperty("value"), "Filling Rendering Provider Name: "+testConfig.getRunTimeProperty("value"), "Rendering Prov");
+		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
+		    	Element.selectByVisibleText(drpDwnPayer, "UMR",  "UMR");
 	 			break;
+	 			
 	 			
 			 case "byHCPayment_Number":
 				{
@@ -919,9 +1164,6 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	
-		    	
-		    	
 		    	break;
 		    }
 		    
@@ -1534,7 +1776,7 @@ public class SearchRemittanceSearchCriteria {
            int sqlRowNo=62;
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
-           if(userType=="SUBPAYER")
+           if(userType=="SUBPAYER"||userType.equals("PAY"))
         	   return dataProvider.getTinForPaymentType(paymentType);
            else
            return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
