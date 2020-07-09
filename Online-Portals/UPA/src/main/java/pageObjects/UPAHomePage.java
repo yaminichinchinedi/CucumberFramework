@@ -96,10 +96,11 @@ public class UPAHomePage extends HomePage {
 		Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
 	}
 
-	public SearchTinPage clickManageUsersLink()
+	public ManageUsers clickManageUsersTab()
 	{
+		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
-		return new SearchTinPage(testConfig);
+		return new ManageUsers(testConfig);
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()

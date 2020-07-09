@@ -70,7 +70,7 @@ public class UPAHomePageSteps extends TestBase{
 	
 	@When("^Click on Manage User Link$")
 	public void click_on_Manage_User_Link() throws Throwable {
-		homePage.clickManageUsersLink();
+		homePage.clickManageUsersTab();
 	}
 
 	
