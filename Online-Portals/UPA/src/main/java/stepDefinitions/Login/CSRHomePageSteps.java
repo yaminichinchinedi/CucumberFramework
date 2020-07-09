@@ -50,5 +50,10 @@ public class CSRHomePageSteps extends TestBase{
 		public void user_clicks_on_Common_Reports_link() throws Throwable {
 			homePage.clickCommonReportsLink(); 
 		}
+	   
+	   @When("^Click on CSRManage User Link$")
+		public void click_on_CSRManage_User_Link() throws Throwable {
+			homePage.clickManageUsersLink();
+		}
 
 }

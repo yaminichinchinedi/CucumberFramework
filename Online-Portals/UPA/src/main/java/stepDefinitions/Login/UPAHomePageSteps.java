@@ -56,5 +56,22 @@ public class UPAHomePageSteps extends TestBase{
    public void clicks_on_Maintain_Enrollment_Tab() throws Throwable {
    	homePage.clickMaintainEnrollmentTab();
    }
+   
+   @Then("^Select the TIN for \"([^\"]*)\" UPA Portal$")
+	public void select_the_TIN_for_UPA_Portal(String userType) throws Throwable {
+		if(userType.equalsIgnoreCase("PROV"))
+			homePage.selectTINforUPA();
+	}
+
+	@When("^Click on UPA - My Profile Link$")
+	public void click_on_Upa_My_Profile_Link() throws Throwable {
+		homePage.clickMyProfileTab();
+	}
+	
+	@When("^Click on Manage User Link$")
+	public void click_on_Manage_User_Link() throws Throwable {
+		homePage.clickManageUsersLink();
+	}
+
 	
 }
