@@ -60,39 +60,40 @@ public class LoginCSR extends TestBase {
 	
 	@FindBy(xpath="//input[@value='Login']")
 	public WebElement btnLogin;
-			
-	@FindBy(linkText="More information")
-    public WebElement lnkMoreInfo;
-	
-	@FindBy(name="overridelink")
-    public WebElement lnkOverride;
-	
-	private TestBase testConfig;
-	String id, password;
-
-	public LoginCSR(TestBase testConfig)
-	{
 		
-	   this.testConfig=testConfig;
-	   PageFactory.initElements(testConfig.driver, this);
-	   System.setProperty("Application", "CSR");
-	   Browser.dismissAlert(testConfig);
-	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	  try {
-	   if(lnkMoreInfo!=null && lnkMoreInfo.isDisplayed())
-       {
-         Element.clickByJS(testConfig, testConfig.driver.findElement(By.linkText("More information")), "More Information");
-         Element.clickByJS(testConfig, testConfig.driver.findElement(By.id("overridelink")), "Go on to Web Page -not Recommended");
-       }
-	  }
-	  catch (Exception e) {
-		Log.Comment("Security page didnt appear");
-	}
-	   
-	   Log.Pass("CSR Launched Successfully with URL" + System.getProperty("URL"));
-	   Element.fluentWait(testConfig, txtboxUserName, 120, 5, "USername Text box");
-       
-	}
+	@FindBy(linkText="More information")
+	 public WebElement lnkMoreInformation;
+		
+    @FindBy(id="overridelink")
+	 public WebElement lnkNotRecomended;
+		
+		
+		private TestBase testConfig;
+		String id, password;
+
+		public LoginCSR(TestBase testConfig)
+		{
+			
+			this.testConfig=testConfig;
+			   PageFactory.initElements(testConfig.driver, this);
+			   System.setProperty("Application", "CSR");
+			   Browser.dismissAlert(testConfig);
+			   testConfig.driver.navigate().to(System.getProperty("URL"));
+	       
+	       try{
+	    	   if(lnkMoreInformation!=null && lnkMoreInformation.isDisplayed())
+	           {
+	             Element.clickByJS(testConfig,lnkMoreInformation, "More Information");
+	             Element.fluentWait(testConfig, lnkNotRecomended, 200, 5, "Go on to Web Page -not Recommended");
+	             Browser.wait(testConfig, 3);
+	             Element.clickByJS(testConfig, lnkNotRecomended, "Go on to Web Page -not Recommended");
+	           }
+	       }
+	       catch (Exception e) {
+			Log.Comment("Security page didnt appear");
+		}
+	       Element.fluentWait(testConfig, txtboxUserName, 120, 5, "USername Text box");
+		}
 	
 	//Default constructor
 	public LoginCSR()

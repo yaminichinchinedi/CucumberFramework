@@ -48,6 +48,24 @@ public class LoginUPA {
     @FindBy(linkText="Benefits of EPS")
     WebElement tabBenefitsOfEPS;
 	
+    
+    @FindBy(xpath = "//label[@contains(text(),'favorite color')]")
+	WebElement favColorQuestion;
+
+	@FindBy(id = "challengeQuestionLabelId")
+	WebElement securityQuestion;
+
+	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+	WebElement txtboxSecurityAns;
+
+	@FindBy(name = "rememberMyDevice")
+	WebElement chkBoxRememberDevice;
+
+	@FindBy(id = "authQuesSubmitButton")
+	WebElement btnNext;
+
+	@FindBy(xpath = "//div[@class='authQuestionTitle']")
+	WebElement txtUnrecognizedDevice;
 	private TestBase testConfig;
 	String id, password;
 	String env=System.getProperty("env");
@@ -66,8 +84,92 @@ public class LoginUPA {
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-	   return new UPAHomePage(testConfig); 
-	 }
+	   Browser.wait(testConfig, 3);
+	   WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+	   if(welcomeTxt!=null)
+	   Log.Comment("Security Questions not present");
+	   else
+	    {
+          for(int i=0;i<2;i++)
+           {
+             securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+             if(securityQuestion!=null)
+             { 
+            fillAns();
+               break;
+             }
+           }
+	    }
+     return new UPAHomePage(testConfig);
+   }
+
+	public void fillAns() {
+		
+		if (securityQuestion.getText().contains("color")) 
+			fillColorAns();
+		
+		else if (securityQuestion.getText().contains("sports")) 
+			fillSportsAns();
+
+		else if (securityQuestion.getText().contains("best friend")) 
+			fillBestFriendAns();
+		
+		else if (securityQuestion.getText().contains("father")) 
+			fillFatherAns();
+		
+		else if (securityQuestion.getText().contains("nickname")) 
+			fillNicknameAns();
+		
+		else if (securityQuestion.getText().contains("state of your birth")) 
+			fillStateOfBirthAns();
+
+		else 
+			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
+	
+		if (!chkBoxRememberDevice.isSelected())
+			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+		
+		Element.click(btnNext, "Next to submit answer");
+	}
+
+	
+	private void fillNicknameAns() {
+		 Element.enterData(txtboxSecurityAns, "Ginni","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
+	}
+	
+	private void fillStateOfBirthAns() {
+		 Element.enterData(txtboxSecurityAns, "Faridabad","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
+	}
+
+
+	private void fillFatherAns() {
+		if(id.equals("TestPayerStage"))
+	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
+		else
+			 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+	}
+
+	private void fillBestFriendAns() {
+			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+	}
+
+	private void fillSportsAns() {
+		if(testConfig.getRunTimeProperty("id").equals("PayerAuto"))
+			Element.enterData(txtboxSecurityAns, "tester","Entered 'tester' as Favorite Sports team", "txtboxSecurityAns");
+		else
+		Element.enterData(txtboxSecurityAns, "india","Entered 'india' as Favorite Sports team", "txtboxSecurityAns");
+		
+	}
+
+	public void fillColorAns() {
+		if(id.equals("AVUHCPAYSTG1"))
+			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
+		else
+			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+	} 
+	 
 	
 	
 	
