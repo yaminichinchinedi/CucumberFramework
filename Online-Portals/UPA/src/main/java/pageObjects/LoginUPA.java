@@ -83,7 +83,7 @@ public class LoginUPA {
 	   Element.click(clickUPASignIn, "Click On Sign In UPA");
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.clickByJS(testConfig,btnLogin,"click Login button");
+	   Element.click(btnLogin,"click Login button");
 	   Browser.wait(testConfig, 3);
 	   WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
 	   if(welcomeTxt!=null)
