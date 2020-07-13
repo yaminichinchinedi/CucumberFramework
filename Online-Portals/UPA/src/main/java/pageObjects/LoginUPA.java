@@ -30,6 +30,11 @@ public class LoginUPA {
     @FindBy(xpath="//font[@class='errors']")
 	private WebElement txtErrorMsg;
 	
+    
+    
+    @FindBy(xpath="//span[contains(text(),'The Optum ID or password that you entered is incorrect.')]")
+	WebElement txtErrorMsg1;
+    
     @FindBy(xpath=".//*[@id='signin-tile']/div/p[2]/a")
     public WebElement activateAccount;
     
@@ -84,10 +89,29 @@ public class LoginUPA {
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.click(btnLogin,"click Login button");
-	   Browser.wait(testConfig, 3);
+       Browser.waitForPageLoad(testConfig);
+	   
+	   try{
+	   if(txtErrorMsg1!=null)
+	   {
+	      if(txtErrorMsg1.isDisplayed())
+	     {
+	    	  Log.Comment("Authentication error message displayed..trying again");
+	    	  Browser.wait(testConfig, 3);
+	    	  Element.fluentWait(testConfig, txtboxPwd, 120,5, "txtboxOptumID");
+	    	  Element.enterData(txtboxUserName,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID"); 
+	    	  Element.enterData(txtboxPwd,password, "Entered Optum ID password  as :" + " "+ password, "txtboxPwd");
+	    	  Element.click(btnLogin, "Sign In");
+	     }
+	   }
+	   }
+	   catch(Exception e)
+	   {
+		   Log.Comment("Authentication Error not present");
+	   }
 	   WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
 	   if(welcomeTxt!=null)
-	   Log.Comment("Security Questions not present");
+	   Log.Comment("Security Question not present");
 	   else
 	    {
           for(int i=0;i<2;i++)
