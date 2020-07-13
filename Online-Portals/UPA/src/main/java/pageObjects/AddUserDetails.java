@@ -215,7 +215,14 @@ public class AddUserDetails {
 	}
 	
 	
-	
+	public String selectAndAddTin(int sqlRow)
+	{
+		Map tinNoToBeSelected=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+	    Element.selectByValue(drpDwnSelectTin, tinNoToBeSelected.get("PROV_TIN_NBR").toString(), "select tin as " + tinNoToBeSelected.get("PROV_TIN_NBR").toString());
+		Browser.waitForLoad(testConfig.driver);
+		clickAddTin();
+		return tinNoToBeSelected.get("PROV_TIN_NBR").toString();
+	}
 	
 	
 	public ManageUsers verifyDetailsOfNewUser(String userType)

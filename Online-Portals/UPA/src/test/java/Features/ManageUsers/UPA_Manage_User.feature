@@ -1,17 +1,19 @@
 #Author: vinit_rohela@optum.com
 @UPAManageUsers
-Feature: Create Enrollment - UPA Manage User Functionality
+Feature: UPA Manage User Functionality
 
-Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is working correctly on Manage Users Tab
+@UPAManageUsers1
+Scenario Outline: Verifies user list sorting is working correctly on Manage Users Tab
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the TIN for "<accessType>" UPA Portal
-    When Click on Manage User Link
-    Then Verifies user list sorting is working correctly on Manage Users Tab
+     Then Select the TIN for "<accessType>" UPA Portal
+     When Click on Manage User Link
+     Then Verifies user list sorting is working correctly on Manage Users Tab
     Examples:
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
-
-  Scenario Outline: UPA Manage User UI Functionality Verifies Save & Cancel button functionlity for Access level changes for a Provider User
+      #|      PROV_Gen       |   PROV|
+ 
+  Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -20,7 +22,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies Tin Grid Details in Manage Users Tab
+  Scenario Outline: Verifies Tin Grid Details in Manage Users Tab
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -29,7 +31,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies error messages and associated tins with a user
+  Scenario Outline: Verifies error messages and associated tins with a user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -38,7 +40,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies provider user details are read only on UPA
+  Scenario Outline:Verifies provider user details are read only on UPA
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -47,7 +49,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies details for New Billing Service user
+  Scenario Outline: Verifies details for New Billing Service user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -56,7 +58,16 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      BS_Admin   |   BS      	|		Administrator			|
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies Payer user details are read only on UPA
+  Scenario Outline: Verifies BS user details are read only on UPA
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verifies Payer "<accessType>" user details are read only on UPA
+    Examples:
+      |    userType     |   accessType  |
+      |      BS_Admin   |   BS     	|
+      
+       Scenario Outline: Verifies Payer user details are read only on UPA
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -65,7 +76,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |    userType     |   accessType  |
       |      PAY_Admin  |   PAY     	|
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies details for New Payer user
+  Scenario Outline: Verifies details for New Payer user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -74,7 +85,7 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PAY_Admin  |   PAY     	|		Administrator	    	|
 
-  Scenario Outline: UPA Manage User UI Functionality Verifies details for New Provider user
+  Scenario Outline: Verifies details for New Provider user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -82,3 +93,15 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |
+      
+      
+    @UPAManageUsers2
+    Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verify Save and Cancel func for AccessLvl for "<userType>"
+      Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|
+      |      PROV_Admin |   PROV     	|		Administrator		    |
+      	
