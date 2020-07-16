@@ -25,7 +25,11 @@ import main.java.reporting.Log;
 //For Search Remittance Data 
 public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 		
-	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";	
+//	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";
+	
+	static final String connectionUrl = "http://apsrs3771:8080/api/finance/providers/payments/v1/search";
+	
+	
 	String xmlFilePath=System.getProperty("user.dir") +"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request";
 		
 	public EpsSearchRemittanceRequestHelper(String requestType)
@@ -36,7 +40,8 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	        case "byDOP":
 	        case "byDOP&SubscriberID":
 	        case "byDOPAndAccountNo":
-	        case "byDOPAndNpi":
+	        case "byDOPAndRenderingProvider":
+	        case "byDOPAndMarketType":
 	        case "byDOPAndClaimNo":
 	        case "byDOPAndZeroPaymentClaims":
 	              xmlFilePath=xmlFilePath +"\\DOP.xml";
@@ -44,6 +49,10 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	        case "byDOS":
 	        case "byDOSAndSubscriberId":
 	        case "byDOSAndAcntNo":
+	        case "byDOSAndClmNo":
+	        case "byDOSAndPtntNm":
+	        case "byDOSAndZeroPmntClms":
+	        case "byDOSAndMarketType":
 	               xmlFilePath=xmlFilePath +"\\RequestSearchRemitDOS.xml";
 	               break;
 	        case "byDOPAndPatientNm":
@@ -51,11 +60,17 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	               break;
 	      
 	        case "byElectronicPaymentNo":
-	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
-                  break;
 	        case "byCheckNo":
 	              xmlFilePath=xmlFilePath+"\\DOP&ElectronicPaymentNoRequest.xml";
-                break;
+                  break;
+                  
+	        case "byDOPAndNpi":
+	        	xmlFilePath=xmlFilePath+"\\DOP&NPI.xml";
+	        	break;
+	        	
+	        case "byDOSAndNpi":
+	        	xmlFilePath=xmlFilePath+"\\DOS&NPI.xml";
+	        	break;
 	       
 	        
 	        default:

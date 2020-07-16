@@ -60,23 +60,40 @@ public class LoginCSR extends TestBase {
 	
 	@FindBy(xpath="//input[@value='Login']")
 	public WebElement btnLogin;
-			
-	
-	
-	private TestBase testConfig;
-	String id, password;
-
-	public LoginCSR(TestBase testConfig)
-	{
 		
-	   this.testConfig=testConfig;
-	   System.setProperty("Application", "CSR");
-//	   testConfig.tearUp();
-	   Browser.dismissAlert(testConfig);
-	   testConfig.driver.navigate().to(System.getProperty("URL"));
-	   Log.Comment("Navigated to CSR with URL :" +" " + System.getProperty("URL")) ;
-       PageFactory.initElements(testConfig.driver, this);
-	}
+	@FindBy(linkText="More information")
+	 public WebElement lnkMoreInformation;
+		
+    @FindBy(id="overridelink")
+	 public WebElement lnkNotRecomended;
+		
+		
+		private TestBase testConfig;
+		String id, password;
+
+		public LoginCSR(TestBase testConfig)
+		{
+			
+			this.testConfig=testConfig;
+			   PageFactory.initElements(testConfig.driver, this);
+			   System.setProperty("Application", "CSR");
+			   Browser.dismissAlert(testConfig);
+			   testConfig.driver.navigate().to(System.getProperty("URL"));
+	       
+	       try{
+	    	   if(lnkMoreInformation!=null && lnkMoreInformation.isDisplayed())
+	           {
+	             Element.clickByJS(testConfig,lnkMoreInformation, "More Information");
+	             Element.fluentWait(testConfig, lnkNotRecomended, 200, 5, "Go on to Web Page -not Recommended");
+	             Browser.wait(testConfig, 3);
+	             Element.clickByJS(testConfig, lnkNotRecomended, "Go on to Web Page -not Recommended");
+	           }
+	       }
+	       catch (Exception e) {
+			Log.Comment("Security page didnt appear");
+		}
+	       Element.fluentWait(testConfig, txtboxUserName, 120, 5, "USername Text box");
+		}
 	
 	//Default constructor
 	public LoginCSR()
@@ -180,13 +197,15 @@ public class LoginCSR extends TestBase {
 	   String env=System.getProperty("env");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
-       testConfig.putRunTimeProperty("id", id);
-	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName"); 
-	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-
-	   return new CSRHomePage(testConfig); 
-
+       testConfig.putRunTimeProperty("id", id);      
+       Browser.wait(testConfig, 3);
+       
+       Element.enterDataByJS(testConfig, txtboxUserName, id, "txtboxUserName");
+       Browser.wait(testConfig, 3);
+       Element.enterDataByJS(testConfig, txtboxPwd, password, "txtboxPwd");
+       Browser.wait(testConfig, 3);
+       Element.clickByJS(testConfig,btnLogin,"click Login button");
+       return new CSRHomePage(testConfig);
 	}
 	
    

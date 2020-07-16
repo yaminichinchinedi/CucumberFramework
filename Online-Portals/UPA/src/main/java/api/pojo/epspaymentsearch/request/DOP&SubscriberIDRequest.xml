@@ -19,5 +19,5 @@
 <ns4:FromDate>2017-07-18</ns4:FromDate>
 <ns4:ToDate>2017-07-18</ns4:ToDate>
 </ns4:PaymentMadeOnDateRange>
-<ns2:EpsSecondaryPayerReferenceIdentifiers></ns2:EpsSecondaryPayerReferenceIdentifiers>
+<ns2:EpsSecondaryPayerReferenceIdentifiers>87726</ns2:EpsSecondaryPayerReferenceIdentifiers>
 </EpsPaymentsSearchRequest>

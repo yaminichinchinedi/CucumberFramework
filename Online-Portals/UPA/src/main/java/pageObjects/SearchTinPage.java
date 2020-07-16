@@ -38,7 +38,7 @@ public class SearchTinPage {
 	List <WebElement> btnSearch;
 
 	private TestBase testConfig;
-	SearchTinPage(TestBase testConfig) 
+	public SearchTinPage(TestBase testConfig) 
 	{
 		
 		this.testConfig=testConfig;
@@ -171,11 +171,13 @@ public class SearchTinPage {
 		Map tinDetails=null;
 		int sqlRow;
 		List<String> userAndTinDetails=new ArrayList<String>();
+		Map portalUserDetails=null;
+
 		switch(typeOfTin)
 		{
 		   case "tinWithOneActiveAdmin" :
 		   {
-			  sqlRow=163;
+			  sqlRow=254;
 			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
 			  Log.Comment("Fetched a tin that has only One Active Admin and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
 			  break;
@@ -183,7 +185,7 @@ public class SearchTinPage {
 		   
 		   case "tinWithMoreThanOneActiveAdmin" :
 		   {
-			  sqlRow=164;
+			  sqlRow=256;
 			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
 			  Log.Comment("Fetched a tin that has only 2 Active Admins and it is : "+ tinDetails.get("PROV_TIN_NBR").toString());
 			  break;
@@ -194,8 +196,12 @@ public class SearchTinPage {
 		   
 		}
 		
+		sqlRow=255;
+		testConfig.putRunTimeProperty("tin", tinDetails.get("PROV_TIN_NBR").toString());
+		portalUserDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
 		userAndTinDetails.add(tinDetails.get("PROV_TIN_NBR").toString());
-		userAndTinDetails.add(tinDetails.get("LST_NM").toString().toUpperCase() + "," +" " + tinDetails.get("FST_NM").toString().toUpperCase());
+		userAndTinDetails.add(portalUserDetails.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserDetails.get("FST_NM").toString().toUpperCase());
+
 		return userAndTinDetails;
 	}
 	

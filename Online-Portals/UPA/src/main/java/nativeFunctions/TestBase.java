@@ -30,6 +30,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -162,30 +163,32 @@ public class TestBase extends ReporterClass {
 		 else 
 			Execution_Env = System.getProperty("Executionin");
 		
-		
 		if (Execution_Env.equalsIgnoreCase("Local"))
 		{
 			DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
+			case "Chrome":
 				driver = initChromeDriver();
 				break;			
 			case "IE":
-				caps = DesiredCapabilities.internetExplorer();
-				caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-				caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-				caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-				caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
-				caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-				caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-				//String v = caps.getVersion().toString();
-				caps.setCapability("disable-popup-blocking", true);
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
-				driver = new InternetExplorerDriver(caps);
-				driver.manage().deleteAllCookies();
+				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
+				caps1.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+				caps1.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+				caps1.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
+				caps1.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+				caps1.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+	            caps1.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION,true);
+	            caps1.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+	            caps1.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
+	            caps1.setCapability("disable-popup-blocking", true);
+	            caps1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+	            
+	            System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
+	            driver = new InternetExplorerDriver(caps1);
 				driver.manage().window().maximize();
-//				Log.Comment("Launched " + browserType );
+				
 				break;
 				
 			case "CSRIE_UPAIE":
@@ -276,24 +279,18 @@ public class TestBase extends ReporterClass {
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
 
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-
 		chromePrefs.put("download.default_directory", downloadFilepath);
-
 		ChromeOptions options = new ChromeOptions();
-
 		options.setExperimentalOption("prefs", chromePrefs);
 
 		// For handling pop up -Loading of unpacked extensions is disabled by
 		// the administrator
 		options.setExperimentalOption("useAutomationExtension", false);
-
 		options.addArguments("enable-automation");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--dns-prefetch-disable");
 		options.addArguments("--disable-gpu");
-
-		// WebDriver driver = new ChromeDriver(options);
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
@@ -432,7 +429,6 @@ public class TestBase extends ReporterClass {
 
 
 	public WebDriver SetdriveronSauce(String Browser) {
-		
 		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
