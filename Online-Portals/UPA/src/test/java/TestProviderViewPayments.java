@@ -37,7 +37,7 @@ public class TestProviderViewPayments extends TestBase {
      */
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowAllFilter_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -56,7 +56,7 @@ public class TestProviderViewPayments extends TestBase {
  	 }
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowAllFilter_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -77,7 +77,7 @@ public class TestProviderViewPayments extends TestBase {
  	 }
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowAllFilter_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -98,7 +98,7 @@ public class TestProviderViewPayments extends TestBase {
  	 }
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowAllFilter_4_6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -119,7 +119,7 @@ public class TestProviderViewPayments extends TestBase {
  	 }
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowALLFilter_6_9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -140,7 +140,7 @@ public class TestProviderViewPayments extends TestBase {
  	 }
     
     @TestDetails(author="Priyanka")
-    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments")
+    @Test(priority=1,description="TS006_View Payments_Payments filter_Show All " + "<br>" + "TS002_View Payments_display of TINs latest payments within the last 30 days" + "Validate correct payment information is displayed on selection of 'Show All' from the  filter - Filter Payments",groups="View Payments - Provider")
     void testPaymentsForShowALLFilter_9_13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
  	 {
  	    userType="PROV";
@@ -171,7 +171,7 @@ public class TestProviderViewPayments extends TestBase {
     */
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -193,7 +193,7 @@ public class TestProviderViewPayments extends TestBase {
      }	
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -214,7 +214,7 @@ public class TestProviderViewPayments extends TestBase {
     }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -235,7 +235,7 @@ public class TestProviderViewPayments extends TestBase {
     }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_4_6Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -256,7 +256,7 @@ public class TestProviderViewPayments extends TestBase {
     }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_6_9Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -272,12 +272,11 @@ public class TestProviderViewPayments extends TestBase {
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
  		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		home.selectTin(paymentType);
-        home.clickViewPaymentsTab().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter); 	
+ 		home.selectTin(paymentType).clickViewPaymentsTab().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter); 	
     }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments")
+   @Test(priority=2,description="TS005_View Payments_Payments filter_NPI Only"+ "<br>" + "Validate correct payment information is displayed on selection of 'NPI Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForNPI_9_13Months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
     {
 	    userType="PROV";
@@ -308,7 +307,7 @@ public class TestProviderViewPayments extends TestBase {
     * @throws ParseException
     */
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -328,7 +327,7 @@ public class TestProviderViewPayments extends TestBase {
   }	
    
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -348,7 +347,7 @@ public class TestProviderViewPayments extends TestBase {
    }
 
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -368,7 +367,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_4_6months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -388,7 +387,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_6_9months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -408,7 +407,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments")
+   @Test(priority=3,description="TS004_View Payments_Payments filter_TIN Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'TIN Only' from the  filter - Filter Payments",groups="View Payments - Provider")
    void testPaymentsForTIN_9_13months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -438,14 +437,15 @@ public class TestProviderViewPayments extends TestBase {
     */
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+    @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
+   
    void testPaymentsArchiveOnly_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
 	    accessType="Admin";
 	    
         String filterPayments="Show All";
-        String archiveFilter="Active Only";
+        String archiveFilter="Archived Only"; 
         String quickSearchFilter="Last 30 days";
         String paymentType="archiveOnly30Days";
         testConfig.putRunTimeProperty("key", "ACTIVE_ARCHIVE_PAYMENTS_INDICATOR");
@@ -459,7 +459,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testPaymentsArchiveOnly_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -478,8 +478,10 @@ public class TestProviderViewPayments extends TestBase {
         home.clickViewPaymentsTab().verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
    }  
    
+   
+   
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testPaymentsArchiveOnly_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -499,7 +501,7 @@ public class TestProviderViewPayments extends TestBase {
    } 
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testPaymentsArchiveOnly_4_6months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -519,7 +521,7 @@ public class TestProviderViewPayments extends TestBase {
    } 
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testPaymentsArchiveOnly_6_9months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -540,7 +542,7 @@ public class TestProviderViewPayments extends TestBase {
    } 
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testArchivedPaymentsFilterArchiveOnly_9_13months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -571,7 +573,7 @@ public class TestProviderViewPayments extends TestBase {
     */
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_30days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -591,7 +593,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_60days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -611,7 +613,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_90days() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -632,7 +634,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_4_6months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -653,7 +655,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_6_9months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -673,7 +675,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments")
+   @Test(priority=5,description="TS021_View Payments_Active_Archived Payments filter_Active Only" + "<br>" + "Validate that correct payment information is displayed on selection of 'Active Only' from the  filter - Archived Payments",groups="View Payments - Provider")
    void testActiveOnlyPayments_9_13months() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";
@@ -703,7 +705,7 @@ public class TestProviderViewPayments extends TestBase {
     */
 
    @TestDetails(author="Priyanka")
-   @Test(priority=4,description="TS003_View Payments_chronological order of payments" + "<br>" + "Validate Payment date sorting for both ascending and descending")
+   @Test(priority=4,description="TS003_View Payments_chronological order of payments" + "<br>" + "Validate Payment date sorting for both ascending and descending",groups="View Payments - Provider")
    void testPaymentDateSorting() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {   
 	    userType="PROV";
@@ -720,9 +722,9 @@ public class TestProviderViewPayments extends TestBase {
         paymentSummaryPage.verifyPaymentDateSorting("Asc");    
    }
    
-   
+   	
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS024_View Payments_Remit payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Remit Payments")
+   @Test(priority=5,description="TS024_View Payments_Remit payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Remit Payments",groups="View Payments - Provider")
    void testRemitPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
 	   userType="PROV";
@@ -740,7 +742,7 @@ public class TestProviderViewPayments extends TestBase {
    
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS025_View Payments_Failed payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Failed Payments")
+   @Test(priority=5,description="TS025_View Payments_Failed payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Failed Payments",groups="View Payments - Provider")
    void testFailedPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
 	{
 	   userType="PROV";
@@ -757,7 +759,7 @@ public class TestProviderViewPayments extends TestBase {
    
    
    @TestDetails(author="Avneet")
-   @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments")
+   @Test(priority=5,description="TS014_View Payments_Zero Dollar ACH Payments",groups="View Payments - Provider")
    void testZeroDollarACHPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	   userType="PROV";
@@ -774,7 +776,7 @@ public class TestProviderViewPayments extends TestBase {
    
    
    @TestDetails(author="Avneet")
-   @Test(priority=5,description="TS015_View Payments_Zero Dollar VCP Payments")
+   @Test(priority=5,description="TS015_View Payments_Zero Dollar VCP Payments",groups="View Payments - Provider")
    void testZeroDollarVCPPayments() throws InterruptedException, IOException, JAXBException, SAXException, ParserConfigurationException, ParseException 
    {
 	   userType="PROV";
@@ -790,7 +792,7 @@ public class TestProviderViewPayments extends TestBase {
    }
    
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS012_View Payments_Market Type filter_Medical_Dental etc" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type")
+   @Test(priority=5,description="TS012_View Payments_Market Type filter_Medical_Dental etc" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type",groups="View Payments - Provider")
    void testPaymentsForMktTypeFilter_Medical() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    { 
 	    userType="PROV";
@@ -807,7 +809,7 @@ public class TestProviderViewPayments extends TestBase {
    }
       
    @TestDetails(author="Priyanka")
-   @Test(priority=5,description="TS013_View Payments_Market Type filter_Show All" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-ALL from the  filter - Market Type")
+   @Test(priority=5,description="TS013_View Payments_Market Type filter_Show All" + "<br>" + "Validate that correct payment information is displayed on selection of Market type-ALL from the  filter - Market Type",groups="View Payments - Provider")
    void testPaymentsForMktTypeFilter_ShowALL() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   
    {
 	    userType="PROV";

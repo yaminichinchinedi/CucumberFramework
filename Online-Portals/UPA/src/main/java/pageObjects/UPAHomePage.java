@@ -5,6 +5,8 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,15 +14,23 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 
 public class UPAHomePage {
 	
 	private WebDriver driver;
 	private TestBase testConfig;
+	private ViewPaymentsDataProvider dataProvider;
 	
 	
 	@FindBy(linkText="Manage Users")
 	WebElement lnkManageUsers;
+	
+	@FindBy(id="tabHome")
+	WebElement homeTab;
+
+	@FindBy(id = "taxIndNbrId")
+	WebElement drpDwnTin;
 	
     @FindBy(linkText="View Payments")
     WebElement lnkViewPayments;
@@ -133,6 +143,29 @@ public class UPAHomePage {
         Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance");
 		
 	}
+	
+	public UPAHomePage selectTin(String paymentType) 
+	 {
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		dataProvider.associateTinWithUser(tin);
+		
+		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
+		tin=tin+" - Enrolled";
+		
+		if((!tinList.contains(tin))){
+		   Element.click(homeTab, "home Tab");
+		   Browser.waitForLoad(testConfig.driver);
+		   Browser.wait(testConfig, 3);
+		   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
+		 }
+		
+		Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
+		Browser.waitForLoad(testConfig.driver);
+		return this;
+	}
+
 
 	
 }

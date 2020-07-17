@@ -6,12 +6,13 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 import main.java.pageObjects.ViewPayments_Page;
-
+import main.java.pageObjects.paymentSummary;
 import main.java.pageObjects.SearchTinPageViewPayments;
 
 public class ViewPaymentsSteps extends TestBase {
 	
     ViewPayments_Page viewPayments = new ViewPayments_Page(testConfig);
+    paymentSummary paySum = new paymentSummary(testConfig);
     
 
     @Then("^Validate all other columns in Show All State$")
@@ -42,6 +43,14 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayments.verifyPaymentNumberHypherLinkClaimDtl();
     }
     
+    
+    @Then("^Set FISL Parameters \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void set_FISL_Parameters_and(String key, String value) throws Throwable {
+    	
+ 		testConfig.putRunTimeProperty("key", key);
+ 		testConfig.putRunTimeProperty("value", value);	
+    }
+    
     @When("^Click on View Payments Link for UPA$")
     public void click_on_View_Payments_Link_for_UPA() throws Throwable {
         
@@ -59,7 +68,65 @@ public class ViewPaymentsSteps extends TestBase {
        
     	 viewPayments.verifyPayNumHypherLinkClaimDtlPayer();
     }
+    
+    @Then("^Verify Default Search Result Count$")
+    public void verify_Default_Search_Result_Count() throws Throwable {
+    	paySum.verifyDefaultSearchResultCount();
+    }
+    
+    @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void verify_Search_Results_With_for(String filterPayments, String quickSearchFilter) throws Throwable {
 
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
+    }
+
+    @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\" With \"([^\"]*)\"$")
+    public void verify_Search_Results_With_for_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+    	
+    }
     
+    @Then("^Verify Search Results for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
+    public void verify_Search_Results_for_having_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
+        
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
+    }
     
+    @Then("^Set Search Filters for \"([^\"]*)\" having \"([^\"]*)\"$")
+    public void set_Search_Filters_for_having(String archiveFilter, String quickSearchFilter) throws Throwable {
+    	
+    	paySum.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
+    	
+    }
+    
+    @Then("^Verify Payment Date Sorting for \"([^\"]*)\"$")
+    public void verify_Payment_Date_Sorting_for(String order) throws Throwable {
+    	paySum.verifyPaymentDateSorting(order);
+    }
+    
+    @Then("^Set Quick Search Filter for \"([^\"]*)\"$")
+    public void set_Quick_Search_Filter_for(String paymentType) throws Throwable {
+    	paySum.setQuickSearchFilter(paymentType);
+    }
+
+    @Then("^Verify Remit Payment PopUp$")
+    public void verify_Remit_Payment_PopUp() throws Throwable {
+    	paySum.verifyRemitPaymentPopUp(); 
+    }
+    
+    @Then("^Verify Failed Payment PopUp$")
+    public void verify_Failed_Payment_PopUp() throws Throwable {
+    	paySum.verifyFailedPaymentPopUp();
+    }
+    
+    @Then("^Verify Zero Dollar Payments for \"([^\"]*)\"$")
+    public void verify_Zero_Dollar_Payments_for(String paymentType) throws Throwable {
+    	paySum.verifyZeroDollarPayments(paymentType);
+    }
+    
+    @Then("^Verify Mkt Type for \"([^\"]*)\"$")
+    public void verify_Mkt_Type_for(String mktTypeFilter) throws Throwable {
+    	paySum.verifyMktType(mktTypeFilter);
+    }
+       
 }

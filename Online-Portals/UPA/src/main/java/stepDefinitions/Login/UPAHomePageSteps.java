@@ -19,6 +19,7 @@ import main.java.pageObjects.UPARegistrationPage;
 public class UPAHomePageSteps extends TestBase{
 	
 	UPAHomePage homePage=null;
+	HomePage home=null;
 
 	
     @Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
@@ -36,6 +37,12 @@ public class UPAHomePageSteps extends TestBase{
     
 	   homePage.selectTINforUPA();
 	   
+}
+
+@Then("^Select the TIN for UPA Portal for \"([^\"]*)\"$")
+public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwable {
+    // Write code here that turns the phrase above into concrete actions
+	homePage.selectTin(paymentType);
 }
    
   
