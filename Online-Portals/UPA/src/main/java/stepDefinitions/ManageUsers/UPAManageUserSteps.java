@@ -33,8 +33,8 @@ public class UPAManageUserSteps extends TestBase {
     }
 
     @Then("^Verifies provider user details are read only on UPA$")
-    public void user_enters_in_Upa_Manage_Users_Page_and_verify_User_Details_Read_Only() throws Throwable {
-        manageUser.verifyUserDetailsAreReadOnly();
+    public void user_enters_in_Upa_Manage_Users_Page_and_verify_User_Details_Read_Only(String userType) throws Throwable {
+        manageUser.verifyUserDetailsAreReadOnly(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Billing Service user$")

@@ -14,7 +14,7 @@ public class CSRHomePageSteps extends TestBase{
 	
 	CSRHomePage homePage=null;
 	SearchTinPage searchTinPage;
-	ManageUsers manageUsers;
+	ManageUsers manageUsers=new ManageUsers(testConfig);
 
 
 	@Given("^User navigates to CSR portal and enters credentials and login$")

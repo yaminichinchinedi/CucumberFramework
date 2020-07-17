@@ -1026,9 +1026,14 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		int sql=252;
 		ArrayList<String> usersFromDB=new ArrayList<>();
-		
+		try {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
 		selectPurgedCheckbox();
-		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.equalsIgnoreCase("PAY"))
+		}
+		catch (Exception e) {
+			Log.Comment("App is UPA");
+		}
+		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
 		{
 			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
 			Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
@@ -1042,6 +1047,13 @@ public class ManageUsers extends AddUserDetails  {
 			Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
 			
 			sql=253;
+			try {
+				if(System.getProperty("App").equalsIgnoreCase("CSR"))
+				selectPurgedCheckbox();
+				}
+				catch (Exception e) {
+					Log.Comment("App is UPA");
+				}
 			deSelectPurgedCheckbox();
 			usersFromDB.clear();
 			userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
@@ -1069,8 +1081,9 @@ public class ManageUsers extends AddUserDetails  {
         	sqlRowNo=10;
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
-        else if(userType.equalsIgnoreCase("PAY"))
+        else if(userType.contains("PAY"))
         	sqlRowNo=254;
+        
         
 		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		testConfig.putRunTimeProperty("user", purgedUserDetails.get("USERNAME").toString());
@@ -1079,10 +1092,31 @@ public class ManageUsers extends AddUserDetails  {
 		return purgedUser;
 	}
 	
-	
+	/**
+	 * FOR CSR
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
 		String expectedStatus="Purged";
-		selectPurgedCheckbox().clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+		
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+			selectPurgedCheckbox();
+	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
+	
+	
+	/**
+	 * FOR UPA
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	
+//	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
+//		String expectedStatus="Purged";
+//		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+//	}
 }
 
