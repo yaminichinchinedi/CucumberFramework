@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,6 +105,28 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),' been reset')]")
 	WebElement txtResetPwd;
 	
+	@FindBy(name="purgedUser")
+	WebElement chkBoxPurgedUser;
+	
+	@FindBy(id="limitPayerAccessyes")
+	WebElement btnYesSubPayerDataOnly;
+	
+	@FindBy(id="limitPayerAccessno")
+	WebElement btnNoSubPayerDataOnly;
+	
+	
+	@FindBy(name="fundingEmailNotify")
+	List<WebElement> chkBoxFundingEmail;
+	
+	@FindBy(name="nonEnrolledEmailNotify")
+	List<WebElement> chkBoxNonEnrolledEmailNotify;
+	
+	@FindBy(name="inActiveEmailNotify")
+	List<WebElement> chkInActiveEmailNotify;
+	
+	@FindBy(xpath=".//*[contains(text(),'Status')]")
+	WebElement txtStatus;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -204,7 +227,7 @@ public class ManageUsers extends AddUserDetails  {
 		try{
 		for(WebElement userName:userNames)
 		 { 
-			UsersListUI.add(userName.getText().toString().toUpperCase());	
+			UsersListUI.add(userName.getText().toString().toUpperCase().trim());	
 		 }
 		}
 		catch(Exception e)
@@ -308,7 +331,6 @@ public class ManageUsers extends AddUserDetails  {
 				      break;
 		   }
 	     }
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -547,7 +569,7 @@ public class ManageUsers extends AddUserDetails  {
 	}
 
 	
-	public void verifyUserDetailsAreReadOnly() throws InterruptedException
+	public ManageUsers verifyUserDetailsAreReadOnly(String userType) throws InterruptedException
 	{
 		String expectedValue="true";
 		try
@@ -573,8 +595,29 @@ public class ManageUsers extends AddUserDetails  {
 			Log.Fail("Failed due to an exception : " + e);
 		}
 		
+		if(userType.equalsIgnoreCase("PAY"))
+		{
+			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - Yes button", expectedValue, btnYesSubPayerDataOnly.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - No button", expectedValue, btnNoSubPayerDataOnly.getAttribute("disabled"));
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			for(WebElement accessLevel:accessLvls )
+				Helper.compareEquals(testConfig, "Access Level is Disabled ", expectedValue, accessLevel.getAttribute("disabled"));
+			for(WebElement fundingEmail:chkBoxFundingEmail )
+				Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, fundingEmail.getAttribute("disabled"));
+			for(WebElement nonEnrolledEmail:chkBoxNonEnrolledEmailNotify )
+				Helper.compareEquals(testConfig, "NonEnrolled Email Notify Checkbox is Disabled ", expectedValue, nonEnrolledEmail.getAttribute("disabled"));
+			for(WebElement inactiveEmail:chkInActiveEmailNotify )
+				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
+		}
+		return this;
 	}
 	
+	public ManageUsers verifyUserStatus(String userType,String expectedStatus)
+	{
+		if(userType.equalsIgnoreCase("PAY"))
+			Helper.compareContains(testConfig, "Status of User", expectedStatus, txtStatus.getText());
+		return this;
+	}
 	
 	public void verifyPayerUserDetailsAreReadOnly() throws InterruptedException
 	{
@@ -937,5 +980,143 @@ public class ManageUsers extends AddUserDetails  {
 		clickSave();
 		return this;
 	}
+	
+	public ManageUsers verifyPurgedUserOptionState(String expectedState)
+	{
+		if(expectedState.equalsIgnoreCase("enabled"))
+		{
+			Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User option");
+			if(!listOfAttributes.containsKey("disabled"))
+				Log.Pass("Purged user option is in Enable State");
+			else
+				Log.Fail("Purged user option is in " + chkBoxPurgedUser.getAttribute("value") + " State" );
+		}
+		else
+	   Helper.compareEquals(testConfig, "Purged Option Disabled Attribute Value", expectedState, chkBoxPurgedUser.getAttribute("disabled").toLowerCase().trim());
+	   return this;
+	}
+
+	public ManageUsers selectPurgedCheckbox() throws IOException, InterruptedException {
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User Checkbox");
+		if(!listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user checbox is not checked, checking it now");
+			Element.click(chkBoxPurgedUser, "Purged User checkbox");
+		}
+			
+		return this;
+		
+	}
+	
+	public ManageUsers deSelectPurgedCheckbox() throws IOException, InterruptedException {
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User Checkbox");
+		if(listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxPurgedUser, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+			
+		return this;
+		
+	}
+	
+	
+	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
+	{
+		int sql=252;
+		ArrayList<String> usersFromDB=new ArrayList<>();
+		try {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+		selectPurgedCheckbox();
+		}
+		catch (Exception e) {
+			Log.Comment("App is UPA");
+		}
+		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
+		{
+			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			for(int i=1;i<=userDetails.size();i++)
+			{
+				if(userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim() +"   - PURGED");
+				else
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			}
+			Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			
+			sql=253;
+			try {
+				if(System.getProperty("App").equalsIgnoreCase("CSR"))
+				selectPurgedCheckbox();
+				}
+				catch (Exception e) {
+					Log.Comment("App is UPA");
+				}
+			deSelectPurgedCheckbox();
+			usersFromDB.clear();
+			userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			for(int i=1;i<=userDetails.size();i++)
+			  usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			
+		}
+			
+	}
+
+	
+	/*
+	 * This function fetches the name of a purged user
+	 * which is associated with the logged in tin 
+	 * i.e. the tin that you selected on Home Page 
+	 */
+	public String getPurgedUser(String userType)
+	{
+        int sqlRowNo=10;
+        String purgedUser;
+        
+        if(userType.equalsIgnoreCase("PROV"))
+        	sqlRowNo=10;
+        else if(userType.equalsIgnoreCase("BS"))
+        	sqlRowNo=18;
+        else if(userType.contains("PAY"))
+        	sqlRowNo=254;
+        
+        
+		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		testConfig.putRunTimeProperty("user", purgedUserDetails.get("USERNAME").toString());
+		purgedUser=purgedUserDetails.get("LST_NM").toString().toUpperCase()+","+ " " +purgedUserDetails.get("FST_NM").toString().toUpperCase();
+		Log.Comment("Purged user returned is :" +" " + purgedUser);
+		return purgedUser;
+	}
+	
+	/**
+	 * FOR CSR
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
+		String expectedStatus="Purged";
+		
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+			selectPurgedCheckbox();
+	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+	}
+	
+	
+	/**
+	 * FOR UPA
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	
+//	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
+//		String expectedStatus="Purged";
+//		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+//	}
 }
 

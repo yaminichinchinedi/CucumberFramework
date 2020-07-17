@@ -102,6 +102,62 @@ public class SearchTinPage {
 		return new ManageUsers(testConfig);
 	}
 	
+	
+	public ManageUsers doSearch(String userType,String searchCriteria)
+	{
+		int sqlRowNo = 0;
+		Map Searchedtin=null;
+		String tin="";
+		selectUserType(userType);
+		
+		switch(userType)
+		{
+		  case "PROV" :
+		   {
+			   sqlRowNo=15;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+			   break;
+		   }
+		   
+		  case "BS" :
+		   {
+			   sqlRowNo=16;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
+			   break;
+		   }
+		   
+		  case "PAY" :
+		   {
+			   if(searchCriteria.equalsIgnoreCase("PurgedUsers"))
+			       sqlRowNo=250;
+			   else if(searchCriteria.equalsIgnoreCase("NoPurgedUsers"))
+				   sqlRowNo=251;
+			   
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
+			   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
+			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			   break;
+		   }
+		   
+		   default:
+			   break;
+		}
+		
+		testConfig.putRunTimeProperty("tin", tin);
+		return new ManageUsers(testConfig);
+	}
+	
+	
+	
+	
+	
 	public String enterTin(String typeOfTin)
 	{
 		List<String> userAndTinDetails=getTinAndUserDetails(typeOfTin);
