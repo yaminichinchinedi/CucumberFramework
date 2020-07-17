@@ -29,7 +29,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
 
 import com.mysql.jdbc.StringUtils;
 
@@ -3844,27 +3843,11 @@ public void enterTINMultiplePLBAdjUPA() throws Exception
 
 public void enterElectronicNumForMultiplePLBCriteria() throws Exception
 {
-//	int sqlRowNo = 189;
-//	Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//	String elctronicNum1 = cp_DSPL_CONSL_PAY_NBRDB.toString();
-//	String elctronicNum2 = elctronicNum1.substring(elctronicNum1.lastIndexOf("=")+1);
-//	String elctronicNum = elctronicNum2.substring(0, elctronicNum2.length()-1);
-//	Log.Comment("The Electronic Payment Number is :" + elctronicNum);
-//	Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
-//	Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
-//	Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
-//	Element.click(elcPayNum, "Electronic Payment Number");
-//	Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
-//	Element.click(srchRemitBtn, "Search Remit");
-	
-	int sqlRowNo = 223;
+    int sqlRowNo = 223;
 	System.getProperty("tin");
 	Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 
 	String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
-	//String elctronicNum1 = cp_DSPL_CONSL_PAY_NBRDB.toString();
-//	String elctronicNum2 = elctronicNum1.substring(elctronicNum1.lastIndexOf("=")+1);
-//	String elctronicNum = elctronicNum2.substring(0, elctronicNum2.length()-1);
 	Log.Comment("The Electronic Payment Number is :" + elctronicNum);
 	System.setProperty("consl_pay_nbr", cp_DSPL_CONSL_PAY_NBRDB.get("CONSL_PAY_NBR").toString());
 	

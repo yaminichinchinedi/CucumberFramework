@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 //import junit.framework.Assert;
 import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
@@ -14,16 +15,18 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.sun.mail.iap.Argument;
 
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
  public class Element {
 	
@@ -38,7 +41,7 @@ import main.java.reporting.LogTemp;
 	 {
 		 try{
 				element.clear();
-				LogTemp.Comment(namOfElement+" " +"has been cleared successfully");
+				Log.Comment(namOfElement+" " +"has been cleared successfully");
 				}
 					 
 		 catch(NoSuchElementException e)
@@ -52,7 +55,7 @@ import main.java.reporting.LogTemp;
 			}
 		 catch(Exception e)
 			{
-				LogTemp.Comment("Can not clear the element" + " " + namOfElement);
+				Log.Comment("Can not clear the element" + " " + namOfElement);
 				e.printStackTrace();
 			}
 		 
@@ -65,7 +68,7 @@ import main.java.reporting.LogTemp;
 		}
 		catch(Exception e)
 		{
-			LogTemp.Comment("Can not clear the element" + " " + namOfElement,"directly entering data");
+			Log.Comment("Can not clear the element" + " " + namOfElement,"directly entering data");
 		}
 		try
 		{
@@ -755,6 +758,52 @@ public static boolean waitForElementTobeClickAble(TestBase testConfig,WebElement
 	return true;
 }
 
+public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)
+{
+	try{
+		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
+    .pollingEvery(pollingTime, TimeUnit.SECONDS) 			
+	.ignoring(NoSuchElementException.class);
+	wait.until(ExpectedConditions.visibilityOf(element));
+	
+	 Log.Pass(nameOfElement + " " + "is present on page");
+}
+catch(NoSuchElementException e)
+{
+	Log.Fail("Element" + " " + "'"+nameOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
+}
+
+catch (TimeoutException e)
+{
+	Log.Fail("Element" + " " + "'"+nameOfElement +" "+ " " +  " is Not found on page and timeout happened" + '\n' + e);
+}
+
+catch(ElementNotVisibleException e)
+{
+	Log.Fail("Element" + " " + "'"+nameOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+}
+
+catch(StaleElementReferenceException e)
+{
+	 WebDriverWait wait=new WebDriverWait(testConfig.driver, 60);
+	 wait.until(ExpectedConditions.visibilityOf(element));
+	 //Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+}
+
+catch(Exception e)
+{
+	Log.Fail("Element" + " " + "'"+nameOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
+}
+}
+
+
+public static void enterDataByJS(TestBase testConfig, WebElement element,String data,String namOfElement)
+{
+	 JavascriptExecutor js = (JavascriptExecutor)testConfig.driver;
+    js.executeScript("arguments[0].value='" + data + "';", element);
+    Log.Comment("Entered" + data + "in" + namOfElement);
+}
+    
 //public static void verifyElementNotEnabled(WebElement button,String namOfButton)
 //{
 //try

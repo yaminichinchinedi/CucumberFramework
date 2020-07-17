@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="UPA_Regression">
+	<listeners>
+		<!-- listener class-name="org.uncommons.reportng.HTMLReporter" /-->
+		<!-- listener class-name="org.uncommons.reportng.HTMLReporter" /-->
+	</listeners>
+	<test name="Branch Version Extractor">
+		<classes> 
+		<class name="test.java.TestBranchVersion" />
+		</classes>
+	</test>
+</suite>

@@ -36,7 +36,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -142,6 +142,8 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//span[contains(@title,'ePRA in process')]")
 	WebElement mousehoverEPRA;
 	
+	@FindBy(name="taxIdNbr")
+	WebElement txtboxTinNo;
 	
 	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[1]") WebElement payerUI;
 	
@@ -169,23 +171,25 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary(TestBase testConfig)
 	{
 		super(testConfig);
-//		this.testConfig=testConfig;
+		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		
-//		service = new PaymentSummaryFislService();
-//		
-//		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
-//		
-//		if(drpDwnQuickSearch!=null)
-//			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
-//		else
-//		if(txtBoxPayerTin!=null)
-//			Element.verifyElementPresent(txtBoxPayerTin, "Payer provider tin text box");
-//		else if(txtBoxBSTin !=null)
-//			Element.verifyElementPresent(txtBoxBSTin, "Billing Service provider tin text box");
-//		else if(txtBoxProvTin!=null)
-//			Element.verifyElementPresent(txtBoxProvTin, "Provider tin text box");
-			
+		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
+		if(drpDwnQuickSearch!=null)
+			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
+		else
+		{
+		  try
+		  {
+		    if(txtBoxPayerTin!=null)
+			Log.Pass("Payer Prov tin text box is displayed");
+		    else if(txtBoxBSTin !=null)
+		    	Log.Pass("BS Prov tin text box is displayed");
+		}
+		catch(Exception e)
+		{
+			Log.Comment("Not payer/BS user");
+		}
+		}
 		
 	}
 	
@@ -219,6 +223,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 			setlDate=getPaymentNoDetails(paymentType).get("setlDate");
 
 		String filterToBeSelected=getQuickSearchFilterCriteria(setlDate);
+		Browser.waitForLoad(testConfig.driver);
 		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,filterToBeSelected, filterToBeSelected +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
@@ -1014,13 +1019,20 @@ public void verifyFailedPaymentPopUp()
 	 */
 	
 	
+	/**
+	 * Selecting all the required filters
+	 * from respective dropdowns
+	 * @param filterPayments,quickSearchFilter,Archivefilter,MktTypeFilter
+	 * @return 
+	 */
+	
+	
 	public paymentSummary setSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
+		Browser.wait(testConfig,2);
 		Browser.waitForLoad(testConfig.driver);
-		
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
-       
 		if(checkArchiveFilter!=null)
         {
         	Element.selectByVisibleText(drpDwnArchiveFilter,Archivefilter, Archivefilter + " " +" from 'Archive payments' dropdown");
@@ -1031,10 +1043,10 @@ public void verifyFailedPaymentPopUp()
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
-//		getQuickSearchDates(quickSearchFilter);
+		getQuickSearchDates(quickSearchFilter);
 		
 		Element.selectByVisibleText(drpDwnMarketType,MktTypeFilter,MktTypeFilter + " " +" from 'Market Type' dropdown");	
-		Browser.wait(testConfig,3);
+		Browser.wait(testConfig,2);
 		return this;
 	}
 	
@@ -1075,9 +1087,7 @@ public void verifyFailedPaymentPopUp()
 		{
 			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
 			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
-			System.out.println("from date" + testConfig.getRunTimeProperty("fromDate")) ;
 			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
-			System.out.println("to date" + testConfig.getRunTimeProperty("toDate")) ;
 		}
 		
 		else 
@@ -1097,20 +1107,33 @@ public void verifyFailedPaymentPopUp()
 	 */
 	public String getRecordCountFromUI()
 	{
-		 try{ 
+		
+		//on payment summary page
+		 try
+		  { 
 			String recordCountElement[]=recordCount.getText().split(":");
 			return recordCountElement[recordCountElement.length-1].trim();
-		 }
-	    catch(org.openqa.selenium.NoSuchElementException e)	{
+		  }
+		 
+		 //On search remittance page
+	    catch(org.openqa.selenium.NoSuchElementException e)
+		 {
 	    	searchRemittance=new SearchRemittance(testConfig,true);
 	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-			return String.valueOf(searchRemittance.divSearchResults.size());
-	    }
-		catch(Exception e){
-				Log.Fail("Exception occured : " + e);
-				return null;
-			}  
+	    	
+	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
+	    	if(criteria!=null)
+	    	{
+			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
+					return String.valueOf(searchRemittance.divSearchResults.size()-1);
+			}
+				
+		 }
+		 return String.valueOf(searchRemittance.divSearchResults.size());
+		
+		
 	}
+	
 	
 	
 	public String getRecordCountFromUISR()
@@ -1182,7 +1205,8 @@ public void verifyFailedPaymentPopUp()
 			   innerMap.remove("Payment Status / Trace Number");
 			   innerMap.remove("Payer/Patient");
 			   innerMap.remove("Type");
-			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+			   innerMap.remove("Payer");
+			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n","")+ "_" + innerMap.get("Payment Date"), innerMap);
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -1199,7 +1223,7 @@ public void verifyFailedPaymentPopUp()
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -1280,9 +1304,19 @@ public void verifyFailedPaymentPopUp()
 		  for(int i=0;i<totalPayments;i++)
 		  {
 			innerMap=new LinkedHashMap<String, String>();
-			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+//			innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			
-			innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-dd-mm", "dd-mm-yyyy")));
+			try 
+			 {
+			   String setlDate=payments[i].getEpsClaimPaymentResponses().getEpsReturnedReoriginatedClaimPayment().getSettlementDate().toString();
+			   innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(setlDate,"yyyy-dd-mm", "dd-mm-yyyy")));
+			 }
+			
+			catch(Exception e)
+			{
+			   innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-dd-mm", "dd-mm-yyyy")));	
+			}
+			
 		    if(payments[i].getNationalProviderIdentifier()!=null)
 		    innerMap.put("NPI",payments[i].getNationalProviderIdentifier());
 			else 
@@ -1298,7 +1332,7 @@ public void verifyFailedPaymentPopUp()
 			}
 // 			innerMap.put("Type",getDisplayPaymentMethod(payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode()));
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
-			outerMap.put(innerMap.get("Payment Number"), innerMap);
+			outerMap.put(innerMap.get("Payment Number")+ "_" + innerMap.get("Payment Date"), innerMap);
 		 }
 		  
 //		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
@@ -1319,14 +1353,17 @@ public void verifyFailedPaymentPopUp()
 		testConfig.putRunTimeProperty("payerName", payerNameFromFISL);
 		Map payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		if(payerTable!= null)
-		return payerTable.get("PAYR_DSPL_NM").toString().trim();	
-		else
-		{
+			return payerTable.get("PAYR_DSPL_NM").toString().trim();
+			
+		else if(payerNameFromFISL.toString().equals("Neighborhood Health Partnership Inc"))
+		return "Neighborhood Health Partnership";
+		
+		else if(payerNameFromFISL.toString().equals("UnitedHealthcare Insurance Company of the River Valley"))
+			return "UHC Insurance Company of the River Valley";
+			
+        else
 			return payerNameFromFISL;
-//		sqlRowNo=20;
-//		payerTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//		return payerTable.get("PAYR_DSPL_NM").toString().trim();
-		}
+					
 	}
 	
 	/**
@@ -1342,9 +1379,17 @@ public void verifyFailedPaymentPopUp()
 		else if(maketTypeFromFISL.equalsIgnoreCase("H"))
 		return "HRA";
 		else if(maketTypeFromFISL.equalsIgnoreCase("Y"))
-			return "Member Payments";
+			return "Patient Payments";
 		else if(maketTypeFromFISL.equalsIgnoreCase("W"))
 			return "Workers Compensation";
+		else if(maketTypeFromFISL.equalsIgnoreCase("P"))
+			return "Property and Casualty";
+		else if(maketTypeFromFISL.equalsIgnoreCase("O"))
+			return "Other";
+		else if(maketTypeFromFISL.equalsIgnoreCase("D"))
+			return "Dental";
+		else if(maketTypeFromFISL.equalsIgnoreCase("S"))
+			return "CARES Act - Healthcare Relief Program";
 
 		else
 		return maketTypeFromFISL;
@@ -1479,7 +1524,6 @@ public void verifyFailedPaymentPopUp()
 		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
 		
 		int totalNoOfPages=getNumberOfPages();
-    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
     	
     	OUTERLOOP: 	
 		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
@@ -1487,28 +1531,22 @@ public void verifyFailedPaymentPopUp()
 			for(int i=1; i<searchResultRows.size(); i++)
 			  {    			
     			String paymentAmountUI = searchResultRows.get(i).findElements(By.tagName("td")).get(5).getText();
-				
-				if(paymentAmountUI.equalsIgnoreCase(ZeroDollar)){
-					String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();
-					
-					if(paymentTypeUI.equalsIgnoreCase(expectedPaymentType)){
-						Log.Pass("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
-						
-						actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-						actualPaymntNo=actualPaymntNo.replace("\n", "");
-						
-						if(payments[i-1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo))
-						{
-							Log.Pass("FISL and UI Payment No", payments[i-1].getDisplayConsolidatedPaymentNumber(), actualPaymntNo);
+    			actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+    			actualPaymntNo=actualPaymntNo.replace("\n", "");
+    			
+				  if(payments[i-1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo) && paymentAmountUI.equalsIgnoreCase(ZeroDollar))
+					 {
+							String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();
+							if(paymentTypeUI.equalsIgnoreCase(expectedPaymentType))
+								Log.Pass("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
+								else
+									Log.Fail("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
+							
 							Helper.compareContains(testConfig, "Zero dollar amount for above payment No: ", ZeroDollar, paymentAmountUI);
 							break OUTERLOOP;
-						}						
-					}
-					else{
-						Log.Fail("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
-					}
-				}				
+			           }
 			  }
+			
     		
     		if(pageNo%10!=0 && pageNo<totalNoOfPages){   
     			int pageToBeClicked=pageNo+1;
@@ -1524,7 +1562,7 @@ public void verifyFailedPaymentPopUp()
 			    Browser.wait(testConfig,3);
     		}
     		else
-			     Log.Warning("Could not find failed payment on any of the pages, please execute test case manually", testConfig);
+			     Log.Warning("Could not find Zero dollar payment on any of the pages, please execute test case manually", testConfig);
 		 }
     	return this;
 	}
@@ -1548,17 +1586,33 @@ public void verifyFailedPaymentPopUp()
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
 		String tin=dataProvider.getTinForPaymentType(paymentType);
 		txtBoxPayerTin = Element.findElement(testConfig, "name", "payerProvTin");
-		if(txtBoxPayerTin!=null){
+		if(txtBoxPayerTin!=null)
 			Element.enterData(txtBoxPayerTin, tin,"Entered TIN", "Payer Tin");
-		}
-		else{
+		else if (txtBoxPayerTin2!=null)
 			Element.enterData(txtBoxPayerTin2, tin,"Entered TIN", "Payer Tin");
-		}
-//		Element.enterData(txtBoxPayerTin, tin,"Entered TIN", "Payer Tin");
+			else
+				Element.enterData(txtBoxBSTin, tin,"Entered TIN", "BS Tin");
+	
 		testConfig.putRunTimeProperty("tin", tin);
 		Element.click(btnSearch, "Search Button");
 		return this;
 	}
+	
+	public paymentSummary enterBSTin(String userType,String paymentType) 
+	 {
+		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		dataProvider.associateTinWithUser(userType,tin);
+		txtBoxBSTin = Element.findElement(testConfig, "name", "billingProvTin");
+		if(txtBoxBSTin!=null)
+			Element.enterData(txtBoxBSTin, tin,"Entered TIN", "BS Tin");
+		else
+			Element.enterData(txtboxTinNo, tin,"Entered TIN", "BS Tin");
+		testConfig.putRunTimeProperty("tin", tin);
+		Element.click(btnSearch, "Search Button");
+		return this;
+	}
+
 
 	/**
 	 * Getting response from EPSA
@@ -1575,7 +1629,8 @@ public void verifyFailedPaymentPopUp()
 		epsPaymentsSearchRequest=setTinNumber(epsPaymentsSearchRequest);
 		setToAndFromDate(epsPaymentsSearchRequest);
 		setMapEntryKey(epsPaymentsSearchRequest);
-		if(testConfig.getRunTimeProperty("payerID")!=null)
+	
+		if(testConfig.getRunTimeProperty("835ID")!=null)
 			setPayerID(epsPaymentsSearchRequest);
 		
 		/**Posting the modified request and getting response*/
@@ -1597,11 +1652,22 @@ public void verifyFailedPaymentPopUp()
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
+	public EpsPaymentsSearchRequest setNPINumber(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		
+	   ((EpsPaymentsSearchRequest) object).setEPSNationalProviderIdentifiers(testConfig.getRunTimeProperty("NPI").trim());
+	    return (EpsPaymentsSearchRequest) object;
+	}
+	
 	public EpsPaymentsSearchRequest setToAndFromDate(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
+		if(testConfig.getRunTimeProperty("fromDate")!=null)
+	  {
 		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setFromDate(testConfig.getRunTimeProperty("fromDate"));
 		((EpsPaymentsSearchRequest) object).getPaymentMadeOnDateRange().setToDate(testConfig.getRunTimeProperty("toDate"));
+	  }
 		return (EpsPaymentsSearchRequest) object;
+				
 	}
 	
 	
@@ -1630,8 +1696,10 @@ public void verifyFailedPaymentPopUp()
 	*/     
 	public EpsPaymentsSearchRequest setPayerID(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
-	((EpsPaymentsSearchRequest) object).getEpsSecondaryPayerReferenceIdentifiers().add(testConfig.getRunTimeProperty("payerID"));
-	return (EpsPaymentsSearchRequest) object;
+		
+	   ((EpsPaymentsSearchRequest) object).setEpsSecondaryPayerReferenceIdentifiers(testConfig.getRunTimeProperty("835ID"));
+	    return (EpsPaymentsSearchRequest) object;
+		
 	}
 
 	
@@ -2103,7 +2171,7 @@ public void verifyFailedPaymentPopUp()
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -2695,12 +2763,11 @@ public void verifyFailedPaymentPopUp()
 	 * @return Outer map
 	 * @throws IOException 
 	 */	
-	public paymentSummary verifyPayerRolePayments() throws IOException{
-
-		int sqlRowNo=40;		
+public paymentSummary verifyPayerRolePayments() throws IOException{
+		
 		ArrayList<String> payerListFromDB = new ArrayList<String>();
-		List<String> payerListFromUI = new ArrayList<String>();
-		HashMap<Integer, HashMap<String, String>> payerMapFromDB = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		/*List<String> payerListFromUI = new ArrayList<String>();
+		/*HashMap<Integer, HashMap<String, String>> payerMapFromDB = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 
 		for (int i = 1; i <= payerMapFromDB.size(); i++) {
 			payerListFromDB.add(payerMapFromDB.get(i).get("PAYR_NM"));
@@ -2712,11 +2779,35 @@ public void verifyFailedPaymentPopUp()
 		Set<String> payersWithoutDuplicates = new LinkedHashSet<String>(payerListFromDB);
 
 		payerListFromDB.clear();
-		payerListFromDB.addAll(payersWithoutDuplicates);
+		payerListFromDB.addAll(payersWithoutDuplicates);*/
+		
+		HashMap<Integer, HashMap<String, String>> payerMapFromDB = DataBase.executeSelectQueryALL(testConfig, 176);
+		for (int i = 1; i <= payerMapFromDB.size(); i++) {
+			payerListFromDB.add(payerMapFromDB.get(i).get("SUB_PAYR_DSPL_NM"));
+		}
+		payerMapFromDB.clear();
+		payerMapFromDB = DataBase.executeSelectQueryALL(testConfig, 177);
+		
+		for (int i = 1; i <= payerMapFromDB.size(); i++) {
+		payerListFromDB.add(payerMapFromDB.get(i).get("PAYR_DSPL_NM"));
+		}
+		
+		 Map<String,LinkedHashMap<String,String>> detailsFromUI=getPayerDetailsFromUI();
 
-		for( Entry<String, LinkedHashMap<String, String>> entry : getPayerDetailsFromUI().entrySet() ){			
+		  for(Map.Entry<String,LinkedHashMap<String, String>> map : detailsFromUI.entrySet())
+		   {
+				if((payerListFromDB).contains(map.getValue().get("Payer").toString()))
+		           Log.Pass("Verified Payer is  UnitedHealthcare ( " + map.getValue().get("Payer").toString() +" ) for payment number : " +  map.getKey());
+				else
+					Log.Fail("Payer is NOT UnitedHealthcare, it is " + map.getValue().get("Payer").toString()+"for payment number : " +  map.getKey() );
+		 }
+
+		/*for( Entry<String, LinkedHashMap<String, String>> entry : getPayerDetailsFromUI().entrySet() ){			
 			LinkedHashMap<String, String> innerMap= new LinkedHashMap<String,String>();
+
+			innerMapKey=entry.getKey();
 			innerMap = entry.getValue();
+			
 			Set<String> keys = innerMap.keySet();
 
 			for(String k:keys){
@@ -2728,15 +2819,14 @@ public void verifyFailedPaymentPopUp()
 
 		for (String payer : payerListFromUI) {
 			if (payerListFromDB.contains(payer)) {
-				Log.Pass(payer + " :" + " " + "matches in both UI and DB");
+				Log.Pass("Payment is for " + payer );
 			}
 			else {
 				Log.Fail(payer + " :" + " " + "not present in DB");				
 			}
-		}
+		}*/
 		return this;		
 	}
-	
 	
 	public Map<String,LinkedHashMap<String,String>> getPayerDetailsFromUI()
 	{	   
@@ -2775,7 +2865,7 @@ public void verifyFailedPaymentPopUp()
 			else if(pageNo%10==0 && totalNoOfPages!=2)
 			{
 				Browser.wait(testConfig,1);
-				LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+				Log.Comment("Page Number is multiple of 10..so clicking Next");
 				Element.click(lnkNextPage,"Next Link");
 				Browser.wait(testConfig,3);
 				pageNo++;

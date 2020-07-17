@@ -2,6 +2,7 @@ package main.java.pageObjects;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import main.java.Utils.DataBase;
@@ -45,7 +46,7 @@ public class OptumIdLoginPage {
 	@FindBy(name = "rememberMyDevice")
 	WebElement chkBoxRememberDevice;
 
-	@FindBy(id = "authQuesSubmitButton")
+	@FindBy(xpath="//div[@class='authQuestionNavigation']//input[@id='authQuesSubmitButton']")
 	WebElement btnNext;
 
 	@FindBy(xpath = "//div[@class='authQuestionTitle']")
@@ -257,8 +258,20 @@ public class OptumIdLoginPage {
 		if (!chkBoxRememberDevice.isSelected())
 			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
 		
-		Element.click(btnNext, "Next to submit answer");
+		Browser.wait(testConfig,3);
+		List<WebElement> btnNxt=testConfig.driver.findElements(By.xpath("//div[@class='authQuestionNavigation']//input[@id='authQuesSubmitButton']"));
+		System.out.println(btnNxt.size());
+		for(WebElement e: btnNxt)
+		{
+			System.out.println(e.getText());
+			
+		}
+		
+		
+		
+		Element.click(Element.findElement(testConfig, "xpath","//div[@class='authQuestionNavigation']//input[@id='authQuesSubmitButton']"), "Next to submit answer");
 	}
+	
 
 	
 	private void fillNicknameAns() {

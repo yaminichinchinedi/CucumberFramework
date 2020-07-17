@@ -37,7 +37,7 @@ import com.jcraft.jsch.SftpException;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
-import main.java.Utils.sFTPAccess;
+import main.java.Utils.SFTPAccess;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
@@ -49,7 +49,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 public class SearchRemittance extends paymentSummary {
 	
@@ -149,6 +149,8 @@ public class SearchRemittance extends paymentSummary {
 		super(testConfig,true);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		//Ask..why it is commented
+		
 		//Element.expectedWait(divSearchCriteria, testConfig, "Search Criteria section","Search Criteria section");
 		
 	}
@@ -166,13 +168,15 @@ public class SearchRemittance extends paymentSummary {
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
 		
+
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
+			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
 		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 			Helper.compareMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
 		  else
-		 Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
-//		 Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
+		  Element.verifyTextPresent(errorMsg,"No records match the selected search criteria. Choose a different search option or try your search again later.");
+//		   Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
 		}
 		else 
 			verifyPaymentDetailsForCSR(requestType,searchResponse);
@@ -222,11 +226,25 @@ public class SearchRemittance extends paymentSummary {
 			setMapEntryKey2(epsSearchRemittanceSearchRequest);
 		
 	    setMapEntryKey(epsSearchRemittanceSearchRequest);
+	    
+	    try{
 	    setServiceData(epsSearchRemittanceSearchRequest);
+	    }
+	    catch(Exception e)
+	    {
+	    	Log.Comment("check service daTA");
+	    }
+	    
+	    if(requestType.contains("byDOPAndNpi")||requestType.contains("byDOSAndNpi"))
+	    	setNPINumber(epsSearchRemittanceSearchRequest);
+	    
 	    if(requestType.contains("byDOS")) 
-			setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
-		else
+	     setToAndFromDateDOS(epsSearchRemittanceSearchRequest);
+	    else
 			setToAndFromDate(epsSearchRemittanceSearchRequest);
+	 
+	    if(testConfig.getRunTimeProperty("835ID")!=null)
+	    setPayerID(epsSearchRemittanceSearchRequest);
 
 	    /**Posting the modified request and getting response*/
 	    EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
@@ -252,10 +270,12 @@ public class SearchRemittance extends paymentSummary {
 	
 	public EpsPaymentsSearchRequest setMapEntryKey2(Object object) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
+		if(testConfig.getRunTimeProperty("key1")!=null)
+	  {
 		
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setKey(testConfig.getRunTimeProperty("key1"));
 		((SearchByCriteriaRequest) object).getSearchCriteria().getParameterMap().getEntries().get(1).setValue(testConfig.getRunTimeProperty("value1"));
-		
+	  }	
 		return (EpsPaymentsSearchRequest) object;
 	}
 	
@@ -411,50 +431,56 @@ public class SearchRemittance extends paymentSummary {
 					break;
 					
 		case "Patient Name":
-					listString = new ArrayList<String>();
-					actualListString = new ArrayList<String>();
+			listString = new ArrayList<String>();
+			actualListString = new ArrayList<String>();
 
-					listString=getExpectedDetailsFromFISL(criteriaType, colName);
-					Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
+			listString=getExpectedDetailsFromFISL(criteriaType, colName);
+			Collections.sort(listString);
+			
+			/*Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
 
-						@Override
-						public int compare(ArrayList<String> a1,ArrayList<String> a2) {
-							int v1=a1.get(2).compareTo(a2.get(2));
-			                int v2=a1.get(1).compareTo(a2.get(1));
-			                int v3=a1.get(3).compareTo(a2.get(3));
-			                if(v1==0)
-			                    return (v2==0)?v3:v2;
-			                else
-			                    return v1;
-						}
-						
-					});
-					if(listString.size()<30)
-						for(int i=0;i<listString.size();i++)
-							newList.add(listOfPatients.get(0).get(0));
-					else
-						for(int i=0;i<30;i++)
-							newList.add(listOfPatients.get(0).get(0));
-					Element.clickByJS(testConfig, lnkName, colName);
-					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListString = getColumnValue(colName);					
-					Helper.compareEquals(testConfig, colName, newList, actualListString);
-		
-					// now sorting in descending order
-					Collections.sort(listString, Collections.reverseOrder());
-					if(listString.size()<30)
-						for(int i=0;i<listString.size();i++)
-							newList.add(listOfPatients.get(0).get(0));
-					else
-						for(int i=0;i<30;i++)
-							newList.add(listOfPatients.get(0).get(0));
-					Element.clickByJS(testConfig, lnkName, colName);
-					Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
-					actualListString.clear();
-					actualListString = getColumnValue(colName);
-					Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
-					Helper.compareEquals(testConfig, colName, newList, actualListString);
-					break;
+				@Override
+				public int compare(ArrayList<String> a1,ArrayList<String> a2) {
+					int v1=a1.get(2).compareTo(a2.get(2));
+	                int v2=a1.get(1).compareTo(a2.get(1));
+	                int v3=a1.get(3).compareTo(a2.get(3));
+	                if(v1==0)
+	                    return (v2==0)?v3:v2;
+	                else
+	                    return v1;
+				}
+				
+			});
+			if(listString.size()<30)
+				for(int i=0;i<listString.size();i++)
+					newList.add(listOfPatients.get(0).get(0));
+			else
+				for(int i=0;i<30;i++)
+					newList.add(listOfPatients.get(0).get(0));*/
+				
+//			Element.clickByJS(testConfig, lnkName, colName);
+			Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+			actualListString = getColumnValue(colName);	
+			for(int i=0;i<30;i++)
+				newList.add(listString.get(i));
+				
+			Helper.compareEquals(testConfig, colName, newList, actualListString);
+
+			// now sorting in descending order
+			Collections.sort(listString, Collections.reverseOrder());
+			if(listString.size()<30)
+				for(int i=0;i<listString.size();i++)
+					newList.add(listOfPatients.get(0).get(0));
+			else
+				for(int i=0;i<30;i++)
+					newList.add(listOfPatients.get(0).get(0));
+			Element.clickByJS(testConfig, lnkName, colName);
+			Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
+			actualListString.clear();
+			actualListString = getColumnValue(colName);
+			Log.Comment("True specifies archive is checked and False specifies archive is unchecked");
+			Helper.compareEquals(testConfig, colName, newList, actualListString);
+			break;
 			
 		case "Amount":
 		case "Claim Amount":
@@ -537,9 +563,8 @@ public class SearchRemittance extends paymentSummary {
 		List<Double> l = new ArrayList<Double>();
 		for(String s : listString)
 		{
-			double amount = Double.parseDouble(s.substring(1, s.length()).replace(",", ""));
+			double amount = Double.parseDouble(s.replace(",", "").replace("$", ""));
 			l.add(BigDecimal.valueOf(amount).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-			
 		}
 		return l;
 	}
@@ -760,32 +785,32 @@ public class SearchRemittance extends paymentSummary {
 		
 	   /**Gets headers List which will be key for following map*/
 	   int startingLoop=2;
-		if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi")||requestType.equalsIgnoreCase("byDOP&SubscriberID"))
+		if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi"))
 			startingLoop=1;
-		
+	
 	   LinkedHashMap<String,String> innerMap = null;
+	
 	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	   ArrayList<String> headers=getHeadersFromResultTable();
 	   int totalNoOfPages=getNumberOfPages();
 	   if(totalNoOfPages>2)
 		 totalNoOfPages=1;
 		   
+	   if(requestType.equalsIgnoreCase("byDOPAndNpi")||requestType.equalsIgnoreCase("byDOSAndNpi"))
+		   divSearchResults=Element.findElements(testConfig, "xpath", "//table[@class='form']//table//tr");
+	   else
 	   if(divSearchResults.size()==0)
 		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 	   
 	   Log.Comment("Fetching all payments From UI..");
 	   String details="";
 	   String amount="";
-	   int l=0;;
 	
 	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
-		   
 			for(int i=startingLoop;i<divSearchResults.size();i++)
 		    {
-				System.out.println(divSearchResults.size());
-				
 			   innerMap=new LinkedHashMap<String,String>();
 			   
 			   for(int j=0,k=0;j<headers.size();j++,k++)
@@ -794,16 +819,21 @@ public class SearchRemittance extends paymentSummary {
 					   k=k+4;
 				  details=divSearchResults.get(i).findElements(By.tagName("td")).get(k).getText();
 			      details=details.replace("\n", "");
+			      if(headers.get(j).contains("Payment Status"))
+			    	  innerMap.put("Payment Status", details);
+			      else
 			      innerMap.put(headers.get(j), details);	
 				 }
 			    
-			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo"))
+			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi"))
 			    { 
 			      if(innerMap.get("Amount").contains(","))
 			      {
-			      amount=innerMap.get("Amount").replace(",", "");
-			      innerMap.put("Amount", amount);
+			         amount=innerMap.get("Amount").replace(",", "");
+			         innerMap.put("Amount", amount);
 			      }
+			      if(innerMap.get("Amount").equals("$0.00")&& (innerMap.get("Type").equals("NON")||innerMap.get("Type").equals("DD")))
+					     innerMap.put("Type","Non||DD");
 			    }
 			   else
 			   {
@@ -813,15 +843,40 @@ public class SearchRemittance extends paymentSummary {
 				      innerMap.put("Claim Amount", amount);
 				   }
 			   }
+			   
+			   if(innerMap.keySet().contains("Account Number"))
+			   {
+				   String accNo=null;
+			    if(innerMap.get("Account Number").contains(" "))
+			    {
+			    	accNo=innerMap.get("Account Number").replaceAll(" ", "");
+			        innerMap.put("Account Number", accNo);
+			    }
+			   }
+			   
+			   
+			   
 			   innerMap.remove("Redemption Date");
 			   innerMap.remove("Proxy Number");
 			   innerMap.remove("Payer");
 			   innerMap.remove("835 / EPRA");
 			   innerMap.remove("Payer PRA");
 			   innerMap.remove("Archive");
-			   innerMap.remove("Payment Status / Trace Number");
-			   outerMap.put(innerMap.get("Payment Number")+l, innerMap);
-				  l++;
+//			   innerMap.put("Payment Status",innerMap.get("Payment Status / Trace Number"));
+//			   innerMap.remove("Payment Status / Trace Number");in
+			   
+			   String cl=null;
+			 
+			   if(innerMap.get("Claim Date")!=null)
+					cl=innerMap.get("Claim Date");
+				else
+					cl=innerMap.get("Payment Date");
+			 
+			   outerMap.put(innerMap.get("Payment Number")+"_"+innerMap.get("Patient Name")+"_"+innerMap.get("Subscriber ID")+"_"+cl, innerMap);
+			   if(requestType.equalsIgnoreCase("byDOPAndNpi"))
+				   i=i+2;
+				   else if(requestType.equalsIgnoreCase("byDOSAndNpi"))
+					   i=i+1;
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -838,7 +893,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -846,11 +901,10 @@ public class SearchRemittance extends paymentSummary {
 			 
 		 }
 	   
-	   Log.Comment("UI detials " +(outerMap));
+//	   Log.Comment("UI details " +(outerMap));
 		return outerMap;
 	   
     }
-	
 	
 	
 	public LinkedHashMap<String,String> getPaymentDetailsFromCSRUI()
@@ -928,7 +982,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           Browser.wait(testConfig,3);
 			           pageNo++;
@@ -959,7 +1013,6 @@ public class SearchRemittance extends paymentSummary {
 	    	divSearchResults=Element.findElements(testConfig, "xpath",".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table//tr");
 	   
 //	   Log.Comment("Fetching all payments From UI..");
-	   System.out.println(divSearchResults.size());
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
 			for(int i=1;i<divSearchResults.size();i++)
@@ -970,8 +1023,6 @@ public class SearchRemittance extends paymentSummary {
 			    {	
 			      String details=divSearchResults.get(i).findElements(By.tagName("td")).get(j).getText();
 			      details=details.replace("\n", "");
-			     
-			     System.out.println(divSearchResults.get(3).findElements(By.tagName("td")).get(j).getText());
 			      if(headers.get(j).equals("Payment Status/Trace Number"))
 			    	 innerMap.put(headers.get(j), divSearchResults.get(i).findElements(By.tagName("td")).get(13).getText());
 			      if(headers.get(j).equals("Market Type"))
@@ -1015,7 +1066,7 @@ public class SearchRemittance extends paymentSummary {
 			  else if(pageNo%10==0 && totalNoOfPages!=2)
 				 {
 				       Browser.wait(testConfig,1);
-					   LogTemp.Comment("Page Number is multiple of 10..so clicking Next");
+					   Log.Comment("Page Number is multiple of 10..so clicking Next");
 			           Element.click(lnkNextPage,"Next Link");
 			           pageNo++;
 			     }
@@ -1032,10 +1083,7 @@ public class SearchRemittance extends paymentSummary {
 	public ArrayList<String> getHeadersFromResultTable()
 	{
 	   List <String> headerList=new ArrayList<String>();
-	 
 	   int noOfHeaders=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).size();
-	   System.out.println(noOfHeaders);
-	   
 	   for (int i=0;i<noOfHeaders;i++)
 	   {
 	     String header=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).get(i).getText();
@@ -1061,14 +1109,17 @@ public class SearchRemittance extends paymentSummary {
 			 
 			innerMap=new LinkedHashMap<String, String>();
 			
-//			if(requestType.equals("byDOP")||requestType.equals("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndAccountNo"))
-			innerMap.put("Payer/Patient",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			if(requestType.equals("byDOP")||requestType.equals("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndAccountNo"))
+//			innerMap.put("Payer/Patient",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			
+//			innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
+			innerMap.put("Payer","UnitedHealthcare");
 
 			String patientName=payments[i].getPatientFirstName()+" " + payments[i].getPatientMiddleName()+" "+payments[i].getPatientLastName();
 			patientName=patientName.replace("null ", "").trim();
 			
 			
-			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP"))
+			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP")||requestType.equals("byDOPAndRenderingProvider"))
 			 {
 			   if(payments[i].getClaimDate()!=null)
 			   innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
@@ -1088,7 +1139,7 @@ public class SearchRemittance extends paymentSummary {
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			
 			
-			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi")))
 			 {
 			    if(patientName!="")
 			      innerMap.put("Patient Name",patientName);
@@ -1098,10 +1149,10 @@ public class SearchRemittance extends paymentSummary {
 			if(payments[i].getSubscriberIdentifier()!=null)
 			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
 			
-			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")))
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi")))
 			{
 				if(payments[i].getPatientAccountNumber()!=null)
-					innerMap.put("Account Number",payments[i].getPatientAccountNumber());
+					innerMap.put("Account Number",payments[i].getPatientAccountNumber().replace(" ",""));
 				else
 					innerMap.put("Account Number","");
 			}
@@ -1120,6 +1171,12 @@ public class SearchRemittance extends paymentSummary {
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
 			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
 			    innerMap.put("Claim Amount","$"+ amount);
+			    if(innerMap.get("Claim Amount").contains("-"))
+			    {
+			    	String claimAmount=innerMap.get("Claim Amount").replace("-", "");
+			    	innerMap.put("Claim Amount","-"+ claimAmount);
+			    }
+			    	
 			  }
 			}
 			else
@@ -1131,29 +1188,35 @@ public class SearchRemittance extends paymentSummary {
 			
 			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
 			if(innerMap.get("Amount")!=null)
-			{
+			{ 
 			    if(innerMap.get("Amount").equals("$0.00"))
-				innerMap.put("Type","DD");
+				     innerMap.put("Type","Non||DD");
 			}
 			
 			 
- 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo"))
+ 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.contains("byDOP")||requestType.contains("byDOS")||requestType.equals("byDOSAndAcntNo"))
  			{
  				if(payments[i].getPaymentStatusCode().getDescription()!=null)
- 					innerMap.put("Payment Status/Trace Number",payments[i].getPaymentStatusCode().getDescription());
+ 					innerMap.put("Payment Status".trim(),payments[i].getPaymentStatusCode().getDescription());
  				else
  					if(innerMap.get("Type").equals("ACH"))
- 						innerMap.put("Payment Status/Trace Number","Successful ACH");
+ 						innerMap.put("Payment Status".trim(),"Successful ACH");
  					else
- 					innerMap.put("Payment Status/Trace Number","N/A");
+ 					innerMap.put("Payment Status".trim(),"N/A");
  			}
  			 
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
-			outerMap.put(innerMap.get("Payment Number")+i, innerMap);
+			innerMap.remove("Payer");
+			String cl=null;
+			if(innerMap.get("Claim Date")!=null)
+				cl=innerMap.get("Claim Date");
+			else
+				cl=innerMap.get("Payment Date");
+			outerMap.put(innerMap.get("Payment Number")+"_"+innerMap.get("Patient Name")+"_"+innerMap.get("Subscriber ID")+"_"+cl, innerMap);
 		 }
 		  
 		  
-		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
+//		 Log.Comment("Details from FISL is :"  + '\n' +outerMap);
 		 return outerMap;
 	}
 	
@@ -1236,18 +1299,20 @@ public class SearchRemittance extends paymentSummary {
 		List<String> list= new ArrayList<String>();
 		int totalPayments;
 		
-//		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(searchResponse2);
-		
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) searchResponse).getEpsConsolidatedClaimPaymentSummaries();
-		totalPayments=payments.length;
+	    totalPayments=payments.length;
 		
+	    if(totalPayments>0)
+	   {
 		switch(colName)
 		{
+		
 		case "Payer":
 			for(int i=0;i<totalPayments;i++)
 				list.add(getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			break;
 		case "Claim Date":
+		case "Payment Date":
 			for(int i=0;i<totalPayments;i++)
 				if(payments[i].getClaimDate()!=null)
 					list.add(Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
@@ -1291,6 +1356,7 @@ public class SearchRemittance extends paymentSummary {
 				   list.add(payments[i].getClaimIdentifier());
 			break;
 		case "Claim Amount":
+		case "Amount":
 			for(int i=0;i<totalPayments;i++)
 				if(payments[i].getClaimIdentifier()!=null && payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
 					   list.add("$"+"0.00");
@@ -1305,7 +1371,11 @@ public class SearchRemittance extends paymentSummary {
 			for(int i=0;i<totalPayments;i++)
 				list.add(getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			break;
-		}		 
+		}	
+		
+	  
+	   }
+	    
 		return list;
 	}
 	
@@ -1523,7 +1593,7 @@ public class SearchRemittance extends paymentSummary {
 	public SearchRemittance verifyfileinNASDrive() throws SftpException, JSchException
 	{
 		
-		sFTPAccess obj_FTPaccess = new sFTPAccess();	
+		SFTPAccess obj_FTPaccess = new SFTPAccess();	
 		//Connecting to sFTP location
 		obj_FTPaccess.connect();	
 		//Calling isFileAvailable function to validate file presence

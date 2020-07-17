@@ -30,6 +30,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -48,6 +49,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import cucumber.api.Scenario;
 import test.java.TestDetails;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
@@ -56,57 +58,44 @@ import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.ReporterClass;
+import main.java.reporting.Log;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class TestBase {
+public class TestBase extends ReporterClass {
 
-	public static WebDriver driver;
-	static String driverPath = "D:\\chromedriver\\";
+
+
 	public static HashMap<String, TestDataReader> testDataReaderHashMap = new HashMap<String, TestDataReader>();
 	public static HashMap<Integer, HashMap<String, String>> genericErrors = new HashMap<Integer, HashMap<String, String>>();
+	
 	TestDataReader testDataReaderObj;
-	public boolean printToScreen = true;
-	public boolean enableScreenshot;
-	public String testLog;
-	public Connection DBConnection = null;
-	protected static volatile TestBase testConfig;
-	private static Object mutex = new Object();
-	public static String ResultsDir;
+	public static WebDriver driver;
 	public Method testMethod;
-	private static HashMap<String, HashMap<String, String>> loginCredentials;
-	private final static String DEFAULT_SAUCE_USER = "pchaud19";
-	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
-
-	// stores the run time properties (different for every test)
-
 	public Properties runtimeProperties;
 	public SoftAssert softAssert;
-	public Connection connection = null;
+	protected static volatile TestBase testConfig;
+	public Connection DBConnection = null;
+	private final static String DEFAULT_SAUCE_USER = "pchaud19";
+	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
+	
+//	private static HashMap<String, HashMap<String, String>> loginCredentials;
 
 	public TestBase() {
 
-		// Reading Config file
-
+		runtimeProperties = new Properties();
 		File file = new File(System.getProperty("user.dir") + "\\ConfigFiles\\Config.properties");
 		FileInputStream fileInput = null;
-		testLog = "";
 		this.softAssert = new SoftAssert();
-
-		// Set the full path of results dir for taking screenshot
-		// Need to understand this
-		// this.testMethod = method;
 
 		try {
 			fileInput = new FileInputStream(file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		runtimeProperties = new Properties();
-
-		// load properties file
+		
 		try {
 			runtimeProperties.load(fileInput);
 		} catch (IOException e) {
@@ -114,66 +103,51 @@ public class TestBase {
 		}
 
 		// Getting Jenkins Parameter
+       
+		if (System.getProperty("env") == null)
+			urlHelper(runtimeProperties.getProperty(("Env")));
 
-		if (System.getProperty("env") == null) {
-			urlHeper(runtimeProperties.getProperty(("Env")));
+		else if (System.getProperty("env").equals("Stage2"))
+			urlHelper("Stage2");
 
-		}
+		else if (System.getProperty("env").equals("Stage")) 
+			urlHelper("Stage");
+		
+		else if (System.getProperty("env").equals("IMPL")) 
+			urlHelper("IMPL");
+		
+		else if (System.getProperty("env").equals("Test1")) 
+			urlHelper("Test1");
+		
+		else if (System.getProperty("env").equals("Test2"))
+			urlHelper("Test2");
 
-		else if (System.getProperty("env").equals("Stage2")) {
-			urlHeper("Stage2");
-		}
-
-		else if (System.getProperty("env").equals("Stage")) {
-			urlHeper("Stage");
-		}
-
-		else if (System.getProperty("env").equals("IMPL")) {
-			urlHeper("IMPL");
-		}
-
-		// testConfig=this;
+		else if (System.getProperty("env").equals("IMPL"))
+			urlHelper("IMPL");
 	}
 
 	public static TestBase getInstance() {
-
-		// TestBase result = testConfig;
-		if (testConfig == null) {
+		if (testConfig == null)
 			testConfig = new TestBase();
-		}
 		return testConfig;
 	}
 
-	public void urlHeper(String env) {
-
+	public void urlHelper(String env) 
+	{
 		System.setProperty("Database", env);
-		System.setProperty("UserActiveURL", runtimeProperties.getProperty("UPAURLActive_" + env));
 		System.setProperty("env", env);
-		LogTemp.Comment("testSuite " + System.getProperty("testSuite"));
-		LogTemp.Comment("BrowserType " + System.getProperty("BrowserType"));
-		LogTemp.Comment("Running on Environment : " + System.getProperty("env"), "Orange");
+	
+		if (System.getProperty("tagsToRun") == null)
+			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") + "URL_" + env));
 
-		if (System.getProperty("testSuite") == null) {
-
-			System.setProperty("URL",
-					runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") + "URL_" + env));
-
-			LogTemp.Comment("Running test Suite for: " + runtimeProperties.getProperty("testSuite"));
-
-		} else if (System.getProperty("testSuite").equals("UPA_Regression")) {
-
+		else if (System.getProperty("tagsToRun").contains("UPA")) 
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_" + env));
-		}
 
-		else if (System.getProperty("testSuite").equals("CSR_Regression")) {
-
-			LogTemp.Comment("**runtimeProperties.getPropertyenv-" + runtimeProperties.getProperty("CSRURL_" + env));
+		else if (System.getProperty("tagsToRun").equals("CSR"))
 			System.setProperty("URL", runtimeProperties.getProperty("CSRURL_" + env));
-
-		} else {
-
+		
+		else 
 			System.setProperty("URL", runtimeProperties.getProperty("CSRURL_" + env));
-		}
 
 	}
 
@@ -189,30 +163,32 @@ public class TestBase {
 		 else 
 			Execution_Env = System.getProperty("Executionin");
 		
-		
 		if (Execution_Env.equalsIgnoreCase("Local"))
 		{
 			DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
+			case "Chrome":
 				driver = initChromeDriver();
 				break;			
 			case "IE":
-				caps = DesiredCapabilities.internetExplorer();
-				caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
-				caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-				caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-				caps.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
-				caps.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-				caps.setCapability(InternetExplorerDriver.IE_USE_PER_PROCESS_PROXY, true);
-				//String v = caps.getVersion().toString();
-				caps.setCapability("disable-popup-blocking", true);
-				System.setProperty("webdriver.ie.driver",
-						System.getProperty("user.dir") + "\\drivers\\IEDriverServer.exe");
-				driver = new InternetExplorerDriver(caps);
-				driver.manage().deleteAllCookies();
+				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
+				caps1.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+				caps1.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+				caps1.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
+				caps1.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
+				caps1.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
+	            caps1.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION,true);
+	            caps1.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+	            caps1.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
+	            caps1.setCapability("disable-popup-blocking", true);
+	            caps1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+	            
+	            System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
+	            driver = new InternetExplorerDriver(caps1);
 				driver.manage().window().maximize();
-				LogTemp.Comment("Launched " + browserType );
+				
 				break;
 				
 			case "CSRIE_UPAIE":
@@ -234,7 +210,7 @@ public class TestBase {
 					driver = new InternetExplorerDriver(caps);
 					driver.manage().deleteAllCookies();
 					driver.manage().window().maximize();
-					LogTemp.Comment("Launched IE browser-- : " + browserType);
+					Log.Comment("Launched IE browser-- : " + browserType);
 				}
 				break;
 				
@@ -256,7 +232,7 @@ public class TestBase {
 					driver = new InternetExplorerDriver(caps);
 					driver.manage().deleteAllCookies();
 					driver.manage().window().maximize();
-					LogTemp.Comment("Launched " + browserType );
+					Log.Comment("Launched " + browserType );
 				}
 				break;
 			default:
@@ -270,7 +246,7 @@ public class TestBase {
 		else 
 		
 		{
-			LogTemp.Comment("Execution environment is Saucelab");
+			Log.Comment("Execution environment is Saucelab");
 			switch (browserType) {
 			case "chrome":
 				driver = SetdriveronSauce(browserType);
@@ -298,29 +274,23 @@ public class TestBase {
 	}
 
 	private static WebDriver initChromeDriver() {
-		LogTemp.Comment("Launching Google Chrome..");
+		Log.Comment("Launching Google Chrome..");
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
 
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-
 		chromePrefs.put("download.default_directory", downloadFilepath);
-
 		ChromeOptions options = new ChromeOptions();
-
 		options.setExperimentalOption("prefs", chromePrefs);
 
 		// For handling pop up -Loading of unpacked extensions is disabled by
 		// the administrator
 		options.setExperimentalOption("useAutomationExtension", false);
-
 		options.addArguments("enable-automation");
 		options.addArguments("--no-sandbox");
 		options.addArguments("--disable-extensions");
 		options.addArguments("--dns-prefetch-disable");
 		options.addArguments("--disable-gpu");
-
-		// WebDriver driver = new ChromeDriver(options);
 		driver = new ChromeDriver(options);
 		driver.manage().window().maximize();
 		return driver;
@@ -392,14 +362,8 @@ public class TestBase {
 		runtimeProperties.put(key, value);
 	}
 
-	@BeforeSuite
-	public void setUpReportingConfig() {
-		Log.setReportingConfig();
 
-	}
-
-	//@BeforeTest
-	//If browser type comes null from jenkins, pick up thr browser type from Config.
+	//If browser type comes null from jenkins, pick up the browser type from Config.
 	public void tearUp() 
 	{
 		if (System.getProperty("BrowserType") == null)
@@ -408,6 +372,7 @@ public class TestBase {
 			setDriver(System.getProperty("BrowserType"));
 	}
 
+	/*
 	@BeforeMethod()
 	public void setupTestMethod(Method method) {
 
@@ -426,14 +391,26 @@ public class TestBase {
 		new Log(testConfig, method.getName(), test.description(), author);
 		
 
+	}*/
+	
+	
+	public void setupTestMethod(Scenario scn) {
+		 startTestCase(scn.getName(),scn.getName(),"Priyanka");
+	     new Log(testConfig);
 	}
 
-	@AfterMethod()
+/*	@AfterMethod()
 	public void endTest(ITestResult iTestResult) {
 		Log.endTest(iTestResult);
-	}
+	}*/
 
-	//@AfterTest
+	
+	public void endTest(Scenario scn) {
+		logReportSteps(scn.getStatus());
+		 endReporting();
+	}
+		
+	@AfterTest
 	public void tearDown() {
 		 Browser.closeBrowser(testConfig);		 
 
@@ -446,13 +423,13 @@ public class TestBase {
 
 	public void initializeData() {
 		testConfig = TestBase.getInstance();
+		tearUp();
 	}
 
 
 
 	public WebDriver SetdriveronSauce(String Browser) {
-		
-		String URL = "http://" + "pchaud19" + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
+		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("platform", "Windows 10");
@@ -469,7 +446,7 @@ public class TestBase {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			LogTemp.Comment("Launched browser-- : " + Browser);
+			Log.Comment("Launched browser-- : " + Browser);
 		}
 		else if (Browser.equalsIgnoreCase("chrome")) {
 			
@@ -485,7 +462,7 @@ public class TestBase {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			LogTemp.Comment("Launched browser-- : " + Browser);
+			Log.Comment("Launched browser-- : " + Browser);
 		}
 
 		return driver;
@@ -494,7 +471,7 @@ public class TestBase {
 	
 	/*private static WebDriver initFirefoxDriver() {
 
-	LogTemp.Comment("Launching Firefox browser..");
+	Log.Comment("Launching Firefox browser..");
 	System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\drivers\\geckodriver.exe");
 
 	FirefoxProfile profile = new FirefoxProfile();

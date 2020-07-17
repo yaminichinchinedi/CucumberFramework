@@ -29,7 +29,7 @@ public class DataBase
 	
 	public enum DatabaseType
 	{
-		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test(6);
+		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test1(6),Test2(7);
 
 	  public final int values;
 	  
@@ -145,23 +145,23 @@ public class DataBase
 		
 		
 		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
-		{
           return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage);
-		}
+	
 		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
-         {
-	    return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
-         }
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
+      
          else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
-         {
-	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
-       }
-         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
-         {
-	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test);
-       }
-    else
-	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+         
+         else if (System.getProperty("Database").equalsIgnoreCase("Test1"))
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test1);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
+    	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test2);
+           
+       
+      else
+	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
 
 	/**
@@ -335,23 +335,22 @@ public class DataBase
 	{
 		
 		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
-		{
           return executeSelectQuery(testConfig, DatabaseType.Stage,sqlRow);
-		}
+
 		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
-         {
-	    return executeSelectQuery(testConfig,DatabaseType.Stage2,sqlRow);
-         }
+	     return executeSelectQuery(testConfig,DatabaseType.Stage2,sqlRow);
+
          else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
-         {
-	   return executeSelectQuery(testConfig,DatabaseType.PROD,sqlRow);
-       }
-         else if (System.getProperty("Database").equalsIgnoreCase("Test"))
-         {
-	   return executeSelectQuery(testConfig,DatabaseType.Test,sqlRow);
-       }
-    else
-	return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
+	     return executeSelectQuery(testConfig,DatabaseType.PROD,sqlRow);
+      
+         else if (System.getProperty("Database").equalsIgnoreCase("Test1"))
+         return executeSelectQuery(testConfig,DatabaseType.Test1,sqlRow);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
+         return executeSelectQuery(testConfig,DatabaseType.Test2,sqlRow);
+    
+         else
+	     return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
 }
 
 	/**
@@ -654,11 +653,18 @@ public class DataBase
 				password = testConfig.getRunTimeProperty("ProdDBPassword");
 				break;
 				
-			case Test:
-				connectString = testConfig.getRunTimeProperty("TestDBConnectionString");
-				Log.Comment("Connecting to Test DB:-" + connectString);
-				userName = testConfig.getRunTimeProperty("TestDBUsername");
-				password = testConfig.getRunTimeProperty("TestDBPassword");
+			case Test1:
+				connectString = testConfig.getRunTimeProperty("Test1DBConnectionString");
+				Log.Comment("Connecting to Test1 DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("Test1DBUsername");
+				password = testConfig.getRunTimeProperty("Test1DBPassword");
+				break;
+				
+			case Test2:
+				connectString = testConfig.getRunTimeProperty("Test2DBConnectionString");
+				Log.Comment("Connecting to Test2 DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("Test2DBUsername");
+				password = testConfig.getRunTimeProperty("Test2DBPassword");
 				break;
 				
 			case Automation:
@@ -697,8 +703,8 @@ public class DataBase
 			Log.Comment("Exception occured : " + e);
 		}
 
-		testConfig.connection = con;
-		return testConfig.connection;
+		testConfig.DBConnection = con;
+		return testConfig.DBConnection;
 	}
 	
 	/**
