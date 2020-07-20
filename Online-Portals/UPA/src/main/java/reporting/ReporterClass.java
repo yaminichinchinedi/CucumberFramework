@@ -39,10 +39,10 @@ public abstract class ReporterClass {
    	{
        	  if(result.equalsIgnoreCase("failed")) 
        		  Log.Fail(result);
-       	    else if(result.equalsIgnoreCase("passed"))
-       	    	Log.Pass(result);
-       	    else 
-       	    	Log.skipped(result);
+//       	    else if(result.equalsIgnoreCase("passed"))
+//       	    	Log.Pass(result);
+//       	    else 
+//       	    	Log.skipped(result);
 //   	    ExtentTestManager.getTest().assignCategory(result.getMethod().getGroups());
    	}
     public synchronized void endReporting() {
