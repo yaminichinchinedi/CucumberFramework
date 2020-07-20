@@ -595,7 +595,7 @@ public class ManageUsers extends AddUserDetails  {
 			Log.Fail("Failed due to an exception : " + e);
 		}
 		
-		if(userType.equalsIgnoreCase("PAY"))
+		if(userType.contains("PAY"))
 		{
 			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - Yes button", expectedValue, btnYesSubPayerDataOnly.getAttribute("disabled"));
 			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - No button", expectedValue, btnNoSubPayerDataOnly.getAttribute("disabled"));
@@ -1100,9 +1100,13 @@ public class ManageUsers extends AddUserDetails  {
 	 */
 	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
 		String expectedStatus="Purged";
-		
+		try {
 		if(System.getProperty("App").equalsIgnoreCase("CSR"))
 			selectPurgedCheckbox();
+		}
+		catch (Exception e) {
+			Log.Comment("App is UPA");
+		}
 	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
 	
