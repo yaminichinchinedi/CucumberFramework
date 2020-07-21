@@ -935,5 +935,14 @@ public class ManageUsers extends AddUserDetails  {
 		clickSave();
 		return this;
 	}
+	
+	public ManageUsers verifyPurgedUserStatus()
+	{
+		int sqlNo=258;
+		Map data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		String status=data.get("STS_CD").toString();
+		Helper.compareEquals(testConfig, "Purged User Status", "PZ", status);
+		return this;
+	}
 }
 

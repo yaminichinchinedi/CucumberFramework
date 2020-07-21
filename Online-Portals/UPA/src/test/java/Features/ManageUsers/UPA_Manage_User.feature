@@ -82,3 +82,27 @@ Scenario Outline: UPA Manage User UI Functionality Verifies user list sorting is
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |
+      
+      @TEST1
+      Scenario Outline: UPA Manage User Add new Provider user using purged user email address
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Provider user using "<stsCode>"
+    Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
+      |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
+      
+      Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Payer and BS user using "<stsCode>"
+    Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|		stsCode		|
+      |      PAY_Admin  |     PAY     	|		    Administrator	   	|			PU			|
+      |      BS_Admin   |     BS      	|	    	Administrator			|			PU			|
+      
+     
+      
+      

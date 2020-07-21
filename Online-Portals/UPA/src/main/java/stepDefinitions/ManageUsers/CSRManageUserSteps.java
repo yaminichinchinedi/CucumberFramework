@@ -19,6 +19,17 @@ public class CSRManageUserSteps extends TestBase {
 
         manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
     }
+    
+    @Then("^User enters \"([^\"]*)\" in Manage Users Page and Click to add new User using \"([^\"]*)\"  and fill the details \"([^\"]*)\" and verify the user detils and delete the user$")
+    public void user_enters_in_Manage_Users_Page_and_Click_to_add_new_User_using_and_fill_the_details_and_verify_the_user_detils_and_delete_the_user(String userType, String stsCode, String accessLevelOfNewUser) throws Throwable {
+    	if(userType.equalsIgnoreCase("PROV"))
+             manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo(stsCode).addTinCSR().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+         else
+             manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+
+         manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
+    }
+
 
     @Then("^validate User enters \"([^\"]*)\" to verify acive admin, access level, email check, remove tin \"([^\"]*)\" and modify email \"([^\"]*)\" and \"([^\"]*)\" firstName$")
     public void user_enters_in_Manage_Users_Page_and_Verify_Deatils_one(String userType,String disabledValue,String email,String firstName) throws Throwable {
@@ -57,4 +68,9 @@ public class CSRManageUserSteps extends TestBase {
         String newTinAdded=manageUsers.addTinCSR(sqlNo);
         manageUsers.verifyDisabledItemsForTin(tinNo, disabledValue).selectAccessLvl("Administrator",newTinAdded).clickSave().removeTinNpi(newTinAdded).verifyDisabledItemsForTin(tinNo,disabledValue);
     }
+	
+	@Then("^Validate status of purged user is changed to PZ$")
+	public void validate_status_of_purged_user_is_changed_to_PZ() throws Throwable {
+		manageUsers.verifyPurgedUserStatus();
+	}
 }

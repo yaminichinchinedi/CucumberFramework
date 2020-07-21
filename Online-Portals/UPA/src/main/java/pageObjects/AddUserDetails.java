@@ -160,6 +160,27 @@ public class AddUserDetails {
 		
 	}
 	
+	public AddUserDetails fillNewUserInfo(String stsCode)
+	{
+		int sqlNo=257;
+		testConfig.putRunTimeProperty("stsCode", stsCode);
+		Map pzEmail=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		userEmailAdr=pzEmail.get("EMAIL_ADR_TXT").toString();
+		testConfig.putRunTimeProperty("purgedEmail", userEmailAdr);
+		userEmailAdr=userEmailAdr.substring(0, userEmailAdr.indexOf("##PU##"));
+		testConfig.putRunTimeProperty("email", userEmailAdr);
+		Browser.wait(testConfig, 2);
+		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
+	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
+		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		return new AddUserDetails(testConfig);
+		
+	}
+	
 	public AddUserDetails selectAndAddTin()
 	{
 	    Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");

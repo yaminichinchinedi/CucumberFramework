@@ -64,4 +64,19 @@ public class UPAManageUserSteps extends TestBase {
         addUserDetails.verifyDetailsOfNewUser(userType);
         manageUser.removeFistTinInGrid();
     }
+    
+	
+	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user using \"([^\"]*)\"$")
+	public void verifies_details_for_and_New_Provider_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
+		addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails.clickSave().verifyDetailsOfNewUser(userType);
+        manageUser.removeFistTinInGrid();
+	}
+	
+	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
+	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
+		addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails.clickSave().verifyDetailsOfNewUser(userType);
+	}
+
 }
