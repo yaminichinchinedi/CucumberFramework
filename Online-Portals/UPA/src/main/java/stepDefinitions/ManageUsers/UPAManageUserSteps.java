@@ -78,5 +78,10 @@ public class UPAManageUserSteps extends TestBase {
 		addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyDetailsOfNewUser(userType);
 	}
-
+    
+    @Then("^Verify Save and Cancel func for AccessLvl for \"([^\"]*)\"$")
+    public void verify_Save_and_Cancel_func_for_AccessLvl_for(String userType) throws Throwable {
+    	manageUser.changeAndSaveAccessLevel(userType);
+     
+    }
 }

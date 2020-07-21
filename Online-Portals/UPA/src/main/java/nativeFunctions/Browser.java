@@ -71,6 +71,30 @@ public class Browser
 		}
 	}
 	
+	public static void waitForPageLoad(TestBase testConfig) 
+	{
+		try{
+			
+			ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() 
+				{
+			      public Boolean apply(WebDriver driver) 
+			      {
+			    	  driver=testConfig.driver;
+				  return ((JavascriptExecutor)testConfig.driver).executeScript(
+						"return document.readyState").equals("complete");
+			}
+		};
+		
+		WebDriverWait wait = new WebDriverWait(testConfig.driver,120,600);
+		wait.until(pageLoadCondition);
+		}
+		catch(Exception e)
+		{
+			Browser.wait(testConfig, 5);
+		}
+	}
+  
+	
 	public static void scrollTillAnElement(TestBase testConfig,WebElement element,String description)
 	{
 		try{

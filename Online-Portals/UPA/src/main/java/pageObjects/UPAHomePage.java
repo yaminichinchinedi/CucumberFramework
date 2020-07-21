@@ -99,7 +99,7 @@ public class UPAHomePage extends HomePage {
 	public ManageUsers clickManageUsersTab()
 	{
 		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
-		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
+		Element.click(lnkManageUsers, "Manage Users");
 		return new ManageUsers(testConfig);
 	}
 	
