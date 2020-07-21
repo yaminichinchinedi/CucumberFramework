@@ -172,7 +172,7 @@ public class MyProfile {
 			Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getPayerTinsFromUI());
 		else
 		Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getTinsFromUI());
-		Log.PassWithScreenshot("Verifies user details on my profile page successully");
+	//	Log.passWithScreenshot("Verifies user details on my profile page successully");
 		return this;
 	}
 	
@@ -270,7 +270,7 @@ public class MyProfile {
 		Element.enterData(txtBoxVerifyEmail, existingEmailAdr,"Enter verify existing email address as : " + existingEmailAdr,"Verify Email");
 		Element.click(btnSave, "Save button");
 		Element.waitTillTextAppears(errorEmail, "Email Address already exists in our database", testConfig);
-		Log.PassWithScreenshot("Verifies all error msgs successfully");
+		//Log.passWithScreenshot("Verifies all error msgs successfully");
 		
 	}
 	

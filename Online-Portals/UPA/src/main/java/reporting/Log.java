@@ -286,7 +286,7 @@ public  class Log extends ExtentTestManager {
 	    }
 
 	
-	public synchronized static void PassWithScreenshot(String message)
+	public synchronized static void passWithScreenshot(String message)
 	{
 		printToScreen(message);
 		addScreenshotMsgForPass(testConfig,message);
