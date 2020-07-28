@@ -20,6 +20,24 @@ public class CSRManageUserSteps extends TestBase {
         manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
     }
 
+
+	@Then("^User enters \"([^\"]*)\"  and Purged TIN  and click on Search button in Manage Users Page$")
+	public void user_enters_and_Purged_TIN_and_click_on_Search_button_in_Manage_Users_Page(String userType) throws Throwable {
+		if(userType.equalsIgnoreCase("PROV"))
+			manageUsers = searchPage.doSearchPUTIN("PROV");
+	  
+	}
+    
+	@Then("^User clicks on View Purge Users checkbox$")
+	public void user_click_on_View_Purge_Users_checkbox() throws Throwable {
+		manageUsers.clickPurgeUsers();
+	}
+
+	@Then("^User clicks on one of Purged User from User list and perform validations like Name,Phone No,Email,TIN List,buttons disabled for \"([^\"]*)\" user$")
+	public void user_clicks_on_one_of_Purged_User_from_User_list_and_perform_validations_like_Name_Phone_No_Email_TIN_List_buttons_disabled_for_user(String credentials) throws Throwable {
+		manageUsers.validatePurgeUsers("CSR",credentials);    	
+	}
+	
     @Then("^validate User enters \"([^\"]*)\" to verify acive admin, access level, email check, remove tin \"([^\"]*)\" and modify email \"([^\"]*)\" and \"([^\"]*)\" firstName$")
     public void user_enters_in_Manage_Users_Page_and_Verify_Deatils_one(String userType,String disabledValue,String email,String firstName) throws Throwable {
         String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");

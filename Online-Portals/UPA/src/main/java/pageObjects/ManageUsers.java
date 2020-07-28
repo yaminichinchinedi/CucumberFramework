@@ -58,6 +58,36 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath="//input[@value='Add User']")
 	WebElement btnAddUser;
 	
+	@FindBy(xpath="//input[@value='Resend Registration Email']")
+	WebElement btnRsndRegEmail;
+	
+	@FindBy(name="fname")
+	WebElement fname;
+	
+	@FindBy(name="lname")
+	WebElement lname;
+	
+	@FindBy(name="phoneNum")
+	WebElement phoneNum;
+	
+	@FindBy(name="phoneNum1")
+	WebElement phoneNum1;
+	
+	@FindBy(name="phoneNum2")
+	WebElement phoneNum2;
+	
+	@FindBy(name="email")
+	WebElement email;
+	
+	@FindBy(name="verifyEmail")
+	WebElement verifyEmail;
+	
+	@FindBy(xpath="//input[@value='Search']")
+	WebElement btnSearch;
+	
+	@FindBy(xpath="//input[@value='Add TIN/NPI']")
+	WebElement btnAddTINNPI;
+	
 	@FindBy(name="GridListResults[0].removeTinNpi")
 	WebElement chkRemoveTin;
 	
@@ -127,6 +157,8 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),'Status')]")
 	WebElement txtStatus;
 	
+	@FindBy(xpath="//input[@id='viewpurgeduser']")
+	WebElement viewPurge;
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -138,6 +170,121 @@ public class ManageUsers extends AddUserDetails  {
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
 
+	}
+	
+	public void clickPurgeUsers()
+	{
+		Element.clickByJS(testConfig, viewPurge, "Purged Users Checkbox");
+		Browser.wait(testConfig, 4);
+		
+	}
+	
+
+	public void checkPurgedUser(String LoginType)
+	{
+		
+		List <WebElement> userNames=null;
+		ArrayList<String> UsersListUI=new ArrayList<String>();
+		try{
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		catch(Exception e){
+			Log.Comment("Finding user List again");
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		
+		for (int i=0;i<=userNames.size();i++)
+		{
+			if ( (LoginType.equals("UPA") && userNames.get(i).getText().contains("Purged"))||
+			   ( (LoginType.equals("CSR") && userNames.get(i).getText().equals(testConfig.getRunTimeProperty("PurgedUser"))))
+					   )
+			{
+				Element.click(userNames.get(i), "Purged User List");
+				Browser.wait(testConfig, 5);
+				break;
+			}
+		
+		}	
+	}
+	
+	
+	public void validatePurgeUsers(String LoginType,String Credentials) throws InterruptedException
+	{
+		
+		checkPurgedUser(LoginType);
+		
+		
+		if (LoginType.equals("CSR") && !(Credentials.equals("RO")) )
+		{	
+		 Helper.compareEquals(testConfig, "Save Button", "true",  btnSave.getAttribute("disabled"));
+		 Helper.compareEquals(testConfig, "Cancel Button", "true",  btnCancel.getAttribute("disabled"));
+		}
+		 if (LoginType.equals("CSR"))
+		{
+			if (Credentials.equals("Super")||Credentials.equals("RW"))
+			{	
+				if (Credentials.equals("Super"))
+				{		
+			Helper.compareEquals(testConfig, "Delete Button", "true",  btnDelete.getAttribute("disabled"));
+	        Helper.compareEquals(testConfig, "Resend Email Button", "true",  btnRsndRegEmail.getAttribute("disabled"));
+			}
+			else
+			Helper.compareEquals(testConfig, "Resend Email Button", "true",  btnRsndRegEmail.getAttribute("disabled"));
+		
+			}
+			Browser.wait(testConfig, 3);
+			 Helper.compareEquals(testConfig, "First Name", "true",  fname.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Last Name", "true",  lname.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum", "true",  phoneNum.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum1", "true",  phoneNum1.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum2", "true",  phoneNum2.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Email", "true",  email.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Verify Email", "true",  verifyEmail.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Search Button", "true",  btnSearch.getAttribute("disabled"));
+		}
+		 
+		
+		 Helper.compareEquals(testConfig, "Add TIN/NPI Button", "true",  btnAddTINNPI.getAttribute("disabled"));
+
+		 Helper.compareEquals(testConfig, "First Name", "true",  fname.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Last Name", "true",  lname.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum", "true",  phoneNum.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum1", "true",  phoneNum1.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum2", "true",  phoneNum2.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Email", "true",  email.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Verify Email", "true",  verifyEmail.getAttribute("readonly"));
+		 List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+		 if (LoginType.equals("UPA") )
+		 Helper.compareContains(testConfig, "Status matching", "Purged", details.get(0).getText());
+	if (LoginType.equals("CSR")&& Credentials.equals("Super"))
+	{
+		Helper.compareContains(testConfig, "Status matching", "Purged", details.get(1).getText()); 
+		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(5).getText());
+		 Helper.compareContains(testConfig, "DateTime", testConfig.getRunTimeProperty("Timestamp"), details.get(6).getText());
+	}	
+	if (LoginType.equals("CSR")&& (Credentials.equals("RO")|| Credentials.equals("RW")))
+	{
+		Helper.compareContains(testConfig, "Status matching", "Purged", details.get(0).getText()); 
+		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(4).getText());
+		 Helper.compareContains(testConfig, "DateTime", testConfig.getRunTimeProperty("Timestamp"), details.get(5).getText());
+	}	
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].accessLevel']").getAttribute("disabled") ;
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].emailNotify']").getAttribute("disabled") ;
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].removeTinNpi']").getAttribute("disabled") ;
+	
+		 if (LoginType.equals("CSR"))
+			{
+			 Element.clickByJS(testConfig,  Element.findElement(testConfig, "id", "logOutId"), "Logout");
+			 Browser.wait(testConfig, 2);
+			 
+			}
+	
+	}
+
+	public void validateUserEntrybySameTIN(){
+		
+		getTinsListFromUI();
+		
 	}
 	
 	public AddUserDetails clickAddNewUser()
@@ -314,6 +461,20 @@ public class ManageUsers extends AddUserDetails  {
 	}
 	
 	
+	
+	public ManageUsers validateAddingSameTIN()
+	{
+		
+		String tinNoToBeSelected= Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[1]").getText();
+	    Element.selectByValue(drpDwnSelectTin, tinNoToBeSelected, "select tin as " + tinNoToBeSelected);
+		Browser.waitForLoad(testConfig.driver);
+		clickAddTin();
+		Browser.wait(testConfig, 2);
+		String expected=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
+		String actual=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
+		Helper.compareEquals(testConfig, "Error Message comparision", expected, actual);
+		return new ManageUsers(testConfig);
+	}
 	
 	/**
 	 * This function clicks the specified user by 

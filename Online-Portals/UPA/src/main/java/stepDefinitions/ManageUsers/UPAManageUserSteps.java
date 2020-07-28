@@ -71,4 +71,15 @@ public class UPAManageUserSteps extends TestBase {
     	manageUser.changeAndSaveAccessLevel(userType);
      
     }
+    @Then("^Verify Purged User validations by clicking on it$")
+    public void verify_Purged_User_validations_by_clicking_on_it() throws Throwable {
+    	manageUser.validatePurgeUsers("UPA","All");
+    }
+    
+
+	@Then("^User perform validation by adding TIN with same TIN$")
+	public void user_perform_validation_by_adding_TIN_with_same_TIN() throws Throwable {
+	manageUser.clickActiveUserName("PROV");
+	manageUser.validateAddingSameTIN();
+}
 }
