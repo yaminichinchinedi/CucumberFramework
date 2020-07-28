@@ -103,7 +103,7 @@ import main.java.reporting.Log;
 //        "com.cucumber.listener.ExtentCucumberFormatter:"+ "C:/CucumberEditEnrollment/CucumberFramework/Online-Portals/UPA/ExtentReports/ExtentReportResults.html"},
         dryRun=false,
         strict=true,
-        tags={"@UPASrchRemitEPRAPayer"}
+        tags={"@CSRPurgedTest2"}
 
 		)
 public class DemoTestNGRunner extends TestBase {

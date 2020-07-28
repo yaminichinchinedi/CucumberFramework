@@ -33,8 +33,8 @@ Scenario Outline: US2684242_2_CSR_SuperUsers_ManageUsers_selectViewPurgedUsers_C
 	
 					|  credentials	|   userType  |  searchCriteria   |  
 					|     Super     |   PAY       |    PurgedUsers    | 
-					|     RO        |   PAY       |    PurgedUsers    |
-					|     RW        |   PAY       |    PurgedUsers    | 
+					#|     RO        |   PAY       |    PurgedUsers    |
+					#|     RW        |   PAY       |    PurgedUsers    | 
 					
 					
 @CSRPurgedTest3

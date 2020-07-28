@@ -1040,7 +1040,7 @@ public class ManageUsers extends AddUserDetails  {
 			for(int i=1;i<=userDetails.size();i++)
 			{
 				if(userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
-					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim() +"   - PURGED");
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() +"  - PURGED");
 				else
 					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
 			}
@@ -1049,19 +1049,19 @@ public class ManageUsers extends AddUserDetails  {
 			sql=253;
 			try {
 				if(System.getProperty("App").equalsIgnoreCase("CSR"))
-				selectPurgedCheckbox();
-				}
-				catch (Exception e) {
-					Log.Comment("App is UPA");
-				}
-			deSelectPurgedCheckbox();
-			usersFromDB.clear();
-			userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
-			Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-			for(int i=1;i<=userDetails.size();i++)
-			  usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
-			Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
-			
+				{
+				 deSelectPurgedCheckbox();
+			     usersFromDB.clear();
+			     userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			     Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			    for(int i=1;i<=userDetails.size();i++)
+			    usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			    Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			   }
+			}
+			catch (Exception e) {
+				Log.Comment("App is UPA");
+		}
 		}
 			
 	}
