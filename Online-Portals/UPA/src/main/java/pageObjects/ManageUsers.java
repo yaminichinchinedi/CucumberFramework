@@ -616,6 +616,8 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		if(userType.equalsIgnoreCase("PAY"))
 			Helper.compareContains(testConfig, "Status of User", expectedStatus, txtStatus.getText());
+		if(userType.contains("BS"))
+			Helper.compareContains(testConfig, "Status of User", expectedStatus, txtStatus.getText());
 		return this;
 	}
 	
@@ -1079,8 +1081,8 @@ public class ManageUsers extends AddUserDetails  {
         
         if(userType.equalsIgnoreCase("PROV"))
         	sqlRowNo=10;
-        else if(userType.equalsIgnoreCase("BS"))
-        	sqlRowNo=18;
+        else if(userType.contains("BS"))
+        	sqlRowNo=256;
         else if(userType.contains("PAY"))
         	sqlRowNo=254;
         
