@@ -32,6 +32,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -434,12 +435,15 @@ public class TestBase extends ReporterClass {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "11.285");
+			caps.setCapability("name", "Remote File Upload Test");
 			caps = DesiredCapabilities.internetExplorer();
 
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			try {
-				driver = new RemoteWebDriver(new URL(URL), caps);
+				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
+				remoteWebDriver.setFileDetector(new LocalFileDetector());
+				driver=remoteWebDriver;
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}

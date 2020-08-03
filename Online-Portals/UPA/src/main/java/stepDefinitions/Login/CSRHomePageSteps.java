@@ -55,6 +55,10 @@ public class CSRHomePageSteps extends TestBase{
 		public void click_on_CSRManage_User_Link() throws Throwable {
 			homePage.clickManageUsersLink();
 		}
+	   
+	   @Then("^User clicks on Create/Maintain Enrollment link$")
+	   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
+		   homePage.clickCrtEnrlmnt();  
+	   }
 
-	 
 }

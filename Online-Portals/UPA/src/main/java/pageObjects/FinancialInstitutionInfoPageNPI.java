@@ -2,9 +2,13 @@ package main.java.pageObjects;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
@@ -467,6 +471,204 @@ public class FinancialInstitutionInfoPageNPI{
 		
 		}
 	}
+	
+	
+	
+	public FinancialInstitutionInfoPageNPI clearNfillRTNNoABANPI() throws IOException 
+	{
+	  
+		  	  
+		  int rowNo=16;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  List<String>ValidRoutNos=data.GetAllColumnsData("FinancialInfo","ValidRoutingNos");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		  if( ValidRoutNos.contains(routingNo))
+		  {  
+		  Element.clearData(finInstRoutNum, "Routing No");
+		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
+		  Browser.wait(testConfig, 2);
+		  //Check for the API down message "Service is down, please try again."
+		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
+		  Browser.wait(testConfig, 5);
+		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
+		  String AddronUIText=AddronUI.getText();
+		  try{
+		  AddronUI.sendKeys("12");
+		  }
+		  catch(WebDriverException e){
+		  Log.Comment("readOnly field");
+		  }
+
+		  String spChar="!#$%&'()*+./:;<=>?@[]^_`{|}";
+		  for (int i = 0; i < AddronUIText.length(); i++) {
+			    
+			    if (spChar.contains(Character.toString(AddronUIText.charAt(i))))
+			    {
+			    Log.Warning((AddronUIText.charAt(i)+": is a special character"),testConfig);
+			    }  
+			  }
+		  String[] Bankdetails=AddronUIText.split("\n");
+		  List<String> UIBankDetails=Arrays.asList(Bankdetails);
+		  //Validate that it does contain any special character
+		  List<String>ValidAddr=data.GetAllColumnsData("FinancialInfo","ValidAddr2");
+		  ValidAddr.add(3, "");
+		  Helper.compareEquals(testConfig, "UI and Actual Compasision", ValidAddr, UIBankDetails);
+
+		 String zip=ValidAddr.get(2).toString().substring(ValidAddr.get(2).toString().length()-10);
+		 if (zip.length()==5 || ( zip.length()==10 || ( zip.substring(5,6).equals("-"))))
+		 {}
+		 else
+		 Log.Fail("Zip length is not 5 or '-' is missing between them");	 
+		 String phone=ValidAddr.get(4);
+		 
+		 if ( phone.substring(3,4).equals("-")  &&  phone.substring(7,8).equals("-")  )
+		 {}
+		 else
+		 {
+			 Log.Fail(" '-' is missing between phone nos");	 
+		 }
+		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
+		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
+		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
+		 }
+		  else
+			  Log.Fail("Please proceed with valid RTN");
+		 
+	   Element.click(btnContinueSavChng, "Save Changes Button");
+
+		return this;
+    }
+
+	
+	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoFromNPIABA(String routingNo) throws IOException 
+	{
+		  String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		  Element.enterData(finInstNPINo,npiNumber ,"Enter National Provider Identifier","finInstNPINo");   
+		  Element.enterKeys(finInstNPINo, Keys.TAB, "TAB Key entering", "TAB Key");
+		  int rowNo=1;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  if (routingNo== null)
+		  {
+		  Element.clearData(finInstRoutNum, "Routing Num");
+		  Element.enterKeys(finInstRoutNum, Keys.TAB, "TAB Key entering", "TAB Key");
+
+		  }
+		 else
+		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  verifyErrorMsgABNNPI(routingNo);
+		
+		 return this;
+    }
+
+	public void verifyErrorMsgABNNPI(String routingNo){
+		
+
+		String expectedColor= "rgb(189, 60, 55)";
+        Element.verifyTextPresent(Element.findElement(testConfig, "xpath", "//div[@id='headingErrorForInvalidRtn']/ul/li/a"), "- Financial Institution Information - Financial Institution Routing Number");
+        Log.Comment("Verifying Error Msg is displayed for Financial Inst Name..");
+	    
+        //Null value
+        if (routingNo==null){
+        String expectedText="Missing Data";
+        Element.verifyTextPresent(Element.findElement(testConfig, "xpath", "//div[@id='bankDetailMissingError']/p"), expectedText);
+        }
+        
+	    //9 but incorrect RTN
+        else if (routingNo.length()==9 && routingNo.matches("[^[0-9]]*$")){
+        Browser.wait(testConfig, 5);
+         String expectedVal="No Financial Institution match found for this routing number"+" "+"- Please enter again";
+	    String actVal1=Element.findElement(testConfig, "xpath", "//div[@id='bankDetailInvalidErrorTryAgain']/p[1]").getText();
+	    String actVal2=Element.findElement(testConfig, "xpath", "//div[@id='bankDetailInvalidErrorTryAgain']/p[2]").getText();
+	    String actVal=actVal1+" "+actVal2;
+	    Helper.compareEquals(testConfig, "Verify Error message" , expectedVal, actVal);
+        }
+       //Less than 9 and Alphanumeric
+        else if (routingNo.length()!=9 || routingNo.matches("[^[a-zA-Z0-9]]*$")){
+	    String expectedTextInvalid="Invalid Data";  
+	    Element.verifyTextPresent(Element.findElement(testConfig, "xpath", "//div[@id='bankDetailInvalidError']/p"), expectedTextInvalid);
+        }
+	   Browser.wait(testConfig, 2);
+	    Helper.compareEquals(testConfig, "Verify Red color is highlighted in Financial Routing No" , expectedColor, Color.fromString(finInstRoutNum.getCssValue("border-color")).asRgb());
+			
+		
+	}
+	
+	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoFromExcelABANPI() throws IOException 
+	{
+	  
+		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinueSavChng.getAttribute("disabled"));	  
+		  String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		  Element.enterData(finInstNPINo,npiNumber ,"Enter National Provider Identifier","finInstNPINo");  
+		  Element.enterKeys(finInstNPINo, Keys.TAB, "TAB Key entering", "TAB Key");
+		  int rowNo=15;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  List<String>ValidRoutNos=data.GetAllColumnsData("FinancialInfo","ValidRoutingNos");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		  if( ValidRoutNos.contains(routingNo))
+		  {  
+		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
+		  Browser.wait(testConfig, 2);
+		  //Check for the API down message "Service is down, please try again."
+		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
+		  Browser.wait(testConfig, 5);
+		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
+		  String AddronUIText=AddronUI.getText();
+		  try{
+		  AddronUI.sendKeys("12");
+		  }
+		  catch(WebDriverException e){
+		  Log.Comment("readOnly field");
+		  }
+
+		  String spChar="!#$%&'()*+./:;<=>?@[]^_`{|}";
+		  for (int i = 0; i < AddronUIText.length(); i++) {
+			    
+			    if (spChar.contains(Character.toString(AddronUIText.charAt(i))))
+			    {
+			    Log.Warning((AddronUIText.charAt(i)+": is a special character"),testConfig);
+			    }  
+			  }
+		  String[] Bankdetails=AddronUIText.split("\n");
+		  List<String> UIBankDetails=Arrays.asList(Bankdetails);
+		  //Validate that it does contain any special character
+		  List<String>ValidAddr=data.GetAllColumnsData("FinancialInfo","ValidAddr");
+		  ValidAddr.add(3, "");
+		  Helper.compareEquals(testConfig, "UI and Actual Compasision", ValidAddr, UIBankDetails);
+		  Element.verifyElementVisiblity(btnContinueSavChng, "Continue Button");
+		 String zip=ValidAddr.get(2).toString().substring(ValidAddr.get(2).toString().length()-10);
+		 if (zip.length()==5 || ( zip.length()==10 || ( zip.substring(5,6).equals("-"))))
+		 {}
+		 else
+		 Log.Fail("Zip length is not 5 or '-' is missing between them");	 
+		 System.out.println("zip is"+zip);
+		 String phone=ValidAddr.get(4);
+		 
+		 if ( phone.substring(3,4).equals("-")  &&  phone.substring(7,8).equals("-")  )
+		 {}
+		 else
+		 {
+			 Log.Fail(" '-' is missing between phone nos");	 
+		 }
+		  uploadBankLetterPdfWithAcceptance();
+		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
+		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
+		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
+		 }
+		  else
+			  Log.Fail("Please proceed with valid RTN");
+		 
+		
+		return this;
+    }
 	
 	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoForNPI() throws IOException
 	{
