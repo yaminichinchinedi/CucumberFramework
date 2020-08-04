@@ -433,8 +433,10 @@ public class TestBase extends ReporterClass {
 		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-			caps.setCapability("platform", "Windows 10");
-			caps.setCapability("version", "11.285");
+			caps.setCapability("platform", "Windows 11");
+			//caps.setCapability("version", "11.285");
+			caps.setCapability("version", "latest");
+			caps.setCapability("maxDuration", 3600);
 			caps.setCapability("name", "Remote File Upload Test");
 			caps = DesiredCapabilities.internetExplorer();
 
