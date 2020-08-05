@@ -61,11 +61,11 @@ Scenario Outline: CSR Manage Purse User
     Then User clicks on one of Purged User from User list and perform validations like Name,Phone No,Email,TIN List,buttons disabled for "<credentials>" user 
     Examples:
       |    userType     |   credentials   |   
-      |      PROV       |      RO      		|	 
-      |      PROV       |      RW      		|	 
+      |      PROV       |      ROOnly    	|	 
+      |      PROV       |      RWOnly    	|	 
       |      PROV       |      Super      |	
-      |      PROV       |      ROPublish 	|
-      |      PROV       |      RWPublish 	|
+      |      PROV       |      RO 				|
+      |      PROV       |      RW 				|
 
 
 																

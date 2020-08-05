@@ -214,14 +214,14 @@ public class ManageUsers extends AddUserDetails  {
 		checkPurgedUser(LoginType);
 		
 		
-		if (LoginType.equals("CSR") && !(Credentials.equals("RO")|| Credentials.equals("ROPublish")|| Credentials.equals("RWPublish") ) )
+		if (LoginType.equals("CSR") && !(Credentials.equals("ROOnly")|| Credentials.equals("RO")|| Credentials.equals("RW") ) )
 		{	
 		 Helper.compareEquals(testConfig, "Save Button", "true",  btnSave.getAttribute("disabled"));
 		 Helper.compareEquals(testConfig, "Cancel Button", "true",  btnCancel.getAttribute("disabled"));
 		}
 		 if (LoginType.equals("CSR"))
 		{
-			if (Credentials.equals("Super")||Credentials.equals("RW"))
+			if (Credentials.equals("Super")||Credentials.equals("RWOnly"))
 			{	
 				if (Credentials.equals("Super"))
 				{		
@@ -262,7 +262,7 @@ public class ManageUsers extends AddUserDetails  {
 		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(5).getText());
 		 Helper.compareContains(testConfig, "DateTime", testConfig.getRunTimeProperty("Timestamp"), details.get(6).getText());
 	}	
-	if (LoginType.equals("CSR")&& (Credentials.equals("RO")||Credentials.equals("ROPublish") ||Credentials.equals("RW")||Credentials.equals("RWPublish") ))
+	if (LoginType.equals("CSR")&& (Credentials.equals("ROOnly")||Credentials.equals("RO") ||Credentials.equals("RWOnly")||Credentials.equals("RW") ))
 	{
 		Helper.compareContains(testConfig, "Status matching", "Purged", details.get(0).getText()); 
 		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(4).getText());
