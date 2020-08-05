@@ -57,13 +57,17 @@ public class UPARegistrationPage extends TestBase{
 		
 		System.setProperty("Application", "UPA");
 		Browser.dismissAlert(testConfig);
-		testConfig.driver.navigate().to(System.getProperty("URL"));
+		if("purged".equals(testConfig.getRunTimeProperty("purged")))
+			testConfig.driver.navigate().to("https://ppsp-ts2-upp-e.uhc.com/registrationSignIn.do?OFSP_main=registration");
+		else
+			testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		Browser.waitForLoad(testConfig.driver);
-		Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
-		
+		if(!"purged".equals(testConfig.getRunTimeProperty("purged")))
+			Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
 		
 	}
+	
 	
 	public void clickAndVerifyOptumLogo()
 	{

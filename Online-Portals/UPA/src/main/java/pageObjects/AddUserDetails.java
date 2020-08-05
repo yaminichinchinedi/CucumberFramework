@@ -66,8 +66,6 @@ public class AddUserDetails {
 	@FindBy(xpath="//input[@value=' Save ']")
 	WebElement btnSave;
 	
-
-	
 	//"//td[@class='subheadernormal'][2]")+ "//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	@FindBy(xpath="//td[contains(text(),'Provider')]")
 	WebElement txtUserType;
@@ -162,13 +160,8 @@ public class AddUserDetails {
 	
 	public AddUserDetails fillNewUserInfo(String stsCode)
 	{
-		int sqlNo=257;
 		testConfig.putRunTimeProperty("stsCode", stsCode);
-		Map pzEmail=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
-		userEmailAdr=pzEmail.get("EMAIL_ADR_TXT").toString();
-		testConfig.putRunTimeProperty("purgedEmail", userEmailAdr);
-		userEmailAdr=userEmailAdr.substring(0, userEmailAdr.indexOf("##PU##"));
-		testConfig.putRunTimeProperty("email", userEmailAdr);
+		userEmailAdr=testConfig.getRunTimeProperty("email");
 		Browser.wait(testConfig, 2);
 		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");

@@ -74,4 +74,18 @@ public class UPAHomePageSteps extends TestBase{
 	}
 
 	
+	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login as purged User\\.$")
+	public void user_navigates_to_UPA_portal_and_enters_and_login_as_purged_User(String userType) throws Throwable {
+		 new UPARegistrationPage(testConfig); 
+		 LoginUPA loginPage=new LoginUPA(testConfig);
+		 loginPage.doLoginPurgedUPA(userType).verifyError();
+	}
+	
+	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and enters security pin for \"([^\"]*)\" and verify error\\.$")
+	public void user_navigates_to_UPA_portal_and_enters_and_enters_security_pin_for_and_verify_error(String userType, String role) throws Throwable {
+		testConfig.putRunTimeProperty("purged", "purged");
+		 new UPARegistrationPage(testConfig); 
+		 LoginUPA loginPage=new LoginUPA(testConfig);
+		 loginPage.doLoginPurgedUPA(userType).enterSSOTin(role).verifyError();
+	}
 }
