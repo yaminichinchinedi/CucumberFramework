@@ -79,8 +79,10 @@ public class TestBase extends ReporterClass {
 	public SoftAssert softAssert;
 	protected static volatile TestBase testConfig;
 	public Connection DBConnection = null;
-	private final static String DEFAULT_SAUCE_USER = "pchaud19";
-	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
+//	private final static String DEFAULT_SAUCE_USER = "pchaud19";
+//	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
+	private final static String DEFAULT_SAUCE_USER = "ssharm31";
+	private final static String DEFAULT_SAUCE_ACCESSKEY = "e6c7117a-aad7-4268-b384-aebbea2c28a8";
 	
 //	private static HashMap<String, HashMap<String, String>> loginCredentials;
 
