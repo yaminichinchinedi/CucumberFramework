@@ -85,6 +85,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PAY_Admin  |   PAY     	|		Administrator	    	|
 
+
   Scenario Outline: Verifies details for New Provider user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -95,7 +96,8 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |      PROV_Admin |   PROV     	|		Administrator		    |
       
       
-      Scenario Outline: UPA Manage User Add new Provider user using purged user email address
+  @UPAManageUsers_US2769380    
+  Scenario Outline: UPA Manage User Add new Provider user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -104,8 +106,9 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
       |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
-      @TEST1
-    Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
+      
+  @UPAManageUsers_US2769380
+  Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
@@ -113,22 +116,27 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Then Validate status of purged user for "<userType>" in portal tables.
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|		stsCode		|
-      #|      PAY_Admin  |     PAY     	|		    Administrator	   	|			PU			|
+      |      PAY_Admin  |     PAY     	|		    Administrator	   	|			PU			|
       |      BS_Admin   |     BS      	|	    	Administrator			|			PU			|
       
-    
-    Scenario Outline: UPA Purged User login
+  @UPARegistration_ManageUsers_US2695434 
+  Scenario Outline: UPA Purged User login
     Given User navigates to UPA portal and enters "<userType>" and login as purged User.
+    Then validate the error page and click return to login button.
+    Then validate landing page is present.
     Examples:
       |  			  userType 			  | 
-      |      PURGED_PROV_Admin  | 
-      |      PURGED_PAY_Admin   |  
-      | 		 PURGED_BS_Admin		|
-      |			 PURGED_SubPay_Admin|
+      |      PROV_Admin_PURGED  | 
+      |      PAY_Admin_PURGED   |  
+      | 		 BS_Admin_PURGED		|
+      |			 SubPay_Admin_PURGED|
       
-      @TEST2
+   @UPARegistration_ManageUsers_US2695434_02 
     Scenario Outline: UPA Purged User login
-    Given User navigates to UPA portal and enters "<userType>" and enters security pin for "<role>" and verify error.
+    Given User navigates to UPA portal and enters "<userType>" and login as purged User.
+    Then Enters security pin for "<role>".
+    Then validate the error page and click return to login button.
+    Then validate landing page is present.
     Examples:
       |  			  userType 				 | 	role		|
       |      PRPURGED_Admin		   |   P			|

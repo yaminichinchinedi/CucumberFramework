@@ -278,7 +278,7 @@ public class LoginUPA {
 	public LoginUPA doLoginPurgedUPA(String userType)
 	{
 	   setUserProperties(userType);
-	   if("purged".equals(testConfig.getRunTimeProperty("purged")));
+	   if("prpurged".equals(testConfig.getRunTimeProperty("prpurged")));
 	   else
 		   Element.click(clickUPASignIn, "Click On Sign In UPA");
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
@@ -334,11 +334,17 @@ public class LoginUPA {
 		return this;
 	}
 	
-	public LoginUPA verifyError()
+	public LoginUPA verifyErrorPageAndClickReturn()
 	{
 		Element.verifyElementPresent(btnRtnLogin, "Return to Login");
 		Element.click(btnRtnLogin, "Return to Landing Page");
+		return this;
+	}
+	
+	public LoginUPA verifyLandingPage()
+	{
 		Element.verifyElementPresent(clickUPASignIn, "Sign in Button");
 		return this;
 	}
+	
 }

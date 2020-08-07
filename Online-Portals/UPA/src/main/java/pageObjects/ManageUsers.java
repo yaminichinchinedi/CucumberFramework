@@ -244,34 +244,32 @@ public class ManageUsers extends AddUserDetails  {
 	public ManageUsers verifyUserInList(String userType) throws InterruptedException
 	{
 		
-		ArrayList<String> UsersListUI=getListOfAllUsersFromUI(testConfig);
-		String Username=testConfig.getRunTimeProperty("lName").toUpperCase()
+		ArrayList<String> usersListUI=getListOfAllUsersFromUI(testConfig);
+		String userName=testConfig.getRunTimeProperty("lName").toUpperCase()
 				+", "+testConfig.getRunTimeProperty("fName").toUpperCase()+"   - PURGED";
-		System.out.println("Username: "+Username);
-		if(!UsersListUI.contains(Username)) 
+		if(!usersListUI.contains(userName)) 
 		{
-			Log.Pass("User with name : " + " " + "'" +Username + "'" + "is not present in User List");
+			Log.Pass("User with name : " + " " + "'" +userName + "'" + "is not present in User List");
 		}
-		else if(UsersListUI.contains(Username))
+		else if(usersListUI.contains(userName))
 		{
-			for(WebElement userName:userNames)
+			for(WebElement name:userNames)
 			{ 
-				if(userName.getText().toString().contains(Username))
+				if(name.getText().toString().contains(userName))
 						{
-					      Element.click(userName, "UserName: "+ " " +Username);
+					      Element.click(name, "UserName: "+ " " +userName);
 					      Browser.wait(testConfig, 2);
 					      break;
 						}
 			}
 			
 			if(email.getAttribute("value").toString().equalsIgnoreCase(testConfig.getRunTimeProperty("purgedEmail")))
-				Log.Fail("User with name : " + " " + "'" +Username + "'" + " present");
+				Log.Fail("User with name : " + " " + "'" +userName + "'" + " present");
 			else
-				Log.Pass("User with name : " + " " + "'" +Username + "'" + "is not present in User List");
+				Log.Pass("User with name : " + " " + "'" +userName + "'" + "is not present in User List");
 		}
 		else
-			Log.Fail("User with name : " + " " + "'" +Username + "'" + " present");
-		Log.Comment("User List is" + '\n'  + UsersListUI);
+			Log.Fail("User with name : " + " " + "'" +userName + "'" + " present");
 		return this;
 	}
 	
@@ -985,7 +983,7 @@ public class ManageUsers extends AddUserDetails  {
 		Map data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
 		
 		if(data==null)
-			Log.passWithScreenshot("No record in Portal user table");
+			Log.Pass("No record in Portal user table");
 		else
 			Log.Fail("Record still exist in Portal User table");
 		
@@ -1007,7 +1005,7 @@ public class ManageUsers extends AddUserDetails  {
 		sqlNo=266;
 		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
 		if(data==null)
-			Log.passWithScreenshot("No record in Portal User Tin table");
+			Log.Pass("No record in Portal User Tin table");
 		else
 			Log.Fail("Record still exist in Portal User Tin table");
 		
@@ -1036,13 +1034,14 @@ public class ManageUsers extends AddUserDetails  {
 	public ManageUsers getPurgedEmail()
 	{
 		clickSpecificUserName("PURGED");
-		String phnNo=phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString();
-		String Email=email.getAttribute("value").toString();
-		testConfig.putRunTimeProperty("phnNo", phnNo);
+		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("emailOfUsr", email.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("fName", firstName.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("lName", lastName.getAttribute("value").toString());
-		String purgedEmail=userEmailAdr+"##PU##";
+		
+		//to avoid the conflict of already existing user with same email address
+		// purged user email address is updated to a random email address 
+		String purgedEmail=userEmailAdr+"##PU##"; 
 		testConfig.putRunTimeProperty("purgedEmail", purgedEmail);
 		testConfig.putRunTimeProperty("email", userEmailAdr);
 		
@@ -1052,9 +1051,8 @@ public class ManageUsers extends AddUserDetails  {
 		
 		sqlRowNo=262;
 		DataBase.executeUpdateQuery(testConfig,sqlRowNo );
-		Browser.browserRefresh(testConfig);
 		Browser.wait(testConfig, 3);
-		Email=email.getAttribute("value").toString();
+		Browser.browserRefresh(testConfig);
 		return this;
 	}
 }

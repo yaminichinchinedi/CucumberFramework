@@ -171,7 +171,6 @@ public class AddUserDetails {
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
 		return new AddUserDetails(testConfig);
-		
 	}
 	
 	public AddUserDetails selectAndAddTin()
@@ -180,7 +179,6 @@ public class AddUserDetails {
 		Browser.wait(testConfig,2);
 		clickAddTin();
 		return this;
-		
 	}
 	
 	public AddUserDetails addTinCSR()
