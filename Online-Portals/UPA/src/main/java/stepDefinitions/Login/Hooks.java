@@ -19,11 +19,11 @@ public class Hooks extends TestBase{
 		setupTestMethod(scn);
 	}
 
-//	@After
-//	public void Aftertest()
-//	{
-//		testConfig.tearDown();
-//	}
+	@After
+	public void Aftertest()
+	{
+		testConfig.tearDown();
+	}
 	
 	 @After
 	    public void afterhook(Scenario scn) 

@@ -2,9 +2,9 @@
 #Author:Rahul Krishna
 @CSRUS2673017
 Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org Financial Institution Information
-
+@Rahulxyz
 		Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
-		When  ABN Validator Switch is set as 'Y'
+		#When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -24,7 +24,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
          |    RW             |
 
 		Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Error Messages Validation
-		When  ABN Validator Switch is set as 'Y'
+		#When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -43,7 +43,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		         |    RW             |
  
   		Scenario Outline: ABN Validators Financial Institution Information AO-Error message Revalidations
-		When  ABN Validator Switch is set as 'Y'
+		#When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -66,7 +66,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		         |    RW             |
 		         
 	  Scenario Outline: ABN Validators Financial Institution Information AO -Org Level Review and Submit
-	  When  ABN Validator Switch is set as 'Y'
+	  #When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -91,7 +91,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
     
     
     Scenario Outline: Create Enrollment-CSR- RTN API Request/Response AV- Error Messages Validation
-    When  ABN Validator Switch is set as 'Y'
+    #When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -109,7 +109,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		         |    RW             |
    
     Scenario Outline: ABN Validators Financial Institution Information AV -Error message Revalidations
-    When  ABN Validator Switch is set as 'Y'
+    #When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
@@ -133,7 +133,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		
 	
 		Scenario Outline: ABN Validators Financial Institution Information AV-Org Level Review and Submit
-		When  ABN Validator Switch is set as 'Y'
+		#When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link
 		Then User Select User Type as "Provider" and enter unique TIN and click Search

@@ -79,10 +79,10 @@ public class TestBase extends ReporterClass {
 	public SoftAssert softAssert;
 	protected static volatile TestBase testConfig;
 	public Connection DBConnection = null;
-//	private final static String DEFAULT_SAUCE_USER = "pchaud19";
-//	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
-	private final static String DEFAULT_SAUCE_USER = "ssharm31";
-	private final static String DEFAULT_SAUCE_ACCESSKEY = "e6c7117a-aad7-4268-b384-aebbea2c28a8";
+	private final static String DEFAULT_SAUCE_USER = "pchaud19";
+	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
+//	private final static String DEFAULT_SAUCE_USER = "ssharm31";
+//	private final static String DEFAULT_SAUCE_ACCESSKEY = "e6c7117a-aad7-4268-b384-aebbea2c28a8";
 	
 //	private static HashMap<String, HashMap<String, String>> loginCredentials;
 
@@ -432,14 +432,14 @@ public class TestBase extends ReporterClass {
 
 
 	public WebDriver SetdriveronSauce(String Browser) {
-		//String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
-		String URL = "https://sso-optum-sahil_d_sharma:e6c7117a-aad7-4268-b384-aebbea2c28a8@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
+		//String URL = "https://sso-optum-sahil_d_sharma:e6c7117a-aad7-4268-b384-aebbea2c28a8@ondemand.us-west-1.saucelabs.com:443/wd/hub";
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
-			caps.setCapability("platform", "Windows 11");
-			//caps.setCapability("version", "11.285");
-			caps.setCapability("version", "latest");
-			caps.setCapability("maxDuration", 3600);
+			caps.setCapability("platform", "Windows 10");
+			caps.setCapability("version", "11.285");
+			//caps.setCapability("version", "latest");
+			//caps.setCapability("maxDuration", 3600);
 			caps.setCapability("name", "Remote File Upload Test");
 			caps = DesiredCapabilities.internetExplorer();
 
