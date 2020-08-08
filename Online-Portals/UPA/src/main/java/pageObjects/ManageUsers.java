@@ -124,6 +124,9 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(name="inActiveEmailNotify")
 	List<WebElement> chkInActiveEmailNotify;
 	
+	@FindBy(name="genEmailNotification")
+	List<WebElement> chkBoxgenEmailNotification;	
+	
 	@FindBy(xpath=".//*[contains(text(),'Status')]")
 	WebElement txtStatus;
 	
@@ -630,12 +633,9 @@ public class ManageUsers extends AddUserDetails  {
 			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
 			for(WebElement accessLevel:accessLvls )
 				Helper.compareEquals(testConfig, "Access Level is Disabled ", expectedValue, accessLevel.getAttribute("disabled"));
-			for(WebElement fundingEmail:chkBoxFundingEmail )
-				Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, fundingEmail.getAttribute("disabled"));
-			for(WebElement nonEnrolledEmail:chkBoxNonEnrolledEmailNotify )
-				Helper.compareEquals(testConfig, "NonEnrolled Email Notify Checkbox is Disabled ", expectedValue, nonEnrolledEmail.getAttribute("disabled"));
-			for(WebElement inactiveEmail:chkInActiveEmailNotify )
-				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
+			for(WebElement genEmailNotification:chkBoxgenEmailNotification )
+				Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, genEmailNotification.getAttribute("disabled"));
+		
 		}
 		
 		return this;
