@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Wed Jun 24 17:11:01 IST 2020</td>
+<td>Started on:</td><td>Fri Aug 07 12:47:47 PDT 2020</td>
 </tr>
-<tr><td>Total time:</td><td>177 seconds (177848 ms)</td>
+<tr><td>Total time:</td><td>52 seconds (52465 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -75,21 +75,10 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='main.java.Runner.DemoTestNGRunner.feature()'><b>feature</b><br>Test class: main.java.Runner.DemoTestNGRunner<br>Test method: Runs Cucumber Feature<br>Parameters: UPA Edit Enrollment</td>
-<td><div><pre>cucumber.runtime.CucumberException: java.lang.AssertionError: Element &apos;Edit button&apos;  is Not found on page and exception is: 
-org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]&quot;}
-  (Session info: chrome=83.0.4103.106)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.02 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;LHTU05CG7402W2F&apos;, ip: &apos;10.94.98.24&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_251&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\p1058\AppData\Local\Temp\scoped_dir21064_24578}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=83.0.4103.106, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c8f39d7914b00a612893011028c2cf67
-*** Element info: {Using=xpath, value=//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]}
+<td title='main.java.Runner.DemoTestNGRunner.feature()'><b>feature</b><br>Test class: main.java.Runner.DemoTestNGRunner<br>Test method: Runs Cucumber Feature<br>Parameters: UPA Manage User Functionality</td>
+<td><div><pre>cucumber.runtime.CucumberException: java.lang.NullPointerException
 	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
-	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:120)
+	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:121)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -112,43 +101,17 @@ Session ID: c8f39d7914b00a612893011028c2cf67
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: java.lang.AssertionError: Element &apos;Edit button&apos;  is Not found on page and exception is: 
-org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]&quot;}
-  (Session info: chrome=83.0.4103.106)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.02 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;LHTU05CG7402W2F&apos;, ip: &apos;10.94.98.24&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_251&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\p1058\AppData\Local\Temp\scoped_dir21064_24578}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=83.0.4103.106, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c8f39d7914b00a612893011028c2cf67
-*** Element info: {Using=xpath, value=//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]}
-	at org.testng.Assert.fail(Assert.java:93)
-	at main.java.reporting.Log.failure(Log.java:142)
-	at main.java.reporting.Log.Fail(Log.java:132)
-	at main.java.nativeFunctions.Element.click(Element.java:203)
-	at main.java.pageObjects.MaintainEnrollment.clickEditBtn(MaintainEnrollment.java:141)
-	at main.java.stepDefinitions.EditEnrollment.EditEnrollmentSteps.changes_banking_data(EditEnrollmentSteps.java:117)
-	at ?.And Changes banking data(EditEnrollment/UPA_EditEnrollment.feature:133)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1741007954", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1741007954'><pre>cucumber.runtime.CucumberException: java.lang.AssertionError: Element &apos;Edit button&apos;  is Not found on page and exception is: 
-org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]&quot;}
-  (Session info: chrome=83.0.4103.106)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.02 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;LHTU05CG7402W2F&apos;, ip: &apos;10.94.98.24&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_251&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\p1058\AppData\Local\Temp\scoped_dir21064_24578}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=83.0.4103.106, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c8f39d7914b00a612893011028c2cf67
-*** Element info: {Using=xpath, value=//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]}
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+Caused by: java.lang.NullPointerException
+	at main.java.pageObjects.ManageUsers.verifyDetailsForPurgedUser(ManageUsers.java:1135)
+	at main.java.stepDefinitions.Login.CSRHomePageSteps.verify_UI_Details_for_Purged_user(CSRHomePageSteps.java:82)
+	at ?.Then Verify UI Details for Purged &quot;BS_Admin&quot; user(ManageUsers/UPA_Manage_User.feature:138)
+</pre></div><a href='#' onClick='toggleBox("stack-trace13660009", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace13660009'><pre>cucumber.runtime.CucumberException: java.lang.NullPointerException
 	at cucumber.api.testng.TestNGCucumberRunner.runCucumber(TestNGCucumberRunner.java:69)
-	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:120)
+	at main.java.Runner.DemoTestNGRunner.feature(DemoTestNGRunner.java:121)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -171,31 +134,16 @@ Session ID: c8f39d7914b00a612893011028c2cf67
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-Caused by: java.lang.AssertionError: Element &apos;Edit button&apos;  is Not found on page and exception is: 
-org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]&quot;}
-  (Session info: chrome=83.0.4103.106)
-  (Driver info: chromedriver=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 15.02 seconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;LHTU05CG7402W2F&apos;, ip: &apos;10.94.98.24&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_251&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.37.544315 (730aa6a5fdba159ac9f4c1e8cbc59bf1b5ce12b7), userDataDir=C:\Users\p1058\AppData\Local\Temp\scoped_dir21064_24578}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=83.0.4103.106, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: c8f39d7914b00a612893011028c2cf67
-*** Element info: {Using=xpath, value=//td[@align=&apos;right&apos;]//input[@value=&apos;  Edit  &apos;]}
-	at org.testng.Assert.fail(Assert.java:93)
-	at main.java.reporting.Log.failure(Log.java:142)
-	at main.java.reporting.Log.Fail(Log.java:132)
-	at main.java.nativeFunctions.Element.click(Element.java:203)
-	at main.java.pageObjects.MaintainEnrollment.clickEditBtn(MaintainEnrollment.java:141)
-	at main.java.stepDefinitions.EditEnrollment.EditEnrollmentSteps.changes_banking_data(EditEnrollmentSteps.java:117)
-	at ?.And Changes banking data(EditEnrollment/UPA_EditEnrollment.feature:133)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+Caused by: java.lang.NullPointerException
+	at main.java.pageObjects.ManageUsers.verifyDetailsForPurgedUser(ManageUsers.java:1135)
+	at main.java.stepDefinitions.Login.CSRHomePageSteps.verify_UI_Details_for_Purged_user(CSRHomePageSteps.java:82)
+	at ?.Then Verify UI Details for Purged &quot;BS_Admin&quot; user(ManageUsers/UPA_Manage_User.feature:138)
 </pre></div></td>
-<td>157</td>
-<td>main.java.Runner.DemoTestNGRunner@229d10bd</td></tr>
+<td>42</td>
+<td>main.java.Runner.DemoTestNGRunner@1dc8ecb</td></tr>
 </table><p>
 </body>
 </html>

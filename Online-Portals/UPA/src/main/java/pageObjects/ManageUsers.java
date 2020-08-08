@@ -127,6 +127,12 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),'Status')]")
 	WebElement txtStatus;
 	
+	@FindBy(id="provTinAssociateId")
+	WebElement txtAddProviderAssociation;
+	
+	@FindBy(xpath="//*[@id=\"bsForm\"]/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td/table[3]/tbody/tr/td[3]/div/input[2]")
+	WebElement btnAddProviderAssociation;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -588,6 +594,7 @@ public class ManageUsers extends AddUserDetails  {
 			Log.Comment("Extension is empty");
 		}
 		Helper.compareEquals(testConfig, "Email field is Read only", expectedValue, email.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Retype Email field is Read only", expectedValue, verifyEmail.getAttribute("readonly"));
 		}
 		
 		catch(Exception e)
@@ -609,6 +616,28 @@ public class ManageUsers extends AddUserDetails  {
 			for(WebElement inactiveEmail:chkInActiveEmailNotify )
 				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
 		}
+		
+		if(userType.contains("BS"))
+		{
+			Helper.compareEquals(testConfig, "Associate Billing Service Users to all Providers - Yes button", expectedValue, rdoYes.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Associate Billing Service Users to all Providers - No button", expectedValue, rdoNo.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Add Provider Association - textbox", expectedValue, txtAddProviderAssociation.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Add TIN Association - button", expectedValue, btnAddProviderAssociation.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Save - button", expectedValue, btnSave.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Cancel - button", expectedValue, btnCancel.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Delete - button", expectedValue, btnDelete.getAttribute("disabled"));
+			
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			for(WebElement accessLevel:accessLvls )
+				Helper.compareEquals(testConfig, "Access Level is Disabled ", expectedValue, accessLevel.getAttribute("disabled"));
+			for(WebElement fundingEmail:chkBoxFundingEmail )
+				Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, fundingEmail.getAttribute("disabled"));
+			for(WebElement nonEnrolledEmail:chkBoxNonEnrolledEmailNotify )
+				Helper.compareEquals(testConfig, "NonEnrolled Email Notify Checkbox is Disabled ", expectedValue, nonEnrolledEmail.getAttribute("disabled"));
+			for(WebElement inactiveEmail:chkInActiveEmailNotify )
+				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
+		}
+		
 		return this;
 	}
 	

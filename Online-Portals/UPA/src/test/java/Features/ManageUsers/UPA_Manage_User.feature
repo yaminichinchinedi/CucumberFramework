@@ -140,16 +140,6 @@ Scenario Outline: US2499639_1_UPA_BS_Admin_ManageUsers_UIValidationforPurgedUser
 	    Examples:
       |    userType     |		
       |     BS_Admin   	|	
-      
-@UPAUS2499639P2
-Scenario Outline: US2499639_2_UPA_BS_Admin_ManageUsers_selectViewPurgedUsers_CheckDesignation
-
-	Given User navigates to UPA portal and enters "<userType>" and login
-	When  Click on Manage User Link
-	Then  Verify Users List for "<userType>" with "<searchCriteria>" on selecting and deselecting of purge checkbox
-	
-	Examples:
-      |    userType   |		accessLevelOfNewUser	|searchCriteria   |
-      |     BS_Admin |  		Administrator		    | PurgedUsers			|
+    
 
       	
