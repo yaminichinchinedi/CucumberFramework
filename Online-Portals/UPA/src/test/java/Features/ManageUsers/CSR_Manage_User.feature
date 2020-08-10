@@ -37,4 +37,18 @@ Feature: CSR Manage User Functionality
     Examples:
       |    userType     |   credentials   |		disabledValue		|
       |      PROV       |      Super      |		disabled    		|
+      
+      
+	@CSRManageUsers_US2769380
+  Scenario Outline: CSR Manage User UI Functionality Add new user using Purged user Email address
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Click to add new User using "<stsCode>"  and fill the details "<accessLevelOfNewUser>" and verify the user detils and delete the user
+   	Then Validate status of purged user for "<userType>" in tables.
+    Examples:
+      |    userType     |   credentials   |  stsCode 	 | accessLevelOfNewUser   	|
+      |    PROV			    |      Super      |	 		PU     |			Administrator				|
+      |      BS         |      Super      |	 	  PU 		 |			Administrator				|
+      |      PAY        |      Super      |	    PU		 |			Administrator				|
+      
 

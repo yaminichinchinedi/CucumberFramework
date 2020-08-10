@@ -85,6 +85,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PAY_Admin  |   PAY     	|		Administrator	    	|
 
+
   Scenario Outline: Verifies details for New Provider user
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -94,6 +95,53 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |
       
+      
+  @UPAManageUsers_US2769380    
+  Scenario Outline: UPA Manage User Add new Provider user using purged user email address
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Provider user using "<stsCode>"
+    Then Validate status of purged user for "<userType>" in portal tables.
+    Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
+      |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
+      
+  @UPAManageUsers_US2769380
+  Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Payer and BS user using "<stsCode>"
+    Then Validate status of purged user for "<userType>" in portal tables.
+    Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|		stsCode		|
+      |      PAY_Admin  |     PAY     	|		    Administrator	   	|			PU			|
+      |      BS_Admin   |     BS      	|	    	Administrator			|			PU			|
+      
+  @UPARegistration_ManageUsers_US2695434 
+  Scenario Outline: UPA Purged User login
+    Given User navigates to UPA portal and enters "<userType>" and login as purged User.
+    Then validate the error page and click return to login button.
+    Then validate landing page is present.
+    Examples:
+      |  			  userType 			  | 
+      |      PROV_Admin_PURGED  | 
+      |      PAY_Admin_PURGED   |  
+      | 		 BS_Admin_PURGED		|
+      |			 SubPay_Admin_PURGED|
+      
+   @UPARegistration_ManageUsers_US2695434_02 
+    Scenario Outline: UPA Purged User login
+    Given User navigates to UPA portal and enters "<userType>" and login as purged User.
+    Then Enters security pin for "<role>".
+    Then validate the error page and click return to login button.
+    Then validate landing page is present.
+    Examples:
+      |  			  userType 				 | 	role		|
+      |      PRPURGED_Admin		   |   P			|
+      |      PRPURGED_Admin		   |   BS			|
+      |      PRPURGED_Admin		   |   PA			|
       
     @UPAManageUsers2
     Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User

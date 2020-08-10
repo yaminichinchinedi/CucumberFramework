@@ -20,7 +20,7 @@ import main.java.pageObjects.UPARegistrationPage;
 public class UPAHomePageSteps extends TestBase{
 	
 	UPAHomePage homePage=null;
-
+	LoginUPA loginPage=null;
 	
     @Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_UPA_portal_and_enters_and_login(String userType) throws Throwable {
@@ -79,4 +79,27 @@ public class UPAHomePageSteps extends TestBase{
 	}
 
 	
+	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login as purged User\\.$")
+	public void user_navigates_to_UPA_portal_and_enters_and_login_as_purged_User(String userType) throws Throwable {
+		if(userType.contains("PRPURGED"))
+			testConfig.putRunTimeProperty("prpurged", "prpurged");
+		 new UPARegistrationPage(testConfig); 
+		 loginPage=new LoginUPA(testConfig);
+		 loginPage.doLoginPurgedUPA(userType);
+	}
+
+	@Then("^validate the error page and click return to login button\\.$")
+	public void validate_the_error_page_and_click_return_to_login_button() throws Throwable {
+		loginPage.verifyErrorPageAndClickReturn();
+	}
+
+	@Then("^validate landing page is present\\.$")
+	public void validate_landing_page_is_present() throws Throwable {
+		loginPage.verifyLandingPage();
+	}
+
+	@Then("^Enters security pin for \"([^\"]*)\"\\.$")
+	public void enters_security_pin_for(String role) throws Throwable {
+		loginPage.enterSSOTin(role);
+	}
 }

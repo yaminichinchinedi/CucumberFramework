@@ -66,8 +66,18 @@ public class SearchTinPage {
 		{
 		  case "PROV" :
 		   {
-			   sqlRowNo=15;
-			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+			   {
+				   sqlRowNo=260;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+			   }
+			   else
+			   {
+				   sqlRowNo=15;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   }
+			   
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
@@ -76,8 +86,17 @@ public class SearchTinPage {
 		   
 		  case "BS" :
 		   {
-			   sqlRowNo=16;
-			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+			   {
+				   sqlRowNo=261;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+			   }
+			   else
+			   {
+				   sqlRowNo=16;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   }
 			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
@@ -89,7 +108,10 @@ public class SearchTinPage {
 			   sqlRowNo=17;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
-			   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+				   Element.selectByVisibleText(drpDownPayer, "UMR", "Payer as : UMR" );
+			   else
+				   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
 			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
 			   break;
 		   }

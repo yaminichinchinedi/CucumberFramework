@@ -65,12 +65,31 @@ public class UPAManageUserSteps extends TestBase {
         manageUser.removeFistTinInGrid();
     }
     
+	
+	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user using \"([^\"]*)\"$")
+	public void verifies_details_for_and_New_Provider_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
+		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
+        manageUser.removeFistTinInGrid();
+	}
+	
+	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
+	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
+		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
+	}
     
     @Then("^Verify Save and Cancel func for AccessLvl for \"([^\"]*)\"$")
     public void verify_Save_and_Cancel_func_for_AccessLvl_for(String userType) throws Throwable {
     	manageUser.changeAndSaveAccessLevel(userType);
      
     }
+
+    @Then("^Validate status of purged user for \"([^\"]*)\" in portal tables\\.$")
+    public void validate_status_of_purged_user_for_in_portal_tables(String userType) throws Throwable {
+    	manageUser.verifyPurgedUserStatus(userType);
+    }
+
     @Then("^Verify Purged User validations by clicking on it$")
     public void verify_Purged_User_validations_by_clicking_on_it() throws Throwable {
     	manageUser.validatePurgeUsers("UPA","All");
@@ -82,4 +101,5 @@ public class UPAManageUserSteps extends TestBase {
 	manageUser.clickActiveUserName("PROV");
 	manageUser.validateAddingSameTIN();
 }
+
 }

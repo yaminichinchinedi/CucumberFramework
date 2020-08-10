@@ -1,8 +1,8 @@
 ## Environments  ###
 
-Env=Test2
-testSuite=CSR
-BrowserType=IE
+Env=Stage
+testSuite=UPA
+BrowserType=chrome
 AutomationExecution=Local
 
 ## Files Location ##
@@ -29,27 +29,14 @@ UPAURL_Test1=https://ppsp-test-upp-e.uhc.com/registrationSignIn.do?OFSP_main=log
 UPAURL_Test2=https://ppsp-ts2-upp-e.uhc.com/registrationSignIn.do?OFSP_main=login
 
 
-########### URLs for UPA Registration ###########
-
-UPARegistrationURL_IMPL=https://ppsp-impl-e-payer10.optumhealthfinancial.com/registrationSignIn.do?OFSP_main=registration
-UPARegistrationURL_Stage=https://stage-myservices.optumhealthpaymentservices.com/registrationSignIn.do?OFSP_main=registration
-UPARegistrationURL_Stage2=https://stage2-myservices.optumhealthpaymentservices.com/registrationSignIn.do?OFSP_main=registration#
-UPARegistrationURL_Test1=https://ppsp-test-upp-e.uhc.com/registrationSignIn.do?OFSP_main=registration
-UPARegistrationURL_Test2=https://ppsp-ts2-upp-e.uhc.com/registrationSignIn.do?OFSP_main=registration
-
-
 ###   CSR Creds  ###
 
 CSR_ID_Super_Stage=pgupt24
 CSR_Pwd_Super_Stage=Exact@123
-CSR_ID_ROOnly_Stage=sbatar
-CSR_Pwd_ROOnly_Stage=Error111
-CSR_ID_RWOnly_Stage=kstrout2
-CSR_Pwd_RWOnly_Stage=Blue@123
 CSR_ID_RO_Stage=rhooda
-CSR_Pwd_RO_Stage=RHaug@12
+CSR_Pwd_RO_Stage=RHmay@12
 CSR_ID_RW_Stage=ndureja1
-CSR_Pwd_RW_Stage=Alex@231
+CSR_Pwd_RW_Stage=Group@12
 CSR_ID_ROPPRA_Stage=Rhooda
 CSR_Pwd_ROPPRA_Stage=RHmay@12
 
@@ -74,16 +61,12 @@ CSR_Pwd_ROPPRA_Test1=RHmay@12
 
 CSR_ID_Super_Test2=pgupt24
 CSR_Pwd_Super_Test2=Exact@123
-CSR_ID_ROOnly_Test2=sbatar
-CSR_Pwd_ROOnly_Test2=Error111
-CSR_ID_RWOnly_Test2=kstrout2
-CSR_Pwd_RWOnly_Test2=Blue@123
 CSR_ID_RO_Test2=rhooda
-CSR_Pwd_RO_Test2=RHaug@12
+CSR_Pwd_RO_Test2=RHmay@12
 CSR_ID_RW_Test2=ndureja1
-CSR_Pwd_RW_Test2=Alex@231
+CSR_Pwd_RW_Test2=Group@12
 CSR_ID_ROPPRA_Test2=Rhooda
-CSR_Pwd_ROPPRA_Test2=RHaug@12
+CSR_Pwd_ROPPRA_Test2=RHmay@12
 
 CSR_ID_Super_IMPL=pgupt24
 CSR_Pwd_Super_IMPL=Exact@123
@@ -132,52 +115,42 @@ UPA_OptumID_SUBPAYER_Gen_Stage2=Subpayergen123
 UPA_OptumPwd_SUBPAYER_Gen_Stage2=Subpayergen@123
 
 
-UPA_OptumID_PROV_Admin_Stage=UATPROV1
-
-UPA_OptumPwd_PROV_Admin_Stage=Prov@Adm85
-UPA_OptumID_PROV_Admin_PURGED_Stage=sesoneqe
-UPA_OptumPwd_PROV_Admin_PURGED_Stage=Prov@Adm14
-
+#UPA_OptumID_PROV_Admin_Stage=UATPROV1
+#UPA_OptumPwd_PROV_Admin_Stage=Prov@Adm14
+UPA_OptumID_PROV_Admin_Stage=sesoneqe
+UPA_OptumPwd_PROV_Admin_Stage=Prov@Adm14
 UPA_OptumID_PROV_Gen_Stage=ProvGen1
-UPA_OptumPwd_PROV_Gen_Stage=Prov@Gen24
+UPA_OptumPwd_PROV_Gen_Stage=Prov@Gen14
 UPA_OptumID_PROVPPRA_Stage=PAHAIN2172ptpre
-UPA_OptumPwd_PROVPPRA_Stage=Payables@185
+UPA_OptumPwd_PROVPPRA_Stage=Payables@137
 
-UPA_OptumID_BS_Admin_Stage=BSAdmin12 
-UPA_OptumPwd_BS_Admin_Stage=BSAdm_136
-UPA_OptumID_BS_Admin_PURGED_Stage=BsUserStage 
-UPA_OptumPwd_BS_Admin_PURGED_Stage=Pass@123
+#UPA_OptumID_BS_Admin_Stage=BSAdmin12 
+#UPA_OptumPwd_BS_Admin_Stage=BSAdm_136
+UPA_OptumID_BS_Admin_Stage=BsUserStage 
+UPA_OptumPwd_BS_Admin_Stage=Pass@123
 UPA_OptumID_BS_Gen_Stage=BSGeneral12
-UPA_OptumPwd_BS_Gen_Stage=BSGen_186
+UPA_OptumPwd_BS_Gen_Stage=BSGen_1234
 UPA_OptumID_BSPPRA_Stage=BSAdmin12
 UPA_OptumPwd_BSPPRA_Stage=BSAdm_136
 
-UPA_OptumID_PAY_Admin_Stage=UATPAYR1
- #apayer1
-UPA_OptumPwd_PAY_Admin_Stage=Payr@Adm35
-#Test@123
-
-UPA_OptumID_PAY_Admin_PURGED_Stage=PurgedPayerUsr
-UPA_OptumPwd_PAY_Admin_PURGED_Stage=Pass@123
-UPA_OptumID_SubPay_Admin_PURGED_Stage=PurgedSubPayer
-UPA_OptumPwd_SubPay_Admin_PURGED_Stage=Pass@123
-
+#UPA_OptumID_PAY_Admin_Stage=apayer1
+ #UATPAYR1
+#UPA_OptumPwd_PAY_Admin_Stage=Test@123
+#Payr@Adm14
+UPA_OptumID_PAY_Admin_Stage=kannuPayer
+UPA_OptumPwd_PAY_Admin_Stage=Pass@123
 UPA_OptumID_PAY_Gen_Stage=PRASHYAHOO
-UPA_OptumPwd_PAY_Gen_Stage=Payr@Gen35
+UPA_OptumPwd_PAY_Gen_Stage=Payr@Gen14
 UPA_OptumID_PAY_Rally_Admin_Stage=Ptprvadm11
-UPA_OptumPwd_PAY_Rally_Admin_Stage=Payables@185
+UPA_OptumPwd_PAY_Rally_Admin_Stage=Payables@137
 UPA_OptumID_PayerPPRA_Stage=BRWHIT8874ptpre
-UPA_OptumPwd_PayerPPRA_Stage=Payables@185
-
-
-UPA_OptumID_PRPURGED_Admin_Stage=prPurgedUsr
-UPA_OptumPwd_PRPURGED_Admin_Stage=Pass@123
+UPA_OptumPwd_PayerPPRA_Stage=Payables@137
 
 
 UPA_OptumID_PROV_Admin_Test1=Rashi@123
 UPA_OptumPwd_PROV_Admin_Test1=Summer@123
 UPA_OptumID_PROV_Gen_Test1=ProvGen1
-UPA_OptumPwd_PROV_Gen_Test1=Prov@Gen24
+UPA_OptumPwd_PROV_Gen_Test1=Prov@Gen14
 
 UPA_OptumID_BS_Admin_Test1=BSAdmin12 
 UPA_OptumPwd_BS_Admin_Test1=BSAdm_136
@@ -185,37 +158,40 @@ UPA_OptumID_BS_Gen_Test1=BSGeneral12
 UPA_OptumPwd_BS_Gen_Test1=BSGen_1234
 
 UPA_OptumID_PAY_Admin_Test1=UATPAYR1
-UPA_OptumPwd_PAY_Admin_Test1=Payr@Adm35
+UPA_OptumPwd_PAY_Admin_Test1=Payr@Adm14
 UPA_OptumID_PAY_Gen_Test1=PRASHYAHOO
-UPA_OptumPwd_PAY_Gen_Test1=Payr@Gen35
+UPA_OptumPwd_PAY_Gen_Test1=Payr@Gen14
 
-UPA_OptumID_PROV_Admin_Test2=rahul287
-UPA_OptumPwd_PROV_Admin_Test2=Rahul@1234
+UPA_OptumID_PROV_Admin_Test2=MESENS2725
+UPA_OptumPwd_PROV_Admin_Test2=Winter@1234
 UPA_OptumID_PROV_Gen_Test2=MESENS2725
 UPA_OptumPwd_PROV_Gen_Test2=Winter@1234
 
-UPA_OptumID_PROV_Admin_PURGED_Test2=ProvAdminTS2
-UPA_OptumPwd_PROV_Admin_PURGED_Test2=Pass@123
+UPA_OptumID_PURGED_PROV_Admin_Test2=ProvAdminTS2
+UPA_OptumPwd_PURGED_PROV_Admin_Test2=Pass@123
 
-UPA_OptumID_BS_Admin_PURGED_Test2=ActBSUser
-UPA_OptumPwd_BS_Admin_PURGED_Test2=Pass@123
+UPA_OptumID_PURGED_BS_Admin_Test2=ProvAdminTS2
+UPA_OptumPwd_PURGED_BS_Admin_Test2=Pass@123
 
-UPA_OptumID_SubPay_Admin_PURGED_Test2=ActUMRSubPayer
-UPA_OptumPwd_SubPay_Admin_PURGED_Test2=Pass@123
+UPA_OptumID_PURGED_SubPay_Admin_Test2=ProvAdminTS2
+UPA_OptumPwd_PURGED_SubPay_Admin_Test2=Pass@123
 
-UPA_OptumID_PAY_Admin_PURGED_Test2=PayerAdmTS2
-UPA_OptumPwd_PAY_Admin_PURGED_Test2=Pass@123
+UPA_OptumID_PURGED_PAY_Admin_Test2=PayerAdmTS2
+UPA_OptumPwd_PURGED_PAY_Admin_Test2=Pass@123
 
-UPA_OptumID_PRPURGED_Admin_Test2=BSGenTS2
+UPA_OptumID_PRPURGED_Admin_Test2=BSUserTS2
 UPA_OptumPwd_PRPURGED_Admin_Test2=Pass@123
+
+UPA_OptumID_PRPURGED_SUBPAY_Admin_Test2=PayerAdmTS2
+UPA_OptumPwd_PRPURGED_SUBPAY_Admin_Test2=Pass@123
 
 UPA_OptumID_BS_Admin_Test2=BSAdmin12 
 UPA_OptumPwd_BS_Admin_Test2=BSAdm_136
 UPA_OptumID_BS_Gen_Test2=BSGeneral12
 UPA_OptumPwd_BS_Gen_Test2=BSGen_1234
 
-UPA_OptumID_PAY_Admin_Test2=PPayer123
-UPA_OptumPwd_PAY_Admin_Test2=Test@123
+UPA_OptumID_PAY_Admin_Test2=UATPAYR1
+UPA_OptumPwd_PAY_Admin_Test2=Payr@Adm14
 UPA_OptumID_PAY_Gen_Test2=PRASHYAHOO
 UPA_OptumPwd_PAY_Gen_Test2=Payr@Gen14
 

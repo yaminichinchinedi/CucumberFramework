@@ -60,10 +60,11 @@ public class UPARegistrationPage extends TestBase{
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		Browser.waitForLoad(testConfig.driver);
-		Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
-		
+		if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
+			Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
 		
 	}
+	
 	
 	public void clickAndVerifyOptumLogo()
 	{

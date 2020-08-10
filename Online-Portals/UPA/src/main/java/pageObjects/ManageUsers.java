@@ -135,6 +135,9 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),' been reset')]")
 	WebElement txtResetPwd;
 	
+	@FindBy(id="viewpurgeduser") 
+	WebElement chkBoxProvPurge;
+	
 	@FindBy(name="purgedUser")
 	WebElement chkBoxPurgedUser;
 	
@@ -159,6 +162,7 @@ public class ManageUsers extends AddUserDetails  {
 	
 	@FindBy(xpath="//input[@id='viewpurgeduser']")
 	WebElement viewPurge;
+
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -405,6 +409,38 @@ public class ManageUsers extends AddUserDetails  {
 		Log.Comment("User List after deleting user is" + '\n'  + UsersListUI);
 	}
 	
+	public ManageUsers verifyUserInList(String userType) throws InterruptedException
+	{
+		
+		ArrayList<String> usersListUI=getListOfAllUsersFromUI(testConfig);
+		String userName=testConfig.getRunTimeProperty("lName").toUpperCase()
+				+", "+testConfig.getRunTimeProperty("fName").toUpperCase()+"   - PURGED";
+		if(!usersListUI.contains(userName)) 
+		{
+			Log.Pass("User with name : " + " " + "'" +userName + "'" + "is not present in User List");
+		}
+		else if(usersListUI.contains(userName))
+		{
+			for(WebElement name:userNames)
+			{ 
+				if(name.getText().toString().contains(userName))
+						{
+					      Element.click(name, "UserName: "+ " " +userName);
+					      Browser.wait(testConfig, 2);
+					      break;
+						}
+			}
+			
+			if(email.getAttribute("value").toString().equalsIgnoreCase(testConfig.getRunTimeProperty("purgedEmail")))
+				Log.Fail("User with name : " + " " + "'" +userName + "'" + " present");
+			else
+				Log.Pass("User with name : " + " " + "'" +userName + "'" + "is not present in User List");
+		}
+		else
+			Log.Fail("User with name : " + " " + "'" +userName + "'" + " present");
+		return this;
+	}
+	
 	/*
 	 * This function fetches the name of an active user
 	 * which is associated with the logged in tin 
@@ -486,12 +522,15 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		for(WebElement userName:userNames)
 		{ 
+			System.out.println("Username is: "+userName.getText().toString().toUpperCase());
 		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }
+
+//		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -1142,6 +1181,86 @@ public class ManageUsers extends AddUserDetails  {
 		return this;
 	}
 	
+
+	public ManageUsers verifyPurgedUserStatus(String userType)
+	{
+		int sqlNo=258;
+		Map data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		
+		if(data==null)
+			Log.Pass("No record in Portal user table");
+		else
+			Log.Fail("Record still exist in Portal User table");
+		
+		switch(userType)
+		{
+		case "PROV":
+		case "PROV_Admin":
+			testConfig.putRunTimeProperty("tbl", "portal_user_tin");
+			break;
+		case "BS":
+		case "BS_Admin":
+			testConfig.putRunTimeProperty("tbl", "portal_user_bs_tin");
+			break;
+		case "PAY":
+		case "PAY_Admin":
+			testConfig.putRunTimeProperty("tbl", "portal_user_payer_tin");
+			break;
+		}
+		sqlNo=266;
+		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		if(data==null)
+			Log.Pass("No record in Portal User Tin table");
+		else
+			Log.Fail("Record still exist in Portal User Tin table");
+		
+		sqlNo=267;
+		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Helper.compareEquals(testConfig, "Status Code of purged user", "PZ", data.get("STS_CD").toString());
+		Helper.compareEquals(testConfig, "Status Code of purged user", "", data.get("MOD_TYP_CD").toString());
+		
+		sqlNo=268;
+		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Helper.compareEquals(testConfig, "Status Code of purged user", "PU", data.get("STS_CD").toString());
+		Helper.compareEquals(testConfig, "Status Code of purged user", "PUP", data.get("MOD_TYP_CD").toString());
+		
+		return this;
+	}
+	
+	public ManageUsers clickPurgedChkBox(String userType)
+	{
+		if("PAY".equals(userType))
+			Element.click(chkBoxPurgedUser, "View Purged Users Check Box");
+		else
+			Element.click(chkBoxProvPurge, "View Purged Users Check Box");
+		return this;
+	}
+	
+	public ManageUsers getPurgedEmail()
+	{
+		clickSpecificUserName("PURGED");
+		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
+		testConfig.putRunTimeProperty("emailOfUsr", email.getAttribute("value").toString());
+		testConfig.putRunTimeProperty("fName", firstName.getAttribute("value").toString());
+		testConfig.putRunTimeProperty("lName", lastName.getAttribute("value").toString());
+		
+		//to avoid the conflict of already existing user with same email address
+		// purged user email address is updated to a random email address 
+		String purgedEmail=userEmailAdr+"##PU##"; 
+		testConfig.putRunTimeProperty("purgedEmail", purgedEmail);
+		testConfig.putRunTimeProperty("email", userEmailAdr);
+		
+		int sqlRowNo=259;
+		Map Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+		
+		sqlRowNo=262;
+		DataBase.executeUpdateQuery(testConfig,sqlRowNo );
+		Browser.wait(testConfig, 3);
+		Browser.browserRefresh(testConfig);
+		return this;
+	}
+
 	public ManageUsers verifyPurgedUserOptionState(String expectedState)
 	{
 		if(expectedState.equalsIgnoreCase("enabled"))
@@ -1283,5 +1402,6 @@ public class ManageUsers extends AddUserDetails  {
 //		String expectedStatus="Purged";
 //		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 //	}
+
 }
 
