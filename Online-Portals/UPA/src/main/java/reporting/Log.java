@@ -27,6 +27,8 @@ import org.testng.asserts.SoftAssert;
 
 import com.aventstack.extentreports.ExtentReporter;
 import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 
 
@@ -266,6 +268,28 @@ public  class Log extends ExtentTestManager {
 		
 		//This message will be displayed in HTML reports 
 		ExtentTestManager.getTest().info(message);
+		
+	}
+	
+	
+	private static void addScreenshotMsgForPass(TestBase testConfig,String message)
+	  {
+	      MediaEntityModelProvider mediaModel;
+	       try {
+	            mediaModel = MediaEntityBuilder.createScreenCaptureFromPath(captureScreenshot(testConfig)).build();
+	            ExtentTestManager.getTest().pass(message, mediaModel);
+	            }
+        catch (IOException e1) 
+	       {
+	         e1.printStackTrace();
+	       }
+	    }
+
+	
+	public synchronized static void passWithScreenshot(String message)
+	{
+		printToScreen(message);
+		addScreenshotMsgForPass(testConfig,message);
 		
 	}
 		
