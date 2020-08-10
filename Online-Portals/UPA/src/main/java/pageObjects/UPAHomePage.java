@@ -155,7 +155,7 @@ public class UPAHomePage extends HomePage {
 
 	public UPAHomePage selectPursedTin() 
 	 {
-			int sqlRow=258;
+			int sqlRow=271;
 			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 			Element.selectByVisibleText(tinDrpDwn,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
 			Browser.waitForLoad(testConfig.driver);

@@ -142,7 +142,7 @@ public class SearchTinPage {
 		selectUserType(userType);
 		//Element.selectByValue(drpDownUserType,userType, "User type as :" + " " + userType + " ");
 		Element.selectByIndex(drpDownUserType, 1, "Provider User Type");
-		 sqlRowNo=257;
+		 sqlRowNo=270;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   testConfig.putRunTimeProperty("Timestamp", Searchedtin.get("LST_CHG_BY_DTTM").toString().trim().substring(0,19));
