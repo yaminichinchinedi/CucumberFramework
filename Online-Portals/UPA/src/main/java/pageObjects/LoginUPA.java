@@ -219,10 +219,17 @@ public class LoginUPA {
 	
 	public void setUserProperties(String userType)
 	{
+		int sqlRowNo=255;
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
+		
+		if(userType.contains("PAY"))
+		{
+			Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			testConfig.putRunTimeProperty("tin", payerSchema.get("PAYR_DSPL_NM").toString());
+		}
 	}
 	
 	public void verifyLoginUI()

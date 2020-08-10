@@ -153,3 +153,50 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |
       	
+      	
+@UPAUS2711909P1
+Scenario Outline: US2711909_1_UPA_Payer_Admin_ManageUsers_UIValidationforPurgedUsers
+
+	Given User navigates to UPA portal and enters "<userType>" and login
+	When  Click on Manage User Link
+	Then  Verify UI Details for Purged "<userType>" user
+	
+	    Examples:
+      |    userType     |		
+      |     PAY_Admin   |		  
+      
+      
+      
+@UPAUS2711909P2
+Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers_CheckDesignation + US2684242_3_CSR_SuperUser_ManageUsers_UnselectViewPurgedUsers_CheckDesignation
+
+	Given User navigates to UPA portal and enters "<userType>" and login
+	When  Click on Manage User Link
+	Then  Verify Users List for "<userType>" with "<searchCriteria>" on selecting and deselecting of purge checkbox
+	
+	Examples:
+      |    userType     |		accessLevelOfNewUser	|searchCriteria   |
+      |     PAY_Admin |  		Administrator		    | PurgedUsers|
+	  
+	
+  @UPAUS2711348
+     Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the Purged TIN from the dropdown
+    When Click on Manage User Link
+    Then Verify Purged User validations by clicking on it
+      Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|
+      |      PROV_Admin |   PROV     	|		Administrator		    |  
+     
+     @UPAUS2720684 	
+		Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+    Then User perform validation by adding TIN with same TIN 
+      Examples:
+      |    userType     |   accessType  |		accessLevelOfNewUser	|
+      |      PROV_Admin |   PROV     	|		Administrator		    |  
+     	
+      	

@@ -4,7 +4,7 @@
 
 
 <head>
-	<meta charset='utf-8' /> 
+	<meta charset='UTF-8' /> 
 	<meta name='description' content='' />
 	<meta name='robots' content='noodp, noydir' />
 	<meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -15,13 +15,19 @@
 
 		<link href='https://cdn.rawgit.com/anshooarora/extentreports-java/bee7a4abdc590e21eec8618a90c81ff4d16e500a/dist/css/extent.css' type='text/css' rel='stylesheet' />
 	
-	<title>ExtentReports</title>
+	<title>Automation Report</title>
 
 	<style type='text/css'>
+			
+            
+            .report-name>img {height:50%;width:60%;margin-top:1px;}
+            
+                     
+        
 	</style>
 </head>
 
-	<body class='extent standard default hide-overflow '>
+	<body class='extent dark default hide-overflow '>
 		<div id='theme-selector' alt='Click to toggle theme. To enable by default, use theme configuration.' title='Click to toggle theme. To enable by default, use theme configuration.'>
 			<span><i class='material-icons'>desktop_windows</i></span>
 		</div>
@@ -33,8 +39,7 @@
 		<!-- slideout menu -->
 		<ul id='slide-out' class='side-nav fixed hide-on-med-and-down'>
 			<li class='waves-effect active'><a href='#!' view='test-view' onclick="configureView(0);chartsView('test');"><i class='material-icons'>dashboard</i></a></li>
-						<li class='waves-effect'><a href='#!' view='category-view' onclick="configureView(1)"><i class='material-icons'>label_outline</i></a></li>
-				<li class='waves-effect'><a href='#!' view='author-view' onclick="configureView(3)"><i class='material-icons'>person</i></a></li>
+							<li class='waves-effect'><a href='#!' view='author-view' onclick="configureView(3)"><i class='material-icons'>person</i></a></li>
 			<li class='waves-effect'><a href='#!' onclick="configureView(-1);chartsView('dashboard');" view='dashboard-view'><i class='material-icons'>track_changes</i></i></a></li>
 		</ul>
 
@@ -48,7 +53,7 @@
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<li>
                 <a href='#!'>
-                    <span class='label suite-start-time blue darken-3'>Apr 23, 2020 04:20:14 PM</span>
+                    <span class='label suite-start-time blue darken-3'>Jun 24, 2020 02:09:42 PM</span>
 				</a>
 			</li>
 			<li>
@@ -74,6 +79,7 @@
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
 											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+						<li status='skip'><a href='#!'>Skip <i class='material-icons cyan-text'>redo</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -81,16 +87,6 @@
 			<!-- test toggle -->
 
 			<!-- category toggle -->
-			<div class='chip transparent'>
-				<a class='dropdown-button category-toggle' data-activates='category-toggle' data-constrainwidth='false' data-beloworigin='true' data-hover='true' href='#'>
-					<i class='material-icons'>local_offer</i> Category
-				</a>
-				<ul id='category-toggle' class='dropdown-content'>
-					<li><a href='#'>cucumber</a></li>
-					<li class='divider'></li>
-					<li class='clear'><a href='#!' clear='true'>Clear Filters</a></li>
-				</ul>
-			</div>
 			<!-- category toggle -->
 
 			<!-- clear filters -->
@@ -134,10 +130,10 @@
 					<canvas id='parent-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>1</span> test(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='0%'><span class='strong'>0</span> test(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='100%'>1</span> others
 				</div>
 			</div>
 		</div>
@@ -149,10 +145,10 @@
 					<canvas id='child-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='17.857%'><span class='strong'>5</span> step(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='40%'><span class='strong'>8</span> step(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='82.143%'>23</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='60%'>12</span> others
 				</div>
 			</div>
 		</div>
@@ -167,25 +163,22 @@
 			<ul id='test-collection' class='test-collection'>
 				
 				
-				<li class='test displayed active  pass' status='pass' bdd='false' test-id='1'>
+				<li class='test displayed active  skip' status='skip' bdd='false' test-id='1'>
 					<div class='test-heading'>
-						<span class='test-name'>feature</span>
-						<span class='test-time'>Apr 23, 2020 04:20:20 PM</span>
-						<span class='test-status right pass'>pass</span>
+						<span class='test-name'>RTN API feature3</span>
+						<span class='test-time'>Jun 24, 2020 02:09:56 PM</span>
+						<span class='test-status right skip'>skip</span>
 					</div>
 					<div class='test-content hide'>
 <div class='test-time-info'>
-	<span class='label start-time'>Apr 23, 2020 04:20:20 PM</span>
-	<span class='label end-time'>Apr 23, 2020 04:22:31 PM</span>
-	<span class='label time-taken grey lighten-1 white-text'>0h 2m 11s+706ms</span>
+	<span class='label start-time'>Jun 24, 2020 02:09:56 PM</span>
+	<span class='label end-time'>Jun 24, 2020 02:10:50 PM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 0m 53s+119ms</span>
 </div>
-	<div class='test-desc'>Runs Cucumber Feature </div>
+	<div class='test-desc'>RTN API feature3 </div>
 	<div class='test-attributes'>
-			<div class='category-list'>
-				<span class='category label white-text'>cucumber</span>
-			</div>
 			<div class='author-list'>
-				<span class='author label white-text'>Unspecified</span>
+				<span class='author label white-text'>Priyanka</span>
 			</div>
 	</div>
 	<div class='test-steps'>
@@ -200,143 +193,110 @@
 			<tbody>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:35 PM</td>
+					<td class='timestamp'>2:09:59 PM</td>
 					<td class='step-details'>No alert is present..continuing..</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:40 PM</td>
+					<td class='timestamp'>2:10:09 PM</td>
 					<td class='step-details'>Navigated to UPA with URL : https://stage-myservices.optumhealthpaymentservices.com/registrationSignIn.do</td>
+				</tr>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>2:10:09 PM</td>
+					<td class='step-details'>Sign In With Optum ID is present on page</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:46 PM</td>
+					<td class='timestamp'>2:10:21 PM</td>
 					<td class='step-details'>Clicked Click On Sign In UPA</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:46 PM</td>
-					<td class='step-details'>Waiting for 5 seconds</td>
+					<td class='timestamp'>2:10:21 PM</td>
+					<td class='step-details'>Username entered as : ProvGen1</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:54 PM</td>
-					<td class='step-details'>Username entered as : PAHAIN2172ptpre</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:57 PM</td>
-					<td class='step-details'>Password entered as : Payables@137</td>
+					<td class='timestamp'>2:10:21 PM</td>
+					<td class='step-details'>Password entered as : Prov@Gen14</td>
 				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>4:20:59 PM</td>
+					<td class='timestamp'>2:10:22 PM</td>
 					<td class='step-details'>Clicked click Login button</td>
 				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:20:59 PM</td>
-					<td class='step-details'>Waiting for 7 seconds</td>
-				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>4:21:08 PM</td>
-					<td class='step-details'>Logged in text is present on page</td>
+					<td class='timestamp'>2:10:34 PM</td>
+					<td class='step-details'>Welcome Screen Text  is present on page</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:08 PM</td>
-					<td class='step-details'>Waiting for 10 seconds</td>
+					<td class='timestamp'>2:10:34 PM</td>
+					<td class='step-details'>Read:-'C:\CucumberEditEnrollment\CucumberFramework\Online-Portals\UPA\DataFiles\DataFile.xlsx', Sheet:- 'SQL'</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:18 PM</td>
-					<td class='step-details'>Read:-'C:\Work\April 21_GitHUbDesk\CucumberFramework\Online-Portals\UPA\DataFiles\DataFile.xlsx', Sheet:- 'SQL'</td>
+					<td class='timestamp'>2:10:36 PM</td>
+					<td class='step-details'><font color=''>Executing the query - 'select t.PROV_TIN_NBR from OLE.PORTAL_USER_TIN t join OLE.PORTAL_USER u 
+on t.PORTAL_USER_ID=u.PORTAL_USER_ID  join OLE.ENROLLED_PROVIDER ep
+on t.PROV_TIN_NBR = ep.PROV_TIN_NBR
+where u.SSO_ID='ProvGen1' 
+AND ep.ENRL_STS_CD='A' and u.STS_CD='A' order by ep.ENRL_DTTM desc
+fetch first row only'</font></br></td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:21 PM</td>
-					<td class='step-details'><font color=''>Executing the query - 'select * from ole.PORTAL_USER where SSO_ID = 'PAHAIN2172ptpre''</font></br></td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:21 PM</td>
+					<td class='timestamp'>2:10:36 PM</td>
 					<td class='step-details'>Connecting to Stage DB:-jdbc:db2://dbsps0180:50000/PPSPS</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:24 PM</td>
+					<td class='timestamp'>2:10:38 PM</td>
 					<td class='step-details'>Connection succeeded</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:26 PM</td>
-					<td class='step-details'>Select the TIN Selection from Dropdown dropdown text '020619423 - Enrolled'</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:32 PM</td>
-					<td class='step-details'>TIN selected: 020619423 - Enrolled</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:32 PM</td>
-					<td class='step-details'>Waiting for 5 seconds</td>
+					<td class='timestamp'>2:10:39 PM</td>
+					<td class='step-details'>Selected  Selected Tin is : 205958096</td>
 				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>4:21:40 PM</td>
-					<td class='step-details'>Clicked Search Remittance</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:43 PM</td>
-					<td class='step-details'></td>
+					<td class='timestamp'>2:10:39 PM</td>
+					<td class='step-details'>Tin dropdown is present on page</td>
 				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>4:21:44 PM</td>
-					<td class='step-details'>Clicked NPItext box</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:47 PM</td>
-					<td class='step-details'>Filling NPI No: 1457468464</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:50 PM</td>
-					<td class='step-details'>DoP From Date</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:53 PM</td>
-					<td class='step-details'>DoP To Date</td>
+					<td class='timestamp'>2:10:39 PM</td>
+					<td class='step-details'>Welcome Screen Text  is present on page</td>
 				</tr>
 				<tr class='log' status='pass'>
 					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-					<td class='timestamp'>4:21:55 PM</td>
-					<td class='step-details'>Clicked Search Remittance Button</td>
+					<td class='timestamp'>2:10:44 PM</td>
+					<td class='step-details'>Maintain Enrollment Tab is present on page</td>
+				</tr>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>2:10:46 PM</td>
+					<td class='step-details'>Clicked Maintain Enrollment Tab</td>
 				</tr>
 				<tr class='log' status='info'>
 					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:21:55 PM</td>
-					<td class='step-details'>Waiting for 15 seconds</td>
+					<td class='timestamp'>2:10:46 PM</td>
+					<td class='step-details'>Waiting for 3 seconds</td>
 				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:22:10 PM</td>
-					<td class='step-details'>Waiting for 10 seconds</td>
+				<tr class='log' status='pass'>
+					<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+					<td class='timestamp'>2:10:49 PM</td>
+					<td class='step-details'>Passed comparison of  Browser URL
+Expected was : /viewenrollment.do 
+Actual is : https://stage-myservices.optumhealthpaymentservices.com/viewenrollment.do</td>
 				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:22:20 PM</td>
-					<td class='step-details'>Waiting for 10 seconds</td>
-				</tr>
-				<tr class='log' status='info'>
-					<td class='status info' title='info' alt='info'><i class='material-icons'>info_outline</i></td>
-					<td class='timestamp'>4:22:31 PM</td>
-					<td class='step-details'>Close the browser window with URL:- https://stage-myservices.optumhealthpaymentservices.com/searchRemittanceAction.portal. And title as :- Search Remittance</td>
+				<tr class='log' status='skip'>
+					<td class='status skip' title='skip' alt='skip'><i class='material-icons'>redo</i></td>
+					<td class='timestamp'>2:10:50 PM</td>
+					<td class='step-details'>undefined</td>
 				</tr>
 			</tbody>
 		</table>
@@ -368,76 +328,6 @@
 
 </div>
 <!-- test view -->
-<div id='category-view' class='view hide'>
-
-	<section id='controls'>
-		<div class='controls grey lighten-4'>
-			<!-- search -->
-			<div class='chip transparent' alt='Search Tests' title='Search Tests'>
-				<a href="#" class='search-div'>
-					<i class='material-icons'>search</i> Search
-				</a>
-				
-				<div class='input-field left hide'>
-					<input id='search-tests' type='text' class='validate browser-default' placeholder='Search Tests...'>
-				</div>
-				
-			</div>
-			<!-- search -->
-		</div>
-	</section>
-
-	<div class='subview-left left'>
-		
-		<div class='view-summary'>
-			<h5>Categories</h3>
-			<ul id='category-collection' class='category-collection'>
-				
-				<li class='category displayed active'>
-					<div class='category-heading'>
-						<span class='category-name'>cucumber</span>
-						<span class='category-status right'>
-							<span class='label pass'>1</span>
-						</span>
-					</div>
-					<div class='category-content hide'>
-						<div class='category-status-counts'>
-							<span class='label green accent-4 white-text'>Passed: 1</span>
-							
-							
-						</div>
-					
-						<div class='category-tests'>
-							<table class='bordered table-results'>
-								<thead>
-									<tr>
-										<th>Timestamp</th>
-										<th>TestName</th>
-										<th>Status</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>Apr 23, 2020 04:20:20 PM</td>
-										<td class='linked' test-id='1'>feature</td>
-										<td><span class='test-status pass'>pass</span></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</li>
-
-			</ul>
-		</div>
-	</div>
-
-	<div class='subview-right left'>
-		<div class='view-summary'>
-			<h5 class='category-name'></h5>
-		</div>
-	</div>
-</div>
 <!-- category view -->
 <div id='author-view' class='view hide'>
     <section id='controls'>
@@ -465,16 +355,16 @@
 
                         <li class='author displayed active'>
                             <div class='author-heading'>
-                                <span class='author-name'>Unspecified</span>
+                                <span class='author-name'>Priyanka</span>
                                 <span class='author-status right'>
-                                        <span class='label pass'>1</span>
+                                        <span class='label others'>1</span>
 						        </span>
                             </div>
                             <div class='author-content hide'>
                                 <div class='author-status-counts'>
-                                    <span class='label green accent-4 white-text'>Passed: 1</span>
                                     
                                     
+                                    <span class='label yellow darken-2 white-text'>Others: 1</span>
                                 </div>
 
                                 <div class='author-tests'>
@@ -488,9 +378,9 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Apr 23, 2020 04:20:20 PM</td>
-                                                <td class='linked' test-id='1'>feature</td>
-                                                <td><span class='test-status pass'>pass</span></td>
+                                                <td>Jun 24, 2020 02:09:56 PM</td>
+                                                <td class='linked' test-id='1'>RTN API feature3</td>
+                                                <td><span class='test-status skip'>skip</span></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -523,45 +413,25 @@
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>28</div>
+					<div class='panel-lead'>20</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>Apr 23, 2020 04:20:14 PM</div>
+					<div class='panel-lead'>Jun 24, 2020 02:09:42 PM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>Apr 23, 2020 04:22:32 PM</div>
+			 		<div class='panel-lead'>Jun 24, 2020 02:10:50 PM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>137,829ms</div>
-				</div>
-			</div>
-			<div class='col s4'>
-				<div class='card-panel dashboard-categories'>
-					<span class='right label cyan white-text'>Categories</span><p>&nbsp;</p>
-					
-					<table>
-						<tr>
-							<th>Name</th>
-							<th>Passed</th>
-							<th>Failed</th>
-							<th>Others</th>
-						</tr>
-						<tr>
-							<td>cucumber</td>
-							<td>1</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-					</table>
+					<div class='panel-lead'>67,189ms</div>
 				</div>
 			</div>
 		</div>
@@ -574,22 +444,22 @@
 
 		<script>
 			var statusGroup = {
-				passParent: 1,
+				passParent: 0,
 				failParent: 0,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
-				skipParent: 0,
-				exceptionsParent: 0,
+				skipParent: 1,
+				exceptionsParent: 1,
 				
-				passChild: 5,
+				passChild: 8,
 				failChild: 0,
 				fatalChild: 0,
 				errorChild: 0,
 				warningChild: 0,
-				skipChild: 0,
-				infoChild: 23,
-				exceptionsChild: 0,
+				skipChild: 1,
+				infoChild: 11,
+				exceptionsChild: 1,
 				
 				passGrandChild: 0,
 				failGrandChild: 0,
@@ -606,6 +476,14 @@
 		
 		
  		<script type='text/javascript'>
+ 			
+            
+             $(document).ready(function()
+            {
+            $('.logo-container').css('display','none');
+            }); 
+            
+        
  		</script>
 	</body>
 	

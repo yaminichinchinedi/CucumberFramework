@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,36 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath="//input[@value='Add User']")
 	WebElement btnAddUser;
 	
+	@FindBy(xpath="//input[@value='Resend Registration Email']")
+	WebElement btnRsndRegEmail;
+	
+	@FindBy(name="fname")
+	WebElement fname;
+	
+	@FindBy(name="lname")
+	WebElement lname;
+	
+	@FindBy(name="phoneNum")
+	WebElement phoneNum;
+	
+	@FindBy(name="phoneNum1")
+	WebElement phoneNum1;
+	
+	@FindBy(name="phoneNum2")
+	WebElement phoneNum2;
+	
+	@FindBy(name="email")
+	WebElement email;
+	
+	@FindBy(name="verifyEmail")
+	WebElement verifyEmail;
+	
+	@FindBy(xpath="//input[@value='Search']")
+	WebElement btnSearch;
+	
+	@FindBy(xpath="//input[@value='Add TIN/NPI']")
+	WebElement btnAddTINNPI;
+	
 	@FindBy(name="GridListResults[0].removeTinNpi")
 	WebElement chkRemoveTin;
 	
@@ -105,11 +136,33 @@ public class ManageUsers extends AddUserDetails  {
 	WebElement txtResetPwd;
 	
 	@FindBy(id="viewpurgeduser") 
-	WebElement chkBoxPurge;
+	WebElement chkBoxProvPurge;
 	
 	@FindBy(name="purgedUser")
-	WebElement pyrPurgBx;
+	WebElement chkBoxPurgedUser;
 	
+	@FindBy(id="limitPayerAccessyes")
+	WebElement btnYesSubPayerDataOnly;
+	
+	@FindBy(id="limitPayerAccessno")
+	WebElement btnNoSubPayerDataOnly;
+	
+	
+	@FindBy(name="fundingEmailNotify")
+	List<WebElement> chkBoxFundingEmail;
+	
+	@FindBy(name="nonEnrolledEmailNotify")
+	List<WebElement> chkBoxNonEnrolledEmailNotify;
+	
+	@FindBy(name="inActiveEmailNotify")
+	List<WebElement> chkInActiveEmailNotify;
+	
+	@FindBy(xpath=".//*[contains(text(),'Status')]")
+	WebElement txtStatus;
+	
+	@FindBy(xpath="//input[@id='viewpurgeduser']")
+	WebElement viewPurge;
+
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -121,6 +174,121 @@ public class ManageUsers extends AddUserDetails  {
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
 
+	}
+	
+	public void clickPurgeUsers()
+	{
+		Element.clickByJS(testConfig, viewPurge, "Purged Users Checkbox");
+		Browser.wait(testConfig, 4);
+		
+	}
+	
+
+	public void checkPurgedUser(String LoginType)
+	{
+		
+		List <WebElement> userNames=null;
+		ArrayList<String> UsersListUI=new ArrayList<String>();
+		try{
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		catch(Exception e){
+			Log.Comment("Finding user List again");
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		
+		for (int i=0;i<=userNames.size();i++)
+		{
+			if ( (LoginType.equals("UPA") && userNames.get(i).getText().contains("Purged"))||
+			   ( (LoginType.equals("CSR") && userNames.get(i).getText().equals(testConfig.getRunTimeProperty("PurgedUser"))))
+					   )
+			{
+				Element.click(userNames.get(i), "Purged User List");
+				Browser.wait(testConfig, 5);
+				break;
+			}
+		
+		}	
+	}
+	
+	
+	public void validatePurgeUsers(String LoginType,String Credentials) throws InterruptedException
+	{
+		
+		checkPurgedUser(LoginType);
+		
+		
+		if (LoginType.equals("CSR") && !(Credentials.equals("ROOnly")|| Credentials.equals("RO")|| Credentials.equals("RW") ) )
+		{	
+		 Helper.compareEquals(testConfig, "Save Button", "true",  btnSave.getAttribute("disabled"));
+		 Helper.compareEquals(testConfig, "Cancel Button", "true",  btnCancel.getAttribute("disabled"));
+		}
+		 if (LoginType.equals("CSR"))
+		{
+			if (Credentials.equals("Super")||Credentials.equals("RWOnly"))
+			{	
+				if (Credentials.equals("Super"))
+				{		
+			Helper.compareEquals(testConfig, "Delete Button", "true",  btnDelete.getAttribute("disabled"));
+	        Helper.compareEquals(testConfig, "Resend Email Button", "true",  btnRsndRegEmail.getAttribute("disabled"));
+			}
+			else
+			Helper.compareEquals(testConfig, "Resend Email Button", "true",  btnRsndRegEmail.getAttribute("disabled"));
+		
+			}
+			Browser.wait(testConfig, 3);
+			 Helper.compareEquals(testConfig, "First Name", "true",  fname.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Last Name", "true",  lname.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum", "true",  phoneNum.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum1", "true",  phoneNum1.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "phoneNum2", "true",  phoneNum2.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Email", "true",  email.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Verify Email", "true",  verifyEmail.getAttribute("disabled"));
+			 Helper.compareEquals(testConfig, "Search Button", "true",  btnSearch.getAttribute("disabled"));
+		}
+		 
+		
+		 Helper.compareEquals(testConfig, "Add TIN/NPI Button", "true",  btnAddTINNPI.getAttribute("disabled"));
+
+		 Helper.compareEquals(testConfig, "First Name", "true",  fname.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Last Name", "true",  lname.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum", "true",  phoneNum.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum1", "true",  phoneNum1.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "phoneNum2", "true",  phoneNum2.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Email", "true",  email.getAttribute("readonly"));
+		 Helper.compareEquals(testConfig, "Verify Email", "true",  verifyEmail.getAttribute("readonly"));
+		 List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+		 if (LoginType.equals("UPA") )
+		 Helper.compareContains(testConfig, "Status matching", "Purged", details.get(0).getText());
+	if (LoginType.equals("CSR")&& Credentials.equals("Super"))
+	{
+		Helper.compareContains(testConfig, "Status matching", "Purged", details.get(1).getText()); 
+		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(5).getText());
+		 Helper.compareContains(testConfig, "DateTime", testConfig.getRunTimeProperty("Timestamp"), details.get(6).getText());
+	}	
+	if (LoginType.equals("CSR")&& (Credentials.equals("ROOnly")||Credentials.equals("RO") ||Credentials.equals("RWOnly")||Credentials.equals("RW") ))
+	{
+		Helper.compareContains(testConfig, "Status matching", "Purged", details.get(0).getText()); 
+		Helper.compareContains(testConfig, "Job Name", testConfig.getRunTimeProperty("JobName"), details.get(4).getText());
+		 Helper.compareContains(testConfig, "DateTime", testConfig.getRunTimeProperty("Timestamp"), details.get(5).getText());
+	}	
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].accessLevel']").getAttribute("disabled") ;
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].emailNotify']").getAttribute("disabled") ;
+		 Element.findElement(testConfig, "xpath", "//*[@name='GridListResults[0].removeTinNpi']").getAttribute("disabled") ;
+	
+		 if (LoginType.equals("CSR"))
+			{
+			 Element.clickByJS(testConfig,  Element.findElement(testConfig, "id", "logOutId"), "Logout");
+			 Browser.wait(testConfig, 2);
+			 
+			}
+	
+	}
+
+	public void validateUserEntrybySameTIN(){
+		
+		getTinsListFromUI();
+		
 	}
 	
 	public AddUserDetails clickAddNewUser()
@@ -210,7 +378,7 @@ public class ManageUsers extends AddUserDetails  {
 		try{
 		for(WebElement userName:userNames)
 		 { 
-			UsersListUI.add(userName.getText().toString().toUpperCase());	
+			UsersListUI.add(userName.getText().toString().toUpperCase().trim());	
 		 }
 		}
 		catch(Exception e)
@@ -330,6 +498,20 @@ public class ManageUsers extends AddUserDetails  {
 	
 	
 	
+	public ManageUsers validateAddingSameTIN()
+	{
+		
+		String tinNoToBeSelected= Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[1]").getText();
+	    Element.selectByValue(drpDwnSelectTin, tinNoToBeSelected, "select tin as " + tinNoToBeSelected);
+		Browser.waitForLoad(testConfig.driver);
+		clickAddTin();
+		Browser.wait(testConfig, 2);
+		String expected=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
+		String actual=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
+		Helper.compareEquals(testConfig, "Error Message comparision", expected, actual);
+		return new ManageUsers(testConfig);
+	}
+	
 	/**
 	 * This function clicks the specified user by 
 	 * passing its username
@@ -347,6 +529,7 @@ public class ManageUsers extends AddUserDetails  {
 				      break;
 		   }
 	     }
+
 //		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
@@ -586,7 +769,7 @@ public class ManageUsers extends AddUserDetails  {
 	}
 
 	
-	public void verifyUserDetailsAreReadOnly() throws InterruptedException
+	public ManageUsers verifyUserDetailsAreReadOnly(String userType) throws InterruptedException
 	{
 		String expectedValue="true";
 		try
@@ -612,8 +795,29 @@ public class ManageUsers extends AddUserDetails  {
 			Log.Fail("Failed due to an exception : " + e);
 		}
 		
+		if(userType.contains("PAY"))
+		{
+			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - Yes button", expectedValue, btnYesSubPayerDataOnly.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Limit User's Access to Sub Payer's Data Only - No button", expectedValue, btnNoSubPayerDataOnly.getAttribute("disabled"));
+			accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+			for(WebElement accessLevel:accessLvls )
+				Helper.compareEquals(testConfig, "Access Level is Disabled ", expectedValue, accessLevel.getAttribute("disabled"));
+			for(WebElement fundingEmail:chkBoxFundingEmail )
+				Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, fundingEmail.getAttribute("disabled"));
+			for(WebElement nonEnrolledEmail:chkBoxNonEnrolledEmailNotify )
+				Helper.compareEquals(testConfig, "NonEnrolled Email Notify Checkbox is Disabled ", expectedValue, nonEnrolledEmail.getAttribute("disabled"));
+			for(WebElement inactiveEmail:chkInActiveEmailNotify )
+				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
+		}
+		return this;
 	}
 	
+	public ManageUsers verifyUserStatus(String userType,String expectedStatus)
+	{
+		if(userType.equalsIgnoreCase("PAY"))
+			Helper.compareContains(testConfig, "Status of User", expectedStatus, txtStatus.getText());
+		return this;
+	}
 	
 	public void verifyPayerUserDetailsAreReadOnly() throws InterruptedException
 	{
@@ -977,6 +1181,7 @@ public class ManageUsers extends AddUserDetails  {
 		return this;
 	}
 	
+
 	public ManageUsers verifyPurgedUserStatus(String userType)
 	{
 		int sqlNo=258;
@@ -1025,9 +1230,9 @@ public class ManageUsers extends AddUserDetails  {
 	public ManageUsers clickPurgedChkBox(String userType)
 	{
 		if("PAY".equals(userType))
-			Element.click(pyrPurgBx, "View Purged Users Check Box");
+			Element.click(chkBoxPurgedUser, "View Purged Users Check Box");
 		else
-			Element.click(chkBoxPurge, "View Purged Users Check Box");
+			Element.click(chkBoxProvPurge, "View Purged Users Check Box");
 		return this;
 	}
 	
@@ -1055,5 +1260,148 @@ public class ManageUsers extends AddUserDetails  {
 		Browser.browserRefresh(testConfig);
 		return this;
 	}
+
+	public ManageUsers verifyPurgedUserOptionState(String expectedState)
+	{
+		if(expectedState.equalsIgnoreCase("enabled"))
+		{
+			Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User option");
+			if(!listOfAttributes.containsKey("disabled"))
+				Log.Pass("Purged user option is in Enable State");
+			else
+				Log.Fail("Purged user option is in " + chkBoxPurgedUser.getAttribute("value") + " State" );
+		}
+		else
+	   Helper.compareEquals(testConfig, "Purged Option Disabled Attribute Value", expectedState, chkBoxPurgedUser.getAttribute("disabled").toLowerCase().trim());
+	   return this;
+	}
+
+	public ManageUsers selectPurgedCheckbox() throws IOException, InterruptedException {
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User Checkbox");
+		if(!listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user checbox is not checked, checking it now");
+			Element.click(chkBoxPurgedUser, "Purged User checkbox");
+		}
+			
+		return this;
+		
+	}
+	
+	public ManageUsers deSelectPurgedCheckbox() throws IOException, InterruptedException {
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxPurgedUser, "Purged User Checkbox");
+		if(listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxPurgedUser, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+			
+		return this;
+		
+	}
+	
+	
+	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
+	{
+		int sql=252;
+		ArrayList<String> usersFromDB=new ArrayList<>();
+		try {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+		selectPurgedCheckbox();
+		}
+		catch (Exception e) {
+			Log.Comment("App is UPA");
+		}
+		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
+		{
+			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			for(int i=1;i<=userDetails.size();i++)
+			{
+				if(userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() +"  - PURGED");
+				else
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			}
+			Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			
+			sql=253;
+			try {
+				if(System.getProperty("App").equalsIgnoreCase("CSR"))
+				{
+				 deSelectPurgedCheckbox();
+			     usersFromDB.clear();
+			     userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			     Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			    for(int i=1;i<=userDetails.size();i++)
+			    usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			    Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			   }
+			}
+			catch (Exception e) {
+				Log.Comment("App is UPA");
+		}
+		}
+			
+	}
+
+	
+	/*
+	 * This function fetches the name of a purged user
+	 * which is associated with the logged in tin 
+	 * i.e. the tin that you selected on Home Page 
+	 */
+	public String getPurgedUser(String userType)
+	{
+        int sqlRowNo=10;
+        String purgedUser;
+        
+        if(userType.equalsIgnoreCase("PROV"))
+        	sqlRowNo=10;
+        else if(userType.equalsIgnoreCase("BS"))
+        	sqlRowNo=18;
+        else if(userType.contains("PAY"))
+        	sqlRowNo=254;
+        
+        
+		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		testConfig.putRunTimeProperty("user", purgedUserDetails.get("USERNAME").toString());
+		purgedUser=purgedUserDetails.get("LST_NM").toString().toUpperCase()+","+ " " +purgedUserDetails.get("FST_NM").toString().toUpperCase();
+		Log.Comment("Purged user returned is :" +" " + purgedUser);
+		return purgedUser;
+	}
+	
+	/**
+	 * FOR CSR
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
+		String expectedStatus="Purged";
+		try {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+			selectPurgedCheckbox();
+		}
+		catch (Exception e) {
+			Log.Comment("App is UPA");
+		}
+	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+	}
+	
+	
+	/**
+	 * FOR UPA
+	 * @param userType
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	
+//	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
+//		String expectedStatus="Purged";
+//		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+//	}
+
 }
 

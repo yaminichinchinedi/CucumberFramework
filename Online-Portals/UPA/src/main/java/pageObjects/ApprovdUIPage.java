@@ -32,6 +32,7 @@ protected TestBase testbase;
 	WebDriver driver;
 	public ApprovdUIPage()
 	{
+		    Log.Comment("Launching Firefox browser..");
 			System.setProperty("webdriver.gecko.driver",System.getProperty("user.dir")+"\\drivers\\geckodriver.exe");
 			
 			FirefoxProfile profile = new FirefoxProfile();
