@@ -94,6 +94,16 @@ public class SearchTinPage {
 			   break;
 		   }
 		   
+		    case "PROVPUTIN" :
+		   {
+			   sqlRowNo=258;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			   break;
+		   }
+		   
 		   default:
 			   break;
 		}
@@ -102,6 +112,29 @@ public class SearchTinPage {
 		return new ManageUsers(testConfig);
 	}
 	
+		public ManageUsers doSearchPUTIN(String userType)
+	{
+		int sqlRowNo;
+		Map Searchedtin=null;
+		String tin="";
+		selectUserType(userType);
+		//Element.selectByValue(drpDownUserType,userType, "User type as :" + " " + userType + " ");
+		Element.selectByIndex(drpDownUserType, 1, "Provider User Type");
+		 sqlRowNo=257;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   testConfig.putRunTimeProperty("Timestamp", Searchedtin.get("LST_CHG_BY_DTTM").toString().trim().substring(0,19));
+			   testConfig.putRunTimeProperty("JobName", Searchedtin.get("LST_CHG_BY_ID").toString().trim());
+			   testConfig.putRunTimeProperty("PurgedUser", Searchedtin.get("LST_NM").toString().trim()+", "+Searchedtin.get("FST_NM").toString().trim()+"   - Purged");
+			 
+			   Element.enterData(Element.findElement(testConfig, "css", "input#taxNumber"), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			 //  Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			
+			   Element.click(  Element.findElement(testConfig, "xpath", "//input[@value='Search']"),"Search Button");
+			   testConfig.putRunTimeProperty("tin", tin);
+			   return new ManageUsers(testConfig);
+	}
 	
 	public ManageUsers doSearch(String userType,String searchCriteria)
 	{

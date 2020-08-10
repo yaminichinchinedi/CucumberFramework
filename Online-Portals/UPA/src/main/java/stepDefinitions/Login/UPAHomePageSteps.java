@@ -63,6 +63,11 @@ public class UPAHomePageSteps extends TestBase{
 			homePage.selectTin();
 	}
 
+   @Then("^Select the Purged TIN from the dropdown$")
+   public void select_the_Purged_TIN_from_the_dropdown() throws Throwable {
+		homePage.selectPursedTin();
+
+   }
 	@When("^Click on UPA - My Profile Link$")
 	public void click_on_Upa_My_Profile_Link() throws Throwable {
 		homePage.clickMyProfileTab();
