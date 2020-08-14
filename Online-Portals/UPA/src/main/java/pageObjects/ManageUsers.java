@@ -104,6 +104,9 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),' been reset')]")
 	WebElement txtResetPwd;
 	
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	WebElement yourChangesWereUpdatedSuccessfully;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -250,7 +253,9 @@ public class ManageUsers extends AddUserDetails  {
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
         else if(userType.equalsIgnoreCase("PAY"))
-        	sqlRowNo=19;
+        	//sqlRowNo=19;
+        	sqlRowNo=259;
+
         
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -286,7 +291,11 @@ public class ManageUsers extends AddUserDetails  {
 			  break;
 		   }
 	     }
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		if(userType.equalsIgnoreCase("PAY")) 
+			Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage Payer Users");
+		else
+			Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		
 		return new ManageUsers(testConfig);
 	}
 	
@@ -935,6 +944,23 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
 		clickSave();
+		return this;
+	}
+	
+	public void verifyYourChangesWereUpdatedSuccessfully()
+    {
+		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
+    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
+    }
+	
+	public ManageUsers updateDemographicInfo(String userType)
+	{
+		String userNameBeforeUpdation=getCSRUserName();
+		fillNewUserInfo();
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
+		clickSave();
+		verifyDetailsOfNewUser(userType);
+		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
 		return this;
 	}
 }

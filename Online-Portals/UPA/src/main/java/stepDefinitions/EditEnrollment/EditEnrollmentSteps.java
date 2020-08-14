@@ -10,6 +10,7 @@ import main.java.pageObjects.HomePage;
 import main.java.pageObjects.MaintainEnrollment;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchTinPage;
 import main.java.pageObjects.UPAHomePage;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 
