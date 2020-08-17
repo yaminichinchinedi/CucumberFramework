@@ -80,52 +80,55 @@ public class LoginUPA {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this); 
 	}
-	
-	
-	public UPAHomePage doLoginUPA(String userType)
-	{
-	   setUserProperties(userType);
-	   Element.click(clickUPASignIn, "Click On Sign In UPA");
-	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
-	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.click(btnLogin,"click Login button");
-       Browser.waitForPageLoad(testConfig);
-	   
-	   try{
-	   if(txtErrorMsg1!=null)
-	   {
-	      if(txtErrorMsg1.isDisplayed())
-	     {
-	    	  Log.Comment("Authentication error message displayed..trying again");
-	    	  Browser.wait(testConfig, 3);
-	    	  Element.fluentWait(testConfig, txtboxPwd, 120,5, "txtboxOptumID");
-	    	  Element.enterData(txtboxUserName,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID"); 
-	    	  Element.enterData(txtboxPwd,password, "Entered Optum ID password  as :" + " "+ password, "txtboxPwd");
-	    	  Element.click(btnLogin, "Sign In");
-	     }
-	   }
-	   }
-	   catch(Exception e)
-	   {
-		   Log.Comment("Authentication Error not present");
-	   }
-	   WebElement welcomeTxt=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
-	   if(welcomeTxt!=null)
-	   Log.Comment("Security Question not present");
-	   else
-	    {
-          for(int i=0;i<2;i++)
-           {
-             securityQuestion=Element.findElement(testConfig, "id", "challengeQuestionLabelId");
-             if(securityQuestion!=null)
-             { 
-            fillAns();
-               break;
-             }
-           }
-	    }
-     return new UPAHomePage(testConfig);
-   }
+
+	public void doLoginUPAActivateAccount(String userType) {
+		System.out.print("User type is"+userType);
+		setUserProperties(userType);
+		System.out.print("User type is"+userType);
+		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.click(btnLogin, "click Login button");
+		Browser.waitForPageLoad(testConfig);
+	}
+
+	public UPAHomePage doLoginUPA(String userType) {
+		setUserProperties(userType);
+		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.click(btnLogin, "click Login button");
+		Browser.waitForPageLoad(testConfig);
+
+		try {
+			if (txtErrorMsg1 != null) {
+				if (txtErrorMsg1.isDisplayed()) {
+					Log.Comment("Authentication error message displayed..trying again");
+					Browser.wait(testConfig, 3);
+					Element.fluentWait(testConfig, txtboxPwd, 120, 5, "txtboxOptumID");
+					Element.enterData(txtboxUserName, id, "Entered Optum ID as:" + " " + id, "txtboxOptumID");
+					Element.enterData(txtboxPwd, password, "Entered Optum ID password  as :" + " " + password,
+							"txtboxPwd");
+					Element.click(btnLogin, "Sign In");
+				}
+			}
+		} catch (Exception e) {
+			Log.Comment("Authentication Error not present");
+		}
+		WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+		if (welcomeTxt != null)
+			Log.Comment("Security Question not present");
+		else {
+			for (int i = 0; i < 2; i++) {
+				securityQuestion = Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+				if (securityQuestion != null) {
+					fillAns();
+					break;
+				}
+			}
+		}
+		return new UPAHomePage(testConfig);
+	}
 
 	public void fillAns() {
 		

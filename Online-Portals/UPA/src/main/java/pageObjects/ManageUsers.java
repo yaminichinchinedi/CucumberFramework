@@ -105,6 +105,7 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath=".//*[contains(text(),' been reset')]")
 	WebElement txtResetPwd;
 	
+
 	@FindBy(name="purgedUser")
 	WebElement chkBoxPurgedUser;
 	
@@ -135,6 +136,10 @@ public class ManageUsers extends AddUserDetails  {
 	
 	@FindBy(xpath="//*[@id=\"bsForm\"]/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td/table[3]/tbody/tr/td[3]/div/input[2]")
 	WebElement btnAddProviderAssociation;
+
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	WebElement yourChangesWereUpdatedSuccessfully;
+
 	
 	private TestBase testConfig;
 	LoginCSR csrPage;
@@ -282,7 +287,9 @@ public class ManageUsers extends AddUserDetails  {
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
         else if(userType.equalsIgnoreCase("PAY"))
-        	sqlRowNo=19;
+        	//sqlRowNo=19;
+        	sqlRowNo=259;
+
         
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -318,7 +325,11 @@ public class ManageUsers extends AddUserDetails  {
 			  break;
 		   }
 	     }
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		if(userType.equalsIgnoreCase("PAY")) 
+			Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage Payer Users");
+		else
+			Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		
 		return new ManageUsers(testConfig);
 	}
 	
@@ -1012,6 +1023,7 @@ public class ManageUsers extends AddUserDetails  {
 		return this;
 	}
 	
+
 	public ManageUsers verifyPurgedUserOptionState(String expectedState)
 	{
 		if(expectedState.equalsIgnoreCase("enabled"))
@@ -1149,5 +1161,23 @@ public class ManageUsers extends AddUserDetails  {
 //		String expectedStatus="Purged";
 //		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 //	}
+
+	public void verifyYourChangesWereUpdatedSuccessfully()
+    {
+		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
+    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
+    }
+	
+	public ManageUsers updateDemographicInfo(String userType)
+	{
+		String userNameBeforeUpdation=getCSRUserName();
+		fillNewUserInfo();
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
+		clickSave();
+		verifyDetailsOfNewUser(userType);
+		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+		return this;
+	}
+
 }
 
