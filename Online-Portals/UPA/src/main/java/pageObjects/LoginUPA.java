@@ -60,7 +60,10 @@ public class LoginUPA {
 	@FindBy(id = "challengeQuestionLabelId")
 	WebElement securityQuestion;
 
-	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+//	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+//	WebElement txtboxSecurityAns;
+	
+	@FindBy(id = "UnrecognizedSecAns_input")
 	WebElement txtboxSecurityAns;
 
 	@FindBy(name = "rememberMyDevice")
@@ -153,8 +156,8 @@ public class LoginUPA {
 		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
 	
-		if (!chkBoxRememberDevice.isSelected())
-			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+//		if (!chkBoxRememberDevice.isSelected())
+//			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
 		
 		Element.click(btnNext, "Next to submit answer");
 	}
