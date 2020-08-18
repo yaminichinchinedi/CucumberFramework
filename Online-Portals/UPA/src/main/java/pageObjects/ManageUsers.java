@@ -162,6 +162,12 @@ public class ManageUsers extends AddUserDetails  {
 	
 	@FindBy(xpath="//input[@id='viewpurgeduser']")
 	WebElement viewPurge;
+	
+	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance:')]")
+	WebElement termsAndCond;
+	
+	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
+	WebElement termsAndCondDate;
 
 	private TestBase testConfig;
 	LoginCSR csrPage;
@@ -522,15 +528,14 @@ public class ManageUsers extends AddUserDetails  {
 	{
 		for(WebElement userName:userNames)
 		{ 
-			System.out.println("Username is: "+userName.getText().toString().toUpperCase());
 		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }
-
 //		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		Browser.wait(testConfig, 3);
 		return new ManageUsers(testConfig);
 	}
 	
@@ -1390,6 +1395,18 @@ public class ManageUsers extends AddUserDetails  {
 	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
 	
+	
+	public ManageUsers validateTandCFields(){
+//		termsAndCond=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Terms and Conditions Acceptance:')]");
+//		termsAndCondDate=Element.findElement(testConfig, "xpath", "//span[contains(text(),'Terms and Conditions Acceptance Date:')]");
+		String termAndCond=termsAndCond.getText().substring(termsAndCond.getText().indexOf(":")+1, termsAndCond.getText().length()).trim();
+		String termAndCondDate=termsAndCondDate.getText().substring(termsAndCondDate.getText().indexOf(":")+1, termsAndCondDate.getText().length());
+		int sqlRowNo=258;
+		Map portalUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "", portalUserDetails.get("TC_ACCEPT_IND").toString(), termAndCond);
+		Helper.compareContains(testConfig, "", portalUserDetails.get("TC_ACCEPT_DTTM").toString(), termAndCondDate);
+		return this;
+	}
 	
 	/**
 	 * FOR UPA

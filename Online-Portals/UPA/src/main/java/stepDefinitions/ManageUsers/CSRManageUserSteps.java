@@ -92,4 +92,32 @@ public class CSRManageUserSteps extends TestBase {
 	public void validate_status_of_purged_user_for_in_tables(String userType) throws Throwable {
 		manageUsers.verifyPurgedUserStatus(userType);
 	}
+
+	@Then("^select user \"([^\"]*)\" from dropdown$")
+	public void select_user_from_dropdown(String userType) throws Throwable {
+		searchPage.selectUserType(userType);
+	}
+
+	@Then("^Enter tin on Search Tin Page for \"([^\"]*)\" having condition as \"([^\"]*)\" and click search button$")
+	public void enter_tin_on_Search_Tin_Page_for_having_condition_as_and_click_search_button(String userType, String termsAndCondition) throws Throwable {
+		String typeOfTin=null;
+		if(userType.equals("PROV"))
+			typeOfTin="tinwithTermAndConditionProv";
+		else
+			typeOfTin="tinwithTermAndConditionBS";
+		testConfig.putRunTimeProperty("termsAndCondition", termsAndCondition);
+		searchPage.enterTin(typeOfTin);
+		manageUsers=searchPage.clickSearch(userType);
+	}
+
+	@Then("^User clicks on username from user list$")
+	public void user_clicks_on_username_from_user_list() throws Throwable {
+		manageUsers.clickSpecificUserName(testConfig.getRunTimeProperty("username"));
+	}
+
+	@Then("^validate T and C fields\\.$")
+	public void validate_T_and_C_fields() throws Throwable {
+		manageUsers.validateTandCFields();
+	}
+
 }
