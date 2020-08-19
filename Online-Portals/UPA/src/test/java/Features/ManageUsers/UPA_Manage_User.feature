@@ -182,7 +182,8 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
   @UPAUS2711348
      Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the Purged TIN from the dropdown
+   # Then Select the Purged TIN from the dropdown
+     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
     Then Verify Purged User validations by clicking on it
       Examples:
