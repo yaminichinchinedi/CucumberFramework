@@ -88,6 +88,9 @@ public class CSRHomePage {
 	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
 	WebElement lnkSearchRemittance;
 	
+	@FindBy(xpath="//a[contains(text(),' Create/Maintain Enrollment')]")
+	WebElement lnkCreateMaintainEnrollment;
+	
 	@FindBy(linkText="Common Reports")
     WebElement lnkComnRerts;
 
@@ -119,6 +122,12 @@ public class CSRHomePage {
     {
            Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance Link");
            return new SearchTinPageSearchRemittance(testConfig);
+    }
+
+    
+    public void clickCreateMaintainEnrollmentLink()
+    {
+           Element.clickByJS(testConfig,lnkCreateMaintainEnrollment, "Create Maintain Enrollment Link");
     }
 
     public SelectReportsPage clickCommonReportsLink()

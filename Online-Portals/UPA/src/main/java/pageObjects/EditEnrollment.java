@@ -211,6 +211,20 @@ public class EditEnrollment {
 	@FindBy(id="tinLevelResetButton")
 	WebElement btnResetBankDetails;
 	
+	@FindBy(xpath="//td[@class='Tableheader1bold'][contains(text(),'Payer')]")
+	WebElement payerPatientBankingInformationHeader;
+	
+
+	@FindBy(xpath="	//td[contains(text(),'Select Payer')]")
+	WebElement selectPayerPatientdropdowntitle;
+	
+	
+	@FindBy(name="bankAccountTO.payerTinNbr")
+	WebElement drpDwnSelectPayerPatient;
+	
+	@FindBy(xpath="//th[@class='Tableheader4bold'][contains(text(),'Payer/Patient')]")
+	WebElement bankingInformationHeader;
+	
 	@FindBy(id="payerPayerId")
 	WebElement drpDwnPayerPatient;
 	
@@ -353,8 +367,11 @@ public class EditEnrollment {
 	@FindBy(xpath="//input[@value='Finish']")
 	WebElement btnFinish;
 	
+	@FindBy(xpath="//td[contains(text(),'Patient Payment')]")
+	WebElement payerName;
 	
-	
+	@FindBy(xpath="//td[contains(text(),'HM801')]")
+	WebElement payerId;
 	
 	
 	
@@ -601,6 +618,47 @@ public class EditEnrollment {
 	{
 		Element.click(tabsMenu.findElements(By.tagName("li")).get(2), "Bank Account(s) Tab");
 		return this;
+	}
+	
+	public EditEnrollment clickPayersTab()
+	{
+		Element.click(tabsMenu.findElements(By.tagName("li")).get(1), "Payer (s) tab");
+		return this;
+	}
+	
+	public EditEnrollment clickPayerPRATab()
+	{
+		Element.click(tabsMenu.findElements(By.tagName("li")).get(3), "Payer PPRA's Tab");
+		return this;
+	}
+	
+	public void verifyPayersPagePayerNameandId()
+	{
+  		Element.verifyTextPresent(payerName, "Patient Payment");
+  		Element.verifyTextPresent(payerId, "HM801");
+	}
+	
+	public void verifyPayerPRAPagePayerName()
+	{
+  		Element.verifyTextPresent(payerName, "Patient Payment");
+	}
+	
+	public void verifyPayerPatientBankingHeader()
+	{
+		Helper.compareContains(testConfig, "Payer Patient Banking Header", "Payer/Patient Level Banking Information   (Designate separate bank accounts by Payer or for Patient payments)", payerPatientBankingInformationHeader.getText());
+	}
+	
+	public void verifySelectPayerPatientdropdowntitle()
+	{
+  		Browser.scrollTillAnElement(testConfig, selectPayerPatientdropdowntitle, "Select Payer/Patient");
+		Helper.compareContains(testConfig, "Select Payer Patient", "Select Payer/Patient: ", selectPayerPatientdropdowntitle.getText());
+  		List<String> values = Element.getAllOptionsInSelect(testConfig, drpDwnSelectPayerPatient);
+  		if (values.contains("Patient Payment"))
+  			Log.Pass("Pass");
+  		else
+  			Log.Fail("Fail");
+  		Element.verifyTextPresent(bankingInformationHeader, "Payer/Patient");
+  		
 	}
 	
 	public EditEnrollment verifyTinLevelBankInfo()

@@ -71,6 +71,12 @@ public class AddUserDetails {
 	//"//td[@class='subheadernormal'][2]")+ "//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	@FindBy(xpath="//td[contains(text(),'Provider')]")
 	WebElement txtUserType;
+	
+	@FindBy(xpath="//span[contains(text(),'Optum ID:')]")
+	WebElement ssoId;
+	
+	@FindBy(xpath="//span[contains(text(),'UUID:')]")
+	WebElement UUId;
 			
 	@FindBy(name="GridListResults[0].providerTinNumber")
 	WebElement associatedTinNo;
@@ -412,6 +418,29 @@ public class AddUserDetails {
 		
 	}
 	
+	public ManageUsers VerifyDetailsOfUser(String userType)
+	{
+		int sqlRowNo=0;
+		Map portalUser=null;
+		{
+			sqlRowNo=258;
+			portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			try
+			{
+			Helper.compareEquals(testConfig, "First name", portalUser.get("FST_NM").toString(), firstName.getAttribute("value").toString());
+			Helper.compareEquals(testConfig, "Phone number", portalUser.get("TEL_NBR").toString(), phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
+			Helper.compareContains(testConfig, "SSO ID", (portalUser.get("SSO_ID").toString()), ssoId.getText());
+			Helper.compareContains(testConfig, "UUID", portalUser.get("UUID").toString(), UUId.getText());
+			}
+			catch(Exception e)
+			{
+				Log.Fail("Exception occured : " + e);
+			}
+		}
+		
+	    return new ManageUsers(testConfig);
+	    
+	}
 	
 	
 }

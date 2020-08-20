@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -106,6 +107,14 @@ public class Payment_DataFiles_Page extends TestBase
 	@FindBy(xpath = "(//td[@class='runtext'])[2]")
 	WebElement BundleFileType;
 	
+	@FindBy(name = "availablePayers")
+	WebElement payerName;
+	
+	@FindBy(xpath = "//span[contains(text(),'Note: Payer PRAs and EPRAs are not available for P')]")
+	WebElement payerPRANote;
+	
+	@FindBy(xpath = "//*[contains(text(),'Data Bundle requests for Patient Payments will be available soon')]")
+	WebElement patientPaymentsNote;
 	
 	public Payment_DataFiles_Page(TestBase testConfig)
 	{
@@ -166,6 +175,20 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
+	public Payment_DataFiles_Page enterTin() throws Exception 
+	{
+		int sqlRow;
+		sqlRow=15;
+		Map paymentdetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		String Prov_tin_nbr = paymentdetails.get("PROV_TIN_NBR").toString().trim();
+		testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TIN_NBR").toString().trim());
+		
+		Element.enterData(EnterTIN, Prov_tin_nbr, "Provider TIN entered: "+Prov_tin_nbr, "TINField");
+		Element.click(SearchBtn, "Search Button");
+		Browser.wait(testConfig, 3);
+		return this;
+	}
+	
 	public Payment_DataFiles_Page verifyCreateDataBundlePage() throws Exception
 	{
 
@@ -212,11 +235,11 @@ public class Payment_DataFiles_Page extends TestBase
 		Browser.wait(testConfig, 5);
 		//Map PayerListDB=null;
 		
-		List<String> PayerListUI=new ArrayList<>();
-		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option");
+		List<String> PayerListUI=new ArrayList<>();//availablePayerTinNbrs
+		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayers']/option");
 		for(int i=1; i<= payer.size(); i++)
 		{
-			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
+			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
 		}
 		Browser.wait(testConfig, 3);
@@ -917,5 +940,26 @@ public class Payment_DataFiles_Page extends TestBase
 			 return this;
 		}
 		
+		public Payment_DataFiles_Page verifyPatientPatientOnTopOfTheList() {
+		Element.verifyTextPresent(payerName.findElements(By.tagName("option")).get(0), "Patient Payment");
+		return this;
+		}
 		
+		public Payment_DataFiles_Page verifypayerPRANote() {
+			Element.verifyTextPresent(payerPRANote, "Note: Payer PRAs and EPRAs are not available for Patient Payments");
+			return this;
+		}
+		
+		public Payment_DataFiles_Page verifyAbsenseOfPatientPaymentsNote() {
+			Element.verifyElementNotPresent(patientPaymentsNote, "Data Bundle requests for Patient Payments will be available soon");
+			return this;
+
+		}
+		
+		public Payment_DataFiles_Page verify835isClickable() {
+			Element.click(Eight35ChkBox, "835's Check Box");
+			Element.verifyElementIsChecked(Eight35ChkBox, "835's Check Box");
+			return this;
+
+		}
 }

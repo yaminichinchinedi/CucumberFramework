@@ -11,7 +11,7 @@ public class ABNSwitchCheckSteps extends TestBase{
 	
 		@When("^ABN Validator Switch is set as 'Y'$")
 		public void abn_Validator_Switch_is_set_as_Y() throws Throwable {
-			int sqlRowNo=258;
+			int sqlRowNo=260;
 			Map ABNSwitch=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 			
 			if (!ABNSwitch.get("PROC_DATA").toString().equals("Y"))
