@@ -29,7 +29,7 @@ public class ProviderEFTERAEnrollPage extends ProviderInformationEFTERAEnroll {
 		PageFactory.initElements(testConfig.driver, this);
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			expectedURL="/billingserviceinformationbsenroll";
-		Browser.verifyURL(testConfig, expectedURL);
+		//Browser.verifyURL(testConfig, expectedURL);
 	}
 	
 	public ProviderInformationEFTERAEnroll clickContinue() 

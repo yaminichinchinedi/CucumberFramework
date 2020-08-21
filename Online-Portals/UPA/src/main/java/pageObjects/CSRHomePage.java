@@ -93,12 +93,16 @@ public class CSRHomePage {
 	
 	@FindBy(linkText="Common Reports")
     WebElement lnkComnRerts;
+
+	@FindBy(css = "a.runtext")
+    WebElement lnkCrtEnrl;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
+		Browser.wait(testConfig, 7);
 	}
 
 	public SearchTinPage clickManageUsersLink()
@@ -130,5 +134,10 @@ public class CSRHomePage {
     {
            Element.clickByJS(testConfig,lnkComnRerts, "Common Report Link");
            return new SelectReportsPage(testConfig);
+    }
+    public CreateEnrollUsrTyp clickCrtEnrlmnt()
+    {
+           Element.clickByJS(testConfig,lnkCrtEnrl, "Create/Maintain Enrollment Link");
+          return new CreateEnrollUsrTyp(testConfig);
     }
 }

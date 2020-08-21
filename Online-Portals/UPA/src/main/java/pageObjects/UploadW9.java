@@ -10,6 +10,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
@@ -45,8 +46,11 @@ public class UploadW9 {
 	
 	public UploadW9(TestBase testConfig) 
 	{
-		this.testConfig = testConfig;	
+		this.testConfig = testConfig;
+		Browser.checkPageReadyState(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
+		
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/footer/a[2]"), 60);
 		Element.expectedWait(fedW9Lnk, testConfig, "Fedral W9 Form Link", "FedW9Link");
 		String expectedURL;
 		
