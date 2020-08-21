@@ -502,6 +502,8 @@ public class ReviewAndSubmit {
 	  
 	  public void clickFinancialInfoEditLink()
 		{
+			
+		  Browser.wait(testConfig, 3);
 			Element.click(finInfoEdit, "Edit Hyperlink");
 			String expectedURL="financialInformationEFTERAEnroll.do?fromReview=Y";
 			Browser.verifyURL(testConfig, expectedURL);
@@ -523,7 +525,7 @@ public class ReviewAndSubmit {
 		}
 	public void verifyEditHyperLinks()
 	{
-		
+	Browser.wait(testConfig, 3);	
 	Element.verifyElementPresent(edtlnks.get(0),"Org Info EDIT");
 	Element.verifyElementPresent(edtlnks.get(1),"Identify Admin EDIT");
 	Element.verifyElementPresent(edtlnks.get(2),"Tin Information EDIT");

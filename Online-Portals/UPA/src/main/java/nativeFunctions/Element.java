@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
@@ -73,6 +74,35 @@ import main.java.reporting.Log;
 		try
 		{
 		element.sendKeys(data);		
+		Log.Comment(description);
+		}
+		catch(NoSuchElementException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not found on page" + '\n' + e);
+		}
+		
+		catch(ElementNotVisibleException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page" + '\n' + e);
+		}
+		
+		catch(StaleElementReferenceException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page"+ '\n' + e);
+		}
+		
+		catch(NullPointerException e)
+		{
+			Log.Fail("Element" + " " + "'"+namOfElement +"'"+ " " + " is Not Visible on the page and exception is: " + " " + e);
+		}
+	}
+	
+	public static void enterKeys(WebElement element,Keys key, String description,String namOfElement)
+	{
+	
+		try
+		{
+		element.sendKeys(key);		
 		Log.Comment(description);
 		}
 		catch(NoSuchElementException e)
