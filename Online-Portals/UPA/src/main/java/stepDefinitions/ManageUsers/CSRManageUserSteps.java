@@ -119,5 +119,16 @@ public class CSRManageUserSteps extends TestBase {
 	public void validate_T_and_C_fields() throws Throwable {
 		manageUsers.validateTandCFields();
 	}
+    
+    @Then("^User enters \"([^\"]*)\" in Manage Users Page and Updates an active User and verify the user details in the UI and DB$")
+    public void user_enters_in_Manage_Users_Page_and_Updates_an_active_User_and_verify_the_user_details_in_the_UI_and_DB(String userType) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+    	if(userType.equalsIgnoreCase("PROV"))
+          manageUsers = searchPage.doSearch(userType);
+    	else
+          manageUsers = searchPage.doSearch(userType);
+    	manageUsers.clickActiveUserName(userType).updateDemographicInfo(userType).clickSave().verifyYourChangesWereUpdatedSuccessfully();
+    	manageUsers.VerifyDetailsOfUser(userType);   
+}
 
 }

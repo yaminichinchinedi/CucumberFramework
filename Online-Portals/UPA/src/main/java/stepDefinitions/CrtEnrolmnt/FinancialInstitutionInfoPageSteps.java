@@ -8,6 +8,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.Runner.DemoTestNGRunner;
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
@@ -102,13 +103,56 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_NPI() throws Throwable {
 		financialInstitutionInfoPage.fillFinancialInstInfo().clickYestoNPI().clickContinueNPI();
 	}
+	@Then("^Users clears the RTN No fill the new RTN No and validate the details and click on Save changes button$")
+	public void users_clears_the_RTN_No_fill_the_new_RTN_No_and_validate_the_details_and_click_on_Save_changes_button() throws Throwable {
+		financialInstitutionInfoPage.clearNfillRTNNoABA();
+	}
+	@Then("^User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator_Click_YES_to_NPI_and_click_continue() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickYestoNPI().clickContinueNPI();
+	}
+	@Then("^User fills all the information on Financial Institution Information page for ABA Validator and click continue$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_and_click_continue_NPI() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickContinue();
 
+	}
+	@Then("^User fills all the information on Financial Institution Information page for ABA Validator and click continue AV$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator_and_click_continue_AV() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickContinueAV();
+
+	}
 //	@Then("^User fills all the information of Financial Institution Information NPI page and click continue\\.$")
 //	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
 //		financialInstitutionNPI=new FinancialInstitutionInfoPageNPI(testConfig);
 //		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinueAV();
 //	}
-	
+	@When("^RTI API server is up$")
+	public void rti_API_server_is_up_and_RTN_switch_is_set_as_Y() throws Throwable {
+		 financialInstitutionInfoPage.checkABNValidator();
+	}
+
+	@Then("^All the validations are performed with incorrect information with editable RTN No$")
+	public void all_the_validations_are_performed_with_incorrect_information_with_editable_RTN_No() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickContinue();
+	}
+	@Then("^User fills all the information with Incorrect/Improper/Null RTN No on Financial Institution Information page for ABA Validator$")
+	public void user_fills_all_the_information_with_Incorrect_Improper_Null_RTN_No_on_Financial_Institution_Information_page_for_ABA_Validator() throws Throwable {
+		   financialInstitutionInfoPage.fillFinancialInstInfoFromABA(null)
+		   							   .fillFinancialInstInfoFromABA(Long.toString(Helper.generateRandomNumber(5)))
+									   .fillFinancialInstInfoFromABA(Helper.generateRandomAlphaNumericString(9))
+									   .fillFinancialInstInfoFromABA(Long.toString(Helper.generateRandomNumber(9)))
+		   ;
+	}
+
+	@Then("^All the validations are performed for Incorrect information with editable RTN No$")
+	public void all_the_validations_are_performed_for_Incorrect_information_with_editable_RTN_No() throws Throwable {
+	    
+	}
+	@Then("^modify/remove RTN No making as invalid,validations are performed$")
+	public void modify_remove_RTN_No_making_as_invalid_validations_are_performed() throws Throwable {
+		financialInstitutionInfoPage
+		   .fillFinancialInstInfoFromABA(Long.toString(Helper.generateRandomNumber(7)));
+	}
 	@Then("^User fills all the information on Financial Institution Information page and click continue$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue() throws Throwable {
 		financialInstitutionInfoPage.fillFinancialInstInfo().clickContinue();

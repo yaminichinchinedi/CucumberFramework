@@ -85,3 +85,12 @@ Feature: CSR Manage User Functionality
     
     
 
+@US2707358
+  Scenario Outline: CSR Manage User UI Functionality Portal User History
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Updates an active User and verify the user details in the UI and DB
+    Examples:
+      |    userType     |   credentials   |  
+      |      PAY        |      Super      |
+      |      PROV       |      Super      |

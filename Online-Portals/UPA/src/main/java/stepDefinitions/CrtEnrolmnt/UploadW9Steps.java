@@ -1,6 +1,7 @@
 package main.java.stepDefinitions.CrtEnrolmnt;
 
 import cucumber.api.java.en.Then;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.UploadW9;
 
@@ -15,6 +16,7 @@ public class UploadW9Steps extends TestBase {
 	
 	@Then("^clicks back button on Upload WNine Page\\.$")
 	public void clicks_back_button_on_Upload_WNine_Page() throws Throwable {
+		Browser.wait(testConfig, 2);
 		uploadW9.clickBackButton();
 	}
 }
