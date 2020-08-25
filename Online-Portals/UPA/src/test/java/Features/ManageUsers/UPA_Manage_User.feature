@@ -179,7 +179,7 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |     PAY_Admin |  		Administrator		    | PurgedUsers|
 	  
 	
-  @UPAUS2711348
+  @UPAUS2711348 @UPA_AugRelease
      Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
    # Then Select the Purged TIN from the dropdown
@@ -190,7 +190,7 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |  
      
-     @UPAUS2720684 	
+     @UPAUS2720684 	@UPA_AugRelease
 		Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal

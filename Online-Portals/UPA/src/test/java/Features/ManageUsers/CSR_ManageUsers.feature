@@ -52,7 +52,7 @@ Scenario Outline: US2684242_4_CSR_SuperUser_ManageUsers_ValidationforViewPurgedU
 					|     RW        |   PAY       |    PurgedUsers    | 
 			  	 
 
-@CSRUS2684219 @CSRUS2767633
+@CSRUS2684219 @CSRUS2767633 @CSR_AugRelease
 Scenario Outline: CSR Manage Purse User 
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
