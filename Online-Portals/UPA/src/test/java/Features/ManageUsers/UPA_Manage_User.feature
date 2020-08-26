@@ -96,7 +96,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |      PROV_Admin |   PROV     	|		Administrator		    |
       
       
-  @UPAManageUsers_US2769380    
+  @UPAManageUsers_US2769380  @UPA_AugRelease  
   Scenario Outline: UPA Manage User Add new Provider user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -107,7 +107,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
       |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
       
-  @UPAManageUsers_US2769380
+  @UPAManageUsers_US2769380 @UPA_AugRelease
   Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
