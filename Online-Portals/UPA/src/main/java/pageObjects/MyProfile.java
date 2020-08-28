@@ -12,7 +12,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
+import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -172,6 +172,7 @@ public class MyProfile {
 			Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getPayerTinsFromUI());
 		else
 		Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getTinsFromUI());
+	//	Log.passWithScreenshot("Verifies user details on my profile page successully");
 		return this;
 	}
 	
@@ -269,6 +270,7 @@ public class MyProfile {
 		Element.enterData(txtBoxVerifyEmail, existingEmailAdr,"Enter verify existing email address as : " + existingEmailAdr,"Verify Email");
 		Element.click(btnSave, "Save button");
 		Element.waitTillTextAppears(errorEmail, "Email Address already exists in our database", testConfig);
+		//Log.passWithScreenshot("Verifies all error msgs successfully");
 		
 	}
 	

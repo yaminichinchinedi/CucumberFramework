@@ -29,7 +29,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import main.java.reporting.Log;
-import main.java.reporting.LogTemp;
 
 import com.mysql.jdbc.StringUtils;
 

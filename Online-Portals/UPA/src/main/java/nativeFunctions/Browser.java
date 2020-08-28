@@ -71,6 +71,30 @@ public class Browser
 		}
 	}
 	
+	public static void waitForPageLoad(TestBase testConfig) 
+	{
+		try{
+			
+			ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() 
+				{
+			      public Boolean apply(WebDriver driver) 
+			      {
+			    	  driver=testConfig.driver;
+				  return ((JavascriptExecutor)testConfig.driver).executeScript(
+						"return document.readyState").equals("complete");
+			}
+		};
+		
+		WebDriverWait wait = new WebDriverWait(testConfig.driver,120,600);
+		wait.until(pageLoadCondition);
+		}
+		catch(Exception e)
+		{
+			Browser.wait(testConfig, 5);
+		}
+	}
+  
+	
 	public static void scrollTillAnElement(TestBase testConfig,WebElement element,String description)
 	{
 		try{
@@ -202,26 +226,14 @@ public class Browser
 
 	public static void closeBrowser(TestBase testConfig)
 	{
-
-	try
-	{
-	if (testConfig.driver != null)
-	{
-	Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
-	//testConfig.driver.close();
-	testConfig.driver.quit();
-	return;
+	    if (testConfig.driver != null)
+	    {
+	      Log.Comment("Close the browser window with URL:- " + testConfig.driver.getCurrentUrl() + ". And title as :- " + testConfig.driver.getTitle());
+	      testConfig.driver.close();
+	    }
 	}
-	testConfig.driver.quit();
-	testConfig.driver  = null;
-
-	}
-	catch (UnreachableBrowserException e)
-	{
-	Log.Fail("Unable to close browser due to :" + '\n' + ExceptionUtils.getStackTrace(e));
-
-	}
-	}
+	  
+	    	
 	
 	
 	public void navigateTo(TestBase testConfig,String url)
@@ -249,7 +261,7 @@ public class Browser
 		}
 		catch (UnreachableBrowserException e)
 		{
-			logger.logWarning("Warning : " +e);
+			Log.Warning("warning " + e, testConfig);
 		}
 	}
 	
@@ -297,96 +309,9 @@ public class Browser
 		File dest = new File(testConfig.getRunTimeProperty("ResultsDir"));
 		return dest;
 	}
-	private static String getScreenshotFileName(Method testMethod)
-	 {
-			String nameScreenshot = testMethod.getDeclaringClass().getName() + "." + testMethod.getName();
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-			Date date = new Date();
-			return dateFormat.format(date) + "_" + nameScreenshot + ".png";
-	}
 	
 	
-	/**
-	 * Takes the screenshot of the current active browser window
-	 * 
-	 * @param Config
-	 *            test config instance
-	 * @param destination
-	 *            file to which screenshot is to be saved
-	 * @throws Exception 
-	 */
-//	public static void takeScreenShot(TestBase testConfig, File destination)  
-//	{
-//		try
-//		{
-//			if (testConfig.driver != null)
-//			{
-//				File screenshot = null;
-//				String screenshotName="";
-//				
-//				try
-//				{
-//					screenshot = captureScreenshot(testConfig);
-//				}
-//				catch (NullPointerException ne)
-//				{
-//					Log.Comment("NullPointerException:Screenshot can't be taken. Probably browser is not reachable");
-//					//test case will end, setting this as null will prevent taking screenshot again in cleanup
-//					testConfig.driver = null;
-//				}
-//				
-////				if (screenshot != null)
-////				{
-////					try
-////					{
-////						FileUtils.writeByteArrayToFile(destination, screenshot);
-////						
-////						float compressionQuality = (float) 0.5;
-////						try
-////						{
-////							compressionQuality = Float.parseFloat(testConfig.getRunTimeProperty("ScreenshotCompressionQuality"));
-////						}
-////						catch (Exception e)
-////						{
-////							// We are not using testConfig.logException(e) to print
-////							// exception here
-////							// testConfig.logException(e) creates a infinite loop
-////							// and breaks all test cases
-////							e.printStackTrace();
-////						}
-////						compressJpegFile(destination, destination, compressionQuality);
-////					}
-////					catch (IOException e)
-////					{
-////						// We are not using testConfig.logException(e) to print
-////						// exception here
-////						// testConfig.logException(e) creates a infinite loop and
-////						// breaks all test cases
-////						e.printStackTrace();
-////					}
-////				}
-//					if(testConfig.driver !=null)
-//						Log.Comment("<B>Page URL</B>:- " + testConfig.driver.getCurrentUrl());
-//					else 
-//						Log.Comment("Driver is NULL");
-//				}
-//			
-//				//String href =  screenshot;
-//				//Log.Comment("<B>Screenshot</B>:- <a href=" + href  +" target='_blank' >" + destination.getName() + "</a>");
-//			
-//		}
-//		catch (UnreachableBrowserException e)
-//		{
-//			testConfig.enableScreenshot = false;
-//			Log.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
-//		}
-//		catch (Exception e)
-//		{
-//			testConfig.enableScreenshot = false;
-//			Log.Comment("Unable to take screenshot:- " + ExceptionUtils.getStackTrace(e));
-//			
-//		}
-//	}
+	
 	
 			
 			

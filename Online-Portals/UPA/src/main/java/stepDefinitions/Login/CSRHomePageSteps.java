@@ -5,8 +5,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.CSRHomePage;
+import main.java.pageObjects.CreateMaintainEnrollment;
+import main.java.pageObjects.EditEnrollment;
 import main.java.pageObjects.LoginCSR;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchTinPage;
 
 public class CSRHomePageSteps extends TestBase{
 	
@@ -50,5 +53,30 @@ public class CSRHomePageSteps extends TestBase{
 		public void user_clicks_on_Common_Reports_link() throws Throwable {
 			homePage.clickCommonReportsLink(); 
 		}
+	   
+	   @Then("^User clicks on Create/Maintain Enrollment link$")
+	   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
+		   homePage.clickCreateMaintainEnrollmentLink();
+	   }
+	   
+	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
+	   public void user_enters_and_active_TIN_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType) throws Throwable {
+			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
+			enrollment.doSearch(userType);
+			enrollment.validateViewEnrollment();
+			enrollment.clickEditBtn();
+		}
+	   
+	   
+	   @When("^Click on CSRManage User Link$")
+		public void click_on_CSRManage_User_Link() throws Throwable {
+			homePage.clickManageUsersLink();
+		}
+	   
+	   
+	   @Then("^User clicks on Create/Maintain Enrollment link on CSR HomePage$")
+	   public void user_clicks_on_Create_Maintain_Enrollment_link_on_CSR_HomePage() throws Throwable {
+		   homePage.clickCrtEnrlmnt();
+	   }
 
 }

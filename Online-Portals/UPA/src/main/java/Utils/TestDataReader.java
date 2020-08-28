@@ -116,7 +116,52 @@ public class TestDataReader {
 		
 		return value;
 	}
+public List <String> GetAllColumnsData(String sheetName,String Column){
+	
+	List<String> data=new ArrayList<String>();
+	List<String> headerRow = testData.get(0);
+	int findColumnNo=0;
+	for (int i = 0; i < headerRow.size(); i++) {
+		if (headerRow.get(i).equalsIgnoreCase(Column)) {
+			
+				findColumnNo=i;
+				break;
+		}
+	}
+	
+	XSSFWorkbook workbook = null;
+	XSSFSheet sheet = null;
+	XSSFRow row =null;
+	filename = testConfig.getRunTimeProperty("DataFilePath");
+	try {
+		
+		fis = new FileInputStream(filename);
+		workbook = new XSSFWorkbook(fis);
+		sheet = workbook.getSheet(sheetName);
 
+			int rowNum = 0;
+			int totalRows = getRecordsNum();
+
+			for(int i=1;i<totalRows;i++)
+				
+			{
+				row=sheet.getRow(i);
+				
+				if (!convertXSSFCellToString(row.getCell(findColumnNo)).equals(""))
+					data.add (convertXSSFCellToString(row.getCell(findColumnNo)));
+					row=null;
+			}
+		
+	} catch (FileNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	
+	return data;
+}
 	public String GetcolumnData(String column, String value, String path,
 			int columnNum, Boolean newPennyFlow) {
 		String data = "";

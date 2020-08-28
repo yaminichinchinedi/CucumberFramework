@@ -5,15 +5,20 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import java.util.List;
+import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 
-public class UPAHomePage {
+public class UPAHomePage extends HomePage {
 	
 	private WebDriver driver;
 	private TestBase testConfig;
@@ -79,21 +84,23 @@ public class UPAHomePage {
     WebElement lnkSearchRemittance;
 	
 	
-	@FindBy(xpath = "//select[@id='taxIndNbrId']") WebElement tinDrpDwn;
+	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	
+	private ViewPaymentsDataProvider dataProvider;
 	
 	
 	UPAHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//span[contains(text(),'Welcome Screen')]"), 60);
-		//Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");	
+		Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
 	}
 
-	public SearchTinPage clickManageUsersLink()
+	public ManageUsers clickManageUsersTab()
 	{
-		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
-		return new SearchTinPage(testConfig);
+		Element.expectedWait(manageUsersTab, testConfig, "Manage users tab","Manage Users tab");
+		Element.click(lnkManageUsers, "Manage Users");
+		return new ManageUsers(testConfig);
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
@@ -134,5 +141,36 @@ public class UPAHomePage {
 		
 	}
 
+	public UPAHomePage selectTin() 
+	 {
+			int sqlRow=23;
+			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			Element.selectByVisibleText(tinDrpDwn,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+			Browser.waitForLoad(testConfig.driver);
+			Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown ",  "Tin dropdown");
+			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
+			return new UPAHomePage(testConfig);
+	}
+
+
 	
+	public HomePage selectTin(String paymentType) 
+	 {
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		dataProvider.associateTinWithUser(tin);
+		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
+		tin=tin+" - Enrolled";
+		
+		if((!tinList.contains(tin))){
+		   Element.click(homeTab, "home Tab");
+		   Browser.waitForLoad(testConfig.driver);
+		   Browser.wait(testConfig, 3);
+		   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
+		 }
+		
+		Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
+		Browser.waitForLoad(testConfig.driver);
+		return this;
+	}
 }

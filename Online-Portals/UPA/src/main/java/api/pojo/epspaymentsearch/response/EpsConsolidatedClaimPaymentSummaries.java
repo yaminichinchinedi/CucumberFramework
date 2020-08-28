@@ -81,6 +81,14 @@ public class EpsConsolidatedClaimPaymentSummaries
 
 	@XmlElement(name = "EpsSecondaryPayerReferenceIdentifier", required = true)
     private String EpsSecondaryPayerReferenceIdentifier;
+	
+	@XmlElement(name = "EpsClaimPaymentResponses", required = true)
+	private EpsClaimPaymentResponses EpsClaimPaymentResponses;
+	
+	
+
+
+	    
 
     public PayerSummary getPayerSummary ()
     {
@@ -340,6 +348,16 @@ public class EpsConsolidatedClaimPaymentSummaries
     public void setEpsSecondaryPayerReferenceIdentifier (String EpsSecondaryPayerReferenceIdentifier)
     {
         this.EpsSecondaryPayerReferenceIdentifier = EpsSecondaryPayerReferenceIdentifier;
+    }
+    
+    public EpsClaimPaymentResponses getEpsClaimPaymentResponses ()
+    {
+        return EpsClaimPaymentResponses;
+    }
+
+    public void setEpsClaimPaymentResponses (EpsClaimPaymentResponses EpsClaimPaymentResponses)
+    {
+        this.EpsClaimPaymentResponses = EpsClaimPaymentResponses;
     }
 
     @Override

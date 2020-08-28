@@ -30,6 +30,11 @@ public class LoginUPA {
     @FindBy(xpath="//font[@class='errors']")
 	private WebElement txtErrorMsg;
 	
+    
+    
+    @FindBy(xpath="//span[contains(text(),'The Optum ID or password that you entered is incorrect.')]")
+	WebElement txtErrorMsg1;
+    
     @FindBy(xpath=".//*[@id='signin-tile']/div/p[2]/a")
     public WebElement activateAccount;
     
@@ -48,34 +53,150 @@ public class LoginUPA {
     @FindBy(linkText="Benefits of EPS")
     WebElement tabBenefitsOfEPS;
 	
+    
+    @FindBy(xpath = "//label[@contains(text(),'favorite color')]")
+	WebElement favColorQuestion;
+
+	@FindBy(id = "challengeQuestionLabelId")
+	WebElement securityQuestion;
+
+	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+	WebElement txtboxSecurityAns;
+
+	@FindBy(name = "rememberMyDevice")
+	WebElement chkBoxRememberDevice;
+
+	@FindBy(id = "authQuesSubmitButton")
+	WebElement btnNext;
+
+	@FindBy(xpath = "//div[@class='authQuestionTitle']")
+	WebElement txtUnrecognizedDevice;
 	private TestBase testConfig;
 	String id, password;
-
+	String env=System.getProperty("env");
+	
 	public LoginUPA(TestBase testConfig) 
 	{
-		
 		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+		PageFactory.initElements(testConfig.driver, this); 
+	}
+
+	public void doLoginUPAActivateAccount(String userType) {
+		System.out.print("User type is"+userType);
+		setUserProperties(userType);
+		System.out.print("User type is"+userType);
+		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.click(btnLogin, "click Login button");
+		Browser.waitForPageLoad(testConfig);
+	}
+
+	public UPAHomePage doLoginUPA(String userType) {
+		setUserProperties(userType);
+		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.click(btnLogin, "click Login button");
+		Browser.waitForPageLoad(testConfig);
+
+		try {
+			if (txtErrorMsg1 != null) {
+				if (txtErrorMsg1.isDisplayed()) {
+					Log.Comment("Authentication error message displayed..trying again");
+					Browser.wait(testConfig, 3);
+					Element.fluentWait(testConfig, txtboxPwd, 120, 5, "txtboxOptumID");
+					Element.enterData(txtboxUserName, id, "Entered Optum ID as:" + " " + id, "txtboxOptumID");
+					Element.enterData(txtboxPwd, password, "Entered Optum ID password  as :" + " " + password,
+							"txtboxPwd");
+					Element.click(btnLogin, "Sign In");
+				}
+			}
+		} catch (Exception e) {
+			Log.Comment("Authentication Error not present");
+		}
+		WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+		if (welcomeTxt != null)
+			Log.Comment("Security Question not present");
+		else {
+			for (int i = 0; i < 2; i++) {
+				securityQuestion = Element.findElement(testConfig, "id", "challengeQuestionLabelId");
+				if (securityQuestion != null) {
+					fillAns();
+					break;
+				}
+			}
+		}
+		return new UPAHomePage(testConfig);
+	}
+
+	public void fillAns() {
 		
-        
+		if (securityQuestion.getText().contains("color")) 
+			fillColorAns();
+		
+		else if (securityQuestion.getText().contains("sports")) 
+			fillSportsAns();
+
+		else if (securityQuestion.getText().contains("best friend")) 
+			fillBestFriendAns();
+		
+		else if (securityQuestion.getText().contains("father")) 
+			fillFatherAns();
+		
+		else if (securityQuestion.getText().contains("nickname")) 
+			fillNicknameAns();
+		
+		else if (securityQuestion.getText().contains("state of your birth")) 
+			fillStateOfBirthAns();
+
+		else 
+			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
+	
+		if (!chkBoxRememberDevice.isSelected())
+			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+		
+		Element.click(btnNext, "Next to submit answer");
+	}
+
+	
+	private void fillNicknameAns() {
+		 Element.enterData(txtboxSecurityAns, "Ginni","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
 	}
 	
-	
-	public UPAHomePage doLoginUPA(String userType)
-	{
+	private void fillStateOfBirthAns() {
+		 Element.enterData(txtboxSecurityAns, "Faridabad","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
+	}
 
-	   Element.click(clickUPASignIn, "Click On Sign In UPA");
-	   String env=System.getProperty("env");
-       Browser.wait(testConfig, 5);
-       id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
-       password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
-       testConfig.putRunTimeProperty("id", id);
-	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
-	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
-	   Element.clickByJS(testConfig,btnLogin,"click Login button");
-	   Browser.wait(testConfig, 7);
-	   return new UPAHomePage(testConfig); 
-	 }
+
+	private void fillFatherAns() {
+		if(id.equals("TestPayerStage"))
+	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
+		else
+			 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+	}
+
+	private void fillBestFriendAns() {
+			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+	}
+
+	private void fillSportsAns() {
+		if(testConfig.getRunTimeProperty("id").equals("PayerAuto"))
+			Element.enterData(txtboxSecurityAns, "tester","Entered 'tester' as Favorite Sports team", "txtboxSecurityAns");
+		else
+		Element.enterData(txtboxSecurityAns, "india","Entered 'india' as Favorite Sports team", "txtboxSecurityAns");
+		
+	}
+
+	public void fillColorAns() {
+		if(id.equals("AVUHCPAYSTG1"))
+			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
+		else
+			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+	} 
+	 
 	
 	
 	
@@ -86,8 +207,10 @@ public class LoginUPA {
 	}
 	
 	
-	public void setUserProperties()
+	public void setUserProperties(String userType)
 	{
+		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
+		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 	}
@@ -107,16 +230,13 @@ public class LoginUPA {
         Element.click(activateAccount, "Activate your account link on registartion page");
         
         if(!txtboxUserName.isDisplayed())
-        {
         	 Element.click(activateAccount, "Activate your account link on registartion page");
-        }
-    
+        
         Element.expectedWait(txtboxUserName, testConfig, "User Name", "User Name textbox");
 		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
 		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
-		setUserProperties();
-		
+		setUserProperties(userType);
 	    return new SplashPage3(testConfig);
 	}
 	
@@ -131,7 +251,6 @@ public class LoginUPA {
 		Element.enterData(txtboxUserName, id, "Correct Username entered as :"+" " + id, "txtboxUserName");	
 		Element.enterData(txtboxPwd, password, "Invalid Password entered :" + " " + password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
-		
 		verifyLoginErrorMessage();
 		
 	}
@@ -145,22 +264,5 @@ public class LoginUPA {
 	{
 		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
 	}
-	
-	
-	public void UPARegistrationPage(TestBase testConfig) throws IOException
-    {
-
-          //this.testConfig=testConfig;          
-          Browser.dismissAlert(testConfig);
-
-           testConfig.driver.navigate().to(System.getProperty("URL"));
-          Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
-          PageFactory.initElements(testConfig.driver, this);
-          Browser.waitForLoad(testConfig.driver);
-          //Element.expectedWait(lnkSignInWithOptumId, testConfig, "Sign In With Optum ID",  "Sign In With Optum ID");
-    }
-	
-	
-	
 	
 }

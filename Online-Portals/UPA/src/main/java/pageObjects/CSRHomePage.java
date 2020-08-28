@@ -88,8 +88,14 @@ public class CSRHomePage {
 	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
 	WebElement lnkSearchRemittance;
 	
+	@FindBy(xpath="//a[contains(text(),' Create/Maintain Enrollment')]")
+	WebElement lnkCreateMaintainEnrollment;
+	
 	@FindBy(linkText="Common Reports")
     WebElement lnkComnRerts;
+
+	@FindBy(css = "a.runtext")
+    WebElement lnkCrtEnrl;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -106,7 +112,8 @@ public class CSRHomePage {
 	}
 	
     public SearchTinPageViewPayments clickViewPaymentsLink()
-    {      Browser.wait(testConfig, 7);
+    {
+    	   Element.fluentWait(testConfig, lnkViewPayments, 200, 3, "View Payments");
            Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
            return new SearchTinPageViewPayments(testConfig);
     }
@@ -117,9 +124,20 @@ public class CSRHomePage {
            return new SearchTinPageSearchRemittance(testConfig);
     }
 
+    
+    public void clickCreateMaintainEnrollmentLink()
+    {
+           Element.clickByJS(testConfig,lnkCreateMaintainEnrollment, "Create Maintain Enrollment Link");
+    }
+
     public SelectReportsPage clickCommonReportsLink()
     {
            Element.clickByJS(testConfig,lnkComnRerts, "Common Report Link");
            return new SelectReportsPage(testConfig);
+    }
+    public CreateEnrollUsrTyp clickCrtEnrlmnt()
+    {
+           Element.clickByJS(testConfig,lnkCrtEnrl, "Create/Maintain Enrollment Link");
+          return new CreateEnrollUsrTyp(testConfig);
     }
 }
