@@ -13,6 +13,8 @@ public class TestBranchVersion extends TestBase{
 	public void testEnvBranchVersion() throws InterruptedException, IOException
 	 {
           VersionPage vp=new VersionPage(testConfig);
-          vp.verifyDevAndQABranchVersionIsSame();
+//          vp.verifyDevAndQABranchVersionIsSame();
+          
+          vp.verifyCommitIDfromYesterday();
      }
 }  

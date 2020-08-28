@@ -1,5 +1,11 @@
 package pageObjects;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +48,59 @@ public class VersionPage {
 				else
 					Log.Fail("Mismatch between Dev and QA branch , Dev branch is :" +getDevDeployedBranchVersion() + "\n" +  "Automation branch is" + System.getProperty("automationBranch"));
 	}
+
+	public void verifyCommitIDfromYesterday() throws IOException {
+		if(getDevCodeCommitIDfromYesterday()!="")
+		 {
+	        if(getDevCodeCommitIDfromYesterday().equals(getDevDeployedBranchVersion()))
+	        	Log.Fail("Yesterday DEVcommit ID and Today DEVcommit are same which is :" + getDevDeployedBranchVersion() + "hence not running regression JOB");
+	        	else
+	        	{
+	        		Log.Pass("Yesterday DEV commit ID and Today DEV commit are  NOT same ,hence starting RUNNING regression JOB");
+	        		Log.Comment("Yesterday DEVcommit ID is :" + getDevCodeCommitIDfromYesterday());
+	        		Log.Comment("Today DEVcommit ID is :" + getDevDeployedBranchVersion());
+	        	}
+		 }
+	        		
+		
 }
+
+	public String getDevCodeCommitIDfromYesterday() throws IOException {
+	
+		String versionFromFile="";
+		String fileLocation="C:\\AnnCucumberFramework\\Online-Portals\\BranchVersionExtractor\\DeployedVersion.txt";
+		File file =new File(fileLocation);
+		if(file.exists())
+		{
+		
+		 FileReader reader = new FileReader(fileLocation); 
+	     int i; 
+	     while ((i=reader.read()) != -1) 
+	     versionFromFile=versionFromFile+(char)i;
+	     
+	     
+		}
+		else
+			writeDeployedVersionInFile();
+	   
+	    return versionFromFile;
+	  
+	}
+
+  public void writeDeployedVersionInFile()
+  {
+    try  
+    {
+    	FileWriter fileWriter = new FileWriter("C:\\AnnCucumberFramework\\Online-Portals\\BranchVersionExtractor\\DeployedVersion.txt");
+    	String devCommitID = getDevDeployedBranchVersion();
+        fileWriter.write(devCommitID);
+        fileWriter.close();
+   
+    } 
+    catch (IOException e) {}
+    
+}
+}
+		
+	
 
