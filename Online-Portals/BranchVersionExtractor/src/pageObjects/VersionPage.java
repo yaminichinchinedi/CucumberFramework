@@ -59,6 +59,7 @@ public class VersionPage {
 	        		Log.Pass("Yesterday DEV commit ID and Today DEV commit are  NOT same ,hence starting RUNNING regression JOB");
 	        		Log.Comment("Yesterday DEVcommit ID is :" + getDevCodeCommitIDfromYesterday());
 	        		Log.Comment("Today DEVcommit ID is :" + getDevDeployedBranchVersion());
+	        		writeDeployedVersionInFile();
 	        	}
 		 }
 	        		
@@ -68,7 +69,8 @@ public class VersionPage {
 	public String getDevCodeCommitIDfromYesterday() throws IOException {
 	
 		String versionFromFile="";
-		String fileLocation="C:\\AnnCucumberFramework\\Online-Portals\\BranchVersionExtractor\\DeployedVersion.txt";
+		String fileLocation=System.getProperty("user.dir")+"\\DeployedVersion.txt";
+		System.out.println("File location is ");
 		File file =new File(fileLocation);
 		if(file.exists())
 		{
@@ -91,7 +93,7 @@ public class VersionPage {
   {
     try  
     {
-    	FileWriter fileWriter = new FileWriter("C:\\AnnCucumberFramework\\Online-Portals\\BranchVersionExtractor\\DeployedVersion.txt");
+    	FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"\\DeployedVersion.txt");
     	String devCommitID = getDevDeployedBranchVersion();
         fileWriter.write(devCommitID);
         fileWriter.close();

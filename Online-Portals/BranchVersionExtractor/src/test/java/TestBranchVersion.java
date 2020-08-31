@@ -14,7 +14,6 @@ public class TestBranchVersion extends TestBase{
 	 {
           VersionPage vp=new VersionPage(testConfig);
 //          vp.verifyDevAndQABranchVersionIsSame();
-          
           vp.verifyCommitIDfromYesterday();
      }
 }  
