@@ -53,13 +53,14 @@ public class UPARegistrationPage extends TestBase{
 	{
 		
 		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
+		
 		
 		System.setProperty("Application", "UPA");
 		Browser.dismissAlert(testConfig);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
 		Log.Comment("Navigated to UPA with URL : " + System.getProperty("URL"));
 		Browser.waitForLoad(testConfig.driver);
+		PageFactory.initElements(testConfig.driver, this);
 		Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");
 		
 		
