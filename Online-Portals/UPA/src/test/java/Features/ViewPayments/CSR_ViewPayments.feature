@@ -37,7 +37,7 @@ Feature: CSR View Payments UI Functionality
         |    credentials  |   paymentType  		     |key									|value|
         |      Super		  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
 
-@CSRViewPayments_TC004-TC008
+@CSRViewPayments_TC004
   Scenario Outline: Validate correct payment information is displayed on filter Show All
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -52,7 +52,7 @@ Feature: CSR View Payments UI Functionality
       |Super		     |   Last 6-9 months        |	Show All				|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
       |Super		     |   Last 9-13 months       |	Show All				|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
 
-  @CSRViewPayments_TC009
+  @CSRViewPayments_TC005
   Scenario Outline: Validation of TIN's latest NPI Only payments and Quick Search Filter
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -69,6 +69,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     | generalPaymentForNPI_6-9months |	NPI Only				|	Last 6-9 months		| Show All      |TAX_IDENTIFIER_TYPE	|NPI	|
       |      Super		     | generalPaymentForNPI_9-13months|	NPI Only				|	Last 9-13 months	| Show All      |TAX_IDENTIFIER_TYPE	|NPI	|
 
+  @CSRViewPayments_TC006
   Scenario Outline: CSR View Payments UI Functionality Validate correct payment information is displayed on selection of 'TIN Only' from the filter
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -84,6 +85,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     | generalPaymentForTIN_6_9months |	TIN Only				|	Last 6-9 months		|  Show All      |TAX_IDENTIFIER_TYPE	|TIN	|
       |      Super		     | generalPaymentForTIN_9_13months|	TIN Only				|	Last 9-13 months	|  Show All      |TAX_IDENTIFIER_TYPE	|TIN	|
 
+  @CSRViewPayments_TC007
   Scenario Outline: CSR View Payments UI Functionality Validate correct payment information is displayed on selection of 'Active Only' from the filter
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -100,6 +102,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     | activeOnly9_13months|	Show All				|	Last 9-13 months	| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
 
 
+  @CSRViewPayments_TC008
   Scenario Outline: CSR View Payments UI Functionality Validate correct payment information is displayed on selection of 'Archived Only' from the filter
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -115,15 +118,20 @@ Feature: CSR View Payments UI Functionality
       |      Super		     | archiveOnly6_9months 	|	Show All				|	Last 6-9 months		| Archived Only |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|Y		|
       |      Super		     | archiveOnly9_13months	|	Show All				|	Last 9-13 months	| Archived Only |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|Y		|
 
+  @CSRViewPayments_TC009
   Scenario Outline: CSR View Payments UI Functionality Validate Payment date sorting for both ascending and descending
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
     Then Select the TIN for "<paymentType>" CSR Portal
-    Then Validate "<paymentType>" , "<quickSearchFilter>" , "<archiveFilter>" Payment date sorting for both ascending and descending
+    Then Set Search Filters for "<archivefilter>" having "<paymentType>"  
+    Then Verify Payment Date Sorting for "<chronologicalorder>"
+    
     Examples:
-      |    credentials     |   paymentType       |	quickSearchFilter	|  archiveFilter   |
-      |      Super		     | generalPayment      |	Last 60 days      |   Show All       |
+      |    credentials     |   paymentType       |  archivefilter   |chronologicalorder|
+      |      Super		     | Last 9-13 months    |   Show All       |Desc							 |
+      |      Super		     | Last 9-13 months    |   Show All       |Asc							 |
 
+  @CSRViewPayments_TC010
   Scenario Outline: CSR View Payments UI Functionality Validate TS014_View Payments_Zero Dollar ACH or VCP Payments
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -135,6 +143,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     |      ACH       |TAX_IDENTIFIER_TYPE	|ALL	|
       |      Super		     |      VCP       |TAX_IDENTIFIER_TYPE	|ALL	|
 
+  @CSRViewPayments_TC011
   Scenario Outline: CSR View Payments UI Functionality Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -142,14 +151,17 @@ Feature: CSR View Payments UI Functionality
     And Set FISL Parameters "<key>" and "<value>"
     Then Verify Mkt Type for "<mktTypeFilter>"
     Examples:
-      |    credentials     |   paymentType      |   mktTypeFilter   |
-      |      Super		     |   medicalFilter    |   Medical         |
+      |    credentials     |   paymentType      |   mktTypeFilter   |key				|value|
+      |      Super		     |   medicalFilter    |   Medical         |MARKET_TYPE|M		|
 
+  @CSRViewPayments_TC012
   Scenario Outline: CSR View Payments UI Functionality Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
     Then Select the TIN for "<quickSearchFilter>" CSR Portal
-    Then Validate "<quickSearchFilter>" , "<filterPayments>" that correct payment information is displayed on selection of Market type-Medical from the  filter
+    And Set FISL Parameters "<key>" and "<value>"
+    Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>"   
     Examples:
-      |    credentials       |   quickSearchFilter      |   filterPayments   |
-      |      Super		     |   Last 9-13 months       |   Show All         |
+      |    credentials     |   quicksearchfilter      |   filterpayments 	 |key			|value			|
+      |      Super		     |   Last 9-13 months       |   Show All         |MARKET_TYPE|ALL			|
+     
