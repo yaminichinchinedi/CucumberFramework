@@ -193,7 +193,7 @@ public class LoginUPA {
 	}
 
 	private void fillBestFriendAns() {
-			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "kanishka", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {
@@ -208,7 +208,7 @@ public class LoginUPA {
 		if(id.equals("AVUHCPAYSTG1"))
 			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
 		else
-			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+			Element.enterData(txtboxSecurityAns, "Green","Entered 'black' as Favorite Color answer", "txtboxSecurityAns");
 	} 
 	 
 	

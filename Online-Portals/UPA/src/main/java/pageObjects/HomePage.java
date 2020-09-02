@@ -379,7 +379,12 @@ public class HomePage extends LoginUPA {
 	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    optumIDLoginPage.fillCredsAndSignIn("", "");
 	}*/
-
+	
+	public HomePage clickHomeTab()
+	{
+		Element.click(homeTab, "Home Tab");
+		return this;
+	}
 
 	
 

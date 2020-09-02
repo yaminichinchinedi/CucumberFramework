@@ -48,6 +48,13 @@ public class UPAHomePageSteps extends TestBase{
     	homePage.selectTin(searchCriteria);
     }
     
+    @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void user_Selects_a_tin_on_HomePage_for_for(String searchCriteria, String tinType) throws Throwable {
+    	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("prdctSelected", searchCriteria);
+    	homePage.selectTin(searchCriteria);
+    }
+    
     @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
     public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
     	testConfig.putRunTimeProperty("tinType", tinType);

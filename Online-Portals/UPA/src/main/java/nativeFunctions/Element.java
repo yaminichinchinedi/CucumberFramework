@@ -69,7 +69,7 @@ import main.java.reporting.Log;
 		}
 		catch(Exception e)
 		{
-			Log.Comment("Can not clear the element" + " " + namOfElement,"directly entering data");
+			Log.Comment("Can not clear the element" + " " + namOfElement+"directly entering data");
 		}
 		try
 		{

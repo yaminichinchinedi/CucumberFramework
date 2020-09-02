@@ -15,6 +15,9 @@ public class CancelManageUser {
 	
 	@FindBy(name="Yes")
 	WebElement btnYes;
+	
+	@FindBy(linkText="User List")
+	WebElement lnkUserList;
 
 	private TestBase testConfig;
 	
@@ -34,6 +37,8 @@ public class CancelManageUser {
 	public void clickNo()
 	{
 		Element.click(btnNo, "No button");
+		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
+		Element.verifyElementPresent(lnkUserList, "User List");
 	}
 	
 }

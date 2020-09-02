@@ -212,7 +212,7 @@ public class AddUserDetails {
 	{
 		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
-		 Browser.wait(testConfig,2);
+//		 Browser.wait(testConfig,2);
 		 return this;
 	}
 	

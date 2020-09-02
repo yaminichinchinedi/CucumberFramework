@@ -12,7 +12,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
       #|      PROV_Gen       |   PROV|
- 
+ @amit1
   Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -198,5 +198,21 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |  
-     	
+      
+      
+       @UPAManageUsers_US2775740
+		Scenario Outline: Access Payments - Manage users Provider for Legacy Experience
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on Manage User Link
+    Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Provider user
+    Then Verify user List on UI from DB for "<userType>" using "<searchCriteria>"
+    Then verify Add user button is enabled.
+    Then Verify Access level and Email notification indicator can be updated for "<userType>".
+    Then User perform validation by adding TIN with same TIN 
+      Examples:
+   	  |    userType     |   accessType  |		accessLevelOfNewUser	| 			searchCriteria				|		portalAccess	| tinType		|
+      |      PROV_Admin |   PROV     		|					General			    |  		TinWithMoreThnMaxUsr 		|			Legacy			|		AO			|
+      |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		AV			|
+      |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		VO			|
       	
