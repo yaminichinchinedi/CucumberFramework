@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 import main.java.nativeFunctions.TestBase;
-import pageObjects.VersionPage;
+import main.java.pageObjects.VersionPage;
 
 public class TestBranchVersion extends TestBase{
 	

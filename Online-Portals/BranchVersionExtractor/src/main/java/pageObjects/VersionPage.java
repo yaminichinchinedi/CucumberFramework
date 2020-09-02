@@ -1,4 +1,4 @@
-package pageObjects;
+package main.java.pageObjects;
 
 import java.io.File;
 import java.io.FileNotFoundException;
