@@ -107,6 +107,7 @@ public class CSRHomePage {
 
 	public SearchTinPage clickManageUsersLink()
 	{
+		Element.fluentWait(testConfig, lnkManageUsers, 200, 3, "Manage Users link");
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 		return new SearchTinPage(testConfig);
 	}

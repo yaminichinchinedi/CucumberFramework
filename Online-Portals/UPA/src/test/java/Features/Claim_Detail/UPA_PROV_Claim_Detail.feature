@@ -1,5 +1,4 @@
 #Author: Athyusha Thota
-
 @UPARegression @UPAClaimDetailProv
 Feature: UPA Provider Claim Detail
 

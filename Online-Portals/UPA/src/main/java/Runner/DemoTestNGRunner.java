@@ -103,7 +103,8 @@ import main.java.reporting.Log;
 //        "com.cucumber.listener.ExtentCucumberFormatter:"+ "C:/CucumberEditEnrollment/CucumberFramework/Online-Portals/UPA/ExtentReports/ExtentReportResults.html"},
         dryRun=false,
         strict=true,
-        tags={"@UPAEditEnr4"}
+        tags={"@CSRPurgedTest2"}
+
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;
