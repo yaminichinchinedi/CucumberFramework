@@ -38,6 +38,7 @@ public class VersionPage {
 	public String getDevDeployedBranchVersion()
 	{
 		int index=txtDeployedBranch.getText().indexOf(":"); 
+		System.out.println("current version is : " + txtDeployedBranch.getText().substring(index+2, txtDeployedBranch.getText().length()));
 		return txtDeployedBranch.getText().substring(index+2, txtDeployedBranch.getText().length());
 	}
 	
@@ -70,7 +71,7 @@ public class VersionPage {
 	public String getDevCodeCommitIDfromYesterday() throws IOException {
 	
 		String versionFromFile="";
-		String fileLocation=System.getProperty("user.dir")+"\\DeployedVersion.txt";
+		String fileLocation=("C:\\Users\\rkrish38\\Jenkins\\DeployedVersion.txt");
 		File file =new File(fileLocation);
 		if(file.exists())
 		{
@@ -81,6 +82,7 @@ public class VersionPage {
 	     versionFromFile=versionFromFile+(char)i;
 	     
 	     
+	     
 		}
 		else
 		{
@@ -88,6 +90,7 @@ public class VersionPage {
 			writeDeployedVersionInFile();
 		}
 	   
+		System.out.println("Verion is : " + versionFromFile);
 	    return versionFromFile;
 	  
 	}
@@ -96,8 +99,9 @@ public class VersionPage {
   {
     try  
     {
-    	FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"\\DeployedVersion.txt");
-    	System.out.println(System.getProperty("user.dir")+"\\DeployedVersion.txt");
+//    	FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"\\DeployedVersion.txt");
+    	
+    	FileWriter fileWriter = new FileWriter("C:\\Users\\rkrish38\\Jenkins\\DeployedVersion.txt");
     	String devCommitID = getDevDeployedBranchVersion();
         fileWriter.write(devCommitID);
         fileWriter.close();
