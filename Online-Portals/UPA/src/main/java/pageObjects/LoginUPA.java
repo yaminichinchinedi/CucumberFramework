@@ -60,7 +60,10 @@ public class LoginUPA {
 	@FindBy(id = "challengeQuestionLabelId")
 	WebElement securityQuestion;
 
-	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+//	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+//	WebElement txtboxSecurityAns;
+	
+	@FindBy(xpath = "//input[@id='UnrecognizedSecAns_input']")
 	WebElement txtboxSecurityAns;
 
 	@FindBy(name = "rememberMyDevice")
@@ -71,6 +74,19 @@ public class LoginUPA {
 
 	@FindBy(xpath = "//div[@class='authQuestionTitle']")
 	WebElement txtUnrecognizedDevice;
+	
+	@FindBy(linkText="RETURN TO LOGIN")
+	WebElement btnRtnLogin;
+	
+	@FindBy(name="userName")
+	WebElement txtPIN;
+	
+	@FindBy(name="tinNumber")
+	WebElement txtTin;
+	
+	@FindBy(linkText="CONTINUE")
+	WebElement btnContinue;
+	
 	private TestBase testConfig;
 	String id, password;
 	String env=System.getProperty("env");
@@ -82,9 +98,7 @@ public class LoginUPA {
 	}
 
 	public void doLoginUPAActivateAccount(String userType) {
-		System.out.print("User type is"+userType);
 		setUserProperties(userType);
-		System.out.print("User type is"+userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
@@ -153,8 +167,8 @@ public class LoginUPA {
 		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
 	
-		if (!chkBoxRememberDevice.isSelected())
-			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+//		if (!chkBoxRememberDevice.isSelected())
+//			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
 		
 		Element.click(btnNext, "Next to submit answer");
 	}
@@ -209,10 +223,17 @@ public class LoginUPA {
 	
 	public void setUserProperties(String userType)
 	{
+		int sqlRowNo=255;
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
+		
+		if(userType.contains("PAY"))
+		{
+			Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			testConfig.putRunTimeProperty("tin", payerSchema.get("PAYR_DSPL_NM").toString());
+		}
 	}
 	
 	public void verifyLoginUI()
@@ -263,6 +284,78 @@ public class LoginUPA {
 	public void verifyLoginErrorMessage()
 	{
 		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
+	}
+	
+	public LoginUPA doLoginPurgedUPA(String userType)
+	{
+	   setUserProperties(userType);
+	   if("prpurged".equals(testConfig.getRunTimeProperty("prpurged")));
+	   else
+		   Element.click(clickUPASignIn, "Click On Sign In UPA");
+	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
+	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
+	   Element.click(btnLogin,"click Login button");
+       Browser.waitForPageLoad(testConfig);
+	   
+	   try{
+	   if(txtErrorMsg1!=null)
+	   {
+	      if(txtErrorMsg1.isDisplayed())
+	     {
+	    	  Log.Comment("Authentication error message displayed..trying again");
+	    	  Browser.wait(testConfig, 3);
+	    	  Element.fluentWait(testConfig, txtboxPwd, 120,5, "txtboxOptumID");
+	    	  Element.enterData(txtboxUserName,id, "Entered Optum ID as:" + " " +id, "txtboxOptumID"); 
+	    	  Element.enterData(txtboxPwd,password, "Entered Optum ID password  as :" + " "+ password, "txtboxPwd");
+	    	  Element.click(btnLogin, "Sign In");
+	     }
+	   }
+	   }
+	   catch(Exception e)
+	   {
+		   Log.Comment("Authentication Error not present");
+	   }
+     return this;
+   }
+	
+	public LoginUPA enterSSOTin(String role)
+	{
+		int sqlRowNo=263;
+		switch(role)
+		{
+			case "P":
+				sqlRowNo=263;
+				break;
+			case "BS":
+				sqlRowNo=264;
+				break;
+			case "PA":
+				sqlRowNo=265;
+				break;
+		}
+		Map data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Element.enterData(txtPIN, data.get("USERNAME").toString().trim(), "Security PIN", "Security PIN text Box");
+		if("P".equals(role))
+			Element.enterData(txtTin, data.get("PROV_TIN_NBR").toString().trim(), "Tin", "Tin Text Box");
+		else if("BS".equals(role))
+			Element.enterData(txtTin, data.get("IDENTIFIER_NBR").toString().trim(), "Tin", "Tin Text Box");
+		else if("PA".equals(role))
+			Element.enterData(txtTin, data.get("PAYR_TIN_NBR").toString().trim(), "Tin", "Tin Text Box");
+		Element.click(btnContinue, "Continue btn");
+		return this;
+	}
+	
+	public LoginUPA verifyErrorPageAndClickReturn()
+	{
+		Element.verifyElementPresent(btnRtnLogin, "Return to Login");
+		Element.click(btnRtnLogin, "Return to Landing Page");
+		return this;
+	}
+	
+	public LoginUPA verifyLandingPage()
+	{
+		Element.verifyElementPresent(clickUPASignIn, "Sign in Button");
+		return this;
 	}
 	
 }

@@ -66,8 +66,6 @@ public class AddUserDetails {
 	@FindBy(xpath="//input[@value=' Save ']")
 	WebElement btnSave;
 	
-
-	
 	//"//td[@class='subheadernormal'][2]")+ "//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	@FindBy(xpath="//td[contains(text(),'Provider')]")
 	WebElement txtUserType;
@@ -166,13 +164,27 @@ public class AddUserDetails {
 		
 	}
 	
+	public AddUserDetails fillNewUserInfo(String stsCode)
+	{
+		testConfig.putRunTimeProperty("stsCode", stsCode);
+		userEmailAdr=testConfig.getRunTimeProperty("email");
+		Browser.wait(testConfig, 2);
+		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
+	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
+		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		return new AddUserDetails(testConfig);
+	}
+	
 	public AddUserDetails selectAndAddTin()
 	{
 	    Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
 		Browser.wait(testConfig,2);
 		clickAddTin();
 		return this;
-		
 	}
 	
 	public AddUserDetails addTinCSR()
@@ -200,7 +212,7 @@ public class AddUserDetails {
 	{
 		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
-		 Browser.wait(testConfig,2);
+//		 Browser.wait(testConfig,2);
 		 return this;
 	}
 	

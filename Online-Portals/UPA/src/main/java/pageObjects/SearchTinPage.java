@@ -33,7 +33,6 @@ public class SearchTinPage {
 	@FindBy(xpath="//input[contains(@id,'taxNumber')]")
 	List <WebElement> txtboxTinNo;
 	
-	
 	@FindBy(name="btnSubmit")
 	List <WebElement> btnSearch;
 
@@ -66,6 +65,109 @@ public class SearchTinPage {
 		{
 		  case "PROV" :
 		   {
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+			   {
+				   sqlRowNo=260;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+			   }
+			   else
+			   {
+				   sqlRowNo=15;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   }
+			   
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+			   break;
+		   }
+		   
+		  case "BS" :
+		   {
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+			   {
+				   sqlRowNo=261;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+			   }
+			   else
+			   {
+				   sqlRowNo=16;
+				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   }
+			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
+			   break;
+		   }
+		   
+		  case "PAY" :
+		   {
+			   sqlRowNo=17;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
+			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
+				   Element.selectByVisibleText(drpDownPayer, "UMR", "Payer as : UMR" );
+			   else
+				   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
+			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			   break;
+		   }
+		   
+		    case "PROVPUTIN" :
+		   {
+			   sqlRowNo=258;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			   break;
+		   }
+		   
+		   default:
+			   break;
+		}
+		
+		testConfig.putRunTimeProperty("tin", tin);
+		return new ManageUsers(testConfig);
+	}
+	
+		public ManageUsers doSearchPUTIN(String userType)
+	{
+		int sqlRowNo;
+		Map Searchedtin=null;
+		String tin="";
+		selectUserType(userType);
+		//Element.selectByValue(drpDownUserType,userType, "User type as :" + " " + userType + " ");
+		Element.selectByIndex(drpDownUserType, 1, "Provider User Type");
+		 sqlRowNo=270;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   testConfig.putRunTimeProperty("Timestamp", Searchedtin.get("LST_CHG_BY_DTTM").toString().trim().substring(0,19));
+			   testConfig.putRunTimeProperty("JobName", Searchedtin.get("LST_CHG_BY_ID").toString().trim());
+			   testConfig.putRunTimeProperty("PurgedUser", Searchedtin.get("LST_NM").toString().trim()+", "+Searchedtin.get("FST_NM").toString().trim()+"   - Purged");
+			 
+			   Element.enterData(Element.findElement(testConfig, "css", "input#taxNumber"), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			 //  Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
+			
+			   Element.click(  Element.findElement(testConfig, "xpath", "//input[@value='Search']"),"Search Button");
+			   testConfig.putRunTimeProperty("tin", tin);
+			   return new ManageUsers(testConfig);
+	}
+	
+	public ManageUsers doSearch(String userType,String searchCriteria)
+	{
+		int sqlRowNo = 0;
+		Map Searchedtin=null;
+		String tin="";
+		selectUserType(userType);
+		
+		switch(userType)
+		{
+		  case "PROV" :
+		   {
 			   sqlRowNo=15;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
@@ -86,7 +188,11 @@ public class SearchTinPage {
 		   
 		  case "PAY" :
 		   {
-			   sqlRowNo=17;
+			   if(searchCriteria.equalsIgnoreCase("PurgedUsers"))
+			       sqlRowNo=250;
+			   else if(searchCriteria.equalsIgnoreCase("NoPurgedUsers"))
+				   sqlRowNo=251;
+			   
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
 			   Element.selectByVisibleText(drpDownPayer, tin, "Payer as :"+" " + tin );
@@ -102,10 +208,17 @@ public class SearchTinPage {
 		return new ManageUsers(testConfig);
 	}
 	
+	
+	
+	
+	
 	public String enterTin(String typeOfTin)
 	{
 		List<String> userAndTinDetails=getTinAndUserDetails(typeOfTin);
-		Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+		if(typeOfTin.contentEquals("tinwithTermAndConditionBS"))
+			Element.enterData(txtboxTinNo.get(1),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+		else
+			Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
 		testConfig.putRunTimeProperty("username", userAndTinDetails.get(1));
 		return userAndTinDetails.get(0);
 	}
@@ -135,17 +248,39 @@ public class SearchTinPage {
 			  break;
 		    }
 			  
+		   case "tinwithTermAndConditionProv":
+			  sqlRow=1501;
+			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+			  testConfig.putRunTimeProperty("portalUserID", tinDetails.get("PORTAL_USER_ID").toString());
+			  Log.Comment("Fetched a tin : "+ tinDetails.get("PROV_TIN_NBR").toString());
+			  break;
+		   case "tinwithTermAndConditionBS":
+			  sqlRow=1502;
+			  tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+			  testConfig.putRunTimeProperty("portalUserID", tinDetails.get("PORTAL_USER_ID").toString());
+			  Log.Comment("Fetched a tin : "+ tinDetails.get("IDENTIFIER_NBR").toString());
+			  break;
 		   default :
 			   Log.Comment("No Search criteria defined");
 		   
 		}
-		
+		if(typeOfTin.equals("tinwithTermAndConditionBS"))
+		{
+			userAndTinDetails.add(tinDetails.get("IDENTIFIER_NBR").toString());
+			testConfig.putRunTimeProperty("tin", tinDetails.get("IDENTIFIER_NBR").toString());
+		}
+		else
+		{
+			userAndTinDetails.add(tinDetails.get("PROV_TIN_NBR").toString());
+			testConfig.putRunTimeProperty("tin", tinDetails.get("PROV_TIN_NBR").toString());
+		}
+		if(typeOfTin.contains("OneActiveAdmin")){
 		sqlRow=255;
-		testConfig.putRunTimeProperty("tin", tinDetails.get("PROV_TIN_NBR").toString());
 		portalUserDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
-		userAndTinDetails.add(tinDetails.get("PROV_TIN_NBR").toString());
 		userAndTinDetails.add(portalUserDetails.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserDetails.get("FST_NM").toString().toUpperCase());
-
+		}
+		else
+			userAndTinDetails.add(tinDetails.get("FULLNAME").toString().toUpperCase());
 		return userAndTinDetails;
 	}
 	
@@ -154,5 +289,15 @@ public class SearchTinPage {
 		Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 		return new ManageUsers(testConfig);
 	}
+	
+	public ManageUsers clickSearch(String userType)
+	{
+		if(userType.equals("PROV"))
+			Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+		else if(userType.equals("BS"))
+			Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
+		return new ManageUsers(testConfig);
+	}
+	
 	
 }

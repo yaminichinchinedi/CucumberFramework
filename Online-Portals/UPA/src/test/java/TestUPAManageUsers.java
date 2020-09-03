@@ -44,7 +44,7 @@ public class TestUPAManageUsers extends TestBase {
 		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		home.selectTin();
 		ManageUsers manageUser=home.clickManageUsersTab();
-		manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);		
+		manageUser.changeAndVerifyAccLvlEmailNotify(userType);//.changeAndCancelAccessLevel(userType);		
 		home.logOutFromUPA();
      }
 		
@@ -94,7 +94,7 @@ public class TestUPAManageUsers extends TestBase {
 		 HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
 		 home.selectTin();
 		 ManageUsers manageUser=home.clickManageUsersTab();	
-		 manageUser.verifyUserDetailsAreReadOnly();
+		 manageUser.verifyUserDetailsAreReadOnly(userType);
 //		 manageUser.verifySuccessfulEmailNotificationChange(userType);	
 		 home.logOutFromUPA();
        }	

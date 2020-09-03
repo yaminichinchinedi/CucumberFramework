@@ -153,11 +153,23 @@ public class UPAHomePage extends HomePage {
 	}
 
 
+	public UPAHomePage selectPursedTin() 
+	 {
+			int sqlRow=271;
+			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			Element.selectByVisibleText(tinDrpDwn,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
+			Browser.waitForLoad(testConfig.driver);
+			Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown ",  "Tin dropdown");
+			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
+			return new UPAHomePage(testConfig);
+	}
+	
 	
 	public HomePage selectTin(String paymentType) 
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		String tin=dataProvider.getTinForPaymentType(paymentType);
+		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
 		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
 		tin=tin+" - Enrolled";

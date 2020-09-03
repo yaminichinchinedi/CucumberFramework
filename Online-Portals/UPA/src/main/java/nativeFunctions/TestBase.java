@@ -142,7 +142,10 @@ public class TestBase extends ReporterClass {
 	
 		if (System.getProperty("tagsToRun") == null)
 			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("testSuite") + "URL_" + env));
-
+		
+		else if (System.getProperty("tagsToRun").contains("UPARegistration")) 
+			System.setProperty("URL", runtimeProperties.getProperty("UPARegistrationURL_" + env));
+		
 		else if (System.getProperty("tagsToRun").contains("UPA")) 
 			System.setProperty("URL", runtimeProperties.getProperty("UPAURL_" + env));
 

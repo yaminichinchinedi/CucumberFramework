@@ -901,6 +901,14 @@ public String getTinForPaymentType(String paymentType)
 			break;	
 		}
 		
+			case "TinWithLessThnMaxUsr":
+				sqlRowNo=1503;
+				break;
+				
+			case "TinWithMoreThnMaxUsr":
+				sqlRowNo=1504;
+				break;
+				
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		

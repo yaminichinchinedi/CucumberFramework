@@ -37,6 +37,53 @@ Feature: CSR Manage User Functionality
     Examples:
       |    userType     |   credentials   |		disabledValue		|
       |      PROV       |      Super      |		disabled    		|
+      
+      
+	@CSRManageUsers_US2769380
+  Scenario Outline: CSR Manage User UI Functionality Add new user using Purged user Email address
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Click to add new User using "<stsCode>"  and fill the details "<accessLevelOfNewUser>" and verify the user detils and delete the user
+   	Then Validate status of purged user for "<userType>" in tables.
+    Examples:
+      |    userType     |   credentials   |  stsCode 	 | accessLevelOfNewUser   	|
+      |    PROV			    |      Super      |	 		PU     |			Administrator				|
+      |      BS         |      Super      |	 	  PU 		 |			Administrator				|
+      |      PAY        |      Super      |	    PU		 |			Administrator				|
+      
+      
+   @CSRManageUsers_US2764505
+    Scenario Outline: CSR Manage User UI Functionality Add new user using Purged user Email address
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then select user "<userType>" from dropdown 
+    Then Enter tin on Search Tin Page for "<userType>" having condition as "<termsAndCondition>" and click search button
+    Then User clicks on username from user list
+    Then validate T and C fields.
+     Examples:
+      |    userType     |   credentials   | termsAndCondition	|
+    	|    	 PROV			  |      Super      |					Y					|
+    	|    	 PROV			  |      Super      |					N					|
+      |      PROV       |      ROOnly    	|	 				Y					|
+      |      PROV       |      ROOnly    	|	 				N					|
+      |      PROV       |      RWOnly    	|	 				Y					|
+      |      PROV       |      RWOnly    	|	 				N					|
+      |      PROV       |      RO 				|					Y					|
+      |      PROV       |      RO 				|					N					|
+      |      PROV       |      RW 				|					Y					|
+      |      PROV       |      RW 				|					N					|
+    	|      BS         |      Super      |					Y					|
+    	|    	 BS			    |      Super      |					N					|
+      |      BS	        |      ROOnly    	|	 				Y					|
+      |      BS	        |      ROOnly    	|	 				N					|
+      |      BS	        |      RWOnly    	|	 				Y					|
+      |      BS         |      RWOnly    	|	 				N					|
+      |      BS	        |      RO 				|					Y					|
+      |      BS	        |      RO 				|					N					|
+      |      BS	        |      RW 				|					Y					|
+      |      BS	        |      RW 				|					N					|
+    
+    
 
 @US2707358
   Scenario Outline: CSR Manage User UI Functionality Portal User History
