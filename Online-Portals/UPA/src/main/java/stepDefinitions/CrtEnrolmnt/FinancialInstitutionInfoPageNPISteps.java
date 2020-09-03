@@ -1,5 +1,6 @@
 package main.java.stepDefinitions.CrtEnrolmnt;
 
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.FinancialInstitutionInfoPageNPI;
 import cucumber.api.java.en.Then;
@@ -12,7 +13,30 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 		
 		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickContinue();
 	}
+	@Then("^User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue\\.$")
+	public void user_fills_NPI_No_RTN_No_and_other_information_on_Financial_Institution_Information_NPI_page_and_click_continue() throws Throwable {
+		financialInstitutionNPI.fillFinancialInstInfoFromExcelABANPI().clickContinue();
+
+	}
+	@Then("^User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue for AV\\.$")
+	public void user_fills_NPI_No_RTN_No_and_other_information_on_Financial_Institution_Information_NPI_page_and_click_continue_for_AV() throws Throwable {
+		financialInstitutionNPI.fillFinancialInstInfoFromExcelABANPI().clickContinueAV();
+	}
+
+	@Then("^User fills NPI No and other information with Incorrect/Improper/Null RTN No on Financial Institution Information NPI page for ABA Validator$")
+	public void user_fills_NPI_No_and_other_information_with_Incorrect_Improper_Null_RTN_No_on_Financial_Institution_Information_NPI_page_for_ABA_Validator() throws Throwable {
+		financialInstitutionNPI.fillFinancialInstInfoFromNPIABA(null)
+							   .fillFinancialInstInfoFromNPIABA(Long.toString(Helper.generateRandomNumber(5)))
+						       .fillFinancialInstInfoFromNPIABA(Helper.generateRandomAlphaNumericString(9))
+						       .fillFinancialInstInfoFromNPIABA(Long.toString(Helper.generateRandomNumber(9)))
+;
+
+	}
 	
+	@Then("^Users clears the RTN No on NPI page fill the new RTN No and validate the details and click on Save changes button$")
+	public void users_clears_the_RTN_No_on_NPI_page_fill_the_new_RTN_No_and_validate_the_details_and_click_on_Save_changes_button() throws Throwable {
+		financialInstitutionNPI.clearNfillRTNNoABANPI();
+	}
 	@Then("^User fills all the information of Financial Institution Information NPI page and click continue for AV\\.$")
 	public void user_fills_all_the_information_of_Financial_Institution_Information_NPI_page_and_click_continue_for_AV() throws Throwable {
 		

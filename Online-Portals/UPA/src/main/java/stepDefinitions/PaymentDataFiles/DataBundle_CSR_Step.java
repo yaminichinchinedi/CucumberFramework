@@ -40,6 +40,10 @@ public void user_enters_the_number() throws Throwable  {
 	clickDataBundle.enterTIN();
 }
 
+@When("^User enters the Valid tin number$")
+public void user_enters_the_Valid_tin_number() throws Throwable {   
+	clickDataBundle.enterTin();
+}
 
 @Then("^Validates the System upon entering \"([^\"]*)\"$")
 public void Validate_system_upon_entering_Valid_TIN(String ValidTIN) throws Throwable {
@@ -259,7 +263,27 @@ public void user_validates_the_completed_File_Name_in_the_Grid() throws Throwabl
 {
 	
 	clickDataBundle.verifyZipFileName();
-	
+}
+
+
+@Then("^User Verify Patient Payment Payer appear on top of the list$")
+public void user_Verify_Patient_Payment_Payer_appear_on_top_of_the_list() throws Throwable {
+	clickDataBundle.verifyPatientPatientOnTopOfTheList();
+}
+
+@Then("^User Verify for Note appears that Payer PRAs and EPRAs are not available for Patient Payments$")
+public void user_Verify_for_Note_appears_that_Payer_PRAs_and_EPRAs_are_not_available_for_Patient_Payments() throws Throwable {
+	clickDataBundle.verifypayerPRANote();
+}
+
+@Then("^User  Verify for Note that Data Bundle requests for Patient Payments will be available soon, no longer appears above Payer Selection\\.$")
+public void user_Verify_for_Note_that_Data_Bundle_requests_for_Patient_Payments_will_be_available_soon_no_longer_appears_above_Payer_Selection() throws Throwable {
+	clickDataBundle.verifyAbsenseOfPatientPaymentsNote();
+}
+
+@Then("^User  Verifies able to select (\\d+)s$")
+public void user_Verifies_able_to_select_s(int arg1) throws Throwable {
+	clickDataBundle.verify835isClickable();
 }
 
 }

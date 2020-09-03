@@ -28,7 +28,14 @@ public class UPAHomePageSteps extends TestBase{
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
     }
-
+    
+	@Given("^User navigates to UPA portal for account activation,enters \"([^\"]*)\" and login$")
+	public void user_navigates_to_UPA_portal_for_account_activation_enters_and_login(String userType) throws Throwable {
+		new UPARegistrationPage(testConfig);
+		LoginUPA loginPage = new LoginUPA(testConfig);
+		loginPage.doLoginUPAActivateAccount(userType);
+	}
+	
     @When("^User Selects a tin on HomePage$")
     public void user_Selects_a_tin_on_HomePage() throws Throwable {
     	homePage.selectTin();

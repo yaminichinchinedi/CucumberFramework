@@ -22,7 +22,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.google.inject.spi.Elements;
 import com.ibm.db2.jcc.am.tn;
 
 import main.java.Utils.DataBase;
@@ -35,10 +34,9 @@ import main.java.reporting.Log;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
-public class ManageUsers extends AddUserDetails  {
+public class ManageUsers extends AddUserDetails
+{
 	
-	//private static final boolean String = false;
-
 	@FindBy(linkText="User List")
 	WebElement lnkUserList;
 	
@@ -1389,19 +1387,6 @@ public class ManageUsers extends AddUserDetails  {
 		}
 	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
-	
-	
-	/**
-	 * FOR UPA
-	 * @param userType
-	 * @throws InterruptedException
-	 * @throws IOException
-	 */
-	
-//	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
-//		String expectedStatus="Purged";
-//		clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
-//	}
 
 }
 
