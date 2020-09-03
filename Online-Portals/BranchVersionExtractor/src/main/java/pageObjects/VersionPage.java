@@ -32,6 +32,7 @@ public class VersionPage {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		testConfig.driver.navigate().to(System.getProperty("URL"));
+		Log.Comment("Navigated to App Version URL for stage " + System.getProperty("URL"));
 	}
 
 	public String getDevDeployedBranchVersion()
@@ -70,7 +71,6 @@ public class VersionPage {
 	
 		String versionFromFile="";
 		String fileLocation=System.getProperty("user.dir")+"\\DeployedVersion.txt";
-		System.out.println("File location is ");
 		File file =new File(fileLocation);
 		if(file.exists())
 		{

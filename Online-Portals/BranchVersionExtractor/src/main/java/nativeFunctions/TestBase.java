@@ -116,7 +116,6 @@ public class TestBase {
 
 	
 	public void urlHelper(String env) {
-		System.out.println("Env from jenkins is " + System.getProperty("env"));
 		if (System.getProperty("env") == null ||System.getProperty("env").equalsIgnoreCase("$Env")) 
 			System.setProperty("URL",runtimeProperties.getProperty(runtimeProperties.getProperty("Env")+"_VersionURL"));
 		else
@@ -261,6 +260,12 @@ public class TestBase {
 		new Log(testConfig, method.getName(), "Branch Test", "Priyanka");
 		
 
+	}
+	
+	@AfterTest
+	public void closeBrowser()
+	{
+	      testConfig.driver.quit();
 	}
 
 	
