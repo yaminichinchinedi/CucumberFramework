@@ -100,6 +100,7 @@ public class VersionPage {
     	String devCommitID = getDevDeployedBranchVersion();
         fileWriter.write(devCommitID);
         fileWriter.close();
+        Log.Comment("Writing  code commit " + devCommitID);
    
     } 
     catch (IOException e) {}
