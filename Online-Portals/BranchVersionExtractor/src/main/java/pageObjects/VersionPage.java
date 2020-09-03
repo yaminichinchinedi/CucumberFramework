@@ -97,10 +97,11 @@ public class VersionPage {
     try  
     {
     	FileWriter fileWriter = new FileWriter(System.getProperty("user.dir")+"\\DeployedVersion.txt");
+    	System.out.println(System.getProperty("user.dir")+"\\DeployedVersion.txt");
     	String devCommitID = getDevDeployedBranchVersion();
         fileWriter.write(devCommitID);
         fileWriter.close();
-        Log.Comment("Writing  code commit " + devCommitID);
+        Log.Comment("Writing  code commitdd " + devCommitID);
    
     } 
     catch (IOException e) {}
