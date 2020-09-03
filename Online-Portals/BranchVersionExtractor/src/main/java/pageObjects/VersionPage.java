@@ -74,7 +74,7 @@ public class VersionPage {
 		File file =new File(fileLocation);
 		if(file.exists())
 		{
-		
+		 Log.Comment("Deplyed version file already exists");
 		 FileReader reader = new FileReader(fileLocation); 
 	     int i; 
 	     while ((i=reader.read()) != -1) 
@@ -83,7 +83,10 @@ public class VersionPage {
 	     
 		}
 		else
+		{
+			Log.Comment("Deployed version file does not exist. ence creating a new one");
 			writeDeployedVersionInFile();
+		}
 	   
 	    return versionFromFile;
 	  
