@@ -40,11 +40,19 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 		 beginEnrollmentPage=  registrationPage.clickEnrollNow();   
 	}
 
+	@Then("^User Validates link Download Virtual Card Payment Enrollment Guide Link  and click on it$")
+	public void user_Validates_link_Download_Virtual_Card_Payment_Enrollment_Guide_Link_and_click_on_it() throws Throwable {
+		beginEnrollmentPage.validateUserIsAbleToDwnldEnrlmntPdf();
+	}
 	@Then("^User Select a How you heard option and  click on Continue button$")
 	public void user_Select_a_How_you_heard_option_and_click_on_Continue_button() throws Throwable {
 		beginEnrollmentContinuePage=beginEnrollmentPage.selectHowYouHeard(option); 
 	}
-	
+	@Then("^User clicks on which option should i choose link and close the opened popup$")
+	public void user_clicks_on_which_option_should_i_choose_link_and_close_the_opened_popup() throws Throwable {
+		beginEnrollmentContinuePage.verifyHowtoChooseLink();
+
+	}
 	
 	@Then("^Select Enrollment Type as BS$")
 	public void select_Enrollment_Type_as_BS() throws Throwable {

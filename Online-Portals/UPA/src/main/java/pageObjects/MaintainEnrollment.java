@@ -1,8 +1,16 @@
 package main.java.pageObjects;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +21,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 public class MaintainEnrollment extends HomePage  {
 	
@@ -83,7 +92,14 @@ public class MaintainEnrollment extends HomePage  {
 	       
 	             @FindBy(xpath="//td[contains(text(),'Payer Information')]")
 	             WebElement divPayerInfo;
-	
+	             
+	             
+	             @FindBy(id="payerInfoControl")
+	         	WebElement payrInfo;
+	             
+	         	@FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
+	        	WebElement editButton;
+	           
 	
 	public MaintainEnrollment(TestBase testConfig)
 	{
@@ -212,6 +228,166 @@ public class MaintainEnrollment extends HomePage  {
 		}
 	}
 
+public void validateOptumPayText() {
+		
+		Element.click(payrInfo, "Payer Information");
+		Browser.wait(testConfig, 2);
+		Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "id", "payerInfoMsgDiv").getText());
+
+		if (Element.findElement(testConfig, "id", "payerInfoMsgDiv").getText().contains("EPS")|| 
+			Element.findElement(testConfig, "id", "payerInfoMsgDiv").getText().contains("Electronic Payments and Statements") )
+			Log.Fail("EPS text is present");
+		
+	}
+	public void validateOptumPayTextonEdit() {
+		
+		Element.click(editButton, "Edit Button");
+		Browser.wait(testConfig, 4);
+		Element.click(Element.findElement(testConfig, "xpath", "//ul[@id='tabmenu']/li[2]"), "Payer Tab");
+		Browser.wait(testConfig, 5);
+		Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[6]/td").getText());
+
+
+		if (Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[6]/td").getText().contains("EPS") ||
+			Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[6]/td").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+		
+	}
+public void validateOptumPayTextonEditOrg(String UserTyp) {
+		if (UserTyp.equals("BS"))
+		{
+		Element.click(Element.findElement(testConfig, "xpath", "//input[@type='button' and @value='     Edit     ']"), "Edit Button");
+		Browser.wait(testConfig, 2);
+		WebElement bsName=Element.findElement(testConfig, "name", "bsName");
+		Element.enterData(bsName, "QWE@#$", "Billing Service Name", "BSName");
+		Element.click(Element.findElement(testConfig, "xpath", "//input[@type='submit' and @value='Finish']"), "Finish Button");
+		Browser.wait(testConfig, 3);
+		Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/th").getText());
+
+
+		if (Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/th").getText().contains("EPS") ||
+			Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/th").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+		}
+		if (UserTyp.equals("PROV"))
+		{	
+		Element.click(editButton, "Edit Button");
+		Browser.wait(testConfig, 4);
+		WebElement orgName=Element.findElement(testConfig, "name", "orgName");
+		Element.enterData(orgName, "QWE@#$", "Organisatin Name", "orgName");
+		Element.click(Element.findElement(testConfig, "name", "continueBtn"), "Organization Name Field");
+		Browser.wait(testConfig, 3);
+		Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/th").getText());
+
+
+		if (Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/th").getText().contains("EPS") ||
+			Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/th").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+		}
+		Browser.wait(testConfig, 3);
+		Element.click(Element.findElement(testConfig, "id", "tabMntnEnrl"), "Maintain Enrollment Tab");
+
+	}
+public void validateOptumPayTextonCancel() {
+		
+		//Element.click(editButton, "Edit Button");
+		Browser.wait(testConfig, 2);
+		Element.click(Element.findElement(testConfig, "xpath", "//input[@value=' Cancel ']"), "Cancel Button");
+		Browser.wait(testConfig, 2);
+		Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//td[@class='subheadernormal'][1]").getText());
+
+		if (Element.findElement(testConfig, "xpath", "//td[@class='subheadernormal'][1]").getText().contains("EPS") ||
+			Element.findElement(testConfig, "xpath", "//td[@class='subheadernormal'][1]").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+		
+		
+	}
+public void validateOptumPayTextonCancelBS() {
 	
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='button' and @value='     Edit     ']"), "Edit Button");
+	Browser.wait(testConfig, 2);
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@value='Cancel']"), "Cancel Button");
+	Browser.wait(testConfig, 2);
+	Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/td").getText());
+
+
+	if (Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/td").getText().contains("EPS") ||
+		Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/table/tbody/tr[3]/td").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+	
+}
+public void validateOptumPayTextonFinish() {
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='submit' and @name='No']"), "No Button");
+
+	Browser.wait(testConfig, 2);
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@value=' Finish ']"), "Finish Button");
+	
+	Browser.wait(testConfig, 2);
+
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='submit' and @name='Submit']"), "Submit Button");
+	Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[2]/td/table/tbody").getText());
+
+	if (Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[2]/td/table/tbody").getText().contains("EPS") ||
+		Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[2]/td/table/tbody").getText().contains("Electronic Payments and Statements")	)
+		Log.Fail("EPS text is present");
+	}
+
+public void readPDFFile(String UserTyp ) throws IOException{
+	String output="";	
+	String fileName="";
+	String filedir=System.getProperty("user.dir")+"\\Downloads";
+	File fileDirectory=new File(filedir);
+	Helper.purgeDirectory(fileDirectory);
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='button' and @name='Print Enrollment Form']"), "Print Enrollment Button");
+	Browser.wait(testConfig, 8);
+	if (UserTyp.equals("PROV"))
+	{
+	int sqlRowNo=1;
+     Map portalUserTable = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
+		fileName=portalUserTable.get("ENRL_ID_NBR").toString().trim();
+	}	
+	if (UserTyp.equals("BS"))
+	fileName=testConfig.getRunTimeProperty("BS TIN");
+	fileName="\\"+fileName+".pdf";
+	   testConfig.driver.get("file:///"+filedir+fileName);
+	
+	URL url = new URL(testConfig.driver.getCurrentUrl());
+    InputStream is = url.openStream();
+    BufferedInputStream fileToParse = new BufferedInputStream(is);
+    PDDocument document = null;
+    try {
+        document = PDDocument.load(fileToParse);
+        document.getNumberOfPages();
+        output = new PDFTextStripper().getText(document);
+    } finally {
+        if (document != null) {
+            document.close();
+        }
+        fileToParse.close();
+        is.close();
+    }
+	Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", output);
+
+}
+
+
+public void validateOptumPayTextonFinishBS() {
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='submit' and @Value='No']"), "No Button");
+
+	Browser.wait(testConfig, 2);
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@value='Finish']"), "Finish Button");
+	Browser.wait(testConfig, 3);
+	testConfig.putRunTimeProperty("BS TIN", Element.findElement(testConfig, "xpath", "//form[@id='billingserviceenrollmentForm']/span/table/tbody/tr[4]/td/table/tbody/tr[1]/td[4]/strong").getText());
+	Element.click(Element.findElement(testConfig, "xpath", "//input[@type='submit' and @name='Submit']"), "Submit Button");
+	
+	Helper.compareContains(testConfig, "Optum Pay text", "Optum Pay", Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/td/table/tbody").getText());
+	
+	if (Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/td/table/tbody").getText().contains("EPS") ||
+			Element.findElement(testConfig, "xpath", "//form[@id='enrollmentForm']/table/tbody/tr[4]/td/table/tbody").getText().contains("Electronic Payments and Statements")	)
+			Log.Fail("EPS text is present");
+	
+	
+}
+
 
 }

@@ -144,6 +144,9 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(name="purgedUser")
 	WebElement chkBoxPurgedUser;
 	
+	@FindBy(name="fetchPurgedUser")
+	WebElement chkBoxPurgedUserBS;
+	
 	@FindBy(id="limitPayerAccessyes")
 	WebElement btnYesSubPayerDataOnly;
 	
@@ -175,6 +178,9 @@ public class ManageUsers extends AddUserDetails  {
 	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
 
+	@FindBy(id="provTinAssociateId")
+	WebElement provTinAssociate;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -209,7 +215,7 @@ public class ManageUsers extends AddUserDetails  {
 			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		   }
 		
-		for (int i=0;i<=userNames.size();i++)
+		for (int i=0;i<userNames.size();i++)
 		{
 			if ( (LoginType.equals("UPA") && userNames.get(i).getText().contains("Purged"))||
 			   ( (LoginType.equals("CSR") && userNames.get(i).getText().equals(testConfig.getRunTimeProperty("PurgedUser"))))
@@ -1342,7 +1348,48 @@ public class ManageUsers extends AddUserDetails  {
 		
 	}
 	
-	
+	public void purgedUserChecbox(String userTyp) throws IOException, InterruptedException{
+		Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getText();
+		Helper.compareEquals(testConfig, "Purge User checkbox", "View Purged Users:", Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getText().trim());	
+		//if(Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getAttribute("disabled").equals(null))
+		if(userTyp.contains("PAY"))
+		{
+		selectPurgedCheckbox();
+		checkPurgedUser("UPA");
+		deSelectPurgedCheckbox();
+		checkPurgedUser("UPA");
+		}
+		if(userTyp.contains("PROV"))
+		{
+		clickPurgedChkBox("PROV");
+		checkPurgedUser("UPA");
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxProvPurge, "Purged User Checkbox");
+		if(listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxProvPurge, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+		}
+		if(userTyp.contains("BS"))
+		{
+		Element.click(chkBoxPurgedUserBS, "View Purged Users Check Box");
+		checkPurgedUser("UPA");
+		Map listOfAttributesBS=Element.getAllAttributes(testConfig, chkBoxPurgedUserBS, "Purged User Checkbox");
+		if(listOfAttributesBS.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxPurgedUserBS, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+		checkPurgedUser("UPA");
+		}
+		//else
+		{
+			Log.Comment("View Purged checkbox not enabled");
+		}
+		
+	}
 	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
 	{
 		int sql=252;
@@ -1539,6 +1586,79 @@ public class ManageUsers extends AddUserDetails  {
 //	}
 //		return this;
 //	}
+
+	public void validateTermsNConditionsforBS() throws InterruptedException
+	{
+		
+		List <WebElement> userNames=null;
+		List <WebElement> userNamesanother=null;
+		ArrayList<String> UsersListUI=new ArrayList<String>();
+		
+		try{
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			userNamesanother= userNames;
+		}
+		catch(Exception e){
+			Log.Comment("Finding user List again");
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		Browser.wait(testConfig, 5);
+		for (int i=0;i<=userNames.size();i++)
+		{
+			//Browser.browserRefresh(testConfig);
+			//Element.findElement(testConfig, "id", "tabManageusers").click();
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			if ( ! userNames.get(i).getText().contains("Purged"))
+				 
+			{
+
+				testConfig.putRunTimeProperty("LST_NM",userNames.get(i).getText().substring(0, userNames.get(i).getText().indexOf(',')));
+				testConfig.putRunTimeProperty("FST_NM",userNames.get(i).getText().substring(userNames.get(i).getText().indexOf(',')+2));
+				Element.click(userNames.get(i), "ClickUser List");
+				Browser.wait(testConfig, 5);
+				List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+				String TnC=details.get(2).getText();
+				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  Y"))
+				{	
+				if ( details.get(3).getText().contains("Terms and Conditions Acceptance Date:") &&
+				! (details.get(3).getText().substring(38).equals(null)))
+				{
+				int sqlRowNo=262;
+				
+				
+				Map TnCData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				Helper.compareContains(testConfig, "TnC Indicator", TnCData.get("TC_ACCEPT_IND").toString(), TnC);	
+				Helper.compareContains(testConfig, "DateTimeStamp", TnCData.get("TC_ACCEPT_DTTM").toString(), details.get(3).getText().substring(38));	
+				}
+				
+				}
+				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  N"))
+				{	
+				details.get(3).getText().equals("Terms and Conditions Acceptance Date:");
+				break;
+				}
+			}
+		}
+//		for (int i=0;i<=userNamesanother.size();i++)
+//		{	
+//		if (  userNamesanother.get(i).getText().contains("Purged"))
+//			 
+//			{
+//				Element.click(userNamesanother.get(i), "Purged User List");
+//				Browser.wait(testConfig, 5);
+//				List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+//				String TnC=details.get(2).getText();
+//				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  N"))
+//				details.get(3).getText().equals("Terms and Conditions Acceptance Date:");
+//				break;
+//			}
+//		
+//		}
+		
+		
+
+	}
+
 }
 
 

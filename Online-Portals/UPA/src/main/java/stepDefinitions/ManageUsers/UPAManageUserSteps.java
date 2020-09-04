@@ -117,4 +117,21 @@ public class UPAManageUserSteps extends TestBase {
 	public void verify_user_List_on_UI_from_DB_for_using(String userType, String searchCriteria) throws Throwable {
 		manageUser.verifyUserList(userType, searchCriteria);
 	}
+	
+	@Then("^User click on one of the User and validates Terms and Conditions Acceptance fields$")
+	public void user_click_on_one_of_the_User_and_validates_Terms_and_Conditions_Acceptance_fields() throws Throwable {
+		manageUser.validateTermsNConditionsforBS();
+	}
+
+	@Then("^User validates for \"([^\"]*)\" the View Purge User checbox presence,its status,and purged user avability on clicking on it$")
+	public void user_validates_for_the_View_Purge_User_checbox_presence_its_status_and_purged_user_avability_on_clicking_on_it(String uesrTyp) throws Throwable {
+		manageUser.purgedUserChecbox(uesrTyp);
+	}
+	@Then("^Select one of the Active User and select Associate BS User to all Providers as No$")
+	public void select_one_of_the_Active_User_and_select_Associate_BS_User_to_all_Providers_as_No() throws Throwable {
+	    manageUser.clickActiveUserName("BS");
+	}
+
+	
+	
 }

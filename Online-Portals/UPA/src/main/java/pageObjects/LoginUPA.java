@@ -231,8 +231,8 @@ public class LoginUPA {
 		
 		if(userType.contains("PAY"))
 		{
-			Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			testConfig.putRunTimeProperty("tin", payerSchema.get("PAYR_DSPL_NM").toString());
+			//Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			//testConfig.putRunTimeProperty("tin", payerSchema.get("PAYR_DSPL_NM").toString());
 		}
 	}
 	
