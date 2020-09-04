@@ -27,7 +27,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     |   remitPayment   |
  
  @CSRViewPayments_TC003
- Scenario Outline: CSR View Payments UI Functionality TS006_View Payments_Payments filter_Show All and TS002_View Payments_display of TINs latest payments within the last 30 days and Validate correct payment information is displayed on selection of Show All from the  filter - Filter Payments
+ Scenario Outline: Validate the default Search Result Count
      Given User navigates to CSR portal and enters "<credentials>" and login
      When Click on View Payments Link
      Then Select the TIN for "<paymentType>" CSR Portal
@@ -155,13 +155,13 @@ Feature: CSR View Payments UI Functionality
       |      Super		     |   medicalFilter    |   Medical         |MARKET_TYPE|M		|
 
   @CSRViewPayments_TC012
-  Scenario Outline: CSR View Payments UI Functionality Validate that correct payment information is displayed on selection of Market type-Medical from the  filter - Market Type
+  Scenario Outline: CSR View Payments UI Functionality Validate that correct payment information is displayed on selection of Market type-Medical from the  filter-Market Type
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
-    Then Select the TIN for "<quickSearchFilter>" CSR Portal
+    Then Select the TIN for "<paymentType>" CSR Portal
     And Set FISL Parameters "<key>" and "<value>"
     Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>"   
     Examples:
-      |    credentials     |   quicksearchfilter      |   filterpayments 	 |key			|value			|
-      |      Super		     |   Last 9-13 months       |   Show All         |MARKET_TYPE|ALL			|
+      |    credentials     |  paymentType      |   quicksearchfilter|filterpayments 	 	 |key				 |value		|
+      |      Super		     |   Last 9-13 months|Last 9-13 months 		|   Show All         |MARKET_TYPE|ALL			|
      
