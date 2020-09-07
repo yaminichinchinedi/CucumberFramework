@@ -89,4 +89,9 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		ViewPaymentsTIN.enterTinForPayer(srchCriteria);
 	}
 	
+	@Then("^Select the TIN for \"([^\"]*)\" CSR Portal$")
+	public void user_enters_tin_for_ViewPayment(String paymentType) throws Throwable {
+		ViewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
+	}
+	
 }
