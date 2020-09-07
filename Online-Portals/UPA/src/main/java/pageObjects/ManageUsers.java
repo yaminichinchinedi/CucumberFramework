@@ -179,7 +179,14 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(id="provTinAssociateId")
 	WebElement provTinAssociate;
 
+	@FindBy(name="genEmailNotification")
+    List<WebElement> chkBoxgenEmailNotification;
 	
+	@FindBy(id="provTinAssociateId")
+	WebElement txtAddProviderAssociation;
+	
+	@FindBy(xpath="//*[@id=\"bsForm\"]/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td/table[3]/tbody/tr/td[3]/div/input[2]")
+	WebElement btnAddProviderAssociation;
 
 	private TestBase testConfig;
 	LoginCSR csrPage;
@@ -474,7 +481,8 @@ public class ManageUsers extends AddUserDetails
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
         else if(userType.equalsIgnoreCase("PAY"))
-        	sqlRowNo=19;
+        //	sqlRowNo=19;
+        	sqlRowNo=259;
         
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -511,6 +519,10 @@ public class ManageUsers extends AddUserDetails
 			  break;
 		   }
 	     }
+		
+		if(userType.equalsIgnoreCase("PAY"))
+			 Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage Payer Users");
+		else
 		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
@@ -856,6 +868,24 @@ public class ManageUsers extends AddUserDetails
 			for(WebElement inactiveEmail:chkInActiveEmailNotify )
 				Helper.compareEquals(testConfig, "InActive Email Notify Checkbox is Disabled ", expectedValue, inactiveEmail.getAttribute("disabled"));
 		}
+		
+		if(userType.contains("BS"))
+        {
+                Helper.compareEquals(testConfig, "Associate Billing Service Users to all Providers - Yes button", expectedValue, rdoYes.getAttribute("disabled"));
+                Helper.compareEquals(testConfig, "Associate Billing Service Users to all Providers - No button", expectedValue, rdoNo.getAttribute("disabled"));
+                Helper.compareEquals(testConfig, "Add Provider Association - textbox", expectedValue, txtAddProviderAssociation.getAttribute("disabled"));
+                Helper.compareEquals(testConfig, "Add TIN Association - button", expectedValue, btnAddProviderAssociation.getAttribute("disabled"));Helper.compareEquals(testConfig, "Save - button", expectedValue, btnSave.getAttribute("disabled"));
+                Helper.compareEquals(testConfig, "Cancel - button", expectedValue, btnCancel.getAttribute("disabled"));
+                Helper.compareEquals(testConfig, "Delete - button", expectedValue, btnDelete.getAttribute("disabled"));
+                accessLvls =Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+                
+                for(WebElement accessLevel:accessLvls )
+                Helper.compareEquals(testConfig, "Access Level is Disabled ", expectedValue, accessLevel.getAttribute("disabled"));
+
+                for(WebElement genEmailNotification:chkBoxgenEmailNotification )
+
+                        Helper.compareEquals(testConfig, "Funding Email Checkbox is Disabled ", expectedValue, genEmailNotification.getAttribute("disabled"));
+        }
 		return this;
 	}
 	
@@ -1459,7 +1489,7 @@ public class ManageUsers extends AddUserDetails
         if(userType.equalsIgnoreCase("PROV"))
         	sqlRowNo=10;
         else if(userType.equalsIgnoreCase("BS"))
-        	sqlRowNo=18;
+        	sqlRowNo=256;
         else if(userType.contains("PAY"))
         	sqlRowNo=254;
         
@@ -1488,8 +1518,6 @@ public class ManageUsers extends AddUserDetails
 		}
 	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
-
-	
 
 	
 	public ManageUsers validateTandCFields(){

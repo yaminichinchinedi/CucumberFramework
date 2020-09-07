@@ -177,6 +177,7 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
 	Examples:
       |    userType     |		accessLevelOfNewUser	|searchCriteria   |
       |     PAY_Admin |  		Administrator		    | PurgedUsers|
+
 	  
 	
   @UPAUS2711348 @UPA_AugRelease
@@ -216,4 +217,18 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |      PROV_Admin |   PROV     		|					General			    |  		TinWithMoreThnMaxUsr 		|			Legacy			|		AO			|
       |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		AV			|
       |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		VO			|
+
+      
+@UPAUS2499639P1
+Scenario Outline: US2499639_1_UPA_BS_Admin_ManageUsers_UIValidationforPurgedUsers
+
+	Given User navigates to UPA portal and enters "<userType>" and login
+	When  Click on Manage User Link
+	Then  Verify UI Details for Purged "<userType>" user
+	
+	    Examples:
+      |    userType     |		
+      |     BS_Admin   	|	
+    
+
       	

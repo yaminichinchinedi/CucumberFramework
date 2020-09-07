@@ -105,6 +105,7 @@ import main.java.reporting.Log;
         strict=true,
         tags={"@CSRPurgedTest2"}
 
+
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

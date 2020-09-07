@@ -63,7 +63,8 @@ public class LoginUPA {
 //	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
 //	WebElement txtboxSecurityAns;
 	
-	@FindBy(xpath = "//input[@id='UnrecognizedSecAns_input']")
+
+	@FindBy(id = "UnrecognizedSecAns_input")
 	WebElement txtboxSecurityAns;
 
 	@FindBy(name = "rememberMyDevice")

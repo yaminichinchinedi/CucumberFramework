@@ -76,57 +76,59 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\"$")
     public void verify_Search_Results_With_for(String filterPayments, String quickSearchFilter) throws Throwable {
-
                paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
     }
 
+  
+
     @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_With_for_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
-               paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
-               
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+    	
     }
     
     @Then("^Verify Search Results for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_for_having_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
         
-               paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
     }
     
     @Then("^Set Search Filters for \"([^\"]*)\" having \"([^\"]*)\"$")
     public void set_Search_Filters_for_having(String archiveFilter, String quickSearchFilter) throws Throwable {
-               
-               paySum.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
-               
+    	
+    	paySum.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
+    	
     }
     
     @Then("^Verify Payment Date Sorting for \"([^\"]*)\"$")
     public void verify_Payment_Date_Sorting_for(String order) throws Throwable {
-               paySum.verifyPaymentDateSorting(order);
+    	paySum.verifyPaymentDateSorting(order);
     }
     
     @Then("^Set Quick Search Filter for \"([^\"]*)\"$")
     public void set_Quick_Search_Filter_for(String paymentType) throws Throwable {
-               paySum.setQuickSearchFilter(paymentType);
+    	paySum.setQuickSearchFilter(paymentType);
     }
 
     @Then("^Verify Remit Payment PopUp$")
     public void verify_Remit_Payment_PopUp() throws Throwable {
-               paySum.verifyRemitPaymentPopUp(); 
+    	paySum.verifyRemitPaymentPopUp(); 
     }
     
     @Then("^Verify Failed Payment PopUp$")
     public void verify_Failed_Payment_PopUp() throws Throwable {
-               paySum.verifyFailedPaymentPopUp();
+    	paySum.verifyFailedPaymentPopUp();
     }
     
     @Then("^Verify Zero Dollar Payments for \"([^\"]*)\"$")
     public void verify_Zero_Dollar_Payments_for(String paymentType) throws Throwable {
-               paySum.verifyZeroDollarPayments(paymentType);
+    	paySum.verifyZeroDollarPayments(paymentType);
     }
     
     @Then("^Verify Mkt Type for \"([^\"]*)\"$")
     public void verify_Mkt_Type_for(String mktTypeFilter) throws Throwable {
                paySum.verifyMktType(mktTypeFilter);
+    	paySum.verifyMktType(mktTypeFilter);
     }
        
 }

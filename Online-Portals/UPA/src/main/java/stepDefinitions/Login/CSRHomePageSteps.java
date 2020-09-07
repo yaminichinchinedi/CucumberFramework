@@ -99,7 +99,6 @@ public class CSRHomePageSteps extends TestBase{
 			enrollment.validateViewEnrollment();
 			enrollment.clickEditBtn();
 		}
-	   
 
 	   @When("^Click on CSRManage User Link$")
 		public void click_on_CSRManage_User_Link() throws Throwable {
