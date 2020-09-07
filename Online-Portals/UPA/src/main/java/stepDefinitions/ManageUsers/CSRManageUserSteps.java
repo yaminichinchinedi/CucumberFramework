@@ -93,7 +93,7 @@ public class CSRManageUserSteps extends TestBase {
 		manageUsers.verifyPurgedUserStatus(userType);
 	}
 
-
+s
 	@Then("^select user \"([^\"]*)\" from dropdown$")
 	public void select_user_from_dropdown(String userType) throws Throwable {
 		searchPage.selectUserType(userType);
