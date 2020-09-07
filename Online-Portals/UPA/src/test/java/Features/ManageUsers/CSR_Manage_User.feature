@@ -38,7 +38,8 @@ Feature: CSR Manage User Functionality
       |    userType     |   credentials   |		disabledValue		|
       |      PROV       |      Super      |		disabled    		|
       
-      
+  
+  @CSR_AugRelease
 	@CSRManageUsers_US2769380
   Scenario Outline: CSR Manage User UI Functionality Add new user using Purged user Email address
     Given User navigates to CSR portal and enters "<credentials>" and login

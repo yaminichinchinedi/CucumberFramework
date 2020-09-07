@@ -96,7 +96,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |      PROV_Admin |   PROV     	|		Administrator		    |
       
       
-  @UPAManageUsers_US2769380    
+  @UPAManageUsers_US2769380  @UPA_AugRelease  
   Scenario Outline: UPA Manage User Add new Provider user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -107,7 +107,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
       |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
       
-  @UPAManageUsers_US2769380
+  @UPAManageUsers_US2769380 @UPA_AugRelease
   Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -179,17 +179,18 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |     PAY_Admin |  		Administrator		    | PurgedUsers|
 	  
 	
-  @UPAUS2711348
+  @UPAUS2711348 @UPA_AugRelease
      Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the Purged TIN from the dropdown
+   # Then Select the Purged TIN from the dropdown
+     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
     Then Verify Purged User validations by clicking on it
       Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |  
      
-     @UPAUS2720684 	
+     @UPAUS2720684 	@UPA_AugRelease
 		Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal

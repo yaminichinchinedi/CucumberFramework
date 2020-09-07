@@ -26,7 +26,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.google.inject.spi.Elements;
 import com.ibm.db2.jcc.am.tn;
 
 import main.java.Utils.DataBase;
@@ -38,10 +37,9 @@ import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
-public class ManageUsers extends AddUserDetails  {
+public class ManageUsers extends AddUserDetails
+{
 	
-	//private static final boolean String = false;
-
 	@FindBy(linkText="User List")
 	WebElement lnkUserList;
 	
@@ -180,7 +178,9 @@ public class ManageUsers extends AddUserDetails  {
 
 	@FindBy(id="provTinAssociateId")
 	WebElement provTinAssociate;
+
 	
+
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -1488,7 +1488,9 @@ public class ManageUsers extends AddUserDetails  {
 		}
 	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
+
 	
+
 	
 	public ManageUsers validateTandCFields(){
 		String termAndCond=termsAndCond.getText().substring(termsAndCond.getText().indexOf(":")+1, termsAndCond.getText().length()).trim();
@@ -1529,22 +1531,6 @@ public class ManageUsers extends AddUserDetails  {
 	}
 	
 	
-	public void verifyYourChangesWereUpdatedSuccessfully()
-    {
-		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
-    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
-    }
-	
-	public ManageUsers updateDemographicInfo(String userType)
-	{
-		String userNameBeforeUpdation=getCSRUserName();
-		fillNewUserInfo();
-		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		clickSave();
-		verifyDetailsOfNewUser(userType);
-		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
-		return this;
-	}
 	
 	public ManageUsers verifyAddUserBtnEnabled(){
 		try{
@@ -1659,6 +1645,23 @@ public class ManageUsers extends AddUserDetails  {
 
 	}
 
+
+	public ManageUsers updateDemographicInfo(String userType)
+	{
+		String userNameBeforeUpdation=getCSRUserName();
+		fillNewUserInfo();
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
+		clickSave();
+		verifyDetailsOfNewUser(userType);
+		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+		return this;
+	}
+	
+	public void verifyYourChangesWereUpdatedSuccessfully()
+    {
+		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
+    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
+    }
 }
 
 
