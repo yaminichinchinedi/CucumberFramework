@@ -88,5 +88,64 @@ Examples:
          |       Tricare_BS          |   BS_Admin        |  BS        |
          |       Tricare_BS          |   BS_Gen          |  BS        |         
           
+@US2707347
+Scenario Outline: Remittance Detail payer column relabel for BS 
+     
+     Given User navigates to UPA portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link for UPA
+     And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
+     And Enter Electronic Number for Tricare Masking Criteria
+     Then Validate that Payer/Patient column name is changed to Payer 
 
+Examples:
+
+        |    searchBy                   |       credentials        |usertype   |  
+		|       PLB_Adj_Only_BSAdmin    |       BS_Admin           |  BS        |
+   #    |      Multiple_PLB             |       BS_Gen             |  BS        |
         
+        
+@US2707342  
+Scenario Outline: Remittance Detail UI Functionality for Complaint patient payments 
+     
+     Given User navigates to UPA portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link for UPA
+     And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
+     And Enter Check Number and click search
+     Then Click on Payment Number Link and Validate the Download 835 option is displayed
+
+Examples:
+
+        |    searchBy                   |       credentials        |usertype   |  
+		| generalPaymentForTIN_90days   |       BS_Admin           |  BS        |
+        | generalPaymentForTIN_90days   |       BS_Gen             |  BS        |
+        
+@US2707374  
+Scenario Outline: Remittance Detail Page UI Functionality for Patient Payements (Search Remittance  --> Remittance Detail)
+     
+     Given User navigates to UPA portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link for UPA
+     And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
+     And Enter Check Number and click search
+	 Then Validate and click on payment number
+     Then Validate all Headers in the Page for Payer
+     Then Validate Column Headers in the grid for remittance detail Page
+Examples:
+
+        |    searchBy                   |       credentials        |usertype   |  
+		| generalPaymentForTIN_90days   |       BS_Admin           |  BS        |
+        | generalPaymentForTIN_90days   |       BS_Gen             |  BS        |
+        
+@US2707344  
+Scenario Outline: Remittance Detail UI Functionality for Complaint patient payments UPA
+     
+     Given User navigates to UPA portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link for UPA
+     And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
+     And Enter Check Number and click search
+     Then Validate the EPRA and Payer PRA column in Search Remittance Page for "<type>"
+
+Examples:
+
+        |    searchBy                   |       credentials        |usertype    |  type   |
+		| generalPaymentForTIN_90days   |       BS_Admin           |  BS        |  UPA    |
+        | generalPaymentForTIN_90days   |       BS_Gen             |  BS        |  UPA    |

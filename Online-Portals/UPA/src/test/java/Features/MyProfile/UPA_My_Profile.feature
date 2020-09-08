@@ -61,3 +61,26 @@ Feature: Create Enrollment - UPA My Profile Functionality
 #        |      userType       |   accessType   |
 #        |      PROV_Admin     |   Admin        |
 #        |      PROV           |   Gen          |
+
+@US2707365
+  Scenario Outline: UPA My Profile UI Functionality Update and Verify User Details displayed on My profile Page from user details saved in Database for logged in user
+
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on UPA - My Profile Link
+    Then User updates fields on My profile Page and verifies in Database for logged in user
+    Examples:
+      |      userType       |   accessType|
+      |      BS_Admin       |   BS     	  |
+      |      PAY_Admin     	|   PAY       |
+
+@US2707363
+Scenario Outline: UPA My Profile UI Functionality Update and verify user details for provider
+
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on UPA - My Profile Link
+    Then User updates fields on My profile Page for provider and verifies in Database for logged in user
+    Examples:
+      |      userType       |   accessType|
+      |      PROV_Admin     |   PROV      |

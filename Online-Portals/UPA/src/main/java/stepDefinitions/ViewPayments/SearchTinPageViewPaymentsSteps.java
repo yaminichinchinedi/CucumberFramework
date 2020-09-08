@@ -11,13 +11,13 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 import main.java.pageObjects.ViewPayments_Page;
-
+import main.java.pageObjects.paymentSummary;
 import main.java.pageObjects.SearchTinPageViewPayments;
 
 public class SearchTinPageViewPaymentsSteps extends TestBase {
 	
     SearchTinPageViewPayments ViewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
-
+	paymentSummary payment= new paymentSummary(testConfig); 
     
     @Then("^User enters tin on View Payments Tin \"([^\"]*)\" and click continue$")
     public void user_enters_tin_on_View_Payments_Tin_and_click_continue(String srchCriteria) throws Throwable {
@@ -87,6 +87,16 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_enters_tin_for_UPA_for_Payer(String srchCriteria) throws Throwable {
 	   
 		ViewPaymentsTIN.enterTinForPayer(srchCriteria);
+	}
+	
+	@Then("^User enters tin for View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria$")
+	public void user_enters_tin_for_View_Payments_UPA_for_and_search_criteria(String paymentType, String userType) throws Throwable {
+    	ViewPaymentsTIN.enterPaymentTinUPA(paymentType, userType);
+    }
+	
+	@Then("^User enters tin for BS View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria$")
+	public void user_enters_tin_for_BS_View_Payments_UPA_for_and_search_criteria(String userType, String paymentType) throws Throwable {
+    	payment.enterBSTin(paymentType, userType);
 	}
 	
 	@Then("^Select the TIN for \"([^\"]*)\" CSR Portal$")

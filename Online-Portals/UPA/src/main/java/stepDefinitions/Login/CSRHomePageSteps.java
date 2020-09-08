@@ -113,4 +113,24 @@ public class CSRHomePageSteps extends TestBase{
 		   homePage.clickCrtEnrlmnt();
 	   }
 
+	   @Then("^User enters \"([^\"]*)\" and active \"([^\"]*)\" in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
+	   public void user_enters_and_active_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType, String tinType) throws Throwable {
+			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
+			enrollment.clickEditBtn();
+	   }
+	   
+	   @Then("^User enters \"([^\"]*)\" and active \"([^\"]*)\" based on \"([^\"]*)\" and \"([^\"]*)\"in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
+	   public void user_enters_and_active_based_on_and_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType, String tinType, String payMethodCode, String enrollmentStatusCode) throws Throwable {
+			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
+			enrollment.getTin(userType, tinType, payMethodCode, enrollmentStatusCode);
+			enrollment.clickEditBtn();
+	   }
+
+
+		@Given("^User is on CSR Home Page$")
+		public void user_is_on_CSR_Home_Page() throws Throwable {
+			homePage.VerifyCSRLogin();
+			
+}
+
 }

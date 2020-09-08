@@ -95,6 +95,12 @@ public class MyProfile {
 	@FindBy(xpath="//input[@value=' Save ']")
 	WebElement btnSave;
 	
+	@FindBy(xpath = "//td[contains(text(),'Your profile changes were updated successfully.')]")
+	WebElement updateMsg;
+	
+    @FindBy(name="tinGridList[0].emailNotify")
+	WebElement emailChkbox;
+	
 	@FindBy(xpath="//font[contains(text(),'Invalid First')]")
 	WebElement errors;
 	private TestBase testConfig;
@@ -295,5 +301,73 @@ public class MyProfile {
 	}
 	
 	
+	public void updateAndVerifyUserDetails()
+	{
+		int sqlRowNo;
+		Map query=null;
+		String mod_typ_cd = "";
+		sqlRowNo=405;
+		String phNo = Long.toString(Helper.generateRandomNumber(3));
+		String userEmailAdr=Helper.getUniqueEmailId();
+		
+		String firstNameTxt=Helper.generateRandomAlphabetsString(3);
+		
+		Element.enterData(txtBoxFName, firstNameTxt, "Enter First Name as : " + firstNameTxt ,"FirstName");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCN");
+		
+		Element.enterData(txtBoxPhNo1, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum1");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCT");
+		
+
+		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
+		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCE");
+
+		
+		Element.enterData(txtBoxLName, firstNameTxt, "Enter Last Name as : " + firstNameTxt ,"LastName");
+		Element.enterData(txtBoxPhNo, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCM");
+		
+		
+//		emailChkbox.click();
+//		Element.click(btnSave, "Save button");
+//		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+//		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+//		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCC");
+
+	}
 	
+
+	public void updateAndVerifyProvDetails()
+	{
+		int sqlRowNo;
+		Map query=null;
+		sqlRowNo=406;
+		String phNo = Long.toString(Helper.generateRandomNumber(3));
+		Element.enterData(txtBoxPhNo1, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum1");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Phone number", query.get("TEL_NBR").toString(), txtBoxPhNo.getAttribute("value").toString()+txtBoxPhNo1.getAttribute("value").toString()+txtBoxPhNo2.getAttribute("value").toString());
+
+	}
+
+
 }

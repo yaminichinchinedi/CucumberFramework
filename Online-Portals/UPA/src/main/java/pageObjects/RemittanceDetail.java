@@ -104,7 +104,7 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//td[contains(text(),'Prov Adj Discount')]") WebElement provAdj;
 	@FindBy(xpath = "//td[contains(text(),'Amount Allowed')]") WebElement amntAllowed;
 	@FindBy(xpath = "//td[contains(text(),'Deduct/ Coins/ Copay')]") WebElement copay;
-	@FindBy(xpath = "//tr[@class='columnHeaderText']//td[contains(text(),'Paid to Provider')]") WebElement paidPrvdr;
+	@FindBy(xpath = "//td[contains(text(),'Total Paid to Provider:')]") WebElement paidPrvdr;
 	@FindBy(xpath = "//a[contains(text(),'Adj Reason Code')]") WebElement adj_code;
 	@FindBy(xpath = "//a[contains(text(),'RMK Code')]") WebElement rmk_code;
 	@FindBy(xpath = "//td[contains(text(),'Patient Resp')]") WebElement patientResp;
@@ -166,6 +166,7 @@ public class RemittanceDetail {
 	@FindBy(id="paymentNbrTypeSelection")	WebElement payNumdrpdwn;
 	//@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
 	@FindBy(id="paymentNumberInputId")	WebElement elcPayNum;
+	@FindBy(id="checkNumberInputId")	WebElement checkPayNum;
 	//@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
 	@FindBy(name="searchRemittance")	WebElement srchRemitBtn;
 	//@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
@@ -183,6 +184,7 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]") WebElement homeBtnUPA;
 	@FindBy(xpath="//input[@value='Print Request' and @type = 'button']") WebElement btnPrint;
 	@FindBy(id="printProcessing") WebElement btnPrntProcessing;
+	@FindBy(xpath="//input[@value='Download 835' and @type = 'button']") WebElement download835;
 	@FindBy(xpath = "//input[@value='Print Available']") WebElement btnPrntavailable;
 	@FindBy(xpath = "//input[@value='Return to Search Results']") WebElement returnbtn;
 	@FindBy(xpath = "//b[contains(text(),'Your PDF is now available. To access your document')]") WebElement msg;
@@ -201,6 +203,7 @@ public class RemittanceDetail {
 	@FindBy(name="taxIdNbr") WebElement bstinDrpDwn;
 	@FindBy(name="taxIdNbr") WebElement payertinDrpDwn;
     @FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
+	@FindBy(xpath = "//*[contains(text(),'Note: Above information provided by the member']") WebElement noteMsg;
 	
 	private ViewPaymentsDataProvider dataProvider;
 	List<String> actual=new ArrayList<String>();
@@ -760,6 +763,41 @@ public void verifyBottomHeadersPayer() throws Exception
 	 Helper.compareEquals(testConfig, "Total Paid to Provider info", true, returnBtnUI);
 }
 	
+
+	public void verifyHeadersRemittanceDetail() throws Exception {
+		Boolean acctNumUI = acctNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Account Number Column", true, acctNumUI);
+
+		Boolean patientNameUI = patientName.isDisplayed();
+		Helper.compareEquals(testConfig, "Patient Name Column", true, patientNameUI);
+
+		Boolean subscrbrNameUI = subscrbrName.isDisplayed();
+		Helper.compareEquals(testConfig, "Subscriber Name Column", true, subscrbrNameUI);
+
+		Boolean dosHeaderUI = dosHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Date(s) of Service Column", true, dosHeaderUI);
+
+		Boolean renderingHeaderUI = renderingHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Rendering Provider Column", true, renderingHeaderUI);
+
+		Boolean claimnumHeaderUI = claimnumHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Claim Number Column", true, claimnumHeaderUI);
+
+		Boolean patientpayHeaderUI = patientpayHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Patient Payment Column", true, patientpayHeaderUI);
+
+		Boolean amntpaidHeaderUI = amntpaidHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Amount Paid Column", true, amntpaidHeaderUI);
+
+		Boolean totPaidSubHdrUI = paidPrvdr.isDisplayed();
+		if (totPaidSubHdrUI == true) {
+			Helper.compareContains(testConfig, "Total Paid to Provider", "Total Paid to Provider",
+					paidPrvdr.getText());
+		} else {
+			Log.Fail("Total Paid to Provider: is not displayed");
+		}
+	}
+
 public void verifyRemitPaginationOptions() throws Exception
 {
 	  int subRecordCount = subTotalCount.size();
@@ -4184,6 +4222,21 @@ public void enterElectronicNumForPLBOnlyCriteria() throws Exception
 
 }
 
+	public void enterCheckNumber() throws Exception
+	{
+	    int sqlRowNo = 407;
+	    System.getProperty("tin");
+		Map UCONSL_PAY_NBR = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String checkNumber = UCONSL_PAY_NBR.get("UCONSL_PAY_NBR").toString();
+		Log.Comment("The Electronic Payment Number is :" + checkNumber);
+	    Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+		Element.selectVisibleText(payNumdrpdwn,"Check Number","Payment Dropdown");
+		Log.Comment("Payment Dropdown Selected: Check Number is selected");
+	    Element.click(checkPayNum, "Check Number");
+	    Element.enterData(checkPayNum, checkNumber, "Enter Check Number as "+checkNumber, "Check Number");
+	    Element.click(srchRemitBtn, "Search Remit");
+	
+	}
 
 
 public void enterElectronicNumForPLBOnlyPayer() throws Exception
@@ -6698,6 +6751,18 @@ public void verifyTricareMasking() throws Exception
 		Log.Fail("Subscriber ID is masked and only last 4 digits are reavled");
   }
 
+	public void verifyDownload835() throws Exception
+	{
+		Browser.wait(testConfig, 3);
+		
+		Boolean remitpaymntheadUI = remitpaymnthead.isDisplayed();
+		Helper.compareEquals(testConfig, "Payment Number Header", true, remitpaymntheadUI);
+	    Element.click(paymentNo1, "Payment Number");
+	    Element.expectedWait(subscriberUI1, testConfig, "Subscriber ID", "Subscriber ID");
+		Boolean download835Button = download835.isDisplayed();
+		Helper.compareEquals(testConfig, "Download 835 Button", true, download835Button);
+		Element.verifyElementNotPresent(noteMsg, "Note: Above information provided by the member");
+	  }
 
 
 public void verifyRemittancePageDataUPA() throws Exception

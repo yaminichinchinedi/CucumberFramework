@@ -17,4 +17,15 @@ public class MyProfileSteps extends TestBase {
     public void user_enters_in_Upa_My_Profile_Page_And_Verify_Error_Message(String userType) throws Throwable {
         myProfile.verifyErrorMessages(userType);
     }
+    
+    @Then("^User updates fields on My profile Page and verifies in Database for logged in user$")
+    public void user_updates_fields_on_My_profile_Page_and_verifies_in_Database_for_logged_in_user() throws Throwable {
+    	myProfile.updateAndVerifyUserDetails();
+    }
+    
+    @Then("^User updates fields on My profile Page for provider and verifies in Database for logged in user$")
+    public void user_updates_fields_on_My_profile_Page_for_provider_and_verifies_in_Database_for_logged_in_user() throws Throwable {
+    	myProfile.updateAndVerifyProvDetails();
+    }
+
 }

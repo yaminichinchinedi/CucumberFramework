@@ -53,7 +53,8 @@ import main.java.reporting.Log;
 
 public class SearchRemittance extends paymentSummary {
 	
-	@FindBy(xpath="//td[@class='errors']")
+	//@FindBy(xpath="//td[@class='errors']")
+	@FindBy(xpath = "//td[contains(text(),'No records match the selected search criteria. Cho')]")
 	WebElement errorMsg;
 	
 	@FindBy(xpath="//td[contains(text(),'No records')]")
@@ -134,6 +135,14 @@ public class SearchRemittance extends paymentSummary {
 	
 	@FindBy(xpath="//span[contains(@id,'epra')]//img")
 	WebElement imgEPRApdf;
+	
+	@FindBy(name="printSearchResult")
+	WebElement printSearchResultsButton;
+	
+	@FindBy(xpath="//b[contains(text(),'Payer')]")
+	//@FindBy(xpath="//td[contains(text(),'Payer')]")
+	WebElement payer;
+	
 	
 	@FindBy(xpath = "//td[@class='commenlink' and @id='homeId']/a[1]") WebElement HomeBtn;
 	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement SrchRemit;
@@ -1527,6 +1536,20 @@ public class SearchRemittance extends paymentSummary {
 		return this;
 	}
 	
+	public SearchRemittance verifyPayerText()
+	{
+		Helper.compareContains(testConfig, "Payer Text", "Payer", payer.getText());
+		if(testConfig.driver.getPageSource().contains("No records match the selected search criteria. Cho")){
+			Log.Comment("No Records Found", testConfig);
+		}
+		else{
+			Element.click(printSearchResultsButton, "Print Search Results");
+			String oldWindow=Browser.switchToNewWindow(testConfig,"printnpipaymentsearchresults.do");
+			Helper.compareContains(testConfig, "Payer Text", "Payer", payer.getText());
+		    Browser.switchToParentWindow(testConfig,oldWindow);
+		}
+		return this;
+	}
 	
 	
 	public SearchRemittance verifyUsrEvntLogRemitDetail()
@@ -1679,4 +1702,35 @@ public class SearchRemittance extends paymentSummary {
 		return this;
 		
 	 } 
+	
+	public void verifyEPRAAndPayerPRA(String credentials) {
+		if (credentials.equals("CSR")) {
+			divSearchResults = Element.findElements(testConfig, "xpath",
+					"//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+			if (divSearchResults.get(1).findElements(By.tagName("td")).get(14).getText()
+					.contentEquals("Patient Payments")) {
+				Helper.compareEquals(testConfig, "Payer PRA", "N/A",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(11).getText());
+				divSearchResults.get(1).findElements(By.tagName("td")).get(8).isDisplayed();
+				Helper.compareEquals(testConfig, "835", "835",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(8).getText());
+				Helper.compareEquals(testConfig, "EPRA", "N/A",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(10).getText());
+			}
+
+		} else {
+			divSearchResults = Element.findElements(testConfig, "xpath",
+					"//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+			if (divSearchResults.get(1).findElements(By.tagName("td")).get(14).getText()
+					.contentEquals("Patient Payments")) {
+				Helper.compareEquals(testConfig, "Payer PRA", "N/A",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(11).getText());
+				divSearchResults.get(1).findElements(By.tagName("td")).get(8).isDisplayed();
+				Helper.compareEquals(testConfig, "835", "835",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(8).getText());
+				Helper.compareEquals(testConfig, "EPRA", "N/A",
+						divSearchResults.get(1).findElements(By.tagName("td")).get(10).getText());
+			}
+		}
+	}
 }

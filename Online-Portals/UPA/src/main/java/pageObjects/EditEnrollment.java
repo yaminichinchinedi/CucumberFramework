@@ -105,12 +105,15 @@ public class EditEnrollment {
 	@FindBy(id="resetButton")
 	WebElement btnReset;
 	
-	@FindBy(id="updateButton")
+	//@FindBy(id="updateButton")
+	@FindBy(xpath="//input[contains(@value,'Update Payment Method(s)')]")
 	WebElement btnUpdate;
 	
 	
 	
-	@FindBy(xpath="//form[@name='enrollmentForm']//table//tr[@class='subheadernormal']//tr")
+	//@FindBy(xpath="//form[@name='enrollmentForm']//table//tr[@class='subheadernormal']//tr")
+	//*[@id="enrollmentForm"]/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr
+	@FindBy(xpath="//*[@id='enrollmentForm']/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr")
 	List<WebElement> payerTable;
 	
 	
@@ -364,7 +367,7 @@ public class EditEnrollment {
 	@FindBy(name="btnNo")
 	WebElement btnNoForW9;
 	
-	@FindBy(xpath="//input[@value='Finish']")
+	@FindBy(name="btnFinish")
 	WebElement btnFinish;
 	
 	@FindBy(xpath="//td[contains(text(),'Patient Payment')]")
@@ -373,7 +376,8 @@ public class EditEnrollment {
 	@FindBy(xpath="//td[contains(text(),'HM801')]")
 	WebElement payerId;
 	
-	
+	@FindBy(name="Submit")
+	WebElement submitBtn;
 	
 	
 	
@@ -878,15 +882,59 @@ public class EditEnrollment {
 				Helper.compareContains(testConfig, "ACH_TYP_CD", payerGridInfoDB.get(i).get("ACH_TYP_CD"), noOFPayers.get(i-1).findElements(By.tagName("td")).get(4).getText());
 //				Helper.compareContains(testConfig, "TEL_NBR", payerGridInfoDB.get(i).get("TEL_NBR"), noOFPayers.get(i-1).findElements(By.tagName("td")).get(5).getText().replace("-", "").replace("  ",""));
 			}
-//			
-		
+	
 	}
 	
-	
-	
-	
+		
+		public void UpdateandVerifyPayerTable() throws IOException 
+		{
+	       
+			int sqlRow=404;
+			Map payerDB = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			int drpdwnEnabled=0;
+			Map<String, String> mapA = new HashMap<>();
+			String nonePaymentMethod = "None";
+			String achPaymentMethod = "ACH";
+			String nonePaymentMethodDb = "";
+			Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(1),"Payer Id");
+			Element.verifyTextPresent(payerTable.get(2).findElements(By.tagName("td")).get(1),"RPMP5");
 
-	
+			for(int i=2;i<payerTable.size()-2;i++) {
+				System.out.println(payerDB.get("PAYR_835_ID").toString().trim());
+				if((payerDB.get("PAYR_835_ID").toString().trim()).equals((payerTable.get(i).findElements(By.tagName("td")).get(1)).getText())){
+					Browser.scrollTillAnElement(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(1), "Payer Id");
+					String oldPayMeth=Element.getFirstSelectedOption(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), "value");
+					if(oldPayMeth.equals(achPaymentMethod)) {
+						Element.selectVisibleText(payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), nonePaymentMethod, "Value");
+						mapA.put("payment",  oldPayMeth); 
+					}
+					else {
+						Element.selectVisibleText(payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), achPaymentMethod, "Select " + achPaymentMethod + "Value");
+						mapA.put("payment",  oldPayMeth); 
+					}			    	
+			        String newPayMeth=Element.getFirstSelectedOption(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), "value");
+					String payerName=payerTable.get(i).findElements(By.tagName("td")).get(0).getText();
+					Browser.scrollToBottom(testConfig);
+					Element.click(btnUpdate, "Update button");
+					//Element.verifyTextPresent(payerTableOnMethChange.get(1).findElement(By.tagName("td")),"You have elected to change Payment Method(s) for the following Payer(s)");
+			      	Element.click(btnYes1, "Yes button");
+			      	Element.click(btnFinish, "Yes button");
+			      	Element.click(btnFinish, "Yes button");
+					Browser.scrollToBottom(testConfig);
+			      	Element.click(submitBtn, "Yes button");
+
+				}
+			}
+			Map payerDb = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+			if(mapA.get("payment").equals(achPaymentMethod)) {
+				Helper.compareEquals(testConfig, "Payment Method", nonePaymentMethodDb, payerDb.get("PAY_METH_CD").toString());
+			}
+			else {
+			    Helper.compareEquals(testConfig, "Payment Method", achPaymentMethod, payerDb.get("PAY_METH_CD").toString());
+
+			}
+		}
+			
 	
 
 }

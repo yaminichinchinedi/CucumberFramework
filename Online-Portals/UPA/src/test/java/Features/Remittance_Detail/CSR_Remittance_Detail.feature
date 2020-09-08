@@ -90,8 +90,65 @@ Examples:
          |     RW          | 
          |     RO          |
          
+@US2707347
+Scenario Outline: Remittance Detail payer column relabel for CSR 
+     
+     Given User navigates to CSR portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link
+     Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button     
+     And Enter Electronic Number for Adjustment Only Criteria
+     Then Validate that Payer/Patient column name is changed to Payer 
 
 
+Examples:
+
+         |   credentials   |	priority		|	     searchBy	            | usertype   |
+         |     Super       |      None          |    Multiple_PLB_ProvAdmin     |   PROV     |
+
+@US2707342
+Scenario Outline: Remittance Detail Page UI Functionality for CSR 
+     
+     Given User navigates to CSR portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link
+     Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button     
+     And Enter Check Number and click search
+     Then Click on Payment Number Link and Validate the Download 835 option is displayed
+
+
+Examples:
+
+         |   credentials   |	priority		|	     searchBy	                 | usertype   |
+         |     Super       |      None          |    generalPaymentForTIN_90days     |   PROV     |
+
+@US2707374 
+Scenario Outline: Remittance Detail Page UI Functionality for Patient Payements (Search Remittance  --> Remittance Detail)
+     
+     Given User navigates to CSR portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link
+     Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button     
+     And Enter Check Number and click search
+	Then Validate and click on payment number
+    Then Validate all Headers in the Page for Payer
+    Then Validate Column Headers in the grid for remittance detail Page
+
+
+Examples:
+
+         |   credentials   |	priority		|	     searchBy	                 | usertype   |
+         |     Super       |      None          |    generalPaymentForTIN_90days     |   PROV     |
   
-  
+@US2707344
+Scenario Outline: Remittance Detail UI Functionality for Complaint patient payments CSR
+     
+     Given User navigates to CSR portal and enters "<credentials>" and login
+     Then User clicks on Search Remittance link
+     Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" click on continue button     
+     And Enter Check Number and click search
+     Then Validate the EPRA and Payer PRA column in Search Remittance Page for "CSR"
+
+
+Examples:
+
+         |   credentials   |	priority		|	     searchBy	                 | usertype   |
+         |     Super       |      None          |    generalPaymentForTIN_90days     |   PROV     |
                  

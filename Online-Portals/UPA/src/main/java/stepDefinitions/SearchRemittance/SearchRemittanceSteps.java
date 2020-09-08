@@ -194,4 +194,9 @@ public class SearchRemittanceSteps extends TestBase{
 		obj_FTPaccess.Closeconnection();				
 		
 	}
+	
+    @Then("^Validate the EPRA and Payer PRA column in Search Remittance Page for \"([^\"]*)\"$")
+    public void validate_the_EPRA_and_Payer_PRA_column_in_Search_Remittance_Page_for(String credentials) throws Throwable {
+    	srchRemittance.verifyEPRAAndPayerPRA(credentials);
+    }
 }
