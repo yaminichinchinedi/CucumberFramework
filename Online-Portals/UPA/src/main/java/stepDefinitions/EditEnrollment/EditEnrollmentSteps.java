@@ -172,5 +172,20 @@ public class EditEnrollmentSteps extends TestBase {
     public void user_clicks_on_Edit_button_Enter_special_charater_in_Org_Name_then_click_on_Finish_button_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
     	maintainEnrollment.validateOptumPayTextonEditOrg("BS");;    
    
-    }	
+    }
+    @Then("^User clicks on Finish and Submit button and validates Optum Pay text insted of EPS for Billing Service$")
+    public void user_clicks_on_Finish_and_Submit_button_and_validates_Optum_Pay_text_insted_of_EPS_for_Billing_Service() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonFinishBS();
+
+    }   
+    @Then("^User clicks of Print Enrollment Form,a PDF file is downloaded and verify Optum Pay Text instead of EPS$")
+    public void user_clicks_of_Print_Enrollment_Form_a_PDF_file_is_downloaded_and_verify_Optum_Pay_Text_instead_of_EPS() throws Throwable {
+    	maintainEnrollment.readPDFFile("PROV");
+    }
+    @Then("^User clicks of Print Enrollment Form,a PDF file is downloaded and verify Optum Pay Text instead of EPS in Billing Service$")
+    public void user_clicks_of_Print_Enrollment_Form_a_PDF_file_is_downloaded_and_verify_Optum_Pay_Text_instead_of_EPS_in_Billing_Service() throws Throwable {
+    	maintainEnrollment.readPDFFile("BS");
+
+    }
+	
 }
