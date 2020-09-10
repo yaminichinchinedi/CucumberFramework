@@ -234,12 +234,12 @@ public class LoginUPA {
 		}
 	}
 
-	public void setUserProperties(String userType) {
-		id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
-		password = testConfig.runtimeProperties.getProperty("UPA_" + "OptumPwd_" + userType + "_" + env);
-		testConfig.putRunTimeProperty("id", id);
-		testConfig.putRunTimeProperty("password", password);
-	}
+//	public void setUserProperties(String userType) {
+//		id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
+//		password = testConfig.runtimeProperties.getProperty("UPA_" + "OptumPwd_" + userType + "_" + env);
+//		testConfig.putRunTimeProperty("id", id);
+//		testConfig.putRunTimeProperty("password", password);
+//	}
 
 	public void verifyLoginUI() {
 		Element.verifyElementPresent(tabHowToEnroll, "How to enroll tab");
