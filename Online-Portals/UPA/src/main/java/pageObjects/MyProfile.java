@@ -110,7 +110,7 @@ public class MyProfile {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(lnkChangePwd, "Page is loaded and Change Password Link");
+		//Element.verifyElementPresent(lnkChangePwd, "Page is loaded and Change Password Link");
 	}
 
 	//Default constructor

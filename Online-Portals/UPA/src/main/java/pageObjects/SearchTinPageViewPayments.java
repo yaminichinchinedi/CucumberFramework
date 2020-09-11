@@ -344,9 +344,10 @@ public class SearchTinPageViewPayments {
 //		return dataProvider.getTinForPaymentType(paymentType);
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
 		String tin=dataProvider.getTinForPaymentType(paymentType);
+		dataProvider.associateTinWithUser("BS",tin);
 		if (paymentType.equals("EPRAViewPay"))
 		{
-		dataProvider.associateTinWithUser("BS",tin);
+		//dataProvider.associateTinWithUser("BS",tin);
 		WebElement txtBoxBSTin = Element.findElement(testConfig, "name", "billingProvTin");
 		if(txtBoxBSTin!=null)
 			Element.enterData(txtBoxBSTin, tin,"Entered TIN", "BS Tin");

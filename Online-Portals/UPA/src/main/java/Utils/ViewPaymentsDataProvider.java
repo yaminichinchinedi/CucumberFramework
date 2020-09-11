@@ -151,6 +151,15 @@ public String getTinForPaymentType(String paymentType)
  			 sqlRowNo=254;
  			 break;
  			 
+		 case "NON":
+	 		 sqlRowNo=35; 
+	 		 break;
+		 case "NPI_SingleTIN":
+	 		 sqlRowNo=408; 
+	 		 break;
+		 case "NPI_MultipleTIN":
+	 		 sqlRowNo=409; 
+	 		 break;
 // 		 case "byDOP":
 // 		 case "byDOPAndAccountNo":
 // 			 sqlRowNo=204;

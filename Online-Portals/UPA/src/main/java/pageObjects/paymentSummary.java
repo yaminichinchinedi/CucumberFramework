@@ -171,7 +171,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	public paymentSummary(TestBase testConfig)
 	{
 		super(testConfig);
-		this.testConfig=testConfig;
+		//this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		drpDwnQuickSearch=Element.findElement(testConfig,"id", "periodId");
 		if(drpDwnQuickSearch!=null)
@@ -1153,8 +1153,75 @@ public void verifyFailedPaymentPopUp()
 			}  
 	}
 	
+	public boolean areAllUnique(){
+		ArrayList<String> list = getNPIDetails();
+		Set<String> set = new HashSet<String>(list);
+		if(set.size() != 1){
+		    return false;
+		}
+		else {
+			return true;
+		}
+
+	}
 	
 	
+	public void verifyNPI(String paymentType) {
+		Boolean NPI = areAllUnique();
+
+		if(paymentType.contains("Single")) {
+			Helper.compareEquals(testConfig, "NPI", true, NPI);
+		}
+		if(paymentType.contains("Multiple")) {
+		Helper.compareEquals(testConfig, "NPI", false, NPI);
+		}
+	}
+
+
+	public ArrayList<String> getNPIDetails() {
+		List<String> list = new ArrayList<String>();
+		ArrayList<String> headers = getHeadersFromResultTable();
+
+		int totalNoOfPages = getNumberOfPages();
+
+		if (totalNoOfPages > 2)
+			totalNoOfPages = 1;
+		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
+			Element.findElements(testConfig, "xpath",
+					".//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+
+			for (int i = 1; i < searchResultRows.size(); i++) {
+					String detail = searchResultRows.get(i).findElements(By.tagName("td")).get(2).getText();
+					if (detail.matches("\\d{10}")) {
+						String details = detail.replaceAll("\\s","");
+						list.add(details);
+					}
+				}
+
+			if (pageNo % 10 != 0 && pageNo < totalNoOfPages) {
+				int pageToBeClicked = pageNo + 1;
+				WebElement pageLink = Element.findElement(testConfig, "xpath",
+						".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text(),"
+								+ pageToBeClicked + ")]");
+				if (pageLink != null)
+					pageLink.click();
+				else
+					Element.findElement(testConfig, "xpath",
+							".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text(),"
+									+ pageToBeClicked + ")]")
+							.click();
+				Log.Comment("Clicked Page number : " + pageToBeClicked);
+				Browser.wait(testConfig, 3);
+			} else if (pageNo % 10 == 0 && totalNoOfPages != 2) {
+				Browser.wait(testConfig, 1);
+				Log.Comment("Page Number is multiple of 10..so clicking Next");
+				Element.click(lnkNextPage, "Next Link");
+				Browser.wait(testConfig, 3);
+				pageNo++;
+			}
+		}
+		return (ArrayList<String>) list;
+	}
 	
 	
 	/**

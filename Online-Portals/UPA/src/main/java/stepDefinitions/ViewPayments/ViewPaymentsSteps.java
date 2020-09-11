@@ -3,6 +3,7 @@ package main.java.stepDefinitions.ViewPayments;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.HomePage;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.ValidateEnrollmentTypePage;
 import main.java.pageObjects.ViewPayments_Page;
@@ -197,5 +198,10 @@ public class ViewPaymentsSteps extends TestBase {
     public void verify_Mkt_Type_for(String mktTypeFilter) throws Throwable {
                paySum.verifyMktType(mktTypeFilter);
     }
-       
+    
+    @Then("^Validate payment summary page for only single NPI payments for \"([^\"]*)\"$")
+    public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable {
+    	paySum.verifyNPI(paymentType);
+    	}
+
 }

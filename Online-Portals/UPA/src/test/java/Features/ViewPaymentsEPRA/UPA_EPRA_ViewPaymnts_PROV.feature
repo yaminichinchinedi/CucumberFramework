@@ -176,4 +176,19 @@ Examples:
         |    searchBy                   |       credentials        |  TimePeriod   |  userType  |    filter          | 
 		|generalPaymentForTIN_90days    |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments | 
         |generalPaymentForTIN_90days    |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments | 
+        
+ @US2854253 
+Scenario Outline: NPI User Payment Summary
+	
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 Then User enters tin for View Payments UPA for "<searchBy>" and "<userType>" search criteria
+	 When Click on View Payments Link for UPA 
+     And User selects time period filter "<timePeriod>" for View Payments
+     Then Validate payment summary page for only single NPI payments for "<searchBy>"
+Examples:     
+       
+        |    searchBy                   |       credentials        |  timePeriod   |  userType  |
+      	|  NPI_SingleTIN                |       PROV_Admin         |  Last 90 days |  PROV      |
+        |  NPI_MultipleTIN              |       PROV_Admin         |  Last 90 days |  PROV      |
+
              

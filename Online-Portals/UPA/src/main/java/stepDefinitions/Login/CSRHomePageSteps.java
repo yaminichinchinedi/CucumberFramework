@@ -15,13 +15,14 @@ import main.java.pageObjects.SearchTinPage;
 public class CSRHomePageSteps extends TestBase{
 	
 	CSRHomePage homePage=null;
+	LoginCSR loginPage=new LoginCSR(testConfig);
 	SearchTinPage searchTinPage;
 	ManageUsers manageUsers;
 
 
 	@Given("^User navigates to CSR portal and enters credentials and login$")
 	public void user_navigates_to_CSR_portal_and_enters_credentials_and_login(String userType) throws Throwable {
-		LoginCSR loginPage=new LoginCSR(testConfig);
+	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 	
@@ -29,7 +30,7 @@ public class CSRHomePageSteps extends TestBase{
 	
 	@Given("^User navigates to CSR portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_CSR_portal_and_enters_and_login(String userType) throws Throwable {
-		LoginCSR loginPage=new LoginCSR(testConfig);
+	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 

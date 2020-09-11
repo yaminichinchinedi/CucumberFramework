@@ -91,6 +91,7 @@ public class UPAHomePage extends HomePage {
 	
 	UPAHomePage(TestBase testConfig) 
 	{
+ 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
