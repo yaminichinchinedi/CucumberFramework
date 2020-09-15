@@ -10,6 +10,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.apache.xpath.operations.Or;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -41,7 +42,9 @@ public class LoginUPA {
     @FindBy(linkText="ACTIVATE")
     public WebElement btnActivate;
     
-   @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
+    @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") WebElement clickUPASignIn;
+   
+    //@FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignInTest1;
 	
 	
     @FindBy(id="tabHome")
@@ -60,8 +63,11 @@ public class LoginUPA {
 	@FindBy(id = "challengeQuestionLabelId")
 	WebElement securityQuestion;
 
-	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
-	WebElement txtboxSecurityAns;
+//	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
+//	WebElement txtboxSecurityAns;
+	
+	 @FindBy(id="UnrecognizedSecAns_input")
+	 public WebElement txtboxSecurityAns;	
 
 	@FindBy(name = "rememberMyDevice")
 	WebElement chkBoxRememberDevice;
@@ -104,7 +110,7 @@ public class LoginUPA {
 		Browser.waitForPageLoad(testConfig);
 	}
 
-	public UPAHomePage doLoginUPA(String userType) {
+	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
@@ -127,8 +133,11 @@ public class LoginUPA {
 		} catch (Exception e) {
 			Log.Comment("Authentication Error not present");
 		}
-		WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
-		if (welcomeTxt != null)
+		
+		//WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+	    //if (welcomeTxt != null)
+		
+		if(testConfig.driver.findElements(By.xpath("//span[contains(text(),'Welcome Screen')]")).size() != 0)
 			Log.Comment("Security Question not present");
 		else {
 			for (int i = 0; i < 2; i++) {
@@ -161,12 +170,15 @@ public class LoginUPA {
 		
 		else if (securityQuestion.getText().contains("state of your birth")) 
 			fillStateOfBirthAns();
+		
+		else if (securityQuestion.getText().contains("middle")) 
+			fillfathermiddlename();
 
 		else 
 			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
 	
-		if (!chkBoxRememberDevice.isSelected())
-			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
+//		if (!chkBoxRememberDevice.isSelected())
+//			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
 		
 		Element.click(btnNext, "Next to submit answer");
 	}
@@ -181,17 +193,23 @@ public class LoginUPA {
 		 Element.enterData(txtboxSecurityAns, "Faridabad","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
 		
 	}
+	
+	
+	private void fillfathermiddlename() {
+		 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'testpt2' as Father's Middle Name", "txtboxSecurityAns");
+		
+	}
 
 
 	private void fillFatherAns() {
 		if(id.equals("TestPayerStage"))
 	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
 		else
-			 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
-			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {
@@ -206,7 +224,7 @@ public class LoginUPA {
 		if(id.equals("AVUHCPAYSTG1"))
 			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
 		else
-			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+			Element.enterData(txtboxSecurityAns, "testpt3","Entered 'testpt3' as Favorite Color answer", "txtboxSecurityAns");
 	} 
 	 
 	
