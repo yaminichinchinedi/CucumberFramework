@@ -5,6 +5,7 @@ import main.java.Utils.SFTPAccess;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.reporting.Log;
 
 public class SearchRemittanceSteps extends TestBase{
@@ -199,4 +200,33 @@ public class SearchRemittanceSteps extends TestBase{
     public void validate_the_EPRA_and_Payer_PRA_column_in_Search_Remittance_Page_for(String credentials) throws Throwable {
     	srchRemittance.verifyEPRAAndPayerPRA(credentials);
     }
+    
+    @Then("^verify search results for \"([^\"]*)\"$")
+    public void verify_search_results_for(String criteriaType) throws Throwable {
+    	srchRemittance.verifySearchResults(criteriaType);
+    }
+    
+
+    @Then("^verify search results sorting for \"([^\"]*)\"$")
+    public void verify_search_results_sorting_for(String criteriaType) throws Throwable {
+    	srchRemittance.verifySorting(criteriaType);
+    }
+    
+    @Then("^verify pagination in search results$")
+    public void verify_pagination_in_search_results() throws Throwable {
+    	srchRemittance.verifyPagination();
+    }
+    
+    @Then("^verify payment status for <\"([^\"]*)\"> in search results$")
+    public void verify_payment_status_for_in_search_results(String paymentType) throws Throwable {
+    	srchRemittance.verifyPaymentStatus(paymentType);
+    }
+    
+    @Then("^verify returned reason for <\"([^\"]*)\">  in search results$")
+    public void verify_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
+    	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
+    }
+
+
+
 }

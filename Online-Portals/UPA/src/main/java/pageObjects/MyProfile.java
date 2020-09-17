@@ -100,6 +100,15 @@ public class MyProfile {
 	
     @FindBy(name="tinGridList[0].emailNotify")
 	WebElement emailChkbox;
+    
+	@FindBy(linkText="Change Password")
+	WebElement chngPwd;
+	
+	@FindBy(linkText="Manage Security Questions")
+	WebElement mngSecQuestns;
+	
+	@FindBy(xpath="//td[contains(text(),'Optum ID:')]")
+	WebElement optumID;
 	
 	@FindBy(xpath="//font[contains(text(),'Invalid First')]")
 	WebElement errors;
@@ -306,11 +315,19 @@ public class MyProfile {
 		int sqlRowNo;
 		Map query=null;
 		String mod_typ_cd = "";
-		sqlRowNo=405;
+		sqlRowNo=404;
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		String userEmailAdr=Helper.getUniqueEmailId();
 		
 		String firstNameTxt=Helper.generateRandomAlphabetsString(3);
+		
+		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
+		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
+		Element.click(btnSave, "Save button");
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
+		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCE");
 		
 		Element.enterData(txtBoxFName, firstNameTxt, "Enter First Name as : " + firstNameTxt ,"FirstName");
 		Element.click(btnSave, "Save button");
@@ -327,13 +344,7 @@ public class MyProfile {
 		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCT");
 		
 
-		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
-		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
-		Element.click(btnSave, "Save button");
-		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCE");
+	
 
 		
 		Element.enterData(txtBoxLName, firstNameTxt, "Enter Last Name as : " + firstNameTxt ,"LastName");
@@ -360,7 +371,10 @@ public class MyProfile {
 		int sqlRowNo;
 		Map query=null;
 		sqlRowNo=406;
+		String userEmailAdr=Helper.getUniqueEmailId();
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
+		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
+		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
 		Element.enterData(txtBoxPhNo1, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum1");
 		Element.click(btnSave, "Save button");
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
@@ -368,6 +382,37 @@ public class MyProfile {
 		Helper.compareEquals(testConfig, "Phone number", query.get("TEL_NBR").toString(), txtBoxPhNo.getAttribute("value").toString()+txtBoxPhNo1.getAttribute("value").toString()+txtBoxPhNo2.getAttribute("value").toString());
 
 	}
+	
+	public void verifyChangePwdSecurity() 
+	{
+//		if(testConfig.driver.findElements(By.xpath("//a[contains(text(),'Change Password')]")).size()== 0)
+//			Log.Pass("Change Password Link/Text is not present");
+//		else
+//			Log.Fail("Change Password Link/Text is present");
+//		
+//		if(testConfig.driver.findElements(By.xpath("//a[contains(text(),'Manage Security Questions')]")).size()== 0)
+//			Log.Pass("Manage Security Questions Link/Text is not present");
+//		else
+//			Log.Fail("Manage Security Questions Link/Text is present");
+		
+		Element.verifyElementNotPresent(chngPwd, "Change Password Link/Text");
+		Element.verifyElementNotPresent(mngSecQuestns, "Manage Security Questions Link/Text");
+		
+	}
+	
+	public void verifyOptumID()
+	{
+	
+//		if(testConfig.driver.findElements(By.xpath("//td[contains(text(),'Optum ID:')]")).size() != 0)
+//			Log.Pass("Optum ID Link/Text is present");
+//		else
+//			Log.Fail("Optum ID Link/Text is not present");
+		
+		Element.verifyElementPresent(optumID, "Optum ID Option");
+			
+	}
+	
+	
 
 
 }

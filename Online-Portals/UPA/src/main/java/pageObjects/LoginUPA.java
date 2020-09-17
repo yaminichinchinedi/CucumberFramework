@@ -114,6 +114,7 @@ public class LoginUPA {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
 		Browser.waitForPageLoad(testConfig);
@@ -239,7 +240,8 @@ public class LoginUPA {
 	
 	public void setUserProperties(String userType)
 	{
-		int sqlRowNo=255;
+		//int sqlRowNo=255;
+		int sqlRowNo=237;
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
 		testConfig.putRunTimeProperty("id",id);

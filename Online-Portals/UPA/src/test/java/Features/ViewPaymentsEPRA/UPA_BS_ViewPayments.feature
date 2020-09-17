@@ -31,7 +31,7 @@ Examples:
 
         |    searchBy                   |       credentials        |userType   |  timePeriod   |  filter           |   type  |
 		|generalPaymentForTIN_90days    |       BS_Admin           |  BS       |  Last 90 days |  Patient Payments |   UPA   |
-        |generalPaymentForTIN_90days    |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |   UPA   |
+        #|generalPaymentForTIN_90days    |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |   UPA   |
         
         
 @US2707374
