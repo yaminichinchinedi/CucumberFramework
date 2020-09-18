@@ -908,7 +908,9 @@ public String getTinForPaymentType(String paymentType)
 			case "TinWithMoreThnMaxUsr":
 				sqlRowNo=1504;
 				break;
-				
+			case "LegacyOrPremiOrStandard":
+				sqlRowNo=1605;
+				break;	
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
@@ -1102,6 +1104,7 @@ public String getTinForPaymentType(String paymentType)
 		 {
 		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
 		   Log.Comment("Associated tin " + tin + "With Logged in user");
+		   testConfig.putRunTimeProperty("TobeDeleted", "deletedTINProv");
 		 }
 		else
 		Log.Comment("Tin No " + tin + " is already associated with logged in user");

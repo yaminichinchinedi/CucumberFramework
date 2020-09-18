@@ -479,7 +479,8 @@ public class ManageUsers extends AddUserDetails
         if(userType.equalsIgnoreCase("PROV"))
         	sqlRowNo=10;
         else if(userType.equalsIgnoreCase("BS"))
-        	sqlRowNo=18;
+        	//sqlRowNo=18;
+            sqlRowNo=1603;
         else if(userType.equalsIgnoreCase("PAY"))
         //	sqlRowNo=19;
         	sqlRowNo=259;
@@ -1558,7 +1559,72 @@ public class ManageUsers extends AddUserDetails
 		
 	}
 	
-	
+	public void deleteInsertedUser(){
+		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("deletedTINProv"))
+			DataBase.executeDeleteQuery(testConfig, 25);
+	}
+		
+	public ManageUsers verifyAddUsrBtnVsblBySystem_Mode(String applicationTyp,String portalAccess){
+		
+		int sqlRowNoupdate=1607;
+		DataBase.executeUpdateQuery(testConfig,sqlRowNoupdate );
+		
+		int sqlRowNo=1606;
+		Map system_Mode = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		if(applicationTyp.equalsIgnoreCase("UPA"))
+		{
+			//Feebased and Premium or Legacy
+		if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && 
+				( portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy") ) )
+		{
+			verifyAddUserBtnEnabled();
+			deleteInsertedUser();
+		}
+		//FeeBased and Standard
+		if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && portalAccess.equalsIgnoreCase("Standard"))
+		{
+			int sqlRowNoStandardTinCount=1608;
+			Map noofRecords = DataBase.executeSelectQuery(testConfig,sqlRowNoStandardTinCount, 1);
+			int recordCount=Integer.valueOf((String) noofRecords.get("TOTALACTPR"));
+
+			if (recordCount >= 2)
+				verifyAddUserBtnDisabled();
+			else
+			verifyAddUserBtnEnabled();	
+			deleteInsertedUser();
+		}
+		//LEGACY
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) && 
+			(portalAccess.equalsIgnoreCase("Legacy")|| portalAccess.equalsIgnoreCase("Standard")|| portalAccess.equalsIgnoreCase("Premium")) )
+		{
+			verifyAddUserBtnEnabled();
+			deleteInsertedUser();
+		}
+		//BS
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
+			portalAccess.equalsIgnoreCase("BillingService"))
+			verifyAddUserBtnEnabled();
+		
+		//Payer
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
+				portalAccess.equalsIgnoreCase("Payer"))
+			verifyAddUserBtnEnabled();
+		}
+		if(applicationTyp.equalsIgnoreCase("CSR"))
+		{
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
+			portalAccess.equalsIgnoreCase("Premium")||portalAccess.equalsIgnoreCase("Standard")||portalAccess.equalsIgnoreCase("Legacy")
+					)
+					verifyAddUserBtnEnabled();
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
+				portalAccess.equalsIgnoreCase("BillingService"))
+						verifyAddUserBtnEnabled();
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
+				portalAccess.equalsIgnoreCase("Payer"))
+						verifyAddUserBtnEnabled();
+		}			
+		return this;
+	} 
 	
 	public ManageUsers verifyAddUserBtnEnabled(){
 		try{
@@ -1567,6 +1633,7 @@ public class ManageUsers extends AddUserDetails
 	}catch(Exception e){
 		Log.Fail("User button is enabled");
 	}
+		
 		return this;
 	}
 	
@@ -1690,6 +1757,43 @@ public class ManageUsers extends AddUserDetails
 		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
     	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
     }
+	
+		public void enterPortalTIN(String portalAccess, String tinTyp)
+	{
+		Element.click(rdoNo, "No Radio Button");
+		Browser.wait(testConfig, 2);
+		for(int i=1;i<tinGridRows.size();i++)
+		{
+		Element.click(Element.findElement(testConfig, "xpath", "//form[@id='bsForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[6]"), "Remove tin checkbox");
+		}
+		int sqlRowNo=0;
+		if (portalAccess.equalsIgnoreCase("Premium") && (tinTyp.equalsIgnoreCase("AO")||tinTyp.equalsIgnoreCase("AV")))
+		 sqlRowNo=1601;
+		if (portalAccess.equalsIgnoreCase("Premium") && tinTyp.equalsIgnoreCase("VO"))
+		 sqlRowNo=1602;
+		  Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		  testConfig.putRunTimeProperty("tin", portalUserData.get("PROV_TIN_NBR").toString());
+		 
+		  
+         int sqlRowNo1=1604;
+         int isTinAssociated=0;
+ 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo1, 1);
+ 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+ 		if(isTinAssociated == 0) 
+        
+ 			{
+ 			int insertQueryRowNo=61;
+	         DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+			   Log.Comment("Associated tin " + portalUserData.get("PROV_TIN_NBR").toString() + "With Logged in user");
+			  // testConfig.putRunTimeProperty("TobeDeleted", userType);
+ 			}
+ 		  Element.enterData( Element.findElement(testConfig, "name", "provTinAssociate"), portalUserData.get("PROV_TIN_NBR").toString(), "Prov TIN", "PROV TIN");
+		  Element.findElement(testConfig, "xpath", "//input[@type='button' and @value='Add TIN Association']").click();
+		  
+		  btnSave.click();
+		  Helper.compareEquals(testConfig, "Updated msg",  Element.findElement(testConfig, "xpath", "//td[contains(text(),'Your user changes were updated successfully')]").getText(), "Your user changes were updated successfully");
+		
+	}
 }
 
 

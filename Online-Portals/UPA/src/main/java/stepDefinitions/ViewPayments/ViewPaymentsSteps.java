@@ -68,8 +68,19 @@ public class ViewPaymentsSteps extends TestBase {
        
                 viewPayments.verifyPayNumHypherLinkClaimDtlPayer();
     }
-    
-    @Then("^Verify Default Search Result Count$")
+
+    @When("^User validates different UI fields as enabled/disabled,renamed and few New$")
+    public void user_validates_different_UI_fields_as_enabled_disabled_renamed_and_few_New() throws Throwable {
+    	viewPayments.verifyDisable();
+    }
+
+    @When("^User also validates for refreshment of page and limited UI if diferent standard TIN is selected from dropdown$")
+    public void user_also_validates_for_refreshment_of_page_and_limited_UI_if_diferent_standard_TIN_is_selected_from_dropdown() throws Throwable {
+        
+    }
+	
+	
+	 @Then("^Verify Default Search Result Count$")
     public void verify_Default_Search_Result_Count() throws Throwable {
                paySum.verifyDefaultSearchResultCount();
     }

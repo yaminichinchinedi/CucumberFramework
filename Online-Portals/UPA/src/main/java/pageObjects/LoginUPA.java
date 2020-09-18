@@ -41,7 +41,8 @@ public class LoginUPA {
     @FindBy(linkText="ACTIVATE")
     public WebElement btnActivate;
     
-   @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
+  // @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
+    @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") WebElement clickUPASignIn;
 	
 	
     @FindBy(id="tabHome")
@@ -110,6 +111,7 @@ public class LoginUPA {
 	public UPAHomePage doLoginUPA(String userType) {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
@@ -190,11 +192,11 @@ public class LoginUPA {
 		if(id.equals("TestPayerStage"))
 	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
 		else
-			 Element.enterData(txtboxSecurityAns, "Sharma","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'testpt2' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
-			 Element.enterData(txtboxSecurityAns, "sahil", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'testpt1' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {
@@ -209,7 +211,7 @@ public class LoginUPA {
 		if(id.equals("AVUHCPAYSTG1"))
 			Element.enterData(txtboxSecurityAns, "Black","Entered 'Black' as Favorite Color answer", "txtboxSecurityAns");
 		else
-			Element.enterData(txtboxSecurityAns, "Green","Entered 'Green' as Favorite Color answer", "txtboxSecurityAns");
+			Element.enterData(txtboxSecurityAns, "testpt3","Entered 'testpt3' as Favorite Color answer", "txtboxSecurityAns");
 	} 
 	 
 	

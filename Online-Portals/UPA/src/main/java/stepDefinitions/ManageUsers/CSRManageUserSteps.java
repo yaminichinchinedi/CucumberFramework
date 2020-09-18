@@ -31,13 +31,15 @@ public class CSRManageUserSteps extends TestBase {
          manageUsers.clickPurgedChkBox(userType).verifyUserInList(userType).verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
     }
 
-
+    @Then("^User selects \"([^\"]*)\" from dropdown,Enter TIN or Select Payer and click on Search button in Manage Users Page$")
+    public void user_selects_from_dropdown_Enter_TIN_or_Select_Payer_and_click_on_Search_button_in_Manage_Users_Page(String userType) throws Throwable {
+        
+    }
 
 	@Then("^User enters \"([^\"]*)\"  and Purged TIN  and click on Search button in Manage Users Page$")
 	public void user_enters_and_Purged_TIN_and_click_on_Search_button_in_Manage_Users_Page(String userType) throws Throwable {
 		if(userType.equalsIgnoreCase("PROV"))
 			manageUsers = searchPage.doSearchPUTIN("PROV");
-	  
 	}
     
 	@Then("^User clicks on View Purge Users checkbox$")
@@ -130,5 +132,22 @@ public class CSRManageUserSteps extends TestBase {
     	manageUsers.clickActiveUserName(userType).updateDemographicInfo(userType).clickSave().verifyYourChangesWereUpdatedSuccessfully();
     	manageUsers.VerifyDetailsOfUser(userType);   
 }
+    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin or select payer$")
+    public void users_selects_from_dropdown_and_enter_Tin_or_select_payer(String userType) throws Throwable {
+    	manageUsers=searchPage.doSearch(userType);
+    }
+    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin  based on \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void users_selects_from_dropdown_and_enter_Tin_based_on_and_or_select_payer(String userType, String tinType, String portalAccess) throws Throwable {
+    	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+    	manageUsers=searchPage.doSearch(userType, portalAccess);
 
+    }
+    
+    @Then("^User verifies Add User button visiblity for \"([^\"]*)\",\"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
+    public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String tinTyp, String portalAccess, String systemMode) throws Throwable {
+    	testConfig.putRunTimeProperty("sysMode", systemMode);
+    	manageUsers.verifyAddUsrBtnVsblBySystem_Mode("CSR",portalAccess);
+
+    }
 }

@@ -45,7 +45,8 @@ public class UPARegistrationPage extends TestBase{
 	private TestBase testConfig;
 	public ValidateEFTERASubmitInfo validatw9SubmitForm;
 	
-	@FindBy(linkText="SIGN IN WITH OPTUM ID")
+	@FindBy(linkText="SIGN IN")
+	//@FindBy(linkText="SIGN IN WITH OPTUM ID")
 	WebElement lnkSignInWithOptumId;
 	
 	
@@ -64,7 +65,9 @@ public class UPARegistrationPage extends TestBase{
 		
 		//Added by AMit- ask him the reason for not putting elses
 		if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
-			Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");	
+			//Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");	
+		    Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In");
+
 	}
 	
 	

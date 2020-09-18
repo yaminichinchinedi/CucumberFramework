@@ -111,8 +111,12 @@ public class UPAManageUserSteps extends TestBase {
 	public void verify_Add_user_button_is_disabled() throws Throwable {
 		manageUser.verifyAddUserBtnDisabled();
 	}
-
 	
+	@Then("^User verifies Add User button visiblity for \"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
+	public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String portalAccess, String sysMode) throws Throwable {
+		testConfig.putRunTimeProperty("sysMode", sysMode);
+		manageUser.verifyAddUsrBtnVsblBySystem_Mode("UPA",portalAccess);
+	}
 	@Then("^Verify user List on UI from DB for \"([^\"]*)\" using \"([^\"]*)\"$")
 	public void verify_user_List_on_UI_from_DB_for_using(String userType, String searchCriteria) throws Throwable {
 		manageUser.verifyUserList(userType, searchCriteria);
@@ -132,6 +136,11 @@ public class UPAManageUserSteps extends TestBase {
 	    manageUser.clickActiveUserName("BS");
 	}
 
+	@Then("^Enter \"([^\"]*)\" TIN with \"([^\"]*)\" click on Add TIN Association,Click on save and User updated$")
+	public void enter_TIN_with_click_on_Add_TIN_Association_Click_on_save_and_User_updated(String portalAccess, String tinTyp) throws Throwable {
+		manageUser.enterPortalTIN(portalAccess, tinTyp);
+	}
 	
+
 	
 }
