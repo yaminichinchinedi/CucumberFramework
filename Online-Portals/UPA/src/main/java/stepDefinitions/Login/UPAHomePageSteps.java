@@ -109,4 +109,9 @@ public class UPAHomePageSteps extends TestBase{
 	public void enters_security_pin_for(String role) throws Throwable {
 		loginPage.enterSSOTin(role);
 	}
+	
+	@When("^Click on UPA - Manage User Link$")
+	public void click_on_Upa_Manage_User_Link() throws Throwable {
+	    homePage.clickManageUsersLink();
+	}
 }

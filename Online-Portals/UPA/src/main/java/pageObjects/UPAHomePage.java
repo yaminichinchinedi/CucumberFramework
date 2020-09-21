@@ -185,4 +185,9 @@ public class UPAHomePage extends HomePage {
 		Browser.waitForLoad(testConfig.driver);
 		return this;
 	}
+	
+	public void clickManageUsersLink()
+	{
+		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
+	}
 }

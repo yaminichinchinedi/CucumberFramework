@@ -103,6 +103,21 @@ public class CSRManageUserSteps extends TestBase {
     	manageUsers.clickActiveUserName(userType).updateDemographicInfo(userType).clickSave().verifyYourChangesWereUpdatedSuccessfully();
     	manageUsers.VerifyDetailsOfUser(userType);   
 }
+    
+    @Then("^Verify Reset Password Option doesnt exists$")
+    public void verify_Reset_Password_Option_doesnt_exists() throws Throwable {
+       
+    	manageUsers.verifyResetPwdButton();
+    }
 
+    
+    @Then("^User enters \"([^\"]*)\" in Manage Users Page to enter TIN$")
+    public void user_enters_in_Manage_Users_Page_to_enter_TIN(String userType) throws Throwable {
+       
+    	searchPage.doSearch(userType);
+    }
+    
+    
+   
 
 }

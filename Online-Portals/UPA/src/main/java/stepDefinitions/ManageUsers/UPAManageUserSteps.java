@@ -1,6 +1,7 @@
 package main.java.stepDefinitions.ManageUsers;
 
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.AddUserDetails;
 import main.java.pageObjects.ManageUsers;
@@ -101,5 +102,13 @@ public class UPAManageUserSteps extends TestBase {
 	manageUser.clickActiveUserName("PROV");
 	manageUser.validateAddingSameTIN();
 }
+	
+
+	@When("^Verify Reset Password Option doesnt exists for UPA$")
+	public void verify_Reset_Password_Option_doesnt_exists_for_UPA() throws Throwable {
+    
+		manageUser.verifyResetPwdButtonUPA();
+}
+
 
 }

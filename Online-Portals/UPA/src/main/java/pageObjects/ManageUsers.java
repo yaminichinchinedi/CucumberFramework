@@ -161,6 +161,8 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@id='viewpurgeduser']")
 	WebElement viewPurge;
 
+	@FindBy(xpath="//input[@value='Reset Password']") WebElement resetPwdBtn;
+
 	
 	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
@@ -1346,6 +1348,12 @@ public class ManageUsers extends AddUserDetails
 		}
 			
 	}
+	
+	public void verifyResetPwdButton()
+	{
+		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
+		
+	 }
 
 	
 	/*
@@ -1409,5 +1417,13 @@ public class ManageUsers extends AddUserDetails
 		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
     	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
     }
+	
+	public void verifyResetPwdButtonUPA()
+	{
+		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
+		
+	 }
+	
+	
 }
 

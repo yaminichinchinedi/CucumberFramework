@@ -1,4 +1,6 @@
 #Author: Priyanka
+
+@purgedUsersCSR
 Feature: PRJ202767 Fraud Prevention - Purged Users - CSR - Payer Manage Users - QA
 
 			
