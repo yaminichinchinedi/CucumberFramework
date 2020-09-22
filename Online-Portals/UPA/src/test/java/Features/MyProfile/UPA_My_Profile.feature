@@ -62,6 +62,7 @@ Feature: Create Enrollment - UPA My Profile Functionality
 #        |      PROV_Admin     |   Admin        |
 #        |      PROV           |   Gen          |
 
+#Author : Pranav
 @US2707365
   Scenario Outline: UPA My Profile UI Functionality Update and Verify User Details displayed on My profile Page from user details saved in Database for logged in user
 
@@ -74,6 +75,7 @@ Feature: Create Enrollment - UPA My Profile Functionality
       |      PAY_Admin     	|   PAY       |
       |      BS_Admin       |   BS     	  |
 
+#Author : Pranav
 @US2707363
 Scenario Outline: UPA My Profile UI Functionality Update and verify user details for provider
 

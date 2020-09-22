@@ -222,8 +222,8 @@ public class SearchRemittanceSteps extends TestBase{
     	srchRemittance.verifyPaymentStatus(paymentType);
     }
     
-    @Then("^verify returned reason for <\"([^\"]*)\">  in search results$")
-    public void verify_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
+    @Then("^User verifies returned reason for \"([^\"]*)\" in search results$")
+    public void User_verifies_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
     	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
     }
 

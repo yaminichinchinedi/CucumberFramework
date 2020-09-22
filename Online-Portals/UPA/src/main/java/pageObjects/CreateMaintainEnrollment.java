@@ -134,7 +134,7 @@ public class CreateMaintainEnrollment {
 		   
 		  case "NONE" :
 		   {
-			   sqlRowNo=45;
+			   sqlRowNo=405;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");

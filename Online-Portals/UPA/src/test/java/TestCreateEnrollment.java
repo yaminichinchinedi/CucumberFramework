@@ -13,6 +13,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
+import main.java.pageObjects.BenefitsOfOptumPay;
 import main.java.pageObjects.EnrollmentSubmitted;
 import main.java.pageObjects.FinancialInstitutionInfoPage;
 import main.java.pageObjects.Footer;
