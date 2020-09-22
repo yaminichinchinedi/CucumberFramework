@@ -13,7 +13,6 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
-import main.java.pageObjects.BenefitsOfEPS;
 import main.java.pageObjects.EnrollmentSubmitted;
 import main.java.pageObjects.FinancialInstitutionInfoPage;
 import main.java.pageObjects.Footer;
@@ -549,13 +548,13 @@ public class TestCreateEnrollment extends TestBase{
 		beginEnrollment.validateBeginEnrollment();
 	}
 	
-	@TestDetails(author="Abhinav")
-	@Test(priority=3,description="US1348562 - TS_00006 - Benefits of EPS link on page navigates user to the Benefits of EPS page.",groups="Provider")
-	public void testValidateBenefitsOfEPSLink()
-	{
-		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
-		upaRegistrationPage.clickBenefitsOfEPSLink();		
-	}
+//	@TestDetails(author="Abhinav")
+//	@Test(priority=3,description="US1348562 - TS_00006 - Benefits of EPS link on page navigates user to the Benefits of EPS page.",groups="Provider")
+//	public void testValidateBenefitsOfEPSLink()
+//	{
+//		UPARegistrationPage upaRegistrationPage = new UPARegistrationPage(testConfig);
+//		upaRegistrationPage.clickBenefitsOfEPSLink();		
+//	}
 	
 	
 	
