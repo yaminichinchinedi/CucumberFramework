@@ -71,8 +71,8 @@ Feature: Create Enrollment - UPA My Profile Functionality
     Then User updates fields on My profile Page and verifies in Database for logged in user
     Examples:
       |      userType       |   accessType|
-      |      BS_Admin       |   BS     	  |
       |      PAY_Admin     	|   PAY       |
+      |      BS_Admin       |   BS     	  |
 
 @US2707363
 Scenario Outline: UPA My Profile UI Functionality Update and verify user details for provider

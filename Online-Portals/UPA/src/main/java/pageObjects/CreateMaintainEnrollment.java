@@ -124,7 +124,7 @@ public class CreateMaintainEnrollment {
 		{
 		  case "ACH" :
 		   {
-			   sqlRowNo=403;
+			   sqlRowNo=402;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
@@ -134,7 +134,7 @@ public class CreateMaintainEnrollment {
 		   
 		  case "NONE" :
 		   {
-			   sqlRowNo=406;
+			   sqlRowNo=45;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
