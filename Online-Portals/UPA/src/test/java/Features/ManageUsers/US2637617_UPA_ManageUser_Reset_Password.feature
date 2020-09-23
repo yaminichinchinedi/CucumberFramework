@@ -13,7 +13,7 @@ Scenario Outline: UPA Manage User UI Check Reset Password Visibility
 Examples:
        |      userType       |   accessType|
        |      PROV_Admin     |   PROV      |
-       |      BS_Admin       |   BS     	 |
+       |      BS_Admin       |   BS        |
        |      PAY_Admin      |   PAY       |
          
 

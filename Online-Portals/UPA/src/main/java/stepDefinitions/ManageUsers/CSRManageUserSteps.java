@@ -106,8 +106,7 @@ public class CSRManageUserSteps extends TestBase {
     
     @Then("^Verify Reset Password Option doesnt exists$")
     public void verify_Reset_Password_Option_doesnt_exists() throws Throwable {
-       
-    	manageUsers.verifyResetPwdButton();
+    	new ManageUsers(testConfig).verifyResetPwdButton();
     }
 
     
