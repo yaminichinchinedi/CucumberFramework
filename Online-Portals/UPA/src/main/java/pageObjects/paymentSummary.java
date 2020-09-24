@@ -46,6 +46,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.xml.sax.SAXException;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 import com.optum.enterprise.schema.cim.api.finance.payables.provider.paymentsservice_v1_0.EpsConsolidatedClaimPaymentSummary;
 
 import main.java.Utils.ViewPaymentsDataProvider;
@@ -73,6 +74,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	@FindBy(id="archiveFilterType")
 	WebElement drpDwnArchiveFilter;
+	
+	@FindBy(xpath="//select[@id='archiveFilterType']/ ../preceding-sibling::td")
+	WebElement lblPaymentStatus;
 	
 	@FindBy(css="#paymentsummaryform>table>tbody>tr>td>table>tbody")
 	WebElement divSearchResults;
@@ -152,6 +156,9 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//a[@id = 'paymentNbr_1']") WebElement paymntnumHeader;
 	
 	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
+	
+	@FindBy(id="savePaymentArchive")
+	WebElement btnSave;
 	
 	Map dataRequiredForSearch;
 	
@@ -1029,7 +1036,11 @@ public void verifyFailedPaymentPopUp()
 	
 	public paymentSummary setSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
 	{
-		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
+		System.out.println(filterPayments);
+		System.out.println(quickSearchFilter);
+		System.out.println(Archivefilter);
+		System.out.println(MktTypeFilter);
+//		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.wait(testConfig,2);
 		Browser.waitForLoad(testConfig.driver);
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
@@ -1242,7 +1253,8 @@ public void verifyFailedPaymentPopUp()
 	public ArrayList<String> getHeadersFromResultTable()
 	{
 	   List <String> headerList=new ArrayList<String>();
-	   for (int i=0;i<10;i++)
+	   int size=searchResultRows.get(0).findElements(By.tagName("th")).size();
+	   for (int i=0;i<size;i++)
 	   {
 	     String header=searchResultRows.get(0).findElements(By.tagName("th")).get(i).getText();
 	     if(header.equals("Original Payment Date"))
@@ -3084,9 +3096,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
 					}
-		    	   
-		    	   System.out.println("The Actual Payment no is:" + actualPaymntNo);
-		    	   System.out.println("The expected Payment no is:" + expectedPaymntNo);
 		    	   WebElement lnkPaymntNo=null;
 			      if(actualPaymntNo.contains(expectedPaymntNo))
 			      {	
@@ -3144,12 +3153,223 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 						  Log.Fail("Unable to identify Payment Number");
 					  
 				    }
-		
-
 		return new RemittanceDetail(testConfig);
+	}
 	
-	
+	public paymentSummary verifyQuickSrchFilterOptions(){
+		List<String> quickSrchOptions = new ArrayList<>(Arrays.asList("Last 30 days", "Last 60 days","Last 90 days","Last 4-6 months",
+			    		"Last 6-9 months","Last 9-13 months"));
+		Element.verifyElementPresent(drpDwnQuickSearch, "Quick Search");
+		String defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnQuickSearch, "text");
+		Helper.compareEquals(testConfig, "Default value of Quick Search filter", "Last 30 days", defaultVal);
+		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		
+		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
+		Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
+		return this;
+	}
+	
+	public paymentSummary verifyPaymentStatusFilter(){
+		String label=lblPaymentStatus.getText().trim();
+		if(!label.equals("Active/Archived Payments"))
+			Log.Pass("Passed : Active/Archived Payments is relabeled");
+		else
+			Log.Fail("Failed : Active/Archived Payments is not relabeled");
+		Helper.compareEquals(testConfig, "Payment Status filter label", "Payment Status", label);
+		
+		List<String> paymntStatusOptions = new ArrayList<>(Arrays.asList("New","Pending","Closed","Show All"));
+		Element.verifyElementPresent(drpDwnArchiveFilter, "Payment Status");
+		String defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnArchiveFilter, "text");
+		Helper.compareEquals(testConfig, "Default value of Payment Status filter", "New", defaultVal);
+		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnArchiveFilter);
+		Helper.compareEquals(testConfig, "Options of Payment Status Filter", paymntStatusOptions,drpDownOptionsUI );
+		return this;
+	}
+	
+	public paymentSummary verifyColumnPresent(String columnName){
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		if(tblHeader.contains(columnName))
+			Log.Pass("Passed : "+columnName+" is present on Page in table Headers.");
+		else
+			Log.Fail("Failed : "+columnName+" is not present on Page in table Headers.");
+		return this;
+	}
+	
+	public paymentSummary verifyColumnIsNotPresent(String columnName){
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		if(tblHeader.contains(columnName))
+			Log.Fail("Failed : "+columnName+" is present on Page in table Headers.");
+		else
+			Log.Pass("Passed : "+columnName+" is not present on Page in table Headers.");
+		return this;
+	}
+	
+	public RemittanceDetail verifyClaimCountHyperlink(String columnName){
+		WebElement link =null;
+		WebElement claimCount=null;
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf(columnName);
+		
+		//verify if claim count is 0, hyperlink is not present
+		for(int i=1;i<searchResultRows.size();i++)
+	    {
+		     claimCount=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+		     if(claimCount.getText().toString().equals("0")){
+		    	 try{
+		    		 link = claimCount.findElement(By.tagName("a"));
+		    	 }catch(ElementNotFoundException e){
+		    		 Log.Pass("Claim count is 0 and hyperlink is not present");
+		    	 }
+		    	 break;
+		     }
+	    }
+		//verify if claim count is not 0, hyperlink is present
+		for(int i=1;i<searchResultRows.size();i++)
+	    {
+		     claimCount=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+		     if(!claimCount.getText().toString().equals("0")){
+		    	  link = claimCount.findElement(By.tagName("a"));
+		    	  Element.verifyElementPresent(link, "Claim count link is present");
+		    	  Element.click(link, "Claim count hyperlink");
+		    	  break;
+		     }
+	    }
+		return new RemittanceDetail(testConfig);
+	}
+	
+	public paymentSummary verifySaveBtnRelabled(){
+		String label=btnSave.getAttribute("value").trim();
+		Helper.compareEquals(testConfig, "Save button relabeled", "Save", label);
+		return this;
+	}
+	
+	public paymentSummary verify835EPRAlink(){
+		String actualPaymntNo="";
+		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		boolean found=false;
+		WebElement link =null;
+		WebElement epraLink=null;
+		int totalNoOfPages=getNumberOfPages();		
+    	
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("835 / EPRA");
+		
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+			if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+		    	   	epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
+					link = epraLink.findElement(By.tagName("a"));
+					Element.verifyElementPresent(link, "835 link is present");
+				    
+				    epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(2);
+				    link = epraLink.findElement(By.tagName("a"));
+					Element.verifyElementPresent(link, "EPRA link is present");
+					
+					columnIndex=tblHeader.indexOf("Payer PRA");
+					epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+3);
+					System.out.println("pPRA : "+epraLink.getText().toString());
+		    	   }
+		        }
+		     }
+			
+			if(found==true)break;
+			gotoNextPage(pageNo, totalNoOfPages);
+		 }
+		return this;
+	}
+	
+	public paymentSummary verifyResendPayment(){
+		System.out.println("inside resend payment function");
+		String actualPaymntNo="";
+		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		boolean found=false;
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("Resend Payment");
+		int totalNoOfPages=getNumberOfPages();	
+		
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+			if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+		    	   	WebElement epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElement(By.tagName("select"));
+		    	   	List <String> resendOptions=Element.getAllOptionsInSelect(testConfig,epraLink);
+		    	   	System.out.println(resendOptions);
+		    	   }
+		        }
+		     }
+			if(found==true)break;
+			gotoNextPage(pageNo, totalNoOfPages);
+		      
+		 }
+		return this;
+	}
+	
+	public paymentSummary verifyPaymentStatusColumnDropdwn(){
+		String actualPaymntNo="";
+		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		boolean found=false;
+		int totalNoOfPages=getNumberOfPages();	
+		WebElement drpDwnPaymntStatusCol=null;
+		List<String> paymntStatusOptions = new ArrayList<>(Arrays.asList("New","Pending","Closed"));
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("Payment Status");
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+			if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+					drpDwnPaymntStatusCol=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+4).findElement(By.tagName("select"));
+					List <String> resendOptions=Element.getAllOptionsInSelect(testConfig,drpDwnPaymntStatusCol);
+		
+					Helper.compareEquals(testConfig, "Payment Status Options", paymntStatusOptions, resendOptions);
+					String defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnPaymntStatusCol, "text");
+					Helper.compareEquals(testConfig, "Default value of Quick Search filter", "New", defaultVal);
+					
+					Element.selectByVisibleText(drpDwnPaymntStatusCol, "Closed", "Choose Closed from dropdown");
+					Element.click(btnSave, "Save button");
+					
+					Element.selectByVisibleText(drpDwnArchiveFilter, "Show All", "Show All option is selected in payment filter dropdown");
+					
+					searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+					 for(int j=1;j<searchResultRows.size();j++)
+				        {
+				    	   actualPaymntNo=searchResultRows.get(j).findElements(By.tagName("td")).get(3).getText();
+				    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+				    		   drpDwnPaymntStatusCol=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+4).findElement(By.tagName("select"));
+				    		   defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnPaymntStatusCol, "text");
+				    		   System.out.println(defaultVal);
+				    	   }
+				        }
+					//DB validation to verify from to be worked below code
+//					int sqlRowNo=1506; 
+//					Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//					Helper.compareEquals(testConfig, "Payment Status indicator", results.get("ARCHV_IND"), defaultVal);
+//					Helper.compareEquals(testConfig, "Payment Status indicator", results.get("CP_ARCHV_IND"), defaultVal);
+		    	   }
+		        }
+		     }
+			if(found==true)break;
+			gotoNextPage(pageNo, totalNoOfPages);
+		 }
+		return this;
 	}
 }
         

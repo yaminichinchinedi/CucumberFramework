@@ -206,17 +206,14 @@ public class RemittanceDetail {
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
 	
-
+	private TestBase testConfig;
 	
-	
-	
-private TestBase testConfig;
-
-public RemittanceDetail(TestBase testConfig)
-{
-	this.testConfig=testConfig;
-	PageFactory.initElements(testConfig.driver, this);
-}
+	public RemittanceDetail(TestBase testConfig)
+	{
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+		Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
+	}
 
 	public void verifyHoverTexts()
 	{

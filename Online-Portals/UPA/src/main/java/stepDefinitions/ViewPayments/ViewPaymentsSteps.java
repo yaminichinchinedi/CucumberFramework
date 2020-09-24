@@ -130,5 +130,70 @@ public class ViewPaymentsSteps extends TestBase {
                paySum.verifyMktType(mktTypeFilter);
     	paySum.verifyMktType(mktTypeFilter);
     }
+    
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions();
+    }
+
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
+    	paySum.verifyPaymentStatusFilter();
+    }
+
+    @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
+    public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
+    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    }
+
+    @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
+    public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
+        paySum.verifyClaimCountHyperlink("Claim Count");
+    }
+
+	@Then("^Validate Archive column relabeled to Payment Status$")
+	public void validate_Archive_column_relabeled_to_Payment_Status() throws Throwable {
+		paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive"); 
+	}
+
+    @Then("^Validate Archive/Save changes button is relabeled to Save$")
+    public void validate_Archive_Save_changes_button_is_relabeled_to_Save() throws Throwable {
+        paySum.verifySaveBtnRelabled();
+    }
+    
+    @Then("^Validate default value of Payment Status filter displays New and dropdown have other status options\\.$")
+    public void validate_default_value_of_Payment_Status_filter_displays_New_and_dropdown_have_other_status_options() throws Throwable {
+    	paySum.verifyPaymentStatusFilter();
+    }
+    
+    @Then("^Validate Archive column relabeled to Payment Status and has dropdown menu having values New, Pending and Closed$")
+    public void validate_Archive_column_relabeled_to_Payment_Status_and_has_dropdown_menu_having_values_New_Pending_and_Closed() throws Throwable {
+    	paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifyPaymentStatusColumnDropdwn();
+    }
+
+    @Then("^Validate user is able to change the value of Payment Status column$")
+    public void validate_user_is_able_to_change_the_value_of_Payment_Status_column() throws Throwable {
+       paySum.verifyPaymentStatusColumnDropdwn();
+    }
+
+    @Then("^Validate upon changing of status in Payment Status filter appropriate payments display\\.$")
+    public void validate_upon_changing_of_status_in_Payment_Status_filter_appropriate_payments_display() throws Throwable {
        
+    }
+
+    @Then("^Validate on Legacy Mode Pending and New Status are treated as Active and Closed Status as Archive$")
+    public void validate_on_Legacy_Mode_Pending_and_New_Status_are_treated_as_Active_and_Closed_Status_as_Archive() throws Throwable {
+       
+    }
+    
+    @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
+    public void validate_ePRA_and_Payer_PRA_are_enabled(int arg1) throws Throwable {
+      paySum.verify835EPRAlink();
+    }
+
+    @Then("^Validate \"([^\"]*)\" is able to re-originate ACH/drop to check payments$")
+    public void validate_is_able_to_re_originate_ACH_drop_to_check_payments(String arg1) throws Throwable {
+       paySum.verifyResendPayment();
+    }
+
 }

@@ -94,4 +94,8 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		ViewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
 	}
 	
+	@Then("^Enter \"([^\"]*)\" portal access tin for \"([^\"]*)\" and \"([^\"]*)\" criteria and click submit button$")
+	public void enter_portal_access_tin_for_and_criteria_and_click_submit_button(String premiumTin, String arg2, String arg3) throws Throwable {
+		ViewPaymentsTIN.enterTin(premiumTin).clickSearchBtn();
+	}
 }
