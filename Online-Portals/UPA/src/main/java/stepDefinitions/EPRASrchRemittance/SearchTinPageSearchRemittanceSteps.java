@@ -13,7 +13,7 @@ import main.java.pageObjects.SearchTinPageSearchRemittance;
 import main.java.pageObjects.paymentSummary;
 
 public class SearchTinPageSearchRemittanceSteps extends TestBase {
-	SearchRemittanceSearchCriteria searcTin = new SearchRemittanceSearchCriteria(testConfig);
+	//SearchRemittanceSearchCriteria searcTin = new SearchRemittanceSearchCriteria(testConfig);
 	SearchTinPageSearchRemittance srchTinPage=new SearchTinPageSearchRemittance(testConfig);
 	private paymentSummary paysumm;	
 	@Then("^User enters tin on Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" click on continue button$")

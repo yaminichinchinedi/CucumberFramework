@@ -275,11 +275,22 @@ public class RemittanceDetailSteps extends TestBase {
 	@Then("^Click on Payment Number Link and Validate the Download (\\d+) option is displayed$")
 	public void click_on_Payment_Number_Link_and_Validate_the_Download_option_is_displayed(int arg1) throws Throwable {
 		remitDetail.verifyDownload835();
-}
+    }
  
 	@Then("^Validate Column Headers in the grid for remittance detail Page$")
 	public void validate_Column_Headers_in_the_grid_for_remittance_detail_Page() throws Throwable {
 		remitDetail.verifyHeadersRemittanceDetail();
 	}
 
+	@Then("^Enter Electronic Payment Number for Rendering Provider$")
+	public void enter_Electronic_Payment_Number_for_Rendering_Provider() throws Throwable {
+	   
+		remitDetail.enterElecNumForRenderprov();
+	}
+
+	@Then("^Enter Electronic Payment Number based on \"([^\"]*)\"$")
+	public void enter_Electronic_Payment_Number_based_on(String CriteriaType) throws Throwable {
+	   
+		remitDetail.verifyRemitPageDataUPA(CriteriaType);
+	}
 }

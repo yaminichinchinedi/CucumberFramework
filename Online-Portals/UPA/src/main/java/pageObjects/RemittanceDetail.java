@@ -1160,12 +1160,35 @@ public void verifyRemittancePageData() throws Exception
 	       Log.Comment("The Product Name doesnt exists for this Criteria");
 	     }
 	     
-	     String subscrbrUI = subscriberUI1.getText();
-	     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-	     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-	     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-	     if(!subscrbrDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	     
+	     
+	     String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+	     
+//	     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+//	     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+//	     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+//	     if(!subscrbrDB.equalsIgnoreCase("0"))
+//	        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 	   
 	     String claimHashUI = claimHash.getText();
 	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -1389,12 +1412,34 @@ public void verifyRemittancePageData() throws Exception
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-     if(!subscrbrDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+     String subscrbrUI1 = subscriberUI1.getText();
+     
+
+	if(subscrbrUI1.contains("/"))
+	{
+	    String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+		Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+		String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+		Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+		if(!subscrbrDB.equalsIgnoreCase("0"))
+		   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	}
+
+	else
+	{
+		String subscrbrUI = subscriberUI1.getText().trim();
+		Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+		String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+		Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+		if(!subscrbrDB.equalsIgnoreCase("0"))
+		   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	}
+     
+//     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+//     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+//     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+//     if(!subscrbrDB.equalsIgnoreCase("0"))
+//        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
    
      String claimHashUI = claimHash.getText();
      Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -1640,12 +1685,34 @@ if(null == payerSchema)
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-     if(!subscrbrDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+    String subscrbrUI1 = subscriberUI1.getText();
+
+    if(subscrbrUI1.contains("/"))
+    {
+                   String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+    	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+    }
+
+    else
+    {
+    	String subscrbrUI = subscriberUI1.getText().trim();
+    	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+    }
+     
+     
+//     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+//     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+//     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+//     if(!subscrbrDB.equalsIgnoreCase("0"))
+//        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
    
      String claimHashUI = claimHash.getText();
      Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -1865,13 +1932,36 @@ else
    Log.Comment("The Product Name doesnt exists for this Criteria");
  }
  
- String subscrbrUI = subscriberUI1.getText();
- Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
- String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
- Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
- if(!subscrbrDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+// String subscrbrUI = subscriberUI1.getText();
+// Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+// String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+// Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+// if(!subscrbrDB.equalsIgnoreCase("0"))
+//    Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
 
+ 
+ String subscrbrUI1 = subscriberUI1.getText();
+
+ if(subscrbrUI1.contains("/"))
+ {
+                String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+ 	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+ 	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+ 	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+ 	if(!subscrbrDB.equalsIgnoreCase("0"))
+ 	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+ }
+
+ else
+ {
+ 	String subscrbrUI = subscriberUI1.getText().trim();
+ 	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+ 	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+ 	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+ 	if(!subscrbrDB.equalsIgnoreCase("0"))
+ 	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+ }
+ 
  String claimHashUI = claimHash.getText();
  Log.Comment("Claim # from UI is :" + claimHashUI);
  String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
@@ -2143,29 +2233,28 @@ public void verifyCOBFilterClaimData() throws Exception
       	     {
       	       Log.Comment("The Product Name doesnt exists for this Criteria");
       	     }
-      	     
-      	   String subscrbrUI = subscriberUI1.getText();
-  	     
-      	if(subscrbrUI.contains("/"))
-         {
-      		 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-        	// subscrbrUI = subscrbrUI.replace("/","").trim();
-        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-             if(!subscrbrDB.equalsIgnoreCase("0"))
-                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-         }
-         
-         else
-         {
-        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-             if(!subscrbrDB.equalsIgnoreCase("0"))
-                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-        	 
-         }
+      	    
+      	   String subscrbrUI1 = subscriberUI1.getText();
+
+  	     if(subscrbrUI1.contains("/"))
+  	     {
+  	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+  	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+  	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+  	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+  	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+  	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+  	     }
+
+  	     else
+  	     {
+  	     	String subscrbrUI = subscriberUI1.getText().trim();
+  	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+  	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+  	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+  	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+  	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+  	     }
   	     
       	     String claimHashUI = claimHash.getText();
       	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -2390,29 +2479,27 @@ public void verifyCOBFilterClaimData() throws Exception
   	     }
   	     
   	     
-  	   String subscrbrUI = subscriberUI1.getText();
+  	   String subscrbrUI1 = subscriberUI1.getText();
 
-     
-     if(subscrbrUI.contains("/"))
-     {
-    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-         if(!subscrbrDB.equalsIgnoreCase("0"))
-            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-     }
-     
-     else
-     {
-    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-         if(!subscrbrDB.equalsIgnoreCase("0"))
-            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-    	 
-     }
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 	     
   	     String claimHashUI = claimHash.getText();
   	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -2754,27 +2841,26 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	       Log.Comment("The Product Name doesnt exists for this Criteria");
     	     }
     	     
-    	     String subscrbrUI = subscriberUI1.getText();
-    	     
-    	     if(subscrbrUI.contains("/"))
+    	     String subscrbrUI1 = subscriberUI1.getText();
+
+    	     if(subscrbrUI1.contains("/"))
     	     {
-    	    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-    	    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-    	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-    	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-    	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-    	         if(!subscrbrDB.equalsIgnoreCase("0"))
-    	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+    	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+    	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
     	     }
-    	     
+
     	     else
     	     {
-    	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-    	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-    	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-    	         if(!subscrbrDB.equalsIgnoreCase("0"))
-    	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-    	    	 
+    	     	String subscrbrUI = subscriberUI1.getText().trim();
+    	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
     	     }
     	     
     	     
@@ -3069,27 +3155,26 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
     	       Log.Comment("The Product Name doesnt exists for this Criteria");
     	     }
     	     
-    	     String subscrbrUI = subscriberUI1.getText();
-    	     
-    	     if(subscrbrUI.contains("/"))
+    	     String subscrbrUI1 = subscriberUI1.getText();
+
+    	     if(subscrbrUI1.contains("/"))
     	     {
-    	    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-    	    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-    	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-    	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-    	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-    	         if(!subscrbrDB.equalsIgnoreCase("0"))
-    	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+    	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+    	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
     	     }
-    	     
+
     	     else
     	     {
-    	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-    	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-    	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-    	         if(!subscrbrDB.equalsIgnoreCase("0"))
-    	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-    	    	 
+    	     	String subscrbrUI = subscriberUI1.getText().trim();
+    	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+    	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+    	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+    	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+    	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
     	     }
     	     
     	    
@@ -3423,28 +3508,27 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	       Log.Comment("The Product Name doesnt exists for this Criteria");
    	     }
    	     
-   	     String subscrbrUI = subscriberUI1.getText();
-   	     
-   	     if(subscrbrUI.contains("/"))
-   	     {
-   	    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-   	    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-   	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-   	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-   	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-   	         if(!subscrbrDB.equalsIgnoreCase("0"))
-   	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-   	     }
-   	     
-   	     else
-   	     {
-   	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-   	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-   	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-   	         if(!subscrbrDB.equalsIgnoreCase("0"))
-   	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-   	    	 
-   	     }
+   	     String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
    	     
    	     
    	   
@@ -3738,28 +3822,27 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
    	       Log.Comment("The Product Name doesnt exists for this Criteria");
    	     }
    	     
-   	     String subscrbrUI = subscriberUI1.getText();
-   	     
-   	     if(subscrbrUI.contains("/"))
-   	     {
-   	    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-   	    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-   	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-   	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-   	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-   	         if(!subscrbrDB.equalsIgnoreCase("0"))
-   	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-   	     }
-   	     
-   	     else
-   	     {
-   	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-   	         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-   	         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-   	         if(!subscrbrDB.equalsIgnoreCase("0"))
-   	            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-   	    	 
-   	     }
+   	    String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
    	     
    	    
    	     String accntNumUI = accntNum.getText();
@@ -3818,13 +3901,26 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception
 public void enterTINMultiplePLBAdj() throws Exception
 {
 	
-	int sqlRowNo = 200;
+//	int sqlRowNo = 200;
+//	Map prov_TAX_ID_NBRDB3 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//	String prov_TAX_ID_NBRDB1 = prov_TAX_ID_NBRDB3.toString();
+//	String prov_TAX_ID_NBRDB2 = prov_TAX_ID_NBRDB1.substring(prov_TAX_ID_NBRDB1.lastIndexOf("=")+1);
+//    String prov_TAX_ID_NBR = prov_TAX_ID_NBRDB2.substring(0, prov_TAX_ID_NBRDB2.length()-1);
+//    Log.Comment("The TIN for Multiple PLB Adj is:" + prov_TAX_ID_NBR);
+//    Element.click(enterTIN, "Enter TIN");
+//    Element.enterData(enterTIN, prov_TAX_ID_NBR, "Entering TIN", "Enter TIN");
+//    Element.click(searchBtn, "Search");
+	
+	
+	int sqlRowNo = 1901;
 	Map prov_TAX_ID_NBRDB3 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	String prov_TAX_ID_NBRDB1 = prov_TAX_ID_NBRDB3.toString();
 	String prov_TAX_ID_NBRDB2 = prov_TAX_ID_NBRDB1.substring(prov_TAX_ID_NBRDB1.lastIndexOf("=")+1);
     String prov_TAX_ID_NBR = prov_TAX_ID_NBRDB2.substring(0, prov_TAX_ID_NBRDB2.length()-1);
     Log.Comment("The TIN for Multiple PLB Adj is:" + prov_TAX_ID_NBR);
+    System.setProperty("tin", prov_TAX_ID_NBR);
     Element.click(enterTIN, "Enter TIN");
+    Element.enterData(enterTIN, prov_TAX_ID_NBR, "Entering TIN", "Enter TIN");
     Element.click(searchBtn, "Search");
 }
 
@@ -3881,13 +3977,30 @@ public void enterTINMultiplePLBAdjUPA() throws Exception
 
 public void enterElectronicNumForMultiplePLBCriteria() throws Exception
 {
-    int sqlRowNo = 223;
-	System.getProperty("tin");
+//    int sqlRowNo = 223;
+//	System.getProperty("tin");
+//	Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//
+//	String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
+//	Log.Comment("The Electronic Payment Number is :" + elctronicNum);
+//	System.setProperty("consl_pay_nbr", cp_DSPL_CONSL_PAY_NBRDB.get("CONSL_PAY_NBR").toString());
+//	
+//	Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+//	Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
+//	Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+//	Element.click(elcPayNum, "Electronic Payment Number");
+//	Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
+//	Element.click(srchRemitBtn, "Search Remit");
+	
+	String tin = System.getProperty("tin");
+	 int sqlRowNo = 1902;
+	//int sqlRowNo = 49;
+	testConfig.putRunTimeProperty("tin",tin);
 	Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 
 	String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
 	Log.Comment("The Electronic Payment Number is :" + elctronicNum);
-	System.setProperty("consl_pay_nbr", cp_DSPL_CONSL_PAY_NBRDB.get("CONSL_PAY_NBR").toString());
+	//System.setProperty("consl_pay_nbr", cp_DSPL_CONSL_PAY_NBRDB.get("CONSL_PAY_NBR").toString());
 	
 	Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
 	Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
@@ -3898,6 +4011,70 @@ public void enterElectronicNumForMultiplePLBCriteria() throws Exception
 	
 }
 
+
+public void verifyRemitPageDataUPA(String CriteriaType) throws Exception  
+{
+   if(CriteriaType.equalsIgnoreCase("RemitDetail"))
+	{
+	     String tin = System.getProperty("tin");
+		 int sqlRowNo = 1902;
+		//int sqlRowNo = 49;
+		testConfig.putRunTimeProperty("tin",tin);
+		Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+        String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
+	    Log.Comment("The Electronic Payment Number is :" + elctronicNum);
+		Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+		Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
+		Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+		Element.click(elcPayNum, "Electronic Payment Number");
+		Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
+		Element.click(srchRemitBtn, "Search Remit");
+	}
+   
+   else if(CriteriaType.equalsIgnoreCase("MultiplePLB")||CriteriaType.equalsIgnoreCase("PLB"))
+   {
+//	 //String tin = System.getProperty("tin");
+//	 		// int sqlRowNo = 1902;
+//	 		//int sqlRowNo = 49;
+//	 		//testConfig.putRunTimeProperty("tin",tin);
+//	 		//Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//	         //String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
+	 	  //String elctronicNum = System.getProperty("elctronicNum");
+	 	 String elctronicNum = testConfig.getRunTimeProperty("elctronicNum").toString();
+//        String consl_pay_nbr = cp_DSPL_CONSL_PAY_NBRDB.get("UCP_CONSL_PAY_NBR").toString();
+	   
+       // System.setProperty("consl_pay_nbr", consl_pay_nbr);
+        Log.Comment("The Electronic Payment Number is :" + elctronicNum);
+		Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+		Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
+		Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+		Element.click(elcPayNum, "Electronic Payment Number");
+		Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
+		Element.click(srchRemitBtn, "Search Remit");
+   }
+   
+   else
+   {
+	   Log.Comment("There is an issue in this condition");
+   }
+   
+//   else
+//   {
+//	    String tin = System.getProperty("tin");
+//		int sqlRowNo = 49;
+//		testConfig.putRunTimeProperty("tin",tin);
+//		Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//        String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("CP_DSPL_CONSL_PAY_NBR").toString();
+//		Log.Comment("The Electronic Payment Number is :" + elctronicNum);
+//		Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+//		Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
+//		Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+//		Element.click(elcPayNum, "Electronic Payment Number");
+//		Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
+//		Element.click(srchRemitBtn, "Search Remit");
+//   }
+		
+}
 
 public void verifyMultiplePLBAdj() throws Exception
 {
@@ -4061,7 +4238,8 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	}
     	
     	
-    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
+    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr"));
+    	                                                              
     	
     	int size = list.size();
     	Log.Comment("Size of PLB List is :" + size);
@@ -4071,7 +4249,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		{
 			for(int j=1; j<=3; j++)
 			{
-				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr["+i+"]/td["+j+"]")).getText();
+				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr["+i+"]/td["+j+"]")).getText();
 				if(sText.contains("$"))
 				{
 					sText= sText.replace("$","").trim();
@@ -4088,7 +4266,8 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 //    	testConfig.putRunTimeProperty("CP_DSPL_CONSL_PAY_NBR",consl_PAY_NBR);
 	    
 	    int sqlRowNo = 241;
-	    System.getProperty("consl_pay_nbr");
+	    String consl_pay_nbr =  System.getProperty("consl_pay_nbr");
+	    testConfig.putRunTimeProperty("consl_pay_nbr",consl_pay_nbr);
 	    ArrayList<String> plb_DB = new ArrayList<String>();
         HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		
@@ -4116,7 +4295,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
     	Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
     	Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
 
-    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
+    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr"));
     	
     	int size = list.size();
     	Log.Comment("Size of PLB List is :" + size);
@@ -4126,7 +4305,7 @@ public void verifyMultiplePLBAdjUPA() throws Exception
 		{
 			for(int j=1; j<=3; j++)
 			{
-				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr["+i+"]/td["+j+"]")).getText();
+				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr["+i+"]/td["+j+"]")).getText();
 				if(sText.contains("$"))
 				{
 					sText= sText.replace("$","").trim();
@@ -4404,7 +4583,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
     	}
 
     
-    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='flow2']//tr"));
+    	List<WebElement> list=testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr"));
     	
     	int size = list.size();
     	Log.Comment("Size of PLB List is :" + size);
@@ -4414,7 +4593,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		{
 			for(int j=1; j<=3; j++)
 			{
-				String sText=testConfig.driver.findElement(By.xpath("//div[@id='flow2']//tr["+i+"]//td["+j+"]")).getText();
+				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr["+i+"]//td["+j+"]")).getText();
 				if(sText.contains("$"))
 				{
 					sText= sText.replace("$","").trim();
@@ -4426,6 +4605,9 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		
 		Collections.sort(plb_UI);
 	    Log.Comment("The Multiple PLB Adjustment Data from UI is" + plb_UI);
+		
+		String consl_pay_nbr = System.getProperty("consl_pay_nbr");
+		testConfig.putRunTimeProperty("consl_pay_nbr",consl_pay_nbr);
 		int sqlRowNo = 202;
     	ArrayList<String> plb_DB = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> plb_DB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -4463,7 +4645,7 @@ public void verifyPLBAdjOnlyUPA() throws Exception
 		{
 			for(int j=1; j<=3; j++)
 			{
-				String sText=testConfig.driver.findElement(By.xpath("//div[@id='flow2']//tr["+i+"]//td["+j+"]")).getText();
+				String sText=testConfig.driver.findElement(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table[1]/tbody/tr["+i+"]//td["+j+"]")).getText();
 						
 			   if(sText.contains("$"))
 				{
@@ -5333,12 +5515,27 @@ if(null == payerSchema)
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-     if(!subscrbrDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+     String subscrbrUI1 = subscriberUI1.getText();
+
+     if(subscrbrUI1.contains("/"))
+     {
+    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+     	if(!subscrbrDB.equalsIgnoreCase("0"))
+     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+     }
+
+     else
+     {
+     	String subscrbrUI = subscriberUI1.getText().trim();
+     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+     	if(!subscrbrDB.equalsIgnoreCase("0"))
+     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+     }
    
      String claimHashUI = claimHash.getText();
      Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -5632,12 +5829,28 @@ else
    Log.Comment("The Product Name doesnt exists for this Criteria");
  }
  
- String subscrbrUI = subscriberUI1.getText();
- Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
- String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
- Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
- if(!subscrbrDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+
+         String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 
  String claimHashUI = claimHash.getText();
  Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -5960,12 +6173,29 @@ if(null == payerSchema)
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-     if(!subscrbrDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+
+     String subscrbrUI1 = subscriberUI1.getText();
+
+   	     if(subscrbrUI1.contains("/"))
+   	     {
+   	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+   	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+   	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+   	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+   	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+   	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+   	     }
+
+   	     else
+   	     {
+   	     	String subscrbrUI = subscriberUI1.getText().trim();
+   	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+   	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+   	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+   	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+   	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+   	     }
+     
    
      String claimHashUI = claimHash.getText();
      Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -6261,12 +6491,38 @@ else
   Log.Comment("The Product Name doesnt exists for this Criteria");
 }
 
-String subscrbrUI = subscriberUI1.getText();
-Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-if(!subscrbrDB.equalsIgnoreCase("0"))
-   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+String subscrbrUI1 = subscriberUI1.getText();
+
+if(subscrbrUI1.contains("/"))
+{
+	//String subscrbrUI = subscrbrUI1.replace("/", "");
+	
+	String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	
+	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	if(!subscrbrDB.equalsIgnoreCase("0"))
+	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+}
+
+else
+{
+	String subscrbrUI = subscriberUI1.getText();
+	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	if(!subscrbrDB.equalsIgnoreCase("0"))
+	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+}
+
+
+//Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+//String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+//Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+//if(!subscrbrDB.equalsIgnoreCase("0"))
+//   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+
 
 String claimHashUI = claimHash.getText();
 Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -6974,26 +7230,27 @@ public void verifyRemittancePageDataUPA() throws Exception
 	       Log.Comment("The Product Name doesnt exists for this Criteria");
 	     }
 	     
-	     String subscrbrUI = subscriberUI1.getText();
-	     
-	     if(subscrbrUI.contains("/"))
+
+        String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
 	     {
-	    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-	    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		     if(!subscrbrDB.equalsIgnoreCase("0"))
-		        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
 	     }
-	     
+
 	     else
 	     {
-	    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		     if(!subscrbrDB.equalsIgnoreCase("0"))
-		        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
 	     }
 	   
 	     String claimHashUI = claimHash.getText();
@@ -7219,27 +7476,28 @@ public void verifyRemittancePageDataUPA() throws Exception
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     
-     if(subscrbrUI.contains("/"))
-     {
-    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-         if(!subscrbrDB.equalsIgnoreCase("0"))
-            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-     }
-     
-     else
-     {
-    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-         if(!subscrbrDB.equalsIgnoreCase("0"))
-            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-    	 
-     }
+
+        String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
      
    
      String claimHashUI = claimHash.getText();
@@ -7560,12 +7818,28 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	       Log.Comment("The Product Name doesnt exists for this Criteria");
 	     }
 	     
-	     String subscrbrUI = subscriberUI1.getText();
-	     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-	     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-	     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-	     if(!subscrbrDB.equalsIgnoreCase("0"))
-	        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+
+        String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 	   
 	     String claimHashUI = claimHash.getText();
 	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -7788,12 +8062,28 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
        Log.Comment("The Product Name doesnt exists for this Criteria");
      }
      
-     String subscrbrUI = subscriberUI1.getText();
-     Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-     String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-     Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-     if(!subscrbrDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
+
+       String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
    
      String claimHashUI = claimHash.getText();
      Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -7857,6 +8147,30 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		
 		//Element.click(pPRALink, "PDF Print Link");
 		return this;		
+	}
+	
+	
+	
+	
+	
+	public void enterElecNumForRenderprov() throws Exception
+	{
+		String tin = System.getProperty("tin");
+		 int sqlRowNo = 1903;
+		//int sqlRowNo = 49;
+		testConfig.putRunTimeProperty("tin",tin);
+		Map cp_DSPL_CONSL_PAY_NBRDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+
+		String elctronicNum = cp_DSPL_CONSL_PAY_NBRDB.get("DSPL_CONSL_PAY_NBR").toString();
+		Log.Comment("The Electronic Payment Number is :" + elctronicNum);
+		//System.setProperty("consl_pay_nbr", cp_DSPL_CONSL_PAY_NBRDB.get("CONSL_PAY_NBR").toString());
+		
+		Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
+		Element.selectVisibleText(payNumdrpdwn,"Electronic Payment Number","Payment Dropdown");
+		Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+		Element.click(elcPayNum, "Electronic Payment Number");
+		Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
+		Element.click(srchRemitBtn, "Search Remit");
 	}
     
 	public RemittanceDetail isPDFAvailable(String Status) throws InterruptedException
@@ -8184,28 +8498,29 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			      	       Log.Comment("The Product Name doesnt exists for this Criteria");
 			      	     }
 			      	     
-			      	   String subscrbrUI = subscriberUI1.getText();
-			  	     
-			      	if(subscrbrUI.contains("/"))
-			         {
-			      		 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-			        	// subscrbrUI = subscrbrUI.replace("/","").trim();
-			        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-			             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-			             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-			             if(!subscrbrDB.equalsIgnoreCase("0"))
-			                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-			         }
-			         
-			         else
-			         {
-			        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-			             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-			             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-			             if(!subscrbrDB.equalsIgnoreCase("0"))
-			                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-			        	 
-			         }
+			 
+
+         String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 			  	     
 			      	     String claimHashUI = claimHash.getText();
 			      	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -8499,29 +8814,28 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 			  	     }
 			  	     
 			  	     
-			  	   String subscrbrUI = subscriberUI1.getText();
 
-			     
-			     if(subscrbrUI.contains("/"))
-			     {
-			    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-			    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-			    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-			         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-			         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-			         if(!subscrbrDB.equalsIgnoreCase("0"))
-			            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-			     }
-			     
-			     else
-			     {
-			    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-			         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-			         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-			         if(!subscrbrDB.equalsIgnoreCase("0"))
-			            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-			    	 
-			     }
+        String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 				     
 			  	     String claimHashUI = claimHash.getText();
 			  	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -8860,28 +9174,28 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		      	       Log.Comment("The Product Name doesnt exists for this Criteria");
 		      	     }
 		      	     
-		      	   String subscrbrUI = subscriberUI1.getText();
-		  	     
-		      	if(subscrbrUI.contains("/"))
-		         {
-		      		 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-		        	// subscrbrUI = subscrbrUI.replace("/","").trim();
-		        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		             if(!subscrbrDB.equalsIgnoreCase("0"))
-		                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-		         }
-		         
-		         else
-		         {
-		        	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		             String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		             Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		             if(!subscrbrDB.equalsIgnoreCase("0"))
-		                Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-		        	 
-		         }
+
+         String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 		  	     
 		      	     String claimHashUI = claimHash.getText();
 		      	     Log.Comment("Claim # from UI is :" + claimHashUI);
@@ -9174,29 +9488,28 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		  	     }
 		  	     
 		  	     
-		  	   String subscrbrUI = subscriberUI1.getText();
 
-		     
-		     if(subscrbrUI.contains("/"))
-		     {
-		    	 subscrbrUI = subscrbrUI.substring(0, subscrbrUI.indexOf("/")).trim();
-		    	 //subscrbrUI = subscrbrUI.replace("/","").trim();
-		    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		         if(!subscrbrDB.equalsIgnoreCase("0"))
-		            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-		     }
-		     
-		     else
-		     {
-		    	 Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-		         String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-		         Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-		         if(!subscrbrDB.equalsIgnoreCase("0"))
-		            Helper.compareEquals(testConfig, "Comparing Subscriber ID UI and DB", subscrbrDB, subscrbrUI);
-		    	 
-		     }
+         String subscrbrUI1 = subscriberUI1.getText();
+
+	     if(subscrbrUI1.contains("/"))
+	     {
+	    	 String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
+
+	     else
+	     {
+	     	String subscrbrUI = subscriberUI1.getText().trim();
+	     	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
+	     	String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
+	     	Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
+	     	if(!subscrbrDB.equalsIgnoreCase("0"))
+	     	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
+	     }
 			     
 		  	     String claimHashUI = claimHash.getText();
 		  	     Log.Comment("Claim # from UI is :" + claimHashUI);
