@@ -65,7 +65,7 @@ Examples:
         |     Multiple_PLB_ProvAdmin    |       PROV_Admin         |PROV       |   MultiplePLB   |
  #      |     Multiple_PLB_ProvGen          |       PROV_Gen           |PROV       |  Multiple PLB   |
           
- @uhg                   
+                    
 Scenario Outline: Remittance Detail PLB Adjustments Only for Provider
      
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -82,7 +82,7 @@ Examples:
 #          |      PLB_Adj_Only_ProvGen    |     PROV_Gen          |PROV       |     
           
 
-     
+# Data is not coming for Tricare Schema - so no TIN     
 Scenario Outline: Remittance Detail Tricare Validation for Provider
 
      Given User navigates to UPA portal and enters "<credentials>" and login
