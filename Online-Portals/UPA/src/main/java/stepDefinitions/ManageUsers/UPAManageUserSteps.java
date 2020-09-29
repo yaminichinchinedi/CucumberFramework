@@ -1,9 +1,12 @@
 package main.java.stepDefinitions.ManageUsers;
 
+import org.openqa.selenium.By;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.AddUserDetails;
+import main.java.pageObjects.HomePage;
 import main.java.pageObjects.ManageUsers;
 
 public class UPAManageUserSteps extends TestBase {
@@ -109,6 +112,46 @@ public class UPAManageUserSteps extends TestBase {
     
 		manageUser.verifyResetPwdButtonUPA();
 }
+	
+    @Then("^verifies if the TIN grid is relabeled for from Remove Row to Delete User$")
+    public void verifies_if_the_TIN_grid_is_relabeled_for_from_Remove_Row_to_Delete_User() throws Throwable {
+    	manageUser.verifyDeleteUserInTinGrid();  
+    }
+    @Then("^validates if access level, email checkbox, delete user checkbox are enabled or disabled for \"([^\"]*)\"$")
+    public void validates_if_access_level_email_checkbox_delete_user_checkbox_are_enabled_or_disabled_for(String accessLevel) throws Throwable {
+    	manageUser.verifyAbilityOfTinItems(accessLevel);
+    }
+
+    @Then("^deletes \"([^\"]*)\" \"([^\"]*)\" user and verifies from UI and DB$")
+    public void deletes_user_and_verifies_from_UI_and_DB(String accessType, String accessLevel) throws Throwable {
+    	manageUser.deleteUserAndVerify(accessType, accessLevel);
+    }
+
+    @Then("^verifies adding a new user of \"([^\"]*)\" with deleted user email with \"([^\"]*)\"$")
+    public void verifies_adding_a_new_user_of_with_deleted_user_email_with(String accessType, String accessLevel) throws Throwable {
+    	manageUser.clickbtnAddNewUser(accessLevel);
+        manageUser.fillUserInfo(accessType,accessLevel);  
+    }
+    @Then("^verifies Admin user is able to update General user \"([^\"]*)\"$")
+    public void verify_Admin_user_is_able_to_update_General_user_s(String accessLevel) throws Throwable {
+    	manageUser.verifyAdminPrivileges(accessLevel);
+    }
+
+    @Then("^Validate the ability of the fields of TIN grid for \"([^\"]*)\"$")
+    public void validate_the_ability_of_the_fields_of_TIN_grid_for(String accessLevel) throws Throwable {
+       manageUser.abilityOfFields(accessLevel);
+    }
+    @Then("^Verify BS Admin is able to update BS Gen \"([^\"]*)\"$")
+    public void verify_BS_Admin_is_able_to_update_BS_Gen(String accessLevel ) throws Throwable {
+    	manageUser.bsAdminPrivilages(accessLevel);
+    }
+    
+    @Then("^validate ability of access level, email checkbox, delete user checkbox for Payer \"([^\"]*)\"$")
+    public void validate_ability_of_access_level_email_checkbox_delete_user_checkbox_for_Payer(String accessLevel) throws Throwable {
+        manageUser.abilityOfFieldsForPayer(accessLevel);
+    }
+
+   
 
 
 }

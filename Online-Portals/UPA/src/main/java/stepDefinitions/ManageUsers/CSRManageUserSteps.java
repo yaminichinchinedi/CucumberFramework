@@ -116,7 +116,15 @@ public class CSRManageUserSteps extends TestBase {
     	searchPage.doSearch(userType);
     }
     
-    
-   
-
+    @Then("^User enters \"([^\"]*)\" and adds new User with \"([^\"]*)\" and verifies and deletes the user$")
+	public void user_enters_and_adds_new_User_with_and_verifies_and_deletes_the_user(String userType, String accessLevelOfNewUser) throws Throwable {
+    	 if(userType.equalsIgnoreCase("PROV"))
+             manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().addTinCSR().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+         else 
+             manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+     	
+    	 	manageUsers.getPortalUserIdOfNewUser();
+         	manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
+         	manageUsers.verifyModTypCdCodeForDeletedUser(userType);  
+	}
 }

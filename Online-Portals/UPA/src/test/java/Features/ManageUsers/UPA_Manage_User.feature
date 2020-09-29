@@ -199,5 +199,53 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |  
-     	
-      	
+ 
+#Author:Sunanda   	
+@US1846613
+Scenario Outline: Verify Provider Admin and Provider General accessebilities
+ 		Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+   	Then verifies if the TIN grid is relabeled for from Remove Row to Delete User
+    And  validates if access level, email checkbox, delete user checkbox are enabled or disabled for "<accessLevel>"
+    And  deletes "<accessType>" "<accessLevel>" user and verifies from UI and DB 
+    Then verifies adding a new user of "<accessType>" with deleted user email with "<accessLevel>"
+    Then verifies Admin user is able to update General user "<accessLevel>"
+    
+Examples:
+      |    userType     |   accessType  |		accessLevel	          |
+      |   PROV_Admin    |   PROV     	  |		Administrator		      |
+      |   PROV_Admin    |   PROV     	  |		General     		      |
+      
+#Author: Sunanda      
+@US2048540 
+Scenario Outline: Verify BS Admin and BS General accessebilities    
+		 Given User navigates to UPA portal and enters "<userType>" and login
+     Then Select the TIN for "<accessType>" UPA Portal
+     When Click on Manage User Link 
+     Then Validate the ability of the fields of TIN grid for "<accessLevel>"
+     And  Verify BS Admin is able to update BS Gen "<accessLevel>"
+     
+Examples:
+			|    userType     |   accessType  |		accessLevel						|
+      |   BS_Admin   	  |     BS     	  |		Administrator		      |
+      |		BS_Admin   	  |     BS     	  |		General					      |
+      
+#Author: Sunanda     
+@US2854205
+Scenario Outline: Verify Payer Admin and Payer General accessebilities
+ 		Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+   	Then verifies if the TIN grid is relabeled for from Remove Row to Delete User
+    And  validate ability of access level, email checkbox, delete user checkbox for Payer "<accessLevel>"
+    And  deletes "<accessType>" "<accessLevel>" user and verifies from UI and DB 
+ 		Then verifies adding a new user of "<accessType>" with deleted user email with "<accessLevel>"
+    Then verifies Admin user is able to update General user "<accessLevel>"
+
+    Examples:
+			|    userType       |   accessType    |		accessLevel						|
+      |   PAY_Admin   	  |     PAY     	  |		Administrator		      |
+      |		PAY_Admin   	  |     PAY     	  |		General					      |
+      
+      	     	

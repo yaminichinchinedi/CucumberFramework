@@ -62,3 +62,28 @@ Feature: CSR Manage User Functionality
       |    userType     |   credentials   |  
       |      PAY        |      Super      |
       |      PROV       |      Super      |
+      
+#Author:Sunanda       
+@US2020806
+Scenario Outline: CSR Manage User UI Functionality Add new user
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Click to add new User and fill the details "<accessLevelOfNewUser>" and verify the user detils and delete the user
+    Examples:
+      |    userType     |   credentials   |  accessLevelOfNewUser |
+      |      PROV       |      Super      |	 Administrator		  |
+      |      BS         |      Super      |	 Administrator		  |
+      |      PAY        |      Super      |	 Administrator		  |     
+      
+#Author:Sunanda    
+@US2854207
+Scenario Outline: CSR Manage User UI Functionality Add new user
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" and adds new User with "<accessLevelOfNewUser>" and verifies and deletes the user
+    Examples:
+      |    userType     |   credentials   |  accessLevelOfNewUser |
+      |      PROV       |      Super      |	 Administrator		  |
+      |      BS         |      Super      |	 Administrator		  |
+      |      PAY        |      Super      |	 Administrator		  |
+ 
