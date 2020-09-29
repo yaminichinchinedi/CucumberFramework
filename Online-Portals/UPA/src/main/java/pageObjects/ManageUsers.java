@@ -166,6 +166,54 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
+	
+	@FindBy(xpath="//th[contains(text(),'Delete User')]")
+	WebElement txtDeleteUser ;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].removeTinNpi']")
+	WebElement chkDeleteUser;
+	
+	@FindBy(xpath="//a[contains(text(),'Ganti, Sunanda')]")
+	WebElement lnkreqUser;
+	
+	@FindBy(linkText="Manage Users")
+	WebElement lnkManageUsers;
+	
+	@FindBy(id="tabManageusers")
+	WebElement manageUsersTab;
+	
+	@FindBy(name="addNpi")
+	WebElement drpDwnSelectNpi;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].emailNotify']") 
+	WebElement chckEmail;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].genEmailNotification']") 
+	WebElement chckBsEmail;
+	
+	@FindBy(xpath="//select[@name='GridListResults[0].accessLevel']") 
+	WebElement provPayUserAccessLvl ;
+	
+	@FindBy(xpath="//select[@name='bsUserAccessLvl']") 
+	WebElement bsUserAccessLvl ;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].fundingEmailNotify']") 
+	WebElement chckPayEmail1 ;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].nonEnrolledEmailNotify']") 
+	WebElement chckPayEmail2 ;
+	
+	@FindBy(xpath="//input[@name='GridListResults[0].inActiveEmailNotify']") 
+	WebElement chckPayEmail3 ;
+	
+	@FindBy(xpath="//input[@name='email']") 
+	WebElement txtUserEmail ;
+	
+	@FindBy(xpath="//input[@name='Yes']") 
+	WebElement btnDeleteuserYes ;
+	
+	
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -1425,5 +1473,429 @@ public class ManageUsers extends AddUserDetails
 	 }
 	
 	
-}
+	public ManageUsers verifyDeleteUserInTinGrid() {
+		Element.findElement(testConfig, "xpath", "//th[contains(text(),'Delete User')]");
+		Element.verifyTextPresent(txtDeleteUser, "Delete User");
+		if(!txtDeleteUser.getText().toString().equalsIgnoreCase("Remove Row"))
+			Log.Pass("Remove Row is relabled as Delete User");
+		else
+			Log.Fail("Remove Row is not relabled as Delete User");
 
+		return this;
+	}
+	
+	String fstname;
+	String emaildb;
+	public ManageUsers verifyAbilityOfTinItems(String accessLevel)
+	{
+	int sqlRowNo;
+	Map portalUserData=null;
+	
+	if(accessLevel.equalsIgnoreCase("Administrator"))
+	{
+		sqlRowNo=1302;
+		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	}
+	else if(accessLevel.equalsIgnoreCase("General")) {
+		sqlRowNo=1301;
+		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		fstname=portalUserData.get("FST_NM").toString();
+		emaildb=portalUserData.get("EMAIL_ADR_TXT").toString();
+		testConfig.putRunTimeProperty("emaildb", emaildb);
+	}
+	String username= portalUserData.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("FST_NM").toString().toUpperCase();
+	testConfig.putRunTimeProperty("username", username);	
+	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+	verifyEnabledOrDisabledForPROV();
+	return this;
+	}
+	
+	public void verifyEnabledOrDisabledForPROV()
+	{
+        accessLvls=Element.findElements(testConfig, "xpath","//input[@name='GridListResults[0].accessLevel']"); 
+		String initialAccessLvl=accessLvls.get(0).getAttribute("value");
+		if(initialAccessLvl.contains("A")) {
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is disabled for PROV Admin");
+			else
+				Log.Fail("Delete User checkbox is enabled PROV Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox disabled for PROV Admin");
+			else
+				Log.Fail("Email checkbox enabled PROV Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Access level is disabled for PROV Admin");
+			else
+				Log.Fail("Access level is enabled PROV Admin");
+		}
+		else{
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is enabled for PROV Gen ");
+			else
+				Log.Fail("Delete User checkbox is disabled PROV Gen");
+				
+			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox enabled for PROV Gen ");
+			else
+				Log.Fail("Email checkbox disabled PROV Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Access level is enabled for PROV Gen");
+			else
+				Log.Fail("Access level is disabled PROV Gen");
+		}
+	}
+
+	public ManageUsers deleteUserAndVerify(String accessType, String accessLevel) throws InterruptedException {
+		int sqlNo= 1304;
+		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
+		if(accessLevel.equalsIgnoreCase("General")) {
+		ArrayList<String> UsersListUI=getListOfAllUsersFromUI(testConfig); 
+		Log.Comment("Current User List before  deleting user is" + '\n'  + UsersListUI);
+		
+		testConfig.getRunTimeProperty("emaildb");
+		Map data= DataBase.executeSelectQuery(testConfig,sqlNo, 1);
+		String portalUserID=data.get("PORTAL_USER_ID").toString();
+		testConfig.putRunTimeProperty("portalUserID", portalUserID);
+		Element.findElement(testConfig, "xpath", "//input[@name='GridListResults[0].removeTinNpi']");		 
+		Browser.wait(testConfig, 3);
+		if(accessType.equalsIgnoreCase("PROV")){
+		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
+		clickSave();
+		}
+		else if(accessType.equalsIgnoreCase("PAY")) {
+		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
+		Browser.wait(testConfig, 3);
+		Element.click(btnDeleteuserYes, "Yes");
+		}
+		else {
+			Log.Fail("The accessType of the user is neither PROV nor PAY");
+		}
+		UsersListUI.clear();
+		UsersListUI=getListOfAllUsersFromUI(testConfig);
+		
+			if(!UsersListUI.contains(fstname))
+				Log.Pass("User with first name : " + " " + "'" +fstname + "'" + "and email id"+ emaildb + "is deleted successfully");
+			else 
+				Log.Fail("User with first name : " + " " + "'" +fstname + "'" + "and email id "+ emaildb + "not deleted");
+		
+		Log.Comment("User List after deleting user is" + '\n'  + UsersListUI);
+		
+		checkForDeletedUserInDB();
+		}
+		else if(accessLevel.equalsIgnoreCase("Administrator"))
+			Log.Pass("PROV/PAY Admin user cannot delete other Admin user, checkbox is disabled for admin");
+		
+		else {
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+		}		
+		return this;
+	}
+	
+	public void checkForDeletedUserInDB(){
+		int sqlRowNo=1303;
+		int rowNo= 1305;
+		testConfig.getRunTimeProperty("emaildb");
+		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String rowcount=portalUserData.get("ROWNUM").toString();
+		int rowCount=Integer.parseInt(rowcount);
+		if(rowCount==0)
+			Log.Pass("Zero records found for the given condition");
+		else
+			Log.Fail("More than zero records found for the given condition");
+		
+		testConfig.getRunTimeProperty("portalUserID");
+		Map ModTypeData=DataBase.executeSelectQuery(testConfig,rowNo, 1);
+		String modTypCd=ModTypeData.get("MOD_TYP_CD").toString();
+		if(modTypCd.equalsIgnoreCase("PCD"))
+			Log.Pass("The MOD_TYP_CD is PCD ");
+		else
+			Log.Fail("The MOD_TYP_CD is not PCD");
+	}
+	
+	public ManageUsers verifyAdminPrivileges(String accessLevel) throws InterruptedException {
+		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
+		if(accessLevel.equalsIgnoreCase("General")){
+			List <WebElement> accessLvls=Element.findElements(testConfig, "xpath","//select[@name='GridListResults[0].accessLevel']"); 
+		    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level"); 
+		    accessLvls=Element.findElements(testConfig, "xpath","//input[@name='GridListResults[0].accessLevel']"); 
+			String changedAccessLvl=accessLvls.get(0).getAttribute("value");
+	   	    Helper.compareEquals(testConfig, "Access Level after reselecting", "A", changedAccessLvl );
+	   	    clickCancel().clickYes();
+		}
+		 else if(accessLevel.equalsIgnoreCase("Administrator"))  {
+			Log.Pass("AccessLevel is not editable for Admin"); 
+		   }
+		 else {
+			 Log.Fail("The user's accessLevel is neither General nor Administrator");
+		 }
+		return this;
+	}
+
+	public ManageUsers fillUserInfo(String accessType, String accessLevel) {
+		if(accessLevel.equalsIgnoreCase("General")) {
+		String phNo = Long.toString(Helper.generateRandomNumber(5));
+		String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
+		final String firstNameTxt=Helper.generateRandomAlphabetsString(5);
+		Element.findElement(testConfig, "name", "fname");
+	    Element.expectedWait(firstName, testConfig, "First Name textbox", "First Name textbox"); 			
+		Browser.wait(testConfig, 2);
+		testConfig.getRunTimeProperty("emaildb");
+		Element.enterData(email,emaildb, "Enter Email address as:" + " " +emaildb,"email");
+		Element.enterData(verifyEmail, emaildb, "Re type email address as :" +" "+emaildb ,"verifyEmail");
+		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
+	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
+		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		if(accessType.equalsIgnoreCase("PROV")) {
+		Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
+		Browser.wait(testConfig,2);
+		clickAddTin();
+		Browser.wait(testConfig,2);
+		List <WebElement> accessLvls=Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+		Element.selectByVisibleText(accessLvls.get(0), "General", "General as access level");
+		}
+		else if(accessType.equalsIgnoreCase("PAY")) {
+		List <WebElement> accessLvls=Element.findElements(testConfig, "xpath", "//select[not(contains(@id,'accessLevel'))]/parent::td//select");
+		Element.selectByVisibleText(accessLvls.get(0), "General", "General as access level");	
+		}
+		else 
+			Log.Fail("The accessType is neither PROV nor PAY");
+		
+		Browser.wait(testConfig, 3);
+		Element.findElement(testConfig, "xpath", "//input[@value=' Save ']");
+		clickSave();
+		Element.findElement(testConfig, "xpath", "//td[contains(text(),'User successfully added. Pre-registration material')]");
+		String username= firstNameTxt + "," +" " + firstNameTxt;
+		testConfig.putRunTimeProperty("username", username);
+		}
+		else if(accessLevel.equalsIgnoreCase("Administrator"))
+		Log.Pass("User cannot be added with the deleted user's email ID since PROV/PAY Admin user cannot delete other admin user");
+		
+		else
+			 Log.Fail("The user's accessLevel is neither General nor Administrator");
+		 
+		return this;
+	}
+
+	public void clickbtnAddNewUser(String accessLevel) {
+		if(accessLevel.equalsIgnoreCase("General")) {
+		Element.expectedWait(btnAddUser, testConfig, "Add User", "Add User");
+		Element.click(btnAddUser, "Add User");
+		Browser.wait(testConfig, 3);
+		}
+		else if(accessLevel.equalsIgnoreCase("Administrator")) {
+			Log.Pass("User cannot be added usig existing email address");
+		}
+		else {
+			 Log.Fail("The user's accessLevel is neither General nor Administrator");
+		 }
+	}
+	
+
+	public ManageUsers abilityOfFields(String accessLevel) {
+		int sqlRowNo;
+		Map portalUserData=null;
+		if(accessLevel.equalsIgnoreCase("Administrator"))
+		{
+			sqlRowNo=1309;
+			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		}
+		else if(accessLevel.equalsIgnoreCase("General")) {
+			sqlRowNo=1308;
+			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		}
+		else
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+		
+		String bsUsername= portalUserData.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("FST_NM").toString().toUpperCase();
+		testConfig.putRunTimeProperty("bsUsername", bsUsername);	
+		clickSpecificUserName(testConfig.getRunTimeProperty("bsUsername"));	
+		verifyEnabledOrDisabledForBS(accessLevel);
+	return this;	
+	}
+
+	public void verifyEnabledOrDisabledForBS(String accessLevel){
+		if(accessLevel.equalsIgnoreCase("Administrator")) {
+			Map attributes=Element.getAllAttributes(testConfig, bsUserAccessLvl, "BS User AccessLvl");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Access level is disabled for BS Admin");
+			else
+				Log.Fail("Access level is enabled BS Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckBsEmail, "Email checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox disabled for BS Admin");
+			else
+				Log.Fail("Email checkbox enabled BS Admin");
+		}	
+		else if(accessLevel.equalsIgnoreCase("General")){
+			Map attributes=Element.getAllAttributes(testConfig, bsUserAccessLvl, "BS User AccessLvl");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Access level is enabled for BS Gen");
+			else
+				Log.Fail("Access level is disabled BS Gen");
+				
+			attributes=Element.getAllAttributes(testConfig, chckBsEmail, "Email checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox enabled for BS Gen ");
+			else
+				Log.Fail("Email checkbox disabled BS Gen ");
+		}
+		else
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+	}
+
+	public ManageUsers bsAdminPrivilages(String accessLevel) {
+		clickSpecificUserName(testConfig.getRunTimeProperty("bsUsername"));
+		   if(accessLevel.equalsIgnoreCase("General")){
+			    Element.selectByVisibleText(accessLvls.get(0), "Administrator", "Admin as access level"); 
+			    clickSave();
+			    accessLvls=Element.findElements(testConfig, "xpath","//input[@name='bsUserAccessLvl']"); 
+				String changedAccessLvl=accessLvls.get(0).getAttribute("value");
+		   	    Helper.compareEquals(testConfig, "Access Level after reselecting", "A", changedAccessLvl );
+		   	    clickCancel().clickYes();
+		   }
+		   else if(accessLevel.equalsIgnoreCase("Administrator"))
+			   Log.Pass("Access level is not editable for Administrator");
+		   
+		   else
+			   Log.Fail("The user's accessLevel is neither General nor Administrator");
+			   
+		 return this;
+	}
+
+	public ManageUsers abilityOfFieldsForPayer(String accessLevel) {
+		int sqlRowNo;
+		Map portalUserData=null;
+		if(accessLevel.equalsIgnoreCase("Administrator"))
+		{
+			sqlRowNo=1307;
+			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		}
+		else if(accessLevel.equalsIgnoreCase("General")) {
+			sqlRowNo=1306;
+			portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			fstname=portalUserData.get("FST_NM").toString();
+			emaildb=portalUserData.get("EMAIL_ADR_TXT").toString();
+			testConfig.putRunTimeProperty("emaildb", emaildb);
+		}
+		else
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+		
+		String username= portalUserData.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("FST_NM").toString().toUpperCase();
+		testConfig.putRunTimeProperty("username", username);	
+		clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+		verifyEnabledOrDisabledForPAY(accessLevel);
+		return this;
+	}
+	public void verifyEnabledOrDisabledForPAY(String accessLevel){
+		if(accessLevel.equals("Administrator")) {
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is disabled for PAY Admin");
+			else
+				Log.Fail("Delete User checkbox is enabled PAY Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail1, "Email checkbox funding notification");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox1 disabled for PAY Admin");
+			else
+				Log.Fail("Email checkbox1 enabled PAY Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail2, "Email checkbox non enrolled providers notification");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox2 disabled for PAY Admin");
+			else
+				Log.Fail("Email checkbox12 enabled PAY Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail2, "Email checkbox inactive providers notification");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox3 disabled for PAY Admin");
+			else
+				Log.Fail("Email checkbox3 enabled PAY Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Access level is disabled for PAY Admin");
+			else
+				Log.Fail("Access level is enabled PAY Admin");
+		}
+		else if(accessLevel.equals("General")){
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is enabled for PAY Gen");
+			else
+				Log.Fail("Delete User checkbox is disabled PAY Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail1, "Email checkbox funding notification");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox1 enabled for PAY Gen");
+			else
+				Log.Fail("Email checkbox1 disabled PAY Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail2, "Email checkbox non enrolled providers notification");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox2 enabled for PAY Gen");
+			else
+				Log.Fail("Email checkbox2 disabled PAY Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, chckPayEmail2, "Email checkbox inactive providers notification");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox3 enabled for PAY Gen");
+			else
+				Log.Fail("Email checkbox3 disabled PAY Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Access level is enabled for PAY Gen");
+			else
+				Log.Fail("Access level is disabled PAY Gen");
+		}
+		else
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+	}
+	
+	public ManageUsers getPortalUserIdOfNewUser() {
+		clickSave();
+		int sqlNo= 1310;
+		testConfig.getRunTimeProperty("email");
+		Map userData=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		String portalUserID=userData.get("PORTAL_USER_ID").toString();
+		testConfig.putRunTimeProperty("portalUserID",portalUserID);
+		return this;
+		
+	}
+	public ManageUsers verifyModTypCdCodeForDeletedUser(String userType) {
+		clickSave();
+		int sqlrowNo= 1311;
+		testConfig.getRunTimeProperty("portalUserID");
+		testConfig.getRunTimeProperty("email");
+		Map userData=DataBase.executeSelectQuery(testConfig, sqlrowNo, 1);
+		String modTypeCD=userData.get("MOD_TYP_CD").toString();
+		if(userType.equals("PROV") || userType.equals("BS")){
+			if(modTypeCD.equalsIgnoreCase("PCD"))
+				Log.Pass("MOD_TYP_CD value is PCD");
+			else
+				Log.Fail("MOD_TYP_CD value is not PCD");	
+		}
+		else{
+			if(modTypeCD.length()==0)
+				Log.Pass("MOD_TYP_CD value is null");
+			else
+			Log.Fail("MOD_TYP_CD value is not null");		
+		}
+		return this;
+	}
+
+	
+}
