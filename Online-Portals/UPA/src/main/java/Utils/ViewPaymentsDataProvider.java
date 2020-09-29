@@ -625,7 +625,7 @@ public String getTinForPaymentType(String paymentType)
 	 	  
 		case "RemitDetail_ProvAdmin":
 	 	  {
-	 env=System.getProperty("env");
+	         env=System.getProperty("env");
 		     Browser.wait(testConfig, 5);
 		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
 		     
@@ -698,7 +698,7 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "BS_Admin":
 		{
-	 env=System.getProperty("env");
+	         env=System.getProperty("env");
 		     Browser.wait(testConfig, 5);
 		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
 		     
@@ -814,7 +814,8 @@ public String getTinForPaymentType(String paymentType)
 		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
 		     
 		     testConfig.putRunTimeProperty("id", id);
-			 sqlRowNo = 222;
+			 //sqlRowNo = 222;
+		     sqlRowNo = 1907;
 			 break;
 		}	
 		
@@ -865,7 +866,8 @@ public String getTinForPaymentType(String paymentType)
 		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
 		     
 		     testConfig.putRunTimeProperty("id", id);
-			 sqlRowNo = 222;
+			 //sqlRowNo = 222;
+		     sqlRowNo = 1908;
 			 break;
 		}	
 		
@@ -907,6 +909,17 @@ public String getTinForPaymentType(String paymentType)
 		     testConfig.putRunTimeProperty("schema",schema);
 		     sqlRowNo = 214;
 			break;
+		}	
+		
+		case "byElectronicPaymentNoRemitBS":
+		{
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env).trim();
+		     
+		     testConfig.putRunTimeProperty("id", id);
+			 sqlRowNo = 1906;
+			 break;
 		}	
 		
 			case "EPRABSViewPay":
@@ -1010,7 +1023,8 @@ public String getTinForPaymentType(String paymentType)
 		     testConfig.putRunTimeProperty("value", tinNumbers.get("LST_NM").toString());
 		  }
 		       
-		  else if (paymentType.equalsIgnoreCase("Multiple_PLB_ProvAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin"))
+		  else if (paymentType.equalsIgnoreCase("Multiple_PLB_ProvAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin")||paymentType.equalsIgnoreCase("byElectronicPaymentNoRemitBS")
+				  ||paymentType.equalsIgnoreCase("Multiple_PLB_BSAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_BSAdmin"))
 		  {
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			 // System.setProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());

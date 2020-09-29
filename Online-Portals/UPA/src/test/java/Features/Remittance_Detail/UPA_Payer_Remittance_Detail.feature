@@ -4,6 +4,7 @@
 @UPARemitDetail  @UPARegression @BothCSRUPAScenarios @UPARemitDetailPayer
 Feature: UPA Remittance Detail Payer
 
+
 Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
 
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -23,7 +24,7 @@ Scenario Outline: Remittance Detail UI and FISL Validations for Payer User
 Examples: 
         |    Search Criteria     |       credentials        | usertype | 
         |     Payer_Admin        |       PAY_Admin          | Payer    |
-        |     Payer_Gen          |       PAY_Gen            | Payer    |
+ #       |     Payer_Gen          |       PAY_Gen            | Payer    |
         
         
 

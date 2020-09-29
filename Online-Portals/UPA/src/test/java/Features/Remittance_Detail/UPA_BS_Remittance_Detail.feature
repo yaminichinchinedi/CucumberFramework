@@ -1,16 +1,17 @@
 
 #Author: Athyusha Thota
 
-@UPARemitDetail  @UPARegression @BothCSRUPAScenarios @UPARemitDetailBS 
+@UPARemitDetail  @UPARegression @BothCSRUPAScenarios 
 Feature: UPA Remittance Detail Billing Service
 
-
+ 
 Scenario Outline: Remittance Detail UI and FISL Validations for BS User
 
      Given User navigates to UPA portal and enters "<credentials>" and login
      Then User clicks on Search Remittance link for UPA
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
-     And Enter Electronic Number for Mutliple PLB Adjustments Criteria
+    # And Enter Electronic Number for Mutliple PLB Adjustments Criteria
+     And Enter Electronic Payment Number based on "<CriteriaType>"
      And Verify Remittance Detail Online vs FISL Response for "<usertype>"
      Then Validate all Headers in the Page
      Then Validate Column Headers in the Page
@@ -20,11 +21,12 @@ Scenario Outline: Remittance Detail UI and FISL Validations for BS User
      And Check Adj Reason Code Pop Up
      And Verify FISL Response for COB Only Filter Claim for "<usertype>"
      And Verify FISL Response for Reversal Only Filter Claim for "<usertype>"
-     
-Examples: 
-         |        searchBy                |       credentials      | usertype   |  
-         |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
-   #      |        Multiple_PLB_BSAdmin      |       BS_Gen           |  BS        |
+
+    Examples: 
+         |        searchBy                    |       credentials      | usertype   |   CriteriaType   |
+ #       |        Multiple_PLB_BSAdmin        |       BS_Admin         |  BS        | RemitDetail      |
+   #     |        Multiple_PLB_BSAdmin        |       BS_Gen           |  BS        | RemitDetail      |
+         |        byElectronicPaymentNoRemitBS|       BS_Admin         |  BS        | RemitDetailBS    |
         
         
 Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider for BS
@@ -32,47 +34,52 @@ Scenario Outline: Remittance Detail Validations for Patient, Rendering Provider 
      Given User navigates to UPA portal and enters "<credentials>" and login
      Then User clicks on Search Remittance link for UPA
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
-     And Enter Electronic Number for Mutliple PLB Adjustments Criteria
+     And Enter Electronic Payment Number based on "<CriteriaType>"
+     #And Enter Electronic Number for Mutliple PLB Adjustments Criteria
      Then Validate Sort By - Patient Last Name for "<usertype>" 
      Then Validate Sort By - Rendering Provider Last Name for "<usertype>" 
 
 Examples:     
        
-         |        searchBy                |       credentials      | usertype   |  
-         |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+         |        searchBy                    |       credentials      | usertype   | CriteriaType   | 
+         |        byElectronicPaymentNoRemitBS|       BS_Admin         |  BS        | RemitDetailBS   | 
+    #     |        Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
        #  |        Multiple_PLB           |       BS_Gen           |  BS        |
-            
+               
  
 Scenario Outline: Remittance Detail multiple PLB Adjustments for BS 
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      Then User clicks on Search Remittance link for UPA
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
-     And Enter Electronic Number for Mutliple PLB Adjustments Criteria
+     And Enter Electronic Payment Number based on "<CriteriaType>"
+     #And Enter Electronic Number for Mutliple PLB Adjustments Criteria
      And Validate Payment with Multiple PLB Adjustments for UPA 
 
 Examples:
-           |        searchBy              |       credentials      | usertype   |  
-           |      Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        |
+           |        searchBy              |       credentials      | usertype   | CriteriaType   |  
+           |      Multiple_PLB_BSAdmin    |       BS_Admin         |  BS        | RemitDetailBS   | 
    #        |      Multiple_PLB            |       BS_Gen           |  BS        |
           
           
-         
+ @UPARemitDetailBS        
 Scenario Outline: Remittance Detail PLB Adjustments Only for BS
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      Then User clicks on Search Remittance link for UPA
      And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
-     And Enter Electronic Number for Adjustment Only Criteria
+     And Enter Electronic Payment Number based on "<CriteriaType>"
+    # And Enter Electronic Number for Adjustment Only Criteria
      And Validate PLB Adjustment Only for UPA
      
 Examples:
 
-         |        searchBy        |       credentials      | usertype   |  
-         |        PLB_Adj_Only_BSAdmin    |       BS_Admin         |  BS        |
+         |        searchBy              |       credentials      | usertype   |   CriteriaType   |  
+         |      PLB_Adj_Only_BSAdmin    |       BS_Admin         |  BS        | RemitDetailBS    | 
+ #        |        PLB_Adj_Only_BSAdmin    |       BS_Admin         |  BS        |
   #       |        PLB Adj Only    |       BS_Gen           |  BS        |
 
-
+# Data is not coming from DB for this scenario
 Scenario Outline: Remittance Detail Tricare Validation for BS
 
      Given User navigates to UPA portal and enters "<credentials>" and login

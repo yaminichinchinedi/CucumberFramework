@@ -116,8 +116,9 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'2')]") WebElement paginationNo2;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
-	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
-	@FindBy(xpath ="//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]")  WebElement payernameUI;
+	//@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
+	@FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]") WebElement payerUI;
+	@FindBy(xpath ="//form[@id='paymentsummaryform']/table/tbody/tr/td/table/tbody/tr/td/table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]")  WebElement payernameUI;
 	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
 	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
 	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
@@ -1455,13 +1456,13 @@ public void verifyRemittancePageData() throws Exception
      if(!accntNumDB.equalsIgnoreCase("0"))
        	Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", accntNumDB, accntNumUI);
     
-     String amntAllowedUI1 = amntallowed.getText();
-     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
-     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
-     if(!amntAllowedDB.equalsIgnoreCase("0"))
-        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
+//     String amntAllowedUI1 = amntallowed.getText();
+//     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
+//     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
+//     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+//     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
+//     if(!amntAllowedDB.equalsIgnoreCase("0"))
+//        Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", amntAllowedDB, amntAllowedUI);
    
      /*
      String CopayUI1 = copayUI.getText();
@@ -4031,7 +4032,7 @@ public void verifyRemitPageDataUPA(String CriteriaType) throws Exception
 		Element.click(srchRemitBtn, "Search Remit");
 	}
    
-   else if(CriteriaType.equalsIgnoreCase("MultiplePLB")||CriteriaType.equalsIgnoreCase("PLB"))
+   else if(CriteriaType.equalsIgnoreCase("MultiplePLB")||CriteriaType.equalsIgnoreCase("PLB")||CriteriaType.equalsIgnoreCase("RemitDetailBS"))
    {
 //	 //String tin = System.getProperty("tin");
 //	 		// int sqlRowNo = 1902;
@@ -4052,6 +4053,8 @@ public void verifyRemitPageDataUPA(String CriteriaType) throws Exception
 		Element.enterData(elcPayNum, elctronicNum, "Enter Electronic number as "+elctronicNum, "Electonic Payment Number");
 		Element.click(srchRemitBtn, "Search Remit");
    }
+   
+   
    
    else
    {
@@ -7858,7 +7861,9 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	     String amntAllowedUI1 = amntallowed.getText();
 	     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
 	     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
-	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+	    // String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
+	     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:CoveredAmount>")+19, getResponse.indexOf("</ns4:CoveredAmount>"));
+	     
 	     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
 	     if(!amntAllowedDB.equalsIgnoreCase("0"))
 	        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
