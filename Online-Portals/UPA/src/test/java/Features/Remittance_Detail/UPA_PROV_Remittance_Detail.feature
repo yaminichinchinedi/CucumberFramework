@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios 
+@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios @UPARemitDetailProv
 Feature: UPA Remittance Detail Provider
 
 

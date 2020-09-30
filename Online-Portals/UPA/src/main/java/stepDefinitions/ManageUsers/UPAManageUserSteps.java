@@ -36,9 +36,9 @@ public class UPAManageUserSteps extends TestBase {
         addUserDetails.verifyErrorMessages();
     }
 
-    @Then("^Verifies provider user details are read only on UPA$")
-    public void user_enters_in_Upa_Manage_Users_Page_and_verify_User_Details_Read_Only(String userType) throws Throwable {
-        manageUser.verifyUserDetailsAreReadOnly(userType);
+    @Then("^Verify provider user details are read only on UPA for \"([^\"]*)\"$")
+    public void verify_provider_user_details_are_read_only_on_UPA_for(String userType) throws Throwable {
+    	manageUser.verifyUserDetailsAreReadOnly(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Billing Service user$")
@@ -51,7 +51,7 @@ public class UPAManageUserSteps extends TestBase {
     @Then("^Verifies Payer \"([^\"]*)\" user details are read only on UPA$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_Payer_User_Details(String userType) throws Throwable {
         manageUser.verifyPayerUserDetailsAreReadOnly();
-        manageUser.verifyAccessLvlChange(userType);
+        //manageUser.verifyAccessLvlChange(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer user$")
@@ -72,14 +72,13 @@ public class UPAManageUserSteps extends TestBase {
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Provider_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
-        manageUser.removeFistTinInGrid();
 	}
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
 	}
     
@@ -153,5 +152,21 @@ public class UPAManageUserSteps extends TestBase {
 
    
 
+	  @Then("^Verify Users List for \"([^\"]*)\" with \"([^\"]*)\" on selecting and deselecting of purge checkbox$")
+	  public void verify_Users_List_for_with_on_selecting_and_deselecting_of_purge_checkbox(String userType, String searchCriteria) throws Throwable {
+		  new ManageUsers(testConfig).verifyUserList(userType,searchCriteria);
+	  }
+	  
+	  
+	  @Then("^Verify UI Details for Purged \"([^\"]*)\" user$")
+	  public void verify_UI_Details_for_Purged_user(String userType) throws Throwable {
+		  manageUser.verifyDetailsForPurgedUser(userType);
+	    
+	  }
+
+		@Then("^User clicks on View Purge Users checkbox$")
+		public void user_click_on_View_Purge_Users_checkbox() throws Throwable {
+			manageUser.clickPurgeUsers();
+		}
 
 }

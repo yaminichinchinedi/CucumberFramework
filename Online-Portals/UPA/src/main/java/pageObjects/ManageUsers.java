@@ -266,7 +266,7 @@ public class ManageUsers extends AddUserDetails
 	public void validatePurgeUsers(String LoginType,String Credentials) throws InterruptedException
 	{
 		
-		checkPurgedUser(LoginType);
+		this.checkPurgedUser(LoginType);
 		
 		
 		if (LoginType.equals("CSR") && !(Credentials.equals("ROOnly")|| Credentials.equals("RO")|| Credentials.equals("RW") ) )
@@ -543,7 +543,8 @@ public class ManageUsers extends AddUserDetails
 			  break;
 		   }
 	     }
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		Browser.wait(testConfig, 3);
+		//Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
 	
@@ -573,8 +574,7 @@ public class ManageUsers extends AddUserDetails
 	{
 		for(WebElement userName:userNames)
 		{ 
-			System.out.println("Username is: "+userName.getText().toString().toUpperCase());
-		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
+		  if(userName.getText().toString().contains(nameOfUser))
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;
@@ -595,8 +595,10 @@ public class ManageUsers extends AddUserDetails
 	{
 		 
 
-		int sqlNo=257;
+		//int sqlNo=257;
 		int sqlRowNo=11;
+		int sqlNo=416;
+
 
 		//Clicks on an active user displayed in User List
 		clickActiveUserName(userType);
@@ -633,7 +635,7 @@ public class ManageUsers extends AddUserDetails
 				    Browser.waitForLoad(testConfig.driver);
 				    Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
 				    
-				    home.clickManageUsersTab().clickSpecificUserName(testConfig.getRunTimeProperty("activeUser"));
+				    home.clickManageUsersTab().clickActiveUserName(userType);
 				    
 				   //Handling stale element
 				    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
@@ -1017,7 +1019,7 @@ public class ManageUsers extends AddUserDetails
 		Map portalUserData=null;	
 		testConfig.putRunTimeProperty("email", email.getAttribute("value"));
 		
-		if(userType.equalsIgnoreCase("Billing Service"))
+		if(userType.equalsIgnoreCase("BS"))
 		{
 			sqlRowNo=12;
 			
@@ -1225,6 +1227,12 @@ public class ManageUsers extends AddUserDetails
 		return this;
 	}
 	
+	public ManageUsers clickUserListLink()
+	{
+	    Element.click(lnkUserList, "User List Link");
+		return this;
+	}
+	
 	public ManageUsers editLastName(String newName)
 	{
 		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
@@ -1289,7 +1297,7 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers getPurgedEmail()
 	{
-		clickSpecificUserName("PURGED");
+		clickSpecificUserName("Purged");
 		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("emailOfUsr", email.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("fName", firstName.getAttribute("value").toString());
@@ -1352,50 +1360,67 @@ public class ManageUsers extends AddUserDetails
 		
 	}
 	
-	
-	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
-	{
-		int sql=252;
-		ArrayList<String> usersFromDB=new ArrayList<>();
+	public void verifyUserList(String userType, String searchCriteria) throws IOException, InterruptedException {
+
+		ArrayList<String> usersFromDB = new ArrayList<>();
 		try {
-		if(System.getProperty("App").equalsIgnoreCase("CSR"))
-		selectPurgedCheckbox();
-		}
-		catch (Exception e) {
+			if (testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR"))
+				selectPurgedCheckbox();
+		} catch (Exception e) {
 			Log.Comment("App is UPA");
 		}
-		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
-		{
-			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
-			Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-			for(int i=1;i<=userDetails.size();i++)
-			{
-				if(userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
-					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() +"  - PURGED");
-				else
-					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+		if (searchCriteria.equalsIgnoreCase("purgedUsers") && userType.contains("PAY") && testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR")) {
+				int sql = 411;
+				HashMap<Integer, HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
+				Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",
+						userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+				for (int i = 1; i <= userDetails.size(); i++) {
+					if (userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
+						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
+								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() + "  - PURGED");
+					else
+						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
+								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+				}
+				Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,
+						getListOfAllUsersFromUI(testConfig));
+			} else {
+				int sql = 412;
+
+				HashMap<Integer, HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
+				Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",
+						userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+				for (int i = 1; i <= userDetails.size(); i++) {
+					if (userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
+						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
+								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() + "  - PURGED");
+					else
+						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
+								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+				}
+				Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,
+						getListOfAllUsersFromUI(testConfig));
 			}
-			Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
-			
-			sql=253;
 			try {
-				if(System.getProperty("App").equalsIgnoreCase("CSR"))
-				{
-				 deSelectPurgedCheckbox();
-			     usersFromDB.clear();
-			     userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
-			     Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-			    for(int i=1;i<=userDetails.size();i++)
-			    usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
-			    Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
-			   }
-			}
-			catch (Exception e) {
+				if (testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR")) {
+					int sql = 412;
+					deSelectPurgedCheckbox();
+					usersFromDB.clear();
+					HashMap<Integer,HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
+					Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",
+							userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+					for (int i = 1; i <= userDetails.size(); i++)
+						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
+								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+					Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,
+							getListOfAllUsersFromUI(testConfig));
+				}
+			} catch (Exception e) {
 				Log.Comment("App is UPA");
 		}
 		}
-			
-	}
+
+	
 	
 	public void verifyResetPwdButton()
 	{
@@ -1419,7 +1444,7 @@ public class ManageUsers extends AddUserDetails
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
         else if(userType.contains("PAY"))
-        	sqlRowNo=254;
+        	sqlRowNo=413;
         
         
 		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -1437,14 +1462,8 @@ public class ManageUsers extends AddUserDetails
 	 */
 	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
 		String expectedStatus="Purged";
-		try {
-		if(System.getProperty("App").equalsIgnoreCase("CSR"))
-			selectPurgedCheckbox();
-		}
-		catch (Exception e) {
-			Log.Comment("App is UPA");
-		}
-	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
+		selectPurgedCheckbox();
+	    clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
 
 	

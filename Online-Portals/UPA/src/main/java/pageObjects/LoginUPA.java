@@ -175,12 +175,13 @@ public class LoginUPA {
 		else if (securityQuestion.getText().contains("middle")) 
 			fillfathermiddlename();
 
-		else 
-			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
-	
-//		if (!chkBoxRememberDevice.isSelected())
-//			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
-		
+		else
+			Log.Comment("Unidentified Question :" + " " + securityQuestion.getText(), "Red");
+
+		if (!chkBoxRememberDevice.isSelected())
+			Element.click(chkBoxRememberDevice, "'Remember my device' checkbox");
+
+
 		Element.click(btnNext, "Next to submit answer");
 	}
 
@@ -244,6 +245,7 @@ public class LoginUPA {
 		int sqlRowNo=237;
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
+		testConfig.putRunTimeProperty("App", "UPA");
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 		

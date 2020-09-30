@@ -70,7 +70,7 @@ public class CSRManageUserSteps extends TestBase {
         String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
         manageUsers = searchPage.clickSearch().clickSpecificUserName(testConfig.getRunTimeProperty("username")).verifyDisabledItemsForTin(tinNo,disabledValue);
         manageUsers.editLastName("abc").verifyDisabledItemsForTin(tinNo,disabledValue);
-        manageUsers.editLastName("abc%()").verifyDisabledItemsForTin(tinNo,disabledValue);
+        manageUsers.editLastName("abc%()").clickUserListLink().verifyDisabledItemsForTin(tinNo,disabledValue);
     }
 
     @Then("^User enters \"([^\"]*)\" in Manage Users Page and Verifies if a tin has more than one active admin , access level dropdown, email check box & remove tin/npi checkbox \"([^\"]*)\" is enabled$")
@@ -81,7 +81,8 @@ public class CSRManageUserSteps extends TestBase {
 
     @Then("^User enters \"([^\"]*)\" in Manage Users Page and Verifies access level,email and npi/tin checkbox remains disabled for a user who is the only active admin for a tin when gets associated with another new tin and Verifies if the new tin is removed then also these items access level etc remains \"([^\"]*)\" disabled for the only active admin tin$")
     public void user_enters_in_Manage_Users_Page_and_Verify_Deatils_Sixth(String userType,String disabledValue) throws Throwable {
-        int sqlNo=172;
+        //int sqlNo=172;
+        int sqlNo=164;
         String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
         ManageUsers manageUsers=searchPage.clickSearch().clickSpecificUserName(testConfig.getRunTimeProperty("username")).verifyDisabledItemsForTin(tinNo,disabledValue);
         String newTinAdded=manageUsers.addTinCSR(sqlNo);
@@ -96,12 +97,14 @@ public class CSRManageUserSteps extends TestBase {
 
     @Then("^User enters \"([^\"]*)\" in Manage Users Page and Updates an active User and verify the user details in the UI and DB$")
     public void user_enters_in_Manage_Users_Page_and_Updates_an_active_User_and_verify_the_user_details_in_the_UI_and_DB(String userType) throws Throwable {
-    	if(userType.equalsIgnoreCase("PROV"))
+    	if(userType.equalsIgnoreCase("PROV")) {
+            String tinNo=searchPage.selectUserType(userType).enterTin("tinWithMoreThanOneActiveAdmin");
+            searchPage.clickSearch();   	}
+    	else {
           manageUsers = searchPage.doSearch(userType);
-    	else
-          manageUsers = searchPage.doSearch(userType);
-    	manageUsers.clickActiveUserName(userType).updateDemographicInfo(userType).clickSave().verifyYourChangesWereUpdatedSuccessfully();
-    	manageUsers.VerifyDetailsOfUser(userType);   
+          }
+    	new ManageUsers(testConfig).clickActiveUserName(userType).updateDemographicInfo(userType).clickSave().verifyYourChangesWereUpdatedSuccessfully();
+    	new ManageUsers(testConfig).VerifyDetailsOfUser(userType);   
 }
     
     @Then("^Verify Reset Password Option doesnt exists$")

@@ -44,7 +44,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
-    Then Verifies provider user details are read only on UPA
+    Then Verify provider user details are read only on UPA for "<accessType>"
     Examples:
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
@@ -105,7 +105,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Then Validate status of purged user for "<userType>" in portal tables.
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
-      |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
+      |      PROV_Admin |   PROV      	|		 General		    |			PU			|
       
   @UPAManageUsers_US2769380 @UPA_AugRelease
   Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
@@ -182,9 +182,9 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
   @UPAUS2711348 @UPA_AugRelease
      Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
-   # Then Select the Purged TIN from the dropdown
-     Then Select the TIN for "<accessType>" UPA Portal
+    Then  Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
+    Then User clicks on View Purge Users checkbox
     Then Verify Purged User validations by clicking on it
       Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
