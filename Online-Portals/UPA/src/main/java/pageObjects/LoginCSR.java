@@ -195,6 +195,7 @@ public class LoginCSR extends TestBase {
 	{
 
 	   String env=System.getProperty("env");
+	   testConfig.putRunTimeProperty("App", "CSR");
        id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userType+"_"+env);
        password=testConfig.runtimeProperties.getProperty("CSR_"+"Pwd_"+userType+"_"+env);
        testConfig.putRunTimeProperty("id", id);      

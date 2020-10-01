@@ -63,6 +63,7 @@ Scenario Outline: View Payments information is displayed for BS
 Examples:
 
     |       paymentType              | credentials|userType|filterPayments |quickSearchFilter|archiveFilter| MktTypeFilter    |        key        |value |
+    | Last 9-13 months               | BS_Admin   |  BS    |   Show All    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| ALL  |
     | generalPaymentForTIN_30days    | BS_Admin   |  BS    |   TIN Only    | Last 30 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_60days    | BS_Admin   |  BS    |   TIN Only    | Last 60 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_90days    | BS_Admin   |  BS    |   TIN Only    | Last 90 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
@@ -102,7 +103,7 @@ Examples:
     | generalPayment60Days           | BS_Admin   |  BS    |   Show All    |Last 60 days    | Show All     | Show All         |   MARKET_TYPE   |   ALL  |
     | medicalFilter                  | BS_Admin   |  BS    |   Show All    |Last 60 days    | Show All     | Medical          |   MARKET_TYPE   |   M  |
     
-@test123
+
 Scenario Outline: View Payments information for Zero Dollar ACH and VCP
      Given User navigates to UPA portal and enters "<credentials>" and login
      When Click on View Payments Link for UPA

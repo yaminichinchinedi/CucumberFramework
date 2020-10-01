@@ -76,18 +76,6 @@ public class CSRHomePageSteps extends TestBase{
 		}
 	 
 
-	  @Then("^Verify Users List for \"([^\"]*)\" with \"([^\"]*)\" on selecting and deselecting of purge checkbox$")
-	  public void verify_Users_List_for_with_on_selecting_and_deselecting_of_purge_checkbox(String userType, String searchCriteria) throws Throwable {
-		  manageUsers=new ManageUsers(testConfig);
-		  manageUsers.verifyUserList(userType,searchCriteria);
-	  }
-	  
-	  @Then("^Verify UI Details for Purged \"([^\"]*)\" user$")
-	  public void verify_UI_Details_for_Purged_user(String userType) throws Throwable {
-		  manageUsers=new ManageUsers(testConfig);
-		  manageUsers.verifyDetailsForPurgedUser(userType);
-	    
-	  }
 
 	   @Then("^User clicks on Create/Maintain Enrollment link$")
 	   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
