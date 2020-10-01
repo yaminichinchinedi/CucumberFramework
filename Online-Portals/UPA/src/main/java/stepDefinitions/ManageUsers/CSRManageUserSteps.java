@@ -39,12 +39,7 @@ public class CSRManageUserSteps extends TestBase {
 			manageUsers = searchPage.doSearchPUTIN("PROV");
 	  
 	}
-    
-	@Then("^User clicks on View Purge Users checkbox$")
-	public void user_click_on_View_Purge_Users_checkbox() throws Throwable {
-		manageUsers.clickPurgeUsers();
-	}
-
+   
 	@Then("^User clicks on one of Purged User from User list and perform validations like Name,Phone No,Email,TIN List,buttons disabled for \"([^\"]*)\" user$")
 	public void user_clicks_on_one_of_Purged_User_from_User_list_and_perform_validations_like_Name_Phone_No_Email_TIN_List_buttons_disabled_for_user(String credentials) throws Throwable {
 		manageUsers.validatePurgeUsers("CSR",credentials);    	
