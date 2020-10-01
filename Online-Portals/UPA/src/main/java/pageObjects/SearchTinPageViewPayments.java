@@ -340,25 +340,28 @@ public class SearchTinPageViewPayments {
 	
 	public String getTin(String paymentType)
 	{
-//		dataProvider=new ViewPaymentsDataProvider(testConfig);
-//		return dataProvider.getTinForPaymentType(paymentType);
-		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
-		String tin=dataProvider.getTinForPaymentType(paymentType);
-		dataProvider.associateTinWithUser("BS",tin);
-		if (paymentType.equals("EPRAViewPay"))
-		{
-		//dataProvider.associateTinWithUser("BS",tin);
-		WebElement txtBoxBSTin = Element.findElement(testConfig, "name", "billingProvTin");
-		if(txtBoxBSTin!=null)
-			Element.enterData(txtBoxBSTin, tin,"Entered TIN", "BS Tin");
-		else
-			Element.enterData(txtboxTinNo, tin,"Entered TIN", "BS Tin");
-		testConfig.putRunTimeProperty("tin", tin);
-		Browser.wait(testConfig, 3);
-		WebElement btnSearch = Element.findElement(testConfig, "name", "btnSearch");
-		Element.click(btnSearch, "Search Button");
-		}
-		return tin;
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		return dataProvider.getTinForPaymentType(paymentType);
+		//ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
+		
+		
+		
+		//String tin=dataProvider.getTinForPaymentType(paymentType);
+//		dataProvider.associateTinWithUser("BS",tin);
+//		if (paymentType.equals("EPRAViewPay"))
+//		{
+//		//dataProvider.associateTinWithUser("BS",tin);
+//		WebElement txtBoxBSTin = Element.findElement(testConfig, "name", "billingProvTin");
+//		if(txtBoxBSTin!=null)
+//			Element.enterData(txtBoxBSTin, tin,"Entered TIN", "BS Tin");
+//		else
+//			Element.enterData(txtboxTinNo, tin,"Entered TIN", "BS Tin");
+//		testConfig.putRunTimeProperty("tin", tin);
+//		Browser.wait(testConfig, 3);
+//		WebElement btnSearch = Element.findElement(testConfig, "name", "btnSearch");
+//		Element.click(btnSearch, "Search Button");
+//		}
+//		return tin;
 	}
 	
 	

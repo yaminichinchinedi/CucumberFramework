@@ -1,5 +1,4 @@
 #Author: rashi_hooda@optum.com
-
 @CsrViewPayments @CSRRegression
 Feature: CSR View Payments UI Functionality
 
@@ -12,8 +11,8 @@ Feature: CSR View Payments UI Functionality
     Then Verify Failed Payment PopUp
 
     Examples:
-      |    credentials     |   paymentType  	|
-      |      Super		     |   failedPayment  |
+      |    credentials     |   paymentType    |
+      |      Super		   |   failedPayment  |
   
 @CSRViewPayments_TC002
   Scenario Outline: Validate the Remit Payment on CSR
@@ -34,8 +33,8 @@ Feature: CSR View Payments UI Functionality
      And  Set FISL Parameters "<key>" and "<value>"
      Then Verify Default Search Result Count
      Examples:
-        |    credentials  |   paymentType  		     |key									|value|
-        |      Super		  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
+        |    credentials  |   paymentType  		   |key					|value  |
+        |      Super	  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
 
 @CSRViewPayments_TC004
   Scenario Outline: Validate correct payment information is displayed on filter Show All
@@ -43,14 +42,14 @@ Feature: CSR View Payments UI Functionality
     When Click on View Payments Link
     Then Select the TIN for "<paymentType>" CSR Portal
     And  Set FISL Parameters "<key>" and "<value>"
-    Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>" 
+    Then Verify Search Results With "<filterPayments>" for "<quickSearchFilter>" 
     Examples:
-      |credentials   |   paymentType  					|	filterpayments	|	quicksearchfilter	| key									|value|
-      |Super		     |   generalPayment60Days   |	Show All				|	Last 60 days			|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   generalPayment90Days   |	Show All				|	Last 90 days			|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 4-6 months        |	Show All				|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 6-9 months        |	Show All				|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 9-13 months       |	Show All				|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
+      |credentials   |   paymentType  				|	filterPayments	|	quickSearchFilter	| key					|value  |
+      |Super		     |   generalPayment60Days   |	Show All		|	Last 60 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      |Super		     |   generalPayment90Days   |	Show All		|	Last 90 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      |Super		     |   Last 4-6 months        |	Show All		|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      |Super		     |   Last 6-9 months        |	Show All		|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      |Super		     |   Last 9-13 months       |	Show All		|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
 
   @CSRViewPayments_TC005
   Scenario Outline: Validation of TIN's latest NPI Only payments and Quick Search Filter

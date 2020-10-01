@@ -17,17 +17,21 @@ import main.java.api.base.CreateConnection;
 import main.java.api.pojo.epsPaymentDetailRequest.request.ObjectFactory;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
-
 import org.xml.sax.SAXException;
 
 public class EpsPaymentSearchRequestHelper extends CreateConnection
 {
-	static final String connectionUrl = "https://feadgw-stg-esbserv.optum.com/api/finance/providers/payments/v1/search";	
+	
+	
+	static String connectionUrl = "";
 	static final String xmlFilePath=System.getProperty("user.dir")+"\\src\\main\\java\\api\\pojo\\epspaymentsearch\\request\\Request.xml";
 	 
+	
 	public EpsPaymentSearchRequestHelper()
 	{
+		
 		super(connectionUrl);
+		
     }
 
 	
