@@ -248,4 +248,19 @@ Scenario Outline: Verify Payer Admin and Payer General accessebilities
       |   PAY_Admin   	  |     PAY     	  |		Administrator		      |
       |		PAY_Admin   	  |     PAY     	  |		General					      |
       
-      	     	
+
+#Author: Marsha Vegda
+Scenario Outline: Delete General User Checkbox
+Given User navigates to UPA portal and enters "<userType>" and login
+ 	   Then Select the TIN for "<accessType>" UPA Portal
+   	 When Click on Manage User Link
+   	 Then Add a general user and select the user from the list for "<accessType>"
+   	 Then Verify if the user is added in Database 
+   	 Then Click on Delete user checkbox and Click on Save button "<accessType>"
+   	 Then Verify if the deleted user is removed from Database
+   	 	
+   
+    Examples:
+      |      userType       |   accessType|
+      |      PROV_Admin     |   PROV      |
+      	      	     	

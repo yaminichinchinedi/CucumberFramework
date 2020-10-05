@@ -53,6 +53,8 @@ public class ManageUsers extends AddUserDetails
 	
 	WebElement emailChkbox=null;
 	
+	WebElement dltChkbox;
+	
 	@FindBy(xpath="//input[@value='Add User']")
 	WebElement btnAddUser;
 	
@@ -1915,6 +1917,79 @@ public class ManageUsers extends AddUserDetails
 		}
 		return this;
 	}
+	
+	
+	public ManageUsers deleteCheckbox(String accessType) {
+			
+		findDeleteCheckbox(accessType,1).click();
+		clickSave();
+		return this;
+	}
+		
+		
+	public void verifyDbBeforeTinDeletion() {
+		int sqlNo= 13;
+	    testConfig.putRunTimeProperty("email",super.userEmailAdr );
+	    Map dbPortal=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+	    if(dbPortal != null ){
+			Log.Pass("User Added Successfully in Database");
+		}
+		else
+			Log.Fail("User not Added Successfully in Database");
+        
+        String portalUserId=dbPortal.get("PORTAL_USER_ID").toString();
+        testConfig.putRunTimeProperty("portalUserID",portalUserId);
+	        
+	}
+		
+	public void verifyDbAfterTinDeletion() {
+		int sqlNo= 13;
+		Map dbPortal=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		if(dbPortal == null ){
+			Log.Pass("User deleted successfully");
+		}
+		else
+			Log.Fail("User failed to delete");
+	}
+	
+	public void verifyDbHistoryAfterTinDeletion() {
+		int sqlRowNo=1311;
+		Map dbPortal = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String modTypeCd;
+		if(dbPortal!=null) {
+			modTypeCd = dbPortal.get("MOD_TYP_CD").toString();
+			if(modTypeCd.compareTo("PCD")==0) 
+				Log.Pass("Deleted User updated in History table");
+			else 
+				Log.Fail("Deleted User failed to update History table");
+		}
+	}
 
+	public ManageUsers enterTinSaveAndVerify(String accessType){
+		Element.selectByValue(drpDwnSelectTin, testConfig.getRunTimeProperty("tin"), "select tin");
+		
+	    clickAddTin();
+
+	    Element.selectByVisibleText(accessLvls.get(0), "General", "General as access level");
+	    clickSave();
+	    verifyDetailsOfNewUser(accessType);	
+		return this;
+	}
+
+	public WebElement findDeleteCheckbox(String userType, int i)
+	{
+		
+		if(userType.equals("PROV"))
+		{
+			dltChkbox=tinGridRows.get(i).findElements(By.tagName("td")).get(6).findElement(By.tagName("input"));
+		}
+		else if(userType.equals("BS"))
+		{ 
+			dltChkbox=tinGridRows.get(i).findElements(By.tagName("td")).get(5).findElement(By.tagName("input"));
+		}
+			
+		return dltChkbox;
+		
+	}
 	
 }

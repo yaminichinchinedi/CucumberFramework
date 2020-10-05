@@ -169,4 +169,27 @@ public class UPAManageUserSteps extends TestBase {
 			manageUser.clickPurgeUsers();
 		}
 
+		@Then("^Add a general user and select the user from the list for \"([^\"]*)\"$")
+		public void add_a_general_user_and_select_the_user_from_the_list_for(String accessType) throws Throwable {
+			manageUser.clickAddNewUser();
+			manageUser.fillNewUserInfo();
+			manageUser.enterTinSaveAndVerify(accessType);
+		}
+		
+		@Then("^Verify if the user is added in Database$")
+		public void verify_if_the_user_is_added_in_Database() throws Throwable {
+			manageUser.verifyDbBeforeTinDeletion();
+		}
+		
+		@Then("^Click on Delete user checkbox and Click on Save button \"([^\"]*)\"$")
+		public void click_on_Delete_user_checkbox_and_Click_on_Save_button(String accessType) throws Throwable {
+			manageUser.deleteCheckbox(accessType);
+		}
+		
+		@Then("^Verify if the deleted user is removed from Database$")
+		public void verify_if_the_deleted_user_is_removed_from_Database() throws Throwable {
+			manageUser.verifyDbAfterTinDeletion();
+			manageUser.verifyDbHistoryAfterTinDeletion();
+		}
+
 }
