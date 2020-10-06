@@ -8,8 +8,10 @@ Scenario Outline: Remittance Detail UI Functionality and FISL Data Validations
      Given User navigates to CSR portal and enters "<credentials>" and login
      Then User clicks on Search Remittance link
      And User enters tin for Mutliple PLB Adjustments Criteria
-     And Enter Electronic Number for Mutliple PLB Adjustments Criteria
-     And Verify Remittance Detail Online vs FISL Response
+     #And Enter Electronic Number for Mutliple PLB Adjustments Criteria
+     And Enter Electronic Payment Number based on "<CriteriaType>"
+     #And Verify Remittance Detail Online vs FISL Response
+     And Verify Remittance Detail Online vs FISL Response for "<usertype>"
      Then Validate all Headers in the Page
      Then Validate Column Headers in the Page
      And Validate Download, Print, Return buttons in Remit Page
@@ -18,13 +20,14 @@ Scenario Outline: Remittance Detail UI Functionality and FISL Data Validations
      And Check Adj Reason Code Pop Up
      And Verify FISL Response for COB Only Filter Claim for "<usertype>"
      And Verify FISL Response for Reversal Only Filter Claim for "<usertype>"
+
      
 Examples:
 
-        |   credentials     |usertype   |  
-        |      Super        |PROV       |
-        |      RW           |PROV       |
-        |      RO           |PROV       | 
+        |   credentials     |usertype   |  CriteriaType  |
+        |      Super        |PROV       | RemitDetail    |
+ #       |      RW           |PROV       | RemitDetail    |
+ #       |      RO           |PROV       | RemitDetail    |
         
     
 Scenario Outline: Remittance Detail UI and FISL Sort Validations
@@ -33,14 +36,16 @@ Scenario Outline: Remittance Detail UI and FISL Sort Validations
      Then User clicks on Search Remittance link
      And User enters tin for Mutliple PLB Adjustments Criteria
      And Enter Electronic Number for Mutliple PLB Adjustments Criteria
-     Then Validate Sort By - Patient Last Name
-     Then Validate Sort By - Rendering Provider Last Name
+     Then Validate Sort By - Patient Last Name for "<usertype>" 
+     Then Validate Sort By - Rendering Provider Last Name for "<usertype>" 
+     #Then Validate Sort By - Patient Last Name
+     #Then Validate Sort By - Rendering Provider Last Name
 
 Examples:     
-        |   credentials     |  
-        |      Super        |
-        |      RW           |
-        |      RO           | 
+        |   credentials     | usertype   | 
+        |      Super        |  PROV      |
+        |      RW           | PROV       |
+        |      RO           | PROV       |
 
    
 Scenario Outline: Remittance Detail multiple PLB Adjustments 
@@ -74,7 +79,8 @@ Examples:
          |     Super       |
          |     RW          |
          |     RO          |
-                   
+         
+
 Scenario Outline: Remittance Detail Tricare Validation
 
      Given User navigates to CSR portal and enters "<credentials>" and login

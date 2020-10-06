@@ -1,9 +1,9 @@
 #Author: Athyusha Thota
 
-@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios @UPARemitDetailProv
+@UPARemitDetail @UPARegression  @UPASanity @BothCSRUPAScenarios 
 Feature: UPA Remittance Detail Provider
 
-
+@UPARemitDetailProv
 Scenario Outline: Remittance Detail UI and FISL Validations for Provider User
 
      Given User navigates to UPA portal and enters "<credentials>" and login

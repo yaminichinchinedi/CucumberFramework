@@ -204,15 +204,7 @@ public String getTinForPaymentType(String paymentType)
 	 		break;
 	 			
 	 			
-	 	case "EPRACSR":
-	 		 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
-		      sqlRowNo=204;
-	 			break;		
-	 			
+
 		 case "EPRAgenerated":
     	 env=System.getProperty("env");
 		     Browser.wait(testConfig, 5);
@@ -223,124 +215,65 @@ public String getTinForPaymentType(String paymentType)
 				break;
 				
          case "EPRAPROVAdmin":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 		      sqlRowNo=204;
 	 			break;	
 	 			
          case "EPRAgeneratedPROVAdmin":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 			 sqlRowNo=205;
 			 break;	
 		
          case "EPRAPROVGen":		 
-        	 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 				sqlRowNo=204;
 				break;	
 				
          case "EPRAgeneratedPROVGen":
- 
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 				sqlRowNo=205;
 				break;			
 		
          case "EPRAPayerAdmin": 
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Admin"+"_"+env);
-		     
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
-           sqlRowNo=210;
+
+              sqlRowNo=210;
 	 			break;	
 	 			
          case "EPRAPayerGen":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Gen"+"_"+env);
-		     
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 		      sqlRowNo=212;
 	 			break;	
 	 			
          case "EPRAPayergeneratedAdmin": 
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Admin"+"_"+env);
-		     
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 				sqlRowNo=217;
 				break;	
 				
 		 case "EPRAPayergeneratedGen": 
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Gen"+"_"+env);
-		     
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
+
 				sqlRowNo=217;
 				break;	
+
 				
-           case "EPRABSAdmin":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
-		     
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
-		      sqlRowNo=218;
-	 			break;	
-	 			
+		 case "EPRABSAdmin":
+				
+			      sqlRowNo=218;
+		 			break;	
+		 			
 	 			
            case "EPRABSGen":
-	 
-  			 env=System.getProperty("env");
-  		     Browser.wait(testConfig, 5);
-  		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Gen"+"_"+env);
-  		     
-  		     System.setProperty("id", id);
-  		     testConfig.putRunTimeProperty("id", id);
 
   		      sqlRowNo=218;
   	 			break;	
   	 			
   	 			 
            case "EPRAgeneratedBSAdmin":
- 
-  			 env=System.getProperty("env");
-  		     Browser.wait(testConfig, 5);
-  		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
-  		     
-  		     System.setProperty("id", id);
-  		     testConfig.putRunTimeProperty("id", id);
-  		      sqlRowNo=219;
-  	 			break;
+
+  		       sqlRowNo=219;
+  	 		 	break;
   	 			
            case "EPRAgeneratedBSGen":	 
-    			 env=System.getProperty("env");
-    		     Browser.wait(testConfig, 5);
-    		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Gen"+"_"+env);
-    		     
-    		     System.setProperty("id", id);
-    		     testConfig.putRunTimeProperty("id", id);
+
     		      sqlRowNo=219;
     	 			break;				
 	
@@ -613,24 +546,13 @@ public String getTinForPaymentType(String paymentType)
 	 	    
 		case "RemitDetail_ProvGen":
 	 	  {
-	 		 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-
 		      sqlRowNo=211;
 	 		  break;
 	 	  }
 	 	  
 		case "RemitDetail_ProvAdmin":
 	 	  {
-	         env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		    
+
 		      sqlRowNo=211;
 	 		  break;
 	 	  }
@@ -638,47 +560,25 @@ public String getTinForPaymentType(String paymentType)
 		case "RemitDetail":
 	 	  {
 
-           env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);  
 		      sqlRowNo=211;
 	 			break;
 	 	  }
 	 	  
 		case "RemitDetail_BSAdmin":
 	 	  {  
-	 		 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		     
 		      sqlRowNo=211;
 	 		  break;
 	 	  }
 	 	  
 		case "RemitDetail_BSGen":
 	 	  {
-	 		 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		     
+
 		      sqlRowNo=211;
 	 		  break;
 	 	  }
 	 	  
 		case "Provider_Admin":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-
 		      sqlRowNo=211;
 	 			break;
 	 	}
@@ -686,11 +586,6 @@ public String getTinForPaymentType(String paymentType)
 		case "Provider_Gen":
 		{
 
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
 		     sqlRowNo=211;
 	 			break;
 	 	}
@@ -698,12 +593,6 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "BS_Admin":
 		{
-	         env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-
 			 sqlRowNo = 211;
 			break;
 		}
@@ -711,13 +600,6 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "BS_Gen":
 		{
-
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-
 			 sqlRowNo = 211;
 			 break;
 
@@ -732,17 +614,6 @@ public String getTinForPaymentType(String paymentType)
 		}
 		case "Payer_Admin":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		     sqlRowNo = 212;
-		     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		     String payerSchema2 = payerSchema1.toString();
-	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
-		     
-		     testConfig.putRunTimeProperty("schema",schema);
 		     sqlRowNo = 213;
    			 
    		     break;
@@ -750,17 +621,6 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "Payer_Gen":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		     sqlRowNo = 212;
-		     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		     String payerSchema2 = payerSchema1.toString();
-	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
-		     
-		     testConfig.putRunTimeProperty("schema",schema);
 		     sqlRowNo = 213;
    			 
    		     break;
@@ -778,54 +638,39 @@ public String getTinForPaymentType(String paymentType)
 			break;
 		}
 		
+		case "EPRAElectronicPaymentNo":
+		{
+			sqlRowNo = 204;
+			break;
+		}
+		
+		
 		case "Multiple_PLB":
 		{
-			sqlRowNo = 200;
 			break;
 		}	
 		
 		case "Multiple_PLB_ProvAdmin":
 		{
-//			 env=System.getProperty("env");
-//		     Browser.wait(testConfig, 5);
-//		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-//		     
-//		     testConfig.putRunTimeProperty("id", id);
-			 //sqlRowNo = 222;
+
 		     sqlRowNo = 1904;
 			 break;
 		}	
 		
 		case "Multiple_PLB_ProvGen":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
 			 sqlRowNo = 222;
 			 break;
 		}	
 		
 		case "Multiple_PLB_BSAdmin":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-			 //sqlRowNo = 222;
 		     sqlRowNo = 1907;
 			 break;
 		}	
 		
 		case "Multiple_PLB_BSGen":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
 			 sqlRowNo = 222;
 			 break;
 		}	
@@ -838,35 +683,18 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "PLB_Adj_Only_ProvAdmin":
 		{
-			env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-			 //sqlRowNo = 222;
 		     sqlRowNo = 1905;
 			 break;
 		}	
 		
 		case "PLB_Adj_Only_ProvGen":
 		{
-			env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Gen"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
 			 sqlRowNo = 222;
 			 break;
 		}	
 		
 		case "PLB_Adj_Only_BSAdmin":
 		{
-			env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-			 //sqlRowNo = 222;
 		     sqlRowNo = 1908;
 			 break;
 		}	
@@ -875,15 +703,8 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "PLB_Adj_Only_Pay_Admin":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Admin"+"_"+env);
-		     
-		     testConfig.putRunTimeProperty("id", id);
-		     sqlRowNo = 212;
-			
-		     
-		     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+             sqlRowNo = 212;
+			 Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		     String payerSchema2 = payerSchema1.toString();
 	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
 		   
@@ -895,13 +716,8 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "PLB_Adj_Only_Pay_Gen":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PAY_Admin"+"_"+env);
-		     testConfig.putRunTimeProperty("id", id);
+
 		     sqlRowNo = 212;
-			
-		     
 		     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		     String payerSchema2 = payerSchema1.toString();
 	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
@@ -913,11 +729,6 @@ public String getTinForPaymentType(String paymentType)
 		
 		case "byElectronicPaymentNoRemitBS":
 		{
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env).trim();
-		     
-		     testConfig.putRunTimeProperty("id", id);
 			 sqlRowNo = 1906;
 			 break;
 		}	
@@ -1000,6 +811,32 @@ public String getTinForPaymentType(String paymentType)
 		    	testConfig.putRunTimeProperty("fromDate",tinNumbers.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate",tinNumbers.get("SETL_DT").toString());
 		     }
+		       
+		       
+		     else if(paymentType.equalsIgnoreCase("EPRAPROVAdmin")||paymentType.equalsIgnoreCase("EPRAPROVGen")
+		    		 ||paymentType.equalsIgnoreCase("EPRAgeneratedPROVAdmin")||paymentType.equalsIgnoreCase("EPRAgeneratedPROVGen")
+		    		 ||paymentType.equalsIgnoreCase("EPRABSAdmin")||paymentType.equalsIgnoreCase("EPRAgeneratedBSAdmin")||paymentType.equalsIgnoreCase("EPRAPayerAdmin")
+		    		 ||paymentType.equalsIgnoreCase("EPRAPayerGen")||paymentType.equalsIgnoreCase("EPRAPayergeneratedAdmin")||paymentType.equalsIgnoreCase("EPRAPayergeneratedGen")
+		    		 ||paymentType.equalsIgnoreCase("EPRA")||paymentType.equalsIgnoreCase("EPRAgenerated"))
+			 {
+
+				  testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+				  testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+			      System.setProperty("tin", tinNumbers.get("PROV_TAX_ID_NBR").toString());
+				  System.setProperty("npi", tinNumbers.get("PROV_NPI_NBR").toString());
+				  System.setProperty("ELECTRONIC_PAYMENT_NUMBER", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+				  System.setProperty("fromDate", tinNumbers.get("SETL_DT").toString());
+				  System.setProperty("toDate", tinNumbers.get("SETL_DT").toString());
+				  System.setProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
+				  System.setProperty("ptnt_acct_nbr", tinNumbers.get("PTNT_ACCT_NBR").toString());
+				  System.setProperty("sbscr_id", tinNumbers.get("SBSCR_ID").toString());
+				  System.setProperty("clm_nbr", tinNumbers.get("CLM_NBR").toString());
+				  System.setProperty("ptnt_fst_nm", tinNumbers.get("PTNT_FST_NM").toString());
+				  System.setProperty("ptnt_lst_nm", tinNumbers.get("PTNT_LST_NM").toString());
+				  System.setProperty("lst_nm", tinNumbers.get("LST_NM").toString());
+
+					 
+			  }
 		    
 		    else if(paymentType.equalsIgnoreCase("byCheckNoOfReoriginNacha")||paymentType.equalsIgnoreCase("byCheckNoOfConslPayDtl"))
 		    {
@@ -1027,9 +864,9 @@ public String getTinForPaymentType(String paymentType)
 				  ||paymentType.equalsIgnoreCase("Multiple_PLB_BSAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_BSAdmin"))
 		  {
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
-			 // System.setProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			  System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 		  }
+		  
 		    
 		  }
 		    

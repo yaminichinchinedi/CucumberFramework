@@ -22,6 +22,8 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 			testConfig.putRunTimeProperty("suite", "EPRA");
 		else if(searchBy.equals("EPRAgenerated"))
 			testConfig.putRunTimeProperty("suite", "EPRAgenerated");
+
+		
 		if(priority.equals("1"))
 		{
 			testConfig.putRunTimeProperty("claimRange1", "1");
@@ -132,6 +134,7 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		
 		else if(searchBy.equals("EPRAgeneratedBSGen"))
 			testConfig.putRunTimeProperty("suite", "EPRAgeneratedBSGen");
+
 		
 		if(priority.equals("1"))
 		{

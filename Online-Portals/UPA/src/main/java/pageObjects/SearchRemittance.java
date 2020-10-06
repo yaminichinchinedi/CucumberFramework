@@ -1412,7 +1412,7 @@ public class SearchRemittance extends paymentSummary {
 		String actualPaymntNo="";
 		String expectedPaymntNo="";
 		boolean found=false;
-		if(srchType.equals("byDOPAndNpi"))
+		if(srchType.equals("byDOPAndNpi")||srchType.equals("EPRADOPAndNpi"))
 		{
 			//expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 			
@@ -1423,7 +1423,7 @@ public class SearchRemittance extends paymentSummary {
 			
 			searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table//tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		}
-		else if(srchType.equals("byElectronicPaymentNo"))
+		else if(srchType.equals("byElectronicPaymentNo")||srchType.equals("EPRAElectronicPaymentNo"))
 		{
 			//expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 			expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
@@ -1462,9 +1462,9 @@ public class SearchRemittance extends paymentSummary {
 				// if(actualPaymntNo.equals(expectedPaymntNo))
 			       {	
 			    	  found=true;
-			    	  if(srchType.equals("byDOPAndNpi"))
+			    	  if(srchType.equals("byDOPAndNpi")||srchType.equals("EPRADOPAndNpi"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
-			    	  else if(srchType.equals("byElectronicPaymentNo"))
+			    	  else if(srchType.equals("byElectronicPaymentNo")||srchType.equals("EPRAElectronicPaymentNo"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[4]/../td[8]/table/tbody/tr/td[3]/span[3]//img");
 			    	  else if(srchType.equals("viewPayments"))
 			    		  lnkEpraPdf=Element.findElement(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[11]/table/tbody/tr/td[3]/span/span/a/img");                  

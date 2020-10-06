@@ -1,7 +1,8 @@
 #Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 
-@UPASrchRemitEPRA1  @UPARegression @UPAPayerSrchEPRA
+
+@UPAProvSrchEPRA @UPARegression @UPASrchRemitEPRAPayer  
 Feature: UPA_EPRA_Srch_Remittance_Payer
 
 
@@ -19,15 +20,15 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
   And validate record is inserted in User_Event_Log.
 	
 	Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		       |   usertype   |
-						|	byElectronicPaymentNo	|			 PAY_Admin		      |					1				|			EPRAPayerAdmin		 |    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Admin					|					2				|			EPRAPayerAdmin		 |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Admin    		  |					1				|			EPRAPayerAdmin		 |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Admin					|					2				|			EPRAPayerAdmin		 |    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Gen  		      |					1				|			EPRAPayerGen			 |    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Gen  					|					2				|			EPRAPayerGen			 |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayerGen			 |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayerGen			 |    Payer     |
+						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		       |   usertype   |
+						|	EPRAElectronicPaymentNo	|			 PAY_Admin		      |					1				|			EPRAPayerAdmin		 |    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Admin					|					2				|			EPRAPayerAdmin		 |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Admin    		  |					1				|			EPRAPayerAdmin		 |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Admin					|					2				|			EPRAPayerAdmin		 |    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Gen  		      |					1				|			EPRAPayerGen			 |    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Gen  					|					2				|			EPRAPayerGen			 |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayerGen			 |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayerGen			 |    Payer     |
 
 	
 
@@ -46,15 +47,15 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	And validate record is inserted in User_Event_Log for "<usertype>"
 	
 	Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		              |   usertype   |
-						|	byElectronicPaymentNo	|			 PAY_Admin		      |					1				|			EPRAPayergeneratedAdmin		|    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Admin					|					2				|			EPRAPayergeneratedAdmin		|    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Admin    		  |					1				|			EPRAPayergeneratedAdmin		|    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Admin					|					2				|			EPRAPayergeneratedAdmin		|    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Gen  		      |					1				|			EPRAPayergeneratedGen		  |    Payer     |
-						|	byElectronicPaymentNo	|			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen		  |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayergeneratedGen		  |    Payer     |
-						|	    byDOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen	    |    Payer     |
+						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		              |   usertype   |
+						|	EPRAElectronicPaymentNo	|			 PAY_Admin		      |					1				|			EPRAPayergeneratedAdmin		|    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Admin					|					2				|			EPRAPayergeneratedAdmin		|    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Admin    		  |					1				|			EPRAPayergeneratedAdmin		|    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Admin					|					2				|			EPRAPayergeneratedAdmin		|    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Gen  		      |					1				|			EPRAPayergeneratedGen		  |    Payer     |
+						|	EPRAElectronicPaymentNo	|			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen		  |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Gen      		  |					1				|			EPRAPayergeneratedGen		  |    Payer     |
+						|	    EPRADOPAndNpi	      |			 PAY_Gen  					|					2				|			EPRAPayergeneratedGen	    |    Payer     |
 	
 	
 	

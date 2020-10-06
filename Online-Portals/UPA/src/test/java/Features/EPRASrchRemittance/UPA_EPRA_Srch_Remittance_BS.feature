@@ -1,7 +1,7 @@
 #Author: Athyusha
 #PPS.4012 job should be running to execute these test cases.
 
-@UPABSSrchEPRA @UPASrchRemitEPRA1  @UPARegression
+@UPABSSrchEPRA @UPARegression @UPABSSrchEPRABS
 Feature: UPA_EPRA_Srch_Remittance_BS 
 
 
@@ -20,15 +20,16 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
   
 
 Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		    |   usertype  |
-						|	byElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRABSAdmin			|     BS      |
-						|	byElectronicPaymentNo	|			 BS_Admin  					|					2				|			EPRABSAdmin			|     BS      |
-						|	    byDOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRABSAdmin			|     BS      |
-						|	    byDOPAndNpi	      |			 BS_Admin 					|					2				|			EPRABSAdmin			|     BS      |
-						|	byElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRABSGen				|     BS      |
-						|	byElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
-						|	    byDOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRABSGen				|     BS      |
-						|	    byDOPAndNpi	      |			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
+						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		    |   usertype  |
+						|	EPRAElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRABSAdmin			|     BS      |
+						|	EPRAElectronicPaymentNo	|			 BS_Admin  					|					2				|			EPRABSAdmin			|     BS      |
+						|	    EPRADOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRABSAdmin			|     BS      |
+						|	    EPRADOPAndNpi	      |			 BS_Admin 					|					2				|			EPRABSAdmin			|     BS      |
+						|	EPRAElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRABSGen				|     BS      |
+						|	EPRAElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
+						|	    EPRADOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRABSGen				|     BS      |
+						|	    EPRADOPAndNpi	      |			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
+						
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 
@@ -44,15 +45,15 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	
 
 Examples:
-						|		Search Criteria			|				credentials		  	|			priority		|			searchBy		          |   usertype  |
-						|	byElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	byElectronicPaymentNo	|			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	    byDOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	    byDOPAndNpi	      |			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	byElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRAgeneratedBSGen		|    BS       |
-						|	byElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRAgeneratedBSGen		|    BS       |
-						|	    byDOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRAgeneratedBSGen		|    BS       |
-						|	    byDOPAndNpi	      |			 BS_Gen   					|					2				|			EPRAgeneratedBSGen	  |    BS       |
+						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		          |   usertype  |
+						|	EPRAElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRAgeneratedBSAdmin	|    BS       |
+						|	EPRAElectronicPaymentNo	|			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
+						|	    EPRADOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRAgeneratedBSAdmin	|    BS       |
+						|	    EPRADOPAndNpi	      |			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
+						|	EPRAElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRAgeneratedBSGen		|    BS       |
+						|	EPRAElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRAgeneratedBSGen		|    BS       |
+						|	    EPRADOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRAgeneratedBSGen		|    BS       |
+						|	    EPRADOPAndNpi	      |			 BS_Gen   					|					2				|			EPRAgeneratedBSGen	  |    BS       |
 											
 
 Scenario Outline: - verify returned reason in search remittance page

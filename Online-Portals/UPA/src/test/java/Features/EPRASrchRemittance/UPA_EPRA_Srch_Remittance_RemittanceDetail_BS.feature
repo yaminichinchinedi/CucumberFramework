@@ -23,35 +23,35 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	
 Examples:
 	
-						|		Search Criteria			     |			    credentials			  |			priority		|			searchBy		      |   usertype  |
-			  		|	byElectronicPaymentNo	     |					BS_Admin				  |					1				|			EPRABSAdmin				|    BS       |
-						|	byElectronicPaymentNo	     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-					  |			byDOPAndNpi		         |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-			      |			byDOPAndNpi		         |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-					  |	byDOPAndAccountNo			     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-		    		|	byDOPAndAccountNo			     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-						|	byDOP&SubscriberID		     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-						|	byDOP&SubscriberID		     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-						|	byDOPAndPatientNm			     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-						|	byDOPAndPatientNm			     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-						|	byDOPAndRenderingProvider  |			    BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
-			  		|	byDOPAndRenderingProvider  |			    BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
-			  		|	byElectronicPaymentNo	     |					BS_Gen    				|					1				|			EPRABSGen 				|    BS       |
-						|	byElectronicPaymentNo	     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-					  |			byDOPAndNpi		         |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-			      |			byDOPAndNpi		         |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-					  |	byDOPAndAccountNo			     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-		    		|	byDOPAndAccountNo			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-						|	byDOP&SubscriberID		     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-						|	byDOP&SubscriberID		     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-						|	byDOPAndPatientNm			     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-						|	byDOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
-						|	byDOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
-			      |	byDOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+						|		Search Criteria			       |			    credentials			  |			priority		|			searchBy		      |   usertype  |
+			  		|	EPRAElectronicPaymentNo	     |					BS_Admin				  |					1				|			EPRABSAdmin				|    BS       |
+						|	EPRAElectronicPaymentNo	     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+					  |			EPRADOPAndNpi		         |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+			      |			EPRADOPAndNpi		         |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+					  |	EPRADOPAndAccountNo			     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+		    		|	EPRADOPAndAccountNo			     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+						|	EPRADOPAndRenderingProvider  |			    BS_Admin  				|					1				|			EPRABSAdmin				|    BS       |
+			  		|	EPRADOPAndRenderingProvider  |			    BS_Admin  				|					2				|			EPRABSAdmin				|    BS       |
+			  		|	EPRAElectronicPaymentNo	     |					BS_Gen    				|					1				|			EPRABSGen 				|    BS       |
+						|	EPRAElectronicPaymentNo	     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+					  |			EPRADOPAndNpi		         |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+			      |			EPRADOPAndNpi		         |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+					  |	EPRADOPAndAccountNo			     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+		    		|	EPRADOPAndAccountNo			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
+						|	EPRADOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRABSGen				  |    BS       |
+			      |	EPRADOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRABSGen				  |    BS       |
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to UPA portal and enters "<credentials>" and login
@@ -68,31 +68,31 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Examples:
 	
 						|		Search Criteria			     |			    credentials			  |			priority		|			searchBy		                |   usertype  |
-			  		|	byElectronicPaymentNo	     |					BS_Admin				  |					1				|			EPRAgeneratedBSAdmin	      |    BS       |
-						|	byElectronicPaymentNo	     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin		    |    BS       |
-					  |			byDOPAndNpi		         |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-			      |			byDOPAndNpi		         |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-					  |	byDOPAndAccountNo			     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-		    		|	byDOPAndAccountNo			     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOP&SubscriberID		     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOP&SubscriberID		     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOPAndPatientNm			     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOPAndPatientNm			     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-						|	byDOPAndRenderingProvider  |			    BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
-			  		|	byDOPAndRenderingProvider  |			    BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
-			  		|	byElectronicPaymentNo	     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byElectronicPaymentNo	     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
-					  |			byDOPAndNpi		         |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-			      |			byDOPAndNpi		         |					BS_Gen    				|					2				|			EPRAgeneratedBSGen			  	|    BS       |
-					  |	byDOPAndAccountNo			     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-		    		|	byDOPAndAccountNo			     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOP&SubscriberID		     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOP&SubscriberID		     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Gen    				|					1				|			EPRAgeneratedBSGen		  		|    BS       |
-						|	byDOPAndClaimNo				     | 				  BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOPAndPatientNm			     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
-						|	byDOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
-			  		|	byDOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+			  		|	EPRAElectronicPaymentNo	     |					BS_Admin				  |					1				|			EPRAgeneratedBSAdmin	      |    BS       |
+						|	EPRAElectronicPaymentNo	     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin		    |    BS       |
+					  |			EPRADOPAndNpi		         |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+			      |			EPRADOPAndNpi		         |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+					  |	EPRADOPAndAccountNo			     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+		    		|	EPRADOPAndAccountNo			     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+						|	EPRADOPAndRenderingProvider  |			    BS_Admin  				|					1				|			EPRAgeneratedBSAdmin				|    BS       |
+			  		|	EPRADOPAndRenderingProvider  |			    BS_Admin  				|					2				|			EPRAgeneratedBSAdmin				|    BS       |
+			  		|	EPRAElectronicPaymentNo	     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRAElectronicPaymentNo	     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+					  |			EPRADOPAndNpi		         |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+			      |			EPRADOPAndNpi		         |					BS_Gen    				|					2				|			EPRAgeneratedBSGen			  	|    BS       |
+					  |	EPRADOPAndAccountNo			     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+		    		|	EPRADOPAndAccountNo			     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOP&SubscriberID		     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOPAndClaimNo	  		     | 				  BS_Gen    				|					1				|			EPRAgeneratedBSGen		  		|    BS       |
+						|	EPRADOPAndClaimNo				     | 				  BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOPAndPatientNm			     |					BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |
+						|	EPRADOPAndRenderingProvider  |			    BS_Gen    				|					1				|			EPRAgeneratedBSGen				  |    BS       |
+			  		|	EPRADOPAndRenderingProvider  |			    BS_Gen    				|					2				|			EPRAgeneratedBSGen				  |    BS       |

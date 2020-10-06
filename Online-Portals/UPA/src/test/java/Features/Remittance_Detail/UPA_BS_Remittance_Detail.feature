@@ -4,7 +4,7 @@
 @UPARemitDetail  @UPARegression @BothCSRUPAScenarios 
 Feature: UPA Remittance Detail Billing Service
 
- 
+@UPARemitDetailBS
 Scenario Outline: Remittance Detail UI and FISL Validations for BS User
 
      Given User navigates to UPA portal and enters "<credentials>" and login
