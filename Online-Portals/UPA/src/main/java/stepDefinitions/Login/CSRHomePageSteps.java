@@ -15,13 +15,14 @@ import main.java.pageObjects.SearchTinPage;
 public class CSRHomePageSteps extends TestBase{
 	
 	CSRHomePage homePage=null;
+	LoginCSR loginPage=new LoginCSR(testConfig);
 	SearchTinPage searchTinPage;
 	ManageUsers manageUsers;
 
 
 	@Given("^User navigates to CSR portal and enters credentials and login$")
 	public void user_navigates_to_CSR_portal_and_enters_credentials_and_login(String userType) throws Throwable {
-		LoginCSR loginPage=new LoginCSR(testConfig);
+	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 	
@@ -29,7 +30,7 @@ public class CSRHomePageSteps extends TestBase{
 	
 	@Given("^User navigates to CSR portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_CSR_portal_and_enters_and_login(String userType) throws Throwable {
-		LoginCSR loginPage=new LoginCSR(testConfig);
+	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 
@@ -74,31 +75,14 @@ public class CSRHomePageSteps extends TestBase{
 		}
 	 
 
-	  @Then("^Verify Users List for \"([^\"]*)\" with \"([^\"]*)\" on selecting and deselecting of purge checkbox$")
-	  public void verify_Users_List_for_with_on_selecting_and_deselecting_of_purge_checkbox(String userType, String searchCriteria) throws Throwable {
-		  manageUsers=new ManageUsers(testConfig);
-		  manageUsers.verifyUserList(userType,searchCriteria);
-	  }
-	  
-	  @Then("^Verify UI Details for Purged \"([^\"]*)\" user$")
-	  public void verify_UI_Details_for_Purged_user(String userType) throws Throwable {
-		  manageUsers=new ManageUsers(testConfig);
-		  manageUsers.verifyDetailsForPurgedUser(userType);
-	    
-	  }
 
 	   @Then("^User clicks on Create/Maintain Enrollment link$")
 	   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
 		   homePage.clickCreateMaintainEnrollmentLink();
 	   }
 	   
-	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
-	   public void user_enters_and_active_TIN_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType) throws Throwable {
-			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
-			enrollment.doSearch(userType);
-			enrollment.validateViewEnrollment();
-			enrollment.clickEditBtn();
-		}
+
+	   
 
 	   @When("^Click on CSRManage User Link$")
 		public void click_on_CSRManage_User_Link() throws Throwable {
@@ -110,5 +94,12 @@ public class CSRHomePageSteps extends TestBase{
 	   public void user_clicks_on_Create_Maintain_Enrollment_link_on_CSR_HomePage() throws Throwable {
 		   homePage.clickCrtEnrlmnt();
 	   }
+
+
+		@Given("^User is on CSR Home Page$")
+		public void user_is_on_CSR_Home_Page() throws Throwable {
+			homePage.VerifyCSRLogin();
+			
+}
 
 }

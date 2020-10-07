@@ -92,21 +92,15 @@ public class MaintainEnrollment extends HomePage  {
 	       
 	             @FindBy(xpath="//td[contains(text(),'Payer Information')]")
 	             WebElement divPayerInfo;
-	             
-	             
-	             @FindBy(id="payerInfoControl")
-	         	WebElement payrInfo;
-	             
-	         	@FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
-	        	WebElement editButton;
-	           
 	
-	public MaintainEnrollment(TestBase testConfig)
-	{
-		this.testConfig = testConfig;
-		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, "/viewEnrollment.do");
-	}
+	         	public MaintainEnrollment(TestBase testConfig)
+	        	{
+	         		super(testConfig);
+	        		this.testConfig = testConfig;
+	        		PageFactory.initElements(testConfig.driver, this);
+	        		Browser.verifyURL(testConfig, "/viewEnrollment.do");
+	        	}
+
 	
 	public MaintainEnrollment verifyEnrollmentUI(String accessType)
 	  {

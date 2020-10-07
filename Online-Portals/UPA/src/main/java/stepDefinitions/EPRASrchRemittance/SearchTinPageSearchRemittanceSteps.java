@@ -8,11 +8,12 @@ import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.pageObjects.SearchTinPageSearchRemittance;
 import main.java.pageObjects.paymentSummary;
 
 public class SearchTinPageSearchRemittanceSteps extends TestBase {
-	
+	//SearchRemittanceSearchCriteria searcTin = new SearchRemittanceSearchCriteria(testConfig);
 	SearchTinPageSearchRemittance srchTinPage=new SearchTinPageSearchRemittance(testConfig);
 	private paymentSummary paysumm;	
 	@Then("^User enters tin on Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
@@ -21,6 +22,8 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 			testConfig.putRunTimeProperty("suite", "EPRA");
 		else if(searchBy.equals("EPRAgenerated"))
 			testConfig.putRunTimeProperty("suite", "EPRAgenerated");
+
+		
 		if(priority.equals("1"))
 		{
 			testConfig.putRunTimeProperty("claimRange1", "1");
@@ -131,6 +134,7 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		
 		else if(searchBy.equals("EPRAgeneratedBSGen"))
 			testConfig.putRunTimeProperty("suite", "EPRAgeneratedBSGen");
+
 		
 		if(priority.equals("1"))
 		{

@@ -26,17 +26,16 @@ public class UPARegistrationPage extends TestBase{
 	private WebElement lnkHeaderHome;
 	
 
-	@FindBy(linkText="Benefits of EPS")
-	private WebElement lnkHeaderBenefitsofEPS;
+	@FindBy(linkText="BENEFITS OF OPTUM PAY")
+	private WebElement lnkHeaderBenefitsofOptumPay;
 
-	@FindBy(linkText="How to Enroll")
+	@FindBy(linkText="HOW TO ENROLL")
 	private WebElement lnkHeaderHowtoEnroll;
 	
-
 	@FindBy(linkText="FAQs")
 	private WebElement lnkHeaderFAQs;
 
-	@FindBy(css="a.white-header__logo.sprite--optum-logo")
+	@FindBy(css="a.white-header__logo.latest--optumbank-logo")
 	private WebElement lnkOptumLogo;
 	
 	@FindBy(xpath="//a[contains(@class, 'button')andtext()='ENROLL NOW']")
@@ -48,6 +47,27 @@ public class UPARegistrationPage extends TestBase{
 	@FindBy(linkText="SIGN IN")
 	WebElement lnkSignInWithOptumId;
 	
+	@FindBy(tagName="nobr")
+	private WebElement footerText;
+	
+	@FindBy(linkText="BENEFITS OF OPTUM PAY")
+	private WebElement benefitsofOptumPayButton;
+	
+	
+	@FindBy(xpath = "//h1[contains(text(),'Welcome to Optum Pay™')]")
+	WebElement welcomeToOptumPayHeader;
+	
+	@FindBy(xpath = "//p[contains(text(),'There is significant cost savings available by enrolling in Optum Pay delivery. Use this calculator to get an estimate of the dollars your organization could save by switching to either ACH (direct deposit) or Virtual Card Payments (VCP).')]")
+	WebElement calculatorSectionText;
+	
+	@FindBy(xpath = "//h2[contains(text(),'Optum Pay Customer Support')]")
+	WebElement optumPayCustomerSupportHeader;
+
+	@FindBy(xpath = "//b[contains(text(),'Optum Pay Savings Calculator')]")
+	WebElement optumPaySavingsCalculatorHeader;
+	
+	@FindBy(linkText="CALCULATE MY SAVINGS")
+	private WebElement calculateMySavings;
 	
 	public UPARegistrationPage(TestBase testConfig) 
 	{
@@ -62,9 +82,12 @@ public class UPARegistrationPage extends TestBase{
 		Browser.waitForLoad(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
 		
+		String env=System.getProperty("env");
+		
 		//Added by AMit- ask him the reason for not putting elses
 		if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
-			Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");	
+		   Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In");
+
 	}
 	
 	
@@ -87,7 +110,7 @@ public class UPARegistrationPage extends TestBase{
 	public void clickAndVerifyHeaderBenefitsOfEPS()
 	{
 		String expectedURL="Benefits of EPS";
-		Element.click(lnkHeaderBenefitsofEPS,"Header Benefits of EPS");
+		Element.click(lnkHeaderBenefitsofOptumPay,"Header Benefits of EPS");
 		Browser.waitTillSpecificPageIsLoaded(testConfig, expectedURL);
 		expectedURL="benefitofeps.do";
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
@@ -165,9 +188,9 @@ public class UPARegistrationPage extends TestBase{
 		return new HowToEnroll(testConfig);
 	}
 	
-	public BenefitsOfEPS clickBenefitsOfEPSLink() {
-		Element.click(lnkHeaderBenefitsofEPS, "Benefits of EPS Link");
-		return new BenefitsOfEPS(testConfig);
+	public BenefitsOfOptumPay clickBenefitsOfOptumPayLink() {
+		Element.click(lnkHeaderBenefitsofOptumPay, "Benefits of EPS Link");
+		return new BenefitsOfOptumPay(testConfig);
 	}
 	
 		
@@ -224,5 +247,79 @@ public class UPARegistrationPage extends TestBase{
 //			   Log.Fail("Exception occured while execution");
 //		   }   
 //	}
+	
+	public void verifyOptumLogo()
+	{
+		Element.verifyElementPresent(lnkOptumLogo,"Optum Logo at header");
+	}
+	
+	public void verifyFooter()
+	
+	{
+		Helper.compareEquals(testConfig, "Footer Text", footerText.getText(), "2020 Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC");
+	}
+	
+	public void verifyHeaderBenefitsOfOptumPay()
+	{
+		Helper.compareEquals(testConfig, "Header Benefits of Optum Pay", lnkHeaderBenefitsofOptumPay.getText(), "BENEFITS OF OPTUM PAY");
+	}
+	
+	public void verifyBenefitsOfOptumPayButton()
+	
+	{
+		Helper.compareEquals(testConfig, "Benefits Of Optum Pay Text", benefitsofOptumPayButton.getText(), "BENEFITS OF OPTUM PAY");
+	}
+	
+	public void verifyWelcomeToOptumPayHeader()
+	
+	{
+		Helper.compareEquals(testConfig, "Welcome to Optum Pay™ Text", welcomeToOptumPayHeader.getText(), "Welcome to Optum Pay™");
+	}
+	
+	public void verifyOptumPayText(WebElement ele) {
+		String optum_pay = "Optum Pay";	
+		String text = ele.getText();
+		if (text.contains(optum_pay))
+		{
+		Log.Pass(ele + " " +"contains text" + " " + optum_pay);
+		}
+		else
+		{
+		Log.Fail(ele + " " + "does not contains text" + " " + optum_pay);
+		}
+		}
+		
+	
+	public void verifyCalculatorSectionText()
+	
+	{
+		this.verifyOptumPayText(calculatorSectionText);
+	}
+	
+	public void verifyOptumPayCustomerSupportHeader()
+	
+	{
+		Helper.compareEquals(testConfig, "Optum Pay Custome Support Text", optumPayCustomerSupportHeader.getText(), "Optum Pay Customer Support");
+	}
+	
+	public void clickAndVerifyOptumPaySavingsCalculator()
+	{
+		Browser.scrollTillAnElement(testConfig, optumPayCustomerSupportHeader, "calculateMySavings");
+		Element.click(calculateMySavings,"Calculate My Savings");
+		Helper.compareEquals(testConfig, "Optum Pay Savings Calculator Text", optumPaySavingsCalculatorHeader.getText(), "Optum Pay Savings Calculator");
+
+	}
+	public void verifyHomePage()
+	{
+		this.verifyOptumLogo();
+		this.verifyFooter();
+		this.verifyHeaderBenefitsOfOptumPay();
+		this.verifyWelcomeToOptumPayHeader();
+		this.verifyBenefitsOfOptumPayButton();
+		this.verifyCalculatorSectionText();
+		this.verifyOptumPayCustomerSupportHeader();
+		this.clickAndVerifyOptumPaySavingsCalculator();
+	}
+		
 
 }

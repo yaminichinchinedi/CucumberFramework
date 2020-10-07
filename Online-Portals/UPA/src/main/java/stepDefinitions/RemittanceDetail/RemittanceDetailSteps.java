@@ -10,7 +10,7 @@ import main.java.pageObjects.ValidateEnrollmentTypePage;
 public class RemittanceDetailSteps extends TestBase {
 	
     RemittanceDetail remitDetail = new RemittanceDetail(testConfig);
-   
+    SearchRemittance searchRemittance =  new SearchRemittance(testConfig);
 
 	@Then("^Validate all Headers in the Page$")
 	public void validate_all_Headers_in_the_Page() throws Throwable {
@@ -261,10 +261,36 @@ public class RemittanceDetailSteps extends TestBase {
 	    	remitDetail.verifyRemittancePageDataUPA(usertype);
 	    }
 	
-//	@Then("^click Return Button based on \"([^\"]*)\"$")
-//	public void click_Return_Button_based_on(String usertype) throws Throwable {
-//	   
-//		remitDetail.clickReturnBtn(usertype);
-//	}
+	 @Then("^Validate that Payer/Patient column name is changed to Payer$")
+	 public void validate_that_Payer_Patient_column_name_is_changed_to_Payer() throws Throwable {
+		 searchRemittance.verifyPayerText();
+	 }
 
+	 @Then("^Enter Check Number and click search$")
+	 public void enter_Check_Number_and_click_search() throws Throwable {
+		 remitDetail.enterCheckNumber();
+	 }
+
+	
+	@Then("^Click on Payment Number Link and Validate the Download (\\d+) option is displayed$")
+	public void click_on_Payment_Number_Link_and_Validate_the_Download_option_is_displayed(int arg1) throws Throwable {
+		remitDetail.verifyDownload835();
+    }
+ 
+	@Then("^Validate Column Headers in the grid for remittance detail Page$")
+	public void validate_Column_Headers_in_the_grid_for_remittance_detail_Page() throws Throwable {
+		remitDetail.verifyHeadersRemittanceDetail();
+	}
+
+	@Then("^Enter Electronic Payment Number for Rendering Provider$")
+	public void enter_Electronic_Payment_Number_for_Rendering_Provider() throws Throwable {
+	   
+		remitDetail.enterElecNumForRenderprov();
+	}
+
+	@Then("^Enter Electronic Payment Number based on \"([^\"]*)\"$")
+	public void enter_Electronic_Payment_Number_based_on(String CriteriaType) throws Throwable {
+	   
+		remitDetail.verifyRemitPageDataUPA(CriteriaType);
+	}
 }
