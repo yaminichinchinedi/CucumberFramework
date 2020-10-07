@@ -36,7 +36,7 @@ public class CSRHomePageSteps extends TestBase{
 	   
 	   @When("^Click on View Payments Link$")
 	   public void click_on_View_Payments_Link() throws Throwable {
-	     
+	     testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", "8223QG96591912");
 		   homePage.clickViewPaymentsLink();
 	   }
 	   

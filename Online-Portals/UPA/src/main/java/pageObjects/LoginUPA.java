@@ -41,7 +41,7 @@ public class LoginUPA {
     @FindBy(linkText="ACTIVATE")
     public WebElement btnActivate;
     
-   @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
+   @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") WebElement clickUPASignIn;
 	
 	
     @FindBy(id="tabHome")
@@ -225,8 +225,11 @@ public class LoginUPA {
 	public void setUserProperties(String userType)
 	{
 		int sqlRowNo=255;
+		System.out.println(userType);
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
+		System.out.println(id);
+		System.out.println(password);
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 		

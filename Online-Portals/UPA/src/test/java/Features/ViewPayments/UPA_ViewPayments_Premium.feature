@@ -2,7 +2,7 @@
 @UPAViewPayments_Premium
 Feature: UPA Manage User Functionality for Premium TIN
 
-  @UPAViewPayments_US2793429
+  @UPAViewPayments_US2793429 @sudama23
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<userType>" and login
 		When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -19,7 +19,7 @@ Feature: UPA Manage User Functionality for Premium TIN
  			|   PROV_Admin    | 		 premiumTin 	|		 Premium		|		AO		|
  			
  			
- 		@UPAViewPayments_US2783429
+ 		@UPAViewPayments_US2783429 @sudama
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<userType>" and login
 		When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

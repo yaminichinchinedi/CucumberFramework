@@ -2,7 +2,8 @@
 @CsrViewPayments @CSRRegression
 Feature: View Payment Access Payment
 
-  	@CSR_ViewPayments_US2801170,US2879948 @sudama
+		#covers both view and archive story
+  	@CSR_ViewPayments_US2801170,US2879948 @sudama2
 		Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		When Click on View Payments Link
@@ -11,7 +12,8 @@ Feature: View Payment Access Payment
 		Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options.
 		Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
 		Then Validate 835, ePRA and Payer PRA are enabled
-		Then Validate "<usertype>" is able to re-originate ACH/drop to check payments
+		#cannot be automated data constraints
+		#Then Validate "<usertype>" is able to re-originate ACH/drop to check payments
 		Then Validate default value of Payment Status filter displays New and dropdown have other status options.
 		Then Validate Archive column relabeled to Payment Status and has dropdown menu having values New, Pending and Closed
 		Then Validate user is able to change the value of Payment Status column

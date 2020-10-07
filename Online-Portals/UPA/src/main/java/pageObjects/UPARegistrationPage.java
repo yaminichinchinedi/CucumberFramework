@@ -45,7 +45,7 @@ public class UPARegistrationPage extends TestBase{
 	private TestBase testConfig;
 	public ValidateEFTERASubmitInfo validatw9SubmitForm;
 	
-	@FindBy(linkText="SIGN IN WITH OPTUM ID")
+	@FindBy(linkText="SIGN IN")
 	WebElement lnkSignInWithOptumId;
 	
 	

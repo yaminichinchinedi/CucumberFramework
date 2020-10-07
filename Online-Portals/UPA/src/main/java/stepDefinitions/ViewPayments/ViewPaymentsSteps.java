@@ -168,7 +168,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Validate Archive column relabeled to Payment Status and has dropdown menu having values New, Pending and Closed$")
     public void validate_Archive_column_relabeled_to_Payment_Status_and_has_dropdown_menu_having_values_New_Pending_and_Closed() throws Throwable {
-    	paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifyPaymentStatusColumnDropdwn();
+    	paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive");
     }
 
     @Then("^Validate user is able to change the value of Payment Status column$")
@@ -183,7 +183,7 @@ public class ViewPaymentsSteps extends TestBase {
 
     @Then("^Validate on Legacy Mode Pending and New Status are treated as Active and Closed Status as Archive$")
     public void validate_on_Legacy_Mode_Pending_and_New_Status_are_treated_as_Active_and_Closed_Status_as_Archive() throws Throwable {
-       
+       // might have to dlt this step
     }
     
     @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
