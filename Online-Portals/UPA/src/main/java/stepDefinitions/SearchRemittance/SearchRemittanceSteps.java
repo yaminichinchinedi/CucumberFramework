@@ -194,4 +194,30 @@ public class SearchRemittanceSteps extends TestBase{
 		obj_FTPaccess.Closeconnection();				
 		
 	}
+	
+	@Then("^Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace$")
+	public void validate_in_Grid_search_Results_Type_column_or_Payment_Status_field_not_displayed_and_is_relabeled_to_ACH_Trace() throws Throwable {
+		srchRemittance.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+	}
+
+	@Then("^Validate Claim Count column is present which appears as Hyperlink for nonzero claim count and on click redirects to Remittance Detail page$")
+	public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_for_nonzero_claim_count_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
+		srchRemittance.verifyClaimCountHyperlink("Claim Count","Search Remittance");
+	}
+
+	@Then("^Validate ePRA,pPRA and (\\d+) fields are enabled$")
+	public void validate_ePRA_pPRA_and_fields_are_enabled(int arg1) throws Throwable {
+		srchRemittance.verify835EPRAlink("Search Remittance");
+	}
+
+	@Then("^Validate Archived Coulmn,Save Archived button is relabeled to Payment Status and Save button respectively$")
+	public void validate_Archived_Coulmn_Save_Archived_button_is_relabeled_to_Payment_Status_and_Save_button_respectively() throws Throwable {
+		srchRemittance.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifySaveBtnRelabled(); 
+
+	}
+
+	@Then("^Validate that Search Criertia box do not contain hyphen following colon on each search criteria option$")
+	public void validate_that_Search_Criertia_box_do_not_contain_hyphen_following_colon_on_each_search_criteria_option() throws Throwable {
+		srchRemittance.validateHyfen();
+	}
 }

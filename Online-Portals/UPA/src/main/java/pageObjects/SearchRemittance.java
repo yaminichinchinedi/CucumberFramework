@@ -1679,4 +1679,12 @@ public class SearchRemittance extends paymentSummary {
 		return this;
 		
 	 } 
+	public SearchRemittance validateHyfen(){
+		if (Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table/tbody/tr[4]").getText().contains("-"))
+			Log.Fail("Search Criteria contains hyphen");
+		else
+			Log.Pass("Search Criteria do not contains hyphen");
+		
+		return this;
+	}
 }

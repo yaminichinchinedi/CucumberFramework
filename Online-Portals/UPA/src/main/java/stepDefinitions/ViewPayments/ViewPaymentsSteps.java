@@ -141,5 +141,51 @@ public class ViewPaymentsSteps extends TestBase {
                paySum.verifyMktType(mktTypeFilter);
     	paySum.verifyMktType(mktTypeFilter);
     }
-       
+    
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out() throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions("Standard");
+        
+    }
+
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out() throws Throwable {
+    	paySum.verifyPaymentStatusFilter("Standard");
+        
+    }
+
+    @Then("^Validate Archive/Save changes button is not there$")
+    public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
+        
+    	paySum.verifySavArchbtnNotPresent();
+    }
+
+    @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (\\d+)field as enabled\\.$")
+    public void validate_Claim_Count_ePRA_pPRA_and_Payment_status_fields_appear_with_a_gray_box_with_value_N_A_and_field_as_enabled(int arg1) throws Throwable {
+        paySum.verifyColumnValuesNA();
+        
+    }
+	  
+	@Then("^Validate selecting different standard TIN page gets refreshed and will display limited UI View$")
+	public void validate_selecting_different_standard_TIN_page_gets_refreshed_and_will_display_limited_UI_View() throws Throwable {
+		paySum.selectTinNverfyPagRfrsh();
+	}
+
+    //Amit code imported.Modify and check all the codes
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions("Standard");
+    }
+
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
+    	paySum.verifyPaymentStatusFilter("Standard");
+    }
+
+    @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
+    public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
+    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    }
+
+  
 }

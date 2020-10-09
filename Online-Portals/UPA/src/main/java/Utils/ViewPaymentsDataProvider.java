@@ -911,6 +911,9 @@ public String getTinForPaymentType(String paymentType)
 			case "LegacyOrPremiOrStandard":
 				sqlRowNo=1605;
 				break;	
+			case "TinWthatlstOnePayNum":
+				sqlRowNo=1610;
+				break;	
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
