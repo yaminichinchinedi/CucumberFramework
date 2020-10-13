@@ -18,16 +18,16 @@ Feature: UPA Manage User Functionality for Premium TIN
       |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		AV			|
       |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		VO			|
  
-    
- Scenario Outline: US2711909_1 UPA Provider Admin ManageUsers_PurgeUser Checkbox
+    @US2801047
+ Scenario Outline: US2801047_ UPA Provider Admin ManageUsers_AddUserFunctionality for Premium Tins
     Given User navigates to UPA portal and enters "<userType>" and login
     When Click on Manage User Link
 	  Then Select one of the Active User and select Associate BS User to all Providers as No
 	  Then Enter "<productSelection>" TIN with "<tinTyp>" click on Add TIN Association,Click on save and User updated
       Examples:
       |    userType     |   accessType  |	productSelection|tinTyp|	
-      |      BS_Admin   |   BS     	    |Premium      | AO  | 
-      |      BS_Admin   |   BS     	  |Premium        | VO   |
+      |      BS_Admin   |   BS     	    |		Premium       | AO   | 
+      |      BS_Admin   |   BS     	    |		Premium       | VO   |
       
       
        @UPAUS2879930
@@ -50,22 +50,22 @@ Feature: UPA Manage User Functionality for Premium TIN
     Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to UPA portal and enters "<userType>" and login
     When Click on Manage User Link
-    Then User verifies Add User button visiblity for "BillingService" based on System Mode like FeeBased or Legacy.
-   # Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
+    Then User verifies Add User button visiblity for "BillingService" based on "<System Mode>" like FeeBased or Legacy.
+    #Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
              
 	  
 	  Examples:
 		      |    userType     | System Mode|  
 		      |      BS_Admin   | FEEBASED   |
-		       |      BS_Admin  | LEGACY  |
+		      |      BS_Admin  | LEGACY  |
  
  
- @UPAUSAccessPay12
+
  @UPAUS2879930_Pay
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 	Given User navigates to UPA portal and enters "<userType>" and login
 	When  Click on Manage User Link
-   Then User verifies Add User button visiblity for "Payer" based on System Mode like FeeBased or Legacy.         
+   Then User verifies Add User button visiblity for "Payer" based on "<System Mode>" like FeeBased or Legacy.         
 	Examples:
       |    userType     |		System Mode	|
       |     PAY_Admin   |  		FEEBASED	|

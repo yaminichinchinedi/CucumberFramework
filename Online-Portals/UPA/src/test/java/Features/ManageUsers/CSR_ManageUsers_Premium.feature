@@ -30,7 +30,7 @@ Examples:
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
     And   Users selects  "<userType>" from dropdown and enter Tin or select payer
-    Then User verifies Add User button visiblity for "CSR","BillingService" based on System Mode like FeeBased or Legacy.         
+    Then User verifies Add User button visiblity for "CSR","BillingService" based on "<System Mode>" like FeeBased or Legacy.         
     
 Examples:
 	  |    userType   |   credentials     |tinTyp |	portalAccess    |
@@ -41,7 +41,7 @@ Examples:
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
     And   Users selects  "<userType>" from dropdown and enter Tin or select payer
-    Then User verifies Add User button visiblity for "CSR","Payer" based on System Mode like FeeBased or Legacy.         
+    Then User verifies Add User button visiblity for "CSR","Payer" based on "<System Mode>" like FeeBased or Legacy.         
     
 Examples:
 	  |    userType   |   credentials     |
