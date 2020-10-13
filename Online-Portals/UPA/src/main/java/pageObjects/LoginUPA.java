@@ -113,11 +113,12 @@ public class LoginUPA {
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
 		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
-		Browser.waitForPageLoad(testConfig);
+		Browser.wait(testConfig, 3);
 
 		try {
 			if (txtErrorMsg1 != null) {
@@ -178,10 +179,10 @@ public class LoginUPA {
 		else
 			Log.Comment("Unidentified Question :" + " " + securityQuestion.getText(), "Red");
 
-		if (!chkBoxRememberDevice.isSelected())
-			Element.click(chkBoxRememberDevice, "'Remember my device' checkbox");
+// 		if (!chkBoxRememberDevice.isSelected())
+// 			Element.click(chkBoxRememberDevice, "'Remember my device' checkbox");
 
-
+                Browser.wait(testConfig, 2);
 		Element.click(btnNext, "Next to submit answer");
 	}
 
@@ -204,14 +205,14 @@ public class LoginUPA {
 
 
 	private void fillFatherAns() {
-		if(id.equals("TestPayerStage"))
-	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
+		if (id.equals("TestPayerStage"))
+			Element.enterData(txtboxSecurityAns, "Lal", "Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
 		else
-			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'testpt2' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
-			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'testpt1' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {

@@ -355,7 +355,7 @@ public class ManageUsers extends AddUserDetails
 	{
 		btnSave=Element.findElement(testConfig, "xpath", "//input[contains(@value,'Save')]");
 		Element.clickByJS(testConfig,btnSave, "Save Button");
-		return new ManageUsers(testConfig);
+		return this;
 	}
 	
 	public CancelManageUser clickCancel()
@@ -509,8 +509,9 @@ public class ManageUsers extends AddUserDetails
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=18;
         else if(userType.equalsIgnoreCase("PAY"))
-        	sqlRowNo=19;
-        
+        	//sqlRowNo=19;
+        	sqlRowNo=401;
+
 		//Find an Active User associated with logged in Provider Tin number
 		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		
@@ -576,7 +577,7 @@ public class ManageUsers extends AddUserDetails
 	{
 		for(WebElement userName:userNames)
 		{ 
-		  if(userName.getText().toString().contains(nameOfUser))
+		  if(userName.getText().toString().toUpperCase().contains(nameOfUser) || userName.getText().toString().toLowerCase().contains(nameOfUser) || userName.getText().toString().contains(nameOfUser))
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;

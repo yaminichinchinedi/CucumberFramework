@@ -129,7 +129,9 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
   		case "byDOSAndZeroPmntClms":
-  			sqlRowNo=251;
+  			//sqlRowNo=251;
+  			sqlRowNo=243;
+
  			break;
  			
  		 case "byDOSAndSubscriberId":
@@ -142,7 +144,8 @@ public String getTinForPaymentType(String paymentType)
  			 break;
  			 
  		 case "byDOSAndNpi":
- 			 sqlRowNo=253;
+ 			 sqlRowNo=245;
+ 			 //sqlRowNo=253;
  			 break;
 
  		 case "byDOSAndClmNo":
@@ -151,7 +154,8 @@ public String getTinForPaymentType(String paymentType)
  			 break;
  			 
  		 case "byDOSAndMarketType":
- 			 sqlRowNo=254;
+ 			 //sqlRowNo=254;
+ 			 sqlRowNo=246;
  			 break;
  			 
 		 case "NON":
@@ -163,6 +167,10 @@ public String getTinForPaymentType(String paymentType)
 		 case "NPI_MultipleTIN":
 	 		 sqlRowNo=409; 
 	 		 break;
+	 		 
+		    case "PatientPayment":
+			sqlRowNo=417; 
+			break;
 // 		 case "byDOP":
 // 		 case "byDOPAndAccountNo":
 // 			 sqlRowNo=204;
@@ -989,7 +997,7 @@ public String getTinForPaymentType(String paymentType)
 		    insertQueryRowNo=24;
 		}
 		
-		else if(userType.equals("Payer"))
+		else if(userType.equals("Payer") || userType.equals("PAY") || userType.equals("SUBPAYER"))
 		{ 
 			sqlRowNo=242;
 		}
@@ -1069,7 +1077,10 @@ public String getTinForPaymentType(String paymentType)
  		    case "medicalPayment":
  		    sqlRowNo=142;
  		    break;
- 	 		
+ 		    
+ 		    case "NON":
+ 		    sqlRowNo=250; 
+ 	 		break;
  	 		
  	 		default:
  	 			Log.Comment("No SQL Row defined");

@@ -470,19 +470,20 @@ public class SearchRemittance extends paymentSummary {
 //			Element.clickByJS(testConfig, lnkName, colName);
 			Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 			actualListString = getColumnValue(colName);	
-			for(int i=0;i<30;i++)
+			for(int i=0;i<listString.size();i++)
 				newList.add(listString.get(i));
 				
 			Helper.compareEquals(testConfig, colName, newList, actualListString);
 
 			// now sorting in descending order
 			Collections.sort(listString, Collections.reverseOrder());
+			newList.clear();
 			if(listString.size()<30)
 				for(int i=0;i<listString.size();i++)
-					newList.add(listOfPatients.get(0).get(0));
+					newList.add(listOfPatients.get(i).get(0));
 			else
 				for(int i=0;i<30;i++)
-					newList.add(listOfPatients.get(0).get(0));
+					newList.add(listOfPatients.get(i).get(0));
 			Element.clickByJS(testConfig, lnkName, colName);
 			Element.expectedWait(divSearchCriteria, testConfig, "Search Results div", "Search Results div");
 			actualListString.clear();
@@ -827,9 +828,11 @@ public class SearchRemittance extends paymentSummary {
 				   if(headers.get(j).equals("Payer PRA"))
 					   k=k+4;
 				  details=divSearchResults.get(i).findElements(By.tagName("td")).get(k).getText();
-			      details=details.replace("\n", "");
-			      if(headers.get(j).contains("Payment Status"))
-			    	  innerMap.put("Payment Status", details);
+			      //details=details.replace("\n", "");
+			      if(headers.get(j).contains("Payment Status")) {
+			    	  String[] detail = details.split("\n");
+			    			  innerMap.put("Payment Status", detail[0]);}
+			      
 			      else
 			      innerMap.put(headers.get(j), details);	
 				 }
@@ -1379,8 +1382,13 @@ public class SearchRemittance extends paymentSummary {
 		case "Market Type":
 			for(int i=0;i<totalPayments;i++)
 				list.add(getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			break;	
+		
+		case "Archive":
+			for(int i=0;i<totalPayments;i++)
+				list.add(getArchiveIndicator(payments[i].getArchiveIndicator()));
 			break;
-		}	
+		}
 		
 	  
 	   }

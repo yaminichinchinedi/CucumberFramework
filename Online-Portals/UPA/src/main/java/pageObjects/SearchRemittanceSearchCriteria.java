@@ -20,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
@@ -194,8 +195,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");
-		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
 		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
 		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
@@ -232,8 +239,14 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	//For selecting date into calendar
 		    	clickFromDateIcon(criteriaType).setDate(fromDateDos, criteriaType).clickToDateIcon(criteriaType).setDate(toDateDos, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from Payer dropdown");//
-		    	break;		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	break;		    	
 		    }
 		    
 		    
@@ -246,8 +259,14 @@ public class SearchRemittanceSearchCriteria {
 
 		    	
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//		    	
-		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
 		    	testConfig.putRunTimeProperty("fromDate",date);
 		    	testConfig.putRunTimeProperty("toDate",date);
 		    	testConfig.putRunTimeProperty("key", "MARKET_TYPE");
@@ -294,8 +313,14 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(accountNo, acntNo, "Enter patient account no as : "+acntNo, "Account Number");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer deopdown");//
-		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	date=Helper.changeDateFormat(date, "mm/dd/yyyy", "yyyy-mm-dd");
 		    	testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
 		    	testConfig.putRunTimeProperty("value", acntNo);	
 		    	testConfig.putRunTimeProperty("fromDate",date);
@@ -350,8 +375,14 @@ public class SearchRemittanceSearchCriteria {
 				date=Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(subscriberID, sbscrId, "Filling patient subscriber Id: "+sbscrId, "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer deopdown");//
-		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	
 		    	break;
 		    }
@@ -398,8 +429,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.clickByJS(testConfig,NPI, "NPItext box");
 		    	Element.enterData(NPI, srchData.get("PROV_NPI_NBR").toString(), "Filling NPI No: "+ srchData.get("PROV_NPI_NBR").toString(), "NPI");
 		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(fromDate, "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare",  "United Health Care from payer dropdown");//
-		    	break;
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	break;
 		    }
 		    
 		    case "EPRADOPAndClaimNo":
@@ -441,8 +478,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
 		    	Element.enterData(claimNumber, srchData.get("CLM_NBR").toString(), "Enter claim no as : "+srchData.get("CLM_NBR").toString(), "Claim Number");
 		    	clickFromDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType).clickToDateIcon(criteriaType).setDate(Helper.changeDateFormat(srchData.get("SETL_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy"), criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
-		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	break;		    	
 		    }
 		    
@@ -491,8 +534,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.enterData(patientFirstName, srchData.get("PTNT_FST_NM").toString(), "Enter First Name as : "+srchData.get("PTNT_FST_NM").toString(), "First Name");
 		    	Element.enterData(patientLastName, srchData.get("PTNT_LST_NM").toString(), "Enter Last Name as: "+srchData.get("PTNT_LST_NM").toString(), "Last Name");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");//
-		    	break;		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	break;		    	
 		    }
 
 		    
@@ -505,8 +554,14 @@ public class SearchRemittanceSearchCriteria {
 		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
-		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	break;		    	
 		    }
 		    
@@ -516,7 +571,14 @@ public class SearchRemittanceSearchCriteria {
 		    	date=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	clickFromDateIcon(criteriaType).setDate(date, criteriaType).clickToDateIcon(criteriaType).setDate(date, criteriaType);
 		    	Element.click(testConfig.driver.findElement(By.xpath("//input[@value=" + "'" + testConfig.getRunTimeProperty("value") + "'" + "]")), "Market checkbox :" + testConfig.getRunTimeProperty("value"));
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	break;		    	
 		    }
 		    
@@ -526,7 +588,14 @@ public class SearchRemittanceSearchCriteria {
 		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
 		    	Element.click(testConfig.driver.findElement(By.xpath("//input[@value=" + "'" + testConfig.getRunTimeProperty("value") + "'" + "]")), "Market checkbox :" + testConfig.getRunTimeProperty("value"));
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "United Health Care from payer dropdown");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;		    	
 		    }
 
@@ -537,7 +606,14 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    	Element.enterData(accountNo, testConfig.getRunTimeProperty("value"), "Filling patient account no: "+ testConfig.getRunTimeProperty("value"), "Account Number");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    }
 		    
@@ -549,7 +625,14 @@ public class SearchRemittanceSearchCriteria {
 		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	Element.enterData(subscriberID, testConfig.getRunTimeProperty("value"), "Filling patient subscriber Id: "+testConfig.getRunTimeProperty("value"), "subscriber Id");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	testConfig.putRunTimeProperty("appIdentifier", "EPS");
 		    	testConfig.putRunTimeProperty("version", "1.0");
 		    	break;
@@ -563,8 +646,14 @@ public class SearchRemittanceSearchCriteria {
 				
 		    	Element.enterData(NPI,testConfig.getRunTimeProperty("NPI"),"Enter NPI No as : "+ testConfig.getRunTimeProperty("NPI"), "NPI");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
-		    	
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }		    	
 		    	break;
 		    }
 
@@ -576,7 +665,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.clickByJS(testConfig,claimNumber, "Claim Number text box");
 		    	Element.enterData(claimNumber, testConfig.getRunTimeProperty("value"), "Enter claim no as : "+testConfig.getRunTimeProperty("value"), "Claim Number");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    }
 		    
@@ -588,7 +684,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.enterData(patientFirstName, testConfig.getRunTimeProperty("value"), "Enter First Name as : "+testConfig.getRunTimeProperty("value"), "First Name");
 		    	Element.enterData(patientLastName, testConfig.getRunTimeProperty("value1"), "Enter Last Name as: "+testConfig.getRunTimeProperty("value1"), "Last Name");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    }
 
@@ -598,7 +701,14 @@ public class SearchRemittanceSearchCriteria {
 		    	String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
 		    	Element.click(zeroPaymentClaims, "Zero Payment Claims");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    }
 		    
@@ -607,7 +717,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
 		    	Element.enterData(paymentNumber,srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    	
 		    case "byElectronicPaymenForACH":
@@ -616,7 +733,14 @@ public class SearchRemittanceSearchCriteria {
 		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
 		    	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
 		    	Element.enterData(paymentNumber, srchData.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
-		    	Element.selectByVisibleText(drpDwnPayer, "UnitedHealthcare", "Payer selection on search remittance search criteria page");
+		    	try {
+					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
+		    	}
+			    catch(org.openqa.selenium.NoSuchElementException e) {
+					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
+					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
+			    }
 		    	break;
 		    	
 		    case "byElectronicPaymenForNON":
