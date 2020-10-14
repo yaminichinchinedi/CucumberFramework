@@ -64,6 +64,7 @@ public class ViewPaymentsSteps extends TestBase {
                
                testConfig.putRunTimeProperty("key", key);
                testConfig.putRunTimeProperty("value", value); 
+               testConfig.putRunTimeProperty(key, value); 
     }
     
     @When("^Click on View Payments Link for UPA$")
@@ -149,8 +150,6 @@ public class ViewPaymentsSteps extends TestBase {
                paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
     }
 
-  
-
     @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_With_for_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
     	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
@@ -230,44 +229,36 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_Archive_Save_changes_button_is_relabeled_to_Save() throws Throwable {
         paySum.verifySaveBtnRelabled();
     }
-    
-    @Then("^Validate default value of Payment Status filter displays New and dropdown have other status options\\.$")
-    public void validate_default_value_of_Payment_Status_filter_displays_New_and_dropdown_have_other_status_options() throws Throwable {
-    	paySum.verifyPaymentStatusFilter();
-    }
-    
-    @Then("^Validate Archive column relabeled to Payment Status and has dropdown menu having values New, Pending and Closed$")
-    public void validate_Archive_column_relabeled_to_Payment_Status_and_has_dropdown_menu_having_values_New_Pending_and_Closed() throws Throwable {
-    	paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive");
-    }
 
     @Then("^Validate user is able to change the value of Payment Status column$")
     public void validate_user_is_able_to_change_the_value_of_Payment_Status_column() throws Throwable {
        paySum.verifyPaymentStatusColumnDropdwn();
     }
 
-    @Then("^Validate upon changing of status in Payment Status filter appropriate payments display\\.$")
-    public void validate_upon_changing_of_status_in_Payment_Status_filter_appropriate_payments_display() throws Throwable {
-       
-    }
-
-    @Then("^Validate on Legacy Mode Pending and New Status are treated as Active and Closed Status as Archive$")
-    public void validate_on_Legacy_Mode_Pending_and_New_Status_are_treated_as_Active_and_Closed_Status_as_Archive() throws Throwable {
-       // might have to dlt this step
-    }
-    
     @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
     public void validate_ePRA_and_Payer_PRA_are_enabled(int arg1) throws Throwable {
       paySum.verify835EPRAlink();
     }
 
-    @Then("^Validate \"([^\"]*)\" is able to re-originate ACH/drop to check payments$")
-    public void validate_is_able_to_re_originate_ACH_drop_to_check_payments(String arg1) throws Throwable {
-       paySum.verifyResendPayment();
-    }
     @Then("^Validate payment summary page for only single NPI payments for \"([^\"]*)\"$")
     public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable {
     	paySum.verifyNPI(paymentType);
-    	}
+    }
+    
+    @Then("^Click on print Payment Summary button\\.$")
+    public void click_on_print_Payment_Summary_button() throws Throwable {
+        paySum.clickPrintPaymentBtn();
+    }
+    
+    @Then("^Set search filters for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
+    public void set_search_filters_for_having_With(String archivefilter, String quickSearchFilter, String filterPayments) throws Throwable {
+    	paySum.setSearchFilters(filterPayments, quickSearchFilter, archivefilter, filterPayments);
+    }
+
+    @Then("^Validate the data of Print Payment Summary page\\.$")
+    public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
+    	testConfig.putRunTimeProperty("page", "printPaymentSummary");
+    	 paySum.verifyPrintPaymentSummaryPage();
+    }
 
 }

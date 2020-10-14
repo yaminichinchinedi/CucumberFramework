@@ -70,36 +70,44 @@ public class MaintainEnrollment extends HomePage  {
 	
 	@FindBy(xpath="//td[@align='right']//input[@name='Edit']")
 	WebElement btnEdit;
-	 @FindBy(linkText="View W9")
-	       WebElement lnkw9;
 	 
-	       @FindBy(linkText="View Voided Check")
-	       WebElement lnkvoidChk;
+	@FindBy(linkText="View W9")
+	WebElement lnkw9;
 	 
-	       @FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
-	       WebElement btnEdit1;
-	 
-	       @FindBy(xpath="//td[@align='right']//input[@value='Cancel']")
-	       WebElement btnCancel1;
-	 
-	       @FindBy(xpath="//input[@value='  Edit  '][1]")
-	       WebElement btnEdit2;
-	 
-	       @FindBy(xpath="//input[@value='Cancel'][1]")
-	       WebElement btnCancel2;
-	       @FindBy(xpath="//td[contains(text(),'Organization Information')]")
-	             WebElement divOrgInfo;
+	@FindBy(linkText="View Voided Check")
+	WebElement lnkvoidChk;
+ 
+	@FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
+   	WebElement btnEdit1;
+ 
+	@FindBy(xpath="//td[@align='right']//input[@value='Cancel']")
+	WebElement btnCancel1;
+ 
+	@FindBy(xpath="//input[@value='  Edit  '][1]")
+	WebElement btnEdit2;
+ 
+	@FindBy(xpath="//input[@value='Cancel'][1]")
+	WebElement btnCancel2;
+   
+	@FindBy(xpath="//td[contains(text(),'Organization Information')]")
+	WebElement divOrgInfo;
 	       
-	             @FindBy(xpath="//td[contains(text(),'Payer Information')]")
-	             WebElement divPayerInfo;
+	@FindBy(xpath="//td[contains(text(),'Payer Information')]")
+	WebElement divPayerInfo;
 	
-	         	public MaintainEnrollment(TestBase testConfig)
-	        	{
-	         		super(testConfig);
-	        		this.testConfig = testConfig;
-	        		PageFactory.initElements(testConfig.driver, this);
-	        		Browser.verifyURL(testConfig, "/viewEnrollment.do");
-	        	}
+	@FindBy(id="payerInfoControl")
+   	WebElement payrInfo;
+       
+   	@FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
+  	WebElement editButton;
+	
+ 	public MaintainEnrollment(TestBase testConfig)
+	{
+ 		super(testConfig);
+		this.testConfig = testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+		Browser.verifyURL(testConfig, "/viewEnrollment.do");
+	}
 
 	
 	public MaintainEnrollment verifyEnrollmentUI(String accessType)

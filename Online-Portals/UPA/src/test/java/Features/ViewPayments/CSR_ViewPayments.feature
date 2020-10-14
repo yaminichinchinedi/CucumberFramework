@@ -36,7 +36,7 @@ Feature: CSR View Payments UI Functionality
         |    credentials  |   paymentType  		   |key					|value  |
         |      Super	  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
 
-@CSRViewPayments_TC004 @sudama1
+@CSRViewPayments_TC004 
   Scenario Outline: Validate correct payment information is displayed on filter Show All
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -45,10 +45,10 @@ Feature: CSR View Payments UI Functionality
     Then Verify Search Results With "<filterPayments>" for "<quickSearchFilter>" 
     Examples:
       |credentials   |   paymentType  				|	filterPayments	|	quickSearchFilter	| key					|value  |
-      |Super		     |   generalPayment60Days   |	Show All		|	Last 60 days		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   generalPayment90Days   |	Show All		|	Last 90 days		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 4-6 months        |	Show All		|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 6-9 months        |	Show All		|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   generalPayment60Days   |	Show All		|	Last 60 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   generalPayment90Days   |	Show All		|	Last 90 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   Last 4-6 months        |	Show All		|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   Last 6-9 months        |	Show All		|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
       |Super		     |   Last 9-13 months       |	Show All		|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
 
   @CSRViewPayments_TC005

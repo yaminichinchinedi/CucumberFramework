@@ -105,7 +105,16 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	}
 	
 	@Then("^Enter \"([^\"]*)\" portal access tin for \"([^\"]*)\" and \"([^\"]*)\" criteria and click submit button$")
-	public void enter_portal_access_tin_for_and_criteria_and_click_submit_button(String premiumTin, String arg2, String arg3) throws Throwable {
-		ViewPaymentsTIN.enterTin(premiumTin).clickSearchBtn();
+	public void enter_portal_access_tin_for_and_criteria_and_click_submit_button(String portalAccess, String tinType, String searchCriteria) throws Throwable {
+		String paymentType=searchCriteria+"_"+tinType+"_"+portalAccess;
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
+	}
+	
+	@When("^User Enters tin for \"([^\\\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_Enters_tin_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
+		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
+		
 	}
 }

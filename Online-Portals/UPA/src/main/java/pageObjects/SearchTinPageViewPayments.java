@@ -373,5 +373,57 @@ public class SearchTinPageViewPayments {
 		dataProvider.associateTinWithUser(userType,tin);
 		return tin;
 	}
+	public String getTinUPA(String userType,String paymentType,String tinType,String portalAccess)
+	{
+		
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForSearchCriteria(paymentType,tinType,portalAccess);
+		dataProvider.associateTinWithUser(userType,tin);
+		return tin;
+	}
+public SearchTinPageViewPayments enterPaymentTinUPA(String userType,String paymentType, String tinType,String portalAccess) {
+		
+		String tin = getTinUPA(userType,paymentType,tinType,portalAccess); 
+		System.setProperty("tin", tin);
+		
+		switch (userType)
+		{
+		   case "PROV": 
+		   {
+			
+			 WebElement homeTab = Element.findElement(testConfig, "id", "tabHome");
+			 List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
+
+			 String Enrolledtin = tin + " - Enrolled";
+			 if ((!tinList.contains(Enrolledtin))) 
+			 {
+				Element.click(homeTab, "home Tab");
+				Browser.waitForLoad(testConfig.driver);
+				Browser.wait(testConfig, 3);
+				Element.expectedWait(prvdrTIN, testConfig, "Tin dropdown", "Tin dropdown");
+			 }
+			 
+			Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
+			break;
+		}
+		   
+		case "BS": 
+		{
+			testConfig.putRunTimeProperty("tin", tin);
+			Element.enterData(bstinDrpDwn, tin, "Enter Tin to proceed for View Payments","Tin Textbox");
+			Element.click(submitBtn, "Search Button");
+			break;
+		}
+		
+		case "Payer": 
+		{
+			Element.enterData(payertinDrpDwn, tin, "Enter Tin to proceed for View Payments","Tin Textbox");
+			Element.click(submitBtn, "Search Button");
+			break;
+		}
+		
+	}
+		return this;
+	}
 
 }

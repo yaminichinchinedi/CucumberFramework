@@ -78,17 +78,29 @@ public class EpsConsolidatedClaimPaymentSummaries
 
 	@XmlElement(name = "TotalAmount", required = true)
     private String TotalAmount;
+	
+	@XmlElement(name = "ArchiveIndicator", required = true)
+	private String ArchiveIndicator;
 
 	@XmlElement(name = "EpsSecondaryPayerReferenceIdentifier", required = true)
     private String EpsSecondaryPayerReferenceIdentifier;
 	
+	@XmlElement(name = "ClaimCountTotal", required = true)
+	private String ClaimCountTotal;
+	
+	@XmlElement(name = "TraceNumber", required = true)
+	private String TraceNumber;
+	
 	@XmlElement(name = "EpsClaimPaymentResponses", required = true)
 	private EpsClaimPaymentResponses EpsClaimPaymentResponses;
 	
-	
+	public String getTraceNumber() {
+		return TraceNumber;
+	}
 
-
-	    
+	public void setTraceNumber(String traceNumber) {
+		TraceNumber = traceNumber;
+	}
 
     public PayerSummary getPayerSummary ()
     {
@@ -360,9 +372,56 @@ public class EpsConsolidatedClaimPaymentSummaries
         this.EpsClaimPaymentResponses = EpsClaimPaymentResponses;
     }
 
-    @Override
-    public String toString()
-    {
-        return "ClassPojo [PayerSummary = "+PayerSummary+", PaymentTypeIndicator = "+PaymentTypeIndicator+", PatientMiddleName = "+PatientMiddleName+", PaymentStatusTypeDateTime = "+PaymentStatusTypeDateTime+", PaymentIdentifier = "+PaymentIdentifier+", PatientFirstName = "+PatientFirstName+", EpsConsolidatedClaimPaymentDetails = "+EpsConsolidatedClaimPaymentDetails+", ClaimIdentifier = "+ClaimIdentifier+", EpsPrimaryPayerIdentifier = "+EpsPrimaryPayerIdentifier+", DisplayConsolidatedPaymentNumber = "+DisplayConsolidatedPaymentNumber+", ClaimOrder = "+ClaimOrder+", PatientAccountNumber = "+PatientAccountNumber+", ClaimDate = "+ClaimDate+", PaymentMadeOn = "+PaymentMadeOn+", SubscriberIdentifier = "+SubscriberIdentifier+", EpsPaymentStatusCode = "+EpsPaymentStatusCode+", PatientLastName = "+PatientLastName+", ClaimAmount = "+ClaimAmount+", NationalProviderIdentifier = "+NationalProviderIdentifier+", PaymentStatusCode = "+PaymentStatusCode+", PayerPaymentMethod = "+PayerPaymentMethod+", EpsClaimCount = "+EpsClaimCount+", ConsolidatedPaymentNumber = "+ConsolidatedPaymentNumber+", PayeePaymentMethod = "+PayeePaymentMethod+", TotalAmount = "+TotalAmount+", EpsSecondaryPayerReferenceIdentifier = "+EpsSecondaryPayerReferenceIdentifier+"]";
-    }
+    public String getClaimCountTotal() {
+		return ClaimCountTotal;
+	}
+
+	public void setClaimCountTotal(String claimCountTotal) {
+		ClaimCountTotal = claimCountTotal;
+	}
+	
+
+	public String getArchiveIndicator() {
+		return ArchiveIndicator;
+	}
+
+	public void setArchiveIndicator(String archiveIndicator) {
+		ArchiveIndicator = archiveIndicator;
+	}
+
+	@Override
+	public String toString() {
+		return "EpsConsolidatedClaimPaymentSummaries [PayerSummary="
+				+ PayerSummary + ", PaymentTypeIndicator="
+				+ PaymentTypeIndicator + ", PatientMiddleName="
+				+ PatientMiddleName + ", PaymentStatusTypeDateTime="
+				+ PaymentStatusTypeDateTime + ", PaymentIdentifier="
+				+ PaymentIdentifier + ", PatientFirstName=" + PatientFirstName
+				+ ", EpsConsolidatedClaimPaymentDetails="
+				+ EpsConsolidatedClaimPaymentDetails + ", ClaimIdentifier="
+				+ ClaimIdentifier + ", EpsPrimaryPayerIdentifier="
+				+ EpsPrimaryPayerIdentifier
+				+ ", DisplayConsolidatedPaymentNumber="
+				+ DisplayConsolidatedPaymentNumber + ", ClaimOrder="
+				+ ClaimOrder + ", PatientAccountNumber=" + PatientAccountNumber
+				+ ", ClaimDate=" + ClaimDate + ", PaymentMadeOn="
+				+ PaymentMadeOn + ", SubscriberIdentifier="
+				+ SubscriberIdentifier + ", EpsPaymentStatusCode="
+				+ EpsPaymentStatusCode + ", PatientLastName=" + PatientLastName
+				+ ", ClaimAmount=" + ClaimAmount
+				+ ", NationalProviderIdentifier=" + NationalProviderIdentifier
+				+ ", PaymentStatusCode=" + PaymentStatusCode
+				+ ", PayerPaymentMethod=" + PayerPaymentMethod
+				+ ", EpsClaimCount=" + EpsClaimCount
+				+ ", ConsolidatedPaymentNumber=" + ConsolidatedPaymentNumber
+				+ ", PayeePaymentMethod=" + PayeePaymentMethod
+				+ ", TotalAmount=" + TotalAmount + ", ArchiveIndicator="
+				+ ArchiveIndicator + ", EpsSecondaryPayerReferenceIdentifier="
+				+ EpsSecondaryPayerReferenceIdentifier + ", ClaimCountTotal="
+				+ ClaimCountTotal + ", TraceNumber=" + TraceNumber
+				+ ", EpsClaimPaymentResponses=" + EpsClaimPaymentResponses
+				+ "]";
+	}
+
+	
 }
