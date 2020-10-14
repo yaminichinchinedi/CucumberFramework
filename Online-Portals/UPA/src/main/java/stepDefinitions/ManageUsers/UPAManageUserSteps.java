@@ -21,7 +21,7 @@ public class UPAManageUserSteps extends TestBase {
 
     @Then("^Verifies \"([^\"]*)\" Save & Cancel button functionlity for Access level changes for a Provider User$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify(String userType) throws Throwable {
-        manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);
+        manageUser.changeAndVerifyAccLvlEmailNotify(userType);//.changeAndCancelAccessLevel(userType);
     }
 
     @Then("^Verifies Tin Grid Details in Manage Users Tab$")
@@ -66,7 +66,9 @@ public class UPAManageUserSteps extends TestBase {
         addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave();
         addUserDetails.verifyDetailsOfNewUser(userType);
-        manageUser.removeFistTinInGrid();
+        
+        //delete the newly added user
+        manageUser.removeFistTinInGrid().clickSave();
     }
     
 	
@@ -82,12 +84,11 @@ public class UPAManageUserSteps extends TestBase {
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
 	}
     
-    @Then("^Verify Save and Cancel func for AccessLvl for \"([^\"]*)\"$")
-    public void verify_Save_and_Cancel_func_for_AccessLvl_for(String userType) throws Throwable {
-    	manageUser.changeAndSaveAccessLevel(userType);
-     
+    @Then("^Verify Access level and Email notification indicator can be updated for \"([^\"]*)\"\\.$")
+    public void verify_Access_level_and_Email_notification_indicator_can_be_updated_for(String userType) throws Throwable {
+    	manageUser.changeAndVerifyAccLvlEmailNotify(userType);
     }
-
+    
     @Then("^Validate status of purged user for \"([^\"]*)\" in portal tables\\.$")
     public void validate_status_of_purged_user_for_in_portal_tables(String userType) throws Throwable {
     	manageUser.verifyPurgedUserStatus(userType);
@@ -101,6 +102,12 @@ public class UPAManageUserSteps extends TestBase {
 
 	@Then("^User perform validation by adding TIN with same TIN$")
 	public void user_perform_validation_by_adding_TIN_with_same_TIN() throws Throwable {
+	manageUser.clickActiveUserName("PROV").validateAddingSameTIN();
+	}
+	
+	@Then("^verify Add user button is enabled\\.$")
+	public void verify_Add_user_button_is_enabled() throws Throwable {
+		manageUser.verifyAddUserBtnEnabled();
 	manageUser.clickActiveUserName("PROV");
 	manageUser.validateAddingSameTIN();
 }
@@ -192,4 +199,31 @@ public class UPAManageUserSteps extends TestBase {
 			manageUser.verifyDbHistoryAfterTinDeletion();
 		}
 
+	@Then("^verify Add user button is disabled\\.$")
+	public void verify_Add_user_button_is_disabled() throws Throwable {
+		manageUser.verifyAddUserBtnDisabled();
+	}
+
+	
+	@Then("^Verify user List on UI from DB for \"([^\"]*)\" using \"([^\"]*)\"$")
+	public void verify_user_List_on_UI_from_DB_for_using(String userType, String searchCriteria) throws Throwable {
+		manageUser.verifyUserList(userType, searchCriteria);
+	}
+	
+	@Then("^User click on one of the User and validates Terms and Conditions Acceptance fields$")
+	public void user_click_on_one_of_the_User_and_validates_Terms_and_Conditions_Acceptance_fields() throws Throwable {
+		manageUser.validateTermsNConditionsforBS();
+	}
+
+	@Then("^User validates for \"([^\"]*)\" the View Purge User checbox presence,its status,and purged user avability on clicking on it$")
+	public void user_validates_for_the_View_Purge_User_checbox_presence_its_status_and_purged_user_avability_on_clicking_on_it(String uesrTyp) throws Throwable {
+		manageUser.purgedUserChecbox(uesrTyp);
+	}
+	@Then("^Select one of the Active User and select Associate BS User to all Providers as No$")
+	public void select_one_of_the_Active_User_and_select_Associate_BS_User_to_all_Providers_as_No() throws Throwable {
+	    manageUser.clickActiveUserName("BS");
+	}
+
+	
+	
 }

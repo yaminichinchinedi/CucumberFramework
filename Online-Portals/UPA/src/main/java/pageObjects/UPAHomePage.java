@@ -170,6 +170,7 @@ public class UPAHomePage extends HomePage {
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		String tin=dataProvider.getTinForPaymentType(paymentType);
+		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
 		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
 		tin=tin+" - Enrolled";

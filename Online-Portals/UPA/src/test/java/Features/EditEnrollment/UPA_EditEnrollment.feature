@@ -206,10 +206,36 @@ Examples:
 
 
 
+@UPAUS2705920
+Scenario Outline: Optum Pay Rebranding
+Given User navigates to UPA portal and enters "<credentials>" and login
+When  User Selects a tin on HomePage
+And   Clicks on Maintain Enrollment Tab
+Then User clicks on Payer Information Tab and validates Optum Pay text insted of EPS
+Then Click on Edit button and then Organisation Tab,Enter special charater,click on Continue and validates Optum Pay text insted of EPS
+Then Click on Edit button and then Payers Tab and validates Optum Pay text insted of EPS
+Then User clicks on Cancel button and validates Optum Pay text insted of EPS
+Then User clicks on Finish and Submit button and validates Optum Pay text insted of EPS
+Then User clicks of Print Enrollment Form,a PDF file is downloaded and verify Optum Pay Text instead of EPS
+
+Examples:
+            |  credentials     |
+            |   PROV_Admin     |      
 
 
 
-
+@UPAUS2705920P2
+Scenario Outline: Optum Pay Rebranding for BS
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+And   Clicks on Maintain Enrollment Tab
+Then User clicks on Edit button,Enter special charater in Org Name then click on Finish button and validates Optum Pay text insted of EPS
+Then User clicks on Edit button then Cancel button and validates Optum Pay text insted of EPS
+Then User clicks on Finish and Submit button and validates Optum Pay text insted of EPS for Billing Service
+Then User clicks of Print Enrollment Form,a PDF file is downloaded and verify Optum Pay Text instead of EPS in Billing Service
+Examples:
+      |    userType     |   accessType  |
+      |      BS_Admin   |   BS     	| 
 
 
 

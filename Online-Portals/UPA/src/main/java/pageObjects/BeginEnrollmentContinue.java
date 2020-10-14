@@ -301,6 +301,11 @@ public class BeginEnrollmentContinue {
 		return this;
 	}
 
+	public BeginEnrollmentContinue verifyHowtoChooseLink()
+	{
+		clickChooseLinkFunctionality(lnkChoose1,boxLinkPopUp1,closeTip1);
+		return this;
+	}
 
 	/**
 	 * verifies the page navigation upon clicking the change link in front of selected option

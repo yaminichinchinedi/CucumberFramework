@@ -82,10 +82,8 @@ public class UPARegistrationPage extends TestBase{
 		Browser.waitForLoad(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
 		
-		String env=System.getProperty("env");
-		
 		//Added by AMit- ask him the reason for not putting elses
-		if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
+		//if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
 		   Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In");
 
 	}

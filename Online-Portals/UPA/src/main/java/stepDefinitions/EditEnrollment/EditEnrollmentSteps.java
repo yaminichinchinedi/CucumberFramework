@@ -141,8 +141,37 @@ public class EditEnrollmentSteps extends TestBase {
     }
 
     
-    
-    
+    @Then("^User clicks on Payer Information Tab and validates Optum Pay text insted of EPS$")
+    public void user_clicks_on_Payer_Information_Tab_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayText();
+    }
+
+    @Then("^Click on Edit button and then Payers Tab and validates Optum Pay text insted of EPS$")
+    public void click_on_Edit_button_and_then_Payers_Tab_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonEdit();    
+    }
+    @Then("^Click on Edit button and then Organisation Tab,Enter special charater,click on Continue and validates Optum Pay text insted of EPS$")
+    public void click_on_Edit_button_and_then_Organisation_Tab_Enter_special_charater_click_on_Continue_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonEditOrg("PROV");;    
    
-	
+    }
+    @Then("^User clicks on Cancel button and validates Optum Pay text insted of EPS$")
+    public void user_clicks_on_Cancel_button_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonCancel();
+    }
+
+    @Then("^User clicks on Finish and Submit button and validates Optum Pay text insted of EPS$")
+    public void user_clicks_on_Finish_and_Submit_button_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonFinish();
+    }
+        
+    @Then("^User clicks on Edit button then Cancel button and validates Optum Pay text insted of EPS$")
+    public void user_clicks_on_Edit_button_then_Cancel_button_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonCancelBS();
+    }
+    @Then("^User clicks on Edit button,Enter special charater in Org Name then click on Finish button and validates Optum Pay text insted of EPS$")
+    public void user_clicks_on_Edit_button_Enter_special_charater_in_Org_Name_then_click_on_Finish_button_and_validates_Optum_Pay_text_insted_of_EPS() throws Throwable {
+    	maintainEnrollment.validateOptumPayTextonEditOrg("BS");;    
+   
+    }	
 }

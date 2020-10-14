@@ -12,8 +12,12 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.openqa.selenium.By;
@@ -30,7 +34,6 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
-import main.java.reporting.Log;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
@@ -141,6 +144,9 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(name="purgedUser")
 	WebElement chkBoxPurgedUser;
 	
+	@FindBy(name="fetchPurgedUser")
+	WebElement chkBoxPurgedUserBS;
+	
 	@FindBy(id="limitPayerAccessyes")
 	WebElement btnYesSubPayerDataOnly;
 	
@@ -162,6 +168,16 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//input[@id='viewpurgeduser']")
 	WebElement viewPurge;
+	
+	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance:')]")
+	WebElement termsAndCond;
+	
+	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
+	WebElement termsAndCondDate;
+	
+
+	@FindBy(id="provTinAssociateId")
+	WebElement provTinAssociate;
 
 	@FindBy(xpath="//input[@value='Reset Password']") WebElement resetPwdBtn;
 
@@ -213,9 +229,7 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//input[@name='Yes']") 
 	WebElement btnDeleteuserYes ;
-	
-	
-	
+		
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
@@ -250,7 +264,7 @@ public class ManageUsers extends AddUserDetails
 			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
 		   }
 		
-		for (int i=0;i<=userNames.size();i++)
+		for (int i=0;i<userNames.size();i++)
 		{
 			if ( (LoginType.equals("UPA") && userNames.get(i).getText().contains("Purged"))||
 			   ( (LoginType.equals("CSR") && userNames.get(i).getText().equals(testConfig.getRunTimeProperty("PurgedUser"))))
@@ -538,6 +552,7 @@ public class ManageUsers extends AddUserDetails
 	public ManageUsers clickActiveUserName(String userType)
 	{
 		String activeUser=getActiveUser(userType);
+		testConfig.putRunTimeProperty("activeUser", activeUser);
 		for(WebElement userName:userNames)
 		{ 
 		  if(userName.getText().toString().toUpperCase().contains(activeUser))
@@ -578,13 +593,14 @@ public class ManageUsers extends AddUserDetails
 		for(WebElement userName:userNames)
 		{ 
 		  if(userName.getText().toString().toUpperCase().contains(nameOfUser) || userName.getText().toString().toLowerCase().contains(nameOfUser) || userName.getText().toString().contains(nameOfUser))
+
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;
 		   }
 	     }
-
 //		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+		Browser.wait(testConfig, 3);
 		return new ManageUsers(testConfig);
 	}
 	
@@ -594,68 +610,101 @@ public class ManageUsers extends AddUserDetails
 	 * which is fetched from DB
 	 */
 	
-	public ManageUsers changeAndSaveAccessLevel(String userType) throws InterruptedException
+	public ManageUsers changeAndVerifyAccLvlEmailNotify(String userType) throws InterruptedException
 	{
-		 
-
 		//int sqlNo=257;
 		int sqlRowNo=11;
 		int sqlNo=416;
 
 
 		//Clicks on an active user displayed in User List
+
 		clickActiveUserName(userType);
 		String newAddedTin=selectAndAddTin(sqlNo);
-		
 		Log.Comment("Tin number for whom access level is to be changed is :" + " "+ newAddedTin);
 		testConfig.putRunTimeProperty("tinNo",newAddedTin);
-        
+		
+		//get tin index from tin grid
+		int tinIndex=getTinIndexfromTinGrid(newAddedTin);
+		//Add newAddedTin as general and verify it
+		chooseAccessLvl("General", newAddedTin,tinIndex).clickSave();
+		//get tin index from tin grid
+		tinIndex=getTinIndexfromTinGrid(newAddedTin);
+		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+		
+		changeEmailNotifyInd(userType, newAddedTin,tinIndex);
+		
+		//VerifyEmailNotification
+		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+		
+		//change access level from general to admin and click cancel and Yes and verify
+		chooseAccessLvl("Administrator", newAddedTin,tinIndex);
+	    HomePage home=clickCancel().clickYes();
+	    home.clickManageUsersTab().clickSpecificUserName(testConfig.getRunTimeProperty("activeUser"));
+	    verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+	    
+	    //change access Level from general to admin and cancel and No and then click save and verify 
+	    chooseAccessLvl("Administrator", newAddedTin,tinIndex).clickCancel().clickNo();
+	    clickSave().verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+	    return this;
+	}
+	public ManageUsers changeEmailNotifyInd(String userType,String newAddedTin, int tinIndex)
+	{
+//		int index=getTinIndexfromTinGrid(newAddedTin);
+		    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		   
+		    if(userType.contains("PROV"))
+				   emailChkbox=tinGridRows.get(tinIndex).findElements(By.tagName("td")).get(5).findElement(By.tagName("input"));
+			
+		Element.click(emailChkbox, "Email Check box");
+		clickSave();
+		return this;
+	}
+	
+	public ManageUsers chooseAccessLvl(String accessLvl,String newAddedTin,int tinIndex)
+	{
+		int index=0;
 		WebElement accessLvlDrpDwn=null;
+		Browser.wait(testConfig, 2);
+//		index=getTinIndexfromTinGrid(newAddedTin);
+		tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		accessLvlDrpDwn=tinGridRows.get(tinIndex).findElement(By.tagName("select"));
+		//Select Access Level as General for the new added tin
+		Element.selectByVisibleText(accessLvlDrpDwn, accessLvl, "Select "+ accessLvl+" as access level");
+		Browser.waitForLoad(testConfig.driver);
+		return this;
+	}
+	public ManageUsers verifyEmailNotifyAccLvlFromDB(String userType,String newAddedTin,int tinIndex)
+	{
+//		int index=0;
+		int sqlRowNo=11;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//	    index=getTinIndexfromTinGrid(newAddedTin);
+	    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+	   
+	    if(userType.contains("PROV"))
+			   emailChkbox=tinGridRows.get(tinIndex).findElements(By.tagName("td")).get(5).findElement(By.tagName("input"));
+			
+	    String emailIndicator=emailChkbox.getAttribute("checked")==null?"N":"Y";
+	    Helper.compareEquals(testConfig, "Access Level", emailIndicator, portalUserData.get("EMAIL_NTFY_IND").toString());
+	    WebElement accessLvlDrpDwn=tinGridRows.get(tinIndex).findElement(By.tagName("select"));
+	    Helper.compareEquals(testConfig, "Access Level", accessLvlDrpDwn.getAttribute("value").toString(), portalUserData.get("ACCESS_LVL").toString());
+		return this;
+	}
+	public int getTinIndexfromTinGrid(String newAddedTin){
+		int index=0;
 		List<WebElement> tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
 		for(int i=1;i<tinGridRows.size();i++)
 		{
 			String tinNo=tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
 				if(tinNo.equalsIgnoreCase(newAddedTin))
-				{
-					accessLvlDrpDwn=tinGridRows.get(i).findElement(By.tagName("select"));
-					
-					//Select Access Level as General for the new added tin
-					Element.selectByVisibleText(accessLvlDrpDwn, "General", "Select General as access level");
-					Browser.waitForLoad(testConfig.driver);
-				    clickSave();
-				    Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-					Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-				    Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
-				  
-				    
-				    //Handling stale element
-				    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-				    accessLvlDrpDwn=tinGridRows.get(i).findElement(By.tagName("select"));
-				    
-				    Element.selectByVisibleText(accessLvlDrpDwn, "Administrator", "Admin as access level");
-				    HomePage home=clickCancel().clickYes();
-				    
-				    Browser.waitForLoad(testConfig.driver);
-				    Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
-				    
-				    home.clickManageUsersTab().clickActiveUserName(userType);
-				    
-				   //Handling stale element
-				    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-				    accessLvlDrpDwn=tinGridRows.get(i).findElement(By.tagName("select"));
-				   
-				    
-				    Element.selectByVisibleText(accessLvlDrpDwn, "General", "Select General as access level");
-				    clickCancel().clickNo();
-				    Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
-					break;
-					
-				}
-			}
-       
-	    
-	    return this;
-}
+					index=i;
+		}
+		return index;
+	}
+			
+
+				
 	
 	public ManageUsers changeAndCancelAccessLevel(String userType) throws InterruptedException
 	{    
@@ -668,7 +717,8 @@ public class ManageUsers extends AddUserDetails
 		   Log.Comment("Tin number for whom access level is to be changed is :" + " "+  testConfig.getRunTimeProperty("tinNo"));
 		   accessLvls=Element.findElements(testConfig, "xpath","//select[not(contains(@id,'accessLevel'))]/parent::td//select"); 
 		   String initialAccessLvl=accessLvls.get(0).getAttribute("value");
-
+		   System.out.println("Initial Access level: "+initialAccessLvl);
+		   
 		   //Get the Access Level already selected for first Active tin displayed in Grid
 		   if(initialAccessLvl!="G")
 		   Element.selectByVisibleText(accessLvls.get(0), "General", "Select General as access level");  
@@ -815,13 +865,14 @@ public class ManageUsers extends AddUserDetails
     	
     }
 	
-	public void removeFistTinInGrid()
+	public ManageUsers removeFistTinInGrid()
 	{
 		Element.click(chkRemoveTin, "Remove tin checkbox");
 		if(tinGridRows.size()>2)
 		Log.Fail("Tin not removed");
 		else
 		Log.Pass("Tin removed");
+		return this;
 	}
 
 	
@@ -1363,9 +1414,53 @@ public class ManageUsers extends AddUserDetails
 		
 	}
 	
-	public void verifyUserList(String userType, String searchCriteria) throws IOException, InterruptedException {
 
-		ArrayList<String> usersFromDB = new ArrayList<>();
+	public void purgedUserChecbox(String userTyp) throws IOException, InterruptedException{
+		Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getText();
+		Helper.compareEquals(testConfig, "Purge User checkbox", "View Purged Users:", Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getText().trim());	
+		//if(Element.findElements(testConfig, "xpath", "//td[@class='subheadernormal']").get(2).getAttribute("disabled").equals(null))
+		if(userTyp.contains("PAY"))
+		{
+		selectPurgedCheckbox();
+		checkPurgedUser("UPA");
+		deSelectPurgedCheckbox();
+		checkPurgedUser("UPA");
+		}
+		if(userTyp.contains("PROV"))
+		{
+		clickPurgedChkBox("PROV");
+		checkPurgedUser("UPA");
+		Map listOfAttributes=Element.getAllAttributes(testConfig, chkBoxProvPurge, "Purged User Checkbox");
+		if(listOfAttributes.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxProvPurge, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+		}
+		if(userTyp.contains("BS"))
+		{
+		Element.click(chkBoxPurgedUserBS, "View Purged Users Check Box");
+		checkPurgedUser("UPA");
+		Map listOfAttributesBS=Element.getAllAttributes(testConfig, chkBoxPurgedUserBS, "Purged User Checkbox");
+		if(listOfAttributesBS.containsKey("checked"))
+		{
+			Log.Comment("Puged user chekcbox is already checked, unchecking it now");
+			Element.click(chkBoxPurgedUserBS, "Purged User checkbox");
+			Browser.waitForLoad(testConfig.driver);
+		}
+		checkPurgedUser("UPA");
+		}
+		//else
+		{
+			Log.Comment("View Purged checkbox not enabled");
+		}
+		
+	}
+	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
+	{
+		ArrayList<String> usersFromDB=new ArrayList<>();
+
 		try {
 			if (testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR"))
 				selectPurgedCheckbox();
@@ -1421,7 +1516,19 @@ public class ManageUsers extends AddUserDetails
 			} catch (Exception e) {
 				Log.Comment("App is UPA");
 		}
+		
+		if(userType.contains("PROV"))
+		{
+			ArrayList<String> usersFromUI=new ArrayList<String>();
+			int sqlRowNo=1505;
+			HashMap<Integer, HashMap<String, String>>  userListFromDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+			for(int i=1;i<=userListFromDB.size();i++)
+				usersFromDB.add(userListFromDB.get(i).get("FULLNAME").toUpperCase().toString());
+			usersFromUI=getListOfAllUsersFromUI(testConfig);
+			Helper.compareEquals(testConfig, "User List", usersFromDB, usersFromUI);
 		}
+			
+	}
 
 	
 	
@@ -1430,6 +1537,7 @@ public class ManageUsers extends AddUserDetails
 		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
 		
 	 }
+
 
 	
 	/*
@@ -1469,24 +1577,7 @@ public class ManageUsers extends AddUserDetails
 	    clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
 
-	
 
-	public ManageUsers updateDemographicInfo(String userType)
-	{
-		String userNameBeforeUpdation=getCSRUserName();
-		fillNewUserInfo();
-		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		clickSave();
-		verifyDetailsOfNewUser(userType);
-		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
-		return this;
-	}
-	
-	public void verifyYourChangesWereUpdatedSuccessfully()
-    {
-		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
-    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
-    }
 	
 	public void verifyResetPwdButtonUPA()
 	{
@@ -1643,6 +1734,179 @@ public class ManageUsers extends AddUserDetails
 			Log.Fail("The MOD_TYP_CD is not PCD");
 	}
 	
+
+	public ManageUsers validateTandCFields(){
+		String termAndCond=termsAndCond.getText().substring(termsAndCond.getText().indexOf(":")+1, termsAndCond.getText().length()).trim();
+		String termAndCondDate=termsAndCondDate.getText().substring(termsAndCondDate.getText().indexOf(":")+1, termsAndCondDate.getText().length());
+		int sqlRowNo=258;
+		Map portalUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "", portalUserDetails.get("TC_ACCEPT_IND").toString(), termAndCond);
+		Helper.compareContains(testConfig, "", portalUserDetails.get("TC_ACCEPT_DTTM").toString(), termAndCondDate);
+		return this;
+	}
+	
+	public void verifyUserDetailsAreReadOnly() throws InterruptedException
+	{
+		String expectedValue="true";
+		try
+		{
+		Helper.compareEquals(testConfig, "First Name is Read only", expectedValue, firstName.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Last Name is Read only", expectedValue, lastName.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Middle Name is Read only", expectedValue, middleName.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Ph number field 1 is Read only", expectedValue, phoneNum.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Ph number field 2 is Read only", expectedValue, phoneNum1.getAttribute("readonly"));
+		Helper.compareEquals(testConfig, "Ph number field 3 is Read only", expectedValue, phoneNum2.getAttribute("readonly"));
+		if(extension.isDisplayed())
+			try{
+		Helper.compareEquals(testConfig, "Ext is Read only", expectedValue, extension.getAttribute("readonly"));
+			}
+		catch (Exception e) {
+			Log.Comment("Extension is empty");
+		}
+		Helper.compareEquals(testConfig, "Email field is Read only", expectedValue, email.getAttribute("readonly"));
+		}
+		
+		catch(Exception e)
+		{
+			Log.Fail("Failed due to an exception : " + e);
+		}
+		
+	}
+	
+	
+	public void verifyYourChangesWereUpdatedSuccessfully()
+    {
+		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
+    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
+    }
+	
+	public ManageUsers updateDemographicInfo(String userType)
+	{
+		String userNameBeforeUpdation=getCSRUserName();
+		fillNewUserInfo();
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
+		clickSave();
+		verifyDetailsOfNewUser(userType);
+		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+		return this;
+	}
+	
+	public ManageUsers verifyAddUserBtnEnabled(){
+		try{
+			String value=btnAddUser.getAttribute("disabled");
+			Helper.compareEquals(testConfig, "Add User button enabled", null, value);
+	}catch(Exception e){
+		Log.Fail("User button is enabled");
+	}
+		return this;
+	}
+	
+	public ManageUsers verifyAddUserBtnDisabled(){
+		try{
+			String value=btnAddUser.getAttribute("disabled");
+			Helper.compareEquals(testConfig, "Add User button disabled", "true", value);
+	}catch(Exception e){
+		Log.Fail("User button is enabled");
+	}
+		return this;
+	}
+	
+//	public ManageUsers verifyAddUserBtnEnabledOrDisabled(String portalAccess)
+//	{
+//		if("Standard".equals(portalAccess)){
+//			try{
+//					String value=btnAddUser.getAttribute("disabled");
+//					Helper.compareEquals(testConfig, "Add User button disabled", "true", value);
+//			}catch(Exception e){
+//				Log.Fail("User button is enabled");
+//			}
+//		}
+//		else if("Premium".equals(portalAccess)){
+//			try{
+//				String value=btnAddUser.getAttribute("disabled");
+//				Helper.compareEquals(testConfig, "Add User button enabled", null, value);
+//		}catch(Exception e){
+//			Log.Fail("User button is enabled");
+//		}
+//	}
+//		return this;
+//	}
+
+	public void validateTermsNConditionsforBS() throws InterruptedException
+	{
+		
+		List <WebElement> userNames=null;
+		List <WebElement> userNamesanother=null;
+		ArrayList<String> UsersListUI=new ArrayList<String>();
+		
+		try{
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			userNamesanother= userNames;
+		}
+		catch(Exception e){
+			Log.Comment("Finding user List again");
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+		   }
+		Browser.wait(testConfig, 5);
+		for (int i=0;i<=userNames.size();i++)
+		{
+			//Browser.browserRefresh(testConfig);
+			//Element.findElement(testConfig, "id", "tabManageusers").click();
+			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			if ( ! userNames.get(i).getText().contains("Purged"))
+				 
+			{
+
+				testConfig.putRunTimeProperty("LST_NM",userNames.get(i).getText().substring(0, userNames.get(i).getText().indexOf(',')));
+				testConfig.putRunTimeProperty("FST_NM",userNames.get(i).getText().substring(userNames.get(i).getText().indexOf(',')+2));
+				Element.click(userNames.get(i), "ClickUser List");
+				Browser.wait(testConfig, 5);
+				List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+				String TnC=details.get(2).getText();
+				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  Y"))
+				{	
+				if ( details.get(3).getText().contains("Terms and Conditions Acceptance Date:") &&
+				! (details.get(3).getText().substring(38).equals(null)))
+				{
+				int sqlRowNo=262;
+				
+				
+				Map TnCData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				Helper.compareContains(testConfig, "TnC Indicator", TnCData.get("TC_ACCEPT_IND").toString(), TnC);	
+				Helper.compareContains(testConfig, "DateTimeStamp", TnCData.get("TC_ACCEPT_DTTM").toString(), details.get(3).getText().substring(38));	
+				}
+				
+				}
+				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  N"))
+				{	
+				details.get(3).getText().equals("Terms and Conditions Acceptance Date:");
+				break;
+				}
+			}
+		}
+//		for (int i=0;i<=userNamesanother.size();i++)
+//		{	
+//		if (  userNamesanother.get(i).getText().contains("Purged"))
+//			 
+//			{
+//				Element.click(userNamesanother.get(i), "Purged User List");
+//				Browser.wait(testConfig, 5);
+//				List<WebElement> details=Element.findElements(testConfig, "xpath", "//span[@class='subheadernormal']");
+//				String TnC=details.get(2).getText();
+//				if ( TnC.contains("Terms and Conditions Acceptance") && TnC.contains(":  N"))
+//				details.get(3).getText().equals("Terms and Conditions Acceptance Date:");
+//				break;
+//			}
+//		
+//		}
+		
+		
+
+	}
+
+
+
+
 	public ManageUsers verifyAdminPrivileges(String accessLevel) throws InterruptedException {
 		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
 		if(accessLevel.equalsIgnoreCase("General")){
