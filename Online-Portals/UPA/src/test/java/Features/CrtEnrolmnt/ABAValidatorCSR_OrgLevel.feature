@@ -5,7 +5,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
 		When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
-		Then User clicks on Create/Maintain Enrollment link on CSR HomePage on CSR HomePage
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
 		Then User Select User Type as "Provider" and enter unique TIN and click Search
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "AO" and click continue button 

@@ -25,6 +25,7 @@ public class EditEnrollmentSteps extends TestBase {
     public void verify_Edit_Enrollment_Page_UI_for(String accessType) throws Throwable {
     	maintainEnrollment.verifyEnrollmentUI(accessType);
     }
+
     
     @Then("^Verify Org Info$")
     public void verify_Org_Info() throws Throwable {

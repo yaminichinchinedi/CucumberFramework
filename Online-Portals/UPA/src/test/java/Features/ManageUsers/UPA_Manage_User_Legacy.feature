@@ -44,7 +44,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
-    Then Verifies provider user details are read only on UPA
+    Then Verify provider user details are read only on UPA for "<accessType>"
     Examples:
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
@@ -96,7 +96,7 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
       |      PROV_Admin |   PROV     	|		Administrator		    |
       
       
-  @UPAManageUsers_US2769380    
+  @UPAManageUsers_US2769380  @UPA_AugRelease  
   Scenario Outline: UPA Manage User Add new Provider user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -105,9 +105,9 @@ Scenario Outline: Verifies user list sorting is working correctly on Manage User
     Then Validate status of purged user for "<userType>" in portal tables.
     Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|  stsCode	  |
-      |      PROV_Admin |   PROV      	|		 Administrator		    |			PU			|
+      |      PROV_Admin |   PROV      	|		 General		    |			PU			|
       
-  @UPAManageUsers_US2769380
+  @UPAManageUsers_US2769380 @UPA_AugRelease
   Scenario Outline: UPA Manage User Add New Payer and BS user using purged user email address
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -179,17 +179,18 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |     PAY_Admin |  		Administrator		    | PurgedUsers|
 	  
 	
-  @UPAUS2711348
+  @UPAUS2711348 @UPA_AugRelease
      Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the Purged TIN from the dropdown
+    Then  Select the TIN for "<accessType>" UPA Portal
     When Click on Manage User Link
+    Then User clicks on View Purge Users checkbox
     Then Verify Purged User validations by clicking on it
       Examples:
       |    userType     |   accessType  |		accessLevelOfNewUser	|
       |      PROV_Admin |   PROV     	|		Administrator		    |  
      
-     @UPAUS2720684 	
+     @UPAUS2720684 	@UPA_AugRelease
 		Scenario Outline: Verifies Save & Cancel button functionlity for Access level changes for a Provider User
     Given User navigates to UPA portal and enters "<userType>" and login
     Then Select the TIN for "<accessType>" UPA Portal
@@ -216,3 +217,68 @@ Scenario Outline: US2684242_2_UPA_Payer_Admin__ManageUsers_selectViewPurgedUsers
       |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		AV			|
       |      PROV_Admin |   PROV     		|			Administrator		    | 	 	TinWithMoreThnMaxUsr		|			Legacy			|		VO			|
       	
+ 
+#Author:Sunanda   	
+@US1846613
+Scenario Outline: Verify Provider Admin and Provider General accessebilities
+ 		Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+   	Then verifies if the TIN grid is relabeled for from Remove Row to Delete User
+    And  validates if access level, email checkbox, delete user checkbox are enabled or disabled for "<accessLevel>"
+    And  deletes "<accessType>" "<accessLevel>" user and verifies from UI and DB 
+    Then verifies adding a new user of "<accessType>" with deleted user email with "<accessLevel>"
+    Then verifies Admin user is able to update General user "<accessLevel>"
+    
+Examples:
+      |    userType     |   accessType  |		accessLevel	          |
+      |   PROV_Admin    |   PROV     	  |		Administrator		      |
+      |   PROV_Admin    |   PROV     	  |		General     		      |
+      
+#Author: Sunanda      
+@US2048540 
+Scenario Outline: Verify BS Admin and BS General accessebilities    
+		 Given User navigates to UPA portal and enters "<userType>" and login
+     Then Select the TIN for "<accessType>" UPA Portal
+     When Click on Manage User Link 
+     Then Validate the ability of the fields of TIN grid for "<accessLevel>"
+     And  Verify BS Admin is able to update BS Gen "<accessLevel>"
+     
+Examples:
+			|    userType     |   accessType  |		accessLevel						|
+      |   BS_Admin   	  |     BS     	  |		Administrator		      |
+      |		BS_Admin   	  |     BS     	  |		General					      |
+      
+#Author: Sunanda     
+@US2854205
+Scenario Outline: Verify Payer Admin and Payer General accessebilities
+ 		Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on Manage User Link
+   	Then verifies if the TIN grid is relabeled for from Remove Row to Delete User
+    And  validate ability of access level, email checkbox, delete user checkbox for Payer "<accessLevel>"
+    And  deletes "<accessType>" "<accessLevel>" user and verifies from UI and DB 
+ 		Then verifies adding a new user of "<accessType>" with deleted user email with "<accessLevel>"
+    Then verifies Admin user is able to update General user "<accessLevel>"
+
+    Examples:
+			|    userType       |   accessType    |		accessLevel						|
+      |   PAY_Admin   	  |     PAY     	  |		Administrator		      |
+      |		PAY_Admin   	  |     PAY     	  |		General					      |
+      
+
+#Author: Marsha Vegda
+Scenario Outline: Delete General User Checkbox
+Given User navigates to UPA portal and enters "<userType>" and login
+ 	   Then Select the TIN for "<accessType>" UPA Portal
+   	 When Click on Manage User Link
+   	 Then Add a general user and select the user from the list for "<accessType>"
+   	 Then Verify if the user is added in Database 
+   	 Then Click on Delete user checkbox and Click on Save button "<accessType>"
+   	 Then Verify if the deleted user is removed from Database
+   	 	
+   
+    Examples:
+      |      userType       |   accessType|
+      |      PROV_Admin     |   PROV      |
+      	      	     	

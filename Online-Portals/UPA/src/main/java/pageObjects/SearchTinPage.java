@@ -189,9 +189,9 @@ public class SearchTinPage {
 		  case "PAY" :
 		   {
 			   if(searchCriteria.equalsIgnoreCase("PurgedUsers"))
-			       sqlRowNo=250;
+			       sqlRowNo=409;
 			   else if(searchCriteria.equalsIgnoreCase("NoPurgedUsers"))
-				   sqlRowNo=251;
+				   sqlRowNo=410;
 			   
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();

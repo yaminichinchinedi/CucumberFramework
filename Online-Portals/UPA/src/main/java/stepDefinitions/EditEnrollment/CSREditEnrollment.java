@@ -23,4 +23,11 @@ public class CSREditEnrollment extends TestBase {
     public void user_navigates_to_Payer_PPRAs_page_and_verify_Patient_Payment_under_Payer_Name() throws Throwable {
     	editEnrollment.clickPayerPRATab().verifyPayerPRAPagePayerName();
     }
+    
+    @Then("^User navigates to Payer's page and Change the Payment Method$")
+    public void user_navigates_to_Payer_s_page_and_Change_the_Payment_Method() throws Throwable {
+    	editEnrollment.clickPayersTab();
+    	editEnrollment.UpdateandVerifyPayerTable();
+    }
+
 }

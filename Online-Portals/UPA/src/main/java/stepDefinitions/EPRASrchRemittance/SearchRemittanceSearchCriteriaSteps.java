@@ -79,4 +79,14 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 		
 	}
 
+    @Then("^verify error messages in search results$")
+    public void verify_error_messages_in_search_results() throws Throwable {
+    	srchCriteriaPage.verifyErrorMsgs();
+    }
+    
+    @Then("^verify large non large tin in search results$")
+    public void verify_large_non_large_tin_in_search_results() throws Throwable {
+    	srchCriteriaPage.verifyLargeNonLargeTin();
+    }
+
 }

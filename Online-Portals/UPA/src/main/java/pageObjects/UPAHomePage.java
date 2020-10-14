@@ -91,6 +91,7 @@ public class UPAHomePage extends HomePage {
 	
 	UPAHomePage(TestBase testConfig) 
 	{
+ 		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
@@ -184,5 +185,10 @@ public class UPAHomePage extends HomePage {
 		Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
 		Browser.waitForLoad(testConfig.driver);
 		return this;
+	}
+	
+	public void clickManageUsersLink()
+	{
+		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 	}
 }

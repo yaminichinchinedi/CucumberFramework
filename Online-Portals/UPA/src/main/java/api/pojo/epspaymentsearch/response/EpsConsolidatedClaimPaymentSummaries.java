@@ -9,6 +9,9 @@ public class EpsConsolidatedClaimPaymentSummaries
 
 	@XmlElement(name = "PaymentTypeIndicator", required = true)
     private String PaymentTypeIndicator;
+	
+	@XmlElement(name = "ArchiveIndicator", required = true)
+    private String ArchiveIndicator;
 
 	@XmlElement(name = "PatientMiddleName", required = true)
     private String PatientMiddleName;
@@ -103,6 +106,16 @@ public class EpsConsolidatedClaimPaymentSummaries
     public String getPaymentTypeIndicator ()
     {
         return PaymentTypeIndicator;
+    }
+    
+    public String getArchiveIndicator ()
+    {
+        return ArchiveIndicator;
+    }
+    
+    public void setArchiveIndicator (String ArchiveIndicator)
+    {
+        this.ArchiveIndicator = ArchiveIndicator;
     }
 
     public void setPaymentTypeIndicator (String PaymentTypeIndicator)
@@ -363,6 +376,6 @@ public class EpsConsolidatedClaimPaymentSummaries
     @Override
     public String toString()
     {
-        return "ClassPojo [PayerSummary = "+PayerSummary+", PaymentTypeIndicator = "+PaymentTypeIndicator+", PatientMiddleName = "+PatientMiddleName+", PaymentStatusTypeDateTime = "+PaymentStatusTypeDateTime+", PaymentIdentifier = "+PaymentIdentifier+", PatientFirstName = "+PatientFirstName+", EpsConsolidatedClaimPaymentDetails = "+EpsConsolidatedClaimPaymentDetails+", ClaimIdentifier = "+ClaimIdentifier+", EpsPrimaryPayerIdentifier = "+EpsPrimaryPayerIdentifier+", DisplayConsolidatedPaymentNumber = "+DisplayConsolidatedPaymentNumber+", ClaimOrder = "+ClaimOrder+", PatientAccountNumber = "+PatientAccountNumber+", ClaimDate = "+ClaimDate+", PaymentMadeOn = "+PaymentMadeOn+", SubscriberIdentifier = "+SubscriberIdentifier+", EpsPaymentStatusCode = "+EpsPaymentStatusCode+", PatientLastName = "+PatientLastName+", ClaimAmount = "+ClaimAmount+", NationalProviderIdentifier = "+NationalProviderIdentifier+", PaymentStatusCode = "+PaymentStatusCode+", PayerPaymentMethod = "+PayerPaymentMethod+", EpsClaimCount = "+EpsClaimCount+", ConsolidatedPaymentNumber = "+ConsolidatedPaymentNumber+", PayeePaymentMethod = "+PayeePaymentMethod+", TotalAmount = "+TotalAmount+", EpsSecondaryPayerReferenceIdentifier = "+EpsSecondaryPayerReferenceIdentifier+"]";
+        return "ClassPojo [PayerSummary = "+PayerSummary+", PaymentTypeIndicator = "+PaymentTypeIndicator+", ArchiveIndicator = "+ArchiveIndicator+", PatientMiddleName = "+PatientMiddleName+", PaymentStatusTypeDateTime = "+PaymentStatusTypeDateTime+", PaymentIdentifier = "+PaymentIdentifier+", PatientFirstName = "+PatientFirstName+", EpsConsolidatedClaimPaymentDetails = "+EpsConsolidatedClaimPaymentDetails+", ClaimIdentifier = "+ClaimIdentifier+", EpsPrimaryPayerIdentifier = "+EpsPrimaryPayerIdentifier+", DisplayConsolidatedPaymentNumber = "+DisplayConsolidatedPaymentNumber+", ClaimOrder = "+ClaimOrder+", PatientAccountNumber = "+PatientAccountNumber+", ClaimDate = "+ClaimDate+", PaymentMadeOn = "+PaymentMadeOn+", SubscriberIdentifier = "+SubscriberIdentifier+", EpsPaymentStatusCode = "+EpsPaymentStatusCode+", PatientLastName = "+PatientLastName+", ClaimAmount = "+ClaimAmount+", NationalProviderIdentifier = "+NationalProviderIdentifier+", PaymentStatusCode = "+PaymentStatusCode+", PayerPaymentMethod = "+PayerPaymentMethod+", EpsClaimCount = "+EpsClaimCount+", ConsolidatedPaymentNumber = "+ConsolidatedPaymentNumber+", PayeePaymentMethod = "+PayeePaymentMethod+", TotalAmount = "+TotalAmount+", EpsSecondaryPayerReferenceIdentifier = "+EpsSecondaryPayerReferenceIdentifier+"]";
     }
 }
