@@ -10,6 +10,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.apache.xpath.operations.Or;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,13 +19,13 @@ import main.java.Utils.DataBase;
 import main.java.Utils.TestDataReader;
 
 public class LoginUPA {
-	
-	
-	
-	
-	@FindBy(xpath = "//input[@id='userNameId_input']") WebElement txtboxUserName;
-	@FindBy(xpath = "//input[@id='passwdId_input']") WebElement txtboxPwd;
-	@FindBy(xpath = "//input[@id='SignIn']") WebElement btnLogin;
+
+	@FindBy(xpath = "//input[@id='userNameId_input']")
+	WebElement txtboxUserName;
+	@FindBy(xpath = "//input[@id='passwdId_input']")
+	WebElement txtboxPwd;
+	@FindBy(xpath = "//input[@id='SignIn']")
+	WebElement btnLogin;
 
     
     @FindBy(xpath="//font[@class='errors']")
@@ -64,9 +65,8 @@ public class LoginUPA {
 //	@FindBy(xpath = "//div[@id='challengeSecurityAnswerId']/input")
 //	WebElement txtboxSecurityAns;
 	
-
-	@FindBy(id = "UnrecognizedSecAns_input")
-	WebElement txtboxSecurityAns;
+	 @FindBy(id="UnrecognizedSecAns_input")
+	 public WebElement txtboxSecurityAns;	
 
 	@FindBy(name = "rememberMyDevice")
 	WebElement chkBoxRememberDevice;
@@ -91,12 +91,11 @@ public class LoginUPA {
 	
 	private TestBase testConfig;
 	String id, password;
-	String env=System.getProperty("env");
-	
-	public LoginUPA(TestBase testConfig) 
-	{
-		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this); 
+	String env = System.getProperty("env");
+
+	public LoginUPA(TestBase testConfig) {
+		this.testConfig = testConfig;
+		PageFactory.initElements(testConfig.driver, this);
 	}
 
 	public void doLoginUPAActivateAccount(String userType) {
@@ -108,11 +107,12 @@ public class LoginUPA {
 		Browser.waitForPageLoad(testConfig);
 	}
 
-	public UPAHomePage doLoginUPA(String userType) {
+	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
 		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
 		Browser.waitForPageLoad(testConfig);
@@ -132,8 +132,11 @@ public class LoginUPA {
 		} catch (Exception e) {
 			Log.Comment("Authentication Error not present");
 		}
-		WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
-		if (welcomeTxt != null)
+		
+		//WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
+	    //if (welcomeTxt != null)
+		
+		if(testConfig.driver.findElements(By.xpath("//span[contains(text(),'Welcome Screen')]")).size() != 0)
 			Log.Comment("Security Question not present");
 		else {
 			for (int i = 0; i < 2; i++) {
@@ -166,13 +169,17 @@ public class LoginUPA {
 		
 		else if (securityQuestion.getText().contains("state of your birth")) 
 			fillStateOfBirthAns();
-
-		else 
-			Log.Comment("Unidentified Question :"+ " " + securityQuestion.getText(),"Red");
-	
-//		if (!chkBoxRememberDevice.isSelected())
-//			Element.click(chkBoxRememberDevice,"'Remember my device' checkbox");
 		
+		else if (securityQuestion.getText().contains("middle")) 
+			fillfathermiddlename();
+
+		else
+			Log.Comment("Unidentified Question :" + " " + securityQuestion.getText(), "Red");
+
+		if (!chkBoxRememberDevice.isSelected())
+			Element.click(chkBoxRememberDevice, "'Remember my device' checkbox");
+
+
 		Element.click(btnNext, "Next to submit answer");
 	}
 
@@ -184,6 +191,12 @@ public class LoginUPA {
 	
 	private void fillStateOfBirthAns() {
 		 Element.enterData(txtboxSecurityAns, "Faridabad","Entered 'Ginni' as Nick  Name", "txtboxSecurityAns");
+		
+	}
+	
+	
+	private void fillfathermiddlename() {
+		 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'testpt2' as Father's Middle Name", "txtboxSecurityAns");
 		
 	}
 
@@ -226,9 +239,11 @@ public class LoginUPA {
 	
 	public void setUserProperties(String userType)
 	{
-		int sqlRowNo=255;
+		//int sqlRowNo=255;
+		int sqlRowNo=237;
 		id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+env);
 		password=testConfig.runtimeProperties.getProperty("UPA_"+"OptumPwd_"+userType+"_"+env);
+		testConfig.putRunTimeProperty("App", "UPA");
 		testConfig.putRunTimeProperty("id",id);
 		testConfig.putRunTimeProperty("password",password);
 		
@@ -238,54 +253,55 @@ public class LoginUPA {
 			//testConfig.putRunTimeProperty("tin", payerSchema.get("PAYR_DSPL_NM").toString());
 		}
 	}
-	
-	public void verifyLoginUI()
-	{
-		Element.verifyElementPresent(tabHowToEnroll,"How to enroll tab");
-		Element.verifyElementPresent(tabBenefitsOfEPS,"Benefits Of EPS tab");
+
+//	public void setUserProperties(String userType) {
+//		id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
+//		password = testConfig.runtimeProperties.getProperty("UPA_" + "OptumPwd_" + userType + "_" + env);
+//		testConfig.putRunTimeProperty("id", id);
+//		testConfig.putRunTimeProperty("password", password);
+//	}
+
+	public void verifyLoginUI() {
+		Element.verifyElementPresent(tabHowToEnroll, "How to enroll tab");
+		Element.verifyElementPresent(tabBenefitsOfEPS, "Benefits Of EPS tab");
 	}
 
-	
-	public SplashPage3 doLogin(String userType,String accessType) throws IOException
-	{
-		String env=System.getProperty("env");
-        id=testConfig.runtimeProperties.getProperty("UPA_"+"ID_"+userType+"_"+accessType+"_"+env);
-        password=testConfig.runtimeProperties.getProperty("UPA_"+"Pwd_"+userType+"_"+accessType+"_"+env);
-        Element.click(activateAccount, "Activate your account link on registartion page");
-        
-        if(!txtboxUserName.isDisplayed())
-        	 Element.click(activateAccount, "Activate your account link on registartion page");
-        
-        Element.expectedWait(txtboxUserName, testConfig, "User Name", "User Name textbox");
-		Element.enterData(txtboxUserName,id, "Username entered as:" + " " +id, "txtboxUserName");
-		Element.enterData(txtboxPwd,password, "Password entered as :" + " "+ password, "txtboxPwd");
+	public SplashPage3 doLogin(String userType, String accessType) throws IOException {
+		String env = System.getProperty("env");
+		id = testConfig.runtimeProperties.getProperty("UPA_" + "ID_" + userType + "_" + accessType + "_" + env);
+		password = testConfig.runtimeProperties.getProperty("UPA_" + "Pwd_" + userType + "_" + accessType + "_" + env);
+		Element.click(activateAccount, "Activate your account link on registartion page");
+
+		if (!txtboxUserName.isDisplayed())
+			Element.click(activateAccount, "Activate your account link on registartion page");
+
+		Element.expectedWait(txtboxUserName, testConfig, "User Name", "User Name textbox");
+		Element.enterData(txtboxUserName, id, "Username entered as:" + " " + id, "txtboxUserName");
+		Element.enterData(txtboxPwd, password, "Password entered as :" + " " + password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
 		setUserProperties(userType);
 	    return new SplashPage3(testConfig);
 	}
-	
-	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException
-	{
-		TestDataReader data=testConfig.cacheTestDataReaderObject("Login");
-		id=data.GetData(rowNo,"Username");
-		password=data.GetData(rowNo,"Password");
-		
-	    if(activateAccount.isDisplayed())
-	    	clickActivateAccount();
-		Element.enterData(txtboxUserName, id, "Correct Username entered as :"+" " + id, "txtboxUserName");	
+
+	public void doInvalidLoginAndVerifyValidation(int rowNo) throws IOException {
+		TestDataReader data = testConfig.cacheTestDataReaderObject("Login");
+		id = data.GetData(rowNo, "Username");
+		password = data.GetData(rowNo, "Password");
+
+		if (activateAccount.isDisplayed())
+			clickActivateAccount();
+		Element.enterData(txtboxUserName, id, "Correct Username entered as :" + " " + id, "txtboxUserName");
 		Element.enterData(txtboxPwd, password, "Invalid Password entered :" + " " + password, "txtboxPwd");
 		Element.click(btnActivate, "Activate your account button");
 		verifyLoginErrorMessage();
 		
 	}
-	
-	public void clickActivateAccount()
-	{
+
+	public void clickActivateAccount() {
 		Element.click(activateAccount, "Activate your account link on registartion page");
 	}
-	
-	public void verifyLoginErrorMessage()
-	{
+
+	public void verifyLoginErrorMessage() {
 		Element.verifyTextPresent(txtErrorMsg, "The Temporary Username or Password you entered is not valid.");
 	}
 	

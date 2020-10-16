@@ -1,5 +1,4 @@
 #Author: rashi_hooda@optum.com
-
 @CsrViewPayments @CSRRegression
 Feature: CSR View Payments UI Functionality
 
@@ -12,8 +11,8 @@ Feature: CSR View Payments UI Functionality
     Then Verify Failed Payment PopUp
 
     Examples:
-      |    credentials     |   paymentType  	|
-      |      Super		     |   failedPayment  |
+      |    credentials     |   paymentType    |
+      |      Super		   |   failedPayment  |
   
 @CSRViewPayments_TC002
   Scenario Outline: Validate the Remit Payment on CSR
@@ -34,23 +33,23 @@ Feature: CSR View Payments UI Functionality
      And  Set FISL Parameters "<key>" and "<value>"
      Then Verify Default Search Result Count
      Examples:
-        |    credentials  |   paymentType  		     |key									|value|
-        |      Super		  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
+        |    credentials  |   paymentType  		   |key					|value  |
+        |      Super	  |   generalPayment30Days |TAX_IDENTIFIER_TYPE	|ALL	|
 
-@CSRViewPayments_TC004
+@CSRViewPayments_TC004 
   Scenario Outline: Validate correct payment information is displayed on filter Show All
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
     Then Select the TIN for "<paymentType>" CSR Portal
     And  Set FISL Parameters "<key>" and "<value>"
-    Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>" 
+    Then Verify Search Results With "<filterPayments>" for "<quickSearchFilter>" 
     Examples:
-      |credentials   |   paymentType  					|	filterpayments	|	quicksearchfilter	| key									|value|
-      |Super		     |   generalPayment60Days   |	Show All				|	Last 60 days			|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   generalPayment90Days   |	Show All				|	Last 90 days			|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 4-6 months        |	Show All				|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 6-9 months        |	Show All				|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
-      |Super		     |   Last 9-13 months       |	Show All				|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
+      |credentials   |   paymentType  				|	filterPayments	|	quickSearchFilter	| key					|value  |
+      #|Super		     |   generalPayment60Days   |	Show All		|	Last 60 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   generalPayment90Days   |	Show All		|	Last 90 days		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   Last 4-6 months        |	Show All		|	Last 4-6 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      #|Super		     |   Last 6-9 months        |	Show All		|	Last 6-9 months		|TAX_IDENTIFIER_TYPE	|ALL	|
+      |Super		     |   Last 9-13 months       |	Show All		|	Last 9-13 months	|TAX_IDENTIFIER_TYPE	|ALL	|
 
   @CSRViewPayments_TC005
   Scenario Outline: Validation of TIN's latest NPI Only payments and Quick Search Filter
@@ -85,7 +84,7 @@ Feature: CSR View Payments UI Functionality
       |      Super		     | generalPaymentForTIN_6_9months |	TIN Only				|	Last 6-9 months		|  Show All      |TAX_IDENTIFIER_TYPE	|TIN	|
       |      Super		     | generalPaymentForTIN_9_13months|	TIN Only				|	Last 9-13 months	|  Show All      |TAX_IDENTIFIER_TYPE	|TIN	|
 
-  @CSRViewPayments_TC007
+  @CSRViewPayments_TC007 
   Scenario Outline: CSR View Payments UI Functionality Validate correct payment information is displayed on selection of 'Active Only' from the filter
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -94,12 +93,12 @@ Feature: CSR View Payments UI Functionality
     Then Verify Search Results for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"  
     Examples:
       |    credentials     |   paymentType       |	filterpayments	|	quicksearchfilter	| archivefilter   |key															|value|		
-      |      Super		     | activeOnly30Days    |	Show All				|	Last 30 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
-      |      Super		     | activeOnly60Days    |	Show All				|	Last 60 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
-      |      Super		     | activeOnly90Days    |	Show All				|	Last 90 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
-      |      Super		     | activeOnly4_6months |	Show All				|	Last 4-6 months		| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
-      |      Super		     | activeOnly6_9months |	Show All				|	Last 6-9 months		| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
-      |      Super		     | activeOnly9_13months|	Show All				|	Last 9-13 months	| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      #|      Super		     | activeOnly30Days    |	Show All				|	Last 30 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      #|      Super		     | activeOnly60Days    |	Show All				|	Last 60 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      #|      Super		     | activeOnly90Days    |	Show All				|	Last 90 days			| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      #|      Super		     | activeOnly4_6months |	Show All				|	Last 4-6 months		| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      #|      Super		     | activeOnly6_9months |	Show All				|	Last 6-9 months		| Active Only     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|N		|
+      |      Super		     | activeOnly9_13months|	Show All				|	Last 9-13 months	|			 Closed     |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|Y		|
 
 
   @CSRViewPayments_TC008

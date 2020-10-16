@@ -403,6 +403,9 @@ public class TestBase extends ReporterClass {
 	public void setupTestMethod(Scenario scn) {
 		 startTestCase(scn.getName(),scn.getName(),"Priyanka");
 	     new Log(testConfig);
+	     int sqlRowNo=1507;
+	     Map schema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
 	}
 
 /*	@AfterMethod()

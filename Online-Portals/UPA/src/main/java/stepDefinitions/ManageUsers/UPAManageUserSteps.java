@@ -1,8 +1,12 @@
 package main.java.stepDefinitions.ManageUsers;
 
+import org.openqa.selenium.By;
+
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.AddUserDetails;
+import main.java.pageObjects.HomePage;
 import main.java.pageObjects.ManageUsers;
 
 public class UPAManageUserSteps extends TestBase {
@@ -32,9 +36,9 @@ public class UPAManageUserSteps extends TestBase {
         addUserDetails.verifyErrorMessages();
     }
 
-    @Then("^Verifies provider user details are read only on UPA$")
-    public void user_enters_in_Upa_Manage_Users_Page_and_verify_User_Details_Read_Only(String userType) throws Throwable {
-        manageUser.verifyUserDetailsAreReadOnly(userType);
+    @Then("^Verify provider user details are read only on UPA for \"([^\"]*)\"$")
+    public void verify_provider_user_details_are_read_only_on_UPA_for(String userType) throws Throwable {
+    	manageUser.verifyUserDetailsAreReadOnly(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Billing Service user$")
@@ -47,7 +51,7 @@ public class UPAManageUserSteps extends TestBase {
     @Then("^Verifies Payer \"([^\"]*)\" user details are read only on UPA$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_Payer_User_Details(String userType) throws Throwable {
         manageUser.verifyPayerUserDetailsAreReadOnly();
-        manageUser.verifyAccessLvlChange(userType);
+        //manageUser.verifyAccessLvlChange(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer user$")
@@ -70,14 +74,13 @@ public class UPAManageUserSteps extends TestBase {
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Provider_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
-        manageUser.removeFistTinInGrid();
 	}
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
 	}
     
@@ -99,13 +102,96 @@ public class UPAManageUserSteps extends TestBase {
 
 	@Then("^User perform validation by adding TIN with same TIN$")
 	public void user_perform_validation_by_adding_TIN_with_same_TIN() throws Throwable {
-	manageUser.clickActiveUserName("PROV").validateAddingSameTIN();
-	}
+	manageUser.clickActiveUserName("PROV");
+	manageUser.validateAddingSameTIN();
+}
 	
-	@Then("^verify Add user button is enabled\\.$")
-	public void verify_Add_user_button_is_enabled() throws Throwable {
-		manageUser.verifyAddUserBtnEnabled();
-	}
+
+	@When("^Verify Reset Password Option doesnt exists for UPA$")
+	public void verify_Reset_Password_Option_doesnt_exists_for_UPA() throws Throwable {
+    
+		manageUser.verifyResetPwdButtonUPA();
+}
+	
+    @Then("^verifies if the TIN grid is relabeled for from Remove Row to Delete User$")
+    public void verifies_if_the_TIN_grid_is_relabeled_for_from_Remove_Row_to_Delete_User() throws Throwable {
+    	manageUser.verifyDeleteUserInTinGrid();  
+    }
+    @Then("^validates if access level, email checkbox, delete user checkbox are enabled or disabled for \"([^\"]*)\"$")
+    public void validates_if_access_level_email_checkbox_delete_user_checkbox_are_enabled_or_disabled_for(String accessLevel) throws Throwable {
+    	manageUser.verifyAbilityOfTinItems(accessLevel);
+    }
+
+    @Then("^deletes \"([^\"]*)\" \"([^\"]*)\" user and verifies from UI and DB$")
+    public void deletes_user_and_verifies_from_UI_and_DB(String accessType, String accessLevel) throws Throwable {
+    	manageUser.deleteUserAndVerify(accessType, accessLevel);
+    }
+
+    @Then("^verifies adding a new user of \"([^\"]*)\" with deleted user email with \"([^\"]*)\"$")
+    public void verifies_adding_a_new_user_of_with_deleted_user_email_with(String accessType, String accessLevel) throws Throwable {
+    	manageUser.clickbtnAddNewUser(accessLevel);
+        manageUser.fillUserInfo(accessType,accessLevel);  
+    }
+    @Then("^verifies Admin user is able to update General user \"([^\"]*)\"$")
+    public void verify_Admin_user_is_able_to_update_General_user_s(String accessLevel) throws Throwable {
+    	manageUser.verifyAdminPrivileges(accessLevel);
+    }
+
+    @Then("^Validate the ability of the fields of TIN grid for \"([^\"]*)\"$")
+    public void validate_the_ability_of_the_fields_of_TIN_grid_for(String accessLevel) throws Throwable {
+       manageUser.abilityOfFields(accessLevel);
+    }
+    @Then("^Verify BS Admin is able to update BS Gen \"([^\"]*)\"$")
+    public void verify_BS_Admin_is_able_to_update_BS_Gen(String accessLevel ) throws Throwable {
+    	manageUser.bsAdminPrivilages(accessLevel);
+    }
+    
+    @Then("^validate ability of access level, email checkbox, delete user checkbox for Payer \"([^\"]*)\"$")
+    public void validate_ability_of_access_level_email_checkbox_delete_user_checkbox_for_Payer(String accessLevel) throws Throwable {
+        manageUser.abilityOfFieldsForPayer(accessLevel);
+    }
+
+   
+
+	  @Then("^Verify Users List for \"([^\"]*)\" with \"([^\"]*)\" on selecting and deselecting of purge checkbox$")
+	  public void verify_Users_List_for_with_on_selecting_and_deselecting_of_purge_checkbox(String userType, String searchCriteria) throws Throwable {
+		  new ManageUsers(testConfig).verifyUserList(userType,searchCriteria);
+	  }
+	  
+	  
+	  @Then("^Verify UI Details for Purged \"([^\"]*)\" user$")
+	  public void verify_UI_Details_for_Purged_user(String userType) throws Throwable {
+		  manageUser.verifyDetailsForPurgedUser(userType);
+	    
+	  }
+
+		@Then("^User clicks on View Purge Users checkbox$")
+		public void user_click_on_View_Purge_Users_checkbox() throws Throwable {
+			manageUser.clickPurgeUsers();
+		}
+
+		@Then("^Add a general user and select the user from the list for \"([^\"]*)\"$")
+		public void add_a_general_user_and_select_the_user_from_the_list_for(String accessType) throws Throwable {
+			manageUser.clickAddNewUser();
+			manageUser.fillNewUserInfo();
+			manageUser.enterTinSaveAndVerify(accessType);
+		}
+		
+		@Then("^Verify if the user is added in Database$")
+		public void verify_if_the_user_is_added_in_Database() throws Throwable {
+			manageUser.verifyDbBeforeTinDeletion();
+		}
+		
+		@Then("^Click on Delete user checkbox and Click on Save button \"([^\"]*)\"$")
+		public void click_on_Delete_user_checkbox_and_Click_on_Save_button(String accessType) throws Throwable {
+			manageUser.deleteCheckbox(accessType);
+		}
+		
+		@Then("^Verify if the deleted user is removed from Database$")
+		public void verify_if_the_deleted_user_is_removed_from_Database() throws Throwable {
+			manageUser.verifyDbAfterTinDeletion();
+			manageUser.verifyDbHistoryAfterTinDeletion();
+		}
 
 	@Then("^verify Add user button is disabled\\.$")
 	public void verify_Add_user_button_is_disabled() throws Throwable {

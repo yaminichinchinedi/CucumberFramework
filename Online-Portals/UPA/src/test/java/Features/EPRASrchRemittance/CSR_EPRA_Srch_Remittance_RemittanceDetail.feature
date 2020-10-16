@@ -23,49 +23,49 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	
 	Examples:
 	
-						|		Search Criteria			    |			credentials			|			priority		|			searchBy		|usertype    |
-			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRA				| PROV       |
-				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRA				| PROV       |
-						|			byDOPAndNpi				    |					Super				|					1				|			EPRA				| PROV       |
-			      |			byDOPAndNpi				    |					Super				|					2				|			EPRA				| PROV       |
-					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRA				| PROV       |
-		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRA				| PROV       |
-						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRA				| PROV       |
-			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRA				| PROV       |
-			    	|	byElectronicPaymentNo	    |					RO				  |					1				|			EPRA				| PROV       |
-			    	|	byElectronicPaymentNo	    |					RO				  |					2				|			EPRA				| PROV       |
-			    	|			byDOPAndNpi				    |					RO			  	|					1				|			EPRA				| PROV       |
-			    	|			byDOPAndNpi				    |					RO				  |					2				|			EPRA				| PROV       |
-			   	  |	byDOPAndAccountNo			    |					RO				  |					1				|			EPRA				| PROV       |
-			     	|	byDOPAndAccountNo			    |					RO				  |					2				|			EPRA				| PROV       |
-			     	|	byDOP&SubscriberID		    |					RO				  |					1				|			EPRA				| PROV       |
-			    	|	byDOP&SubscriberID		    |					RO				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    |  				RO				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    |  				RO				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					RO				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					RO				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |				  RO				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |				  RO				  |					2				|			EPRA				| PROV       |
-			    	|	byElectronicPaymentNo	    |					RW				  |					1				|			EPRA				| PROV       |
-				  	|	byElectronicPaymentNo	    |					RW				  |					2				|			EPRA				| PROV       |
-				  	|			byDOPAndNpi				    |					RW				  |					1				|			EPRA				| PROV       |
-				  	|			byDOPAndNpi				    |					RW				  |					2				|			EPRA				| PROV       |
-				  	|	byDOPAndAccountNo			    |					RW				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndAccountNo			    |					RW				  |					2				|			EPRA				| PROV       |
-				  	|	byDOP&SubscriberID		    |					RW				  |					1				|			EPRA				| PROV       |
-			    	|	byDOP&SubscriberID		    |					RW				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    |  				RW				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndClaimNo				    |  				RW				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					RW				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndPatientNm			    |					RW				  |					2				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |				  RW				  |					1				|			EPRA				| PROV       |
-			    	|	byDOPAndRenderingProvider |				  RW				  |					2				|			EPRA				| PROV       |
+						|		Search Criteria			      |			credentials			|			priority		|			searchBy		|usertype    |
+			  		|	EPRAElectronicPaymentNo	    |					Super				|					1				|			EPRA				| PROV       |
+				  	|	EPRAElectronicPaymentNo	    |					Super				|					2				|			EPRA				| PROV       |
+						|			EPRADOPAndNpi				    |					Super				|					1				|			EPRA				| PROV       |
+			      |			EPRADOPAndNpi				    |					Super				|					2				|			EPRA				| PROV       |
+					  |	EPRADOPAndAccountNo			    |					Super				|					1				|			EPRA				| PROV       |
+		      	|	EPRADOPAndAccountNo			    |					Super				|					2				|			EPRA				| PROV       |
+						|	EPRADOP&SubscriberID		    |					Super				|					1				|			EPRA				| PROV       |
+			    	|	EPRADOP&SubscriberID		    |					Super				|					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndClaimNo				    | 				Super				|					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndClaimNo				    | 				Super				|					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					Super				|					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					Super				|					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |			    Super				|					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |			    Super				|					2				|			EPRA				| PROV       |
+			    	|	EPRAElectronicPaymentNo	    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	EPRAElectronicPaymentNo	    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|			EPRADOPAndNpi				    |					RO			  	|					1				|			EPRA				| PROV       |
+			    	|			EPRADOPAndNpi				    |					RO				  |					2				|			EPRA				| PROV       |
+			   	  |	EPRADOPAndAccountNo			    |					RO				  |					1				|			EPRA				| PROV       |
+			     	|	EPRADOPAndAccountNo			    |					RO				  |					2				|			EPRA				| PROV       |
+			     	|	EPRADOP&SubscriberID		    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOP&SubscriberID		    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				      |  				RO				  |					1				|			EPRA				| PROV       |
+			    	|	byDOPAndClaimNo				      |  				RO				  |					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					RO				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					RO				  |					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |				  RO				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |				  RO				  |					2				|			EPRA				| PROV       |
+			    	|	byElectronicPaymentNo	      |					RW				  |					1				|			EPRA				| PROV       |
+				  	|	byElectronicPaymentNo	      |					RW				  |					2				|			EPRA				| PROV       |
+				  	|			EPRADOPAndNpi				    |					RW				  |					1				|			EPRA				| PROV       |
+				  	|			EPRADOPAndNpi				    |					RW				  |					2				|			EPRA				| PROV       |
+				  	|	EPRADOPAndAccountNo			    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndAccountNo			    |					RW				  |					2				|			EPRA				| PROV       |
+				  	|	EPRADOP&SubscriberID		    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOP&SubscriberID		    |					RW				  |					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndClaimNo				    |  				RW				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndClaimNo				    |  				RW				  |					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					RW				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndPatientNm			    |					RW				  |					2				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |				  RW				  |					1				|			EPRA				| PROV       |
+			    	|	EPRADOPAndRenderingProvider |				  RW				  |					2				|			EPRA				| PROV       |
 
 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
@@ -83,49 +83,49 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	
 	Examples:
 	
-						|		Search Criteria			    |			credentials			|			priority		|			searchBy		        |usertype   |
-			  		|	byElectronicPaymentNo	    |					Super				|					1				|			EPRAgenerated		    |PROV       |		
-				  	|	byElectronicPaymentNo	    |					Super				|					2				|			EPRAgenerated				|PROV       |		
-						|			byDOPAndNpi				    |					Super				|					1				|			EPRAgenerated				|PROV       |		
-			      |			byDOPAndNpi				    |					Super				|					2				|			EPRAgenerated				|PROV       |		
-					  |	byDOPAndAccountNo			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
-		      	|	byDOPAndAccountNo			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
-						|	byDOP&SubscriberID		    |					Super				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOP&SubscriberID		    |					Super				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    | 				Super				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    | 				Super				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |			    Super				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |			    Super				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byElectronicPaymentNo	    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byElectronicPaymentNo	    |						RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|			byDOPAndNpi				    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|			byDOPAndNpi				    |						RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndAccountNo			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndAccountNo			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOP&SubscriberID		    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    |  					RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    |  					RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |				    RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |				    RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|PROV       |		
-				  	|	byElectronicPaymentNo	    |						RW				|					2				|			EPRAgenerated				|PROV       |		
-				  	|			byDOPAndNpi				    |						RW				|					1				|			EPRAgenerated				|PROV       |		
-				  	|			byDOPAndNpi				    |						RW				|					2				|			EPRAgenerated				|PROV       |		
-				  	|	byDOPAndAccountNo			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndAccountNo			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
-				  	|	byDOP&SubscriberID		    |						RW				|					1				|			EPRAgenerated				|PROV       |		
-				  	|	byDOP&SubscriberID		    |						RW				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    |  					RW				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndClaimNo				    |  					RW				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	byDOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|PROV       |		
+						|		Search Criteria			      |			credentials			|			priority		|			searchBy		        |usertype   |
+			  		|	EPRAElectronicPaymentNo	    |					Super				|					1				|			EPRAgenerated		    |PROV       |		
+				  	|	EPRAElectronicPaymentNo	    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+						|			EPRADOPAndNpi				    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			      |			EPRADOPAndNpi				    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+					  |	EPRADOPAndAccountNo			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+		      	|	EPRADOPAndAccountNo			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+						|	EPRADOP&SubscriberID		    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOP&SubscriberID		    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndClaimNo				    | 				Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndClaimNo				    | 				Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndPatientNm			    |					Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndPatientNm			    |					Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |			    Super				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |			    Super				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byElectronicPaymentNo	      |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byElectronicPaymentNo	      |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|			EPRADOPAndNpi				    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|			EPRADOPAndNpi				    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndAccountNo			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndAccountNo			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOP&SubscriberID		    |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				      |  					RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndClaimNo				      |  					RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			      |						RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	byDOPAndPatientNm			      |						RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |				    RO				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |				    RO				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRAElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|	EPRAElectronicPaymentNo	    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|			EPRADOPAndNpi				    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|			EPRADOPAndNpi				    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|	EPRADOPAndAccountNo			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndAccountNo			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+				  	|	EPRADOP&SubscriberID		    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+				  	|	EPRADOP&SubscriberID		    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndClaimNo				    |  					RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndClaimNo				    |  					RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndPatientNm			    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|PROV       |		
+			    	|	EPRADOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|PROV       |		
 			    
 
 

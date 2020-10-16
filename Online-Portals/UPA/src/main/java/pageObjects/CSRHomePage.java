@@ -3,7 +3,7 @@ package main.java.pageObjects;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-
+import main.java.reporting.Log;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -97,6 +97,9 @@ public class CSRHomePage {
 	@FindBy(css = "a.runtext")
     WebElement lnkCrtEnrl;
 	
+	@FindBy(linkText="Home")
+	WebElement home;
+	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -141,4 +144,12 @@ public class CSRHomePage {
            Element.clickByJS(testConfig,lnkCrtEnrl, "Create/Maintain Enrollment Link");
           return new CreateEnrollUsrTyp(testConfig);
     }
+    
+    public  void VerifyCSRLogin() {
+    	Element.verifyElementPresent(home, "Home Button");
+		Log.Comment("User is on CSR Home Page");
+		if (home.isDisplayed()) {
+	           Element.clickByJS(testConfig,home, "Home Link");
+		}
+	}
 }

@@ -435,7 +435,12 @@ public class AddUserDetails {
 		int sqlRowNo=0;
 		Map portalUser=null;
 		{
-			sqlRowNo=258;
+			if(userType.equalsIgnoreCase("PROV")){
+				sqlRowNo=400;
+			}
+			if(userType.equalsIgnoreCase("PAY")){
+			sqlRowNo=401;
+			}
 			portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			try
 			{
