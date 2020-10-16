@@ -405,7 +405,7 @@ public class TestBase extends ReporterClass {
 	     new Log(testConfig);
 	     int sqlRowNo=1507;
 	     Map schema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString());
+	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
 	}
 
 /*	@AfterMethod()
