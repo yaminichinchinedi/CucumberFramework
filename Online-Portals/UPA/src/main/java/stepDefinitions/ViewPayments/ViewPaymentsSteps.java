@@ -140,7 +140,6 @@ public class ViewPaymentsSteps extends TestBase {
 			paySum.verifyFailedPaymentPopUp();
 		}
     }
-    @Then("^Verify Default Search Result Count$")
 
     @When("^User validates different UI fields as enabled/disabled,renamed and few New$")
     public void user_validates_different_UI_fields_as_enabled_disabled_renamed_and_few_New() throws Throwable {
@@ -153,7 +152,7 @@ public class ViewPaymentsSteps extends TestBase {
     }
 	
 	
-	 @Then("^Verify Default Search Result Count$")
+	@Then("^Verify Default Search Result Count$")
     public void verify_Default_Search_Result_Count() throws Throwable {
                paySum.verifyDefaultSearchResultCount();
     }
@@ -213,14 +212,14 @@ public class ViewPaymentsSteps extends TestBase {
     	paySum.verifyMktType(mktTypeFilter);
     }
     
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
-    	paySum.verifyQuickSrchFilterOptions();
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for \"([^\"]*)\"\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions(portalAccess);
     }
-
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
-    	paySum.verifyPaymentStatusFilter();
+    
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
+    	paySum.verifyPaymentStatusFilter(portalAccess);
     }
 
     @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
@@ -230,7 +229,7 @@ public class ViewPaymentsSteps extends TestBase {
 
     @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
     public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
-        paySum.verifyClaimCountHyperlink("Claim Count");
+        paySum.verifyClaimCountHyperlink("Claim Count","View Payments");
     }
 
 	@Then("^Validate Archive column relabeled to Payment Status$")
@@ -240,7 +239,7 @@ public class ViewPaymentsSteps extends TestBase {
 
     @Then("^Validate Archive/Save changes button is relabeled to Save$")
     public void validate_Archive_Save_changes_button_is_relabeled_to_Save() throws Throwable {
-        paySum.verifySaveBtnRelabled();
+        paySum.verifySavArchbtnNotPresent();
     }
 
     @Then("^Validate user is able to change the value of Payment Status column$")
@@ -302,22 +301,4 @@ public class ViewPaymentsSteps extends TestBase {
 	public void validate_selecting_different_standard_TIN_page_gets_refreshed_and_will_display_limited_UI_View() throws Throwable {
 		paySum.selectTinNverfyPagRfrsh();
 	}
-
-    //Amit code imported.Modify and check all the codes
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
-    	paySum.verifyQuickSrchFilterOptions("Standard");
-    }
-
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
-    	paySum.verifyPaymentStatusFilter("Standard");
-    }
-
-    @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
-    public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
-    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
-    }
-
-  
 }

@@ -227,8 +227,6 @@ public class SearchRemittanceSteps extends TestBase{
     	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
     }
 
-
-
 	@Then("^Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace$")
 	public void validate_in_Grid_search_Results_Type_column_or_Payment_Status_field_not_displayed_and_is_relabeled_to_ACH_Trace() throws Throwable {
 		srchRemittance.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
@@ -246,7 +244,7 @@ public class SearchRemittanceSteps extends TestBase{
 
 	@Then("^Validate Archived Coulmn,Save Archived button is relabeled to Payment Status and Save button respectively$")
 	public void validate_Archived_Coulmn_Save_Archived_button_is_relabeled_to_Payment_Status_and_Save_button_respectively() throws Throwable {
-		srchRemittance.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifySaveBtnRelabled(); 
+		srchRemittance.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifySavArchbtnNotPresent(); 
 
 	}
 
