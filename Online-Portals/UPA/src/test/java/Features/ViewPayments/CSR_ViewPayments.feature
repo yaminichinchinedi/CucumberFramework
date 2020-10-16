@@ -164,3 +164,4 @@ Feature: CSR View Payments UI Functionality
       |    credentials     |  paymentType      |   quicksearchfilter|filterpayments 	 	 |key				 |value		|
       |      Super		     |   Last 9-13 months|Last 9-13 months 		|   Show All         |MARKET_TYPE|ALL			|
      
+  

@@ -206,6 +206,28 @@ public class SearchRemittanceSearchCriteria {
 		    
 		 
 		    
+		 case "byElectronicPayNum":  
+		    {
+
+		    	//Rahul
+		    	
+             dataRequiredForSearch=dataProvider(criteriaType);
+		    	
+		    	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+		    	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Enter Electronic payment number as: " +dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "payment number");
+		    	Element.selectByVisibleText(drpDwnPayer, dataRequiredForSearch.get("PAYR_DSPL_NM").toString().trim(), "Payer Selected from dropdown");
+		    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	
+		    	testConfig.putRunTimeProperty("key1", "ELECTRONIC_PAYMENT_NUMBER");
+		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString());
+		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
+		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
+		    	break;
+		    	
+		    	
+		    	
+		    }    
 		    case "byCheckNo":
 		    {
 		    	dataRequiredForSearch=dataProvider(criteriaType);
@@ -1254,6 +1276,9 @@ public class SearchRemittanceSearchCriteria {
 			case "byDOPAndRenderingProvider":
 				sqlRowNo=70;
 				break;
+			case "byElectronicPayNum":
+				sqlRowNo=1610;
+				break;	
 		}
 		
 		Map data=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);		

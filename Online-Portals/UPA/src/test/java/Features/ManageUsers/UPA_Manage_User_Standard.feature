@@ -29,4 +29,16 @@ Feature: UPA Manage User Functionality for Standard TIN
       |    userType     |     	searchCriteria			|		portalAccess	| tinType		|
       |      PROV_Admin |  	TinWithMoreThnMaxUsr 		|			Standard		|		AO			|
       |      PROV_Admin |  	TinWithMoreThnMaxUsr		|			Standard		|		AV			|
-      
+    
+     
+     @UPAUS2879930_stan
+      Scenario Outline: Access Payments - Manage users Provider for Standard Experience
+ 
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When  User Selects a tin on HomePage for "<portalGroupName>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on Manage User Link
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
+     Examples:
+   	  |    userType     | accessLevelOfNewUser	| 		portalGroupName       	|		portalAccess	  | tinType		|System Mode|
+      |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Standard			|		AO			|  FEEBASED |
+      |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Standard			|		AO			|  LEGACY |  

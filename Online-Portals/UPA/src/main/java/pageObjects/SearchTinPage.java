@@ -78,7 +78,7 @@ public class SearchTinPage {
 			   }
 			   
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
-			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 			   break;
 		   }
@@ -168,8 +168,14 @@ public class SearchTinPage {
 		{
 		  case "PROV" :
 		   {
+			   if(searchCriteria.equalsIgnoreCase("Premium")||searchCriteria.equalsIgnoreCase("Standard")||searchCriteria.equalsIgnoreCase("Legacy"))
+			       sqlRowNo=1605;
+			   else
 			   sqlRowNo=15;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   if(searchCriteria.equalsIgnoreCase("Premium")||searchCriteria.equalsIgnoreCase("Standard")||searchCriteria.equalsIgnoreCase("Legacy"))
+			   tin=Searchedtin.get("PROV_TAX_ID_NBR").toString().trim();
+			   else
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");

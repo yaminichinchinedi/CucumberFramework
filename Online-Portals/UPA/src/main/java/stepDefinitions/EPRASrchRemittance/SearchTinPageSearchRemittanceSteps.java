@@ -223,6 +223,12 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 		srchTinPage.enterTinCSR(searchBy, usertype);
 	}
 
+	@Then("^User enters tin for Search Remittance page for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
+	public void user_enters_tin_for_Search_Remittance_page_for_and_click_on_continue_button(String portalGroupName, String tinType, String portalAccess, String usertype) throws Throwable {
+		testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+		testConfig.putRunTimeProperty("tinType", tinType);
+		srchTinPage.enterTinCSR(portalGroupName, usertype);
+	}
 	@Then("^Enter Tin \"([^\"]*)\" and select serach button$")
 	public void enter_Tin_and_select_serach_button(String Data) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions

@@ -297,3 +297,16 @@ Given User navigates to UPA portal and enters "<userType>" and login
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
       	      	     	
+   @UPAUS2879930_123 
+  Scenario Outline: Access Payments - Manage users Provider for Premium Experience
+ 
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When  User Selects a tin on HomePage for "<portalGroupName>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on Manage User Link
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
+     Examples:
+   	  |    userType     | accessLevelOfNewUser	| 		portalGroupName       	|		portalAccess	| tinType		|System Mode|
+      |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Legacy			|		AO			|  LEGACY | 
+     # |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Legacy			|		AO			|  FEEBASED | --Error
+     # |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Legacy			|		VO			|  LEGACY |
+      	

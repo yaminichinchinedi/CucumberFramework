@@ -45,6 +45,7 @@ public class UPARegistrationPage extends TestBase{
 	public ValidateEFTERASubmitInfo validatw9SubmitForm;
 	
 	@FindBy(linkText="SIGN IN")
+	//@FindBy(linkText="SIGN IN WITH OPTUM ID")
 	WebElement lnkSignInWithOptumId;
 	
 	@FindBy(tagName="nobr")
@@ -54,7 +55,7 @@ public class UPARegistrationPage extends TestBase{
 	private WebElement benefitsofOptumPayButton;
 	
 	
-	@FindBy(xpath = "//h1[contains(text(),'Welcome to Optum Pay™')]")
+	@FindBy(xpath = "//h1[contains(text(),'Welcome to Optum Payï¿½')]")
 	WebElement welcomeToOptumPayHeader;
 	
 	@FindBy(xpath = "//p[contains(text(),'There is significant cost savings available by enrolling in Optum Pay delivery. Use this calculator to get an estimate of the dollars your organization could save by switching to either ACH (direct deposit) or Virtual Card Payments (VCP).')]")
@@ -86,7 +87,8 @@ public class UPARegistrationPage extends TestBase{
 		
 		//Added by AMit- ask him the reason for not putting elses
 		if(!"prpurged".equals(testConfig.getRunTimeProperty("prpurged")))
-		   Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In");
+			//Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In With Optum ID");	
+		    Element.fluentWait(testConfig, lnkSignInWithOptumId, 200, 3, "Sign In");
 
 	}
 	
@@ -273,7 +275,7 @@ public class UPARegistrationPage extends TestBase{
 	public void verifyWelcomeToOptumPayHeader()
 	
 	{
-		Helper.compareEquals(testConfig, "Welcome to Optum Pay™ Text", welcomeToOptumPayHeader.getText(), "Welcome to Optum Pay™");
+		Helper.compareEquals(testConfig, "Welcome to Optum Payï¿½ Text", welcomeToOptumPayHeader.getText(), "Welcome to Optum Payï¿½");
 	}
 	
 	public void verifyOptumPayText(WebElement ele) {

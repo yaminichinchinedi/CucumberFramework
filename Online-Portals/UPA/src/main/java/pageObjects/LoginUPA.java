@@ -42,10 +42,9 @@ public class LoginUPA {
     @FindBy(linkText="ACTIVATE")
     public WebElement btnActivate;
     
-
+  // @FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignIn;
     @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") WebElement clickUPASignIn;
-   
-    //@FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignInTest1;
+	
 	
     @FindBy(id="tabHome")
     public WebElement tabHome;
@@ -111,6 +110,7 @@ public class LoginUPA {
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
+		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
 		Browser.wait(testConfig, 3);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
@@ -205,11 +205,11 @@ public class LoginUPA {
 		if(id.equals("TestPayerStage"))
 	 Element.enterData(txtboxSecurityAns, "Lal","Entered 'Lal' as Father's  Name", "txtboxSecurityAns");
 		else
-			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'Sharma' as Father's  Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt2","Entered 'testpt2' as Father's  Name", "txtboxSecurityAns");
 	}
 
 	private void fillBestFriendAns() {
-			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'sahil' as Best Friend's Name", "txtboxSecurityAns");
+			 Element.enterData(txtboxSecurityAns, "testpt1", "Entered 'testpt1' as Best Friend's Name", "txtboxSecurityAns");
 	}
 
 	private void fillSportsAns() {
