@@ -1,60 +1,6 @@
-#Author: Athyusha
-#PPS.4012 job should be running to execute these test cases.
-
-@UPABSSrchEPRA @UPARegression @UPABSSrchEPRABS
-Feature: UPA_EPRA_Srch_Remittance_BS 
-
-
-Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
-
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	Then User clicks on Search Remittance link for UPA
-	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button
-	Then User enters "<Search Criteria>" and click on search button.
-	And User validates EPRA pdf link is present and clicks on EPRA when "<Search Criteria>" and validate a new window is open with appropriate Text and Hover msg is displayed.
-	And validate PDF link is changed to PDF icon and is enabled and is downloadable for "<Search Criteria>".
-	And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-	And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
-	And validate download status is set to Y in Ole.EPRA_STATUS
-  And validate record is inserted in User_Event_Log for "<usertype>"
-  
-
-Examples:
-						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		    |   usertype  |
-						|	EPRAElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRABSAdmin			|     BS      |
-						|	EPRAElectronicPaymentNo	|			 BS_Admin  					|					2				|			EPRABSAdmin			|     BS      |
-						|	    EPRADOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRABSAdmin			|     BS      |
-						|	    EPRADOPAndNpi	      |			 BS_Admin 					|					2				|			EPRABSAdmin			|     BS      |
-						|	EPRAElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRABSGen				|     BS      |
-						|	EPRAElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
-						|	    EPRADOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRABSGen				|     BS      |
-						|	    EPRADOPAndNpi	      |			 BS_Gen   					|					2				|			EPRABSGen				|     BS      |
-						
-
-Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
-
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	Then User clicks on Search Remittance link for UPA
-	And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<searchBy>" through "<usertype>" and click on continue button
-	Then User enters "<Search Criteria>" and click on search button.
-	And validate PDF icon is enabled and is downloadable for "<Search Criteria>".
-  And validate Claim_Count and Priority is set accordingly based on "<Search Criteria>" for Search Remit Page
-	And validate new Entry is created in Ole.EPRA_STATUS with C status for Search Remit Page
-	And validate download status is set to Y in Ole.EPRA_STATUS
-	And validate record is inserted in User_Event_Log for "<usertype>"
-	
-
-Examples:
-						|		Search Criteria			  |				credentials		  	|			priority		|			searchBy		          |   usertype  |
-						|	EPRAElectronicPaymentNo	|			 BS_Admin 		      |					1				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	EPRAElectronicPaymentNo	|			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	    EPRADOPAndNpi	      |			 BS_Admin     		  |					1				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	    EPRADOPAndNpi	      |			 BS_Admin 					|					2				|			EPRAgeneratedBSAdmin	|    BS       |
-						|	EPRAElectronicPaymentNo	|			 BS_Gen   		      |					1				|			EPRAgeneratedBSGen		|    BS       |
-						|	EPRAElectronicPaymentNo	|			 BS_Gen   					|					2				|			EPRAgeneratedBSGen		|    BS       |
-						|	    EPRADOPAndNpi	      |			 BS_Gen       		  |					1				|			EPRAgeneratedBSGen		|    BS       |
-						|	    EPRADOPAndNpi	      |			 BS_Gen   					|					2				|			EPRAgeneratedBSGen	  |    BS       |
-											
+#Author: Pranav
+@UPASearchRemittance  @UPARegression @UPASrchRemit
+Feature: UPA_Srch_Remittance_BS 
 
 Scenario Outline: - verify returned reason in search remittance page
 
@@ -62,14 +8,14 @@ Scenario Outline: - verify returned reason in search remittance page
 	Then User clicks on Search Remittance link for UPA
 	And User enters tin for UPA Search Remittance Tin Page for "<Search Criteria>" through "<usertype>" and click on continue button
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify returned reason for <"Search Criteria">  in search results
+	Then User verifies returned reason for "<Search Criteria>"  in search results
 
 Examples:
 						|		Search Criteria			| credentials 	|   usertype  |
 	         			|	       byDOP  	            |	 BS_Admin   |    BS       |	
 	         	        |	       byDOP	            |	 BS_Gen     |    BS       |	    
 	         	        
-@tt1234         	        
+
 Scenario Outline: - verify Large non large tin in search remittance page
 
 	Given User navigates to UPA portal and enters "<credentials>" and login

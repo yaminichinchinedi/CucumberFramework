@@ -1,10 +1,10 @@
 
 #Author: Athyusha Thota
 
-@UPAClaimDetail  @UPARegression @BothCSRUPAScenarios @UPAClaimDetailPayer
+@UPAClaimDetail  @UPARegression @BothCSRUPAScenarios 
 Feature: UPA Payer Claim Detail
 
-
+@UPAClaimDetailPayer
 Scenario Outline: Claim Detail UI Functionality and Data Check
 
      Given User navigates to UPA portal and enters "<credentials>" and login

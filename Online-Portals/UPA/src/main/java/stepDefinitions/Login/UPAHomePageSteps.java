@@ -5,8 +5,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.BenefitsOfOptumPay;
 import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.HomePage;
+import main.java.pageObjects.HowToEnroll;
 import main.java.pageObjects.LoginCSR;
 import main.java.pageObjects.LoginUPA;
 import main.java.pageObjects.OptumIdLoginPage;
@@ -122,5 +124,44 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	@Then("^Enters security pin for \"([^\"]*)\"\\.$")
 	public void enters_security_pin_for(String role) throws Throwable {
 		loginPage.enterSSOTin(role);
+	}
+
+	@Given("^User navigates to UPA portal and verifies user is on landing page$")
+	public void user_navigates_to_UPA_portal_and_verifies_user_is_on_landing_page() throws Throwable {
+		new UPARegistrationPage(testConfig);
+		LoginUPA loginPage = new LoginUPA(testConfig);
+		loginPage.verifyLandingPage();
+	}
+
+	@Then("^user verifies home page$")
+	public void user_verifies_home_page() throws Throwable {
+		new UPARegistrationPage(testConfig).verifyHomePage();
+	}
+
+	@Then("^user navigates to benefits of optum pay tab$")
+	public void user_navigates_to_benefits_of_optum_pay_tab() throws Throwable {
+		new UPARegistrationPage(testConfig).clickBenefitsOfOptumPayLink();
+	}
+
+	@Then("^user verifies benefits of optum pay page$")
+	public void user_verifies_benefits_of_optum_pay_page() throws Throwable {
+		BenefitsOfOptumPay benefits = new BenefitsOfOptumPay(testConfig);
+		benefits.verifyBenefitsOfOptumPayPage();
+	}
+
+	@Then("^user navigates to how to enroll tab$")
+	public void user_navigates_to_how_to_enroll_tab() throws Throwable {
+		new UPARegistrationPage(testConfig).clickHowToEnrollLink();
+	}
+
+	@Then("^user verifies how to enroll page$")
+	public void user_verifies_how_to_enroll_page() throws Throwable {
+		HowToEnroll enrl = new HowToEnroll(testConfig);
+		enrl.verifyHowToEnrollPage();
+	}
+	
+	@When("^Click on UPA - Manage User Link$")
+	public void click_on_Upa_Manage_User_Link() throws Throwable {
+	    homePage.clickManageUsersLink();
 	}
 }

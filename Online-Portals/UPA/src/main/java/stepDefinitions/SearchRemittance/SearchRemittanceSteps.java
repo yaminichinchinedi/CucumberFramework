@@ -5,6 +5,7 @@ import main.java.Utils.SFTPAccess;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.reporting.Log;
 
 public class SearchRemittanceSteps extends TestBase{
@@ -195,6 +196,7 @@ public class SearchRemittanceSteps extends TestBase{
 		
 	}
 	
+
 	@Then("^Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace$")
 	public void validate_in_Grid_search_Results_Type_column_or_Payment_Status_field_not_displayed_and_is_relabeled_to_ACH_Trace() throws Throwable {
 		srchRemittance.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
@@ -220,4 +222,37 @@ public class SearchRemittanceSteps extends TestBase{
 	public void validate_that_Search_Criertia_box_do_not_contain_hyphen_following_colon_on_each_search_criteria_option() throws Throwable {
 		srchRemittance.validateHyfen();
 	}
+
+    @Then("^Validate the EPRA and Payer PRA column in Search Remittance Page for \"([^\"]*)\"$")
+    public void validate_the_EPRA_and_Payer_PRA_column_in_Search_Remittance_Page_for(String credentials) throws Throwable {
+    	srchRemittance.verifyEPRAAndPayerPRA(credentials);
+    }
+    
+    @Then("^verify search results for \"([^\"]*)\"$")
+    public void verify_search_results_for(String criteriaType) throws Throwable {
+    	srchRemittance.verifySearchResults(criteriaType);
+    }
+    
+
+    @Then("^verify search results sorting for \"([^\"]*)\"$")
+    public void verify_search_results_sorting_for(String criteriaType) throws Throwable {
+    	srchRemittance.verifySorting(criteriaType);
+    }
+    
+    @Then("^verify pagination in search results$")
+    public void verify_pagination_in_search_results() throws Throwable {
+    	srchRemittance.verifyPagination();
+    }
+    
+    @Then("^verify payment status for <\"([^\"]*)\"> in search results$")
+    public void verify_payment_status_for_in_search_results(String paymentType) throws Throwable {
+    	srchRemittance.verifyPaymentStatus(paymentType);
+    }
+    
+    @Then("^User verifies returned reason for \"([^\"]*)\" in search results$")
+    public void User_verifies_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
+    	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
+    }
+
+
 }

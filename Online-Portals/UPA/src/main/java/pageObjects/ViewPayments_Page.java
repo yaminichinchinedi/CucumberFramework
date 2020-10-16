@@ -18,6 +18,7 @@ import org.openqa.selenium.NoSuchElementException;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.fislServices.FISLConnection2;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -52,6 +53,7 @@ public class ViewPayments_Page {
 	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
 	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement activeDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'Payer')]") WebElement payerHeader;
+	@FindBy(xpath = "//td[contains(text(),'Payer')]") WebElement payerHeaderPrintPaymentSummary;
 	@FindBy(xpath = "//a[contains(text(),'Payment Date')]") WebElement payDateHeader;
 	@FindBy(xpath = "//a[contains(text(),'NPI')]") WebElement npiHeader;
 	@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNum;
@@ -73,8 +75,8 @@ public class ViewPayments_Page {
 	@FindBy(xpath = "//input[@name='btnSearch']") WebElement srchBtn;
 	@FindBy(xpath = "//td[contains(text(),'No payments')]") WebElement errormsg;
 	@FindBy(xpath = "//td[@class='errors']") WebElement errormsgcsr;
-	
-	
+	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
+		
 	
 	
 	
@@ -82,6 +84,7 @@ public class ViewPayments_Page {
 	
 	
 private TestBase testConfig;
+private ViewPaymentsDataProvider dataProvider;
 
 public ViewPayments_Page(TestBase testConfig)
 {
@@ -443,6 +446,7 @@ public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
 	
   }
 
+
 public void verifyDisable()
 {
 	Boolean quickSearchUI = quickSearch.isDisplayed();
@@ -453,4 +457,65 @@ public void verifyDisable()
 //	if (archiveDrpDwn == null)
 //		Log.Comment("Save Archive Changes button is not on the Page");
 }
+
+	public void selectTimePeriod(String TimePeriod) {
+
+		if (TimePeriod.equals("Last 30 days"))
+			Element.selectVisibleText(quickSearch, "Last 30 days", "Quick Search from View Payments");
+		if (TimePeriod.equals("Last 60 days"))
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxx");
+			Element.selectVisibleText(quickSearch, "Last 60 days", "Quick Search from View Payments");
+		if (TimePeriod.equals("Last 90 days"))
+			Element.selectVisibleText(quickSearch, "Last 90 days", "Quick Search from View Payments");
+		if (TimePeriod.equals("Last 4-6 months"))
+			Element.selectVisibleText(quickSearch, "Last 4-6 months", "Quick Search from View Payments");
+		if (TimePeriod.equals("Last 6-9 months"))
+			Element.selectVisibleText(quickSearch, "Last 6-9 months", "Quick Search from View Payments");
+		if (TimePeriod.equals("Last 9-13 months"))
+			Element.selectVisibleText(quickSearch, "Last 9-13 months", "Quick Search from View Payments");
+
+	}
+
+	public void selectMarketType(String filter) {
+			Element.selectVisibleText(marketTyp, filter, "Market Type filter selected on View Payments as :" + filter);
+	}
+
+	public void verifyPayerText(String credentials) {
+		if (credentials.equals("CSR")) {
+			Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeader.getText());
+		} else {
+			Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeader.getText());
+			Browser.scrollToBottom(testConfig);
+			Element.click(printBtn, "Print Payment Summary");
+			String oldWindow = Browser.switchToNewWindow(testConfig, "printPaymentSummary.do");
+			Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeaderPrintPaymentSummary.getText());
+			Browser.switchToParentWindow(testConfig, oldWindow);
+		}
+	}
+
+	
+	public void verifyEPRAAndPayerPRA(String credentials) {
+		if (credentials.equals("CSR")) {
+			if (payerTable.get(2).findElements(By.tagName("td")).get(9).getText().contentEquals("Patient Payments")) {
+				Helper.compareEquals(testConfig, "Payer PRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(17).getText());
+				payerTable.get(2).findElements(By.tagName("td")).get(14).isDisplayed();
+				Helper.compareEquals(testConfig, "835", "835", payerTable.get(2).findElements(By.tagName("td")).get(14).getText());
+				Helper.compareEquals(testConfig, "EPRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(16).getText());
+
+		} }else {
+			Helper.compareEquals(testConfig, "Payer PRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(14).getText());
+			payerTable.get(2).findElements(By.tagName("td")).get(11).isDisplayed();
+			Helper.compareEquals(testConfig, "835", "835", payerTable.get(2).findElements(By.tagName("td")).get(11).getText());
+			Helper.compareEquals(testConfig, "EPRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(13).getText());
+		}
+	}
+
+	public void verifyandClickPayment() throws Exception
+	{
+		Boolean firstPaymentNbr = firstPaymentNumber.isDisplayed();
+		Helper.compareEquals(testConfig, "First payment Number", true, firstPaymentNbr);
+	    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
+		
+	}
+
 }

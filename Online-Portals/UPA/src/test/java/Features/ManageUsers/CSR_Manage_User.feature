@@ -2,17 +2,28 @@
 @CSRManageUsers @CSRRegression
 Feature: CSR Manage User Functionality
 
-@CSRManageUsers1
+
+@US2707358 
+  Scenario Outline: CSR Manage User UI Functionality Portal User History
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Updates an active User and verify the user details in the UI and DB
+    Examples:
+      |    userType     |   credentials   |  
+      |      PROV       |      Super      |
+      |      PAY        |      Super      |
+      
+@CSRManageUsers1 
   Scenario Outline: CSR Manage User UI Functionality Add new user
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
     Then User enters "<userType>" in Manage Users Page and Click to add new User and fill the details "<accessLevelOfNewUser>" and verify the user detils and delete the user
     Examples:
       |    userType     |   credentials   |  accessLevelOfNewUser |
+      |      PAY        |      Super      |	 Administrator		  |
       |      PROV       |      Super      |	 Administrator		  |
       |      BS         |      Super      |	 Administrator		  |
-      |      PAY        |      Super      |	 Administrator		  |
-
+      
 
   Scenario Outline: CSR Manage User UI Functionality Verifies Details
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -40,7 +51,7 @@ Feature: CSR Manage User Functionality
       
   
   @CSR_AugRelease
-  @CSRManageUsers_US2769380
+	@CSRManageUsers_US2769380
   Scenario Outline: CSR Manage User UI Functionality Add new user using Purged user Email address
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
@@ -85,21 +96,9 @@ Feature: CSR Manage User Functionality
       |      BS	        |      RW 				|					N					|
     
     
-
-@US2707358
-  Scenario Outline: CSR Manage User UI Functionality Portal User History
-    Given User navigates to CSR portal and enters "<credentials>" and login
-    When Click on CSRManage User Link
-    Then User enters "<userType>" in Manage Users Page and Updates an active User and verify the user details in the UI and DB
-    Examples:
-      |    userType     |   credentials   |  
-      |      PAY        |      Super      |
-      |      PROV       |      Super      |
-
-      
-      
-@CSRPurgedTest1
-Scenario Outline: US2684242_1_CSR_SuperUser_ManageUsers_checkforViewPurgedUsers- Priyanka
+			
+@CSRPurgedTest1 
+Scenario Outline: US2684242_1_CSR_SuperUser_ManageUsers_checkforViewPurgedUsers
 
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	When  User clicks on Manage Users link
@@ -117,7 +116,7 @@ Scenario Outline: US2684242_1_CSR_SuperUser_ManageUsers_checkforViewPurgedUsers-
           |     RW        |   PAY       |      PurgedUsers  |     enabled    |
           |     RW        |   PAY       |    NoPurgedUsers  |     true       |
 					
-@CSRPurgedTest2
+@CSRPurgedTest2 
 Scenario Outline: US2684242_2_CSR_SuperUsers_ManageUsers_selectViewPurgedUsers_CheckDesignation + US2684242_3_CSR_SuperUser_ManageUsers_UnselectViewPurgedUsers_CheckDesignation
 
 	Given User navigates to CSR portal and enters "<credentials>" and login
@@ -133,7 +132,7 @@ Scenario Outline: US2684242_2_CSR_SuperUsers_ManageUsers_selectViewPurgedUsers_C
 					#|     RW        |   PAY       |    PurgedUsers    | 
 					
 					
-@CSRPurgedTest3
+@CSRPurgedTest3 
 Scenario Outline: US2684242_4_CSR_SuperUser_ManageUsers_ValidationforViewPurgedUsers
 
 	Given User navigates to CSR portal and enters "<credentials>" and login
@@ -148,7 +147,7 @@ Scenario Outline: US2684242_4_CSR_SuperUser_ManageUsers_ValidationforViewPurgedU
 					|     RW        |   PAY       |    PurgedUsers    | 
 			  	 
 
-@CSRUS2684219 @CSRUS2767633 @CSR_AugRelease
+@CSRUS2684219 @CSRUS2767633 @CSR_AugRelease 
 Scenario Outline: CSR Manage Purse User 
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
@@ -157,8 +156,34 @@ Scenario Outline: CSR Manage Purse User
     Then User clicks on one of Purged User from User list and perform validations like Name,Phone No,Email,TIN List,buttons disabled for "<credentials>" user 
     Examples:
       |    userType     |   credentials   |   
-      |      PROV       |      ROOnly    	|	 
-      |      PROV       |      RWOnly    	|	 
+      #|      PROV       |      ROOnly    	|	 
+      #|      PROV       |      RWOnly    	|	 
       |      PROV       |      Super      |	
       |      PROV       |      RO 				|
       |      PROV       |      RW 				|
+
+      
+#Author:Sunanda       
+@US2020806
+Scenario Outline: CSR Manage User UI Functionality Add new user
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page and Click to add new User and fill the details "<accessLevelOfNewUser>" and verify the user detils and delete the user
+    Examples:
+      |    userType     |   credentials   |  accessLevelOfNewUser |
+      |      PROV       |      Super      |	 Administrator		  |
+      |      BS         |      Super      |	 Administrator		  |
+      |      PAY        |      Super      |	 Administrator		  |     
+      
+#Author:Sunanda    
+@US2854207
+Scenario Outline: CSR Manage User UI Functionality Add new user
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" and adds new User with "<accessLevelOfNewUser>" and verifies and deletes the user
+    Examples:
+      |    userType     |   credentials   |  accessLevelOfNewUser |
+      |      PROV       |      Super      |	 Administrator		  |
+      |      BS         |      Super      |	 Administrator		  |
+      |      PAY        |      Super      |	 Administrator		  |
+ 

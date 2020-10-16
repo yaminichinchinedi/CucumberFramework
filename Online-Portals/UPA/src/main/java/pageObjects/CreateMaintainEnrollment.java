@@ -111,6 +111,42 @@ public class CreateMaintainEnrollment {
 
     }
 
-	
+	public void getTin(String userType, String tinType, String payMethodCode, String enrollmentStatusCode)
+	{
+		int sqlRowNo;
+		Map Searchedtin=null;
+		String tin="";
+		selectUserType(userType);
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("payMethodCode", payMethodCode);
+		testConfig.putRunTimeProperty("enrollmentStatusCode", enrollmentStatusCode);
+		switch(payMethodCode)
+		{
+		  case "ACH" :
+		   {
+			   sqlRowNo=402;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+			   break;
+		   }
+		   
+		  case "NONE" :
+		   {
+			   sqlRowNo=405;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+			   break;
+		   }
+		   
+		   default:
+			   break;
+		}
+		
+		testConfig.putRunTimeProperty("tin", tin);
+	}
 
 }

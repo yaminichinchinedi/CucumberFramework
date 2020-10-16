@@ -109,6 +109,7 @@ public class SearchTinPageSearchRemittance {
         	 break;
           }
      case "Payer":
+     case "PAYER":
          {
         	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
         	 Element.click(submitBtn, "Click Search Button");
@@ -123,6 +124,13 @@ public class SearchTinPageSearchRemittance {
       } 
      
      case "PAY_Gen":
+     {
+    	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+    	 Element.click(submitBtn, "Click Search Button");
+    	 break;
+      }  
+     
+     case "SUBPAYER":
      {
     	 Element.enterData(payertinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
     	 Element.click(submitBtn, "Click Search Button");

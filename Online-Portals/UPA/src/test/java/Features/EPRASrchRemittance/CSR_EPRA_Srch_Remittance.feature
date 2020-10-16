@@ -2,9 +2,10 @@
 #PPS.4012 job should be running to execute these test cases.
 #Few test cases will fail due to existing PROD defect
 
-@CSREPRASrchRemitPage    @CSRRegression
+    @CSRRegression
 Feature: CSR_EPRA_Srch_Remittance  
 
+@CSREPRASrchRemitPage
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -19,19 +20,19 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
   And validate record is inserted in User_Event_Log for "<usertype>"
 	
 	Examples:
-						|		Search Criteria			|				credentials			|			priority		|			searchBy		|usertype   |
-						|	byElectronicPaymentNo	|					Super					|					1				|			EPRA				|PROV       |
-						|	byElectronicPaymentNo	|					Super					|					2				|			EPRA				|PROV       |
-						|	byElectronicPaymentNo	|						RW					|					1				|			EPRA				|PROV       |
-						|	byElectronicPaymentNo	|						RW					|					2				|			EPRA				|PROV       |
-						|	byElectronicPaymentNo	|						RO					|					1				|			EPRA				|PROV       |
-						|	byElectronicPaymentNo	|						RO					|					2				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |					Super					|					1				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |					Super					|					2				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |						RW					|					1				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |						RW					|					2				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |						RO					|					1				|			EPRA				|PROV       |
-						|	    byDOPAndNpi	      |						RO					|					2				|			EPRA				|PROV       |
+						|		Search Criteria			  |				credentials			|			priority		|			searchBy		|usertype   |
+						|	EPRAElectronicPaymentNo	|					Super					|					1				|			EPRA				|PROV       |
+						|	EPRAElectronicPaymentNo	|					Super					|					2				|			EPRA				|PROV       |
+						|	EPRAElectronicPaymentNo	|						RW					|					1				|			EPRA				|PROV       |
+						|	EPRAElectronicPaymentNo	|						RW					|					2				|			EPRA				|PROV       |
+						|	EPRAElectronicPaymentNo	|						RO					|					1				|			EPRA				|PROV       |
+						|	EPRAElectronicPaymentNo	|						RO					|					2				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |					Super					|					1				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |					Super					|					2				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |						RW					|					1				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |						RW					|					2				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |						RO					|					1				|			EPRA				|PROV       |
+						|	    EPRADOPAndNpi	      |						RO					|					2				|			EPRA				|PROV       |
 	
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to CSR portal and enters "<credentials>" and login
@@ -46,17 +47,17 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	And validate record is inserted in User_Event_Log for Remittance Detail for CSR "<credentials>"
 	
 Examples:
-						|		Search Criteria			|				credentials			|			priority		|			searchBy		|usertype   |
-						|	byElectronicPaymentNo	|					Super					|					1				|		EPRAgenerated	|PROV       |
-						|	byElectronicPaymentNo	|					Super					|					2				|		EPRAgenerated	|PROV       |
-						|	byElectronicPaymentNo	|						RW					|					1				|		EPRAgenerated	|PROV       |
-						|	byElectronicPaymentNo	|						RW					|					2				|		EPRAgenerated	|PROV       |
-						|	byElectronicPaymentNo	|						RO					|					1				|		EPRAgenerated	|PROV       |
-						|	byElectronicPaymentNo	|						RO					|					2				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |					Super					|					1				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |					Super					|					2				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |						RW					|					1				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |						RW					|					2				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |						RO					|					1				|		EPRAgenerated	|PROV       |
-						|	    byDOPAndNpi	      |						RO					|					2				|		EPRAgenerated	|PROV       |
+						|		Search Criteria		  	|				credentials			|			priority		|			searchBy		|usertype   |
+						|	EPRAElectronicPaymentNo	|					Super					|					1				|		EPRAgenerated	|PROV       |
+						|	EPRAElectronicPaymentNo	|					Super					|					2				|		EPRAgenerated	|PROV       |
+						|	EPRAElectronicPaymentNo	|						RW					|					1				|		EPRAgenerated	|PROV       |
+						|	EPRAElectronicPaymentNo	|						RW					|					2				|		EPRAgenerated	|PROV       |
+						|	EPRAElectronicPaymentNo	|						RO					|					1				|		EPRAgenerated	|PROV       |
+						|	EPRAElectronicPaymentNo	|						RO					|					2				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |					Super					|					1				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |					Super					|					2				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |						RW					|					1				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |						RW					|					2				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |						RO					|					1				|		EPRAgenerated	|PROV       |
+						|	    EPRADOPAndNpi	      |						RO					|					2				|		EPRAgenerated	|PROV       |
 														
