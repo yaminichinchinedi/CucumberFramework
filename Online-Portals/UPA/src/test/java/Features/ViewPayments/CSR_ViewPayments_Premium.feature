@@ -3,7 +3,7 @@
 Feature: View Payment Access Payment
 
 	#Author: AMIT
-  @CSR_ViewPayments_US2801170,US2879948 
+  @CSR_ViewPayments_US2801170,US2879948 @OctRelease
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -21,7 +21,7 @@ Feature: View Payment Access Payment
       |   		Super	    | 		PROV		|	Last 9-13 months |		 Premium		|		AV		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 			|   		Super	    | 		PROV		|	Last 9-13 months |		 Premium		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
   #Author: AMIT
-  @CSR_ViewPayments_US2801189 
+  @CSR_ViewPayments_US2801189 @OctRelease
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link

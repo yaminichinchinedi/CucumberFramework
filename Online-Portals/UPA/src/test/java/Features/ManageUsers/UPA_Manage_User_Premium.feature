@@ -2,7 +2,7 @@
 @UPAManageUsers_Premium
 Feature: UPA Manage User Functionality for Premium TIN
 
-  @UPAManageUsers_US2775740
+  @UPAManageUsers_US2775740 @OctRelease
 		Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to UPA portal and enters "<userType>" and login
     When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

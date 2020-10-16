@@ -3,7 +3,7 @@
 Feature: UPA Manage User Functionality for Premium TIN
 
   	#Author: AMIT
-  	@UPAViewPayments_US2793429 
+  	@UPAViewPayments_US2793429 @OctRelease
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -24,7 +24,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		
  			
  		#Author: AMIT
- 		@UPAViewPayments_US2783429 
+ 		@UPAViewPayments_US2783429 @OctRelease
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
