@@ -1,7 +1,7 @@
 #Author: Rahul Krishna
 @CSRManageUsers @CSRRegression
 Feature: CSR Manage User Functionality for Legacy Tins
-@CSRUS2879930_111
+@CSRUS2879930 @OctRelease
 Scenario Outline: CSR Manage Purse User 
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link

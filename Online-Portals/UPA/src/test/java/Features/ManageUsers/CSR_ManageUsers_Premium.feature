@@ -2,7 +2,7 @@
 
 Feature: CSR Manage User Functionality for Premium Tins
 
-@CSRUS2879930_111
+@CSRUS2879930 @OctRelease
 Scenario Outline: CSR Manage Purse User 
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
@@ -25,7 +25,7 @@ Examples:
      # |      PROV   |   Super     	    |VO			|   TIN not found  |FeeBased    |#--Legacy(Need to check) 
 
 		
-		@CSRUS2879930_BS
+		@CSRUS2879930 @OctRelease
 		Scenario Outline: CSR Manage Purse User for Billing Service
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
@@ -36,7 +36,7 @@ Examples:
 	  |    userType   |   credentials     |tinTyp |	portalAccess    |
     |      BS       |   Super     	    |BS			|   Premium       |
     
-  	@CSRUS2879930_Payer
+  	@CSRUS2879930 @OctRelease
   	Scenario Outline: CSR Manage Purse User for Payer
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link

@@ -2,7 +2,7 @@
 Feature: CSR Search Remittance for Premium access portal			
 
 
-@SrchRemitt123
+@SrchRemitt123 @OctRelease @CSRUS2879974
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 	

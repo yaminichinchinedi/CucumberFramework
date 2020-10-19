@@ -60,7 +60,6 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
     	testConfig.putRunTimeProperty("tinType", tinType);
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", "21QG96591932");
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();
     }

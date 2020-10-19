@@ -297,7 +297,7 @@ Given User navigates to UPA portal and enters "<userType>" and login
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
       	      	     	
-   @UPAUS2879930_123 
+   @UPAUS2879930 @OctRelease
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
  
     Given User navigates to UPA portal and enters "<userType>" and login

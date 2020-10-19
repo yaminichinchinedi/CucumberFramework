@@ -272,17 +272,16 @@ public class ViewPaymentsSteps extends TestBase {
     	testConfig.putRunTimeProperty("page", "printPaymentSummary");
     	 paySum.verifyPrintPaymentSummaryPage();
     }
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions(portalAccess);
 
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out() throws Throwable {
-    	paySum.verifyQuickSrchFilterOptions("Standard");
-        
     }
 
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out() throws Throwable {
-    	paySum.verifyPaymentStatusFilter("Standard");
-        
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
+    	paySum.verifyPaymentStatusFilter(portalAccess);
+
     }
 
     @Then("^Validate Archive/Save changes button is not there$")

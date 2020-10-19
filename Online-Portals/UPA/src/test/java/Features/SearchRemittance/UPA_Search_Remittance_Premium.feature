@@ -1,7 +1,7 @@
 #Author: Rahul Krishna
 Feature: UPA Search Remittance for Premium access portal			
 
-@SrchRemitt
+@UPAUS2879968 @OctRelease
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 	Given User navigates to UPA portal and enters "<credentials>" and login

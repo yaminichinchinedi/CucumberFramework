@@ -30,7 +30,7 @@ Feature: UPA Manage User Functionality for Premium TIN
       |      BS_Admin   |   BS     	    |		Premium       | VO   |
       
       
-       @UPAUS2879930
+       @UPAUS2879930 @OctRelease
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
  
     Given User navigates to UPA portal and enters "<userType>" and login
@@ -46,7 +46,7 @@ Feature: UPA Manage User Functionality for Premium TIN
      
       
       
-      @UPAUS2879930_BS
+      @UPAUS2879930 @OctRelease
     Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to UPA portal and enters "<userType>" and login
     When Click on Manage User Link
@@ -61,7 +61,7 @@ Feature: UPA Manage User Functionality for Premium TIN
  
  
 
- @UPAUS2879930_Pay
+ @UPAUS2879930 @OctRelease
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 	Given User navigates to UPA portal and enters "<userType>" and login
 	When  Click on Manage User Link
