@@ -197,6 +197,7 @@ public class SearchRemittanceSteps extends TestBase{
 	}
 	
 
+
 	@Then("^Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace$")
 	public void validate_in_Grid_search_Results_Type_column_or_Payment_Status_field_not_displayed_and_is_relabeled_to_ACH_Trace() throws Throwable {
 		srchRemittance.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
@@ -222,6 +223,7 @@ public class SearchRemittanceSteps extends TestBase{
 	public void validate_that_Search_Criertia_box_do_not_contain_hyphen_following_colon_on_each_search_criteria_option() throws Throwable {
 		srchRemittance.validateHyfen();
 	}
+
 
     @Then("^Validate the EPRA and Payer PRA column in Search Remittance Page for \"([^\"]*)\"$")
     public void validate_the_EPRA_and_Payer_PRA_column_in_Search_Remittance_Page_for(String credentials) throws Throwable {
@@ -253,6 +255,5 @@ public class SearchRemittanceSteps extends TestBase{
     public void User_verifies_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
     	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
     }
-
 
 }

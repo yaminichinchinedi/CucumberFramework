@@ -1710,6 +1710,7 @@ public class SearchRemittance extends paymentSummary {
 		return this;
 		
 	 } 
+
 	
 	public SearchRemittance validateHyfen()
 {
@@ -1720,6 +1721,7 @@ public class SearchRemittance extends paymentSummary {
 		
 		return this;
 }
+
 
 	
 	public void verifyEPRAAndPayerPRA(String credentials) {
@@ -1740,17 +1742,15 @@ public class SearchRemittance extends paymentSummary {
 		} else {
 			divSearchResults = Element.findElements(testConfig, "xpath",
 					"//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-			if (divSearchResults.get(1).findElements(By.tagName("td")).get(14).getText()
-					.contentEquals("Patient Payments")) {
-				Helper.compareEquals(testConfig, "Payer PRA", "N/A",
-						divSearchResults.get(1).findElements(By.tagName("td")).get(11).getText());
+			if (divSearchResults.get(1).findElements(By.tagName("td")).get(14).getText().contentEquals("Patient Payments")) {
+				Helper.compareEquals(testConfig, "Payer PRA", "N/A",divSearchResults.get(1).findElements(By.tagName("td")).get(11).getText());
+				
 				divSearchResults.get(1).findElements(By.tagName("td")).get(8).isDisplayed();
-				Helper.compareEquals(testConfig, "835", "835",
-						divSearchResults.get(1).findElements(By.tagName("td")).get(8).getText());
-				Helper.compareEquals(testConfig, "EPRA", "N/A",
-						divSearchResults.get(1).findElements(By.tagName("td")).get(10).getText());
+				Helper.compareEquals(testConfig, "835", "835",divSearchResults.get(1).findElements(By.tagName("td")).get(8).getText());
+				Helper.compareEquals(testConfig, "EPRA", "N/A",divSearchResults.get(1).findElements(By.tagName("td")).get(10).getText());
 			}
 		}
 
 	}
+	
 }

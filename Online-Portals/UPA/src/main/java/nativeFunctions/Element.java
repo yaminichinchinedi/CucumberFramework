@@ -536,7 +536,7 @@ import main.java.reporting.Log;
 		   
 		   Select sel = new Select(element);
 		   
-		  System.out.println( sel.getFirstSelectedOption().getText());
+//		  System.out.println( sel.getFirstSelectedOption().getText());
 		   
 		   if(textOrValue.contains("text"))
 		    FirstSelectedOption=sel.getFirstSelectedOption().getText();

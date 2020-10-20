@@ -230,6 +230,7 @@ Scenario Outline: US2499639_1_UPA_BS_Admin_ManageUsers_UIValidationforPurgedUser
       |    userType     |		
       |     BS_Admin   	|	
     
+
    @UPAUS2879930_123 
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
  
@@ -243,6 +244,7 @@ Scenario Outline: US2499639_1_UPA_BS_Admin_ManageUsers_UIValidationforPurgedUser
      # |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Legacy			|		AO			|  FEEBASED | --Error
      # |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Legacy			|		VO			|  LEGACY |
       	
+
 
       	
  
@@ -309,5 +311,34 @@ Given User navigates to UPA portal and enters "<userType>" and login
     Examples:
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
-      	      	     	
 
+   @UPAUS2879930_123 
+  Scenario Outline: Access Payments - Manage users Provider for Premium Experience
+ 
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When  User Selects a tin on HomePage for "<portalGroupName>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on Manage User Link
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
+     Examples:
+   	  |    userType     | accessLevelOfNewUser	| 		portalGroupName       	|		portalAccess	| tinType		|System Mode|
+      |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Legacy			|		AO			|  LEGACY | 
+     # |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Legacy			|		AO			|  FEEBASED | --Error
+     # |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Legacy			|		VO			|  LEGACY |
+      	
+
+
+#Author: Athyusha Thota
+@US2637617_UPA @UPARegression
+Scenario Outline: UPA Manage User UI Check Reset Password Visibility
+
+    Given User navigates to UPA portal and enters "<userType>" and login
+    Then Select the TIN for "<accessType>" UPA Portal
+    When Click on UPA - Manage User Link
+    And Verify Reset Password Option doesnt exists for UPA
+    
+Examples:
+       |      userType       |   accessType|
+       |      PROV_Admin     |   PROV      |
+       |      BS_Admin       |   BS        |
+       |      PAY_Admin      |   PAY       |
+         

@@ -55,7 +55,6 @@ public class ManageUsers extends AddUserDetails
 	WebElement rdoNo;
 	
 	WebElement emailChkbox=null;
-	
 	WebElement dltChkbox;
 	
 	@FindBy(xpath="//input[@value='Add User']")
@@ -169,12 +168,16 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@id='viewpurgeduser']")
 	WebElement viewPurge;
 	
+	@FindBy(xpath="//input[@value='Reset Password']") WebElement resetPwdBtn;
+	
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance:')]")
 	WebElement termsAndCond;
 	
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
 	WebElement termsAndCondDate;
 	
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	WebElement yourChangesWereUpdatedSuccessfully;
 
 	@FindBy(id="provTinAssociateId")
 	WebElement provTinAssociate;
@@ -187,12 +190,6 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//*[@id=\"bsForm\"]/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[4]/td/table[3]/tbody/tr/td[3]/div/input[2]")
 	WebElement btnAddProviderAssociation;
-
-	@FindBy(xpath="//input[@value='Reset Password']") WebElement resetPwdBtn;
-
-	
-	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
-	WebElement yourChangesWereUpdatedSuccessfully;
 	
 	@FindBy(xpath="//th[contains(text(),'Delete User')]")
 	WebElement txtDeleteUser ;
@@ -238,7 +235,7 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//input[@name='Yes']") 
 	WebElement btnDeleteuserYes ;
-		
+
 
 	private TestBase testConfig;
 	LoginCSR csrPage;
@@ -292,7 +289,7 @@ public class ManageUsers extends AddUserDetails
 	public void validatePurgeUsers(String LoginType,String Credentials) throws InterruptedException
 	{
 		
-		this.checkPurgedUser(LoginType);
+		checkPurgedUser(LoginType);
 		
 		
 		if (LoginType.equals("CSR") && !(Credentials.equals("ROOnly")|| Credentials.equals("RO")|| Credentials.equals("RW") ) )
@@ -579,8 +576,6 @@ public class ManageUsers extends AddUserDetails
 		else
 		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		Browser.wait(testConfig, 3);
-		//Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-
 		return new ManageUsers(testConfig);
 	}
 	
@@ -610,8 +605,7 @@ public class ManageUsers extends AddUserDetails
 	{
 		for(WebElement userName:userNames)
 		{ 
-		  if(userName.getText().toString().toUpperCase().contains(nameOfUser) || userName.getText().toString().toLowerCase().contains(nameOfUser) || userName.getText().toString().contains(nameOfUser))
-
+		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
 		   {
 				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
 				      break;
@@ -721,8 +715,6 @@ public class ManageUsers extends AddUserDetails
 		return index;
 	}
 			
-
-				
 	
 	public ManageUsers changeAndCancelAccessLevel(String userType) throws InterruptedException
 	{    
@@ -1109,7 +1101,7 @@ public class ManageUsers extends AddUserDetails
 		Map portalUserData=null;	
 		testConfig.putRunTimeProperty("email", email.getAttribute("value"));
 		
-		if(userType.equalsIgnoreCase("BS"))
+		if(userType.equalsIgnoreCase("Billing Service"))
 		{
 			sqlRowNo=12;
 			
@@ -1317,12 +1309,6 @@ public class ManageUsers extends AddUserDetails
 		return this;
 	}
 	
-	public ManageUsers clickUserListLink()
-	{
-	    Element.click(lnkUserList, "User List Link");
-		return this;
-	}
-	
 	public ManageUsers editLastName(String newName)
 	{
 		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
@@ -1387,7 +1373,7 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers getPurgedEmail()
 	{
-		clickSpecificUserName("Purged");
+		clickSpecificUserName("PURGED");
 		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("emailOfUsr", email.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("fName", firstName.getAttribute("value").toString());
@@ -1494,63 +1480,46 @@ public class ManageUsers extends AddUserDetails
 		
 	}
 	public void verifyUserList(String userType,String searchCriteria) throws IOException, InterruptedException
-	{
+	{  
+		int sql=123; //need to update this..check from other branches
 		ArrayList<String> usersFromDB=new ArrayList<>();
-
 		try {
-			if (testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR"))
-				selectPurgedCheckbox();
-		} catch (Exception e) {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+		selectPurgedCheckbox();
+		}
+		catch (Exception e) {
 			Log.Comment("App is UPA");
 		}
-		if (searchCriteria.equalsIgnoreCase("purgedUsers") && userType.contains("PAY") && testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR")) {
-				int sql = 411;
-				HashMap<Integer, HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
-				Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",
-						userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-				for (int i = 1; i <= userDetails.size(); i++) {
-					if (userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
-						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
-								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() + "  - PURGED");
-					else
-						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
-								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
-				}
-				Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,
-						getListOfAllUsersFromUI(testConfig));
-			} else {
-				int sql = 412;
-
-				HashMap<Integer, HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
-				Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",
-						userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-				for (int i = 1; i <= userDetails.size(); i++) {
-					if (userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
-						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
-								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() + "  - PURGED");
-					else
-						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
-								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
-				}
-				Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,
-						getListOfAllUsersFromUI(testConfig));
+		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
+		{
+			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			Helper.compareEquals(testConfig, "Total No of users (incuding Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			for(int i=1;i<=userDetails.size();i++)
+			{
+				if(userDetails.get(i).get("STS_CD").equalsIgnoreCase("PU"))
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase() +"  - PURGED");
+				else
+					usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
 			}
+			Helper.compareEquals(testConfig, "User name in DB and UI (incuding Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			
+			sql=253;
 			try {
-				if (testConfig.runtimeProperties.getProperty("App").equalsIgnoreCase("CSR")) {
-					int sql = 412;
-					deSelectPurgedCheckbox();
-					usersFromDB.clear();
-					HashMap<Integer,HashMap<String, String>> userDetails = DataBase.executeSelectQueryALL(testConfig, sql);
-					Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",
-							userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
-					for (int i = 1; i <= userDetails.size(); i++)
-						usersFromDB.add((userDetails.get(i).get("LST_NM") + ", " + userDetails.get(i).get("FST_NM")
-								+ " " + userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
-					Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,
-							getListOfAllUsersFromUI(testConfig));
-				}
-			} catch (Exception e) {
+				if(System.getProperty("App").equalsIgnoreCase("CSR"))
+				{
+				 deSelectPurgedCheckbox();
+			     usersFromDB.clear();
+			     userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
+			     Helper.compareEquals(testConfig, "Total No of users (EXCLUDING Purged) from DB and UI",userDetails.size(), getListOfAllUsersFromUI(testConfig).size());
+			    for(int i=1;i<=userDetails.size();i++)
+			    usersFromDB.add((userDetails.get(i).get("LST_NM")+", "+ userDetails.get(i).get("FST_NM")+" "+userDetails.get(i).get("MIDDLE_INIT")).toUpperCase().trim());
+			    Helper.compareEquals(testConfig, "User name in DB and UI (EXCLUDING Purged)", usersFromDB,getListOfAllUsersFromUI(testConfig));
+			   }
+			}
+			catch (Exception e) {
 				Log.Comment("App is UPA");
+		}
+
 		}
 		
 		if(userType.contains("PROV"))
@@ -1567,12 +1536,6 @@ public class ManageUsers extends AddUserDetails
 	}
 
 	
-	
-	public void verifyResetPwdButton()
-	{
-		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
-		
-	 }
 
 
 	
@@ -1591,7 +1554,7 @@ public class ManageUsers extends AddUserDetails
         else if(userType.equalsIgnoreCase("BS"))
         	sqlRowNo=256;
         else if(userType.contains("PAY"))
-        	sqlRowNo=413;
+        	sqlRowNo=254;
         
         
 		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -1609,170 +1572,25 @@ public class ManageUsers extends AddUserDetails
 	 */
 	public void verifyDetailsForPurgedUser(String userType) throws InterruptedException, IOException {
 		String expectedStatus="Purged";
-		selectPurgedCheckbox();
-	    clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
-	}
-
-
-	
-	public void verifyResetPwdButtonUPA()
-	{
-		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
-		
-	 }
-	
-	
-	public ManageUsers verifyDeleteUserInTinGrid() {
-		Element.findElement(testConfig, "xpath", "//th[contains(text(),'Delete User')]");
-		Element.verifyTextPresent(txtDeleteUser, "Delete User");
-		if(!txtDeleteUser.getText().toString().equalsIgnoreCase("Remove Row"))
-			Log.Pass("Remove Row is relabled as Delete User");
-		else
-			Log.Fail("Remove Row is not relabled as Delete User");
-
-		return this;
-	}
-	
-	String fstname;
-	String emaildb;
-	public ManageUsers verifyAbilityOfTinItems(String accessLevel)
-	{
-	int sqlRowNo;
-	Map portalUserData=null;
-	
-	if(accessLevel.equalsIgnoreCase("Administrator"))
-	{
-		sqlRowNo=1302;
-		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-	}
-	else if(accessLevel.equalsIgnoreCase("General")) {
-		sqlRowNo=1301;
-		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		fstname=portalUserData.get("FST_NM").toString();
-		emaildb=portalUserData.get("EMAIL_ADR_TXT").toString();
-		testConfig.putRunTimeProperty("emaildb", emaildb);
-	}
-	String username= portalUserData.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("FST_NM").toString().toUpperCase();
-	testConfig.putRunTimeProperty("username", username);	
-	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
-	verifyEnabledOrDisabledForPROV();
-	return this;
-	}
-	
-	public void verifyEnabledOrDisabledForPROV()
-	{
-        accessLvls=Element.findElements(testConfig, "xpath","//input[@name='GridListResults[0].accessLevel']"); 
-		String initialAccessLvl=accessLvls.get(0).getAttribute("value");
-		if(initialAccessLvl.contains("A")) {
-			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
-			if(attributes.containsKey("disabled"))
-				Log.Pass("Delete User checkbox is disabled for PROV Admin");
-			else
-				Log.Fail("Delete User checkbox is enabled PROV Admin");
-			
-			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
-			if(attributes.containsKey("disabled"))
-				Log.Pass("Email checkbox disabled for PROV Admin");
-			else
-				Log.Fail("Email checkbox enabled PROV Admin");
-			
-			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
-			if(attributes.containsKey("disabled"))
-				Log.Pass("Access level is disabled for PROV Admin");
-			else
-				Log.Fail("Access level is enabled PROV Admin");
+		try {
+		if(System.getProperty("App").equalsIgnoreCase("CSR"))
+			selectPurgedCheckbox();
 		}
-		else{
-			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
-			if(!attributes.containsKey("disabled"))
-				Log.Pass("Delete User checkbox is enabled for PROV Gen ");
-			else
-				Log.Fail("Delete User checkbox is disabled PROV Gen");
-				
-			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
-			if(!attributes.containsKey("disabled"))
-				Log.Pass("Email checkbox enabled for PROV Gen ");
-			else
-				Log.Fail("Email checkbox disabled PROV Gen");
-			
-			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
-			if(!attributes.containsKey("disabled"))
-				Log.Pass("Access level is enabled for PROV Gen");
-			else
-				Log.Fail("Access level is disabled PROV Gen");
+		catch (Exception e) {
+			Log.Comment("App is UPA");
 		}
+	   clickSpecificUserName(getPurgedUser(userType)).verifyUserDetailsAreReadOnly(userType).verifyUserStatus(userType, expectedStatus);
 	}
 
-	public ManageUsers deleteUserAndVerify(String accessType, String accessLevel) throws InterruptedException {
-		int sqlNo= 1304;
-		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
-		if(accessLevel.equalsIgnoreCase("General")) {
-		ArrayList<String> UsersListUI=getListOfAllUsersFromUI(testConfig); 
-		Log.Comment("Current User List before  deleting user is" + '\n'  + UsersListUI);
-		
-		testConfig.getRunTimeProperty("emaildb");
-		Map data= DataBase.executeSelectQuery(testConfig,sqlNo, 1);
-		String portalUserID=data.get("PORTAL_USER_ID").toString();
-		testConfig.putRunTimeProperty("portalUserID", portalUserID);
-		Element.findElement(testConfig, "xpath", "//input[@name='GridListResults[0].removeTinNpi']");		 
-		Browser.wait(testConfig, 3);
-		if(accessType.equalsIgnoreCase("PROV")){
-		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
-		clickSave();
-		}
-		else if(accessType.equalsIgnoreCase("PAY")) {
-		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
-		Browser.wait(testConfig, 3);
-		Element.click(btnDeleteuserYes, "Yes");
-		}
-		else {
-			Log.Fail("The accessType of the user is neither PROV nor PAY");
-		}
-		UsersListUI.clear();
-		UsersListUI=getListOfAllUsersFromUI(testConfig);
-		
-			if(!UsersListUI.contains(fstname))
-				Log.Pass("User with first name : " + " " + "'" +fstname + "'" + "and email id"+ emaildb + "is deleted successfully");
-			else 
-				Log.Fail("User with first name : " + " " + "'" +fstname + "'" + "and email id "+ emaildb + "not deleted");
-		
-		Log.Comment("User List after deleting user is" + '\n'  + UsersListUI);
-		
-		checkForDeletedUserInDB();
-		}
-		else if(accessLevel.equalsIgnoreCase("Administrator"))
-			Log.Pass("PROV/PAY Admin user cannot delete other Admin user, checkbox is disabled for admin");
-		
-		else {
-			Log.Fail("The user's accessLevel is neither General nor Administrator");
-		}		
-		return this;
-	}
+
+	
+	
 	
 
-	public void checkForDeletedUserInDB(){
-		int sqlRowNo=1303;
-		int rowNo= 1305;
-		testConfig.getRunTimeProperty("emaildb");
-		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		String rowcount=portalUserData.get("ROWNUM").toString();
-		int rowCount=Integer.parseInt(rowcount);
-		if(rowCount==0)
-			Log.Pass("Zero records found for the given condition");
-		else
-			Log.Fail("More than zero records found for the given condition");
-		
-		testConfig.getRunTimeProperty("portalUserID");
-		Map ModTypeData=DataBase.executeSelectQuery(testConfig,rowNo, 1);
-		String modTypCd=ModTypeData.get("MOD_TYP_CD").toString();
-		if(modTypCd.equalsIgnoreCase("PCD"))
-			Log.Pass("The MOD_TYP_CD is PCD ");
-		else
-			Log.Fail("The MOD_TYP_CD is not PCD");
-	}
+	
 	
 
-
+	
 	public ManageUsers validateTandCFields(){
 		String termAndCond=termsAndCond.getText().substring(termsAndCond.getText().indexOf(":")+1, termsAndCond.getText().length()).trim();
 		String termAndCondDate=termsAndCondDate.getText().substring(termsAndCondDate.getText().indexOf(":")+1, termsAndCondDate.getText().length());
@@ -1991,7 +1809,161 @@ public class ManageUsers extends AddUserDetails
 		
 
 	}
+	
+	public void verifyResetPwdButtonUPA()
+	{
+		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
+		
+	 }
+	 
+	 public ManageUsers verifyDeleteUserInTinGrid() {
+		Element.findElement(testConfig, "xpath", "//th[contains(text(),'Delete User')]");
+		Element.verifyTextPresent(txtDeleteUser, "Delete User");
+		if(!txtDeleteUser.getText().toString().equalsIgnoreCase("Remove Row"))
+			Log.Pass("Remove Row is relabled as Delete User");
+		else
+			Log.Fail("Remove Row is not relabled as Delete User");
 
+		return this;
+	}
+	
+	String fstname;
+	String emaildb;
+	public ManageUsers verifyAbilityOfTinItems(String accessLevel)
+	{
+	int sqlRowNo;
+	Map portalUserData=null;
+	
+	if(accessLevel.equalsIgnoreCase("Administrator"))
+	{
+		sqlRowNo=1302;
+		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	}
+	else if(accessLevel.equalsIgnoreCase("General")) {
+		sqlRowNo=1301;
+		portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		fstname=portalUserData.get("FST_NM").toString();
+		emaildb=portalUserData.get("EMAIL_ADR_TXT").toString();
+		testConfig.putRunTimeProperty("emaildb", emaildb);
+	}
+	String username= portalUserData.get("LST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("FST_NM").toString().toUpperCase();
+	testConfig.putRunTimeProperty("username", username);	
+	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+	verifyEnabledOrDisabledForPROV();
+	return this;
+	}
+	
+	public void verifyEnabledOrDisabledForPROV()
+	{
+        accessLvls=Element.findElements(testConfig, "xpath","//input[@name='GridListResults[0].accessLevel']"); 
+		String initialAccessLvl=accessLvls.get(0).getAttribute("value");
+		if(initialAccessLvl.contains("A")) {
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is disabled for PROV Admin");
+			else
+				Log.Fail("Delete User checkbox is enabled PROV Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox disabled for PROV Admin");
+			else
+				Log.Fail("Email checkbox enabled PROV Admin");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(attributes.containsKey("disabled"))
+				Log.Pass("Access level is disabled for PROV Admin");
+			else
+				Log.Fail("Access level is enabled PROV Admin");
+		}
+		else{
+			Map attributes=Element.getAllAttributes(testConfig, chkDeleteUser, "Delete User checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Delete User checkbox is enabled for PROV Gen ");
+			else
+				Log.Fail("Delete User checkbox is disabled PROV Gen");
+				
+			attributes=Element.getAllAttributes(testConfig, chckEmail, "Email checkbox");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Email checkbox enabled for PROV Gen ");
+			else
+				Log.Fail("Email checkbox disabled PROV Gen");
+			
+			attributes=Element.getAllAttributes(testConfig, provPayUserAccessLvl, "PROV User AccessLvl");
+			if(!attributes.containsKey("disabled"))
+				Log.Pass("Access level is enabled for PROV Gen");
+			else
+				Log.Fail("Access level is disabled PROV Gen");
+		}
+	}
+
+	public ManageUsers deleteUserAndVerify(String accessType, String accessLevel) throws InterruptedException {
+		int sqlNo= 1304;
+		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
+		if(accessLevel.equalsIgnoreCase("General")) {
+		ArrayList<String> UsersListUI=getListOfAllUsersFromUI(testConfig); 
+		Log.Comment("Current User List before  deleting user is" + '\n'  + UsersListUI);
+		
+		testConfig.getRunTimeProperty("emaildb");
+		Map data= DataBase.executeSelectQuery(testConfig,sqlNo, 1);
+		String portalUserID=data.get("PORTAL_USER_ID").toString();
+		testConfig.putRunTimeProperty("portalUserID", portalUserID);
+		Element.findElement(testConfig, "xpath", "//input[@name='GridListResults[0].removeTinNpi']");		 
+		Browser.wait(testConfig, 3);
+		if(accessType.equalsIgnoreCase("PROV")){
+		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
+		clickSave();
+		}
+		else if(accessType.equalsIgnoreCase("PAY")) {
+		Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
+		Browser.wait(testConfig, 3);
+		Element.click(btnDeleteuserYes, "Yes");
+		}
+		else {
+			Log.Fail("The accessType of the user is neither PROV nor PAY");
+		}
+		UsersListUI.clear();
+		UsersListUI=getListOfAllUsersFromUI(testConfig);
+		
+			if(!UsersListUI.contains(fstname))
+				Log.Pass("User with first name : " + " " + "'" +fstname + "'" + "and email id"+ emaildb + "is deleted successfully");
+			else 
+				Log.Fail("User with first name : " + " " + "'" +fstname + "'" + "and email id "+ emaildb + "not deleted");
+		
+		Log.Comment("User List after deleting user is" + '\n'  + UsersListUI);
+		
+		checkForDeletedUserInDB();
+		}
+		else if(accessLevel.equalsIgnoreCase("Administrator"))
+			Log.Pass("PROV/PAY Admin user cannot delete other Admin user, checkbox is disabled for admin");
+		
+		else {
+			Log.Fail("The user's accessLevel is neither General nor Administrator");
+		}		
+		return this;
+	}
+	
+	public void checkForDeletedUserInDB(){
+		int sqlRowNo=1303;
+		int rowNo= 1305;
+		testConfig.getRunTimeProperty("emaildb");
+		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String rowcount=portalUserData.get("ROWNUM").toString();
+		int rowCount=Integer.parseInt(rowcount);
+		if(rowCount==0)
+			Log.Pass("Zero records found for the given condition");
+		else
+			Log.Fail("More than zero records found for the given condition");
+		
+		testConfig.getRunTimeProperty("portalUserID");
+		Map ModTypeData=DataBase.executeSelectQuery(testConfig,rowNo, 1);
+		String modTypCd=ModTypeData.get("MOD_TYP_CD").toString();
+		if(modTypCd.equalsIgnoreCase("PCD"))
+			Log.Pass("The MOD_TYP_CD is PCD ");
+		else
+			Log.Fail("The MOD_TYP_CD is not PCD");
+	}
+	
 
 	public ManageUsers verifyAdminPrivileges(String accessLevel) throws InterruptedException {
 		clickSpecificUserName(testConfig.getRunTimeProperty("username"));
@@ -2074,49 +2046,7 @@ public class ManageUsers extends AddUserDetails
 	}
 	
 
-	public void verifyYourChangesWereUpdatedSuccessfully()
-    {
-		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
-    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
-    }
 	
-		public void enterPortalTIN(String portalAccess, String tinTyp)
-	{
-		Element.click(rdoNo, "No Radio Button");
-		Browser.wait(testConfig, 2);
-		for(int i=1;i<tinGridRows.size();i++)
-		{
-		Element.click(Element.findElement(testConfig, "xpath", "//form[@id='bsForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[6]"), "Remove tin checkbox");
-		}
-		int sqlRowNo=0;
-		if (portalAccess.equalsIgnoreCase("Premium") && (tinTyp.equalsIgnoreCase("AO")||tinTyp.equalsIgnoreCase("AV")))
-		 sqlRowNo=1601;
-		if (portalAccess.equalsIgnoreCase("Premium") && tinTyp.equalsIgnoreCase("VO"))
-		 sqlRowNo=1602;
-		  Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		  testConfig.putRunTimeProperty("tin", portalUserData.get("PROV_TIN_NBR").toString());
-		 
-		  
-         int sqlRowNo1=1604;
-         int isTinAssociated=0;
- 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo1, 1);
- 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
- 		if(isTinAssociated == 0) 
-        
- 			{
- 			int insertQueryRowNo=61;
-	         DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
-			   Log.Comment("Associated tin " + portalUserData.get("PROV_TIN_NBR").toString() + "With Logged in user");
-			  // testConfig.putRunTimeProperty("TobeDeleted", userType);
- 			}
- 		  Element.enterData( Element.findElement(testConfig, "name", "provTinAssociate"), portalUserData.get("PROV_TIN_NBR").toString(), "Prov TIN", "PROV TIN");
-		  Element.findElement(testConfig, "xpath", "//input[@type='button' and @value='Add TIN Association']").click();
-		  
-		  btnSave.click();
-		  Helper.compareEquals(testConfig, "Updated msg",  Element.findElement(testConfig, "xpath", "//td[contains(text(),'Your user changes were updated successfully')]").getText(), "Your user changes were updated successfully");
-		
-	}
-
 
 
 
@@ -2323,8 +2253,19 @@ public class ManageUsers extends AddUserDetails
 		clickSave();
 		return this;
 	}
+	
+	public ManageUsers clickUserListLink()
+	{
+	    Element.click(lnkUserList, "User List Link");
+		return this;
+	}	
 		
+	public void verifyResetPwdButton()
+	{
+		Element.verifyElementNotPresent(resetPwdBtn, "Reset Password");
 		
+	 }
+
 	public void verifyDbBeforeTinDeletion() {
 		int sqlNo= 13;
 	    testConfig.putRunTimeProperty("email",super.userEmailAdr );
@@ -2390,5 +2331,60 @@ public class ManageUsers extends AddUserDetails
 		
 	}
 	
+	public ManageUsers updateDemographicInfo(String userType)
+	{
+		String userNameBeforeUpdation=getCSRUserName();
+		fillNewUserInfo();
+		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
+		clickSave();
+		verifyDetailsOfNewUser(userType);
+		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+		return this;
+	}
+	
+	public void verifyYourChangesWereUpdatedSuccessfully()
+    {
+		Log.Comment("Verifying yourChangesWereUpdatedSuccessfully Message");
+    	Element.verifyElementPresent(yourChangesWereUpdatedSuccessfully,"Your Changes Were Updated Successfully Message");
+    }
+	
+		public void enterPortalTIN(String portalAccess, String tinTyp)
+	{
+		Element.click(rdoNo, "No Radio Button");
+		Browser.wait(testConfig, 2);
+		for(int i=1;i<tinGridRows.size();i++)
+		{
+		Element.click(Element.findElement(testConfig, "xpath", "//form[@id='bsForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[6]"), "Remove tin checkbox");
+		}
+		int sqlRowNo=0;
+		if (portalAccess.equalsIgnoreCase("Premium") && (tinTyp.equalsIgnoreCase("AO")||tinTyp.equalsIgnoreCase("AV")))
+		 sqlRowNo=1601;
+		if (portalAccess.equalsIgnoreCase("Premium") && tinTyp.equalsIgnoreCase("VO"))
+		 sqlRowNo=1602;
+		  Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		  testConfig.putRunTimeProperty("tin", portalUserData.get("PROV_TIN_NBR").toString());
+		 
+		  
+         int sqlRowNo1=1604;
+         int isTinAssociated=0;
+ 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo1, 1);
+ 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
+ 		if(isTinAssociated == 0) 
+        
+ 			{
+ 			int insertQueryRowNo=61;
+	         DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+			   Log.Comment("Associated tin " + portalUserData.get("PROV_TIN_NBR").toString() + "With Logged in user");
+			  // testConfig.putRunTimeProperty("TobeDeleted", userType);
+ 			}
+ 		  Element.enterData( Element.findElement(testConfig, "name", "provTinAssociate"), portalUserData.get("PROV_TIN_NBR").toString(), "Prov TIN", "PROV TIN");
+		  Element.findElement(testConfig, "xpath", "//input[@type='button' and @value='Add TIN Association']").click();
+		  
+		  btnSave.click();
+		  Helper.compareEquals(testConfig, "Updated msg",  Element.findElement(testConfig, "xpath", "//td[contains(text(),'Your user changes were updated successfully')]").getText(), "Your user changes were updated successfully");
+		
+	}
 }
+
+
 

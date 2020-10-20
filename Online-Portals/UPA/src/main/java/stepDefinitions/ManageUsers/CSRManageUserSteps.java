@@ -123,7 +123,7 @@ public class CSRManageUserSteps extends TestBase {
     @Then("^User enters \"([^\"]*)\" in Manage Users Page and Updates an active User and verify the user details in the UI and DB$")
     public void user_enters_in_Manage_Users_Page_and_Updates_an_active_User_and_verify_the_user_details_in_the_UI_and_DB(String userType) throws Throwable {
     	if(userType.equalsIgnoreCase("PROV")) {
-            String tinNo=searchPage.selectUserType(userType).enterTin("tinWithMoreThanOneActiveAdmin");
+            searchPage.selectUserType(userType).enterTin("tinWithMoreThanOneActiveAdmin");
             searchPage.clickSearch();   	}
     	else {
           manageUsers = searchPage.doSearch(userType);
@@ -132,26 +132,8 @@ public class CSRManageUserSteps extends TestBase {
     	new ManageUsers(testConfig).VerifyDetailsOfUser(userType);   
 }
 
-    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin or select payer$")
-    public void users_selects_from_dropdown_and_enter_Tin_or_select_payer(String userType) throws Throwable {
-    	manageUsers=searchPage.doSearch(userType);
-    }
-    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin  based on \"([^\"]*)\" and \"([^\"]*)\"$")
-    public void users_selects_from_dropdown_and_enter_Tin_based_on_and_or_select_payer(String userType, String tinType, String portalAccess) throws Throwable {
-    	testConfig.putRunTimeProperty("tinType", tinType);
-    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-    	manageUsers=searchPage.doSearch(userType, portalAccess);
-
-    }
-    
-    @Then("^User verifies Add User button visiblity for \"([^\"]*)\",\"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
-    public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String tinTyp, String portalAccess, String systemMode) throws Throwable {
-    	testConfig.putRunTimeProperty("sysMode", systemMode);
-    	manageUsers.verifyAddUsrBtnVsblBySystem_Mode("CSR",portalAccess);
-
-    }
-
-    
+ 
+ 
     @Then("^Verify Reset Password Option doesnt exists$")
     public void verify_Reset_Password_Option_doesnt_exists() throws Throwable {
     	new ManageUsers(testConfig).verifyResetPwdButton();
@@ -177,4 +159,25 @@ public class CSRManageUserSteps extends TestBase {
          	manageUsers.verifyModTypCdCodeForDeletedUser(userType);  
 	}
 
+    
+    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin or select payer$")
+    public void users_selects_from_dropdown_and_enter_Tin_or_select_payer(String userType) throws Throwable {
+    	manageUsers=searchPage.doSearch(userType);
+    }
+    
+    
+    @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin  based on \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void users_selects_from_dropdown_and_enter_Tin_based_on_and_or_select_payer(String userType, String tinType, String portalAccess) throws Throwable 
+    {
+    	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+    	manageUsers=searchPage.doSearch(userType, portalAccess);
+    }
+    
+    @Then("^User verifies Add User button visiblity for \"([^\"]*)\",\"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
+    public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String tinTyp, String portalAccess, String systemMode) throws Throwable
+      {
+    	testConfig.putRunTimeProperty("sysMode", systemMode);
+    	manageUsers.verifyAddUsrBtnVsblBySystem_Mode("CSR",portalAccess);
+      }
 }

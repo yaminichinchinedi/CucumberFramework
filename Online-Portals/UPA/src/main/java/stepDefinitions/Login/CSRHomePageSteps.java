@@ -37,7 +37,7 @@ public class CSRHomePageSteps extends TestBase{
 	   
 	   @When("^Click on View Payments Link$")
 	   public void click_on_View_Payments_Link() throws Throwable {
-	     
+	     testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", "8223QG96591912");
 		   homePage.clickViewPaymentsLink();
 	   }
 	   
@@ -82,6 +82,7 @@ public class CSRHomePageSteps extends TestBase{
 	   }
 	   
 
+
 	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
 	   public void user_enters_and_active_TIN_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType) throws Throwable {
 			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
@@ -89,6 +90,7 @@ public class CSRHomePageSteps extends TestBase{
 			enrollment.validateViewEnrollment();
 			enrollment.clickEditBtn();
 		}
+
 
 	   @When("^Click on CSRManage User Link$")
 		public void click_on_CSRManage_User_Link() throws Throwable {

@@ -447,6 +447,7 @@ public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
   }
 
 
+
 public void verifyDisable()
 {
 	Boolean quickSearchUI = quickSearch.isDisplayed();
@@ -517,5 +518,6 @@ public void verifyDisable()
 	    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
 		
 	}
+
 
 }

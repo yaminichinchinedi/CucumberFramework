@@ -43,9 +43,10 @@ public class LoginUPA {
     public WebElement btnActivate;
     
 
-    @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") WebElement clickUPASignIn;
+    @FindBy(xpath = "//a[contains(text(),'SIGN IN')]") 
+    WebElement clickUPASignIn;
    
-    //@FindBy(xpath = "//a[contains(text(),'SIGN IN WITH OPTUM ID')]") WebElement clickUPASignInTest1;
+   
 	
 	
     @FindBy(id="tabHome")
@@ -183,7 +184,6 @@ public class LoginUPA {
 // 		if (!chkBoxRememberDevice.isSelected())
 // 			Element.click(chkBoxRememberDevice, "'Remember my device' checkbox");
 
-                Browser.wait(testConfig, 2);
 		Element.click(btnNext, "Next to submit answer");
 	}
 

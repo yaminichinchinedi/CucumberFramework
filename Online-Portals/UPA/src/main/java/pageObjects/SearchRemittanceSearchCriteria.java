@@ -234,6 +234,7 @@ public class SearchRemittanceSearchCriteria {
 		    	
 		    }    
 
+
 		    case "byCheckNo":
 		    {
 		    	dataRequiredForSearch=dataProvider(criteriaType);
