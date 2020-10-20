@@ -759,7 +759,7 @@ public String getTinForPaymentType(String paymentType)
 			case "Last 9-13 months_VO_Premium":
 			case "Last 9-13 months_AV_Premium":
 				paySum.getQuickSearchDates("Last 9-13 months");
-				sqlRowNo=1606;
+				sqlRowNo=1611;
 				break;
 				
 			case "LegacyOrPremiOrStandard":
@@ -783,7 +783,7 @@ public String getTinForPaymentType(String paymentType)
 		       Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       
-		       if(sqlRowNo==1606)
+		       if(sqlRowNo==1611)
                    testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 		       
 		       if(paymentType.contains("byDOS"))
@@ -1731,7 +1731,7 @@ public ArrayList getEnrollmentContent(String content) {
 		case "generalPayment60Days_AO_Premium":
 		{
 			 paySum.getQuickSearchDates("Last 60 days");
-			 sqlRowNo=1606; 
+			 sqlRowNo=1611; 
 	 		 break;
 		}
 		
@@ -1752,7 +1752,7 @@ public ArrayList getEnrollmentContent(String content) {
 		case "Last 4-6 months_AO_Premium":
 		{     
 			  paySum.getQuickSearchDates("Last 4-6 months");
-			  sqlRowNo=1606; 
+			  sqlRowNo=1611; 
 	 		  break;
 		}
 		
