@@ -2055,11 +2055,10 @@ return previousDate.getTime();
 	    			Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
-	    	        	
 	    	    	 if(expected.get(key).get(expectedInternalKey).equals(actual.get(key).get(expectedInternalKey)))
-	    	    	   Log.Pass("Passed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+	    	    	   Log.Pass("Passed" + " " + what + "for " + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    	    	   else
-	    	    		   Log.Fail("Failed" + " " + what + "for" + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
+	    	    		   Log.Fail("Failed" + " " + what + "for " + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    		      }
 	    		  }
 	    	  }

@@ -722,7 +722,7 @@ public class TestProviderViewPayments extends TestBase {
         paymentSummaryPage.verifyPaymentDateSorting("Asc");    
    }
    
-   
+   	
    @TestDetails(author="Priyanka")
    @Test(priority=5,description="TS024_View Payments_Remit payments " + " "+ "<br>" + "Validate hovering text appearing in popup for Remit Payments",groups="View Payments - Provider")
    void testRemitPayments() throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException   

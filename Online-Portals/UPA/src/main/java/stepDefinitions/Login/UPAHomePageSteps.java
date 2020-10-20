@@ -43,6 +43,12 @@ public class UPAHomePageSteps extends TestBase{
     	homePage.selectTin();
     }
     
+
+@Then("^Select the TIN for UPA Portal for \"([^\"]*)\"$")
+public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwable {
+    // Write code here that turns the phrase above into concrete actions
+	homePage.selectTin(paymentType);
+}
    
     
     @When("^User Selects a tin on HomePage for \"([^\"]*)\"$")

@@ -195,6 +195,10 @@ public class DataBase
 			dbType=DatabaseType.Stage;
 			else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
 			dbType=DatabaseType.Stage2;
+			else if (System.getProperty("Database").equalsIgnoreCase("Test1"))
+				dbType=DatabaseType.Test1;
+			else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
+				dbType=DatabaseType.Test2;
 	        else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
 	        dbType=DatabaseType.PROD;
 	        else if (System.getProperty("Database").equalsIgnoreCase("Automation"))

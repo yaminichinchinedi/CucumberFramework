@@ -22,10 +22,17 @@ public class UPAHomePage extends HomePage {
 	
 	private WebDriver driver;
 	private TestBase testConfig;
+	private ViewPaymentsDataProvider dataProvider;
 	
 	
 	@FindBy(linkText="Manage Users")
 	WebElement lnkManageUsers;
+	
+	@FindBy(id="tabHome")
+	WebElement homeTab;
+
+	@FindBy(id = "taxIndNbrId")
+	WebElement drpDwnTin;
 	
     @FindBy(linkText="View Payments")
     WebElement lnkViewPayments;
@@ -85,10 +92,7 @@ public class UPAHomePage extends HomePage {
 	
 	
 	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
-	
-	private ViewPaymentsDataProvider dataProvider;
-	
-	
+		
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -165,13 +169,14 @@ public class UPAHomePage extends HomePage {
 			return new UPAHomePage(testConfig);
 	}
 	
-	
-	public HomePage selectTin(String paymentType) 
+	public UPAHomePage selectTin(String paymentType) 
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		
 		String tin=dataProvider.getTinForPaymentType(paymentType);
 		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
+		
 		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
 		tin=tin+" - Enrolled";
 		
@@ -186,9 +191,10 @@ public class UPAHomePage extends HomePage {
 		Browser.waitForLoad(testConfig.driver);
 		return this;
 	}
-	
+
 	public void clickManageUsersLink()
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 	}
+
 }

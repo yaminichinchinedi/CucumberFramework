@@ -97,14 +97,9 @@ import main.java.reporting.Log;
                 "html:target/cucumber-reports/cucumber-pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "rerun:target/cucumber-reports/rerun.txt"},
-       
-        
-        
-//        "com.cucumber.listener.ExtentCucumberFormatter:"+ "C:/CucumberEditEnrollment/CucumberFramework/Online-Portals/UPA/ExtentReports/ExtentReportResults.html"},
-        dryRun=false,
-        strict=true,
-        tags={"@CSRPurgedTest2"}
-
+		        dryRun=false,
+		        strict=true,
+		        tags={"@xyz"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

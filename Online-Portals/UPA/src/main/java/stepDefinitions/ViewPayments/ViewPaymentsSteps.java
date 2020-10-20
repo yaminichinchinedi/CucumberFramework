@@ -64,6 +64,7 @@ public class ViewPaymentsSteps extends TestBase {
                
                testConfig.putRunTimeProperty("key", key);
                testConfig.putRunTimeProperty("value", value); 
+               testConfig.putRunTimeProperty(key, value); 
     }
     
     @When("^Click on View Payments Link for UPA$")
@@ -83,6 +84,8 @@ public class ViewPaymentsSteps extends TestBase {
        
                 viewPayments.verifyPayNumHypherLinkClaimDtlPayer();
     }
+
+	
     
     @Then("^Validate that View Payments Payer/Patient column name is changed to Payer for \"([^\"]*)\"$")
     public void validate_that_View_Payments_Payer_Patient_column_name_is_changed_to_Payer_for(String credentials) throws Throwable {
@@ -139,69 +142,183 @@ public class ViewPaymentsSteps extends TestBase {
 			paySum.verifyFailedPaymentPopUp();
 		}
     }
-    @Then("^Verify Default Search Result Count$")
+
+    
+    @When("^User validates different UI fields as enabled/disabled,renamed and few New$")
+    public void user_validates_different_UI_fields_as_enabled_disabled_renamed_and_few_New() throws Throwable {
+    	viewPayments.verifyDisable();
+    }
+
+    @When("^User also validates for refreshment of page and limited UI if diferent standard TIN is selected from dropdown$")
+    public void user_also_validates_for_refreshment_of_page_and_limited_UI_if_diferent_standard_TIN_is_selected_from_dropdown() throws Throwable {
+        
+    }
+	
+	
+	@Then("^Verify Default Search Result Count$")
     public void verify_Default_Search_Result_Count() throws Throwable {
                paySum.verifyDefaultSearchResultCount();
     }
     
     @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\"$")
     public void verify_Search_Results_With_for(String filterPayments, String quickSearchFilter) throws Throwable {
-
                paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
     }
 
     @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_With_for_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
-               paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
-               
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, archiveFilter);
+    	
     }
     
     @Then("^Verify Search Results for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_for_having_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
         
-               paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
+    	paySum.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, archiveFilter, filterPayments);
     }
     
     @Then("^Set Search Filters for \"([^\"]*)\" having \"([^\"]*)\"$")
     public void set_Search_Filters_for_having(String archiveFilter, String quickSearchFilter) throws Throwable {
-               
-               paySum.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
-               
+    	
+    	paySum.setSearchFilters(archiveFilter, quickSearchFilter, archiveFilter, archiveFilter);
+    	
     }
     
     @Then("^Verify Payment Date Sorting for \"([^\"]*)\"$")
     public void verify_Payment_Date_Sorting_for(String order) throws Throwable {
-               paySum.verifyPaymentDateSorting(order);
+    	paySum.verifyPaymentDateSorting(order);
     }
     
     @Then("^Set Quick Search Filter for \"([^\"]*)\"$")
     public void set_Quick_Search_Filter_for(String paymentType) throws Throwable {
-               paySum.setQuickSearchFilter(paymentType);
+    	paySum.setQuickSearchFilter(paymentType);
     }
 
     @Then("^Verify Remit Payment PopUp$")
     public void verify_Remit_Payment_PopUp() throws Throwable {
-               paySum.verifyRemitPaymentPopUp(); 
+    	paySum.verifyRemitPaymentPopUp(); 
     }
     
     @Then("^Verify Failed Payment PopUp$")
     public void verify_Failed_Payment_PopUp() throws Throwable {
-               paySum.verifyFailedPaymentPopUp();
+    	paySum.verifyFailedPaymentPopUp();
     }
     
     @Then("^Verify Zero Dollar Payments for \"([^\"]*)\"$")
     public void verify_Zero_Dollar_Payments_for(String paymentType) throws Throwable {
-               paySum.verifyZeroDollarPayments(paymentType);
+    	paySum.verifyZeroDollarPayments(paymentType);
     }
     
     @Then("^Verify Mkt Type for \"([^\"]*)\"$")
     public void verify_Mkt_Type_for(String mktTypeFilter) throws Throwable {
                paySum.verifyMktType(mktTypeFilter);
+    	paySum.verifyMktType(mktTypeFilter);
     }
     
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for \"([^\"]*)\"\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions(portalAccess);
+    }
+    
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
+    	paySum.verifyPaymentStatusFilter(portalAccess);
+    }
+
+
+    @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
+    public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
+        paySum.verifyClaimCountHyperlink("Claim Count","View Payments");
+    }
+
+	@Then("^Validate Archive column relabeled to Payment Status$")
+	public void validate_Archive_column_relabeled_to_Payment_Status() throws Throwable {
+		paySum.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive"); 
+	}
+
+    @Then("^Validate Archive/Save changes button is relabeled to Save$")
+    public void validate_Archive_Save_changes_button_is_relabeled_to_Save() throws Throwable {
+        paySum.verifySavArchbtnNotPresent();
+    }
+
+    @Then("^Validate user is able to change the value of Payment Status column$")
+    public void validate_user_is_able_to_change_the_value_of_Payment_Status_column() throws Throwable {
+       paySum.verifyPaymentStatusColumnDropdwn();
+    }
+
+    @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
+    public void validate_ePRA_and_Payer_PRA_are_enabled(int arg1) throws Throwable {
+      paySum.verify835EPRAlink();
+    }
+
+    
+    @Then("^Click on print Payment Summary button\\.$")
+    public void click_on_print_Payment_Summary_button() throws Throwable {
+        paySum.clickPrintPaymentBtn();
+    }
+    
+    @Then("^Set search filters for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
+    public void set_search_filters_for_having_With(String archivefilter, String quickSearchFilter, String filterPayments) throws Throwable {
+    	paySum.setSearchFilters(filterPayments, quickSearchFilter, archivefilter, filterPayments);
+    }
+
+    @Then("^Validate the data of Print Payment Summary page\\.$")
+    public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
+    	testConfig.putRunTimeProperty("page", "printPaymentSummary");
+    	 paySum.verifyPrintPaymentSummaryPage();
+    }
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions(portalAccess);
+
+    }
+
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
+    	paySum.verifyPaymentStatusFilter(portalAccess);
+
+    }
+
+    @Then("^Validate Archive/Save changes button is not there$")
+    public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
+        
+    	paySum.verifySavArchbtnNotPresent();
+    }
+
+    @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (\\d+)field as enabled\\.$")
+    public void validate_Claim_Count_ePRA_pPRA_and_Payment_status_fields_appear_with_a_gray_box_with_value_N_A_and_field_as_enabled(int arg1) throws Throwable {
+        paySum.verifyColumnValuesNA();
+        
+    }
+	  
+	@Then("^Validate selecting different standard TIN page gets refreshed and will display limited UI View$")
+	public void validate_selecting_different_standard_TIN_page_gets_refreshed_and_will_display_limited_UI_View() throws Throwable {
+		paySum.selectTinNverfyPagRfrsh();
+	}
+
+
+    //Amit code imported.Modify and check all the codes
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
+    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
+    	paySum.verifyQuickSrchFilterOptions("Standard");
+    }
+
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
+    	paySum.verifyPaymentStatusFilter("Standard");
+    }
+
+    @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
+    public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
+    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    }
+
+  
+
     @Then("^Validate payment summary page for only single NPI payments for \"([^\"]*)\"$")
-    public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable {
+    public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable
+    {
     	paySum.verifyNPI(paymentType);
-    	}
+    }
 
 }

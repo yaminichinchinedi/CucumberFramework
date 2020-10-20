@@ -446,6 +446,19 @@ public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
 	
   }
 
+
+
+public void verifyDisable()
+{
+	Boolean quickSearchUI = quickSearch.isDisplayed();
+	Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
+	
+	Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
+	Helper.compareEquals(testConfig, "Active/Archived Payments Drop Down", true, activeDrpDownUI);	
+//	if (archiveDrpDwn == null)
+//		Log.Comment("Save Archive Changes button is not on the Page");
+}
+
 	public void selectTimePeriod(String TimePeriod) {
 
 		if (TimePeriod.equals("Last 30 days"))
@@ -505,4 +518,6 @@ public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
 	    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
 		
 	}
+
+
 }
