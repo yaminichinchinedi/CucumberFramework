@@ -215,8 +215,7 @@ public class SearchRemittanceSteps extends TestBase{
 
 	@Then("^Validate Archived Coulmn,Save Archived button is relabeled to Payment Status and Save button respectively$")
 	public void validate_Archived_Coulmn_Save_Archived_button_is_relabeled_to_Payment_Status_and_Save_button_respectively() throws Throwable {
-		srchRemittance.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifySaveBtnRelabled(); 
-
+		srchRemittance.verifyColumnPresent("Payment Status").verifyColumnIsNotPresent("Archive").verifySavArchbtnNotPresent(); 
 	}
 
 	@Then("^Validate that Search Criertia box do not contain hyphen following colon on each search criteria option$")
