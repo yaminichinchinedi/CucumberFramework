@@ -1,5 +1,4 @@
 #Author: Athyusha Thota
-
 @US2637617_CSR @CSRRegression
 Feature: CSR Reset Password
 
