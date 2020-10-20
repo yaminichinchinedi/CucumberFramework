@@ -31,7 +31,7 @@ Feature: UPA Manage User Functionality for Standard TIN
       |      PROV_Admin |  	TinWithMoreThnMaxUsr		|			Standard		|		AV			|
     
      
-     @UPAUS2879930_stan
+     @UPAUS2879930 @OctRelease
       Scenario Outline: Access Payments - Manage users Provider for Standard Experience
  
     Given User navigates to UPA portal and enters "<userType>" and login

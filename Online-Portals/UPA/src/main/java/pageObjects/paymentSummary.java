@@ -3156,15 +3156,18 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		boolean found=false;
 		WebElement link =null;
 		int totalNoOfPages=getNumberOfPages();	
-		
+		int i=1;
 		if (SearchCriteria.equals("Search Remittance"))
+		{
 			searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[2]");
+		i=0;
+		}
 		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
 			if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
 		     {
 				//verify if claim count is 0, hyperlink is not present
-				for(int i=1;i<searchResultRows.size();i++)
+				for(;i<searchResultRows.size();i++)
 			    {
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
@@ -3180,7 +3183,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			    	   }
 			    }
 				//verify if claim count is not 0, hyperlink is present
-				for(int i=1;i<searchResultRows.size();i++)
+				for(;i<searchResultRows.size();i++)
 			    {
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
