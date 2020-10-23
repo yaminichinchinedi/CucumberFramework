@@ -83,13 +83,13 @@ public class CSRHomePageSteps extends TestBase{
 	   
 
 
-	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
-	   public void user_enters_and_active_TIN_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType) throws Throwable {
-			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
-			enrollment.doSearch(userType);
-			enrollment.validateViewEnrollment();
-			enrollment.clickEditBtn();
-		}
+//	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
+//	   public void user_enters_and_active_TIN_in_Create_Maintain_Enrollment_page_and_navigate_to_edit_enrollment_page(String userType) throws Throwable {
+//			CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
+//			enrollment.doSearch(userType);
+//			enrollment.validateViewEnrollment();
+//			enrollment.clickEditBtn();
+//		}
 
 
 	   @When("^Click on CSRManage User Link$")
