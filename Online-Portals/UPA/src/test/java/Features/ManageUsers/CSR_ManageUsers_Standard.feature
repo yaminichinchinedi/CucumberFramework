@@ -1,8 +1,6 @@
 #Author: Rahul Krishna
-
 Feature: CSR Manage Users functionality for Standard Tins
-
-			@CSRUS2879930 @OctRelase
+@CSRUS2879930 @OctRelase
 Scenario Outline: CSR Manage Purse User 
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
