@@ -1,6 +1,6 @@
 #Author: vinit_rohela@optum.com
 @UPAMyProfile
-Feature: Create Enrollment - UPA My Profile Functionality
+Feature: UPA My Profile Functionality
 
 @UpaMyProfile1
   Scenario Outline: UPA My Profile UI Functionality Verifies User Details displayed on My profile Page from user details saved in Database for logged in user

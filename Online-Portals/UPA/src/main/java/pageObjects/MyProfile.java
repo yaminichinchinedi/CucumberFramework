@@ -312,48 +312,49 @@ public class MyProfile {
 	
 	public void updateAndVerifyUserDetails()
 	{
-		int sqlRowNo;
-		Map query=null;
-		String mod_typ_cd = "";
-		sqlRowNo=404;
+		int sqlRowNo=404;
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		String userEmailAdr=Helper.getUniqueEmailId();
-		
 		String firstNameTxt=Helper.generateRandomAlphabetsString(3);
 		
 		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
 		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
 		Element.click(btnSave, "Save button");
+		Browser.wait(testConfig, 5);
+		
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCE");
+		
+		Map email=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "mod_typ_cd", email.get("MOD_TYP_CD").toString().trim(), "PCE");
 		
 		Element.enterData(txtBoxFName, firstNameTxt, "Enter First Name as : " + firstNameTxt ,"FirstName");
 		Element.click(btnSave, "Save button");
+		Browser.wait(testConfig, 5);
+		
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCN");
+		
+		Map name=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "mod_typ_cd", name.get("MOD_TYP_CD").toString().trim(), "PCN");
 		
 		Element.enterData(txtBoxPhNo1, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum1");
 		Element.click(btnSave, "Save button");
-		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCT");
 		
-
-	
-
+		Browser.wait(testConfig, 5);
+		
+		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
+		Map phone=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "mod_typ_cd", phone.get("MOD_TYP_CD").toString().trim(), "PCT");
+		
 		
 		Element.enterData(txtBoxLName, firstNameTxt, "Enter Last Name as : " + firstNameTxt ,"LastName");
 		Element.enterData(txtBoxPhNo, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum");
 		Element.click(btnSave, "Save button");
+		
+		Browser.wait(testConfig, 5);
+		
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCM");
+		Map multiple=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "mod_typ_cd", multiple.get("MOD_TYP_CD").toString().trim(), "PCM");
 		
 		
 //		emailChkbox.click();
@@ -368,17 +369,16 @@ public class MyProfile {
 
 	public void updateAndVerifyProvDetails()
 	{
-		int sqlRowNo;
-		Map query=null;
-		sqlRowNo=406;
+		int sqlRowNo=406;
 		String userEmailAdr=Helper.getUniqueEmailId();
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		Element.enterData(txtBoxEmail,  userEmailAdr, "Enter existing email address as : " + userEmailAdr,"email");
 		Element.enterData(txtBoxVerifyEmail, userEmailAdr,"Enter verify existing email address as : " + userEmailAdr,"Verify Email");
 		Element.enterData(txtBoxPhNo1, phNo, "Enter Phone number in field 2 as: " + phNo,"phoneNum1");
 		Element.click(btnSave, "Save button");
+		Browser.wait(testConfig, 5);
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Map query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "Phone number", query.get("TEL_NBR").toString(), txtBoxPhNo.getAttribute("value").toString()+txtBoxPhNo1.getAttribute("value").toString()+txtBoxPhNo2.getAttribute("value").toString());
 
 	}
