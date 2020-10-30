@@ -10,7 +10,7 @@ Scenario: View Payments Page UI Functionality for CSR
 	
 	Given User is on CSR Home Page
     When Click on View Payments Link
-    Then User enters tin on View Payments Tin "generalPaymentForTIN_90days" and click continue
+    Then User enters tin on View Payments Tin "PatientPayment" and click continue
     And User selects time period filter "Last 90 days" for View Payments
     Then Validate that View Payments Payer/Patient column name is changed to Payer for "CSR"
 
@@ -19,7 +19,7 @@ Scenario: View Payments UI Functionality for Complaint patient payments CSR
 	
 	Given User is on CSR Home Page
     When Click on View Payments Link
-    Then User enters tin on View Payments Tin "generalPaymentForTIN_90days" and click continue
+    Then User enters tin on View Payments Tin "PatientPayment" and click continue
     And User selects time period filter "Last 90 days" for View Payments
     And User selects market type filter period "Patient Payments" for View Payments
     Then Validate the EPRA and Payer PRA column in View Payments Page for "CSR"
@@ -30,7 +30,7 @@ Scenario: View Payments Page UI Functionality for Patient Payements(View Payment
 
 	Given User is on CSR Home Page
     When Click on View Payments Link
-    Then User enters tin on View Payments Tin "generalPaymentForTIN_90days" and click continue
+    Then User enters tin on View Payments Tin "PatientPayment" and click continue
     And User selects time period filter "Last 90 days" for View Payments
     And User selects market type filter period "Patient Payments" for View Payments
     Then Validate and click on payment number

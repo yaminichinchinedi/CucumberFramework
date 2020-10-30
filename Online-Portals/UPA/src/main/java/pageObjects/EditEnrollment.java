@@ -1,13 +1,24 @@
 package main.java.pageObjects;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -109,11 +120,16 @@ public class EditEnrollment {
 	@FindBy(xpath="//input[contains(@value,'Update Payment Method(s)')]")
 	WebElement btnUpdate;
 	
-	
-	
-	//@FindBy(xpath="//form[@name='enrollmentForm']//table//tr[@class='subheadernormal']//tr")
-	//*[@id="enrollmentForm"]/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr
-	@FindBy(xpath="//*[@id='enrollmentForm']/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr")
+	@FindBy(xpath = "//input[contains(@value,'Update payment Method(s)')]")
+	WebElement btnUpdateUPA;
+
+	@FindBy(xpath = "//input[contains(@value,'Download Payment Method Change History')]")
+	WebElement btnDownload;
+
+	// @FindBy(xpath="//form[@name='enrollmentForm']//table//tr[@class='subheadernormal']//tr")
+	// *[@id="enrollmentForm"]/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr
+	// *[@id='enrollmentForm']/table/tbody/tr[6]/td/table[2]/tbody/tr/td[1]/table/tbody/tr
+	@FindBy(xpath = "//table/tbody/tr[@class='subheadernormal' or @class='rowDark']")
 	List<WebElement> payerTable;
 	
 	
@@ -370,7 +386,10 @@ public class EditEnrollment {
 	@FindBy(name="btnFinish")
 	WebElement btnFinish;
 	
-	@FindBy(xpath="//td[contains(text(),'Patient Payment')]")
+	@FindBy(xpath="//input[@value=' Finish ']")
+	WebElement btnFinishUPA;
+
+	@FindBy(xpath = "//td[contains(text(),'Patient Payment')]")
 	WebElement payerName;
 	
 	@FindBy(xpath="//td[contains(text(),'HM801')]")
@@ -378,21 +397,17 @@ public class EditEnrollment {
 	
 	@FindBy(name="Submit")
 	WebElement submitBtn;
-	
-	
-	
-	
-	
-	
-	
-			
-	
+
+	@FindBy(xpath = "//td[@align='right']//input[@value='     Edit     ']")
+	WebElement btnEdit;
+
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
 	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
-	String userEmailAdr=Helper.getUniqueEmailId();
-	
+	String userEmailAdr = Helper.getUniqueEmailId();
+
+	private Boolean payerexist;
 
 	public EditEnrollment(TestBase testConfig) {
 		this.testConfig = testConfig;
@@ -401,10 +416,9 @@ public class EditEnrollment {
 		Browser.verifyURL(testConfig, "/editEnrollment.do");
 		
 	}
-	
-	public EditEnrollment()
-	{
-		
+
+	public EditEnrollment() {
+
 	}
 	
 	public EditEnrollment verifyTabsAreDisplayed()
@@ -421,52 +435,60 @@ public class EditEnrollment {
 		 int sqlRowNo=1;
           
 		// Verifies count of records displayed in view payments tab from DB
-		Map portalUserTable = DataBase.executeSelectQuery(testConfig, sqlRowNo,1);
-		
-		String orgAddressFromDB=portalUserTable.get("ADR_TXT").toString().trim().replaceAll("\\s", "");
-		String orgAddrFromUI=txtBoxOrgAddr.getAttribute("value").trim().replaceAll("\\s", "");
-		
-		
-		Helper.compareEquals(testConfig, "Organization Name", portalUserTable.get("ORG_NM").toString().trim(), txtBoxOrgName.getAttribute("value").trim());
-		Helper.compareEquals(testConfig, "Organization Address", orgAddressFromDB,orgAddrFromUI);
-		Helper.compareEquals(testConfig, "Organization City", portalUserTable.get("CTY_NM").toString().trim(),txtBoxOrgCity.getAttribute("value").trim());
-		Helper.compareEquals(testConfig, "Organization State", portalUserTable.get("ST_NM").toString().trim(),Element.getFirstSelectedOption(testConfig, drpDwnOrgState, "text"));
-		Helper.compareEquals(testConfig, "ZIP Code", portalUserTable.get("ZIP_CD").toString().trim(),txtBoxorgZip1.getAttribute("value").trim()+txtBoxorgZip2.getAttribute("value").trim());
-		Helper.compareEquals(testConfig, "Tin number","TIN: " + testConfig.getRunTimeProperty("tin").toString(), txtTinNo.getText().trim());
-		Helper.compareEquals(testConfig, "Enrollment ID", portalUserTable.get("ENRL_ID_NBR").toString().trim(), txtEnrollmentID.getText().trim());
-		Helper.compareContains(testConfig, "Date of Enrollment",Helper.changeDateFormat(enrollmentDate.getText().toString(), "mm/dd/yyyy", "yyyy-mm-dd"),portalUserTable.get("ENRL_DTTM").toString().trim());
-		Helper.compareEquals(testConfig, "Enrollment Status",portalUserTable.get("ENRL_STS_CD").toString().trim(),enrollmentStatus.getText().substring(0,1).trim());
-		
+		Map portalUserTable = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+
+		String orgAddressFromDB = portalUserTable.get("ADR_TXT").toString().trim().replaceAll("\\s", "");
+		String orgAddrFromUI = txtBoxOrgAddr.getAttribute("value").trim().replaceAll("\\s", "");
+
+		Helper.compareEquals(testConfig, "Organization Name", portalUserTable.get("ORG_NM").toString().trim(),
+				txtBoxOrgName.getAttribute("value").trim());
+		Helper.compareEquals(testConfig, "Organization Address", orgAddressFromDB, orgAddrFromUI);
+		Helper.compareEquals(testConfig, "Organization City", portalUserTable.get("CTY_NM").toString().trim(),
+				txtBoxOrgCity.getAttribute("value").trim());
+		Helper.compareEquals(testConfig, "Organization State", portalUserTable.get("ST_NM").toString().trim(),
+				Element.getFirstSelectedOption(testConfig, drpDwnOrgState, "text"));
+		Helper.compareEquals(testConfig, "ZIP Code", portalUserTable.get("ZIP_CD").toString().trim(),
+				txtBoxorgZip1.getAttribute("value").trim() + txtBoxorgZip2.getAttribute("value").trim());
+		Helper.compareEquals(testConfig, "Tin number", "TIN: " + testConfig.getRunTimeProperty("tin").toString(),
+				txtTinNo.getText().trim());
+		Helper.compareEquals(testConfig, "Enrollment ID", portalUserTable.get("ENRL_ID_NBR").toString().trim(),
+				txtEnrollmentID.getText().trim());
+		Helper.compareContains(testConfig, "Date of Enrollment",
+				Helper.changeDateFormat(enrollmentDate.getText().toString(), "mm/dd/yyyy", "yyyy-mm-dd"),
+				portalUserTable.get("ENRL_DTTM").toString().trim());
+		Helper.compareEquals(testConfig, "Enrollment Status", portalUserTable.get("ENRL_STS_CD").toString().trim(),
+				enrollmentStatus.getText().substring(0, 1).trim());
+
 		verifyProvAndMktRadioBoxes();
 		return this;
 		
 	}
-	
-	
-	public void verifyProvAndMktRadioBoxes() throws IOException
-	{
-		ArrayList<String> expectedMktTypes=new ArrayList<String>();
-		HashMap<Integer, HashMap<String, String>>mktTypeTbl = DataBase.executeSelectQueryALL(testConfig,243);
-		HashMap<Integer, HashMap<String, String>>provTbl = DataBase.executeSelectQueryALL(testConfig,244);
-		
-		String actual=testConfig.driver.findElement(By.xpath("//td[contains(text(),'Provider Type:')]//following-sibling::td")).getText();
-		actual=actual.replace("\n", " ").replace(",", "").replace("[", "").replace("]", "").replace("  ", " ");
-		
-		 for (int i = 1; i <= mktTypeTbl.size(); i++) 
-			 expectedMktTypes.add(mktTypeTbl.get(i).get("MKT_TYP_DESC").toString());
-		
-		 for (int i = 1; i <= provTbl.size(); i++) 
-			 expectedMktTypes.add(provTbl.get(i).get("MKT_TYP_DESC").toString());
-		 
-		  String expectedMktTyp=expectedMktTypes.toString().replace(",", "").replace("[", "").replace("]", "").replace("", "");
-		 Helper.compareContains(testConfig, "Prov and market types",expectedMktTyp, actual);
-		
-     }
-	
-	public UPAHomePage clickandVerifyCancelFunc()
-	{
-		String expectedText="Are you sure you want to cancel your EPS Enrollment Update?" + '\n' + "If you select 'Yes', your EPS Enrollment changes will" ;
-		
+
+	public void verifyProvAndMktRadioBoxes() throws IOException {
+		ArrayList<String> expectedMktTypes = new ArrayList<String>();
+		HashMap<Integer, HashMap<String, String>> mktTypeTbl = DataBase.executeSelectQueryALL(testConfig, 243);
+		HashMap<Integer, HashMap<String, String>> provTbl = DataBase.executeSelectQueryALL(testConfig, 244);
+
+		String actual = testConfig.driver
+				.findElement(By.xpath("//td[contains(text(),'Provider Type:')]//following-sibling::td")).getText();
+		actual = actual.replace("\n", " ").replace(",", "").replace("[", "").replace("]", "").replace("  ", " ");
+
+		for (int i = 1; i <= mktTypeTbl.size(); i++)
+			expectedMktTypes.add(mktTypeTbl.get(i).get("MKT_TYP_DESC").toString());
+
+		for (int i = 1; i <= provTbl.size(); i++)
+			expectedMktTypes.add(provTbl.get(i).get("MKT_TYP_DESC").toString());
+
+		String expectedMktTyp = expectedMktTypes.toString().replace(",", "").replace("[", "").replace("]", "")
+				.replace("", "");
+		Helper.compareContains(testConfig, "Prov and market types", expectedMktTyp, actual);
+
+	}
+
+	public UPAHomePage clickandVerifyCancelFunc() {
+		String expectedText = "Are you sure you want to cancel your EPS Enrollment Update?" + '\n'
+				+ "If you select 'Yes', your EPS Enrollment changes will";
+
 		Element.click(btnCancel, "Cancel button");
 		Browser.verifyURL(testConfig, "/cancel.do");
 		Element.verifyTextPresent(txtCancel, expectedText);
@@ -479,132 +501,153 @@ public class EditEnrollment {
 		Element.click(btnYes, "Yes button");
 		return new UPAHomePage(testConfig);
 	}
-	
-	public EditEnrollment clickContinue()
-	{  
+
+	public EditEnrollment clickContinue() {
 		Element.click(btnContinue, "continue button");
 		Browser.verifyURL(testConfig, "validateOrgDetails.do");
-  		Helper.compareEquals(testConfig, "Payers tab class", "activeclass", tabsMenu.findElements(By.tagName("li")).get(1).getAttribute("class"));
-  		return this;
-		
+		Helper.compareEquals(testConfig, "Payers tab class", "activeclass",
+				tabsMenu.findElements(By.tagName("li")).get(1).getAttribute("class"));
+		return this;
+
 	}
-	
-	public EditEnrollment clickContinueBank()
-	{  
+
+	public EditEnrollment clickContinueBank() {
 		Element.click(btnContinue, "continue button");
 		Browser.verifyURL(testConfig, "/updateProviderBankingDetails.do");
 		return this;
 	}
-	
-	
-	public void verifyPayerTable() throws IOException 
-	{
-       
-		String payMethod_UI=null; ;
-		int sqlRow=245;
-		HashMap<Integer, HashMap<String,String>> payerGridInfoDB=DataBase.executeSelectQueryALL(testConfig, sqlRow);
-		int drpdwnEnabled=0;
-		
-		Element.verifyElementPresent(payerTable.get(0), "Payer table");
-		Element.verifyTextPresent(payerTable.get(0).findElements(By.tagName("td")).get(0),"Payer Information");
-		Element.verifyTextPresent(payerTable.get(0).findElements(By.tagName("td")).get(1),"Payment Method");
-		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(0),"Payer Name");
-		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(1),"Payer Id");
-		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(2),"Payer Offers");
-		
-		for(int i=2,j=i-1;i<payerTable.size()-2;i++)
-		{ 
-			
-			if(payerGridInfoDB.get(j).get("PAYR_DSPL_NM").toString().equals("UMR"))
-				Helper.compareEquals(testConfig, "Payer Name", "*UMR",payerTable.get(i).findElements(By.tagName("td")).get(0).getText());
-			else
-			Helper.compareEquals(testConfig, "Payer Name", payerGridInfoDB.get(j).get("PAYR_DSPL_NM").toString(),payerTable.get(i).findElements(By.tagName("td")).get(0).getText());
-			Helper.compareEquals(testConfig, "Payer ID", payerGridInfoDB.get(j).get("PAYR_835_ID").toString().trim(),payerTable.get(i).findElements(By.tagName("td")).get(1).getText());
-			Helper.compareEquals(testConfig, "Payer Offers", getDisplayPayOfrCode(payerGridInfoDB.get(j).get("PAY_METH_OFR_CD").toString()),payerTable.get(i).findElements(By.tagName("td")).get(2).getText());
-			
-			
-			if(payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("ACH"))
-				payMethod_UI=getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) +"-"+ "None";
-			
-			else if(payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("ACH/VCP"))
-			{
-				if(getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()).equals("ACH"))
-				payMethod_UI=getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) +"-"+"VCP-None";
-				else
-					payMethod_UI=getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) +"-"+"ACH-None";
-			}
-			else if(payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("VCP"))
-				payMethod_UI=getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) +"-"+ "None";
 
-            Helper.compareEquals(testConfig, "Payer Method dropdown Values", payMethod_UI,payerTable.get(i).findElements(By.tagName("td")).get(3).getText().replaceAll("\n", "-").replaceAll("\\s","").replace("--","-"));
-        
-    		Map  selectDrpdwn=Element.getAllAttributes(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), "Paymenth method for " + payerTable.get(i).findElements(By.tagName("td")).get(3).getText());
-             if(!selectDrpdwn.containsKey("disabled"))
-            	 drpdwnEnabled=i;
-            	
-            j++;
+	public void verifyPayerTable() throws IOException {
+
+		String payMethod_UI = null;
+		;
+		int sqlRow = 245;
+		HashMap<Integer, HashMap<String, String>> payerGridInfoDB = DataBase.executeSelectQueryALL(testConfig, sqlRow);
+		int drpdwnEnabled = 0;
+
+		Element.verifyElementPresent(payerTable.get(0), "Payer table");
+		Element.verifyTextPresent(payerTable.get(0).findElements(By.tagName("td")).get(0), "Payer Information");
+		Element.verifyTextPresent(payerTable.get(0).findElements(By.tagName("td")).get(1), "Payment Method");
+		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(0), "Payer Name");
+		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(1), "Payer Id");
+		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(2), "Payer Offers");
+
+		for (int i = 2, j = i - 1; i < payerTable.size() - 2; i++) {
+
+			if (payerGridInfoDB.get(j).get("PAYR_DSPL_NM").toString().equals("UMR"))
+				Helper.compareEquals(testConfig, "Payer Name", "*UMR",
+						payerTable.get(i).findElements(By.tagName("td")).get(0).getText());
+			else
+				Helper.compareEquals(testConfig, "Payer Name", payerGridInfoDB.get(j).get("PAYR_DSPL_NM").toString(),
+						payerTable.get(i).findElements(By.tagName("td")).get(0).getText());
+			Helper.compareEquals(testConfig, "Payer ID", payerGridInfoDB.get(j).get("PAYR_835_ID").toString().trim(),
+					payerTable.get(i).findElements(By.tagName("td")).get(1).getText());
+			Helper.compareEquals(testConfig, "Payer Offers",
+					getDisplayPayOfrCode(payerGridInfoDB.get(j).get("PAY_METH_OFR_CD").toString()),
+					payerTable.get(i).findElements(By.tagName("td")).get(2).getText());
+
+			if (payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("ACH"))
+				payMethod_UI = getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) + "-"
+						+ "None";
+
+			else if (payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("ACH/VCP")) {
+				if (getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()).equals("ACH"))
+					payMethod_UI = getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) + "-"
+							+ "VCP-None";
+				else
+					payMethod_UI = getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) + "-"
+							+ "ACH-None";
+			} else if (payerTable.get(i).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase("VCP"))
+				payMethod_UI = getDisplayMethodCode(payerGridInfoDB.get(j).get("PAY_METH_CD").toString()) + "-"
+						+ "None";
+
+			Helper.compareEquals(testConfig, "Payer Method dropdown Values", payMethod_UI,
+					payerTable.get(i).findElements(By.tagName("td")).get(3).getText().replaceAll("\n", "-")
+							.replaceAll("\\s", "").replace("--", "-"));
+
+			Map selectDrpdwn = Element.getAllAttributes(testConfig,
+					payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+					"Paymenth method for " + payerTable.get(i).findElements(By.tagName("td")).get(3).getText());
+			if (!selectDrpdwn.containsKey("disabled"))
+				drpdwnEnabled = i;
+
+			j++;
 		}
-		
-		//Reset and update button are disabled
-		Helper.compareEquals(testConfig, "Disabled attribute of reset button", "true", btnReset.getAttribute("disabled").toString());
-		Helper.compareEquals(testConfig, "Disabled attribute of Update button", "true", btnUpdate.getAttribute("disabled").toString());
-		
-		//changing payment method
-		String oldPayMeth=Element.getFirstSelectedOption(testConfig, payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), "value");
-       
-		Element.selectByIndex(payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), 1, "Selecting payer method as "+payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(0).getText());
-    	
-        String newPayMeth=Element.getFirstSelectedOption(testConfig, payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), "value");
-		String payerName=payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(0).getText();
-        clickUpdatePaymentMethod().verifyPayerOnPaymentChange(payerName, oldPayMeth, newPayMeth,drpdwnEnabled);
-        
-       
+
+		// Reset and update button are disabled
+		Helper.compareEquals(testConfig, "Disabled attribute of reset button", "true",
+				btnReset.getAttribute("disabled").toString());
+		Helper.compareEquals(testConfig, "Disabled attribute of Update button", "true",
+				btnUpdate.getAttribute("disabled").toString());
+
+		// changing payment method
+		String oldPayMeth = Element.getFirstSelectedOption(testConfig,
+				payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				"value");
+
+		Element.selectByIndex(
+				payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				1, "Selecting payer method as "
+						+ payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(0).getText());
+
+		String newPayMeth = Element.getFirstSelectedOption(testConfig,
+				payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				"value");
+		String payerName = payerTable.get(drpdwnEnabled).findElements(By.tagName("td")).get(0).getText();
+		clickUpdatePaymentMethod().verifyPayerOnPaymentChange(payerName, oldPayMeth, newPayMeth, drpdwnEnabled);
+
 	}
-		
-	public EditEnrollment clickUpdatePaymentMethod()
-	{
+
+	public EditEnrollment clickUpdatePaymentMethod() {
 		Element.click(btnUpdate, "Update button");
 		Browser.verifyURL(testConfig, "maintainPayerPaymentMethods.portal");
-		Element.verifyTextPresent(payerTableOnMethChange.get(1).findElement(By.tagName("td")),"You have elected to change Payment Method(s) for the following Payer(s)");
-      	Element.verifyElementPresent(btnYes1, "Yes button");
-      	Element.verifyElementPresent(btnNo1, "No button");
+		Element.verifyTextPresent(payerTableOnMethChange.get(1).findElement(By.tagName("td")),
+				"You have elected to change Payment Method(s) for the following Payer(s)");
+		Element.verifyElementPresent(btnYes1, "Yes button");
+		Element.verifyElementPresent(btnNo1, "No button");
 
       	return this;
 	}
-	
-	public EditEnrollment verifyPayerOnPaymentChange(String expectedPayer,String oldPayMeth,String newPayMeth, int payerRowNo)
-	{
-		//Change payment method page
-		
-		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(0),expectedPayer);
-		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1),oldPayMeth);
-		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(2),newPayMeth);
+
+	public EditEnrollment verifyPayerOnPaymentChange(String expectedPayer, String oldPayMeth, String newPayMeth,
+			int payerRowNo) {
+		// Change payment method page
+
+		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2)
+				.findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(0), expectedPayer);
+		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2)
+				.findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1), oldPayMeth);
+		Element.verifyTextPresent(payerTableOnMethChange.get(2).findElements(By.tagName("table")).get(2)
+				.findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(2), newPayMeth);
 		Element.click(btnNo1, "No button");
-		
-		//Back on Payers Tab
-		Helper.compareEquals(testConfig, "Payment Method", oldPayMeth,Element.getFirstSelectedOption(testConfig,payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),"value"));
-		
-		Element.selectByVisibleText(payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")), newPayMeth, "selected " +newPayMeth);
+
+		// Back on Payers Tab
+		Helper.compareEquals(testConfig, "Payment Method", oldPayMeth, Element.getFirstSelectedOption(testConfig,
+				payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				"value"));
+
+		Element.selectByVisibleText(
+				payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				newPayMeth, "selected " + newPayMeth);
 		Element.click(btnUpdate, "Update button");
 		Element.click(btnYes1, "Yes button");
-		Helper.compareEquals(testConfig, "Payment Method", newPayMeth,Element.getFirstSelectedOption(testConfig,payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),"value"));
-		
-		
-		
+		Helper.compareEquals(testConfig, "Payment Method", newPayMeth, Element.getFirstSelectedOption(testConfig,
+				payerTable.get(payerRowNo).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+				"value"));
+
 		return this;
 	}
 
 	private String getDisplayMethodCode(String payMethod) {
-		
-		if(payMethod!=null)
-			{ 
-			 if(payMethod.equalsIgnoreCase("CHK"))
-				 return "None";
-			 else if(payMethod.equalsIgnoreCase("ACH"))
-				 return "ACH";
-			 else if(payMethod.equalsIgnoreCase("VCP"))
-				 return "VCP";
-			}
+
+		if (payMethod != null) {
+			if (payMethod.equalsIgnoreCase("CHK"))
+				return "None";
+			else if (payMethod.equalsIgnoreCase("ACH"))
+				return "ACH";
+			else if (payMethod.equalsIgnoreCase("VCP"))
+				return "VCP";
+		}
 		return "None";
 	}
 
@@ -616,30 +659,30 @@ public class EditEnrollment {
 		else
 			return payMeth_OfrCode;
 	}
-	
-	
-	public EditEnrollment clickBankAccountTab()
-	{
+
+	public EditEnrollment clickBankAccountTab() {
 		Element.click(tabsMenu.findElements(By.tagName("li")).get(2), "Bank Account(s) Tab");
 		return this;
 	}
-	
-	public EditEnrollment clickPayersTab()
-	{
+
+	public void clickEditBtn() {
+		Element.click(btnEdit, "Edit button");
+
+	}
+
+	public EditEnrollment clickPayersTab() {
 		Element.click(tabsMenu.findElements(By.tagName("li")).get(1), "Payer (s) tab");
 		return this;
 	}
-	
-	public EditEnrollment clickPayerPRATab()
-	{
+
+	public EditEnrollment clickPayerPRATab() {
 		Element.click(tabsMenu.findElements(By.tagName("li")).get(3), "Payer PPRA's Tab");
 		return this;
 	}
-	
-	public void verifyPayersPagePayerNameandId()
-	{
-  		Element.verifyTextPresent(payerName, "Patient Payment");
-  		Element.verifyTextPresent(payerId, "HM801");
+
+	public void verifyPayersPagePayerNameandId() {
+		Element.verifyTextPresent(payerName, "Patient Payment");
+		Element.verifyTextPresent(payerId, "HM801");
 	}
 	
 	public void verifyPayerPRAPagePayerName()
@@ -923,18 +966,137 @@ public class EditEnrollment {
 					Browser.scrollToBottom(testConfig);
 			      	Element.click(submitBtn, "Yes button");
 
+			}
+		}
+		Map payerDb = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		if (mapA.get("payment").equals(achPaymentMethod)) {
+			Helper.compareEquals(testConfig, "Payment Method", nonePaymentMethodDb,
+					payerDb.get("PAY_METH_CD").toString());
+		} else {
+			Helper.compareEquals(testConfig, "Payment Method", achPaymentMethod, payerDb.get("PAY_METH_CD").toString());
+
+		}
+	}
+
+	public void UpdatePaymentMethodandValidatePEPHistoryTable() throws IOException {
+
+		int sqlRow = 403;
+		Map payerDB = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		int drpdwnEnabled = 0;
+		Map<String, String> mapA = new HashMap<>();
+		String nonePaymentMethod = "None";
+		String achPaymentMethod = "ACH";
+		String nonePaymentMethodDb = "";
+		Element.verifyTextPresent(payerTable.get(1).findElements(By.tagName("td")).get(1), "HM801");
+
+		for (int i = 2; i < payerTable.size() - 2; i++) {
+			if ((payerDB.get("PAYR_835_ID").toString().trim())
+					.equals((payerTable.get(i).findElements(By.tagName("td")).get(1)).getText())) {
+				Browser.scrollTillAnElement(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(1),
+						"Payer Id");
+				String oldPayMeth = Element.getFirstSelectedOption(testConfig,
+						payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+						"value");
+				mapA.put("OldPayMethod", oldPayMeth);
+				if (oldPayMeth.equals(achPaymentMethod)) {
+					Element.selectVisibleText(
+							payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+							nonePaymentMethod, "Value");
+					mapA.put("payment", oldPayMeth);
+				} else {
+					Element.selectVisibleText(
+							payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+							achPaymentMethod, "Select " + achPaymentMethod + "Value");
+					mapA.put("payment", oldPayMeth);
 				}
-			}
-			Map payerDb = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-			if(mapA.get("payment").equals(achPaymentMethod)) {
-				Helper.compareEquals(testConfig, "Payment Method", nonePaymentMethodDb, payerDb.get("PAY_METH_CD").toString());
-			}
-			else {
-			    Helper.compareEquals(testConfig, "Payment Method", achPaymentMethod, payerDb.get("PAY_METH_CD").toString());
+				String newPayMeth = Element.getFirstSelectedOption(testConfig,
+						payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+						"value");
+				String payerName = payerTable.get(i).findElements(By.tagName("td")).get(0).getText();
+				mapA.put("NewPayment", newPayMeth);
+				Browser.scrollToBottom(testConfig);
+				Element.click(btnUpdate, "Update button");
+				Browser.wait(testConfig, 3);
+				Element.click(btnYes1, "Yes button");
+				Browser.wait(testConfig, 3);
+				Element.click(btnFinish, "Yes button");
+				Browser.scrollToBottom(testConfig);
+				Browser.wait(testConfig, 3);
+				Element.click(btnFinish, "Yes button");
+				Browser.wait(testConfig, 3);
+				Browser.scrollToBottom(testConfig);
+				Element.click(submitBtn, "Yes button");
 
 			}
 		}
-			
-	
 
-}
+		sqlRow = 422;
+		Map pephistorydata = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		System.out.println("Old Payment Method" + mapA.get("OldPayMethod"));
+		System.out.println("Updated Payment Method" + mapA.get("NewPayment"));
+		if (pephistorydata != null) {
+
+			if (mapA.get("NewPayment").trim().equals("NONE")) {
+				Helper.compareEquals(testConfig, "Paymethod Method Validation", nonePaymentMethodDb,
+						pephistorydata.get("PAY_METH_CD"));
+			} else {
+				Helper.compareEquals(testConfig, "Paymethod Method Validation", mapA.get("NewPayment"),
+						pephistorydata.get("PAY_METH_CD").toString());
+			}
+
+		} else {
+			Log.Fail("Record is not Available in Payer Enrolled Provided History Table");
+
+		}
+
+	}
+
+	public void changePaymentMethod(String payerName, String paymentFrom, String paymentTo) {
+		Element.verifyTextPresent(payerTable.get(0).findElements(By.tagName("td")).get(1), "Payer Information");
+		Map<String, String> paymethodmap = new HashMap<>();
+		for (int i = 1; i < payerTable.size(); i++) {
+			System.out.println((payerTable.get(i).findElements(By.tagName("td")).get(0)).getText());
+			if ((payerName.trim())
+					.equalsIgnoreCase((payerTable.get(i).findElements(By.tagName("td")).get(0)).getText())) {
+				Browser.scrollTillAnElement(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(0),
+						"Payer Name");
+				String oldPayMeth = Element.getFirstSelectedOption(testConfig,
+						payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+						"value");
+				paymethodmap.put("OldPayMethod", oldPayMeth);
+				Helper.compareEquals(testConfig, "From Paymethod Method Validation", oldPayMeth.toLowerCase(), paymentFrom.toLowerCase());
+				List<String> paymentoptions = Element.getAllOptionsInSelect(testConfig,
+						payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")));
+				Helper.compareContains(testConfig, "To Payment Method Validation",paymentTo.toLowerCase(), paymentoptions.toString().toLowerCase());
+				if (paymentoptions.toString().toLowerCase().contains(paymentTo.toLowerCase())) {
+					Element.selectVisibleText(
+							payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+							paymentTo, "Value");
+					String newPayMeth = Element.getFirstSelectedOption(testConfig,
+							payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+							"value");
+					paymethodmap.put("NewPayMethod", newPayMeth);
+					Browser.scrollToBottom(testConfig);
+					Element.click(btnUpdateUPA, "Update button");
+					Browser.wait(testConfig, 3);
+					Element.click(btnYes1, "Yes button");
+					Browser.wait(testConfig, 3);
+					Element.click(btnFinishUPA, "Yes button");
+					Browser.wait(testConfig, 3);
+					Browser.scrollToBottom(testConfig);
+					Element.click(submitBtn, "Yes button");
+
+				}
+
+			}
+		}
+
+	}
+	
+	public EditEnrollment verifyPaymentMethod(String payer, String paymentFrom, String paymentTo){
+		int sqlRow = 429;
+		Map pephistorydata = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		Helper.compareEquals(testConfig, "Paymethod Method Validation", paymentTo,pephistorydata.get("PAY_METH_CD"));
+		return this;
+		}
+	}

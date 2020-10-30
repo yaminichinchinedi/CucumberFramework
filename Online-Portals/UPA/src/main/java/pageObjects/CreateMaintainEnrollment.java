@@ -142,6 +142,19 @@ public class CreateMaintainEnrollment {
 			   break;
 		   }
 		   
+		  case "AO" :
+		  case "VO" :
+		  case "AV" :
+
+		   {
+			   sqlRowNo=419;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
+			   break;
+		   }
+		   
 		   default:
 			   break;
 		}

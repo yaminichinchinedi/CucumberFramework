@@ -1,6 +1,6 @@
 package main.java.stepDefinitions.EditEnrollment;
 
-import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
@@ -138,6 +138,18 @@ public class EditEnrollmentSteps extends TestBase {
     @When("^User updates the bank account at payer level$")
     public void user_updates_the_bank_account_at_payer_level() throws Throwable {
       
+    }
+	    
+    @Given("^Change Payment Method for \"([^\"]*)\" from \"([^\"]*)\" to \"([^\"]*)\"$")
+    public void change_Payment_Method_for_from_to(String payer, String paymentFrom, String paymentTo) throws Throwable {
+    	editEnrollment=maintainEnrollment.clickEditBtn();
+    	editEnrollment.clickPayersTab();
+    	editEnrollment.changePaymentMethod(payer, paymentFrom, paymentTo);
+    }
+
+    @Given("^Validate  \"([^\"]*)\" \"([^\"]*)\"  \"([^\"]*)\"  these fields in DB$")
+    public void validate_these_fields_in_DB(String payer, String paymentFrom, String paymentTo) throws Throwable {
+    	editEnrollment.verifyPaymentMethod(payer, paymentFrom, paymentTo);
     }
 
     

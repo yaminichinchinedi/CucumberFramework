@@ -159,6 +159,11 @@ public class CSRManageUserSteps extends TestBase {
          	manageUsers.verifyModTypCdCodeForDeletedUser(userType);  
 	}
 
+    @Then("^User enters tin in the Add tin search box and saves with the  \"([^\"]*)\" and perform validations for access level, email notification,Remove Tin and validate Database$")
+    public void user_enters_tin_in_the_Add_tin_search_box_and_saves_with_the_and_perform_validations_for_access_level_email_notification_Remove_Tin_and_validate_Database(String accessLevel) throws Throwable {
+    	new ManageUsers(testConfig).addTin().AddTinAndVerifyDB(accessLevel).updateAccessLevel();
+    }
+
     
     @Then("^Users selects  \"([^\"]*)\" from dropdown and enter Tin or select payer$")
     public void users_selects_from_dropdown_and_enter_Tin_or_select_payer(String userType) throws Throwable {

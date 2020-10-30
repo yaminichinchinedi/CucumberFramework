@@ -123,7 +123,18 @@ public class AddUserDetails {
 	@FindBy(xpath="//div[@id='flow']//tbody//a")
 	List <WebElement> userNames;
 	
-
+	@FindBy(name="provTinAssociate")
+	WebElement addProviderAssociation;
+	
+	@FindBy(xpath="//input[@value='Add TIN Association']")
+	WebElement addTinAssociationButton;
+	
+	@FindBy(id="allProvAssocno")
+	WebElement associateBSNoButton;
+	
+	@FindBy(id="allProvAssocyes")
+	WebElement associateBSYesButton;
+	
 	private TestBase testConfig;
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
 	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
@@ -160,6 +171,7 @@ public class AddUserDetails {
 	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		testConfig.putRunTimeProperty("firstName", firstNameTxt);		
 		return new AddUserDetails(testConfig);
 		
 	}
@@ -459,5 +471,21 @@ public class AddUserDetails {
 	    
 	}
 	
+	
+	public AddUserDetails clickAsscociateNoButton()
+	{
+		Element.clickByJS(testConfig,associateBSNoButton, "associate BS No Button");
+		return this;
+	}
+	
+	public AddUserDetails addProviderAssociation()
+	{
+	int sqlRowNo = 427;
+	Map Searchedtin = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+	String tin1 = Searchedtin.get("PROV_TIN_NBR").toString().trim();
+	Element.enterData(addProviderAssociation, tin1, "Associate to tin", "addTin");
+	Element.clickByJS(testConfig,addTinAssociationButton, "add Tin Association Button");
+	testConfig.putRunTimeProperty("tin1", tin1);
+	return this;
 	
 }

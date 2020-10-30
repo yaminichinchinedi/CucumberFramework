@@ -293,4 +293,10 @@ public class RemittanceDetailSteps extends TestBase {
 	   
 		remitDetail.verifyRemitPageDataUPA(CriteriaType);
 	}
+	
+	@Then("^validate data in remittance detail screen$")
+	public void validate_data_in_remittance_detail_screen() throws Throwable {
+		remitDetail.verifyRemittanceDetailScreen();
+	}
+
 }

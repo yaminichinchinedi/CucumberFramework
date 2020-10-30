@@ -3,7 +3,7 @@
 Feature: UPA Payment Details Payor     
           
 @US2707345
-Scenario Outline: View Payments Page UI Functionality for CSR
+Scenario Outline: View Payments Page UI Functionality for UPA
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      When Click on View Payments Link for UPA
@@ -14,12 +14,12 @@ Scenario Outline: View Payments Page UI Functionality for CSR
 Examples:
 
         |    searchBy                   |       credentials        |  timePeriod   |  userType  | type  |
-		|generalPaymentForTIN_90days    |       PAY_Admin          |  Last 90 days |  Payer     |  UPA  |
-        |generalPaymentForTIN_90days    |       PAY_Gen            |  Last 90 days |  Payer     |  UPA  |
+		|     PatientPayment            |       PAY_Admin          |  Last 90 days |  Payer     |  UPA  |
+        |     PatientPayment            |       PAY_Gen            |  Last 90 days |  Payer     |  UPA  |
         
         
 @US2810748 
-Scenario Outline: View Payments UI Functionality for Complaint patient payments CSR
+Scenario Outline: View Payments UI Functionality for Complaint patient payments UPA
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      When Click on View Payments Link for UPA
@@ -31,8 +31,8 @@ Scenario Outline: View Payments UI Functionality for Complaint patient payments 
 Examples:
 
         |    searchBy                   |       credentials        |  timePeriod   |  userType  |   filter           | type  |
-		|generalPaymentForTIN_90days    |       PAY_Admin          |  Last 90 days |  Payer     |   Patient Payments |  UPA  |
-        |generalPaymentForTIN_90days    |       PAY_Gen            |  Last 90 days |  Payer     |   Patient Payments |  UPA  |
+		|     PatientPayment            |       PAY_Admin          |  Last 90 days |  Payer     |   Patient Payments |  UPA  |
+        |     PatientPayment            |       PAY_Gen            |  Last 90 days |  Payer     |   Patient Payments |  UPA  |
         
 
 @US2707374 
@@ -50,6 +50,6 @@ Scenario Outline:  View Payments Page UI Functionality for Patient Payements(Vie
 Examples:
 
         |    searchBy                   |       credentials        |  timePeriod   |  userType  |   filter           |
-		|generalPaymentForTIN_90days    |       PAY_Admin          |  Last 90 days |  Payer     |   Patient Payments |
-        |generalPaymentForTIN_90days    |       PAY_Gen            |  Last 90 days |  Payer     |   Patient Payments |
+		|          PatientPayment       |       PAY_Admin          |  Last 90 days |  Payer     |   Patient Payments |
+        |     PatientPayment            |       PAY_Gen            |  Last 90 days |  Payer     |   Patient Payments |
         

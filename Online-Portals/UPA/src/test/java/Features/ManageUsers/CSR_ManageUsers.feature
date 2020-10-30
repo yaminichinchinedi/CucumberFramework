@@ -162,3 +162,15 @@ Scenario Outline: CSR Manage Purse User
       |      PROV       |      Super      |	
       |      PROV       |      RO 				|
       |      PROV       |      RW 				|
+      
+@US2987380  
+Scenario Outline: CSR Manage User UI Functionality Add new user
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+    Then User enters "<userType>" in Manage Users Page to enter TIN
+    Then User enters tin in the Add tin search box and saves with the  "<accessLevel>" and perform validations for access level, email notification,Remove Tin and validate Database
+    
+        Examples:
+      |    userType     |   credentials   | accessLevel       |
+      |      PROV       |      Super      |	 General		  |
+ 

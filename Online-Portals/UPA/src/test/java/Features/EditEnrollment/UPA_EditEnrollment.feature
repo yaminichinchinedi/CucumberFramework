@@ -237,9 +237,18 @@ Examples:
       |    userType     |   accessType  |
       |      BS_Admin   |   BS     	| 
 
+#Author:Pranav
+@US2987409 
+Scenario Outline: provider pep updates
 
-
-     
-     
+	Given User navigates to UPA portal and enters "<credentials>" and login
+    And User enters tin for UPA Search Remittance Tin Page for "<searchBy>" through "<usertype>" and click on continue button
+	And  Clicks on Maintain Enrollment Tab
+	And  Change Payment Method for "<payer>" from "<paymentFrom>" to "<paymentTo>"
+	And Validate  "<payer>" "<paymentFrom>"  "<paymentTo>"  these fields in DB
+Examples:
+        |    searchBy         |  credentials  | usertype|  payer     | paymentFrom| paymentTo|
+        |     Provider_Admin  |   PROV_Admin  |  PROV   | UMR Inc    | ACH        | None     |
+        |     Provider_Admin  |   PROV_Admin  |  PROV   | UMR Inc    | None       | ACH      |
      
      

@@ -340,8 +340,12 @@ public class SearchTinPageViewPayments {
 	
 	public String getTin(String paymentType)
 	{
+	// To do: Parameterize dataProvider.associateTinWithUser("BS",tin); --> with all 3 options (Prov/BS/Payer)
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return dataProvider.getTinForPaymentType(paymentType);
+		
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		dataProvider.associateTinWithUser("BS",tin);
+		//return dataProvider.getTinForPaymentType(paymentType);
 		//ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
 		
 		
@@ -361,7 +365,7 @@ public class SearchTinPageViewPayments {
 //		WebElement btnSearch = Element.findElement(testConfig, "name", "btnSearch");
 //		Element.click(btnSearch, "Search Button");
 //		}
-//		return tin;
+		return tin;
 	}
 	
 	

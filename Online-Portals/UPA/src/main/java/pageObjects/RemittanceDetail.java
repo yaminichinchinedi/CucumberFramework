@@ -8132,8 +8132,25 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	
 }
 
-
-    
+	public void verifyRemittanceDetailScreen() throws Exception
+	// TODO verify subscriber first name and last name
+	{
+	  int size = testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
+	  
+	  Log.Comment("Size of the tlist is:" + size);
+		
+	    if(testConfig.driver.findElements( By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0)
+	    {
+			//List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));
+		      int sqlRowNo = 409;
+		  	Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		  	Log.Comment("Message from DB for Payer Schema:" + payerSchema);		  	
+		  	String paymentNum1 = paymentNo.getText();
+			String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+			Helper.compareEquals(testConfig, "First name", payerSchema.get("DSPL_CONSL_PAY_NBR").toString(), paymentNum);
+	    }
+	}
+	    
  
 
 	public RemittanceDetail SelectPDFLink() throws InterruptedException

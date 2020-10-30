@@ -1,13 +1,15 @@
 package main.java.stepDefinitions.ManageUsers;
 
-import org.openqa.selenium.By;
+import java.util.Map;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import main.java.Utils.DataBase;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.AddUserDetails;
 import main.java.pageObjects.HomePage;
 import main.java.pageObjects.ManageUsers;
+import main.java.reporting.Log;
 
 public class UPAManageUserSteps extends TestBase {
 
@@ -19,10 +21,11 @@ public class UPAManageUserSteps extends TestBase {
         manageUser.doUserListSorting();
     }
 
-    @Then("^Verifies \"([^\"]*)\" Save & Cancel button functionlity for Access level changes for a Provider User$")
-    public void user_enters_in_Upa_Manage_Users_Page_and_verify(String userType) throws Throwable {
-        manageUser.changeAndVerifyAccLvlEmailNotify(userType);//.changeAndCancelAccessLevel(userType);
-    }
+	@Then("^Verifies \"([^\"]*)\" Save & Cancel button functionlity for Access level changes for a Provider User$")
+	public void user_enters_in_Upa_Manage_Users_Page_and_verify(String userType) throws Throwable {
+		manageUser.changeAndSaveAccessLevel(userType).changeAndCancelAccessLevel(userType);
+
+	}
 
     @Then("^Verifies Tin Grid Details in Manage Users Tab$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_Grid_Details() throws Throwable {
@@ -79,9 +82,17 @@ public class UPAManageUserSteps extends TestBase {
 	}
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
-	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
-        addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
+	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser,
+			String stsCode) throws Throwable {
+		addUserDetails = manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser()
+				.fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
+	}
+
+	@Then("^Verify Save and Cancel func for AccessLvl for \"([^\"]*)\"$")
+	public void verify_Save_and_Cancel_func_for_AccessLvl_for(String userType) throws Throwable {
+		manageUser.changeAndSaveAccessLevel(userType);
+
 	}
     
     @Then("^Verify Access level and Email notification indicator can be updated for \"([^\"]*)\"\\.$")
@@ -200,6 +211,63 @@ public class UPAManageUserSteps extends TestBase {
 			manageUser.verifyDbHistoryAfterTinDeletion();
 		}
 
+	@Then("^Create a New User with \"([^\"]*)\" and \"([^\"]*)\" and verify DB$")
+	public void create_a_New_User_with_and(String accessType, String accessLevelOfNewUser) throws Throwable {
+		int rowcount = manageUser.fetchRecordCount();
+		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+		manageUser.verifyRowCount(rowcount);
+		
+	}
+	
+	@Then("^Change the Access Level and verify DB$")
+	public void change_the_Access_Level_and_verify_in_DB() throws Throwable {
+		manageUser.changeAccessLevel();
+	}
+
+	@Then("^Change the Email Notification and verify DB$")
+	public void change_the_Email_Notification_and_verify_in_DB() throws Throwable {
+		manageUser.changeEmailNotificationAndValidateinDB();
+	}
+  
+	@Then("^Remove User and verify DB$")
+	public void remove_User_and_verify_in_DB() throws Throwable {
+		manageUser.deleteUserandValidateinDB();
+	}
+	
+	@Then("^Create a New User with \"([^\"]*)\" and verify DB$")
+	public void create_a_New_User_with_and_verify_DB(String accessLevel) throws Throwable {
+		int rowcount = manageUser.fetchRecordCount();
+		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickSave();
+		manageUser.verifyRowCount(rowcount);
+	}
+
+	@Then("^Create a New User with \"([^\"]*)\", \"([^\"]*)\" flag and verify DB$")
+	public void create_a_New_User_with_flag_and_verify_DB(String accessLevel, String AssociateBS) throws Throwable {
+		int rowcount = manageUser.fetchRecordCount();
+		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickAsscociateNoButton().addProviderAssociation().clickSave();
+		manageUser.verifyRowCount(rowcount);
+	}
+	
+	@Then("^verify newly added user and Change Email Notification and delete user and verify DB$")
+	public void verify_newly_added_user_and_Change_Email_Notification_and_delete_user_and_verify_DB() throws Throwable {
+		manageUser.verifyBSManageUserUpdates();
+	}
+
+	@Then("^change the access level and verify DB$")
+	public void change_the_access_level_and_verify_DB() throws Throwable {
+		manageUser.verifyAccessLevelChangeBS();
+	}
+
+	@Then("^Add tin by selecting do not associate billing service to all providers then remove the tin from the grid and verify DB$")
+	public void add_tin_by_selecting_do_not_associate_billing_service_to_all_providers_then_remove_the_tin_from_the_grid_and_verify_DB() throws Throwable {
+		manageUser.addTinDoNotAssociate();
+	}
+
+	@Then("^verify new added user and change access level and email notification for BS and verify DB$")
+	public void verify_new_added_user_and_change_access_level_and_email_notification_for_BS_and_verify_DB() throws Throwable {
+		manageUser.verifyMutlipleChangesBS();
+
+	}
 	@Then("^verify Add user button is disabled\\.$")
 	public void verify_Add_user_button_is_disabled() throws Throwable {
 		manageUser.verifyAddUserBtnDisabled();

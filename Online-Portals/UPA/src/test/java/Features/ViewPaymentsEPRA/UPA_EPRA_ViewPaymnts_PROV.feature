@@ -129,7 +129,7 @@ Examples:
          
          
 @US2707345 
-Scenario Outline: View Payments Page UI Functionality for CSR
+Scenario Outline: View Payments Page UI Functionality for UPA
 	
 	 Given User navigates to UPA portal and enters "<credentials>" and login
 	 Then User enters tin for View Payments UPA for "<searchBy>" and "<userType>" search criteria
@@ -140,12 +140,13 @@ Scenario Outline: View Payments Page UI Functionality for CSR
 Examples:     
        
    
+
         |    searchBy                   |       credentials        |  TimePeriod   |  userType  | type  |
-		|generalPaymentForTIN_90days    |       PROV_Admin         |  Last 90 days |  PROV      |  UPA  |
-        |generalPaymentForTIN_90days    |       PROV_Gen           |  Last 90 days |  PROV      |  UPA  |
+		|    PatientPayment             |       PROV_Admin         |  Last 90 days |  PROV      |  UPA  |
+        |    PatientPayment             |       PROV_Gen           |  Last 90 days |  PROV      |  UPA  |
         
 @US2810748 
-Scenario Outline: View Payments UI Functionality for Complaint patient payments CSR
+Scenario Outline: View Payments UI Functionality for Complaint patient payments UPA
 	
 	 Given User navigates to UPA portal and enters "<credentials>" and login
 	 Then User enters tin for View Payments UPA for "<searchBy>" and "<userType>" search criteria
@@ -157,8 +158,8 @@ Examples:
        
    
         |    searchBy                   |       credentials        |  TimePeriod   |  userType  |    filter          |  type  |
-		|generalPaymentForTIN_90days    |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments |   UPA  |
-        |generalPaymentForTIN_90days    |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments |   UPA  |
+		|    PatientPayment             |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments |   UPA  |
+        |    PatientPayment             |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments |   UPA  |
         
 @US2707374 
 Scenario Outline: View Payments Page UI Functionality for Patient Payements(View Payments --> Remittance Detail)
@@ -173,9 +174,9 @@ Scenario Outline: View Payments Page UI Functionality for Patient Payements(View
      Then Validate Column Headers in the grid for remittance detail Page
 Examples:     
        
-        |    searchBy                   |       credentials        |  TimePeriod   |  userType  |    filter          | 
-		|generalPaymentForTIN_90days    |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments | 
-        |generalPaymentForTIN_90days    |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments | 
+        |    searchBy                   |       credentials        |  timePeriod   |  userType  |    filter          | 
+		|    PatientPayment             |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments | 
+        |    PatientPayment             |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments | 
         
  @US2854253 
 Scenario Outline: NPI User Payment Summary
@@ -190,5 +191,21 @@ Examples:
         |    searchBy                   |       credentials        |  timePeriod   |  userType  |
       	|  NPI_SingleTIN                |       PROV_Admin         |  Last 90 days |  PROV      |
         |  NPI_MultipleTIN              |       PROV_Admin         |  Last 90 days |  PROV      |
+        
+@US2112134
+Scenario Outline: Remittance detail screen mapping
+	
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 Then User enters tin for View Payments UPA for "<searchBy>" and "<userType>" search criteria
+	 When Click on View Payments Link for UPA 
+     And User selects time period filter "<timePeriod>" for View Payments
+     And User selects market type filter period "<filter>" for View Payments
+     Then Validate and click on payment number
+     Then validate data in remittance detail screen
+Examples:     
+       
+        |    searchBy                   |       credentials        |  timePeriod   |  userType  |    filter          | 
+		|    PatientPayment             |       PROV_Admin         |  Last 90 days |  PROV      |   Patient Payments | 
+        |    PatientPayment             |       PROV_Gen           |  Last 90 days |  PROV      |   Patient Payments | 
 
              

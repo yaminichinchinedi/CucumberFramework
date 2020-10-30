@@ -93,7 +93,7 @@ public class BeginEnrollment {
 	@FindBy(xpath="//header/div/div[1]")
 	WebElement hdrTitle;
 	
-	@FindBy(xpath="//header/div/div[2]")
+	@FindBy(xpath="//header/div/p")
 	WebElement hdrSubTitle; 
 	
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/div/div/span[2]")
@@ -247,14 +247,13 @@ public class BeginEnrollment {
 		int sqlRowNo=107;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			
-		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(1).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, " SubTitle", hdrSubTitle.getText(), dataTest.get(2).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(2).get("TEXT_VAL"));
 		Browser.wait(testConfig, 2);
 		Element.expectedWait(pageBody.get(0).findElement(By.tagName("h1")), testConfig, "Heading", "Heading");
 		Helper.compareEquals(testConfig, " Heading", pageBody.get(0).findElement(By.tagName("h1")).getText(), dataTest.get(3).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Paragraph 1", pageBody.get(0).findElements(By.tagName("p")).get(1).getText(), dataTest.get(5).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Paragraph 2", pageBody.get(0).findElements(By.tagName("p")).get(2).getText(), dataTest.get(6).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Paragraph 3", pageBody.get(0).findElements(By.tagName("p")).get(3).getText(), dataTest.get(7).get("TEXT_VAL")+" "+dataTest.get(8).get("TEXT_VAL")+dataTest.get(9).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Paragraph 2", pageBody.get(0).findElements(By.tagName("p")).get(4).getText(), dataTest.get(6).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Paragraph 3", pageBody.get(0).findElements(By.tagName("p")).get(4).getText(), dataTest.get(7).get("TEXT_VAL")+" "+dataTest.get(8).get("TEXT_VAL")+dataTest.get(9).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "PDF link 1 and 2",pageBody.get(0).findElements(By.tagName("p")).get(4).getText().toString().replace("\t", "").replace("\n", "").trim(), dataTest.get(10).get("TEXT_VAL")+"   "+dataTest.get(11).get("TEXT_VAL").replace("\t", "").trim());
 		Helper.compareEquals(testConfig, "PDF link 3", pageBody.get(0).findElements(By.tagName("p")).get(5).getText().replace("\t", "").trim(), dataTest.get(12).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Continue button",btnContinue.getText().toLowerCase(), dataTest.get(19).get("TEXT_VAL").toLowerCase());

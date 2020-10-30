@@ -1,9 +1,9 @@
 #Author: Pranav Kasula
-@UPARegression @BothCSRUPAScenarios  @ViewPayments
+@UPARegression @BothCSRUPAScenarios  @ViewPaymentsBS 
 Feature: UPA Payment Details Billing Service     
           
-@US2707345
-Scenario Outline: View Payments Page UI Functionality for CSR 
+@US2707345 
+Scenario Outline: View Payments Page UI Functionality for UPA 
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      When Click on View Payments Link for UPA
@@ -13,12 +13,12 @@ Scenario Outline: View Payments Page UI Functionality for CSR
 Examples:
 
         |    searchBy                   |       credentials        |userType   |  timePeriod   |  type  |
-		|generalPaymentForTIN_90days    |       BS_Admin           |  BS       |  Last 90 days |  UPA   |
-        |generalPaymentForTIN_90days    |       BS_Gen             |  BS       |  Last 90 days |  UPA   |
+		|     PatientPayment            |       BS_Admin           |  BS       |  Last 90 days |  UPA   |
+        |     PatientPayment            |       BS_Gen             |  BS       |  Last 90 days |  UPA   |
         
 
 @US2810748 
-Scenario Outline: View Payments UI Functionality for Complaint patient payments CSR
+Scenario Outline: View Payments UI Functionality for Complaint patient payments UPA
      
      Given User navigates to UPA portal and enters "<credentials>" and login
      When Click on View Payments Link for UPA
@@ -30,11 +30,11 @@ Scenario Outline: View Payments UI Functionality for Complaint patient payments 
 Examples:
 
         |    searchBy                   |       credentials        |userType   |  timePeriod   |  filter           |   type  |
-		|generalPaymentForTIN_90days    |       BS_Admin           |  BS       |  Last 90 days |  Patient Payments |   UPA   |
-        #|generalPaymentForTIN_90days    |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |   UPA   |
+		|      PatientPayment           |       BS_Admin           |  BS       |  Last 90 days |  Patient Payments |   UPA   |
+        |      PatientPayment          |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |   UPA   |
         
         
-@US2707374
+@US2707374  
 Scenario Outline: View Payments Page UI Functionality for Patient Payements(View Payments --> Remittance Detail)
      
      Given User navigates to UPA portal and enters "<credentials>" and login
@@ -49,8 +49,8 @@ Scenario Outline: View Payments Page UI Functionality for Patient Payements(View
 Examples:
 
         |    searchBy                   |       credentials        |userType   |  timePeriod   |  filter           |
-		|generalPaymentForTIN_90days    |       BS_Admin           |  BS       |  Last 90 days |  Patient Payments |
-        |generalPaymentForTIN_90days    |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |
+		|    PatientPayment             |       BS_Admin           |  BS       |  Last 90 days |  Patient Payments |
+        |    PatientPayment             |       BS_Gen             |  BS       |  Last 90 days |  Patient Payments |
         
 
 Scenario Outline: View Payments information is displayed for BS
@@ -63,13 +63,12 @@ Scenario Outline: View Payments information is displayed for BS
 Examples:
 
     |       paymentType              | credentials|userType|filterPayments |quickSearchFilter|archiveFilter| MktTypeFilter    |        key        |value |
-    | Last 9-13 months               | BS_Admin   |  BS    |   Show All    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| ALL  |
     | generalPaymentForTIN_30days    | BS_Admin   |  BS    |   TIN Only    | Last 30 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_60days    | BS_Admin   |  BS    |   TIN Only    | Last 60 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_90days    | BS_Admin   |  BS    |   TIN Only    | Last 90 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_4-6months | BS_Admin   |  BS    |   TIN Only    | Last 4-6 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_6-9months | BS_Admin   |  BS    |   TIN Only    | Last 6-9 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_9-13months| BS_Admin   |  BS    |   TIN Only    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_4_6months | BS_Admin   |  BS    |   TIN Only    | Last 4-6 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_6_9months | BS_Admin   |  BS    |   TIN Only    | Last 6-9 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_9_13months| BS_Admin   |  BS    |   TIN Only    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPayment30Days           | BS_Admin   |  BS    |   Show All    | Last 30 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| ALL  |
     | generalPayment60Days           | BS_Admin   |  BS    |   Show All    | Last 60 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| ALL  |
     | generalPayment90Days           | BS_Admin   |  BS    |   Show All    | Last 90 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| ALL  |
@@ -85,9 +84,9 @@ Examples:
     | generalPaymentForTIN_30days    | BS_Admin   |  BS    |   TIN Only    | Last 30 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_60days    | BS_Admin   |  BS    |   TIN Only    | Last 60 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
     | generalPaymentForTIN_90days    | BS_Admin   |  BS    |   TIN Only    | Last 90 days   |  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_4-6months | BS_Admin   |  BS    |   TIN Only    | Last 4-6 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_6-9months | BS_Admin   |  BS    |   TIN Only    | Last 6-9 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
-    | generalPaymentForTIN_9-13months| BS_Admin   |  BS    |   TIN Only    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_4_6months | BS_Admin   |  BS    |   TIN Only    | Last 4-6 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_6_9months | BS_Admin   |  BS    |   TIN Only    | Last 6-9 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
+    | generalPaymentForTIN_9_13months| BS_Admin   |  BS    |   TIN Only    |Last 9-13 months|  Show All    | Show All         |TAX_IDENTIFIER_TYPE| TIN  |
  	| activeOnly30Days               | BS_Admin   |  BS    |   Show All    | Last 30 days   |  Active Only | Show All         |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|   N  |
     | activeOnly60Days               | BS_Admin   |  BS    |   Show All    | Last 60 days   |  Active Only | Show All         |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|   N  |
     | activeOnly90Days               | BS_Admin   |  BS    |   Show All    | Last 90 days   |  Active Only | Show All         |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|   N  |

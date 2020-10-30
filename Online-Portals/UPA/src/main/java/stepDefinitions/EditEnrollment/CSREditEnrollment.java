@@ -29,5 +29,11 @@ public class CSREditEnrollment extends TestBase {
     	editEnrollment.clickPayersTab();
     	editEnrollment.UpdateandVerifyPayerTable();
     }
+    
+    @Then("^User navigates to Payer's page and Change the Payment Method and Valiadate Payer Enrolled Provider History Table$")
+    public void user_navigates_to_Payer_s_page_and_Change_the_Payment_Method_and_Valiadate_Payer_Enrolled_Provider_History_Table() throws Throwable {
+    	editEnrollment.clickPayersTab();
+    	editEnrollment.UpdatePaymentMethodandValidatePEPHistoryTable();
+    }
 
 }

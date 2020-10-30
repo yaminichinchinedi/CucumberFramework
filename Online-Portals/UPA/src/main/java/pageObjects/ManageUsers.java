@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -520,35 +521,35 @@ public class ManageUsers extends AddUserDetails
 	 * which is associated with the logged in tin 
 	 * i.e. the tin that you selected on Home Page 
 	 */
-	public String getActiveUser(String userType)
-	{
-        int sqlRowNo=10;
-        String result="";
-        
-        if(userType.equalsIgnoreCase("PROV"))
-        	sqlRowNo=10;
-        else if(userType.equalsIgnoreCase("BS"))
-        	//sqlRowNo=18;
-            sqlRowNo=1603;
-        else if(userType.equalsIgnoreCase("PAY"))
-        	//sqlRowNo=19;
-        	sqlRowNo=401;
+	public String getActiveUser(String userType) {
+		int sqlRowNo = 10;
+		String result = "";
 
+		if (userType.equalsIgnoreCase("PROV"))
+			sqlRowNo = 10;
+		// sqlRowNo=415;
 
-		//Find an Active User associated with logged in Provider Tin number
-		Map enrolledProvider = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		
-		  if(null == enrolledProvider)
-			Log.Fail("No active user available in Database for " + testConfig.getRunTimeProperty("tin") + '\n' + "Please execute the test case manually");
-		
-		 else
-		 {
-		   testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
-		   String activeUser=enrolledProvider.get("LST_NM").toString().toUpperCase()+","+ " " +enrolledProvider.get("FST_NM").toString().toUpperCase();
-		   Log.Comment("Active user returned is :" +" " + activeUser);
-		   testConfig.putRunTimeProperty("activeUserID", enrolledProvider.get("SSO_ID").toString());
-		   result= activeUser;
-		 }
+		else if (userType.equalsIgnoreCase("BS"))
+			sqlRowNo = 18;
+		else if (userType.equalsIgnoreCase("PAY"))
+			// sqlRowNo=19;
+			sqlRowNo = 401;
+
+		// Find an Active User associated with logged in Provider Tin number
+		Map enrolledProvider = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+
+		if (null == enrolledProvider)
+			Log.Fail("No active user available in Database for " + testConfig.getRunTimeProperty("tin") + '\n'
+					+ "Please execute the test case manually");
+
+		else {
+			testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
+			String activeUser = enrolledProvider.get("LST_NM").toString().toUpperCase() + "," + " "
+					+ enrolledProvider.get("FST_NM").toString().toUpperCase();
+			Log.Comment("Active user returned is :" + " " + activeUser);
+			testConfig.putRunTimeProperty("activeUserID", enrolledProvider.get("SSO_ID").toString());
+			result = activeUser;
+		}
 		return result;
 	}
 	
@@ -603,19 +604,80 @@ public class ManageUsers extends AddUserDetails
 	 */
 	public ManageUsers clickSpecificUserName(String nameOfUser)
 	{
-		for(WebElement userName:userNames)
-		{ 
-		  if(userName.getText().toString().toUpperCase().contains(nameOfUser))
-		   {
-				      Element.clickByJS(testConfig,userName, "UserName: "+ " " +nameOfUser);
-				      break;
-		   }
-	     }
-//		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		Browser.wait(testConfig, 3);
+		for (WebElement userName : userNames) {
+			if (userName.getText().toString().toUpperCase().contains(nameOfUser)
+					|| userName.getText().toString().toLowerCase().contains(nameOfUser)
+					|| userName.getText().toString().contains(nameOfUser)) {
+				Element.clickByJS(testConfig, userName, "UserName: " + " " + nameOfUser);
+				break;
+			}
+		}
+		// Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
 		return new ManageUsers(testConfig);
 	}
-	
+
+	/**
+	 * This function is used to change Access Level of an Active user which is
+	 * fetched from DB
+	 */
+
+	public ManageUsers changeAndSaveAccessLevel(String userType) throws InterruptedException {
+		// int sqlNo=257;
+		int sqlRowNo = 11;
+		int sqlNo = 416;
+
+		// Clicks on an active user displayed in User List
+		clickActiveUserName(userType);
+		String newAddedTin = selectAndAddTin(sqlNo);
+
+		Log.Comment("Tin number for whom access level is to be changed is :" + " " + newAddedTin);
+		testConfig.putRunTimeProperty("tinNo", newAddedTin);
+
+		WebElement accessLvlDrpDwn = null;
+		List<WebElement> tinGridRows = testConfig.driver
+				.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equalsIgnoreCase(newAddedTin)) {
+				accessLvlDrpDwn = tinGridRows.get(i).findElement(By.tagName("select"));
+
+				// Select Access Level as General for the new added tin
+				Element.selectByVisibleText(accessLvlDrpDwn, "General", "Select General as access level");
+				Browser.waitForLoad(testConfig.driver);
+				clickSave();
+				Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
+				Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
+
+				// Handling stale element
+				tinGridRows = testConfig.driver.findElements(
+						By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+				accessLvlDrpDwn = tinGridRows.get(i).findElement(By.tagName("select"));
+
+				Element.selectByVisibleText(accessLvlDrpDwn, "Administrator", "Admin as access level");
+				HomePage home = clickCancel().clickYes();
+
+				Browser.waitForLoad(testConfig.driver);
+				Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
+
+				home.clickManageUsersTab().clickActiveUserName(userType);
+
+				// Handling stale element
+				tinGridRows = testConfig.driver.findElements(
+						By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+				accessLvlDrpDwn = tinGridRows.get(i).findElement(By.tagName("select"));
+
+				Element.selectByVisibleText(accessLvlDrpDwn, "General", "Select General as access level");
+				clickCancel().clickNo();
+				Helper.compareEquals(testConfig, "Access Level", "G", portalUserData.get("ACCESS_LVL").toString());
+				break;
+			}
+		}
+
+		return this;
+	}
+
+
 	/**
 	 * This function is used to change 
 	 * Access Level of an Active user 
@@ -1253,36 +1315,30 @@ public class ManageUsers extends AddUserDetails
 	 * false- it is enabled
 	 * @return
 	 */
-	public ManageUsers verifyDisabledItemsForTin(String expectedTinNo ,String expectedValue )
-	{
-	    List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath", "//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
-	    for(int i=0;i<tinGridRows.size();i++)
-		 {
-		    String tinNo=tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
-			if(tinNo.equals(expectedTinNo))
-			 {    
-			   Map attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(2).findElement(By.tagName("select")), "Access Level Attributes");
-			  
-			   if(attMap.get("disabled").equals(expectedValue))
-				   Log.Pass("Access Level Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   else
-				   Log.Fail("Access Level Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   
-			   attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(5).findElement(By.tagName("input")), "Email Checkbox");
-			   
-			   if(attMap.get("disabled").equals(expectedValue))
-				   Log.Pass("Email Checkbox Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   else
-				   Log.Fail("Email Checkbox Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   
-			   attMap=Element.getAllAttributes(testConfig, tinGridRows.get(i).findElements(By.tagName("td")).get(6).findElement(By.tagName("input")), "Tin/Npi Checkbox");
-			   
-			   if(attMap.get("disabled").equals(expectedValue))
-				   Log.Pass("Remove Tin/Npi Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   else
-				   Log.Fail("Remove Tin/Npi Disabled Attribute Value", expectedValue, attMap.get("disabled").toString());
-			   
-			 }	
+	public ManageUsers verifyDisabledItemsForTin(String expectedTinNo, String expectedValue) {
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath",
+				"//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+		for (int i = 0; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equals(expectedTinNo)) {
+				Map attMap = Element.getAllAttributes(testConfig,
+						tinGridRows.get(i).findElements(By.tagName("td")).get(2).findElement(By.tagName("select")),
+						"Access Level Attributes");
+				Helper.compareEquals(testConfig, "Access Level Disabled Attribute Value", expectedValue,
+						attMap.get("disabled"));
+
+				attMap = Element.getAllAttributes(testConfig,
+						tinGridRows.get(i).findElements(By.tagName("td")).get(5).findElement(By.tagName("input")),
+						"Email Checkbox");
+				Helper.compareEquals(testConfig, "Email Checkbox Disabled Attribute Value", expectedValue,
+						attMap.get("disabled"));
+
+				attMap = Element.getAllAttributes(testConfig,
+						tinGridRows.get(i).findElements(By.tagName("td")).get(6).findElement(By.tagName("input")),
+						"Tin/Npi Checkbox");
+				Helper.compareEquals(testConfig, "Remove Tin/Npi Disabled Attribute Value", expectedValue,
+						attMap.get("disabled"));
+			}
 
 		 }
 	     return this;
@@ -1317,18 +1373,11 @@ public class ManageUsers extends AddUserDetails
 	}
 	
 
-	public ManageUsers verifyPurgedUserStatus(String userType)
-	{
-		int sqlNo=258;
-		Map data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
-		
-		if(data==null)
-			Log.Pass("No record in Portal user table");
-		else
-			Log.Fail("Record still exist in Portal User table");
-		
-		switch(userType)
-		{
+	public ManageUsers verifyPurgedUserStatus(String userType) {
+		int sqlNo = 258;
+		Map data = DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Helper.compareEquals(testConfig, "No record in Portal user table", data, null);
+		switch (userType) {
 		case "PROV":
 		case "PROV_Admin":
 			testConfig.putRunTimeProperty("tbl", "portal_user_tin");
@@ -1342,15 +1391,12 @@ public class ManageUsers extends AddUserDetails
 			testConfig.putRunTimeProperty("tbl", "portal_user_payer_tin");
 			break;
 		}
-		sqlNo=266;
-		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
-		if(data==null)
-			Log.Pass("No record in Portal User Tin table");
-		else
-			Log.Fail("Record still exist in Portal User Tin table");
-		
-		sqlNo=267;
-		data=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		sqlNo = 266;
+		data = DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Helper.compareEquals(testConfig, "No record in Portal user table", data, null);
+
+		sqlNo = 267;
+		data = DataBase.executeSelectQuery(testConfig, sqlNo, 1);
 		Helper.compareEquals(testConfig, "Status Code of purged user", "PZ", data.get("STS_CD").toString());
 		Helper.compareEquals(testConfig, "Status Code of purged user", "", data.get("MOD_TYP_CD").toString());
 		
@@ -1370,11 +1416,11 @@ public class ManageUsers extends AddUserDetails
 			Element.click(chkBoxProvPurge, "View Purged Users Check Box");
 		return this;
 	}
-	
-	public ManageUsers getPurgedEmail()
-	{
-		clickSpecificUserName("PURGED");
-		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
+
+	public ManageUsers getPurgedEmail() {
+		clickSpecificUserName("Purged");
+		testConfig.putRunTimeProperty("phnNo", phoneNum.getAttribute("value").toString()
+				+ phoneNum1.getAttribute("value").toString() + phoneNum2.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("emailOfUsr", email.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("fName", firstName.getAttribute("value").toString());
 		testConfig.putRunTimeProperty("lName", lastName.getAttribute("value").toString());
@@ -1552,11 +1598,11 @@ public class ManageUsers extends AddUserDetails
         if(userType.equalsIgnoreCase("PROV"))
         	sqlRowNo=10;
         else if(userType.equalsIgnoreCase("BS"))
-        	sqlRowNo=256;
+        	//sqlRowNo=256;
+        	sqlRowNo=18;
         else if(userType.contains("PAY"))
-        	sqlRowNo=254;
-        
-        
+        	//sqlRowNo=254;
+        	sqlRowNo=413;
 		Map purgedUserDetails = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		testConfig.putRunTimeProperty("user", purgedUserDetails.get("USERNAME").toString());
 		purgedUser=purgedUserDetails.get("LST_NM").toString().toUpperCase()+","+ " " +purgedUserDetails.get("FST_NM").toString().toUpperCase();
@@ -2330,17 +2376,250 @@ public class ManageUsers extends AddUserDetails
 		return dltChkbox;
 		
 	}
-	
-	public ManageUsers updateDemographicInfo(String userType)
-	{
-		String userNameBeforeUpdation=getCSRUserName();
-		fillNewUserInfo();
-		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		clickSave();
-		verifyDetailsOfNewUser(userType);
-		Helper.compareEquals(testConfig, "Username is same before and after updation", userNameBeforeUpdation,getCSRUserName());
+
+	public ManageUsers addTin() {
+		int sqlRowNo = 423;
+		Map Searchedtin = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		String tin1 = Searchedtin.get("PROV_TIN_NBR").toString().trim();
+		Element.enterData(addTin, tin1, "Associate to tin", "addTin");
+		clickAddTin();
+		testConfig.putRunTimeProperty("tin1", tin1);
 		return this;
 	}
+
+	public ManageUsers AddTinAndVerifyDB(String accessLevel)
+
+	{
+		String tin1 = testConfig.getRunTimeProperty("tin1");
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath",
+				"//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr");
+		for (int i = 0; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equals(tin1)) {
+				Element.selectByVisibleText(
+						tinGridRows.get(i).findElements(By.tagName("td")).get(2).findElement(By.tagName("select")),
+						accessLevel, "Select" + accessLevel + "from access Level dropdown");
+				clickSave();
+			}
+		}
+		return this;
+	}
+
+	public int fetchRecordCount() {
+		int sqlRow = 425;
+		Map portaluserhistorydata = DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		int rowcount = Integer.parseInt(portaluserhistorydata.get("ROWCOUNT").toString().trim());
+		return rowcount;
+	}
+
+	public void verifyRowCount(int rowcount_beforeusercreation) {
+
+		int rowcount_afterusercreation = fetchRecordCount();
+		if (rowcount_afterusercreation > rowcount_beforeusercreation)
+			Log.Pass("New Row  is Created Successfully");
+		else
+			Log.Fail("New Row is Not Created");
+
+	}
+
+	public void changeAccessLevel() {
+		String userName = testConfig.getRunTimeProperty("firstName");
+		String tin = testConfig.getRunTimeProperty("tin");
+		this.clickSpecificUserName(userName);
+		int sqlRowNo = 424;
+		WebElement accessLvlDrpDwn = null;
+		List<WebElement> tinGridRows = testConfig.driver
+				.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equalsIgnoreCase(tin)) {
+				accessLvlDrpDwn = tinGridRows.get(i).findElement(By.tagName("select"));
+				Element.selectByVisibleText(accessLvlDrpDwn, "Administrator", "Admin as access level");
+				clickSave();
+				Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				Helper.compareEquals(testConfig, "Access Level Validation", "A",
+						portalUserData.get("ACCESS_LVL").toString());
+				Helper.compareEquals(testConfig, "MOD TYPE CODE Validation", "PCLU",
+						portalUserData.get("MOD_TYP_CD").toString());
+				break;
+			}
+		}
+
+	}
+
+	public ManageUsers changeEmailNotificationAndValidateinDB() {
+		String userName = testConfig.getRunTimeProperty("firstName");
+		String tin = testConfig.getRunTimeProperty("tin");
+		this.clickSpecificUserName(userName);
+		int sqlRowNo = 424;
+		WebElement accessLvlDrpDwn = null;
+		List<WebElement> tinGridRows = testConfig.driver
+				.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equalsIgnoreCase(tin)) {
+				emailChkbox = findEmailCheckbox("PROV");
+				emailChkbox.click();
+				clickSave();
+				Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				Helper.compareEquals(testConfig, "Email Notification Validation", "PCC",
+						portalUserData.get("MOD_TYP_CD").toString());
+				Element.findElement(testConfig, "xpath", "//input[@name='GridListResults[0].removeTinNpi']");
+				Browser.wait(testConfig, 3);
+				Element.click(chkDeleteUser, "GridListResults[0].removeTinNpi");
+				clickSave();
+
+			}
+			break;
+		}
+		return this;
+	}
+
+	public ManageUsers deleteUserandValidateinDB() {
+		String userName = testConfig.getRunTimeProperty("firstName");
+		String tin = testConfig.getRunTimeProperty("tin");
+		this.clickSpecificUserName(userName);
+		int sqlRowNo = 424;
+		WebElement accessLvlDrpDwn = null;
+		List<WebElement> tinGridRows = testConfig.driver
+				.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equalsIgnoreCase(tin)) {
+				Element.findElement(testConfig, "xpath", "//input[@name='GridListResults[0].removeTinNpi']");
+				Browser.wait(testConfig, 3);
+				Element.click(chkDeleteUser, "removeTinNpi");
+				clickSave();
+				Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+				Helper.compareEquals(testConfig, "Remove User Validation", "PCD",
+						portalUserData.get("MOD_TYP_CD").toString());
+
+			}
+			break;
+		}
+		return this;
+	}
+
+	public void verifyBSManageUserUpdates() {
+		String userName = testConfig.getRunTimeProperty("firstName");
+		String tin = testConfig.getRunTimeProperty("tin");
+		this.clickSpecificUserName(userName);
+		int sqlRowNo = 426;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "BSAY", portalUserData.get("MOD_TYP_CD").toString());
+		emailChkbox = findEmailCheckbox("BS");
+		emailChkbox.click();
+		clickSave();
+		Map portalUserEmail = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Email Notification Validation", "PCC",
+				portalUserEmail.get("MOD_TYP_CD").toString());
+		Element.click(btnDelete, "Delete Button");
+		Element.click(btnYes, "Delete Button");
+		Map portalUserDelete = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Email Notification Validation", "PCD",
+				portalUserDelete.get("MOD_TYP_CD").toString());
+	}
+
+	public void verifyAccessLevelChangeBS() {
+		String userName = testConfig.getRunTimeProperty("firstName");
+		String tin = testConfig.getRunTimeProperty("tin");
+		this.clickSpecificUserName(userName).selectTinAccessLvl("Administrator").clickSave();
+		int sqlRowNo = 426;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCLU", portalUserData.get("MOD_TYP_CD").toString());
+	}
+
+	public void addTinDoNotAssociate() {
+		int sql = 428;
+		Map user = DataBase.executeSelectQuery(testConfig, sql, 1);
+		String userName = user.get("LST_NM").toString();
+		this.clickSpecificUserName(userName);
+		clickAsscociateNoButton().addProviderAssociation();
+		int sqlRowNo = 427;
+		Map provDetails = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		String tin2 = provDetails.get("PROV_TIN_NBR").toString();
+		Element.click(associateBSNoButton, "No Button");
+		Element.enterData(addProviderAssociation, tin2, "EnterTin", "Add provider Association");
+		Element.click(addTinAssociationButton, "add Tin Association Button");
+		clickSave();
+		int sqlRowNo1 = 426;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo1, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "BSPA", portalUserData.get("MOD_TYP_CD").toString());
+		List<WebElement> tinGridRows = testConfig.driver
+				.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
+			if (tinNo.equalsIgnoreCase(tin2)) {
+				tinGridRows.get(i).findElements(By.tagName("td")).get(5).click();
+				clickSave();
+				Map portalUserData1 = DataBase.executeSelectQuery(testConfig, sqlRowNo1, 1);
+				Helper.compareEquals(testConfig, "Remove User Validation", "BSPD",
+						portalUserData1.get("MOD_TYP_CD").toString());
+				break;
+			}
+		}
+
+	}
+
+
+	public void verifyMutlipleChangesBS() {
+
+		String nameOfUser = testConfig.getRunTimeProperty("firstName");
+		int sqlRowNo = 426;
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "BSAN", portalUserData.get("MOD_TYP_CD").toString());
+		List<WebElement> users = testConfig.driver.findElements(By.partialLinkText(nameOfUser));
+		users.get(1).click();
+		selectTinAccessLvl("Administrator");
+		emailChkbox = findEmailCheckbox("BS");
+		emailChkbox.click();
+		clickSave();
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCM", portalUserData.get("MOD_TYP_CD").toString());
+	}
+
+	public ManageUsers updateAccessLevel() {
+		int sqlRowNo = 426;
+		String tin1 = testConfig.getRunTimeProperty("tin1");
+		Browser.wait(testConfig, 3);
+		Map result = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		// Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCNT",
+		// result.get("MOD_TYP_CD").toString().trim());
+		selectAccessLvl("Administrator", tin1);
+		clickSave();
+		Browser.wait(testConfig, 3);
+
+		Map accessLevel = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCLU", accessLevel.get("MOD_TYP_CD").toString().trim());
+		chckEmail.click();
+		clickSave();
+		Browser.wait(testConfig, 3);
+
+		Map email = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		// Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCC",
+		// email.get("MOD_TYP_CD").toString().trim());
+		removeFistTinInGrid();
+		clickSave();
+		Browser.wait(testConfig, 3);
+
+		Map delete = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCD", delete.get("MOD_TYP_CD").toString().trim());
+
+		addTin().AddTinAndVerifyDB("General");
+		Browser.wait(testConfig, 3);
+
+		selectAccessLvl("Administrator", tin1);
+		Browser.wait(testConfig, 3);
+		chckEmail.click();
+		clickSave();
+		Browser.wait(testConfig, 3);
+		Map multiple = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		// Helper.compareEquals(testConfig, "MOD_TYP_CD", "PCM",
+		// multiple.get("MOD_TYP_CD").toString().trim());
+		return this;
+	}
+	
+	
+		
 	
 	public void verifyYourChangesWereUpdatedSuccessfully()
     {
