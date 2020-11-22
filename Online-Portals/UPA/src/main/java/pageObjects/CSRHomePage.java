@@ -83,7 +83,8 @@ public class CSRHomePage {
 //	@FindBy(linkText="Search Remittance")
 //    WebElement lnkSearchRemittance;
 	
-	
+	@FindBy(xpath="//a[contains(text(),'Billing Service Information')]")
+	WebElement lnkbillingservice;
 	
 	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
 	WebElement lnkSearchRemittance;
@@ -151,5 +152,11 @@ public class CSRHomePage {
 		if (home.isDisplayed()) {
 	           Element.clickByJS(testConfig,home, "Home Link");
 		}
-	}
+		}
+    
+    public void clickBillingServiceInfoLink()
+    {      Browser.wait(testConfig, 7);
+           Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
+           
+    }
 }

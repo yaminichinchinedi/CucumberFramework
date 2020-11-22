@@ -109,5 +109,11 @@ public class CSRHomePageSteps extends TestBase{
 			homePage.VerifyCSRLogin();
 			
 }
+		
+		@When("^Click on Billing Service Info Link CSR$")
+		   public void click_on_Billing_Service_Info_Link_CSR() throws Throwable {
+		       
+			   homePage.clickBillingServiceInfoLink();
+		   }
 
 }
