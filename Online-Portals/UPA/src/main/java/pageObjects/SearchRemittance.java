@@ -43,8 +43,20 @@ import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
 import main.java.api.pojo.*;
-import main.java.api.pojo.epspaymentsearch.response.EpsConsolidatedClaimPaymentSummaries;
-import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOP;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOS;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.EPN;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.ParameterMap;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.PaymentMadeOnDateRange;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.ClaimServiceDateRange;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOSNPI;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOSSubscriber;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOPAccountNumber;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOPClaim;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.DOPPatientName;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.SearchCriteria;
+import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsConsolidatedClaimPaymentSummaries;
+import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsPaymentsSummarySearchResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -125,6 +137,7 @@ public class SearchRemittance extends paymentSummary {
 	WebElement lnkArchive;
 	
 	@FindBy(xpath="//tr[@class='columnHeaderText']")
+	//@FindBy(xpath="//tr[@class='search-remittance__table_header']")
 	List<WebElement> searchResultsHeaderRow;
 	
 	@FindBy(id = "saveArchive")
@@ -175,9 +188,8 @@ public class SearchRemittance extends paymentSummary {
 	public void verifySearchResults(String requestType) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
-		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
+		String totalRecordsFromFISL=String.valueOf(searchResponse.getData().getTotalCount());
 		
-
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
@@ -194,7 +206,7 @@ public class SearchRemittance extends paymentSummary {
 	
 	public void verifyPaymentDetailsForCSR(String requestType,EpsPaymentsSummarySearchResponse searchResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
-		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
+		String totalRecordsFromFISL=String.valueOf(searchResponse.getData().getTotalCount());
 		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 		  Helper.compareLinkedMaps(testConfig, "Payments Details Comparison ",getPaymentDetailsFromFISLForCSR(searchResponse), getPaymentDetailsFromCSRUI());
 		else
@@ -223,10 +235,176 @@ public class SearchRemittance extends paymentSummary {
 	
 	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
+		Object request = null;
+		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
+		if (requestType.equals("byDOP")) {
+			DOP dop = new DOP();
+	        dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+	        dop.setUserRole("PROVIDER");
+	        PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
+	        paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+	        paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+	        System.out.println("DOP=" + dop.toString());
+	        request = dop;
+		}
+		if (requestType.equals("byElectronicPaymentNo")) {
+			EPN epn = new EPN();
+			epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			epn.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = epn.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey("PAYMENT_LEVEL_DETAIL");
+			parameterMap.setValue("Y");
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			parameterMap = new ParameterMap();
+			parameterMap.setKey("ELECTRONIC_PAYMENT_NUMBER");
+			parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			searchCriteria.setParameterMap(parameterMapList);
+
+			PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+
+			System.out.println("EPN=" + epn.toString());
+	        request = epn;
+		}
+
+		if (requestType.equals("byDOS")) {
+			DOS dos = new DOS();
+			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dos.setUserRole("PROVIDER");
+			String[] identifiers = new String[] {"03432","04271","04567","06111","19402","31417","36273","37602","56693","56758", "62952","65088","66214","78857","81400","86047","86050","87726","91785","94265","95378","95467","95959","96385","99726", "APP01","ECHOH","ERIE1","MCLRN","MDWS5","NYU01","PINNA","RPMP5","SAM1","TEX01","UFNEP","UMR01","VACCN","WID01"};
+			dos.setEpsSecondaryPayerReferenceIdentifiers(identifiers);
+			ClaimServiceDateRange claimServiceDateRange = dos.getClaimServiceDateRange();
+			claimServiceDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			claimServiceDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			System.out.println("\nDOS=" + dos.toString());
+			request = dos;
+		}
+		if (requestType.equals("byDOPAndNpi")) {
+			DOSNPI dosnpi = new DOSNPI();
+			dosnpi.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dosnpi.setUserRole("PROVIDER");
+			String[] identifiers = new String[] {testConfig.getRunTimeProperty("NPI").trim()};
+			dosnpi.setEpsSecondaryPayerReferenceIdentifiers(identifiers);
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dosnpi.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			System.out.println("\nDOS NPI=" + dosnpi.toString());
+			request = dosnpi;
+		}
+
+		if (requestType.equals("byDOP&SuPAYcriberID")) {
+			DOSSubscriber dosSubscriber = new DOSSubscriber();
+			dosSubscriber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dosSubscriber.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = dosSubscriber.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey("SUBSCRIBER_IDENTIFIER");
+			parameterMap.setValue("0093167647"); // TODO parameterize value
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+			searchCriteria.setParameterMap(parameterMapList);
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dosSubscriber.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			request = dosSubscriber;
+		}
+
+		if (requestType.equals("byDOPAndAccountNo")) {
+			DOPAccountNumber dopAccountNumber = new DOPAccountNumber();
+			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dopAccountNumber.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = dopAccountNumber.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey("ACCOUNT_NUMBER");
+			parameterMap.setValue("10406822");
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			searchCriteria.setParameterMap(parameterMapList);
+
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dopAccountNumber.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			System.out.println("\nDOP Account Number=" + dopAccountNumber.toString());
+			request = dopAccountNumber;
+
+		}
+
+		if (requestType.equals("byDOPAndClaimNo")) {
+			DOPClaim dopClaim = new DOPClaim();
+			dopClaim.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dopClaim.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = dopClaim.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey("CLAIM_IDENTIFIER");
+			parameterMap.setValue("20180607000463");
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			searchCriteria.setParameterMap(parameterMapList);
+
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dopClaim.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+
+			System.out.println("\nDOP Claim=" + dopClaim.toString());
+			request = dopClaim;
+
+		}
+
+		if (requestType.equals("byDOPAndPatientNm")) {
+			DOPPatientName dopPatientName = new DOPPatientName();
+			dopPatientName.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dopPatientName.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = dopPatientName.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey("PATIENT_FIRST_NAME");
+			parameterMap.setValue("SHELLY");
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			parameterMap.setKey("PATIENT_LAST_NAME");
+			parameterMap.setValue("ROE");
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+
+			searchCriteria.setParameterMap(parameterMapList);
+
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dopPatientName.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+
+			System.out.println("\nDOP Patient Name=" + dopPatientName.toString());
+			request = dopPatientName;
+
+		}
+
+			EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
+	return searchResponse;
+	}
+	
+	public Object getFISLResponse1(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
 		/**Creates POJO for Request.xml so that we can modify the elements*/
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
 		EpsPaymentsSearchRequest epsSearchRemittanceSearchRequest=epsSearchRemittanceRequestHelper.createRequestPojo();
-		
 
 		/**set the request data*/
 		epsSearchRemittanceSearchRequest=setTinNumber(epsSearchRemittanceSearchRequest);
@@ -932,10 +1110,11 @@ public class SearchRemittance extends paymentSummary {
 	   if(totalNoOfPages>2)
 		 totalNoOfPages=1;
 		   
-	   if(divSearchResults.size()==0)
-		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-	     if(divSearchResults.size()==0)
-	    	divSearchResults=Element.findElements(testConfig, "xpath",".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table//tr");
+	   //if(divSearchResults.size()==0)
+		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	                                                                   //*[@id="searchRemittanceResultsForm"]/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody
+	     //if(divSearchResults.size()==0)
+	    	//divSearchResults=Element.findElements(testConfig, "xpath",".//*[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table//tr");
 	   
 //	   Log.Comment("Fetching all payments From UI..");
 	   
@@ -1109,9 +1288,9 @@ public class SearchRemittance extends paymentSummary {
 	{
 		int totalPayments;
 		LinkedHashMap<String,String> innerMap = null;
-	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getEpsConsolidatedClaimPaymentSummaries();
 	    Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
-	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+	    if(((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getTotalCount()>30)
 			 totalPayments=30;
 		  else
 			totalPayments=payments.length;
@@ -1176,12 +1355,12 @@ public class SearchRemittance extends paymentSummary {
 			 {
 			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
 			
-			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   if(payments[i].getClaimAmount().getAmmount() == 0.0 || payments[i].getClaimAmount().getAmmount() == 0.00)
 			   innerMap.put("Claim Amount","$"+"0.00");
 			   else
 			  {
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    String amount = decimalFormat.format((payments[i].getClaimAmount().getAmmount()));
 			    innerMap.put("Claim Amount","$"+ amount);
 			    if(innerMap.get("Claim Amount").contains("-"))
 			    {
@@ -1194,7 +1373,7 @@ public class SearchRemittance extends paymentSummary {
 			else
 			{
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    String amount = decimalFormat.format((payments[i].getTotalAmount()));
 			    innerMap.put("Amount","$"+ amount);
 			}
 			
@@ -1238,16 +1417,15 @@ public class SearchRemittance extends paymentSummary {
 		LinkedHashMap<String,String> innerMap = null;
 		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	
-	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getEpsConsolidatedClaimPaymentSummaries();
 		
-	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
-			 totalPayments=30;
-		  else
+//	    if((((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getTotalCount())>30)
+//			 totalPayments=30;
+//		  else
 			totalPayments=payments.length;
 			
 		  for(int i=0;i<totalPayments;i++)
 		  {
-			 
 			innerMap=new LinkedHashMap<String, String>();
 			//innerMap.put("Payer",getDisplayPayerNameFromDB(payments[i].getPayerSummary().getName()));
 			
@@ -1278,19 +1456,19 @@ public class SearchRemittance extends paymentSummary {
 			 {
 			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
 			
-			   if(payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+			   if(payments[i].getClaimAmount().getAmmount() == 0.0 || payments[i].getClaimAmount().getAmmount() ==0.0)
 			   innerMap.put("Claim Amount","$"+"0.00");
 			   else
 			  {
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    String amount = decimalFormat.format((payments[i].getClaimAmount().getAmmount()));
 			    innerMap.put("Claim Amount","$"+ amount);
 			  }
 			}
 			else
 			{
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    String amount = decimalFormat.format(((payments[i].getTotalAmount())));
 			    innerMap.put("Amount","$"+ amount);
 			}
 				
@@ -1311,7 +1489,7 @@ public class SearchRemittance extends paymentSummary {
 		List<String> list= new ArrayList<String>();
 		int totalPayments;
 		
-	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) searchResponse).getEpsConsolidatedClaimPaymentSummaries();
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) searchResponse).getData().getEpsConsolidatedClaimPaymentSummaries();
 	    totalPayments=payments.length;
 		
 	    if(totalPayments>0)
@@ -1370,12 +1548,12 @@ public class SearchRemittance extends paymentSummary {
 		case "Claim Amount":
 		case "Amount":
 			for(int i=0;i<totalPayments;i++)
-				if(payments[i].getClaimIdentifier()!=null && payments[i].getClaimAmount().equalsIgnoreCase("0.0") || payments[i].getClaimAmount().equalsIgnoreCase("0.00"))
+				if(payments[i].getClaimIdentifier()!=null && payments[i].getClaimAmount().getAmmount() ==0.0 || payments[i].getClaimAmount().getAmmount()==0.0)
 					   list.add("$"+"0.00");
 			   else
 			  {
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getClaimAmount())));
+			    String amount = decimalFormat.format((payments[i].getClaimAmount().getAmmount()));
 			    list.add("$"+ amount);
 			  }
 			break;

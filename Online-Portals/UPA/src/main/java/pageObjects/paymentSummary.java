@@ -27,10 +27,12 @@ import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
+import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
+import main.java.api.pojo.epspaymentsearch.jsonrequest.*;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
-import main.java.api.pojo.epspaymentsearch.response.EpsConsolidatedClaimPaymentSummaries;
-import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
+import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsConsolidatedClaimPaymentSummaries;
+import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsPaymentsSummarySearchResponse;
 import main.java.fislServices.PaymentSummaryFislService;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -1240,8 +1242,9 @@ public void verifyFailedPaymentPopUp()
 	public paymentSummary verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{	
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse();
-		String totalRecordsFromFISL=searchResponse.getResponseReturnStatus().getTotalCount();
-		
+		String totalRecordsFromFISL=String.valueOf(searchResponse.getData().getTotalCount());
+
+
 		if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 		{
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
@@ -1259,7 +1262,7 @@ public void verifyFailedPaymentPopUp()
 	public String getRecordCountFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		EpsPaymentsSummarySearchResponse responseFromFISL=(EpsPaymentsSummarySearchResponse) getFISLResponse();
-		return responseFromFISL.getResponseReturnStatus().getTotalCount().trim(); 
+		return String.valueOf(responseFromFISL.getData().getTotalCount());
 	}
 	
 	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISL(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
@@ -1268,9 +1271,9 @@ public void verifyFailedPaymentPopUp()
 		LinkedHashMap<String,String> innerMap;
 		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	
-	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getEpsConsolidatedClaimPaymentSummaries();
+	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getEpsConsolidatedClaimPaymentSummaries();
 		
-	    if(Integer.parseInt(((EpsPaymentsSummarySearchResponse) FISLResponse).getResponseReturnStatus().getTotalCount())>30)
+	    if((((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getTotalCount()>30))
 			 totalPayments=30;
 		  else
 			totalPayments=payments.length;
@@ -1293,8 +1296,8 @@ public void verifyFailedPaymentPopUp()
 			
 			try 
 			 {
-			   String setlDate=payments[i].getEpsClaimPaymentResponses().getEpsReturnedReoriginatedClaimPayment().getSettlementDate().toString();
-			   innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(setlDate,"yyyy-dd-mm", "dd-mm-yyyy")));
+			   //String setlDate=payments[i].getEpsClaimPaymentResponses().getEpsReturnedReoriginatedClaimPayment().getSettlementDate().toString();
+			   //innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(setlDate,"yyyy-dd-mm", "dd-mm-yyyy")));
 			 }
 			
 			catch(Exception e)
@@ -1308,18 +1311,18 @@ public void verifyFailedPaymentPopUp()
 			innerMap.put("NPI",""); 
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			
-			if(payments[i].getTotalAmount().equalsIgnoreCase("0.0") || payments[i].getTotalAmount().equalsIgnoreCase("0.00"))
+			if(payments[i].getTotalAmount()==0.0 )
 			innerMap.put("Amount","$"+"0.00");
 			else
 			{
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
-			    String amount = decimalFormat.format(Double.parseDouble((payments[i].getTotalAmount())));
+			    String amount = decimalFormat.format((payments[i].getTotalAmount()));
 			    innerMap.put("Amount","$"+amount);
 			}
-			innerMap.put("Claim Count",payments[i].getClaimCountTotal());
+			innerMap.put("Claim Count",String.valueOf(payments[i].getClaimCountTotal()));
 			if(payments[i].getTraceNumber()!=null)
 			    innerMap.put("ACH Trace Number",payments[i].getTraceNumber());
-			else 
+			else
 				innerMap.put("ACH Trace Number","");
 // 			innerMap.put("Type",getDisplayPaymentMethod(payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode()));
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
@@ -1452,7 +1455,8 @@ public void verifyFailedPaymentPopUp()
 	public int getNumberOfPages()
 	 {
 		int noOfPages=0;
-		int recordsCount=Integer.parseInt(getRecordCountFromUI());
+		int recordsCount = 1;
+		//int recordsCount=Integer.parseInt(getRecordCountFromUI());
 		if(recordsCount>30)
 		 {
 			noOfPages=recordsCount/30;
@@ -1544,7 +1548,7 @@ public void verifyFailedPaymentPopUp()
         
 		//FISL Response
 		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
-		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
+		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getData().getEpsConsolidatedClaimPaymentSummaries();	
 		
 		int totalNoOfPages=getNumberOfPages();
     	
@@ -1635,6 +1639,31 @@ public void verifyFailedPaymentPopUp()
 		Element.click(btnSearch, "Search Button");
 		return this;
 	}
+	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	{
+		Object request = null;
+		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
+		EPN epn = new EPN();
+		epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+		epn.setUserRole("PROVIDER");
+		SearchCriteria searchCriteria = epn.getSearchCriteria();
+		ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+		ParameterMap parameterMap = new ParameterMap();
+		parameterMap.setKey("PAYMENT_LEVEL_DETAIL");
+		parameterMap.setValue("Y");
+		parameterMap.setComparator("Equals");
+		parameterMapList.add(parameterMap);
+		searchCriteria.setParameterMap(parameterMapList);
+
+		PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
+		paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+		System.out.println("DOP=" + epn.toString());
+		request = epn;
+
+		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(request);
+		return searchResponse;
+	}
 
 
 	/**
@@ -1642,7 +1671,7 @@ public void verifyFailedPaymentPopUp()
 	 * @return type object of search request
 	 */
 	
-	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public Object getFISLResponse1() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
@@ -2908,8 +2937,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
         
 		//FISL Response
 		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
-		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getEpsConsolidatedClaimPaymentSummaries();	
-		Log.Comment("Total no.of payments with " + marketType +"filter are  :" + responseFromFISL.getResponseReturnStatus().getTotalCount());
+		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getData().getEpsConsolidatedClaimPaymentSummaries();	
+		Log.Comment("Total no.of payments with " + marketType +"filter are  :" + responseFromFISL.getData().getTotalCount());
 		
 		if(getNumberOfPages()>1)
 			Log.Comment("Verifying market type for top 30 payments");
