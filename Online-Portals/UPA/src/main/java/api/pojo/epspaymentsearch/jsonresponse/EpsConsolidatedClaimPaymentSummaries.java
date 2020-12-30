@@ -34,6 +34,7 @@ public class EpsConsolidatedClaimPaymentSummaries {
     private Long claimOrder;
     private String depositDate;
     private String processDateTime;
+    private String internalControlIdentifier;
     private Long claimCountTotal;
     private Long epsClaimCount;
     private String nationalProviderIdentifier;
@@ -223,6 +224,14 @@ public class EpsConsolidatedClaimPaymentSummaries {
 
     public void setProcessDateTime(String processDateTime) {
         this.processDateTime = processDateTime;
+    }
+    
+    public String getInternalControlIdentifier() {
+        return internalControlIdentifier;
+    }
+
+    public void setInternalControlIdentifier(String internalControlIdentifier) {
+        this.internalControlIdentifier = internalControlIdentifier;
     }
 
     public Long getClaimCountTotal() {

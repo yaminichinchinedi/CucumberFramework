@@ -4,6 +4,7 @@ import main.java.api.pojo.epspaymentsearch.jsonresponse.code.PaymentMethodCode;
 
 public class PayeePaymentMethod {
     private PaymentMethodCode paymentMethodCode;
+    
 
     public PaymentMethodCode getPaymentMethodCode() {
         return paymentMethodCode;
