@@ -1211,10 +1211,14 @@ public void verifyFailedPaymentPopUp()
 	   int size=0;
 	   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
 		   searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
-		   size=searchResultRows.get(0).findElements(By.tagName("td")).size();
+		   if (!searchResultRows.isEmpty()) {
+			   size=searchResultRows.get(0).findElements(By.tagName("td")).size();
+		   }
 	   }else{
 		   searchResultRows=Element.findElements(testConfig, "xpath", ".//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
-		   size=searchResultRows.get(0).findElements(By.tagName("th")).size();
+		   if (!searchResultRows.isEmpty()) {
+			   size=searchResultRows.get(0).findElements(By.tagName("th")).size();
+		   }
 	   }
 	   for (int i=0;i<size;i++)
 	   {
@@ -1643,7 +1647,7 @@ public void verifyFailedPaymentPopUp()
 	{
 		Object request = null;
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
-		EPN epn = new EPN();
+		DOP epn = new DOP();
 		epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 		epn.setUserRole("PROVIDER");
 		SearchCriteria searchCriteria = epn.getSearchCriteria();

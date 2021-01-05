@@ -82,7 +82,15 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	        }
 
 		}
-		
+
+	@Override
+	public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(EpsPaymentsSummarySearchResponse.class);
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));
+		return searchResponse;
+	}
+
 		@Override
 		public Object convertResponseJSONToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException
 		{

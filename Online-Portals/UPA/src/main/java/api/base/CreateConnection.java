@@ -113,6 +113,10 @@ public abstract class CreateConnection {
 			throws JAXBException, IOException, SAXException,
 			ParserConfigurationException;
 
+	abstract protected Object convertResponseXMLToPojo(String response)
+			throws JAXBException, IOException, SAXException,
+			ParserConfigurationException;
+
 	abstract protected Object createRequestPojo() throws JAXBException;
 
 	abstract protected String convertRequestPojoToXml(Object object)

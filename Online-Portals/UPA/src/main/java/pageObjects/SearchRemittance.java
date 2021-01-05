@@ -1,7 +1,5 @@
 package main.java.pageObjects;
 
-import groovy.transform.AutoClone;
-
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -14,7 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -28,7 +25,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Reporter;
 import org.xml.sax.SAXException;
 
 import com.jcraft.jsch.JSchException;
@@ -38,14 +34,11 @@ import com.jcraft.jsch.SftpException;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.SFTPAccess;
-import main.java.api.manage.EpsPaymentsSearch.EpsPaymentSearchRequestHelper;
 import main.java.api.manage.EpsPaymentsSearch.EpsSearchRemittanceRequestHelper;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.api.pojo.epspaymentsearch.request.SearchByCriteriaRequest;
-import main.java.api.pojo.*;
 import main.java.api.pojo.epspaymentsearch.jsonrequest.DOP;
 import main.java.api.pojo.epspaymentsearch.jsonrequest.DOS;
-import main.java.api.pojo.epspaymentsearch.jsonrequest.EPN;
 import main.java.api.pojo.epspaymentsearch.jsonrequest.ParameterMap;
 import main.java.api.pojo.epspaymentsearch.jsonrequest.PaymentMadeOnDateRange;
 import main.java.api.pojo.epspaymentsearch.jsonrequest.ClaimServiceDateRange;
@@ -60,7 +53,6 @@ import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsPaymentsSummarySearch
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.reporting.Log;
 import main.java.reporting.Log;
 
 public class SearchRemittance extends paymentSummary {
@@ -237,45 +229,36 @@ public class SearchRemittance extends paymentSummary {
 	{
 		Object request = null;
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
-		if (requestType.equals("byDOP")) {
+		if (requestType.contains("DOP")|| requestType.equals("byElectronicPaymentNo")) {
 			DOP dop = new DOP();
 	        dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 	        dop.setUserRole("PROVIDER");
 	        PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
 	        paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 	        paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			if (requestType.equals("byElectronicPaymentNo")) {
+				SearchCriteria searchCriteria = dop.getSearchCriteria();
+				ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+				ParameterMap parameterMap = new ParameterMap();
+				parameterMap.setKey("PAYMENT_LEVEL_DETAIL");
+				parameterMap.setValue("Y");
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+				parameterMap = new ParameterMap();
+				parameterMap.setKey("ELECTRONIC_PAYMENT_NUMBER");
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+
+				searchCriteria.setParameterMap(parameterMapList);
+			}
+			if (requestType.equals("byDOPAndNpi")) {
+			String[] identifiers = new String[] {testConfig.getRunTimeProperty("NPI").trim()};
+			dop.setEpsNationalProviderIdentifiers(identifiers);
+			}
 	        System.out.println("DOP=" + dop.toString());
 	        request = dop;
 		}
-		if (requestType.equals("byElectronicPaymentNo")) {
-			EPN epn = new EPN();
-			epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
-			epn.setUserRole("PROVIDER");
-
-			SearchCriteria searchCriteria = epn.getSearchCriteria();
-			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
-			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("PAYMENT_LEVEL_DETAIL");
-			parameterMap.setValue("Y");
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-
-			parameterMap = new ParameterMap();
-			parameterMap.setKey("ELECTRONIC_PAYMENT_NUMBER");
-			parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-
-			searchCriteria.setParameterMap(parameterMapList);
-
-			PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
-			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-
-			System.out.println("EPN=" + epn.toString());
-	        request = epn;
-		}
-
 		if (requestType.equals("byDOS")) {
 			DOS dos = new DOS();
 			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
@@ -288,21 +271,9 @@ public class SearchRemittance extends paymentSummary {
 			System.out.println("\nDOS=" + dos.toString());
 			request = dos;
 		}
-		if (requestType.equals("byDOPAndNpi")) {
-			DOSNPI dosnpi = new DOSNPI();
-			dosnpi.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
-			dosnpi.setUserRole("PROVIDER");
-			String[] identifiers = new String[] {testConfig.getRunTimeProperty("NPI").trim()};
-			dosnpi.setEpsSecondaryPayerReferenceIdentifiers(identifiers);
-			PaymentMadeOnDateRange paymentMadeOnDateRange = dosnpi.getPaymentMadeOnDateRange();
-			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-			System.out.println("\nDOS NPI=" + dosnpi.toString());
-			request = dosnpi;
-		}
 
 		if (requestType.equals("byDOP&SuPAYcriberID")) {
-			DOSSubscriber dosSubscriber = new DOSSubscriber();
+			DOP dosSubscriber = new DOP();
 			dosSubscriber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dosSubscriber.setUserRole("PROVIDER");
 
@@ -321,7 +292,7 @@ public class SearchRemittance extends paymentSummary {
 		}
 
 		if (requestType.equals("byDOPAndAccountNo")) {
-			DOPAccountNumber dopAccountNumber = new DOPAccountNumber();
+			DOP dopAccountNumber = new DOP();
 			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopAccountNumber.setUserRole("PROVIDER");
 
@@ -329,7 +300,7 @@ public class SearchRemittance extends paymentSummary {
 			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
 			ParameterMap parameterMap = new ParameterMap();
 			parameterMap.setKey("ACCOUNT_NUMBER");
-			parameterMap.setValue("10406822");
+			parameterMap.setValue("10406822");// TODO parameterize value
 			parameterMap.setComparator("Equals");
 			parameterMapList.add(parameterMap);
 
@@ -344,14 +315,14 @@ public class SearchRemittance extends paymentSummary {
 		}
 
 		if (requestType.equals("byDOPAndClaimNo")) {
-			DOPClaim dopClaim = new DOPClaim();
+			DOP dopClaim = new DOP();
 			dopClaim.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopClaim.setUserRole("PROVIDER");
 
 			SearchCriteria searchCriteria = dopClaim.getSearchCriteria();
 			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
 			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("CLAIM_IDENTIFIER");
+			parameterMap.setKey("CLAIM_IDENTIFIER");// TODO parameterize value
 			parameterMap.setValue("20180607000463");
 			parameterMap.setComparator("Equals");
 			parameterMapList.add(parameterMap);
@@ -368,7 +339,7 @@ public class SearchRemittance extends paymentSummary {
 		}
 
 		if (requestType.equals("byDOPAndPatientNm")) {
-			DOPPatientName dopPatientName = new DOPPatientName();
+			DOP dopPatientName = new DOP();
 			dopPatientName.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopPatientName.setUserRole("PROVIDER");
 
@@ -376,7 +347,7 @@ public class SearchRemittance extends paymentSummary {
 			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
 			ParameterMap parameterMap = new ParameterMap();
 			parameterMap.setKey("PATIENT_FIRST_NAME");
-			parameterMap.setValue("SHELLY");
+			parameterMap.setValue("SHELLY");// TODO parameterize value
 			parameterMap.setComparator("Equals");
 			parameterMapList.add(parameterMap);
 

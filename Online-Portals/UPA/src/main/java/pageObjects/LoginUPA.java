@@ -140,7 +140,8 @@ public class LoginUPA {
 		//WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
 	    //if (welcomeTxt != null)
 		
-		if(testConfig.driver.findElements(By.xpath("//span[contains(text(),'Welcome Screen')]")).size() != 0)
+		//if(testConfig.driver.findElements(By.xpath("//span[contains(text(),'Welcome Screen')]")).size() != 0)
+		if(testConfig.driver.findElements(By.xpath("//div[@id='tabPrmryMenu']")).size() != 0)
 			Log.Comment("Security Question not present");
 		else {
 			for (int i = 0; i < 2; i++) {

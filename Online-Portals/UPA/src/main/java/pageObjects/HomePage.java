@@ -122,7 +122,7 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
+		//Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
 	}
 	
 	//Default constructor
