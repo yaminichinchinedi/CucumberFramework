@@ -29,7 +29,8 @@ public class DOP extends Data {
 
 	@Override
     public String toString() {
-    	StringJoiner sj = new StringJoiner("\",\"", "[\"", "\"]");
+    	//StringJoiner sj = new StringJoiner("\",\"", "[\"", "\"]");
+    	StringJoiner sj = new StringJoiner(",", "[", "]");
 
     	for (String epsNationalProviderIdentifiers : this.epsNationalProviderIdentifiers) {
     		sj.add(epsNationalProviderIdentifiers);

@@ -61,7 +61,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//a[contains(text(),'PDF')]")
 	WebElement lnkEpraPDF;
 	
-	@FindBy(id="periodId")
+	@FindBy(id = "periodId")
 	WebElement drpDwnQuickSearch;
 	
 	@FindBy(id="mktTypeId")
@@ -858,12 +858,13 @@ public void verifyFailedPaymentPopUp()
 		String expectedSelectedOption="Show All";
 		Helper.compareEquals(testConfig, "Selected Option", expectedSelectedOption, Element.getFirstSelectedOption(testConfig, drpDwnFilterPayments,"text"));
 		Helper.compareEquals(testConfig, "Selected Option", expectedSelectedOption, Element.getFirstSelectedOption(testConfig, drpDwnMarketType,"text"));
-		expectedSelectedOption="Active Only";
+		expectedSelectedOption="New";
 		Helper.compareEquals(testConfig, "Selected Option", expectedSelectedOption, Element.getFirstSelectedOption(testConfig, drpDwnArchiveFilter,"text"));
 		
 		//Verify all options are displayed in Quick search Filter dropdown
+		WebElement drpDwnQuickSearch = TestBase.driver.findElement(By.id("periodId"));
 		List <String> quickSearchOptions=Element.getAllOptionsInSelect(testConfig, drpDwnQuickSearch);
-		
+
 		String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 		
 		for (String option:quickSearchOptions){
@@ -1662,6 +1663,8 @@ public void verifyFailedPaymentPopUp()
 		PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
 		paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+		String[] identifiers = new String[] {};
+		epn.setEpsNationalProviderIdentifiers(identifiers);
 		System.out.println("DOP=" + epn.toString());
 		request = epn;
 
