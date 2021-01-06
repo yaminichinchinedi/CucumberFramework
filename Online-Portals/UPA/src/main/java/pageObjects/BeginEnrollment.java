@@ -102,6 +102,9 @@ public class BeginEnrollment {
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]")
 	List<WebElement> pageBody;
 	
+	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[2]")
+	List<WebElement> newPageBody;
+	
 	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[2]/div[1]")
 	List<WebElement> popUp;
 	
@@ -319,6 +322,26 @@ public class BeginEnrollment {
         
         return tin;
     }
+	
+	
+	public void verifyNewPageContent() throws IOException
+	{
+		int sqlRowNo=1612;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+			
+		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(30).get("TEXT_VAL"));
+		Browser.wait(testConfig, 2);
+		
+		Helper.compareContains(testConfig, "Paragraph 1", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(2).getText(), dataTest.get(7).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Paragraph 2", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(3).getText().replaceAll("[^a-zA-Z0.5%] ", " ").trim(), dataTest.get(6).get("TEXT_VAL").replaceAll("[&#;12346789]","").trim());
+		Helper.compareContains(testConfig, "Paragraph 3", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(4).getText().replaceAll("[^a-zA-Z0.5%() ]", "").trim(), dataTest.get(5).get("TEXT_VAL").replaceAll("[&#;12346789]","").trim());
+		Helper.compareContains(testConfig, "Paragraph 4", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(5).getText().trim(), dataTest.get(4).get("TEXT_VAL").replace("strong", "").replaceAll("[</>]", "").trim());
+		Helper.compareContains(testConfig, "Paragraph 5", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(6).getText(), dataTest.get(2).get("CLOBVALFROM"));
+
+		
+		
+	}
+	
 }
 
 

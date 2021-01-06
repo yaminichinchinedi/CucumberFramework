@@ -95,7 +95,23 @@ public class EnrollmentSubmitted  {
 		
 		Browser.verifyURL(testConfig, expectedURL);
 	}
-	
+	public EnrollmentSubmitted validateRowfrVOTIN() throws IOException
+	{
+		if(enrollmentInfoPageObj.getTinIdentifier().equals("VO"))
+		  {
+			int sqlRowNo=1614;
+			testConfig.putRunTimeProperty("Prov_Tin", enrollmentInfoPageObj.getTin());
+			data=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			if (data.size()!=0)
+			Log.Pass("Row inserted in Product Selection Table");
+			else
+			{
+				Log.Fail("Fail to insert row in Product Selection Table");
+			}
+			
+		  }
+	return this;
+	}
 	
 	public EnrollmentSubmitted validateEnrollmentInfo() throws IOException
 	{

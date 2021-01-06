@@ -12,4 +12,9 @@ public class EnrollmentSubmittedSteps extends TestBase{
 	public void validate_Data_is_saved_in_Database_on_Enrollment_Page() throws Throwable {
 		enrollmentSubmitted.validateEnrollmentInfo();
 	}
+	
+	@Then("^Validate one corresponding row is inserted in Product Selection Table$")
+	public void validate_one_corresponding_row_is_inserted_in_Product_Selection_Table() throws Throwable {
+		enrollmentSubmitted.validateRowfrVOTIN();
+	}
 }

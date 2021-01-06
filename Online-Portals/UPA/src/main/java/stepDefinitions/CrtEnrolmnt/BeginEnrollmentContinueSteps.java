@@ -48,6 +48,10 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	public void user_Select_a_How_you_heard_option_and_click_on_Continue_button() throws Throwable {
 		beginEnrollmentContinuePage=beginEnrollmentPage.selectHowYouHeard(option); 
 	}
+	@Then("^User clicks on Continue button of BeginEnrollment Page$")
+	public void user_clicks_on_Continue_button_of_BeginEnrollment_Page() throws Throwable {
+		beginEnrollmentPage.clickContinue();
+	}
 	@Then("^User clicks on which option should i choose link and close the opened popup$")
 	public void user_clicks_on_which_option_should_i_choose_link_and_close_the_opened_popup() throws Throwable {
 		beginEnrollmentContinuePage.verifyHowtoChooseLink();
@@ -82,5 +86,9 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	@Then("^Click Cancel Enrollment button and Verify its content\\.$")
 	public void click_Cancel_Enrollment_button_and_Verify_its_content() throws Throwable {
 		beginEnrollmentContinuePage.verifyCnclEnrlmntPoppUptxt();
+	}
+	@Then("^User Validates all the UI content with database for BeginEnrollment Page$")
+	public void user_Validates_all_the_UI_content_with_database_for_BeginEnrollment_Page() throws Throwable {
+		beginEnrollmentPage.verifyNewPageContent(); 
 	}
 }

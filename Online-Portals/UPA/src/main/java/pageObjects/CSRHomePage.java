@@ -61,14 +61,14 @@ public class CSRHomePage {
 	WebElement addTin;
 	
 	
-//	@FindBy(xpath="//td[contains(text(),'You are logged in to support :')]") 
-//	WebElement txtloggedIn;
+	@FindBy(xpath="//td[contains(text(),'You are logged in to support :')]") 
+	WebElement txtloggedIn;
 	
 //	@FindBy(xpath="//td[contains(text(),'You are logged in to support')]")  
 //		WebElement txtloggedIn; 
 
-	@FindBy(css=".productName") 
-	WebElement txtloggedIn;
+//	@FindBy(css=".productName") 
+//	WebElement txtloggedIn;
 	
 	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin;
@@ -100,6 +100,9 @@ public class CSRHomePage {
 	
 	@FindBy(linkText="Home")
 	WebElement home;
+	
+	@FindBy(linkText="Optum Pay Solutions")
+	WebElement lnkOptPaySoln;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -157,6 +160,11 @@ public class CSRHomePage {
     public void clickBillingServiceInfoLink()
     {      Browser.wait(testConfig, 7);
            Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
+           
+    }
+    public void clickOptmPaySolnLink()
+    {      Browser.wait(testConfig, 2);
+           Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
            
     }
 }
