@@ -32,10 +32,10 @@ Examples:
     Then User verifies Add User button visiblity for "CSR","BillingService" based on "<System Mode>" like FeeBased or Legacy.         
     
 Examples:
-	  |    userType   |   credentials     |tinTyp |	portalAccess    |
-    |      BS       |   Super     	    |BS			|   Premium       |
+	  |    userType   |   credentials     |tinTyp |	portalAccess    |System Mode|
+    |      BS       |   Super     	    |BS			|   Premium       | FEEBASED  |
     
-  	@CSRUS2879930 @OctRelease
+  	@CSRUS2879930_11 @OctRelease
   	Scenario Outline: CSR Manage Purse User for Payer
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
@@ -43,6 +43,6 @@ Examples:
     Then User verifies Add User button visiblity for "CSR","Payer" based on "<System Mode>" like FeeBased or Legacy.         
     
 Examples:
-	  |    userType   |   credentials     |
-    |      PAY       |   Super     	    |
+	  |    userType   |   credentials     |System Mode|
+    |      PAY       |   Super     	    |FEEBASED  |
    														
