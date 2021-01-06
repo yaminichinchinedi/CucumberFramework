@@ -35,7 +35,7 @@ Examples:
 	  |    userType   |   credentials     |tinTyp |	portalAccess    |System Mode|
     |      BS       |   Super     	    |BS			|   Premium       | FEEBASED  |
     
-  	@CSRUS2879930_11 @OctRelease
+  	@CSRUS2879930 @OctRelease
   	Scenario Outline: CSR Manage Purse User for Payer
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
