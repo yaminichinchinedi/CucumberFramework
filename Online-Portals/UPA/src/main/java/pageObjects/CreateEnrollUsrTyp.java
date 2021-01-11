@@ -36,6 +36,7 @@ public class CreateEnrollUsrTyp {
 	public CrtEnrollValidateTIN selectUserType(String userType )
 	{
 		if (userType.equals("Provider"))
+		Browser.wait(testConfig, 5);
 		Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		
 		if (userType.equals("Billing Service"))
