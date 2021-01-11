@@ -36,7 +36,7 @@ public abstract class CreateConnection {
 	public String getAuthToken() throws IOException
 	{    
 		StringBuilder response = new StringBuilder();
-		String authURL="https://gateway-stage-core.optum.com/auth/oauth2/token";
+		String authURL="https://gateway-stage-dmz.optum.com/auth/oauth2/token";
 		URL conn = new URL(authURL);
 		// Opens connection with server
 				URLConnection UrlConn = conn.openConnection();
@@ -74,49 +74,45 @@ public abstract class CreateConnection {
 		String line;
 		
 		URL conn = new URL(connectionUrl);
-		
+
 		// Opens connection with server
 		URLConnection UrlConn = conn.openConnection();
 		HttpURLConnection httpUrlConn;
 		
-		if(testConfig.getRunTimeProperty("Env").equals("Stage"))
-			  httpUrlConn = (HttpURLConnection) UrlConn;
-		else
-			 httpUrlConn = (HttpsURLConnection) UrlConn;
-		
+		httpUrlConn = (HttpURLConnection) UrlConn;
 
 		httpUrlConn.setDoOutput(true);
 		httpUrlConn.setRequestMethod("POST");
-		httpUrlConn.setRequestProperty("Content-Type", "application/xml");
-		if(testConfig.getRunTimeProperty("Env").contains("Test"))
+		httpUrlConn.setRequestProperty("Content-Type", "application/json");
 		httpUrlConn.setRequestProperty("Authorization", "Bearer " + getAuthToken());
 		httpUrlConn.connect();
-	
-		
 
-		OutputStreamWriter ReqWriter = new OutputStreamWriter(
-		httpUrlConn.getOutputStream());
-		String requestXML = convertRequestPojoToXml(pojoRequest);
-		requestXML = requestXML.replace("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>","").replace("null", "");
-		System.out.println("REQUEST :" + requestXML);
-		ReqWriter.write(requestXML);
-		ReqWriter.flush();
+		String payload = pojoRequest.toString();
 
-		/** Gets response of the request fired*/
-		BufferedReader ReplyReader = new BufferedReader(new InputStreamReader(httpUrlConn.getInputStream()));
-
-		/** printing response and writing it in api.xml*/
-		System.out.println("RESPONSE :" + '\n');
-		while ((line = ReplyReader.readLine()) != null) {
-			System.out.println(line);
-			response = response + line;
+		try(OutputStream os = httpUrlConn.getOutputStream()) 
+		{
+		    byte[] input = payload.getBytes("utf-8");
+		    os.write(input, 0, input.length);			
 		}
-		ReplyReader.close();
+		
+		try(BufferedReader br = new BufferedReader(
+				  new InputStreamReader(httpUrlConn.getInputStream(), "utf-8"))) {
+				    String responseLine = null;
+				    while ((responseLine = br.readLine()) != null) {
+				        //response1.append(responseLine.trim());
+						System.out.println(responseLine);
+				        response = response + responseLine.trim();
+				    }
+				}
 		httpUrlConn.disconnect();
-		return convertResponseXMLToPojo(response.replace("<?xml version='1.0' encoding='UTF-8'?>", "").replace("null",""));
+		return convertResponseJSONToPojo(response);
 	}
 
 	
+	abstract protected Object convertResponseJSONToPojo(String response)
+			throws JAXBException, IOException, SAXException,
+			ParserConfigurationException;
+
 	abstract protected Object convertResponseXMLToPojo(String response)
 			throws JAXBException, IOException, SAXException,
 			ParserConfigurationException;

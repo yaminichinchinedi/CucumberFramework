@@ -80,7 +80,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(id="no")
 	WebElement rdoNPINo;
 
-	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/a[1]")
+	@FindBy(xpath="//form[@id='EFTERAregForm']/div[4]/a[1]")
 	WebElement btnContinueSavChng;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")

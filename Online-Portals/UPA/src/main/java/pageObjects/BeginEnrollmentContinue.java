@@ -539,5 +539,13 @@ public class BeginEnrollmentContinue {
 		popUpCnclEnrlmnt.getText());
 		return this;
 	}
+	
+	public BeginEnrollmentContinue clickChangeLink()
+	{
+		Element.verifyElementPresent(lnkChangeOption, "Change my answer for organization type");
+		Element.click(lnkChangeOption,"Change my answer");
+		Element.verifyElementNotPresent(lnkChangeOption, "Change my answer for organization type");
+		return this;
+	}
 
 }

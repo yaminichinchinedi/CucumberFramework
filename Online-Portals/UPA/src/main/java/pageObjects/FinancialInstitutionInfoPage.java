@@ -251,7 +251,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		expectedText="and required to submit additional information.";
 		//Element.verifyTextPresent(txtSecurity2,expectedText);
 		
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 5);
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
@@ -429,7 +429,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
 		  Browser.wait(testConfig, 2);
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
-		  Browser.wait(testConfig, 5);
+		  Browser.wait(testConfig, 8);
 		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
 		  String AddronUIText=AddronUI.getText();
 		  try{
