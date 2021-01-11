@@ -18,7 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 public class CreateEnrollUsrTyp {
 		private TestBase testConfig;
 	
-	@FindBy(css="select#userTypeSelection")
+	@FindBy(css="#userTypeSelection")
 	WebElement usrTyp;
 	
 	@FindBy(id="taxNumber")
@@ -37,10 +37,12 @@ public class CreateEnrollUsrTyp {
 	{
 		if (userType.equals("Provider"))
 		Browser.wait(testConfig, 5);
-		Element.selectByIndex(usrTyp, 1, "Provider User Type");
+		Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
+		//Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		
 		if (userType.equals("Billing Service"))
-			Element.selectByIndex(usrTyp, 2, "BS User Type");
+			Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
+			//Element.selectByIndex(usrTyp, 2, "BS User Type");
 		
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		Element.enterData(usrTIN, tinNumber, "Tin Number", "TIN");
