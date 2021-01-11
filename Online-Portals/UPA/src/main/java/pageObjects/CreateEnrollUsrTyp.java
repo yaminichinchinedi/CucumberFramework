@@ -47,7 +47,8 @@ public class CreateEnrollUsrTyp {
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		Element.enterData(usrTIN, tinNumber, "Tin Number", "TIN");
 		testConfig.putRunTimeProperty("EnrolTin", tinNumber);
-		Element.clickByJS(testConfig, srchButtn, "Search Button");
+		//Element.clickByJS(testConfig, srchButtn, "Search Button");
+		Element.click(testConfig, srchButtn, "Search Button", 5);
 		Browser.wait(testConfig, 8);
 		return new CrtEnrollValidateTIN(testConfig);
 	}
