@@ -1,5 +1,5 @@
 #Author:Rahul Krishna
-@CreateEnrollment @US1463317 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1463317 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollmentTest
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
@@ -14,8 +14,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page
     
@@ -30,8 +30,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page
     Then User clicks on Financial Institution Information NPI page Edit link
@@ -41,14 +41,14 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     
  #TS_004
  
-  Scenario:TS_0004 Validate Upon selection of Remove the NPI information is deleted and the bank letter or voided check removed.
+  	Scenario: TS_0004 Validate Upon selection of Remove the NPI information is deleted and the bank letter or voided check removed.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page
     Then User clicks on Financial Institution Information NPI page remove link and validate it is removed.
@@ -62,8 +62,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     And User clicks on Financial Institution Information NPI page Edit link
@@ -78,8 +78,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     And User clicks on Financial Institution Information NPI page Edit link
@@ -93,8 +93,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     Then User click back button on Review and Submit Page
@@ -111,8 +111,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     And User clicks on Financial Institution Information NPI page Edit link
@@ -151,8 +151,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     Then User clicks on Financial Institution Information NPI page Edit link
@@ -167,8 +167,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     Then User clicks on Financial Institution Information NPI page Edit link
@@ -184,8 +184,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     Then User clicks on Financial Institution Information NPI page Edit link
@@ -203,8 +203,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page
     And User clicks on Financial Institution Information NPI page Edit link
@@ -219,8 +219,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue NPI
-    Then User fills all the information of Financial Institution Information NPI page and click continue.
+	Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
+    Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
     Then User uploads the WNine form and click continue
     Then User validateds multiple Edit option on Review and Submit Page 
     And User clicks on Financial Institution Information NPI page Edit link
