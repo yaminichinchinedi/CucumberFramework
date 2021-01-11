@@ -1,5 +1,6 @@
 #Author:Rahul Krishna
 #@CSRUS2673017
+@CSRCreateEnrollmentTest
 Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org Financial Institution Information
 
 
