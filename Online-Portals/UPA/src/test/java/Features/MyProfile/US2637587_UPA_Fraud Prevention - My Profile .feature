@@ -1,5 +1,5 @@
 #Author: Athyusha Thota
-@US2637587_UPA @UPARegression
+@US2637587_UPA @UPARegression @xyz
 Feature: US2637587 PRJ202767 Fraud Prevention - My Profile - QA
 
 Scenario Outline: UPA My Profile Fraud Prevention Check

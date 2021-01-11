@@ -341,7 +341,7 @@ public class ValidateEnrollmentTypePage {
 	public ValidateEnrollmentTypePage verifyEnrolledInactiveAndBlockStatusTIN() throws IOException
 	{
 		String inActiveTIN =  "Your TIN cannot be enrolled at this time.";
-		String inActiveTINMsg = "The TIN you entered is currently in an inactive status and cannot be enrolled in Electronic Payments and Statements at this time.";
+		String inActiveTINMsg = "The TIN you entered is currently in an inactive status and cannot be enrolled in Optum Pay at this time.";
 		Element.verifyTextPresent(inActiveStatus,inActiveTIN);
 		Element.verifyTextPresent(inActiveStatusMsgUI,inActiveTINMsg);
 		Element.verifyElementPresent(loginBtn,"Return to Login Button");
@@ -370,7 +370,7 @@ public class ValidateEnrollmentTypePage {
 
 	public ValidateEnrollmentTypePage verifyBtnCancelPopup() throws IOException
 	{
-		String btnCancelPopupMsg =  "Are you sure you want to cancel your EPS enrollment application?";
+		String btnCancelPopupMsg =  "Are you sure you want to cancel your Optum Pay enrollment application?";
 		Element.verifyTextPresent(btnCancelPopUp, btnCancelPopupMsg);
 		Element.verifyElementPresent(btnYes,"Cancel Button Yes");
 		Element.verifyElementPresent(btnNo,"Cancel Button No");

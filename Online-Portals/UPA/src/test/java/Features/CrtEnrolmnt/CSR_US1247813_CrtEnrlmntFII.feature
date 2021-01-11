@@ -35,7 +35,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User clicks the link where can i find a finantial intitution's routing no
 
 #TS_007
@@ -43,8 +43,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    		When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator 
+    When RTI API server is up
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User validates the Type of account as Checking by default and can be change to Saving
 
 
@@ -55,7 +55,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User validates the supporting document as Voided Check by default and can be change to Bank letter
 
 
@@ -66,7 +66,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+      Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User clicks on browse and upload its supporting document
     
     
@@ -76,7 +76,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+      Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User clicks on hyperlink how do i manage multiple NPI bank accounts
     
     #TS_011
@@ -86,29 +86,29 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+      Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User validates the NPI Bank account as No by default and can be change to Yes
     
           #TS_012 #TS_013
-	Scenario Outline: Validating the Headers content
+	Scenario: Validating the Headers content
    
 											      
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+      Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then Validate all the Headers from FII page in case of AO and AV Enrollment type
    
    
 											   
 											      
 					#TS_014 #TS_015						      
-	Scenario Outline: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
+	Scenario: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
 											      
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+      Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User validates and clicks buttons Back,Cancel Enrollment,Continue are on the FII page
     
     
@@ -121,7 +121,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User clicks on continue button of FII page and validtes the error messages		
     
     
@@ -132,7 +132,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User fills all the information and PO Box no in Street field and clicks on continue								      
 			
 			
@@ -143,7 +143,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User fills all the information and invalid Zip code for corresponding City and clicks on continue								      
 			
 											      
@@ -154,6 +154,6 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     When RTI API server is up
-		Then User fills all the information on Financial Institution Information page for ABA Validator
+    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User fills all the information and upload non accepted file format and clicks on continue								      
 								
