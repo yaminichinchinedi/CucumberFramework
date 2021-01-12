@@ -50,8 +50,10 @@ public class UploadW9 {
 		this.testConfig = testConfig;
 		Browser.checkPageReadyState(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
-		
+		System.out.println(enrollmentInfoObj.getNpi());
+
 		//Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/footer/a[2]"), 60);
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/div[5]/a[1]"), 60);
 		Element.expectedWait(fedW9Lnk, testConfig, "Fedral W9 Form Link", "FedW9Link");
 		String expectedURL;
 		
@@ -60,7 +62,10 @@ public class UploadW9 {
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AV"))
 			expectedURL="/UploadW9EFTERAEnroll";
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AO"))
-			expectedURL="/validateefterafinancialinfo";
+			if(enrollmentInfoObj.getNpi() != null)
+				expectedURL="/validateEFTERAFinancialInfoNPIRtn";
+			else
+				expectedURL="/validateEFTERAFinancialInfoRtn";
 		else
 			expectedURL="/validateBillingServiceContacts";
 		

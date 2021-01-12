@@ -5,7 +5,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+    Then User clicks on Continue button of BeginEnrollment Page
 #TS_001,TS_003
 @UPASanity
   Scenario: TS_0001/003_Validate Edit and Remove option Option next to each field on Review and Submit page.
@@ -23,9 +23,9 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 
     
 #TS_002 #TS_0034
-@UPASanity
+@UPASanity 
   Scenario: TS_02/09/34_Validate navigation of click Edit button on NPI section and content on Review and Submit page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+      Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
     Then User fills all the information  and click on Continue
@@ -36,7 +36,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User validateds multiple Edit option on Review and Submit Page
     Then User clicks on Financial Institution Information NPI page Edit link
     And User verifies that FII-NPI fields are editables
-    Then User fills all the information on Financial Institution Information NPI page and click Save Changes
+    Then User clicks Save Changes Button on Financial Institution Information NPI page.
     Then User verifies content of FII-NPI on Review and Submit Page  
     
  #TS_004
@@ -55,7 +55,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     
    #TS_005 depricated  
     #TS_06,07
-    @UPASanity
+    @UPASanity 
     Scenario: TS_0006/007_Validate the buttons on the page and Navigatin on click of Cancel changes Button.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -71,7 +71,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User validates the Cancel Changes and Save changes buttons,click on Cancel Changes button
    
      
-    #TS_08
+    #TS_08 
+    
     Scenario: TS_0008_Validate the popup on selecting Where can I find a financial institution s routing number
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -87,6 +88,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User clicks on hyperlink 'where can I find a finantial Institution's routing number?'.
     
     #TS_10
+    
     Scenario: TS_0010_Validate Pop up message to be displayed on selecting How do I manage multiple NPI bank accounts Link
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -144,8 +146,9 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     
    
    #TS_15_blank
-   #@US1463317
-    Scenario: TS_15/17/18/20/21/22/23/28/31/33_Validate the Error message by giving blank input
+   #@US1463317 -- //TODO
+   
+    #Scenario: TS_15/17/18/20/21/22/23/28/31/33_Validate the Error message by giving blank input
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -159,9 +162,9 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     And User verifies that FII-NPI fields are editables
     Then User validates various input field by giving blank input and clicking Save Changes button.
     
-   #TS_NonNumeric
+   #TS_NonNumeric  //TODO
    
-    Scenario: TS_16/23/26/32_Validate the Error message by nonnumeric input
+    #Scenario: TS_16/23/26/32_Validate the Error message by nonnumeric input
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -176,9 +179,9 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User validates various input field by giving nonnumeric data input and clicking Save Changes button.
     
     
-    #TS_POBox No in street field
+    #TS_POBox No in street field  //TODO
     
-    Scenario: TS_19/24/27 Validate the Error message by incomplete/PO BOX no in Street field
+    #Scenario: TS_19/24/27 Validate the Error message by incomplete/PO BOX no in Street field
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -196,8 +199,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
    
 											      
     #TS_035A and 035B
-    
-    Scenario: TS_0035A/35B_Disablinb of Cancel Changes button and with valid info changes are in Review and Submit Page.
+    #Scenario: TS_0035A/35B_Disablinb of Cancel Changes button and with valid info changes are in Review and Submit Page.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -213,7 +215,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User fills valid information on FII NPI page and click Save Changes, an verifies changes on Review Submit Page
     
     #TS_036
-    Scenario: TS_0036_Validate on edit of different voided check or bank letter, the Cancel Changes button gets disabled.
+     
+     Scenario: TS_0036_Validate on edit of different voided check or bank letter, the Cancel Changes button gets disabled.
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |

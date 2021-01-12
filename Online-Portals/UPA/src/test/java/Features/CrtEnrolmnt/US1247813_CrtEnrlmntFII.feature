@@ -6,7 +6,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+    Then User Select a How you heard option and  click on Continue buttonUser Select a How you heard option and  click on Continue button
 #TS_001
 @UPASanity
   Scenario: Fills the relevent Info with AO Enroll Typ

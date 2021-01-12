@@ -252,8 +252,14 @@ public class ProviderInformationEFTERAEnroll {
 		//Same xpath has been used both for Continue and save changes button.
 			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']/footer/a[1]"), "Continue/Save Changes Button");
 		else
-			Element.click(Element.findElement(testConfig, "xpath", "//a[contains(text(),'Continue')]"), "Continue/Save Changes Button");
-			//Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"), "Continue/Save Changes Button");
+		{
+			//Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
+		if (testConfig.driver.getCurrentUrl().contains("CSR"))
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"), "Continue/Save Changes Button CSR");
+		else
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"), "Continue/Save Changes Button");
+
+		}
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}

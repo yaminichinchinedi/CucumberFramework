@@ -80,8 +80,8 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(id="no")
 	WebElement rdoNPINo;
 
-	//@FindBy(xpath="//form[@id='EFTERAregForm']/div[4]/a[1]")
-	@FindBy(xpath="//a[contains(text(),'Continue')]")
+	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/a[1]")
+	//@FindBy(xpath="//a[contains(text(),'Continue')]")
 	WebElement btnContinueSavChng;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
@@ -124,7 +124,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancEnroll;
 	
-	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/input")
+	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/input")
 	WebElement btnCancChng;
 	
 	@FindBy(linkText="YES")
@@ -603,7 +603,7 @@ public class FinancialInstitutionInfoPageNPI{
 	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoFromExcelABANPI() throws IOException 
 	{
 	  
-		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinueSavChng.getAttribute("disabled"));	  
+		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinueSavChng.getAttribute("disabled"));
 		  String npiNumber=Long.toString(Helper.generateRandomNumber(10));
 		  Element.enterData(finInstNPINo,npiNumber ,"Enter National Provider Identifier","finInstNPINo");  
 		  Element.enterKeys(finInstNPINo, Keys.TAB, "TAB Key entering", "TAB Key");
@@ -660,6 +660,7 @@ public class FinancialInstitutionInfoPageNPI{
 			 Log.Fail(" '-' is missing between phone nos");	 
 		 }
 		  uploadBankLetterPdfWithAcceptance();
+		  enrollmentInfoPageObj.setNpi(npiNumber);
 		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
 		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
 		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
@@ -957,5 +958,9 @@ public class FinancialInstitutionInfoPageNPI{
 	public void verifyEditable(){
 		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstNPINo.getAttribute("readonly"));
 		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstName.getAttribute("readonly"));
+	}
+	
+	public void clickSaveChanges() {
+		Element.clickByJS(testConfig, btnContinueSavChng, "CONTINUE");
 	}
 }
