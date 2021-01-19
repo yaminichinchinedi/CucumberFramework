@@ -26,13 +26,13 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	BeginEnrollmentContinue beginEnrollmentContinuePage=null;
 	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
 	
-	@Given("^User navigates to UPA Sys Test application$")
+	/*@Given("^User navigates to UPA Sys Test application$")
 	public void user_navigates_to_UPA_Sys_Test_application () throws Throwable {
 		
 		
 		registrationPage = new UPARegistrationPage(testConfig);
 	    
-	}
+	}*/
 
 	@When("^User Clicks on Enroll Now from the landing page$")
 	public void user_Clicks_on_Enroll_Now_from_the_landing_page() throws Throwable {

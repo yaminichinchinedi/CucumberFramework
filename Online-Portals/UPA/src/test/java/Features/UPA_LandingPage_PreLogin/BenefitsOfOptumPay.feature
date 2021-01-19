@@ -14,7 +14,7 @@ Scenario: Verify text in  Benefits of Optum Pay Tab in UPA
     And User validates Green Tick Paragraph 3
     
     And User Validates "Access can be restricted" paragraph
-    And User Validates "We are only a call away" paragraph
+ 	And User Validates "We are only a call away" paragraph
     
     
     
