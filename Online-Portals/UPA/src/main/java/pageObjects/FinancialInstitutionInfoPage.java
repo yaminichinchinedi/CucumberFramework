@@ -251,7 +251,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		expectedText="and required to submit additional information.";
 		//Element.verifyTextPresent(txtSecurity2,expectedText);
 		
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 5);
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
@@ -362,6 +362,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  //Check for the API down message "Service is down, please try again."
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
 		  Browser.wait(testConfig, 5);
+		  compareHeading();
 		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
 		  String AddronUIText=AddronUI.getText();
 		  try{
@@ -411,6 +412,19 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return this;
     }
 
+	public FinancialInstitutionInfoPage compareHeading() throws IOException 
+	{
+		int sqlRowNo=1613;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+	String HeaderUI=Element.findElement(testConfig, "xpath", "//*[@id='headingAlertForRtn']").getText();
+		
+	Helper.compareContains(testConfig, "Header title1", dataTest.get(1).get("TEXT_VAL"), HeaderUI);
+	Helper.compareContains(testConfig, "Header title2", dataTest.get(2).get("TEXT_VAL"), HeaderUI);
+    Helper.compareContains(testConfig, "Header title3", dataTest.get(3).get("TEXT_VAL"), HeaderUI);
+
+	
+	return this;
+	}
 	
 	public FinancialInstitutionInfoPage fillFinancialInstInfoFromExcelABA() throws IOException 
 	{
@@ -428,8 +442,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  //finInstAcctNum.sendKeys(Keys.TAB);
 		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
 		  Browser.wait(testConfig, 2);
+		  compareHeading();
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
-		  Browser.wait(testConfig, 5);
+		  Browser.wait(testConfig, 8);
 		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
 		  String AddronUIText=AddronUI.getText();
 		  try{

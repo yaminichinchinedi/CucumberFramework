@@ -109,5 +109,14 @@ public class CSRHomePageSteps extends TestBase{
 			homePage.VerifyCSRLogin();
 			
 }
-
+		
+		@When("^Click on Billing Service Info Link CSR$")
+		   public void click_on_Billing_Service_Info_Link_CSR() throws Throwable {
+		       
+			   homePage.clickBillingServiceInfoLink();
+		   }
+		@Then("^User clicks on Optum Pay Soultions link on CSR HomePage$")
+		public void user_clicks_on_Optum_Pay_Soultions_link_on_CSR_HomePage() throws Throwable {
+			homePage.clickOptmPaySolnLink();
+		}
 }

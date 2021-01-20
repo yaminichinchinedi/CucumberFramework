@@ -117,8 +117,8 @@ public class UPAManageUserSteps extends TestBase {
 	}
 	
 	@Then("^verify Add user button is enabled\\.$")
-	public void verify_Add_user_button_is_enabled() throws Throwable {
-		manageUser.verifyAddUserBtnEnabled();
+	public void verify_Add_user_button_is_enabled(String portalAccess) throws Throwable {
+		manageUser.verifyAddUserBtnEnabled(portalAccess);
 
 	manageUser.clickActiveUserName("PROV");
 	manageUser.validateAddingSameTIN();

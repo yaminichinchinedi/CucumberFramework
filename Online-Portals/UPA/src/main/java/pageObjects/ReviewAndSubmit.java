@@ -374,7 +374,7 @@ public class ReviewAndSubmit {
 		  return this;
 	  }
 
-	  public void verifyErrorMsgNull()
+	  public ReviewAndSubmit  verifyErrorMsgNull()
 	  {
 		  Element.clickByJS(testConfig,chkAccptance, "Accept terms and condition");
 		  Element.click(btnEnrllmnt, "Submit Enrollment");
@@ -398,6 +398,7 @@ public class ReviewAndSubmit {
 				Element.click(links,links.getText());
 				Browser.verifyURL(testConfig, expectedURL);
 			}
+		  return this;
 
 	  }
 	  public void verifyMissingDataErrorMsg()

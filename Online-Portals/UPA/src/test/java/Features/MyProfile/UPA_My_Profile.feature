@@ -2,7 +2,7 @@
 @UPAMyProfile
 Feature: UPA My Profile Functionality
 
-@UpaMyProfile1
+@UpaMyProfile1 
   Scenario Outline: UPA My Profile UI Functionality Verifies User Details displayed on My profile Page from user details saved in Database for logged in user
 
     Given User navigates to UPA portal and enters "<userType>" and login
@@ -63,7 +63,7 @@ Feature: UPA My Profile Functionality
 #        |      PROV           |   Gen          |
 
 #Author : Pranav
-@US2707365
+@US2707365 
   Scenario Outline: UPA My Profile UI Functionality Update and Verify User Details displayed on My profile Page from user details saved in Database for logged in user
 
     Given User navigates to UPA portal and enters "<userType>" and login

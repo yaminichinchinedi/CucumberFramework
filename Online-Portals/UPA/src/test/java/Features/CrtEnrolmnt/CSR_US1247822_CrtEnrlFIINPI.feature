@@ -1,5 +1,4 @@
 #Author: Rahul Krishna
-
 @CreateEnrollment @US1247822 @BothCSRUPAScenarios @UPARegression
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
@@ -90,7 +89,7 @@ When RTI API server is up
     
     #TS_11,#TS_12
     @Retest11
-    Scenario Outline: TS_0011_TS_012_Validate the headers on Identify Administrator page for AO and AV TIN.
+    Scenario: TS_0011_TS_012_Validate the headers on Identify Administrator page for AO and AV TIN.
      	Then User select User Type Enrollment as "AO" and click continue button
 
     Then User fills all the information  and click on Continue

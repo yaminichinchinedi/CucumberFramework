@@ -60,15 +60,14 @@ public class CSRHomePage {
 	@FindBy(name="addTincsr")
 	WebElement addTin;
 	
-	
-//	@FindBy(xpath="//td[contains(text(),'You are logged in to support :')]") 
-//	WebElement txtloggedIn;
-	
-//	@FindBy(xpath="//td[contains(text(),'You are logged in to support')]")  
-//		WebElement txtloggedIn; 
 
-	@FindBy(css=".productName") 
+
+    @FindBy(css=".productName") 
 	WebElement txtloggedIn;
+
+	
+//	@FindBy(xpath="//p[contains(text(),'With EPS Online Enrollment you can:')]")
+//	WebElement txtloggedIn;
 	
 	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin;
@@ -83,7 +82,8 @@ public class CSRHomePage {
 //	@FindBy(linkText="Search Remittance")
 //    WebElement lnkSearchRemittance;
 	
-	
+	@FindBy(xpath="//a[contains(text(),'Billing Service Information')]")
+	WebElement lnkbillingservice;
 	
 	@FindBy(xpath="//a[contains(text(),'Search Remittance')]")
 	WebElement lnkSearchRemittance;
@@ -100,11 +100,14 @@ public class CSRHomePage {
 	@FindBy(linkText="Home")
 	WebElement home;
 	
+	@FindBy(linkText="Optum Pay Solutions")
+	WebElement lnkOptPaySoln;
+	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
+		//Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
 		Browser.wait(testConfig, 7);
 	}
 
@@ -151,5 +154,16 @@ public class CSRHomePage {
 		if (home.isDisplayed()) {
 	           Element.clickByJS(testConfig,home, "Home Link");
 		}
-	}
+		}
+    
+    public void clickBillingServiceInfoLink()
+    {      Browser.wait(testConfig, 7);
+           Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
+           
+    }
+    public void clickOptmPaySolnLink()
+    {      Browser.wait(testConfig, 2);
+           Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
+           
+    }
 }

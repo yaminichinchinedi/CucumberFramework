@@ -32,8 +32,9 @@ public class UploadW9 {
 	@FindBy(xpath = "//a[@class='progress-indicator__title']")
 	List<WebElement> OrgInfoHeaders;
 	
-	@FindBy(xpath = "//footer[@class='enrollment-container-footer float-left']/a")
+	@FindBy(xpath = "//div[@class='enrollment-container-footer float-left']/a")
 	List<WebElement> OrgInfoFooters;
+	
 	//exit-modal-header__title float-left
 	@FindBy(xpath="//h4[@class='exit-modal-header__title float-left']")
 	WebElement CancHeaderTitle;
@@ -50,7 +51,9 @@ public class UploadW9 {
 		Browser.checkPageReadyState(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
 		
-		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/footer/a[2]"), 60);
+
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/div[5]/a[1]"), 60);
+
 		Element.expectedWait(fedW9Lnk, testConfig, "Fedral W9 Form Link", "FedW9Link");
 		String expectedURL;
 		
@@ -59,7 +62,8 @@ public class UploadW9 {
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AV"))
 			expectedURL="/UploadW9EFTERAEnroll";
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AO"))
-			expectedURL="/validateefterafinancialinfo";
+			//expectedURL="/validateefterafinancialinfo";
+		expectedURL="/validateEFTERAFinancialInfoRtn";
 		else
 			expectedURL="/validateBillingServiceContacts";
 		
@@ -129,7 +133,7 @@ public class UploadW9 {
 	public UploadW9 verifyClckCancEnroll() {
 		Element.click(OrgInfoFooters.get(2), "Cancel Enrollment Button");
 		Browser.wait(testConfig, 3);
-		Helper.compareEquals(testConfig, "Cancel Popup Header", "Are you sure you want to cancel your EPS enrollment application?", CancHeaderTitle.getText());
+		Helper.compareEquals(testConfig, "Cancel Popup Header", "Are you sure you want to cancel your Optum Pay enrollment application?", CancHeaderTitle.getText());
 		Helper.compareEquals(testConfig, "Yes Button of Cancel Popup", "YES", PopupYesNo.get(0).getText());
 		Helper.compareEquals(testConfig, "No Button of Cancel Popup", "NO", PopupYesNo.get(1).getText());
 		
@@ -137,12 +141,12 @@ public class UploadW9 {
 
 	}
 	
-public void verifyClckNo() {
+public UploadW9  verifyClckNo() {
 		
 		Browser.wait(testConfig, 3);
 		Element.click(PopupYesNo.get(1), "No Button");
 		Browser.verifyURL(testConfig, "validateBillingServiceContacts.do");
-	
+		return this;
 		
 
 	}
