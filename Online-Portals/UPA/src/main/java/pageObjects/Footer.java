@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
 
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -27,7 +28,8 @@ private WebElement lnkTrmOfUse;
 @FindBy(xpath="//nobr")
 private WebElement cpyright;
 
-@FindBy(className="copyright")
+//@FindBy(className="copyrights copyright__text")
+@FindBy(xpath="//span[contains(text(),'Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC')]")
 private WebElement cpyrightwthoutnobr;
 
 
@@ -69,22 +71,28 @@ Browser.verifyURL( testConfig, expecteTrmsOfUsedURL);
 String actualcopyright=null;
 int cpyrghtlngth=0;
 Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+int year=Calendar.getInstance().get(Calendar.YEAR);
+String expectedcopyright=year+" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
+String expectedOptumText=" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
 System.out.println(testConfig.driver.getCurrentUrl().toLowerCase());
 if( (testConfig.driver.getCurrentUrl().toLowerCase().contains("providerefteraenroll")) ||
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraproviderinfo")) ||
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("validatebsbillingserviceinfo")) ||
-(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterafinancialinfortn.do"))
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterafinancialinfortn.do")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("beginenrollment.do")) ||
+(System.getProperty("Application").contains("UPA"))
 )
 {
 Element.expectedWait(cpyrightwthoutnobr, testConfig, "CopyRight Element without nobr", "CopyRight Element");
 actualcopyright=cpyrightwthoutnobr.getText();
+Helper.compareEquals(testConfig, "Footer Text",expectedOptumText," " +actualcopyright);
 }
 
 else
 {
 Element.expectedWait(cpyright, testConfig, "CopyRight Element with nobr", "CopyRight Element");
 actualcopyright=cpyright.getText();
-}
+
 
 //cpyrghtlngth=actualcopyright.length();
 
@@ -94,9 +102,7 @@ actualcopyright=actualcopyright.substring(2);*/
 if(actualcopyright.charAt(0)!='2') {
 	actualcopyright=actualcopyright.substring(2);
 }
-int year=Calendar.getInstance().get(Calendar.YEAR);
-String expectedcopyright=year+" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
-String expectedOptumText=" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
+
 String stryear=actualcopyright.substring(0, 4);
 String optum=actualcopyright.substring(4);
 if ( (Integer.parseInt(stryear)==year) && (optum.trim().equalsIgnoreCase(expectedOptumText.trim())) )
@@ -107,4 +113,5 @@ else
 Log.Fail("Failed Copyright Comparision" + " " + ":" + ""  + "Expected was :" +" " + expectedcopyright  + "and Actual is :" +" " +actualcopyright );
 }
 
+}
 }
