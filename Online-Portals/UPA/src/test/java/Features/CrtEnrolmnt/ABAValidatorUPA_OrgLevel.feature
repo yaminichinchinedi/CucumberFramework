@@ -1,6 +1,5 @@
-
 #Author:Rahul Krishna
-@UPAUS2690163
+@UPAUS2690163 @UPACreateEnrollment
 Feature: US2690163UPAOrg-Create Enrollment UPA- RTN API Request/Response - Org Financial Institution Information
 
   Background: ABA Validator - Financial Institution Page

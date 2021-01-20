@@ -8,14 +8,14 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
   When User Clicks on Enroll Now from the landing page
   Then User clicks on Continue button of BeginEnrollment Page
 	
-	@UPASanity																
+	@UPASanity			 													
 	Scenario: TS_0001_Validate Edit Option next to each field on Review and Submit page.
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
-   Then User fills all the information on Identify Administrators page and click continue
+    Then User fills all the information  and click on Continue
+    Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   And Validates Edit option next to each field on Review and Submit page 
@@ -27,7 +27,7 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -43,7 +43,7 @@ Scenario: TS_0006_Validate the data on Financial Information  page.
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -57,7 +57,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -72,7 +72,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -87,7 +87,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -103,7 +103,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -117,7 +117,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -150,7 +150,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -164,7 +164,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -179,7 +179,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -194,7 +194,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -225,7 +225,7 @@ Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
    Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
