@@ -66,7 +66,6 @@ public class AddUserDetails {
 	@FindBy(xpath="//input[@value=' Save ']")
 	WebElement btnSave;
 	
-	//"//td[@class='subheadernormal'][2]")+ "//td[@class='subheadernormal']//following-sibling::td[@class='subheadernormal']")
 	@FindBy(xpath="//td[contains(text(),'Provider')]")
 	WebElement txtUserType;
 	
@@ -113,7 +112,7 @@ public class AddUserDetails {
 	WebElement errorRetypeEmail;
 	
 	
-	@FindBy(xpath="//input[@value='Add TIN/NPI']")
+	@FindBy(xpath="//input[@value='+ Add TIN/NPI']")
 	WebElement btnAddTin_NPI;
 	
 	@FindBy(css=".rowDark>td>select")
@@ -162,16 +161,25 @@ public class AddUserDetails {
 
 	public AddUserDetails fillNewUserInfo()
 	{
+		Browser.waitForPageLoad(testConfig);
+		Browser.wait(testConfig, 7);
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 7);
 		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		Browser.wait(testConfig, 2);
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		Browser.wait(testConfig, 2);
 		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
 	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
 		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
-		testConfig.putRunTimeProperty("firstName", firstNameTxt);		
+		testConfig.putRunTimeProperty("firstName", firstNameTxt);	
+		System.setProperty("email", userEmailAdr);
+		String email = System.getProperty("email");
+		System.setProperty("userEmailAdr", userEmailAdr);
+		System.setProperty("firstName", firstNameTxt);
+		String fstname = System.getProperty("firstName");
 		return new AddUserDetails(testConfig);
 		
 	}
@@ -225,7 +233,10 @@ public class AddUserDetails {
 		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
 		 Browser.wait(testConfig,2);
-		 return this;
+		 Element.click(btnSave, "Click Save Button");
+		// this.verifyDetailsOfNewUser(userType);
+		return null;
+		 
 	}
 	
 	public ManageUsers clickSave()
@@ -240,6 +251,7 @@ public class AddUserDetails {
 	{
 		Map tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
 		Element.enterData(addTin,tinNo.get("PROV_TIN_NBR").toString(), "Enter tin number : " + tinNo.get("PROV_TIN_NBR").toString() ,"add Tin");
+		testConfig.putRunTimeProperty("tin", tinNo.get("PROV_TIN_NBR").toString());
 		clickAddTin();
 		return tinNo.get("PROV_TIN_NBR").toString();
 	}
@@ -259,6 +271,7 @@ public class AddUserDetails {
 	{
 		int sqlRowNo=0;
 		Map portalUser=null;
+		Browser.waitForPageLoad(testConfig);
 		for(WebElement userName:userNames)
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
@@ -279,29 +292,25 @@ public class AddUserDetails {
 		{
 			sqlRowNo=9;
 			portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			try
-			{
-			Helper.compareEquals(testConfig, "User Type", (portalUser.get("PAY_PROC_ACPT_CD_VAL_DESC").toString()), txtUserType.getText());
-			Helper.compareEquals(testConfig, "Associated Tin Number", portalUser.get("PROV_TIN_NBR").toString(), associatedTinNo.getAttribute("value"));
-			Helper.compareContains(testConfig, "Status", convertStatusType(portalUser.get("STS_CD").toString()), enrollmentStatus.getText());
-			}
-			catch(Exception e)
-			{
-				Log.Fail("Exception occured : " + e);
-			}
-		}
+					}
 		
 		else if(userType.equalsIgnoreCase("PAY"))
 		{
 			sqlRowNo=13;
 		    portalUser = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		}
+		
+		System.setProperty("userEmailAdr", userEmailAdr);
+		System.setProperty("firstName", firstNameTxt);
+		String userEmailAdr = System.getProperty("userEmailAdr");
+		String firstName = System.getProperty("firstName");
+
 	   
 		Browser.wait(testConfig, 3);
-	    Helper.compareEquals(testConfig, "First name", portalUser.get("FST_NM").toString(), firstName.getAttribute("value").toString());
-	    Helper.compareEquals(testConfig, "Last name", portalUser.get("LST_NM").toString(), lastName.getAttribute("value").toString());
-	    Helper.compareEquals(testConfig, "Phone number", portalUser.get("TEL_NBR").toString(), phoneNum.getAttribute("value").toString()+phoneNum1.getAttribute("value").toString()+phoneNum2.getAttribute("value").toString());
-	    Helper.compareEquals(testConfig, "Email address", portalUser.get("EMAIL_ADR_TXT").toString(), email.getAttribute("value").toString());
+		Helper.compareEquals(testConfig, "Comparing First Name", portalUser.get("FST_NM"), firstName);
+		Helper.compareEquals(testConfig, "Comparing Last Name", portalUser.get("LST_NM"), firstName);
+		Helper.compareEquals(testConfig, "Comparing Email Address", portalUser.get("EMAIL_ADR_TXT"), userEmailAdr.trim());
+
 	    return new ManageUsers(testConfig);
 	    
 	}
