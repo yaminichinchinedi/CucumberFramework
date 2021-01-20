@@ -26,12 +26,27 @@ public class BillingServiceInfoSteps extends TestBase {
     public void valdiate_BS_Info_Page_functionality() throws Throwable {
     	bsInfoPage.verifyBSInfoFunctionality();
     }
+//    @Then("^valdiate BS Info Page functionality \"([^\"]*)\"$")
+//    public void valdiate_BS_Info_Page_functionality(String paymentType) throws Throwable {
+//    	bsInfoPage.verifyBSInfoFunctionality(paymentType);
+//    }
+
 
     @Then("^validate Provider Tin Approval and functionality check$")
     public void validate_Provider_Tin_Approval_and_functionality_check() throws Throwable {
     	bsInfoPage.verifyaproveprovtin(); 
     }
     
-   
+    @Then("^User verifies the Trial End Date and updates it to one day later if trial is over$")
+    public void user_verifies_the_Trial_End_Date_and_updates_it_to_one_day_later_if_trial_is_over() throws Throwable {
+    	bsInfoPage.verifyTrialEndDateAndUpdateIfOver();
+    }
+
+    @Then("^User verifies the page text during trial$")
+    public void user_verifies_the_page_text_during_trial() throws Throwable {
+    	bsInfoPage.verifyPageText();
+    }
+
+
 	
 }

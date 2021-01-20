@@ -92,13 +92,16 @@ public class UPAHomePage extends HomePage {
 	
 	
 	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	
+	@FindBy(xpath = "//a[@id='tabBillingService']") 
+	WebElement lnkBsInfo;
 		
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
+		//Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
 	}
 
 	public ManageUsers clickManageUsersTab()
@@ -196,5 +199,8 @@ public class UPAHomePage extends HomePage {
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 	}
-
+	public void clickOnBSInfoTabUPA() {
+		Browser.wait(testConfig, 3);
+        Element.clickByJS(testConfig,lnkBsInfo, "Billing Service Information");
+	}
 }
