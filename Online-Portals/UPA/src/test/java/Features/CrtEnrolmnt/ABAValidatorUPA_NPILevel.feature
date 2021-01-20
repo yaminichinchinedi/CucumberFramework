@@ -6,8 +6,8 @@ Feature: US2690163UPANPI-Create Enrollment UPA- RTN API Request/Response - Org F
   When  ABN Validator Switch is set as 'Y'
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
-    @Rahul
+  	Then User clicks on Continue button of BeginEnrollment Page
+    @Rahul 
   Scenario: ABN Validators Financial Institution Information -NPI Level Validations
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |

@@ -1,12 +1,11 @@
 #Author: Rahul Krishna
-
-@CreateEnrollment @US1048061 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1048061 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
 
   Background: Create Enrollment BS Enrollment Type to Identify Administrators page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 #TS_001
 @UPASanity
   Scenario: TS_00001_Upon selection of Continue from the TIN eligibility status page, user navigates to the Organization Information page

@@ -47,7 +47,8 @@ public class BeginEnrollmentContinue {
 	@FindBy(id="tin")
 	WebElement rdoBillingTin;
 
-	@FindBy(xpath=".//*[@id='enrollment']/div/a[2]")
+	@FindBy(xpath="//*[@id='enrollment']/div[1]/a[2]")
+	//@FindBy(xpath="//a[contains(text(),'Continue')]")
 	WebElement btnContinueBS;
 
 	@FindBy(linkText="CANCEL ENROLLMENT")
@@ -148,6 +149,7 @@ public class BeginEnrollmentContinue {
 		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo"); 		
 		String enrollmentPaymentType=data.GetData(excelRowNo, "EnrollmentTypeMethod").trim();
 		testConfig.putRunTimeProperty("tin", tinNumber);
+		Browser.wait(testConfig, 5);
 		if(data.GetData(excelRowNo, "EnrollmentTypeOrg").toLowerCase().trim().equalsIgnoreCase("healthcare"))
 		{
 			enrollmentInfoObj.setEnrollType("HO");

@@ -37,12 +37,12 @@ public class CreateEnrollUsrTyp {
 	{
 		if (userType.equals("Provider"))
 		Browser.wait(testConfig, 5);
-		Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
-		//Element.selectByIndex(usrTyp, 1, "Provider User Type");
+		//Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
+		Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		
 		if (userType.equals("Billing Service"))
-			Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
-			//Element.selectByIndex(usrTyp, 2, "BS User Type");
+			//Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
+			Element.selectByIndex(usrTyp, 2, "BS User Type");
 		
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		Element.enterData(usrTIN, tinNumber, "Tin Number", "TIN");
