@@ -122,7 +122,7 @@ public class HomePage extends LoginUPA {
 		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
+		//Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
 	}
 	
 	//Default constructor
@@ -352,9 +352,9 @@ public class HomePage extends LoginUPA {
 	public MyProfile clickMyProfileTab() 
 	{
 		Element.expectedWait(myProfileTab, testConfig, "My Profile tab","My Profile tab");
+		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig,myProfileTab, "My Profile Tab");
 		return new MyProfile(testConfig);
-
 	}
 
 	public LoginUPA logOutFromUPA() {

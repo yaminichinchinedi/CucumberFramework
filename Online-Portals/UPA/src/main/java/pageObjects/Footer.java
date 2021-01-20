@@ -69,9 +69,11 @@ Browser.verifyURL( testConfig, expecteTrmsOfUsedURL);
 String actualcopyright=null;
 int cpyrghtlngth=0;
 Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+System.out.println(testConfig.driver.getCurrentUrl().toLowerCase());
 if( (testConfig.driver.getCurrentUrl().toLowerCase().contains("providerefteraenroll")) ||
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraproviderinfo")) ||
-(testConfig.driver.getCurrentUrl().toLowerCase().contains("validatebsbillingserviceinfo"))
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validatebsbillingserviceinfo")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterafinancialinfortn.do"))
 )
 {
 Element.expectedWait(cpyrightwthoutnobr, testConfig, "CopyRight Element without nobr", "CopyRight Element");
@@ -93,8 +95,8 @@ if(actualcopyright.charAt(0)!='2') {
 	actualcopyright=actualcopyright.substring(2);
 }
 int year=Calendar.getInstance().get(Calendar.YEAR);
-String expectedcopyright=year+" Payment Solutions and Optum Pay are provided/made possible by Optum Financial Services and its subsidiary Optum Bank, Inc., Member FDIC";
-String expectedOptumText=" Payment Solutions and Optum Pay are provided/made possible by Optum Financial Services and its subsidiary Optum Bank, Inc., Member FDIC";
+String expectedcopyright=year+" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
+String expectedOptumText=" Optum Pay solutions are made possible by Optum Financial, Inc. and its subsidiary Optum Bank, Inc., Member FDIC";
 String stryear=actualcopyright.substring(0, 4);
 String optum=actualcopyright.substring(4);
 if ( (Integer.parseInt(stryear)==year) && (optum.trim().equalsIgnoreCase(expectedOptumText.trim())) )

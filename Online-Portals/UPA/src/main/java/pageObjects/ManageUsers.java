@@ -1693,7 +1693,7 @@ public class ManageUsers extends AddUserDetails
 		if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && 
 				( portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy") ) )
 		{
-			verifyAddUserBtnEnabled();
+			verifyAddUserBtnEnabled(portalAccess);
 			deleteInsertedUser();
 		}
 		//FeeBased and Standard
@@ -1706,46 +1706,69 @@ public class ManageUsers extends AddUserDetails
 			if (recordCount >= 2)
 				verifyAddUserBtnDisabled();
 			else
-			verifyAddUserBtnEnabled();	
+			verifyAddUserBtnEnabled(portalAccess);	
 			deleteInsertedUser();
 		}
 		//LEGACY
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) && 
 			(portalAccess.equalsIgnoreCase("Legacy")|| portalAccess.equalsIgnoreCase("Standard")|| portalAccess.equalsIgnoreCase("Premium")) )
 		{
-			verifyAddUserBtnEnabled();
+			verifyAddUserBtnEnabled(portalAccess);
 			deleteInsertedUser();
 		}
 		//BS
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 			portalAccess.equalsIgnoreCase("BillingService"))
-			verifyAddUserBtnEnabled();
+			verifyAddUserBtnEnabled(portalAccess);
 		
 		//Payer
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 				portalAccess.equalsIgnoreCase("Payer"))
-			verifyAddUserBtnEnabled();
+			verifyAddUserBtnEnabled(portalAccess);
 		}
 		if(applicationTyp.equalsIgnoreCase("CSR"))
 		{
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 			portalAccess.equalsIgnoreCase("Premium")||portalAccess.equalsIgnoreCase("Standard")||portalAccess.equalsIgnoreCase("Legacy")
 					)
-					verifyAddUserBtnEnabled();
+					verifyAddUserBtnEnabled(portalAccess);
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 				portalAccess.equalsIgnoreCase("BillingService"))
-						verifyAddUserBtnEnabled();
+						verifyAddUserBtnEnabled(portalAccess);
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 				portalAccess.equalsIgnoreCase("Payer"))
-						verifyAddUserBtnEnabled();
+						verifyAddUserBtnEnabled(portalAccess);
 		}			
 		return this;
 	} 
 	
-	public ManageUsers verifyAddUserBtnEnabled(){
+	public ManageUsers verifyAddUserBtnEnabled(String portalAccess){
 		try{
-			String value=btnAddUser.getAttribute("disabled");
-			Helper.compareEquals(testConfig, "Add User button enabled", null, value);
+			
+			if(portalAccess.equalsIgnoreCase("Premium"))
+			{
+				//String value=btnAddUser.getAttribute("enabled").trim();
+				boolean value = btnAddUser.isEnabled();
+				System.out.println(value);
+				Helper.compareEquals(testConfig, "Add User Button is enabled", true, value);
+			}
+			
+			else if(portalAccess.equalsIgnoreCase("Standard"))
+			{
+				String value=btnAddUser.getAttribute("disabled").trim();
+				Helper.compareEquals(testConfig, "Add User Button is disabled", "true", value);
+			}
+			
+			else
+			{
+				Log.Comment("It is Legacy Mode and from Jan 16th it wont be present");
+			}
+			
+			/*
+			String value=btnAddUser.getAttribute("disabled").trim();
+			//Helper.compareEquals(testConfig, "Add User button is not enabled", true, value);
+			Helper.compareEquals(testConfig, "Add User Button", "true", value);
+			*/
 	}catch(Exception e){
 		Log.Fail("User button is enabled");
 	}
