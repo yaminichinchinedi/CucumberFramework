@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,309 +45,222 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 public class BillingServiceInfo {
-
-	@FindBy(xpath = "//select[@id='userTypeSelection']") WebElement usertypedrpdwn;
+	@FindBy(xpath = "//select[@id='userTypeSelection']") WebElement userTypeDrpDwn;
 	@FindBy(name="identifierNbr") WebElement txtboxTinNo;
-	@FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
-	@FindBy(xpath = "//td[contains(text(),'Billing Service Information')]") WebElement bsheader;
-	@FindBy(xpath = "//a[contains(text(),'Add Single Provider TIN')]") WebElement addtin;
-	@FindBy(xpath = "//a[contains(text(),'Upload Multiple Provider TINs')]") WebElement mulprovtin;
-	@FindBy(name="btnCancel") WebElement cancelbtn;
-	@FindBy(name="provderTin") WebElement enterprovtin;
-	@FindBy(xpath = "//tbody/tr[@id='singletin']/td[1]/input[2]") WebElement submitbtn;
-	@FindBy(xpath = "//th[contains(text(),'Provider TIN')]") WebElement provtin;
-	@FindBy(xpath = "/html/body/div/table/tbody/tr[2]/td/form/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[1]/th[1]/a") 
-	WebElement provTinHeaderPendingRequests;
-	
-	@FindBy(xpath = "//*[contains(text(),'Provider Name')]") WebElement provname;
-	@FindBy(xpath = "//*[contains(text(),'Request Date')]") WebElement reqdate;
-	@FindBy(xpath = "//*[contains(text(),'Status')]") WebElement status;
-	@FindBy(name="confirmCheckBox") WebElement confirmchkbox;
-	@FindBy(xpath = "//*[contains(text(),'Enrollment Status')]") WebElement enrlstatus;
-	@FindBy(xpath = "//*[contains(text(),'Confirm')]") WebElement confirm;
-	@FindBy(name="btnSave") WebElement btnsave;
-	@FindBy(name="btnSaveAssoc") WebElement btnSaveOnProvPage;
-	
+	@FindBy(xpath = "//input[@value='Search']") WebElement btnSearch;
+	@FindBy(xpath = "//td[contains(text(),'Billing Service Information')]") WebElement txtbsHeader;
+	@FindBy(linkText="Add Single Provider TIN") WebElement lnkAddTin;
+	@FindBy(linkText="Upload Multiple Provider TINs") WebElement lnkMulProvTin;
+	@FindBy(name="btnCancel") WebElement btnCancel;
+	@FindBy(name="provderTin") WebElement txtboxEnterProvTin;
+	@FindBy(xpath = "//tr[@id='singletin']/td/input[2]") WebElement btnSubmit;
+	@FindBy(xpath = "//th[contains(text(),'Provider TIN')]") WebElement provTinHeader;
+	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//th[1]") WebElement provTinHeaderPendingRequests;
+	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table//tr[11]//th[2]") WebElement providerNameHeader;
+	@FindBy(xpath = "//a[contains(text(),'Request Date')]") WebElement reqDateHeader;
+	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//th[4]") WebElement statusHeader;
+	@FindBy(name="confirmCheckBox") WebElement chkboxConfirm;
+	@FindBy(xpath = "//th[contains(text(),'Enrollment Status')]") WebElement enrlStatusHeader;
+	@FindBy(xpath = "//th[contains(text(),'Confirm')]") WebElement confirmHeader;
+	@FindBy(name="btnSave") WebElement btnSave;
+	@FindBy(name="btnSaveAssoc") WebElement btnSaveOnProvPage;	
 	@FindBy(name="btnCancel") WebElement btncancel;
-	@FindBy(xpath = "//td[2]//a[contains(text(),'Home')]") WebElement homebtn;
-	@FindBy(xpath="//a[contains(text(),'Billing Service Information')]") WebElement lnkbillingservice;
-	@FindBy(xpath = "//td[contains(text(),'Pending Requests')]") WebElement provpendreq;
-
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[17]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[2]") WebElement bsnamependreq;
+	@FindBy(xpath = "//td[2]//a[contains(text(),'Home')]") WebElement btnHome;
+	@FindBy(linkText="Billing Service Information") WebElement lnkBillingService;
+	@FindBy(xpath = "//td[contains(text(),'Pending Requests')]") WebElement txtprovPendReq;
 	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[17]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]") WebElement pendreqdate;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[19]/td/table/tbody/tr[1]/td") WebElement provhistory;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[19]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[1]") WebElement provhisdate;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[19]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[4]") WebElement proveffcdate;
-	@FindBy(name="apprCheck") WebElement apprvpendreq;
+	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[1]/td") WebElement provHistory;
+	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[2]//tr[2]//td[1]") WebElement provHisDate;
+	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[2]//tr[2]//td[4]") WebElement provEffcDate;
+	@FindBy(name="apprCheck") WebElement approvePendingReq;
 	@FindBy(name="effectiveDt_2317") WebElement pendeffectdate;
-	@FindBy(name="btnSaveAssoc") WebElement provsavebtn;
-	@FindBy(xpath = "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[2]") WebElement bsnamecheck;
-	@FindBy(xpath = "//*[contains(text(),'Termination Date: Invalid Data')]") WebElement terminateerror;
-	@FindBy(xpath = "//a[contains(text(),'Anniversary')]") WebElement annvrsybtn;
+	@FindBy(name="btnSaveAssoc") WebElement btnProvSave;
+	@FindBy(xpath = "//font[contains(text(),'Termination Date: Invalid Data')]") WebElement txtInvalidDateError;
+	@FindBy(linkText="Anniversary") WebElement lnkAnniversaryHeader;
 	@FindBy(name="remove") WebElement chkRemove;
-	
-	@FindBy(xpath = "//*[@id=\"billing-service-information-tabs\"]/div[1]/h2") WebElement pageText1;
-	@FindBy(xpath = "//*[@id=\"billing-service-information-tabs\"]/div[1]/p[2]") WebElement pageText2;
-	@FindBy(xpath = "//a[@id='tabBillingService']") WebElement lnkBsInfo;
-	@FindBy(xpath = "//*[@id=\"tabHome\"]") 
-	WebElement lnkHome;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[1]/th[3]/a") WebElement lnkReqDate;
-	
-	@FindBy(xpath="//*[@id=\\\"billingServiceViewInfoForm\\\"]/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr/td[1]")
-	List <WebElement> provTINs;
-	
-	
-	
-    private ViewPaymentsDataProvider dataProvider;
-	private TestBase testConfig;
+	@FindBy(xpath = "//table[1]//div//tr[2]//td[1]") WebElement provTinOnAddProvTinPage;
+	@FindBy(xpath = "//table[1]//div//tr[2]//td[2]") WebElement provNameOnAddProvTinPage;
+	@FindBy(xpath = "//table[1]//div//tr[2]//td[3]") WebElement enrlStatusOnAddProvTinPage;	
+	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//h2") WebElement pageText1;
+	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//p[2]") WebElement pageText2;
+	@FindBy(linkText="Billing Service Information") WebElement lnkBsInfo;
+	@FindBy(linkText="Home") WebElement lnkHome;
 
-	public BillingServiceInfo(TestBase testConfig)
-	{
+	private TestBase testConfig;
+	public BillingServiceInfo(TestBase testConfig){
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
-	
-	private String getTinCSR(String paymentType) {
-		
-		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return dataProvider.getTinForPaymentType(paymentType);
-	}
-	public String getBSTinCSR() {
+
+	public String getBSTinCSR(){
 		 int sqlRowNo = 16;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			String bsTIN = data.get("IDENTIFIER_NBR").toString(); 
-			testConfig.putRunTimeProperty("bsTIN", bsTIN);
-			String bsname= data.get("BS_NM").toString();
-			testConfig.putRunTimeProperty("bsname", bsname);
-		return bsTIN;
+			testConfig.putRunTimeProperty("bsTIN", data.get("IDENTIFIER_NBR").toString());
+			testConfig.putRunTimeProperty("bsname", data.get("BS_NM").toString());
+		return data.get("IDENTIFIER_NBR").toString();
 	}
-	public void verifyUserType(String paymentType, String usertype)
-	{
-		if(usertype.equalsIgnoreCase("Prov")) {
-		String tin=getTinCSR(paymentType);
+	
+	public void verifyUserType(String paymentType, String usertype){
+		if(usertype.equalsIgnoreCase("Prov")){
+		String tin=getProvTinCSR();
 	    System.setProperty("tin", tin); 
 		}
-		else if(usertype.equalsIgnoreCase("BS")) {
+		else if(usertype.equalsIgnoreCase("BS")){
 			String bsTIN=getBSTinCSR();
 		    System.setProperty("bsTIN", bsTIN); 
-		}
-		 
-		switch(usertype) 
-		 {
-		
-		
+		} 
+		switch(usertype){
 	        case "BS":
 	        {   
 			   String bsTIN = System.getProperty("bsTIN");
-			   Element.selectByVisibleText(usertypedrpdwn, "Billing Service", "Billing Service dropdown");
+			   Element.selectByVisibleText(userTypeDrpDwn, "Billing Service", "Billing Service dropdown");
 			   Element.click(txtboxTinNo, "Enter TIN");
 			   Element.enterData(txtboxTinNo, bsTIN, "Enter TIN for BS", "Enter BS TIN in CSR");
-			   Element.click(submitBtn, "Click Search Button");
+			   Element.click(btnSearch, "Click Search Button");
 	  	       break;
 	        }  
 	       case "PROV":
 	       {
 			   String provTIN = System.getProperty("provTIN");
-			   Element.selectByVisibleText(usertypedrpdwn, "Provider", "Provider dropdown");
+			   Element.selectByVisibleText(userTypeDrpDwn, "Provider", "Provider dropdown");
 			   Element.click(txtboxTinNo, "Enter TIN");
 			   Element.enterData(txtboxTinNo, provTIN, "Enter TIN for PROV", "Enter PROV TIN in CSR");
-			   Element.click(submitBtn, "Click Search Button");
+			   Element.click(btnSearch, "Click Search Button");
 	  	       break;
 	        }
 		 }
 	}
 	
-public String getProvTinCSR() {
+public String getProvTinCSR(){
 	 int sqlRowNo = 1340;
 		testConfig.getRunTimeProperty("bsTIN");
-		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		String provTIN = data.get("PROV_TIN_NBR").toString();  
-	return provTIN;
+		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1); 
+	return data.get("PROV_TIN_NBR").toString();  
 }
 	
-	public void verifyBSInfoFunctionality()
-	{
+	public void verifyBSInfoFunctionality(){
 		String provTIN=getProvTinCSR();
 	    System.setProperty("provTIN", provTIN); 
-		Browser.wait(testConfig, 5);
-		Element.click(addtin, "Add Single Provider TIN");
-		Element.click(enterprovtin, "Enter Provider Tin");
-		Element.enterData(enterprovtin, provTIN, "Enter Provider Tin", "EnterProvider Tin");
-		Element.click(submitbtn, "Submit Button");
-		Element.click(confirmchkbox, "Confirm Check Box");
+		Element.click(lnkAddTin, "Add Single Provider TIN");
+		Element.click(txtboxEnterProvTin, "Enter Provider Tin");
+		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "EnterProvider Tin");
+		Element.click(btnSubmit, "Submit Button");
+		Browser.waitForPageLoad(testConfig);
+		Element.click(chkboxConfirm, "Confirm Check Box");
 		verifyAddProvConfirmPage();
 		pendingRequestsFunction();
 		verifyUiFunction();
 	}
-	 
-		
-	public void verifyaproveprovtin() throws ParseException
-	{
-	    Element.click(homebtn, "Home Button");
-	    Browser.wait(testConfig, 3);
-	    Element.click(lnkbillingservice, "Billing Service Infomation Link in Home Page");
+	 	
+	public void verifyApproveProvTin() throws ParseException{
+	    Element.click(btnHome, "Home Button");
+	    Element.click(lnkBillingService, "Billing Service Infomation Link on Home Page");
 	    String provTIN = System.getProperty("provTIN");
-		Element.selectByVisibleText(usertypedrpdwn, "Provider", "Provider dropdown");
+		Element.selectByVisibleText(userTypeDrpDwn, "Provider", "Provider dropdown");
 	    Element.click(txtboxTinNo, "Enter TIN");
     	Element.enterData(txtboxTinNo, provTIN, "Enter TIN for PROV", "Enter PROV TIN in CSR");
-		Element.click(submitBtn, "Click Search Button");
-		String text=Element.findElement(testConfig, "xpath", "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[15]/td").getText() ;
-	
-		if(testConfig.driver.findElements(By.xpath("//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[15]/td")).size() != 0) 
+		Element.click(btnSearch, "Click Search Button");
+		if(testConfig.driver.findElements(By.xpath("//td[contains(text(),'No Billing Service associations exist')]")).size() != 0) 
 			Log.Comment("No Billing Service associations exist");
-		else {
-	    verifyProvFirstRow();
-		}
+		else 
+			verifyProvFirstRow();
 		verifyProvSecondRow();
 		verifyProvThirdRow();
 		verifyAssocProv();
-	  //verifyerrorsfordateformat();
+	  //verifyErrorsForInvaidDateFormat();
 		verifyDeleteAssoc();
 	}
 	
-	public void verifyProvFirstRow()
-	{
-		ArrayList<String> tinsAssocHeader = new ArrayList<String>();
+	public void verifyProvFirstRow(){
+		ArrayList<String> tinsAssocHeader = new ArrayList<String>(Arrays.asList("Provider TIN", "Name of Billing Service","Status","Effective Date","Anniversary","Remove","Renew for Additional Year","Termination Date"));
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
-		tinsAssocHeader.add("Provider TIN");
-		tinsAssocHeader.add("Name of Billing Service");
-		tinsAssocHeader.add("Status");
-		tinsAssocHeader.add("Effective Date");
-		tinsAssocHeader.add("Anniversary");
-		tinsAssocHeader.add("Remove");
-		tinsAssocHeader.add("Renew for Additional Year");
-		tinsAssocHeader.add("Termination Date");
-		int size = tinsAssocHeader.size();
 		Browser.waitForPageLoad(testConfig);
-		Browser.wait(testConfig, 5);
-		for(int i=1; i<=size; i++)												                                        
-		{																			
-			String allOptions=	Element.findElement(testConfig, "xpath", "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[1]/th["+i+"]").getText().toString().trim();												
-			
-			if(allOptions.contains("Renew for"))
-			{
-				allOptions = "Renew for Additional Year";
-			}
+		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
+			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id=\"billingServiceViewInfoForm\"]//tr[16]//table//tr[1]/th["+i+"]").getText().trim();															
 			tinsAssocHeaderUI.add(allOptions);
-		}
-		
+		}		
 		Helper.compareEquals(testConfig, "Provider BS Info Tab First Row Headers", tinsAssocHeader, tinsAssocHeaderUI);
-		
-	  if(testConfig.driver.findElements(By.xpath("//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[4]")).size() != 0)
-	  {
-		  String effecdate = Element.findElement(testConfig, "xpath", "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[4]").getText().trim();
-    	  Element.isValidFormat("mm/dd/yyyy",effecdate,Locale.ENGLISH);
-		  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", effecdate,Locale.ENGLISH));
+	  if(testConfig.driver.findElements(By.xpath("//table//tr[16]//tr[2]//td[4]")).size() != 0) {	  
+		  String effecDate = Element.findElement(testConfig, "xpath", "//table//tr[16]//tr[2]//td[4]").getText().trim();
+    	  Element.isValidFormat("mm/dd/yyyy",effecDate,Locale.ENGLISH);
+		  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", effecDate,Locale.ENGLISH));
 	  }
 	  else
-		  Log.Comment("No data present in the row to check Effective Date format in first row");
+		  Log.Pass("No data present in the row to check Effective Date format in first row");
 	  
-	  if(testConfig.driver.findElements(By.xpath("//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[5]")).size() != 0)
-	  {
-		  String annidate = Element.findElement(testConfig, "xpath", "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[5]").getText().trim();
+	  if(testConfig.driver.findElements(By.xpath("//table//tr[16]//tr[2]//td[5]")).size() != 0){
+		  String annidate = Element.findElement(testConfig, "xpath", "//table//tr[16]//tr[2]//td[5]").getText().trim();
     	  Element.isValidFormat("mm/dd/yyyy",annidate,Locale.ENGLISH);
 		  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", annidate,Locale.ENGLISH));
 	  }
 	  else
-		  Log.Comment("No data present in the row to check Anniversary Date format in first row");
-	  
-}
+		  Log.Pass("No data present in the row to check Anniversary Date format in first row");	  
+}	
 	
-	
-public void verifyProvSecondRow() throws ParseException
-	{
+public void verifyProvSecondRow() throws ParseException{
+		Helper.compareEquals(testConfig, "Pending Request Header in Provider Tab", "Pending Requests", txtprovPendReq.getText());
+		ArrayList<String> pendingReqHeaders = new ArrayList<String>(Arrays.asList("Provider TIN", "Name of Billing Service", "Request Date","Status","Approve","Deny","Effective Date","Notify"));
+		List<String> pendingReqHeadersUI = new ArrayList<String>();
 		
-		String pendreheader = provpendreq.getText();
-		Helper.compareEquals(testConfig, "Pending Request Header in Provider Tab existence", true, provpendreq.isDisplayed());
-		Helper.compareEquals(testConfig, "Pending Request Header in Provider Tab", "Pending Requests", pendreheader);
-		ArrayList<String> pendngreqheaders = new ArrayList<String>();
-		List<String> pendngreqheadersui = new ArrayList<String>();
-		pendngreqheaders.add("Provider TIN");
-		pendngreqheaders.add("Name of Billing Service");
-		pendngreqheaders.add("Request Date");
-		pendngreqheaders.add("Status");
-		pendngreqheaders.add("Approve");
-		pendngreqheaders.add("Deny");
-		pendngreqheaders.add("Effective Date");
-		pendngreqheaders.add("Notify");
-		int size = pendngreqheaders.size();
-		for(int i=1; i<=size; i++)										
-		{
-			String allOptions = testConfig.driver.findElement(By.xpath("//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[17]/td/table/tbody/tr[2]/td/div/table/tbody/tr[1]/th["+i+"]")).getText().trim();
-			pendngreqheadersui.add(allOptions);
+		for(int i=1; i<=pendingReqHeaders.size(); i++){																	
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
+			pendingReqHeadersUI.add(allOptions);
 		}
-		
-		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendngreqheaders, pendngreqheadersui);
-		String provtin = System.getProperty("provTIN");
-		String provtinreq = testConfig.driver.findElement(By.xpath("//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[17]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[1]")).getText().trim();
-		Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", provtin, provtinreq);
-		String bsnamedb = testConfig.getRunTimeProperty("bsname").trim();
-		String bsnamepndrequi = bsnamependreq.getText().trim();
-		Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", bsnamedb, bsnamepndrequi);
-	    int sqlRowNo = 1910;
-		Map curr_datedb = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		String curr_date = curr_datedb.get("CURRENT_DATE").toString();
-	    String pendreqdateui = pendreqdate.getText().trim();
-		Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(curr_date, "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdateui);
-		Element.isValidFormat("mm/dd/yyyy",pendreqdateui,Locale.ENGLISH);
-  	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendreqdateui,Locale.ENGLISH));
+		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendingReqHeaders, pendingReqHeadersUI);
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//tr");
+		String tin = System.getProperty("provTIN");
+		for (int i = 1; i < tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+			if (tinNo.equals(tin)) {
+				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
+				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
+				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
+				break;
+			}
+		}
+		int sqlRowNo = 1910;
+		Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdate.getText().trim());
+		Element.isValidFormat("mm/dd/yyyy",pendreqdate.getText().trim(),Locale.ENGLISH);
+  	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendreqdate.getText().trim(),Locale.ENGLISH));
 }
 	
-	public void verifyProvThirdRow() throws ParseException
-	{
-		String provhistoryui = provhistory.getText().trim();
-		Helper.compareEquals(testConfig, "History Header in Provider Tab existence", true, provhistory.isDisplayed());
-		Helper.compareEquals(testConfig, "History Header in Provider Tab", "History", provhistoryui);
-		ArrayList<String> historyheaders = new ArrayList<String>();
+	public void verifyProvThirdRow() throws ParseException{
+		Helper.compareEquals(testConfig, "History Header in Provider Tab", "History", provHistory.getText().trim());
+		ArrayList<String> historyheaders = new ArrayList<String>(Arrays.asList("Date","Provider TIN", "Name of Billing Service","Effective Date","End Date","Action Type","Name / Username"));
 		List<String> historyheadersui = new ArrayList<String>();
-		historyheaders.add("Date");
-		historyheaders.add("Provider TIN");
-		historyheaders.add("Name of Billing Service");
-		historyheaders.add("Effective Date");
-		historyheaders.add("End Date");
-		historyheaders.add("Action Type");
-		historyheaders.add("Name / Username");
-		
-		int size = historyheaders.size();
-		for(int i=1; i<=size; i++)
-		{																
-			String allOptions = testConfig.driver.findElement(By.xpath("//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[19]/td/table/tbody/tr[2]/td/div/table/tbody/tr[1]/th["+i+"]")).getText().trim();
+		for(int i=1; i<=historyheaders.size(); i++){																
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[1]//th["+i+"]")).getText().trim();
 			historyheadersui.add(allOptions);
 		}
 	    Helper.compareEquals(testConfig, "Provider BS Info Tab Third Row Headers", historyheaders, historyheadersui);
-		if(provhisdate.isDisplayed())
-		  {
-			  String provhisdateui = provhisdate.getText().trim();
-	    	  Element.isValidFormat("mm/dd/yyyy",provhisdateui,Locale.ENGLISH);
-			  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", provhisdateui,Locale.ENGLISH));
+		if(provHisDate.isDisplayed()){
+	    	  Element.isValidFormat("mm/dd/yyyy",provHisDate.getText().trim(),Locale.ENGLISH);
+			  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", provHisDate.getText().trim(),Locale.ENGLISH));
 		  }
 		  else
-			  Log.Comment("No data present in the row to check History Date format in Third row");
+			  Log.Pass("No data present in the row to check History Date format in Third row");
 		
-		if(proveffcdate.isDisplayed())
-		  {
-			  String proveffcdateui = proveffcdate.getText().trim();
-	    	  Element.isValidFormat("mm/dd/yyyy",proveffcdateui,Locale.ENGLISH);
-			  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", proveffcdateui,Locale.ENGLISH));
+		if(provEffcDate.isDisplayed()){
+	    	  Element.isValidFormat("mm/dd/yyyy",provEffcDate.getText().trim(),Locale.ENGLISH);
+			  Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", provEffcDate.getText().trim(),Locale.ENGLISH));
 		  }
 		  else
-			  Log.Comment("No data present in the row to check Effective Date format in Third row");
+			  Log.Pass("No data present in the row to check Effective Date format in Third row");
 		
-		Element.click(apprvpendreq, "Checkbox Aprrove Pending Request");
-		Element.click(provsavebtn, "Save Button");
+		Element.click(approvePendingReq, "Checkbox Aprrove Pending Request");
+		Element.click(btnProvSave, "Save Button");
 }
 	
-	public void verifyAssocProv()
-	{
+	public void verifyAssocProv(){
 		Browser.wait(testConfig, 3);
-	    annvrsybtn.click();
-	    int count = Element.findElements(testConfig, "xpath", "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr").size();
-		String bsnamecheckui = Element.findElement(testConfig, "xpath","//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr["+count+"]/td[2]").getText().trim();
-		String bsnameaddeddb = testConfig.getRunTimeProperty("bsname").trim();
-		Helper.compareEquals(testConfig, "Provider TIN got added properly or not", bsnamecheckui, bsnameaddeddb);
+		lnkAnniversaryHeader.click();
+	    int count = Element.findElements(testConfig, "xpath", "//table/tbody/tr[16]//tr//tr").size();
+		String bsNameCheckUI = Element.findElement(testConfig, "xpath","//table//tr[16]//tr//tr["+count+"]/td[2]").getText().trim();
+		Helper.compareEquals(testConfig, "Billing Service name for the provider TIN added", bsNameCheckUI, testConfig.getRunTimeProperty("bsname").trim());
 	}
-	
-	public void verifyerrorsfordateformat()
+/*	
+	public void verifyErrorsForInvaidDateFormat()
 	{
 		final String splsymbols = "$&@?<>~!%#";
 		String alphacheck = RandomStringUtils.randomAlphabetic(3); 
@@ -366,7 +280,7 @@ public void verifyProvSecondRow() throws ParseException
 //		jst.executeScript("arguments[1].value = arguments[0]; ", alphacheck, termdatecol);
 		Browser.wait(testConfig, 3);
 		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhabetic Characters", true, terminateerror.isDisplayed());
+		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhabetic Characters", true, txtInvalidDateError.isDisplayed());
 		Element.clearData(termdatecol, "Termination Date");
 		
 		Browser.wait(testConfig, 3);
@@ -377,7 +291,7 @@ public void verifyProvSecondRow() throws ParseException
 		Element.enterDataByJS(testConfig, termdatecol, alphanumcheck, "Checking alpha numeric entry for error check");
 		Element.click(chkRemove, "Remove checkbox");
 		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhanumeric", true, terminateerror.isDisplayed());
+		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhanumeric", true, txtInvalidDateError.isDisplayed());
 		Element.clearData(termdatecol, "Termination Date");
 		
 		Browser.wait(testConfig, 3);
@@ -387,43 +301,39 @@ public void verifyProvSecondRow() throws ParseException
 		Element.enterDataByJS(testConfig, termdatecol, splsymbols, "Checking Special Characters for error check");
 		Element.click(chkRemove, "Remove checkbox");
 		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Special Characters", true, terminateerror.isDisplayed());
+		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Special Characters", true, txtInvalidDateError.isDisplayed());
 		Element.clearData(termdatecol, "Termination Date");
 	
 		String effcdtui = System.getProperty("effcdt");
 		Element.click(termdatecol, "Termination Date");
 		Element.enterData(termdatecol, "Enter Valid Date Format", effcdtui, "Entering Date");
 		Element.click(chkRemove, "Remove checkbox");
-		Element.click(btnsave, "Save Button");	
+		Element.click(btnSave, "Save Button");	
 }
+*/	
 	
-	
-public void verifyDeleteAssoc()
-{
+public void verifyDeleteAssoc(){
 	String tin = System.getProperty("provTIN");
 	int sqlRowNo = 1911;
-	int record = DataBase.executeDeleteQuery(testConfig, 1);
+	int record = DataBase.executeDeleteQuery(testConfig, sqlRowNo);
 	
 }
 	
-public void verifyUiFunction()
-{
+public void verifyUiFunction(){
 	List<String> pend_his_headers = new ArrayList<String>();
-	Helper.compareEquals(testConfig, "Billing Service Information Header", true, bsheader.isDisplayed());
-	Helper.compareEquals(testConfig, "Add Single Provider TIN Header", true, addtin.isDisplayed());
-	Helper.compareEquals(testConfig, "Upload Multiple Provider TINs Header", true, mulprovtin.isDisplayed());
-	Helper.compareEquals(testConfig, "Cancel Button Header", true, cancelbtn.isDisplayed());
+	Helper.compareEquals(testConfig, "Billing Service Information Header", true, txtbsHeader.isDisplayed());
+	Helper.compareEquals(testConfig, "Add Single Provider TIN Header", true, lnkAddTin.isDisplayed());
+	Helper.compareEquals(testConfig, "Upload Multiple Provider TINs Header", true, lnkMulProvTin.isDisplayed());
+	Helper.compareEquals(testConfig, "Cancel Button Header", true, btnCancel.isDisplayed());
 }
 	
-public void pendingRequestsFunction()
-{
+public void pendingRequestsFunction(){
 	Browser.wait(testConfig, 7);
 	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provTinHeaderPendingRequests.isDisplayed());
-	Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, provname.isDisplayed());
-	Helper.compareEquals(testConfig, "Request Date Header in Pending Requests", true, reqdate.isDisplayed());
-	Helper.compareEquals(testConfig, "Status Header in Pending Requests", true, status.isDisplayed());
-	Browser.wait(testConfig, 3);
-	String provName;									 
+	Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, providerNameHeader.isDisplayed());
+	Helper.compareEquals(testConfig, "Request Date Header in Pending Requests", true, reqDateHeader.isDisplayed());
+	Helper.compareEquals(testConfig, "Status Header in Pending Requests", true, statusHeader.isDisplayed());
+	Browser.wait(testConfig, 3);							 
     String tin = System.getProperty("provTIN");
     List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//tbody/tr[13]/td[1]/table[1]/tbody/tr[2]/td/div/table/tbody/tr");
 	for (int i = 1; i < tinGridRows.size(); i++) {
@@ -441,41 +351,32 @@ public void pendingRequestsFunction()
 		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
 		Element.isValidFormat("mm/dd/yyyy",reqDate,Locale.ENGLISH);
 		Log.Comment("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", reqDate,Locale.ENGLISH));
-		
 }
 	
-public void verifyAddProvConfirmPage()
-{
-	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provtin.isDisplayed());
-    Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, provname.isDisplayed());
-    Helper.compareEquals(testConfig, "Enrollment Status Header in Pending Requests", true, enrlstatus.isDisplayed());
-    Helper.compareEquals(testConfig, "Confirm Header in Pending Requests", true, confirm.isDisplayed());
-    Helper.compareEquals(testConfig, "Save Button Header in Pending Requests", true, btnsave.isDisplayed());
+public void verifyAddProvConfirmPage(){
+	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provTinHeader.isDisplayed());
+    Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, providerNameHeader.isDisplayed());
+    Helper.compareEquals(testConfig, "Enrollment Status Header in Pending Requests", true, enrlStatusHeader.isDisplayed());
+    Helper.compareEquals(testConfig, "Confirm Header in Pending Requests", true, confirmHeader.isDisplayed());
+    Helper.compareEquals(testConfig, "Save Button Header in Pending Requests", true, btnSave.isDisplayed());
     Helper.compareEquals(testConfig, "Cancel Button Header in Pending Requests", true, btncancel.isDisplayed());
-	String providertin = Element.findElement(testConfig, "xpath", "//table[1]/tbody[1]/tr[1]/td[1]/div[1]/table[1]/tbody[1]/tr[2]/td[1]").getText().trim();
     String tin = System.getProperty("provTIN");
-	Helper.compareEquals(testConfig, "Provider TIN which is getting added", tin,providertin);
-	String provname = Element.findElement(testConfig, "xpath", "//table[1]/tbody[1]/tr[1]/td[1]/div[1]/table[1]/tbody[1]/tr[2]/td[2]").getText().trim().trim();
+	Helper.compareEquals(testConfig, "Provider TIN which is getting added", tin,provTinOnAddProvTinPage.getText().trim());
     int sqlRowNo = 1;
     testConfig.putRunTimeProperty("tin",tin);
     Map orgname = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-    Helper.compareEquals(testConfig, "Provider Name UI and DB", orgname.get("ORG_NM").toString().trim(),provname.trim());
-    String enrlstatus = Element.findElement(testConfig, "xpath", "//table[1]/tbody[1]/tr[1]/td[1]/div[1]/table[1]/tbody[1]/tr[2]/td[3]").getText();
-    if(enrlstatus == "Active")
-    {
-	   enrlstatus = "A";
-	   Helper.compareEquals(testConfig, "Provider Name UI and DB", orgname.get("ENRL_STS_CD").toString(),enrlstatus.trim());
-	 }
-	    Element.click(btnsave, "Save Button");
+    Helper.compareEquals(testConfig, "Provider Name UI and DB", orgname.get("ORG_NM").toString().trim(),provNameOnAddProvTinPage.getText().trim());
+    if(enrlStatusOnAddProvTinPage.getText().trim().equalsIgnoreCase("Active")) 
+	   Helper.compareEquals(testConfig, "Provider Enroll Status UI and DB", "A",orgname.get("ENRL_STS_CD").toString().trim());
+
+	Element.click(btnSave, "Save Button");
 }
 
 public void verifyTrialEndDateAndUpdateIfOver() throws Exception {
 	 int sqlRowNo = 1341;
 		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		String trialEndDate = data.get("PROC_DATA").toString();  
 		String currentDate = Helper.getCurrentDate("yyyy/MM/dd");
 		if(testConfig.driver.findElements(By.xpath("//*[@id=\"billing-service-information-tabs\"]/div[1]/h2")).size()==0) {	
-		//update to current date
 			currentDate = Helper.getCurrentDate("yyyy/MM/dd").replace("/", "-");
 			testConfig.putRunTimeProperty("currentDate", currentDate);
 			testConfig.getRunTimeProperty("currentDate");
@@ -489,13 +390,10 @@ public void verifyTrialEndDateAndUpdateIfOver() throws Exception {
 		else
 			Log.Comment("Trial is not over yet");
 }
+
 public void verifyPageText() {
-	String pageText1UI= pageText1.getText().trim();
-	String pageText2UI= pageText2.getText().trim();
-	String pageText1Expected= "Do you need full access to provider claim payment data?";
-	String pageText2Expected="If you need access to historical claim data and search tools, talk to your provider administrator about activating the full functionality of Optum Pay.";
-Helper.compareContains(testConfig, "Page Text in bold", pageText1Expected, pageText1UI);
-Helper.compareContains(testConfig, "Page Text", pageText2Expected, pageText2UI);
+Helper.compareContains(testConfig, "Page Text in bold", "Do you need full access to provider claim payment data?", pageText1.getText().trim());
+Helper.compareContains(testConfig, "Page Text", "If you need access to historical claim data and search tools, talk to your provider administrator about activating the full functionality of Optum Pay.", pageText2.getText().trim());
 }
 }
 	

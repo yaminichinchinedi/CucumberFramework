@@ -10,8 +10,6 @@ Scenario Outline: BS Info Functionality
    Then Select "<searchBy>" and TIN for "<usertype>" 
    Then valdiate BS Info Page functionality 
    And validate Provider Tin Approval and functionality check   
-   
-
 Examples:
 
         |    usertype     |   credentials     | searchBy |

@@ -95,7 +95,9 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(xpath = "//a[@id='tabBillingService']") 
 	WebElement lnkBsInfo;
-		
+	@FindBy(xpath = "//a[@id='tabOptumPay']") 
+	WebElement lnkOptumPaySol;
+	
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -203,4 +205,9 @@ public class UPAHomePage extends HomePage {
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkBsInfo, "Billing Service Information");
 	}
+	public void clickOnOptumPaySolutionsTabUPA() {
+		Browser.wait(testConfig, 3);
+        Element.clickByJS(testConfig,lnkOptumPaySol, "Billing Service Information");
+	}
+	
 }
