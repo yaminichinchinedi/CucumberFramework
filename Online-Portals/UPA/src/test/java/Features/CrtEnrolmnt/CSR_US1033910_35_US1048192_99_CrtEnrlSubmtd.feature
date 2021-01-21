@@ -89,5 +89,22 @@ Feature:Create Enrollment Home Page Validations
          |   credentials     |
          |    Super          |
 	
-   
+       @CSRUS3143570
+    Scenario Outline: Create Enrollment Enrollment Submitted
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+		Then User Select User Type as "Provider" and enter unique TIN and click Search
+		Then User select Yes button of TIN not enrolled page
+		Then User select User Type Enrollment as "VO" and click continue button 
+		Then User fills all the information  and click on Continue
+    Then User fills all the information on Identify Administrators page and click continue to W9
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+    #And Validate Data is saved in Database on Enrollment Page.
+    And Validate one corresponding row is inserted in Product Selection Table
+    
+    		Examples:
+
+         |   credentials     |
+         |    Super          |
    			

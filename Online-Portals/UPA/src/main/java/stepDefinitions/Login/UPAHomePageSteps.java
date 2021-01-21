@@ -100,6 +100,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	public void click_on_Manage_User_Link() throws Throwable {
 		homePage.clickManageUsersTab();
 	}
+	 
 
 	
 	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login as purged User\\.$")
@@ -163,5 +164,14 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	@When("^Click on UPA - Manage User Link$")
 	public void click_on_Upa_Manage_User_Link() throws Throwable {
 	    homePage.clickManageUsersLink();
+	}
+	@Then("^User clicks on Billing Service Information tab$")
+    public void user_clicks_on_Billing_Service_Information_tab() throws Throwable {
+	 homePage.clickOnBSInfoTabUPA();
+       
+    }
+	@When("^User clicks on Optum Pay Solutions tab$")
+	public void user_clicks_on_Optum_Pay_Solutions_tab() throws Throwable {
+		 homePage.clickOnOptumPaySolutionsTabUPA();
 	}
 }

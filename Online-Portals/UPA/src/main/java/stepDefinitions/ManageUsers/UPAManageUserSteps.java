@@ -35,7 +35,7 @@ public class UPAManageUserSteps extends TestBase {
 
     @Then("^Verifies error messages and associated tins with a user$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_Error_Message() throws Throwable {
-        addUserDetails =manageUser.clickAddNewUser();
+        addUserDetails =manageUser.clickAddNewUserUPA();
         addUserDetails.verifyErrorMessages();
     }
 
@@ -46,7 +46,7 @@ public class UPAManageUserSteps extends TestBase {
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Billing Service user$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_User_Service(String userType, String accessLevelOfNewUser) throws Throwable {
-        addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails=manageUser.clickAddNewUserUPA().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave();
         addUserDetails.verifyDetailsOfNewUser(userType);
     }
@@ -59,32 +59,28 @@ public class UPAManageUserSteps extends TestBase {
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer user$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_New_Payer_User_Service(String userType, String accessLevelOfNewUser) throws Throwable {
-        addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
+        addUserDetails=manageUser.clickAddNewUserUPA().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave();
         addUserDetails.verifyDetailsOfNewUser(userType);
     }
 
     @Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user$")
     public void user_enters_in_Upa_Manage_Users_Page_and_verify_New_Provider_User_Service(String userType, String accessLevelOfNewUser) throws Throwable {
-        addUserDetails=manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
-        addUserDetails.clickSave();
-        addUserDetails.verifyDetailsOfNewUser(userType);
-        
-        //delete the newly added user
-        manageUser.removeFistTinInGrid().clickSave();
+        addUserDetails=manageUser.clickAddNewUserUPA().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+ 
     }
     
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Provider user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Provider_user_using(String userType, String accessLevelOfNewUser, String stsCode) throws Throwable {
-		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
+		addUserDetails=manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUserUPA().fillNewUserInfo(stsCode).selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser);
         addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
 	}
 	
 	@Then("^Verifies details for \"([^\"]*)\" and \"([^\"]*)\" New Payer and BS user using \"([^\"]*)\"$")
 	public void verifies_details_for_and_New_Payer_and_BS_user_using(String userType, String accessLevelOfNewUser,
 			String stsCode) throws Throwable {
-		addUserDetails = manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUser()
+		addUserDetails = manageUser.clickPurgedChkBox(userType).getPurgedEmail().clickAddNewUserUPA()
 				.fillNewUserInfo(stsCode).selectTinAccessLvl(accessLevelOfNewUser);
 		addUserDetails.clickSave().verifyUserInList(userType).verifyDetailsOfNewUser(userType);
 	}
@@ -117,8 +113,8 @@ public class UPAManageUserSteps extends TestBase {
 	}
 	
 	@Then("^verify Add user button is enabled\\.$")
-	public void verify_Add_user_button_is_enabled() throws Throwable {
-		manageUser.verifyAddUserBtnEnabled();
+	public void verify_Add_user_button_is_enabled(String portalAccess) throws Throwable {
+		manageUser.verifyAddUserBtnEnabled(portalAccess);
 
 	manageUser.clickActiveUserName("PROV");
 	manageUser.validateAddingSameTIN();
@@ -190,7 +186,7 @@ public class UPAManageUserSteps extends TestBase {
 
 		@Then("^Add a general user and select the user from the list for \"([^\"]*)\"$")
 		public void add_a_general_user_and_select_the_user_from_the_list_for(String accessType) throws Throwable {
-			manageUser.clickAddNewUser();
+			manageUser.clickAddNewUserUPA();
 			manageUser.fillNewUserInfo();
 			manageUser.enterTinSaveAndVerify(accessType);
 		}
@@ -214,7 +210,7 @@ public class UPAManageUserSteps extends TestBase {
 	@Then("^Create a New User with \"([^\"]*)\" and \"([^\"]*)\" and verify DB$")
 	public void create_a_New_User_with_and(String accessType, String accessLevelOfNewUser) throws Throwable {
 		int rowcount = manageUser.fetchRecordCount();
-		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+		addUserDetails = manageUser.clickAddNewUserUPA().fillNewUserInfo().selectAndAddTin().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
 		manageUser.verifyRowCount(rowcount);
 		
 	}
@@ -237,14 +233,14 @@ public class UPAManageUserSteps extends TestBase {
 	@Then("^Create a New User with \"([^\"]*)\" and verify DB$")
 	public void create_a_New_User_with_and_verify_DB(String accessLevel) throws Throwable {
 		int rowcount = manageUser.fetchRecordCount();
-		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickSave();
+		addUserDetails = manageUser.clickAddNewUserUPA().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickSave();
 		manageUser.verifyRowCount(rowcount);
 	}
 
 	@Then("^Create a New User with \"([^\"]*)\", \"([^\"]*)\" flag and verify DB$")
 	public void create_a_New_User_with_flag_and_verify_DB(String accessLevel, String AssociateBS) throws Throwable {
 		int rowcount = manageUser.fetchRecordCount();
-		addUserDetails = manageUser.clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickAsscociateNoButton().addProviderAssociation().clickSave();
+		addUserDetails = manageUser.clickAddNewUserUPA().fillNewUserInfo().selectTinAccessLvl(accessLevel).clickAsscociateNoButton().addProviderAssociation().clickSave();
 		manageUser.verifyRowCount(rowcount);
 	}
 	
@@ -272,12 +268,7 @@ public class UPAManageUserSteps extends TestBase {
 	public void verify_Add_user_button_is_disabled() throws Throwable {
 		manageUser.verifyAddUserBtnDisabled();
 	}
-	
-	@Then("^User verifies Add User button visiblity for \"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
-	public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String portalAccess, String sysMode) throws Throwable {
-		testConfig.putRunTimeProperty("sysMode", sysMode);
-		manageUser.verifyAddUsrBtnVsblBySystem_Mode("UPA",portalAccess);
-	}
+
 	@Then("^Verify user List on UI from DB for \"([^\"]*)\" using \"([^\"]*)\"$")
 	public void verify_user_List_on_UI_from_DB_for_using(String userType, String searchCriteria) throws Throwable {
 		manageUser.verifyUserList(userType, searchCriteria);
@@ -301,7 +292,12 @@ public class UPAManageUserSteps extends TestBase {
 	public void enter_TIN_with_click_on_Add_TIN_Association_Click_on_save_and_User_updated(String portalAccess, String tinTyp) throws Throwable {
 		manageUser.enterPortalTIN(portalAccess, tinTyp);
 	}
-	
+
+	@Then("^User verifies Add User button visiblity for \"([^\"]*)\" and \"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy for UPA$")
+	public void user_verifies_Add_User_button_visiblity_for_and_based_on_like_FeeBased_or_Legacy_for_UPA(String systemMode, String portalAccess, String userType) throws Throwable {
+		testConfig.putRunTimeProperty("sysMode", systemMode);
+    	manageUser.verifyAddUsrBtnVsblBySystem_ModeUPA(portalAccess, systemMode, userType);
+	}
 
 	
 }

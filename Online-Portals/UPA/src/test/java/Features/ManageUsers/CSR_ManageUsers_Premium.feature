@@ -1,4 +1,6 @@
 #Author: Rahul Krishna
+
+@cloudCSRManageUsers
 Feature: CSR Manage User Functionality for Premium Tins
 
 @CSRUS2879930 @OctRelease
@@ -6,7 +8,7 @@ Scenario Outline: CSR Manage Purse User
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
     And   Users selects  "<userType>" from dropdown and enter Tin  based on "<tinTyp>" and "<portalAccess>"
-    Then User verifies Add User button visiblity for "<tinTyp>","<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.         
     
 Examples:
 	  |    userType |   credentials     |tinTyp |	portalAccess    |System Mode|
@@ -24,25 +26,25 @@ Examples:
      # |      PROV   |   Super     	    |VO			|   TIN not found  |FeeBased    |#--Legacy(Need to check) 
 
 		
-		@CSRUS2879930 @OctRelease
+		@CSRUS2879930 @OctRelease 
 		Scenario Outline: CSR Manage Purse User for Billing Service
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
     And   Users selects  "<userType>" from dropdown and enter Tin or select payer
-    Then User verifies Add User button visiblity for "CSR","BillingService" based on "<System Mode>" like FeeBased or Legacy.         
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.    
     
 Examples:
-	  |    userType   |   credentials     |tinTyp |	portalAccess    |
-    |      BS       |   Super     	    |BS			|   Premium       |
+	  |    userType   |   credentials     |tinTyp |	portalAccess    |System Mode|
+    |      BS       |   Super     	    |BS			|   Premium       | FEEBASED  |
     
-  	@CSRUS2879930 @OctRelease
+  	@CSRUS2879930 @OctRelease 
   	Scenario Outline: CSR Manage Purse User for Payer
     Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link
     And   Users selects  "<userType>" from dropdown and enter Tin or select payer
-    Then User verifies Add User button visiblity for "CSR","Payer" based on "<System Mode>" like FeeBased or Legacy.         
-    
+    Then User verifies Add User button visiblity for "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy.   
+             
 Examples:
-	  |    userType   |   credentials     |
-    |      PAY       |   Super     	    |
+	  |    userType   |   credentials     |System Mode|
+    |      PAY       |   Super     	    |FEEBASED  |
    														

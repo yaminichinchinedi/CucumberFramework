@@ -243,7 +243,7 @@ public class ProviderInformationEFTERAEnroll {
 		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
 		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
 		
-//		Element.click(chkOther, "Other sub checkbox");
+		//Element.click(chkOther, "Other sub checkbox");
 
 	//	Element.click(btnContinue, "Continue button");
 		Browser.wait(testConfig, 5);
@@ -262,6 +262,7 @@ public class ProviderInformationEFTERAEnroll {
 			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"), "Continue/Save Changes Button");
 
 		}
+
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
