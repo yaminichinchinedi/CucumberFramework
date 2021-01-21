@@ -15,10 +15,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.core.JsonParser.Feature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import main.java.api.base.CreateConnection;
 import main.java.api.pojo.epsPaymentDetailRequest.request.ObjectFactory;
 import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
-import main.java.api.pojo.epspaymentsearch.response.EpsPaymentsSummarySearchResponse;
+import main.java.api.pojo.epspaymentsearch.jsonresponse.EpsPaymentsSummarySearchResponse;
 import main.java.reporting.Log;
 
 
@@ -79,15 +82,31 @@ public class EpsSearchRemittanceRequestHelper extends CreateConnection {
 	        }
 
 		}
-		
-		@Override
-		public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException
-		{
-			JAXBContext jaxbContext = JAXBContext.newInstance(EpsPaymentsSummarySearchResponse.class);   
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller(); 
-			EpsPaymentsSummarySearchResponse searchResponse= (EpsPaymentsSummarySearchResponse) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));  
-	        return searchResponse;		
 
+	@Override
+	public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException {
+		JAXBContext jaxbContext = JAXBContext.newInstance(EpsPaymentsSummarySearchResponse.class);
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) jaxbUnmarshaller.unmarshal(new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)));
+		return searchResponse;
+	}
+
+		@Override
+		public Object convertResponseJSONToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException
+		{
+			{
+				EpsPaymentsSummarySearchResponse eps = null;
+				ObjectMapper mapper = new ObjectMapper();
+//		      mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		      mapper.enable(Feature.ALLOW_TRAILING_COMMA);
+		      try {
+		    	  eps = mapper.readValue(response, EpsPaymentsSummarySearchResponse.class);
+		      } catch (IOException e) {
+		          e.printStackTrace();
+		      }
+		      return eps;
+			}
+			
 		}
 		
 		

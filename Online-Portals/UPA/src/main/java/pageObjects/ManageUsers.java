@@ -61,6 +61,22 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@value='Add User']")
 	WebElement btnAddUser;
 	
+	
+	@FindBy(xpath="//span[@class='noTooltipIcon wrapperTooltip']")
+	WebElement btnAddUserdisabled;
+	
+	
+	@FindBy(xpath="//input[@class='px-3 m-1 btn-secondary' and @value = ' + Add User'] ")
+	WebElement btnAddUserUPA;
+	
+	
+	@FindBy(xpath="//button[@class='px-3 m-1 btn-secondary']")
+	WebElement addUserBtn;
+	
+	
+	@FindBy(xpath="//input[@value='+ Add User']")
+	WebElement btnAddUserPAY;
+	
 	@FindBy(xpath="//input[@value='Resend Registration Email']")
 	WebElement btnRsndRegEmail;
 	
@@ -236,7 +252,18 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//input[@name='Yes']") 
 	WebElement btnDeleteuserYes ;
-
+	
+	@FindBy(xpath="//input[@type='checkbox' and @value='on']") 
+	WebElement emailcheckboxUI ;
+	
+	@FindBy(xpath="//div[@class='manageUsers__userListTable_rows']/table/tbody/tr[1]/td") 
+	WebElement usernameUI;
+	
+	@FindBy(xpath="//input[@value=' Save ']") 
+	WebElement savebtn;
+	
+	@FindBy(xpath="//input[@class='px-3 m-1 btn-secondary' and @value = '+ Add User']")
+	WebElement btnAddUserpayer;
 
 	private TestBase testConfig;
 	LoginCSR csrPage;
@@ -386,6 +413,18 @@ public class ManageUsers extends AddUserDetails
 		return new CancelManageUser(testConfig);
 	}
 	
+	
+	public AddUserDetails clickAddNewUserUPA()
+	{
+		//Element.clickByJS(testConfig,btnAddUserUPA, "Add User");
+		if(testConfig.driver.findElements(By.xpath("//input[@class='px-3 m-1 btn-secondary' and @value = ' + Add User']")).size() != 0)
+			Element.clickByJS(testConfig,btnAddUserUPA, "Add User");
+		else
+			Element.clickByJS(testConfig,addUserBtn, "Add User");
+			
+	   return new AddUserDetails(testConfig);
+	}
+	
 	public ManageUsers clickCSRDelete()
 	{
 		Element.clickByJS(testConfig,btnDelete, "Delete Button");
@@ -441,20 +480,28 @@ public class ManageUsers extends AddUserDetails
 	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig) throws InterruptedException
 	{  
 		List <WebElement> userNames=null;
+		ArrayList<String> UsersListUI1=new ArrayList<String>();
 		ArrayList<String> UsersListUI=new ArrayList<String>();
 		try{
-			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			userNames=testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
+			
+			
 		   }
 		catch(Exception e){
 			Log.Comment("Finding user List again");
-			userNames=testConfig.driver.findElements(By.xpath("//div[@id='flow']//tbody//a"));
+			userNames=testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
+			
 		   }
 	   
 		try{
 		for(WebElement userName:userNames)
 		 { 
-			UsersListUI.add(userName.getText().toString().toUpperCase().trim());	
+			UsersListUI1.add(userName.getText().toString().toUpperCase().trim());
+			
 		 }
+		
+		UsersListUI = removeDuplicates(UsersListUI1); 
+		
 		}
 		catch(Exception e)
 		{
@@ -561,38 +608,24 @@ public class ManageUsers extends AddUserDetails
 
 	public ManageUsers clickActiveUserName(String userType)
 	{
-		String activeUser=getActiveUser(userType);
-		testConfig.putRunTimeProperty("activeUser", activeUser);
-		for(WebElement userName:userNames)
-		{ 
-		  if(userName.getText().toString().toUpperCase().contains(activeUser))
-		   {
-			  Element.click(userName, "UserName: "+ " " +activeUser);
-			  break;
-		   }
-	     }
-		
-		if(userType.equalsIgnoreCase("PAY"))
-			 Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage Payer Users");
-		else
-		Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		Browser.wait(testConfig, 3);
-		return new ManageUsers(testConfig);
+	  String emailadr = email.getText();
+      testConfig.putRunTimeProperty("emailadr", emailadr);
+	  int sqlRowNo=1923;
+	  Map Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	  Searchedtin.get("PROV_TIN_NBR").toString();
+      return new ManageUsers(testConfig);
 	}
 	
 	
 	
 	public ManageUsers validateAddingSameTIN()
 	{
-		
-		String tinNoToBeSelected= Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[1]").getText();
-	    Element.selectByValue(drpDwnSelectTin, tinNoToBeSelected, "select tin as " + tinNoToBeSelected);
-		Browser.waitForLoad(testConfig.driver);
-		clickAddTin();
+		int sqlNo = 416;
+		String newAddedTin=selectAndAddTin(sqlNo);
+		Log.Comment("Tin number for whom access level is to be changed is :" + " "+ newAddedTin);
 		Browser.wait(testConfig, 2);
-		String expected=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
-		String actual=Element.findElement(testConfig, "xpath", "//form[@id='myProfileForm']/div[2]/table[1]/tbody/tr[6]/td/table/tbody/tr[4]/td").getText();
-		Helper.compareEquals(testConfig, "Error Message comparision", expected, actual);
+		String actual=Element.findElement(testConfig, "xpath", "//div[@id='manage-users']//td[contains(text(),'TIN-NPI cannot')]").getText();
+		Helper.compareEquals(testConfig, "Error Message comparision", "TIN-NPI cannot be added, already exist in the grid.", actual.trim());
 		return new ManageUsers(testConfig);
 	}
 	
@@ -686,51 +719,33 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers changeAndVerifyAccLvlEmailNotify(String userType) throws InterruptedException
 	{
-		//int sqlNo=257;
-		int sqlRowNo=11;
 		int sqlNo=416;
-
-
-		//Clicks on an active user displayed in User List
-
-		clickActiveUserName(userType);
+        clickActiveUserName(userType);
 		String newAddedTin=selectAndAddTin(sqlNo);
 		Log.Comment("Tin number for whom access level is to be changed is :" + " "+ newAddedTin);
 		testConfig.putRunTimeProperty("tinNo",newAddedTin);
-		
-		//get tin index from tin grid
 		int tinIndex=getTinIndexfromTinGrid(newAddedTin);
-		//Add newAddedTin as general and verify it
-		chooseAccessLvl("General", newAddedTin,tinIndex).clickSave();
-		//get tin index from tin grid
+		String tin = testConfig.getRunTimeProperty("tinNo");
+    	WebElement list = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]"));
+		Element.selectByValue(list, "G", "Selecting General From Dropdown");
 		tinIndex=getTinIndexfromTinGrid(newAddedTin);
 		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
-		
-		changeEmailNotifyInd(userType, newAddedTin,tinIndex);
-		
-		//VerifyEmailNotification
+	    changeEmailNotifyInd(userType, newAddedTin,tinIndex);
 		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
-		
-		//change access level from general to admin and click cancel and Yes and verify
-		chooseAccessLvl("Administrator", newAddedTin,tinIndex);
 	    HomePage home=clickCancel().clickYes();
 	    home.clickManageUsersTab().clickSpecificUserName(testConfig.getRunTimeProperty("activeUser"));
-	    verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
-	    
-	    //change access Level from general to admin and cancel and No and then click save and verify 
-	    chooseAccessLvl("Administrator", newAddedTin,tinIndex).clickCancel().clickNo();
-	    clickSave().verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+	  
 	    return this;
 	}
 	public ManageUsers changeEmailNotifyInd(String userType,String newAddedTin, int tinIndex)
 	{
-//		int index=getTinIndexfromTinGrid(newAddedTin);
-		    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-		   
-		    if(userType.contains("PROV"))
-				   emailChkbox=tinGridRows.get(tinIndex).findElements(By.tagName("td")).get(5).findElement(By.tagName("input"));
-			
-		Element.click(emailChkbox, "Email Check box");
+		tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__tinGrid_container_div']/table/tbody/tr"));
+		if(userType.contains("PROV"))
+		{	 
+		   String tin = testConfig.getRunTimeProperty("tinNo");
+		   WebElement emailChkbox = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/input[contains(@type,'checkbox')]"));
+			Element.click(emailChkbox, "Email Check box");
+		}
 		clickSave();
 		return this;
 	}
@@ -740,30 +755,45 @@ public class ManageUsers extends AddUserDetails
 		int index=0;
 		WebElement accessLvlDrpDwn=null;
 		Browser.wait(testConfig, 2);
-//		index=getTinIndexfromTinGrid(newAddedTin);
-		tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-		accessLvlDrpDwn=tinGridRows.get(tinIndex).findElement(By.tagName("select"));
-		//Select Access Level as General for the new added tin
+		int i = testConfig.driver.findElements(By.xpath("//select[@id='accessLevel']")).size();
+		accessLvlDrpDwn= testConfig.driver.findElement(By.xpath("//select[@name='GridListResults["+i+"].accessLevel']"));
 		Element.selectByVisibleText(accessLvlDrpDwn, accessLvl, "Select "+ accessLvl+" as access level");
 		Browser.waitForLoad(testConfig.driver);
 		return this;
 	}
-	public ManageUsers verifyEmailNotifyAccLvlFromDB(String userType,String newAddedTin,int tinIndex)
+	public void verifyEmailNotifyAccLvlFromDB(String userType,String newAddedTin,int tinIndex)
 	{
-//		int index=0;
-		int sqlRowNo=11;
-		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//	    index=getTinIndexfromTinGrid(newAddedTin);
-	    tinGridRows = testConfig.driver.findElements(By.xpath("//div[@class='subheadernormal' and not(contains(@id,'flow'))]//table//tr"));
-	   
-	    if(userType.contains("PROV"))
-			   emailChkbox=tinGridRows.get(tinIndex).findElements(By.tagName("td")).get(5).findElement(By.tagName("input"));
-			
-	    String emailIndicator=emailChkbox.getAttribute("checked")==null?"N":"Y";
-	    Helper.compareEquals(testConfig, "Access Level", emailIndicator, portalUserData.get("EMAIL_NTFY_IND").toString());
-	    WebElement accessLvlDrpDwn=tinGridRows.get(tinIndex).findElement(By.tagName("select"));
-	    Helper.compareEquals(testConfig, "Access Level", accessLvlDrpDwn.getAttribute("value").toString(), portalUserData.get("ACCESS_LVL").toString());
-		return this;
+		String emailChkboxUI = null;
+		if(userType.contains("PROV"))
+	    {
+          String tin = testConfig.getRunTimeProperty("tinNo");
+		  WebElement  emailChkboxUI1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/input[contains(@type,'checkbox') and @checked='checked']"));
+          boolean emailChkboxUI2 = emailChkboxUI1.isEnabled();
+          String emailChkboxes=Boolean.toString(emailChkboxUI2);
+	      if(emailChkboxUI1.isSelected())
+	         emailChkboxUI = "Y";
+	      else
+	         emailChkboxUI = "N";
+	       Element.click(savebtn, "Save Button");
+	       String activeuser = usernameUI.getText();
+	       String lst_nm = activeuser.substring(0, activeuser.lastIndexOf(','));
+	       String fst_nm = activeuser.substring(activeuser.lastIndexOf(',')+1,activeuser.length()).trim();
+	       
+	       int sqlRowNo=279;
+	       testConfig.putRunTimeProperty("lst_nm", lst_nm);
+	       testConfig.putRunTimeProperty("fst_nm", fst_nm);
+	       Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	       Helper.compareEquals(testConfig, "Access Level", emailChkboxUI, portalUserData.get("EMAIL_NTFY_IND").toString());
+           tin = testConfig.getRunTimeProperty("tinNo");
+	       String  access_lvl1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]/option[@selected='selected']")).getText();
+           String access_lvl = null;
+           if(access_lvl1.contains("General"))
+    	         access_lvl = "G";
+    	   else
+    	         Log.Fail("Access Level for that TIN");
+    	   
+		   Helper.compareEquals(testConfig, "Access Level", access_lvl, portalUserData.get("ACCESS_LVL").toString().trim());
+         }
 	}
 	public int getTinIndexfromTinGrid(String newAddedTin){
 		int index=0;
@@ -1529,13 +1559,7 @@ public class ManageUsers extends AddUserDetails
 	{  
 		int sql=123; //need to update this..check from other branches
 		ArrayList<String> usersFromDB=new ArrayList<>();
-		try {
-		if(System.getProperty("App").equalsIgnoreCase("CSR"))
-		selectPurgedCheckbox();
-		}
-		catch (Exception e) {
-			Log.Comment("App is UPA");
-		}
+
 		if(searchCriteria.equalsIgnoreCase("purgedUsers")&&userType.contains("PAY"))
 		{
 			HashMap<Integer,HashMap<String, String>> userDetails=DataBase.executeSelectQueryALL(testConfig, sql);
@@ -1679,66 +1703,38 @@ public class ManageUsers extends AddUserDetails
 		if (testConfig.getRunTimeProperty("TobeDeleted")!=null && testConfig.getRunTimeProperty("TobeDeleted").equals("deletedTINProv"))
 			DataBase.executeDeleteQuery(testConfig, 25);
 	}
+	
+	
+	public void deleteInsertedUserportal()
+	{
+	    int sqlRowNo = 1920;
+		String email = System.getProperty("email");
+		testConfig.putRunTimeProperty("email", email);
+		Map portal_id = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+		String portal_user_id = portal_id.get("PORTAL_USER_ID").toString();
+		sqlRowNo = 1921;
+	    testConfig.putRunTimeProperty("portal_user_id", portal_user_id);
+		DataBase.executeDeleteQuery(testConfig, 1921);
+		sqlRowNo = 1922;
+		testConfig.putRunTimeProperty("portal_user_id", portal_user_id);
+		DataBase.executeDeleteQuery(testConfig, 1922);
+	}
 		
-	public ManageUsers verifyAddUsrBtnVsblBySystem_Mode(String applicationTyp,String portalAccess){
-		
+	public ManageUsers verifyAddUsrBtnVsblBySystem_Mode(String systemMode,String portalAccess)
+	{
 		int sqlRowNoupdate=1607;
 		DataBase.executeUpdateQuery(testConfig,sqlRowNoupdate );
-		
 		int sqlRowNo=1606;
 		Map system_Mode = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		if(applicationTyp.equalsIgnoreCase("UPA"))
-		{
-			//Feebased and Premium or Legacy
-		if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && 
-				( portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy") ) )
-		{
-			verifyAddUserBtnEnabled(portalAccess);
-			deleteInsertedUser();
-		}
-		//FeeBased and Standard
-		if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && portalAccess.equalsIgnoreCase("Standard"))
-		{
-			int sqlRowNoStandardTinCount=1608;
-			Map noofRecords = DataBase.executeSelectQuery(testConfig,sqlRowNoStandardTinCount, 1);
-			int recordCount=Integer.valueOf((String) noofRecords.get("TOTALACTPR"));
-
-			if (recordCount >= 2)
-				verifyAddUserBtnDisabled();
-			else
-			verifyAddUserBtnEnabled(portalAccess);	
-			deleteInsertedUser();
-		}
-		//LEGACY
-		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) && 
-			(portalAccess.equalsIgnoreCase("Legacy")|| portalAccess.equalsIgnoreCase("Standard")|| portalAccess.equalsIgnoreCase("Premium")) )
-		{
-			verifyAddUserBtnEnabled(portalAccess);
-			deleteInsertedUser();
-		}
-		//BS
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
-			portalAccess.equalsIgnoreCase("BillingService"))
-			verifyAddUserBtnEnabled(portalAccess);
-		
-		//Payer
-		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
-				portalAccess.equalsIgnoreCase("Payer"))
-			verifyAddUserBtnEnabled(portalAccess);
-		}
-		if(applicationTyp.equalsIgnoreCase("CSR"))
-		{
-		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
-			portalAccess.equalsIgnoreCase("Premium")||portalAccess.equalsIgnoreCase("Standard")||portalAccess.equalsIgnoreCase("Legacy")
-					)
+			portalAccess.equalsIgnoreCase("Premium")||portalAccess.equalsIgnoreCase("Standard")||portalAccess.equalsIgnoreCase("Legacy"))
 					verifyAddUserBtnEnabled(portalAccess);
 		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
 				portalAccess.equalsIgnoreCase("BillingService"))
 						verifyAddUserBtnEnabled(portalAccess);
-		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")|| system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY")) &&
-				portalAccess.equalsIgnoreCase("Payer"))
+		if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && (( portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy")) && (portalAccess.equalsIgnoreCase("Payer")))))
 						verifyAddUserBtnEnabled(portalAccess);
-		}			
+				
 		return this;
 	} 
 	
@@ -1746,29 +1742,11 @@ public class ManageUsers extends AddUserDetails
 		try{
 			
 			if(portalAccess.equalsIgnoreCase("Premium"))
-			{
-				//String value=btnAddUser.getAttribute("enabled").trim();
-				boolean value = btnAddUser.isEnabled();
-				System.out.println(value);
-				Helper.compareEquals(testConfig, "Add User Button is enabled", true, value);
-			}
-			
-			else if(portalAccess.equalsIgnoreCase("Standard"))
-			{
-				String value=btnAddUser.getAttribute("disabled").trim();
-				Helper.compareEquals(testConfig, "Add User Button is disabled", "true", value);
-			}
-			
+			      Helper.compareEquals(testConfig, "Add User Button is enabled", true, btnAddUser.isEnabled());
+		    else if(portalAccess.equalsIgnoreCase("Standard"))
+			      Helper.compareEquals(testConfig, "Add User Button is disabled", "true", btnAddUser.getAttribute("disabled").trim());
 			else
-			{
-				Log.Comment("It is Legacy Mode and from Jan 16th it wont be present");
-			}
-			
-			/*
-			String value=btnAddUser.getAttribute("disabled").trim();
-			//Helper.compareEquals(testConfig, "Add User button is not enabled", true, value);
-			Helper.compareEquals(testConfig, "Add User Button", "true", value);
-			*/
+		         Log.Comment("It is Legacy Mode and from Jan 16th it wont be present");
 	}catch(Exception e){
 		Log.Fail("User button is enabled");
 	}
@@ -1778,34 +1756,12 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers verifyAddUserBtnDisabled(){
 		try{
-			String value=btnAddUser.getAttribute("disabled");
-			Helper.compareEquals(testConfig, "Add User button disabled", "true", value);
+			 Helper.compareEquals(testConfig, "Add User button disabled", "true", btnAddUser.getAttribute("disabled"));
 	}catch(Exception e){
 		Log.Fail("User button is enabled");
 	}
 		return this;
 	}
-	
-//	public ManageUsers verifyAddUserBtnEnabledOrDisabled(String portalAccess)
-//	{
-//		if("Standard".equals(portalAccess)){
-//			try{
-//					String value=btnAddUser.getAttribute("disabled");
-//					Helper.compareEquals(testConfig, "Add User button disabled", "true", value);
-//			}catch(Exception e){
-//				Log.Fail("User button is enabled");
-//			}
-//		}
-//		else if("Premium".equals(portalAccess)){
-//			try{
-//				String value=btnAddUser.getAttribute("disabled");
-//				Helper.compareEquals(testConfig, "Add User button enabled", null, value);
-//		}catch(Exception e){
-//			Log.Fail("User button is enabled");
-//		}
-//	}
-//		return this;
-//	}
 
 	public void validateTermsNConditionsforBS() throws InterruptedException
 	{
@@ -2654,10 +2610,6 @@ public class ManageUsers extends AddUserDetails
 	{
 		Element.click(rdoNo, "No Radio Button");
 		Browser.wait(testConfig, 2);
-		for(int i=1;i<tinGridRows.size();i++)
-		{
-		Element.click(Element.findElement(testConfig, "xpath", "//form[@id='bsForm']/div[2]/table[2]/tbody/tr/td/table/tbody/tr/td/div/table/tbody/tr[2]/td[6]"), "Remove tin checkbox");
-		}
 		int sqlRowNo=0;
 		if (portalAccess.equalsIgnoreCase("Premium") && (tinTyp.equalsIgnoreCase("AO")||tinTyp.equalsIgnoreCase("AV")))
 		 sqlRowNo=1601;
@@ -2684,8 +2636,112 @@ public class ManageUsers extends AddUserDetails
 		  
 		  btnSave.click();
 		  Helper.compareEquals(testConfig, "Updated msg",  Element.findElement(testConfig, "xpath", "//td[contains(text(),'Your user changes were updated successfully')]").getText(), "Your user changes were updated successfully");
+		  removetinadded();
+		  
 		
 	}
+		
+public void removetinadded()
+{
+	WebElement delete = testConfig.driver.findElement(By.xpath("//div[@class='manageUsers__tinGrid_container_div']//td[contains(text(),'521362758')]/following-sibling::td/div[contains(@class,'delete')]"));
+	delete.click();
+}
+		
+		
+		
+		public ManageUsers verifyAddUsrBtnVsblBySystem_ModeUPA(String portalAccess, String systemMode, String userType)
+		{
+         	int sqlRowNo=1606;
+			Map system_Mode = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+
+			if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && ((portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy"))) 
+					&& (userType.contains("PROV")))
+			{
+				verifyAddUserBtnEnabledUPA(portalAccess);
+				deleteInsertedUserportal();
+			}
+			
+			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")) || (portalAccess.equalsIgnoreCase("Standard") &&  (userType.contains("PROV"))))
+			{
+				int sqlRowNoStandardTinCount=1608;
+				Map noofRecords = DataBase.executeSelectQuery(testConfig,sqlRowNoStandardTinCount, 1);
+				int recordCount=Integer.valueOf((String) noofRecords.get("TOTALACTPR"));
+
+				if (recordCount >= 2)
+					verifyAddUserBtnDisabledUPA();
+				else
+				{
+				   verifyAddUserBtnEnabledUPA(portalAccess);	
+				   clickAddNewUserUPA().fillNewUserInfo().selectAndAddTin();
+				   deleteInsertedUserportal();
+				}
+			}
+
+			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") || system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("LEGACY") 
+					&&  (portalAccess.equalsIgnoreCase("Premium") &&  (userType.contains("BS") || (userType.contains("PAY"))))))
+				
+				verifyAddUserBtnEnabledUPA(portalAccess);
+			else
+				Log.failure("Condition criteria mismatch");
+			
+			
+			return this;
+		} 
+		
+		
+		
+		public void verifyAddUserBtnEnabledUPA(String portalAccess){
+			try{
+
+				if(testConfig.driver.findElements(By.xpath("//button[@class='px-3 m-1 btn-secondary' ]/b")).size() != 0)
+					Helper.compareEquals(testConfig, "Add User Button is enabled", true, addUserBtn.isEnabled());
+				else if (testConfig.driver.findElements(By.xpath("//input[@class='px-3 m-1 btn-secondary' and @value = ' + Add User']")).size() != 0)
+	             	Helper.compareEquals(testConfig, "Add User Button is enabled", true, btnAddUserUPA.isEnabled());
+	            else if (testConfig.driver.findElements(By.xpath("//input[@class='px-3 m-1 btn-secondary' and @value = '+ Add User']")).size() != 0)
+					Helper.compareEquals(testConfig, "Add User Button is enabled", true, btnAddUserpayer.isEnabled());
+				else
+					Log.failure("Add User Button is disabled for Premium User");
+		}catch(Exception e){
+			Log.Fail("User button is not enabled so entered catch block");
+		}
+			
+			
+		}
+		
+		public void verifyAddUserBtnDisabledUPA()
+		{
+			if(addUserBtn.getAttribute("disabled").toString().equalsIgnoreCase("true"))
+			{
+			   String value = "true";
+		       Helper.compareEquals(testConfig, "Add User button is not enabled", "true", value);
+			}
+			else
+			    Log.Fail("User Button is Enabled");
+
+			
+		}
+		
+		 public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) 
+		    { 
+		  
+		        // Create a new ArrayList 
+		        ArrayList<T> newList = new ArrayList<T>(); 
+		  
+		        // Traverse through the first list 
+		        for (T element : list) { 
+		  
+		            // If this element is not present in newList 
+		            // then add it 
+		            if (!newList.contains(element)) { 
+		  
+		                newList.add(element); 
+		            } 
+		        } 
+		  
+		        // return the new list 
+		        return newList; 
+		    } 
+		
 }
 
 
