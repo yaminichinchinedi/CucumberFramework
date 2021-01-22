@@ -165,5 +165,22 @@ Examples:
 						|	   byDOP&SuPAYcriberID       |	 PAY_Gen  	|    PAY       | 	       byDOP                |	
 						| byCheckNoOfReoriginNacha      |	 PAY_Gen     |    PAY       | 	  byCheckNo                 |	
 						|    byCheckNoOfConslPayDtl     |	 PAY_Gen 	|    PAY       | 	     byCheckNo        	    |	
+
+
+
+@US2948697															
+Scenario Outline: - verify search results for search remittance
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		Then User clicks on Search Remittance link for UPA
+		And User enters tin for UPA Search Remittance Tin Page for "<paymentType>" through "<usertype>" and click on continue button
+		Then verify error messages in search results
+		Then User enters "<Criteria Type>" and click on search button.
+		Then verify search results for "<Criteria Type>"	
+	Examples:
+						|			paymentType			| credentials 	|   usertype  |        Criteria Type          |
+	         	|	 MoreThan13Months   |	  PAY_Admin   |    PAYER    | 	       byDOP  	            |	
+	         	|	 MoreThan13Months   |	  	PAY_Gen   |    PAYER    | 	       byDOP  	            |	
+
+
 																															
 																		
