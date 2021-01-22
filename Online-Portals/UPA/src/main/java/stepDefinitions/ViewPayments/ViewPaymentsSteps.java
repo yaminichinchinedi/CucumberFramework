@@ -69,7 +69,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @When("^Click on View Payments Link for UPA$")
     public void click_on_View_Payments_Link_for_UPA() throws Throwable {
-        
+    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", "10677045");
                viewPayments.clickViewPaymentsTab();
     }
     
@@ -281,9 +281,14 @@ public class ViewPaymentsSteps extends TestBase {
 
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
-        
     	paySum.verifySavArchbtnNotPresent();
     }
+    
+
+	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
+	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
+		paySum.verifySaveBtnDisplay(portalAccess);
+	}
 
     @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (\\d+)field as enabled\\.$")
     public void validate_Claim_Count_ePRA_pPRA_and_Payment_status_fields_appear_with_a_gray_box_with_value_N_A_and_field_as_enabled(int arg1) throws Throwable {
@@ -296,29 +301,75 @@ public class ViewPaymentsSteps extends TestBase {
 		paySum.selectTinNverfyPagRfrsh();
 	}
 
-
-    //Amit code imported.Modify and check all the codes
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
-    	paySum.verifyQuickSrchFilterOptions("Standard");
-    }
-
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
-    	paySum.verifyPaymentStatusFilter("Standard");
-    }
-
     @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
     public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
-    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    	if(System.getProperty("Application").contains("UPA"))
+    		paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    	if(System.getProperty("Application").contains("CSR"))
+    		paySum.verifyColumnPresent("ACH/Payment Status").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
     }
-
-  
 
     @Then("^Validate payment summary page for only single NPI payments for \"([^\"]*)\"$")
     public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable
     {
     	paySum.verifyNPI(paymentType);
     }
+    
+    @Then("^User clicks on claim count grayed out column\\.$")
+    public void user_clicks_on_claim_count_grayed_out_column() throws Throwable {
+    	paySum.clickGrayedClaimCount();
+    }
+
+	@Then("^User clicks on Get started button\\.$")
+	public void user_clicks_on_Get_started_button() throws Throwable {
+		paySum.clickGetStarted();
+	}
+    
+	@Then("^User verifies the pop up for user type having access as \"([^\"]*)\"\\.$")
+	public void user_verifies_the_pop_up_for_user_type_having_access_as(String userType) throws Throwable {
+		paySum.verifyPopUp(userType);
+	}
+
+    
+    @Then("^User verifies bring more power to you pop up and click on I accept button\\.$")
+    public void user_verifies_bring_more_power_to_you_pop_up_and_click_on_I_accept_button() throws Throwable {
+       paySum.verifyGetStartedModal();
+    }
+    
+    @Then("^User verifies the entry in product selection table with portal record status as PS\\.$")
+    public void user_verifies_the_entry_in_product_selection_table_with_portal_record_status_as_PS() throws Throwable {
+       paySum.verifyPrdctSlctnTbl();
+    }
+    
+    @Then("^User click on cross to close the pop up\\.$")
+    public void user_click_on_cross_to_close_the_pop_up() throws Throwable {
+       paySum.clickCloseOnPopUp();
+    }
+    
+    @Then("^Click on Payment number and go to Remittance Detail screen\\.$")
+    public void click_on_Payment_number_and_go_to_Remittance_Detail_screen() throws Throwable {
+        paySum.clickPaymentNumber("View Payments");
+    }
+    
+    @Then("^Validate the data between Single Payment Summary page and poped up Print payment Summary page$")
+    public void validate_the_data_between_Single_Payment_Summary_page_and_poped_up_Print_payment_Summary_page() throws Throwable {
+    	paySum.vaidateHeadersColumns("View Payments");
+    }
+    
+    @Then("^Validate Fee Amount column is not displayed\\.$")
+    public void validate_Fee_Amount_column_is_not_displayed() throws Throwable {
+    	paySum.verifyColumnIsNotPresent("Fee Amount");
+    }
+    
+	
+	@Then("^Validate Fee Amount column is displayed\\.$")
+	public void validate_Fee_Amount_column_is_displayed() throws Throwable {
+		paySum.verifyColumnPresent("Fee Amount");
+	}
+	
+	@Then("^Validate amount is displayed for payments present in debit fee rate table\\.$")
+	public void validate_amount_is_displayed_for_payments_present_in_debit_fee_rate_table() throws Throwable {
+		paySum.verifyFeeAmountDash();
+	}
 
 }
