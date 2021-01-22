@@ -50,7 +50,7 @@ public class UploadW9 {
 		this.testConfig = testConfig;
 		Browser.checkPageReadyState(testConfig.driver);
 		PageFactory.initElements(testConfig.driver, this);
-		
+
 
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/div[5]/a[1]"), 60);
 
@@ -62,8 +62,10 @@ public class UploadW9 {
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AV"))
 			expectedURL="/UploadW9EFTERAEnroll";
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AO"))
-			//expectedURL="/validateefterafinancialinfo";
-		expectedURL="/validateEFTERAFinancialInfoRtn";
+			if(enrollmentInfoObj.getNpi() != null)
+				expectedURL="/validateEFTERAFinancialInfoNPIRtn";
+			else
+				expectedURL="/validateEFTERAFinancialInfoRtn";
 		else
 			expectedURL="/validateBillingServiceContacts";
 		

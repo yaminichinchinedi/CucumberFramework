@@ -1,11 +1,12 @@
 #Author: Rahul Krishna 
+@UPACreateEnrollment
 Feature: Create Enrollment Home Page Validations 
 
 Scenario Outline: US1351172_Create Enrollment_AO_duplicate Primary_Email 
 
-	Given User navigates to UPA Sys Test application 
-	When User Clicks on Enroll Now from the landing page 
-	Then User Select a How you heard option and  click on Continue button 
+    Given User navigates to UPA Sys Test application
+    When User Clicks on Enroll Now from the landing page
+    Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page 
 		|Enrollment Type|
 		|     AO        |	
@@ -26,10 +27,10 @@ Scenario Outline: US1351172_Create Enrollment_AO_duplicate Primary_Email
 	
 		
 Scenario Outline: US1351172_Create Enrollment_AO_duplicate Primary_Email 
-	
-		Given User navigates to UPA Sys Test application 
-		When User Clicks on Enroll Now from the landing page 
-		Then User Select a How you heard option and  click on Continue button 
+
+	    Given User navigates to UPA Sys Test application
+	    When User Clicks on Enroll Now from the landing page
+	    Then User clicks on Continue button of BeginEnrollment Page
 		Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page 
 			|Enrollment Type|
 			|     AO        |

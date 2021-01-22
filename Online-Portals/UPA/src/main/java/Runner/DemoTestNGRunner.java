@@ -92,14 +92,12 @@ import main.java.reporting.Log;
         features = "src/test/java/Features",
         glue = {"main/java/stepDefinitions"},
         monochrome=true,
-        plugin = { 
-                
-                "html:target/cucumber-reports/cucumber-pretty",
+        plugin = { "pretty","html:target/cucumber-reports/cucumber-pretty",
                 "json:target/cucumber-reports/CucumberTestReport.json",
                 "rerun:target/cucumber-reports/rerun.txt"},
 		        dryRun=false,
 		        strict=true,
-		        tags={"@xyz"}
+		        tags={"@UPAMyProfile"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

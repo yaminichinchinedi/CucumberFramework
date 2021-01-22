@@ -1,13 +1,12 @@
-
 #Author:Rahul Krishna
-@UPAUS2690163
+@UPAUS2690163 @UPACreateEnrollment
 Feature: US2690163UPAOrg-Create Enrollment UPA- RTN API Request/Response - Org Financial Institution Information
 
   Background: ABA Validator - Financial Institution Page
     When  ABN Validator Switch is set as 'Y'
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+  	Then User clicks on Continue button of BeginEnrollment Page
 #TS_001,TS_003
 
   Scenario: Create Enrollment-UPA- RTN API Request/Response- Format Bank Info
