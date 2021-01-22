@@ -314,5 +314,62 @@ public class ViewPaymentsSteps extends TestBase {
     {
     	paySum.verifyNPI(paymentType);
     }
+    
+    @Then("^User clicks on claim count grayed out column\\.$")
+    public void user_clicks_on_claim_count_grayed_out_column() throws Throwable {
+    	paySum.clickGrayedClaimCount();
+    }
+
+	@Then("^User clicks on Get started button\\.$")
+	public void user_clicks_on_Get_started_button() throws Throwable {
+		paySum.clickGetStarted();
+	}
+    
+	@Then("^User verifies the pop up for user type having access as \"([^\"]*)\"\\.$")
+	public void user_verifies_the_pop_up_for_user_type_having_access_as(String userType) throws Throwable {
+		paySum.verifyPopUp(userType);
+	}
+
+    
+    @Then("^User verifies bring more power to you pop up and click on I accept button\\.$")
+    public void user_verifies_bring_more_power_to_you_pop_up_and_click_on_I_accept_button() throws Throwable {
+       paySum.verifyGetStartedModal();
+    }
+    
+    @Then("^User verifies the entry in product selection table with portal record status as PS\\.$")
+    public void user_verifies_the_entry_in_product_selection_table_with_portal_record_status_as_PS() throws Throwable {
+       paySum.verifyPrdctSlctnTbl();
+    }
+    
+    @Then("^User click on cross to close the pop up\\.$")
+    public void user_click_on_cross_to_close_the_pop_up() throws Throwable {
+       paySum.clickCloseOnPopUp();
+    }
+    
+    @Then("^Click on Payment number and go to Remittance Detail screen\\.$")
+    public void click_on_Payment_number_and_go_to_Remittance_Detail_screen() throws Throwable {
+        paySum.clickPaymentNumber("View Payments");
+    }
+    
+    @Then("^Validate the data between Single Payment Summary page and poped up Print payment Summary page$")
+    public void validate_the_data_between_Single_Payment_Summary_page_and_poped_up_Print_payment_Summary_page() throws Throwable {
+    	paySum.vaidateHeadersColumns("View Payments");
+    }
+    
+    @Then("^Validate Fee Amount column is not displayed\\.$")
+    public void validate_Fee_Amount_column_is_not_displayed() throws Throwable {
+    	paySum.verifyColumnIsNotPresent("Fee Amount");
+    }
+    
+	
+	@Then("^Validate Fee Amount column is displayed\\.$")
+	public void validate_Fee_Amount_column_is_displayed() throws Throwable {
+		paySum.verifyColumnPresent("Fee Amount");
+	}
+	
+	@Then("^Validate amount is displayed for payments present in debit fee rate table\\.$")
+	public void validate_amount_is_displayed_for_payments_present_in_debit_fee_rate_table() throws Throwable {
+		paySum.verifyFeeAmountDash();
+	}
 
 }

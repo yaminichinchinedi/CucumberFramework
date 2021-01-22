@@ -298,5 +298,9 @@ public class RemittanceDetailSteps extends TestBase {
 	public void validate_data_in_remittance_detail_screen() throws Throwable {
 		remitDetail.verifyRemittanceDetailScreen();
 	}
-
+	
+	 @Then("^Click on Claim number on Remittance Detail screen and go to Claim Detail screen\\.$")
+	 public void click_on_Claim_number_on_Remittance_Detail_screen_and_go_to_Claim_Detail_screen() throws Throwable {
+		 remitDetail.clickClaimNumber();
+	 }
 }

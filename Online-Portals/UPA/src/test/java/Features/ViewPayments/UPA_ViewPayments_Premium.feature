@@ -3,7 +3,7 @@
 Feature: UPA Manage User Functionality for Premium TIN
 
   	#Author: AMIT
-  	@UPAViewPayments_US2793429 @OctRelease
+  	@UPAViewPayments_US2793429 @OctRelease @ViewPaymentStable
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -24,7 +24,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		
  			
  		#Author: AMIT
- 		@UPAViewPayments_US2783429 @OctRelease 
+ 		@UPAViewPayments_US2783429 @OctRelease @ViewPaymentStable
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -46,7 +46,7 @@ Feature: UPA Manage User Functionality for Premium TIN
  			 
 		
 		#Author: AMIT
-		@UPAViewPayments_US2783429 
+		@UPAViewPayments_US2783429 @ViewPaymentStable
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -62,7 +62,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		
 		
 		#Author: AMIT
-		@UPAViewPayments_US2783429 
+		@UPAViewPayments_US2783429 @ViewPaymentStable
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		When Click on View Payments Link for UPA
@@ -77,6 +77,27 @@ Feature: UPA Manage User Functionality for Premium TIN
       |    BS_Gen		    | 	   BS		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
 		
 		
+		#Author: Amit
+		@US2973009 @NovRelease @ViewPaymentStable
+		Scenario Outline: Access Payments - View Payments - Provider Premium
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
+		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
+		Then Click on Payment number and go to Remittance Detail screen.
+		Then Click on Claim number on Remittance Detail screen and go to Claim Detail screen.
+		Then Click on Payment number on Claim detail screen and go to single Payment View Payment screen.
+		Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+		Then Click on print Payment Summary button.
+		And  Set FISL Parameters "<key>" and "<value>"
+		Then Validate the data of Print Payment Summary page.
+		Then Validate the data between Single Payment Summary page and poped up Print payment Summary page
+    
+		 Examples:
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
+      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
+    
 		
 		
 		
