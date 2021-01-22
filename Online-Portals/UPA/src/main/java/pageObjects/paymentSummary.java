@@ -2657,7 +2657,7 @@ public void verifyFailedPaymentPopUp()
 		if(pageNo%10!=0 && pageNo<totalNoOfPages)
 		{  
 			 int pageToBeClicked=pageNo+1;
-			 Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
+			 Element.findElement(testConfig,"xpath","//div[@id='view-payments']/table//tr[1]/td/div[2]/div[2]/span/a[contains(text()," + pageToBeClicked + ")]").click();
 			 Log.Comment("Clicked Page number : " + pageToBeClicked);
 			 Browser.waitForLoad(testConfig.driver);
 		}
@@ -3348,7 +3348,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	}
 	
 	public paymentSummary verifyColumnValuesNA(){
-		searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
 	    for(int i=1;i<searchResultRows.size();i++)
 	     {
 	    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText());
