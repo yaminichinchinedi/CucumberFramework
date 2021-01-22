@@ -104,7 +104,7 @@ public class CSRHomePage {
 	WebElement lnkOptPaySoln;
 	
 	@FindBy(linkText="Manage Internal Users")
-	WebElement linkMnagaeInternalUSer;
+	WebElement lnkManageInternalUSer;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -170,7 +170,7 @@ public class CSRHomePage {
            
     }
     public void clickManageInternalUserlink() {
-		Element.clickByJS(testConfig, linkMnagaeInternalUSer, "Manage Internal Users Link");
+		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
 		
 		
 	}

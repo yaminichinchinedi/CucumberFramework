@@ -25,9 +25,6 @@ public class ManageInternalUsers {
 	
 	@FindBy(name="buttonS")
 	WebElement btnSearchManagInternalUser;
-	
-	@FindBy(xpath="//option[@value='0028']")
-	WebElement tt;
 		
 	@FindBy(name="Remove")
 	List <WebElement> btnRemove;
@@ -42,8 +39,15 @@ public class ManageInternalUsers {
 	WebElement lnkOptPaySoln;
 	
 	@FindBy(id="logOutId")
-	WebElement linklogOut;
-	//Element.findElement(testConfig, "id", "logOutId")
+	WebElement lnkLogOut;
+	
+	@FindBy(xpath="//option[@value='0028']")
+	WebElement optumPaySolutionsTransaction;
+	@FindBy(xpath="//td[contains(text(),'The CSR User Id belongs to Super User Group. Pleas')]")
+	WebElement errorEnteringSuperUser;
+	
+	String env=System.getProperty("env");
+	String id;
 	public ManageInternalUsers(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -54,49 +58,39 @@ public class ManageInternalUsers {
 
 	
 	public void enterUserId(String userId) {
-		 String env=System.getProperty("env");		 
-		String id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userId+"_"+env);
+		id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userId+"_"+env);
 		Element.enterDataByJS(testConfig, txtboxUserId, id, "csr USERID");
 		Element.clickByJS(testConfig, btnSearchManagInternalUser , "search for userid");
-		testConfig.putRunTimeProperty("userId", userId);
 		if (userId.equalsIgnoreCase("Super"))
-		{  
-			
-			Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//td[contains(text(),'The CSR User Id belongs to Super User Group. Pleas')]"), "error is thrown");
-			
+		{Element.verifyElementPresent(errorEnteringSuperUser, "error is thrown");
 		}
 		
 	}
 
-	public void editSelectedTransactions(String buttonType) {
-		String userId=testConfig.getRunTimeProperty("userId");
+	public void editSelectedTransactions(String userId,String Action) {
 		if (!userId.equalsIgnoreCase("Super"))
 		{
-		if(buttonType.equalsIgnoreCase("Remove"))
-			{Element.click(Element.findElement(testConfig, "xpath", "//option[@value='0028']"),"OPSOl transaction");
-			Element.clickByJS(testConfig, btnRemove.get(1),"btnremove");
-			Browser.wait(testConfig,2);
-			}
-		else if(buttonType.equalsIgnoreCase("Add"))
-			{
-			Element.click(Element.findElement(testConfig, "xpath", "//*[@id=\"availableTransaction\"]/option"),"OPSOl transaction");
-			Element.clickByJS(testConfig, btnAdd.get(1),"btnremove");
-			Browser.wait(testConfig,2);
-			}
-		
-			
+		 if(Action.equalsIgnoreCase("Remove"))
+			 {Element.click(optumPaySolutionsTransaction,"OPSOl transaction");
+			 Element.clickByJS(testConfig, btnRemove.get(1),"btnremove");
+			 Browser.wait(testConfig,2);
+			 }
+		else if(Action.equalsIgnoreCase("Add"))
+			{Element.click(optumPaySolutionsTransaction,"OPSOl transaction");
+			 Element.clickByJS(testConfig, btnAdd.get(1),"btnremove");
+			 Browser.wait(testConfig,2);
+			}	
 		Element.clickByJS(testConfig, btnSubmit, "Save");
-		Browser.wait(testConfig,3);
-	    Element.clickByJS(testConfig, Element.findElement(testConfig, "id", "logOutId"), "logOutId");
-	}
+		Browser.wait(testConfig,2);
+		Element.clickByJS(testConfig,lnkLogOut,"logging Out of the portal");
+	   }
 		else
-			Element.clickByJS(testConfig,linklogOut , "logOut of the portal");
+			Element.clickByJS(testConfig,lnkLogOut,"logging Out of the portal");
 		
 	}
 
-	public void optumPaySollinkPresentorNot(String Action) {
+	public void optumPaySolutionsLinkPresentorNot(String userId,String Action) {
 		Browser.wait(testConfig,2);
-		String userId=testConfig.getRunTimeProperty("userId");
 		if (!userId.equalsIgnoreCase("Super"))
 		{
 		if(Action.equalsIgnoreCase("Remove"))
@@ -104,7 +98,7 @@ public class ManageInternalUsers {
 		if(Action.equalsIgnoreCase("Add"))
 			Element.verifyElementPresent(lnkOptPaySoln, "OptumPaySol link");
 		}
-		Element.clickByJS(testConfig,linklogOut , "logOut of the portal");
+		Element.clickByJS(testConfig,lnkLogOut , "logging Out of the portal");
 		
 	}
 	

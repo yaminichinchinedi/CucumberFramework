@@ -12,20 +12,20 @@ public class ManageInternalUsersStep extends TestBase
 	
 
 	@Then("^Enter \"([^\"]*)\" in userid$")
-	public void enter_in_userid(String userId) throws Throwable {
+	public void enter_userId_inManageInternalUsers(String userId) throws Throwable {
 		manageInternalUser.enterUserId(userId);
 	}
 	
    
-   @Then("^Edit OptumPay Sol from Transactions \"([^\"]*)\"$")
-   public void edit_OptumPay_Sol_from_Transactions(String Action) throws Throwable {
-	   manageInternalUser.editSelectedTransactions(Action);
+	@Then("^Edit OptumPay Sol for \"([^\"]*)\" from Transactions \"([^\"]*)\"$")
+   public void edit_OptumPay_Sol_from_Transactions(String userId,String Action) throws Throwable {
+	   manageInternalUser.editSelectedTransactions(userId,Action);
    }
 
 	
-   @Then("^Check if OptumPay Solutions is present or not \"([^\"]*)\"$")
-	public void check_if_OptumPay_Solutions_is_present_or_not(String Action) throws Throwable {
-	    manageInternalUser.optumPaySollinkPresentorNot(Action);
+	@Then("^Check if OptumPay Solutions is present or not for \"([^\"]*)\" based on \"([^\"]*)\"$")
+	public void check_if_OptumPay_Solutions_is_present_or_not(String userId,String Action) throws Throwable {
+	    manageInternalUser.optumPaySolutionsLinkPresentorNot(userId,Action);
 	}
 
 }
