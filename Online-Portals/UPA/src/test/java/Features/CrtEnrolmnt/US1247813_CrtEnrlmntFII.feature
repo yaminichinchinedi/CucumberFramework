@@ -1,14 +1,13 @@
 #Author: Rahul Krishna
-
-@CreateEnrollment @US1247813 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1247813 @BothCSRUPAScenarios @UPARegression  @UPACreateEnrollment
 Feature: Create Enrollment HO Financial Institution Information Continue from Identify Administrators
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+  	Then User clicks on Continue button of BeginEnrollment Page
 #TS_001
-@UPASanity
+@UPASanity 
   Scenario: Fills the relevent Info with AO Enroll Typ
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -43,8 +42,8 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
   #  Then User fills all the information on Identify Administrators page and click continue
 
 
-#TS_005
-@UPASanity
+#TS_005 -- TODO
+@UPASanity 
   Scenario: Checking UI Content matches with DB 
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
@@ -55,6 +54,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
 		     
 
 #TS_006
+
   Scenario: Clicking FI Routing no
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											      | Enrollment Type |
@@ -64,6 +64,7 @@ Feature: Create Enrollment HO Financial Institution Information Continue from Id
     Then User clicks the link where can i find a finantial intitution's routing no
 
 #TS_007
+
   Scenario: Validates the Type of Account
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											      | Enrollment Type |

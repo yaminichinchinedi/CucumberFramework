@@ -1,4 +1,5 @@
 #Author: Rahul Krishna
+@UPACreateEnrollment
 Feature: Create Enrollment existing email validations on IdentifyAdmin Page
 
 		
@@ -6,7 +7,7 @@ Scenario: US1064240_Create Enrollment_BS_existing Email entry
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
@@ -19,7 +20,7 @@ Scenario: US1064240_Create Enrollment_BS_existing Email,Identify Admin Header va
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |

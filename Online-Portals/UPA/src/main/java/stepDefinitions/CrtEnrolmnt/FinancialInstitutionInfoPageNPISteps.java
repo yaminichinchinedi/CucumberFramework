@@ -182,5 +182,10 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 		
 	}
 	 
+	@Then("^User clicks Save Changes Button on Financial Institution Information NPI page\\.$")
+	public void user_clicks_continue_on_Financial_Institution_Information_NPI_page() throws Throwable {
+		financialInstitutionNPI.clickSaveChanges();
+	}
+
 	
 }
