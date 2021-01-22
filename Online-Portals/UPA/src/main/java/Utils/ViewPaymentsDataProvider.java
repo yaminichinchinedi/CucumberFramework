@@ -752,7 +752,7 @@ public String getTinForPaymentType(String paymentType)
 				break;
 				
 			case "TinWithMoreThnMaxUsr":
-				sqlRowNo=1504;
+				sqlRowNo=1503;
 				break;
 				
 			case "Last 9-13 months_AO_Premium":
