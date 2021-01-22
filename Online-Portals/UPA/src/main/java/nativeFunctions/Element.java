@@ -455,13 +455,15 @@ import main.java.reporting.Log;
 	public static void verifyElementNotPresent(TestBase testConfig,String locatorType,String locatorValue,String elementName)
 	{
 		try {
-			  findElement(testConfig,locatorType, locatorValue);
-			  Log.Fail(elementName + " " + " is present");
+			 WebElement ele=findElement(testConfig,locatorType, locatorValue);
+			 if(ele==null)
+				 Log.Pass("PASS: "+elementName + " " + "is not present");
+			 else
+				 Log.Fail("FAILED: "+elementName + " " + " is present");
 		    }
-			
 		catch (Exception e) 
 		{
-			Log.Pass(elementName + " " + "is not present");
+			Log.Pass("PASS: "+elementName + " " + "is not present");
 	    }
 			
 	}

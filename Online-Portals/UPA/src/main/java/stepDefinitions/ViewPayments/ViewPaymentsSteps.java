@@ -69,7 +69,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @When("^Click on View Payments Link for UPA$")
     public void click_on_View_Payments_Link_for_UPA() throws Throwable {
-        
+    	testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER", "10677045");
                viewPayments.clickViewPaymentsTab();
     }
     
@@ -281,9 +281,14 @@ public class ViewPaymentsSteps extends TestBase {
 
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
-        
     	paySum.verifySavArchbtnNotPresent();
     }
+    
+
+	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
+	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
+		paySum.verifySaveBtnDisplay(portalAccess);
+	}
 
     @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (\\d+)field as enabled\\.$")
     public void validate_Claim_Count_ePRA_pPRA_and_Payment_status_fields_appear_with_a_gray_box_with_value_N_A_and_field_as_enabled(int arg1) throws Throwable {
@@ -296,24 +301,13 @@ public class ViewPaymentsSteps extends TestBase {
 		paySum.selectTinNverfyPagRfrsh();
 	}
 
-
-    //Amit code imported.Modify and check all the codes
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options() throws Throwable {
-    	paySum.verifyQuickSrchFilterOptions("Standard");
-    }
-
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options() throws Throwable {
-    	paySum.verifyPaymentStatusFilter("Standard");
-    }
-
     @Then("^Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace$")
     public void validate_grid_no_longer_displays_Type_column_or_Payment_Status_field_and_is_relabeled_to_ACH_Trace() throws Throwable {
-    	paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    	if(System.getProperty("Application").contains("UPA"))
+    		paySum.verifyColumnPresent("ACH Trace Number").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
+    	if(System.getProperty("Application").contains("CSR"))
+    		paySum.verifyColumnPresent("ACH/Payment Status").verifyColumnIsNotPresent("Type").verifyColumnIsNotPresent("Payment Status / Trace Number");
     }
-
-  
 
     @Then("^Validate payment summary page for only single NPI payments for \"([^\"]*)\"$")
     public void validate_payment_summary_page_for_only_single_NPI_payments_for(String paymentType) throws Throwable
