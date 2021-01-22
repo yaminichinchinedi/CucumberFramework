@@ -168,6 +168,24 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//div[@id='view-payments']/table//tr[1]//div[2]/div[1]/span")
 	WebElement divShowRslts;
 	
+	@FindBy(id="viewPaymentsPremium")
+	WebElement popUpViewPay;
+	
+	@FindBy(id="getStartedModal")
+	WebElement popUpGetStarted;
+	
+	@FindBy(xpath="//span[contains(text(),'Get Started')]")
+	WebElement btnGetStarted;
+	
+	@FindBy(xpath="//span[contains(text(),'I Accept')]")
+	WebElement btnIAccept;
+	
+	@FindBy(xpath="//button[@title='Close']")
+	WebElement btnClosePopup;
+	
+	@FindBy(xpath="//span[contains(text(),'No, Thanks')]")
+	WebElement btnNoThnx;
+	
 	Map dataRequiredForSearch;
 	
 
@@ -3494,6 +3512,131 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
+	public paymentSummary clickGrayedClaimCount(){
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("Claim Count");
+		Element.click(searchResultRows.get(1).findElements(By.tagName("td")).get(columnIndex), "Grayed Claim Count");
+		return this;
+	}
+	
+	public paymentSummary verifyPopUp(String userType){
+		Element.verifyElementPresent(popUpViewPay, "View Payments PopUp");
+		String popUptext="";
+		
+		switch(userType){
+		
+		case "PROV_Admin":
+			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay.";
+			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
+			break;
+			
+		case "PROV_Gen":
+			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page are not available without activating Optum Pay. Contact your administrator for access.";
+			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
+			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
+			break;
+			
+		case "BS_Admin":
+			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider for access.";
+			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
+			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
+			break;
+			
+		case "BS_Gen":
+			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider for access.";
+			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
+			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
+			break;
+		}
+		
+		return this;
+	}
+	
+	public paymentSummary clickGetStarted(){
+		Element.verifyElementPresent(popUpViewPay, "View Payments PopUp");
+		Element.click(btnGetStarted, "Get started button");
+		return this;
+	}
+	
+	public paymentSummary verifyGetStartedModal(){
+		Element.verifyElementPresent(popUpGetStarted, "Bring More power to you");
+		Element.click(btnNoThnx, "No Thanx Button");
+		Element.verifyElementNotPresent(popUpGetStarted, "Bring More power to you");
+		clickGrayedClaimCount();
+		Element.click(btnGetStarted, "Get Started button");
+		Element.click(btnIAccept, "I Accept Button");
+		return this;
+	}
+	
+	public paymentSummary verifyPrdctSlctnTbl(){
+		int sqlRowNo=1509;
+		Map prdctSelection = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Helper.compareEquals(testConfig, "Product Selection Active Record", "A", prdctSelection.get("PRTL_PRDCT_SELECTED_STS_CD"));
+		return this;
+	}
+	
+	public paymentSummary clickCloseOnPopUp(){
+		Element.click(btnClosePopup, "Close Pop Up");
+		Element.verifyElementNotPresent(popUpViewPay, "View Payments PopUp");
+		return this;
+	}
+	
+	public paymentSummary vaidateHeadersColumns(String page) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+		//getPaymentDetailsFromUI();
+		ArrayList<String> headers=getHeadersFromResultTable();
+		headers.remove("835 / EPRA");
+		headers.remove(10);
+		testConfig.putRunTimeProperty("page", "printPaymentSummary");
+
+		String parentWin=Browser.switchToNewWindow(testConfig);
+		ArrayList<String> headersPop=getHeadersFromResultTable();
+
+		Browser.switchToParentWindow(testConfig, parentWin);
+		Helper.compareEquals(testConfig,"Single payment Summary and print payment Summary ", headers, headersPop);
+		return this;
+	}
+	
+	public paymentSummary verifyFeeAmountDash(){
+		String actualPaymntNo="";
+		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		boolean found=false;
+		int totalNoOfPages=getNumberOfPages();	
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("Fee Amount");
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		{ 
+			if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   
+		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+		    		found=true;
+					String feeAmountUI=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).getText().toString();
+					//getdetails from FISL and fetch the corresponding consol number from FISL response, save it in run time
+					
+					int sqlRowNo=1510;
+					Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+					if(results==null)
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "-", feeAmountUI);
+					else
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
+		    	   }
+		    	   if(found==true)break;
+		        }
+		     }
+			if(found==true)
+				break;
+			else
+				gotoNextPage(pageNo, totalNoOfPages);
+		 }
+		if(found==false)
+			Log.Fail("Payment number not found on page");
+		return this;
+	}
 }
         
 
