@@ -1202,8 +1202,7 @@ public void verifyFailedPaymentPopUp()
 			   innerMap.remove("Updated Payment Dt");
 			   innerMap.remove("Resend Payment");
 			   innerMap.remove("Payer PRA");
-//			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n","")+ "_" + innerMap.get("Payment Date"), innerMap);
-			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n",""), innerMap);
+			   outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n","")+ "_" + innerMap.get("Payment Date"), innerMap);
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -1367,7 +1366,7 @@ public void verifyFailedPaymentPopUp()
 			else
 				innerMap.put("ACH/Payment Status","");
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
-			outerMap.put(innerMap.get("Payment Number"), innerMap);
+			outerMap.put(innerMap.get("Payment Number")+ "_" + innerMap.get("Payment Date"), innerMap);
 		 }
 		  
 		 Log.Comment("Details from FISL is: "  +outerMap.toString());
