@@ -92,7 +92,12 @@ public class UPAHomePage extends HomePage {
 	
 	
 	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
-		
+	
+	@FindBy(xpath = "//a[@id='tabBillingService']") 
+	WebElement lnkBsInfo;
+	@FindBy(xpath = "//a[@id='tabOptumPay']") 
+	WebElement lnkOptumPaySol;
+	
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -196,5 +201,13 @@ public class UPAHomePage extends HomePage {
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 	}
-
+	public void clickOnBSInfoTabUPA() {
+		Browser.wait(testConfig, 3);
+        Element.clickByJS(testConfig,lnkBsInfo, "Billing Service Information");
+	}
+	public void clickOnOptumPaySolutionsTabUPA() {
+		Browser.wait(testConfig, 3);
+        Element.clickByJS(testConfig,lnkOptumPaySol, "Billing Service Information");
+	}
+	
 }

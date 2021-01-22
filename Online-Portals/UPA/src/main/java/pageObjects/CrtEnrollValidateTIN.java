@@ -43,6 +43,8 @@ public class CrtEnrollValidateTIN {
 	@FindBy(id="paymentPrefAV")
 	WebElement usrTypAV;
 	
+	@FindBy(id="paymentPrefVO")
+	WebElement usrTypVO;
 	@FindBy(xpath="//tr[@id='showcontcanButton']/td/input[1]")
 	WebElement continueButton;
 	
@@ -77,7 +79,7 @@ public class CrtEnrollValidateTIN {
 			break;
 
 		case "VO":	
-			Element.click(usrTypAO, "ACH User Type");
+			Element.click(usrTypVO, "VO User Type");
 			testConfig.putRunTimeProperty("enrollmentType", "VO");
 			enrollmentInfoObj.setTinIdentifier("VO");
 			enrollmentInfoObj.setTin(testConfig.getRunTimeProperty("EnrolTin"));
