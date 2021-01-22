@@ -207,7 +207,7 @@ public class UPAHomePage extends HomePage {
 	}
 	public void clickOnOptumPaySolutionsTabUPA() {
 		Browser.wait(testConfig, 3);
-        Element.clickByJS(testConfig,lnkOptumPaySol, "Billing Service Information");
+        Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
 	}
 	
 }

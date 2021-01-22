@@ -771,6 +771,9 @@ public String getTinForPaymentType(String paymentType)
 			case "TinWthAccuredFeeStat":
 				sqlRowNo=1615;
 				break;	
+			case "TinDuringOrPostTrial":
+				sqlRowNo=1343;
+				break;	
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
