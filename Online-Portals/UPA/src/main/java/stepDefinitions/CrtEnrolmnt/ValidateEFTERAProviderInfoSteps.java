@@ -66,9 +66,9 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase {
 				.validateAdminInfoFields("FrstProvLName", "yamato^&^&").validateAdminInfoFields("FrstProvMName", "&")
 				.validateAdminInfoFields("FrstProvMName", "9").validateAdminInfoFields("FrstProvPhnNo", "")
 				.validateAdminInfoFields("FrstProvPhnNo", "47").validateAdminInfoFields("FrstProvPhnNo", "a89b")
-				.validateAdminInfoFields("FrstProvEmail", "").validateAdminInfoFields("FrstProvReEmail", "")
-				.validateAdminInfoFields("FrstProvEmailSame", "random@@com")
-				.validateAdminInfoFields("FrstProvReEmail", "random@xyz.com");
+				.validateAdminInfoFields("FrstProvEmail", "").validateAdminInfoFields("FrstProvReEmail", "");
+				//.validateAdminInfoFields("FrstProvEmailSame", "random@@com")
+				//.validateAdminInfoFields("FrstProvReEmail", "random@xyz.com");
 	}
 
 	@And("^Fill Administrator Info and Verify error msgs for Secondary Contacts\\.$")
@@ -77,8 +77,8 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase {
 				.validateAdminInfoFields("ScndProvPhnNo", "").validateAdminInfoFields("ScndProvEmail", "")
 				.validateAdminInfoFields("ScndProvReEmail", "").validateAdminInfoFields("ScndProvPhnNo", "abcd")
 				.validateAdminInfoFields("ScndProvPhnNo", "897")
-				.validateAdminInfoFields("ScndProvEmailSame", "random@xyz@com")
-				.validateAdminInfoFields("ScndProvReEmail", "random@yuz.com")
+				//.validateAdminInfoFields("ScndProvEmailSame", "random@xyz@com")
+				//.validateAdminInfoFields("ScndProvReEmail", "random@yuz.com")
 				.validateAdminInfoFields("ScndProvFName", "&*9io").validateAdminInfoFields("ScndProvLName", "&^&%vh9")
 				.validateAdminInfoFields("ScndProvMName", "9").validateAdminInfoFields("ScndProvMName", "%");
 	}

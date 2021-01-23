@@ -1,5 +1,6 @@
 #Author:Rahul Krishna
 #@CSRUS2673017  
+@CSRCreateEnrollmentTest
 Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org Financial Institution Information NPI
 
   Scenario Outline: ABN Validators Financial Institution Information AO -NPI Level Validations

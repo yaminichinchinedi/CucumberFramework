@@ -1,6 +1,5 @@
-
 #Author: Rahul Krishna
-
+@UPACreateEnrollment
 Feature: Create Enrollment BS upload w9 page validations
 
 		
@@ -8,7 +7,7 @@ Feature: Create Enrollment BS upload w9 page validations
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
@@ -22,7 +21,7 @@ Feature: Create Enrollment BS upload w9 page validations
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |

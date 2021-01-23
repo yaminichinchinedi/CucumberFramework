@@ -99,6 +99,14 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
     	payment.enterBSTin(paymentType, userType);
 	}
 	
+	
+	@Then("^User enters tin for BS View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_enters_tin_for_BS_View_Payments_UPA_for_and_search_criteria_for_for_for_Portal_Experience(String paymentType, String userType, String tinType, String portalAccess) throws Throwable {
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
+	}
+	
 	@Then("^Select the TIN for \"([^\"]*)\" CSR Portal$")
 	public void user_enters_tin_for_ViewPayment(String paymentType) throws Throwable {
 		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();

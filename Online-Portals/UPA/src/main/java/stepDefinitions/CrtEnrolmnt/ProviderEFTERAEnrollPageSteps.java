@@ -116,7 +116,7 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		excelRow=3;
 		else if (EnrollmentType.equals("VO"))
 		excelRow=4;
-		new BeginEnrollmentContinue(testConfig).getTin(excelRow, TINStatus).clickContinue().verifyTINStatus().verifyContentTinEligibleBSWithUXDS().verifyContentManagedForTinNotEnrolledBS();
+		new BeginEnrollmentContinue(testConfig).getTin(excelRow, TINStatus).clickContinue().verifyTINStatus().verifyContentManagedForTinNotEnrolledBS();
 	}
 
 	@Then("^Select \"([^\"]*)\" and \"([^\"]*)\" clicks Continue button$")
@@ -195,5 +195,15 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		new BeginEnrollmentContinue(testConfig).getTin(excelRow, TINStatus).clickContinue().verifyW9Form();
 	}
 
+	@Then("^Select \"([^\"]*)\" and \"([^\"]*)\" clicks Continue button and vaidate enrolledTIN Message and its content from DB$")
+	public void select_and_clicks_Continue_button_and_vaidate_enrolledTIN_Message_and_its_content_from_DB(String EnrollmentType, String TINStatus) throws Throwable {
+	if (EnrollmentType.equals("BS"))
+			excelRow=2;
+	new BeginEnrollmentContinue(testConfig).getBSTin(excelRow, TINStatus).clickContinue();
+	if (TINStatus.equals("PreEnrolledBSTIN"))
+		new ValidateEnrollmentTypePage(testConfig).verifyEnrolledPreEnrollmentStatusTIN();
+	if (TINStatus.equals("EnrolledActiveBSTIN"))
+		new ValidateEnrollmentTypePage(testConfig).verifyEnrolledActiveBSTIN();
+	}
 	
 }

@@ -1537,6 +1537,12 @@ public void verifyTricareMaskingClaimDtl() throws Exception
 	else
 		Log.Fail("Subscriber ID is masked and only last 4 digits are reavled");
   }
+
+
+		public paymentSummary clickPaymentNumber(){
+			Element.click(paymentno, "Payment Number");
+			return new paymentSummary(testConfig);
+		}
 	
 }
 
