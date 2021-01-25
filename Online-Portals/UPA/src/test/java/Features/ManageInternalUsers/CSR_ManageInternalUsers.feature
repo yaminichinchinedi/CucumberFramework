@@ -7,9 +7,9 @@ Feature: Manage Internal Users link on CSR
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Manage Internal Users link
     And  Enter "<credential2>" in userid
-    And Edit OptumPay Sol for "<credential2>" from Transactions "<Action>"
+    And Edit OptumPay Sol Transactions "<Action>"
     And User navigates to CSR portal and enters "<credential2>" and login
-    And Check if OptumPay Solutions is present or not for "<credential2>" based on "<Action>"
+    And Check if OptumPay Solutions is present or not based on "<Action>"
     
    
  Examples: 
@@ -17,9 +17,9 @@ Feature: Manage Internal Users link on CSR
 
  
    |credentials|credential2|Action|
-  # |Super      | RW        |Remove|
- #  |Super      | RW        |Add   |
-  # |Super      | RO        |Remove|
-  # |Super      | RO        |Add   |
-   |Super      | Super     |Add   |
+   |Super      | RW        |Remove|
+  |Super      | RW        |Add   |
+   |Super      | RO        |Remove|
+   |Super      | RO        |Add   |
+  |Super      | Super     |Add   |
    |Super      | Super     |Remove|
