@@ -43,11 +43,12 @@ public class ManageInternalUsers {
 	
 	@FindBy(xpath="//option[@value='0028']")
 	WebElement optumPaySolutionsTransaction;
+	
 	@FindBy(xpath="//td[contains(text(),'The CSR User Id belongs to Super User Group. Pleas')]")
 	WebElement errorEnteringSuperUser;
 	
 	String env=System.getProperty("env");
-	String id;
+	String userIdForTransactions,id;
 	public ManageInternalUsers(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -59,6 +60,7 @@ public class ManageInternalUsers {
 	
 	public void enterUserId(String userId) {
 		id=testConfig.runtimeProperties.getProperty("CSR_"+"ID_"+userId+"_"+env);
+		userIdForTransactions=userId;
 		Element.enterDataByJS(testConfig, txtboxUserId, id, "csr USERID");
 		Element.clickByJS(testConfig, btnSearchManagInternalUser , "search for userid");
 		if (userId.equalsIgnoreCase("Super"))
@@ -67,8 +69,8 @@ public class ManageInternalUsers {
 		
 	}
 
-	public void editSelectedTransactions(String userId,String Action) {
-		if (!userId.equalsIgnoreCase("Super"))
+	public void editSelectedTransactions(String Action) {
+		if (!userIdForTransactions.equalsIgnoreCase("Super"))
 		{
 		 if(Action.equalsIgnoreCase("Remove"))
 			 {Element.click(optumPaySolutionsTransaction,"OPSOl transaction");
@@ -89,9 +91,8 @@ public class ManageInternalUsers {
 		
 	}
 
-	public void optumPaySolutionsLinkPresentorNot(String userId,String Action) {
-		Browser.wait(testConfig,2);
-		if (!userId.equalsIgnoreCase("Super"))
+	public void optumPaySolutionsLinkPresentorNot(String Action) {
+		if (!userIdForTransactions.equalsIgnoreCase("Super"))
 		{
 		if(Action.equalsIgnoreCase("Remove"))
 			Element.verifyElementNotPresent(lnkOptPaySoln, "OptumPaySol link");
