@@ -72,8 +72,8 @@ Feature: UPA Manage User Functionality for Premium TIN
 		And  Set FISL Parameters "<key>" and "<value>"
 		Then Validate the data of Print Payment Summary page.
     Examples:
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
-			|    BS_Admin	    | 	   BS	 	  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 30 days		| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
+      |    credentials  |  userType 	|		searchCriteria  |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
+			|    BS_Admin	    | 	   BS	 	  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 30 days		  | 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
       |    BS_Gen		    | 	   BS		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
 		
 		

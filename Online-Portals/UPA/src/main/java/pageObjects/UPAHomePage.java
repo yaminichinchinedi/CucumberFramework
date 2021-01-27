@@ -25,7 +25,8 @@ public class UPAHomePage extends HomePage {
 	private ViewPaymentsDataProvider dataProvider;
 	
 	
-	@FindBy(linkText="Manage Users")
+	//@FindBy(linkText="Manage Users")
+	@FindBy(xpath="//a[@id=\"tabManageusers\"]")
 	WebElement lnkManageUsers;
 	
 	@FindBy(id="tabHome")

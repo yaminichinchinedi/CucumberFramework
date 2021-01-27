@@ -4,6 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BenefitsOfOptumPay;
 import main.java.pageObjects.CSRHomePage;
@@ -98,6 +99,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	
 	@When("^Click on Manage User Link$")
 	public void click_on_Manage_User_Link() throws Throwable {
+		Browser.wait(testConfig, 3);
 		homePage.clickManageUsersTab();
 	}
 	 
