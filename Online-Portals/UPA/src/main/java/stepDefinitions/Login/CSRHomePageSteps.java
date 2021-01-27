@@ -118,4 +118,9 @@ public class CSRHomePageSteps extends TestBase{
 		public void user_clicks_on_Optum_Pay_Soultions_link_on_CSR_HomePage() throws Throwable {
 			homePage.clickOptmPaySolnLink();
 		}
+		
+		@Then("^User clicks on Manage Internal Users link$")
+		public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
+			homePage.clickManageInternalUserlink();
+		}
 }
