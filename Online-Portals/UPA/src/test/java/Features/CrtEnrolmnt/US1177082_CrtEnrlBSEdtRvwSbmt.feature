@@ -1,12 +1,12 @@
 #Author: Rahul Krishna
-@CreateEnrollment @US1048061 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1048061 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
 
  Scenario: US1177082_Create Enrollment_BS_Edit Review and Submit 
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
@@ -22,7 +22,7 @@ Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
   
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |

@@ -4,6 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BenefitsOfOptumPay;
 import main.java.pageObjects.CSRHomePage;
@@ -98,11 +99,10 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	
 	@When("^Click on Manage User Link$")
 	public void click_on_Manage_User_Link() throws Throwable {
+		Browser.wait(testConfig, 3);
 		homePage.clickManageUsersTab();
 	}
 	 
-
-	
 	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login as purged User\\.$")
 	public void user_navigates_to_UPA_portal_and_enters_and_login_as_purged_User(String userType) throws Throwable {
 		if(userType.contains("PRPURGED"))
@@ -174,4 +174,15 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	public void user_clicks_on_Optum_Pay_Solutions_tab() throws Throwable {
 		 homePage.clickOnOptumPaySolutionsTabUPA();
 	}
+
+	 @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" Portal Experience\\.$")
+	 public void user_Selects_a_tin_on_HomePage_for_for_for_for_and_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault) throws Throwable {
+		 testConfig.putRunTimeProperty("tinType", tinType);
+	     testConfig.putRunTimeProperty("portalAccess", portalAccess);
+	     testConfig.putRunTimeProperty("trialStatus", trialStatus);
+	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
+	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
+	    	homePage.selectTin(searchCriteria);
+	 }
+
 }

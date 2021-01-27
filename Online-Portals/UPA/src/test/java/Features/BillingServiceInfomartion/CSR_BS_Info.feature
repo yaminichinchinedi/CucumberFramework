@@ -2,7 +2,6 @@
 
 @CSRRegression  @CSRBSInfoTab @US2872239 
 Feature: CSR Billing Service Info Tab
-@hard
 Scenario Outline: BS Info Functionality 
  
    Given User navigates to CSR portal and enters "<credentials>" and login

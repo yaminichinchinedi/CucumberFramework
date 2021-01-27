@@ -25,8 +25,7 @@ public class UPAHomePage extends HomePage {
 	private ViewPaymentsDataProvider dataProvider;
 	
 	
-	//@FindBy(linkText="Manage Users")
-	@FindBy(xpath="//a[@id=\"tabManageusers\"]")
+	@FindBy(linkText="Manage Users")
 	WebElement lnkManageUsers;
 	
 	@FindBy(id="tabHome")
@@ -179,7 +178,7 @@ public class UPAHomePage extends HomePage {
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="916001537";//dataProvider.getTinForPaymentType(paymentType);
 		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
 		
@@ -208,7 +207,7 @@ public class UPAHomePage extends HomePage {
 	}
 	public void clickOnOptumPaySolutionsTabUPA() {
 		Browser.wait(testConfig, 3);
-        Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
+        Element.clickByJS(testConfig,lnkOptumPaySol, "Billing Service Information");
 	}
 	
 }

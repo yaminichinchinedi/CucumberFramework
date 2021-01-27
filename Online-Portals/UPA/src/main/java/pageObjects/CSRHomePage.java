@@ -103,6 +103,9 @@ public class CSRHomePage {
 	@FindBy(linkText="Optum Pay Solutions")
 	WebElement lnkOptPaySoln;
 	
+	@FindBy(linkText="Manage Internal Users")
+	WebElement lnkManageInternalUSer;
+	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -166,4 +169,9 @@ public class CSRHomePage {
            Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
            
     }
+    public void clickManageInternalUserlink() {
+		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
+		
+		
+	}
 }

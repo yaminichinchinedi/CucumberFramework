@@ -49,5 +49,8 @@ public class ClaimDetailSteps extends TestBase {
     	claimDetail.verifyAllHeadersClaimDtlPay();
     }
 
-	
+    @Then("^Click on Payment number on Claim detail screen and go to single Payment View Payment screen\\.$")
+    public void click_on_Payment_number_on_Claim_detail_screen_and_go_to_single_Payment_View_Payment_screen() throws Throwable {
+    	claimDetail.clickPaymentNumber();
+    }
 }

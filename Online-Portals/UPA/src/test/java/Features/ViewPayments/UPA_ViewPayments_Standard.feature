@@ -1,7 +1,7 @@
 #Author: Rahul Krishna
 @UPAViewPayments_Standard
 Feature: UPA View Payments Functionality for Premium TIN
-      @UPAUS2800914 @OctRelease @letsrun
+      @UPAUS2800914 @OctRelease @ViewPaymentStable
   Scenario Outline: TS_001,010,012--View Payments Standard TIN selection and validation       
     Given User navigates to UPA portal and enters "<credentials>" and login
     When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -18,3 +18,66 @@ Examples:
              |       credentials       |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
              |       PROV_Admin        | 			 Standard  			|			PROV			|TinWthatlstOnePayNum					|  	AO			|
              |      	 PROV_Gen        | 			 Standard  			|			PROV			|TinWthatlstOnePayNum					|  	AO			|
+
+
+
+#Author: AMIT
+@US3069347 @ViewPaymentStable
+Scenario Outline: View Payments Pop up for Standard TIN        
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on View Payments Link for UPA 
+    Then User clicks on claim count grayed out column.
+    Then User verifies the pop up for user type having access as "<credentials>".
+    Then User clicks on Get started button.
+    Then User verifies bring more power to you pop up and click on I accept button.
+    Then User verifies the entry in product selection table with portal record status as PS.
+    Examples:     
+             |       credentials       |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
+             |       PROV_Admin        | 			 Standard  			|			PROV			|TinWthatlstOnePayNum					|  	AO			|
+  
+  
+  #Author: AMIT
+  @US3069347 @ViewPaymentStable
+  Scenario Outline: View Payments Pop up for Standard TIN        
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on View Payments Link for UPA 
+    Then User clicks on claim count grayed out column.
+    Then User verifies the pop up for user type having access as "<credentials>".
+    Then User click on cross to close the pop up.
+   
+    Examples:     
+             |       credentials     |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
+             |       PROV_Gen        | 			 Standard  			|			PROV			|TinWthatlstOnePayNum					|  	AO			|
+             
+             
+             #Author: AMIT
+  @US3069347 @ViewPaymentStable
+  Scenario Outline: View Payments Pop up for Standard TIN        
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    When Click on View Payments Link for UPA
+    Then User enters tin for BS View Payments UPA for "<searchRemitorPymntTIN>" and "<usertype>" search criteria for "<tinType>" for "<portalAccess>" for Portal Experience. 
+    Then User clicks on claim count grayed out column.
+    Then User verifies the pop up for user type having access as "<credentials>".
+    Then User click on cross to close the pop up.
+   
+    Examples:     
+             |       credentials     |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
+             |       BS_Admin        | 			 Standard  			|			BS  			|TinWthatlstOnePayNum					|  	AO			|
+             
+             
+             #Author: AMIT
+  @US3069347 @ViewPaymentStable
+  Scenario Outline: View Payments Pop up for Standard TIN        
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    When Click on View Payments Link for UPA 
+    Then User enters tin for BS View Payments UPA for "<searchRemitorPymntTIN>" and "<usertype>" search criteria for "<tinType>" for "<portalAccess>" for Portal Experience. 
+    Then User clicks on claim count grayed out column.
+    Then User verifies the pop up for user type having access as "<credentials>".
+    Then User click on cross to close the pop up.
+   
+    Examples:     
+             |       credentials     |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
+             |    	   BS_Gen        | 			 Standard  			|			BS  			|TinWthatlstOnePayNum					|  	AO			|
+  

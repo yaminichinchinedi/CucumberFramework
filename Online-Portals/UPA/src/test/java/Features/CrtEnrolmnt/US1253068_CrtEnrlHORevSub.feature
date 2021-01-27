@@ -1,18 +1,17 @@
 #Author: Madhavi Upputuri
-
-@CreateEnrollment @US1253068 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1253068 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: US1253068_Create Enrollment- Review and Submit - show the page and test buttons edit- remove not tested QA
 
   Background: Create Enrollment_HO_Review and Submit 
  
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+  Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											#|     VO        |
 											|     BS        |
-	@UPASanity										
+	@UPASanity		 								
 	Scenario: TS01/TS02_Create Enrollment_HO_Review and Submit page
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -20,7 +19,7 @@ Feature: US1253068_Create Enrollment- Review and Submit - show the page and test
   Then User uploads the WNine form and click continue
   And Vaidates Headers in Review and Submit page 
   
-  @UPASanity
+  @UPASanity 
   Scenario: TS03_Create Enrollment_HO_Review and Submit page_Edit button
 	
   Then User navigates to Billing service information page and fill all fields and click on continue button

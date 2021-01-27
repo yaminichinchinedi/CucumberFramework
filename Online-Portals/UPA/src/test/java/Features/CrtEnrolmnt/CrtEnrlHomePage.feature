@@ -1,7 +1,5 @@
-
 #Author: Rahul Krishna
-
-Feature:Create Enrollment Home Page Validations 
+Feature: Create Enrollment Home Page Validations 
 
  
   Scenario: Test Cases for Home pages
@@ -27,46 +25,47 @@ Feature:Create Enrollment Home Page Validations
    And  also validates footer of this page 
 
   
-   Scenario: US1348562/US1348529_Test Cases for Begin your Enrollment page
-   Given User navigates to UPA Sys Test application
-    Then User Clicks on Enroll Now from the landing page and verify page content from databse
-    Then User also verify survey questions and answer from Survery table
-    Then user clicks on continue button without any entry and validates error message
-    Then select Other option from of how you heard option,click continue and validate error message
-    Then User also checks for the entered text limit is 50
-    When User clicks on Cancel Enrollment button a popup appears verify its content
-    Then User clicks on Yes to cancel the Enrollment and No to continue the Enrollment
-    Then User is able to download the Enrollment PDFs
-    Then Select any how you heard option and click continue to validte the BeginEnrollmentContinue page navigation   
-    
+#   Scenario: US1348562/US1348529_Test Cases for Begin your Enrollment page
+#   Given User navigates to UPA Sys Test application
+#    Then User Clicks on Enroll Now from the landing page and verify page content from databse
+#    Then User also verify survey questions and answer from Survery table
+#    Then user clicks on continue button without any entry and validates error message
+#    Then select Other option from of how you heard option,click continue and validate error message
+#    Then User also checks for the entered text limit is 50
+#    When User clicks on Cancel Enrollment button a popup appears verify its content
+#    Then User clicks on Yes to cancel the Enrollment and No to continue the Enrollment
+#    Then User is able to download the Enrollment PDFs
+#    Then Select any how you heard option and click continue to validte the BeginEnrollmentContinue page navigation   
+#    
 
 										      
-		Scenario Outline: US1351123_US1048048_Create Enrollment Provider flow validations
+	Scenario Outline: US1351123_US1048048_Create Enrollment Provider flow validations
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
-    Then Select "<Enrollment Type>" and  Clicks continue button of Enrollment TIN Eligible page
-										     
-		Then User verifies page content from database				
-		Then Error Message when entering special character in business name and address
-		Then validates Headers display for selected Enrollment type
-		Then Cancel Enrollment,Back and Continue button  options displays on the page
-		Then click on cancel Enrollment,validates its content and click Yes to stop the enrollment flow,No to continue the flow
-		Then click continue without and entry and validate the error messages
-												  | Enrollment Type |
-										      |       AO        |
-										      |			  BS				|	
+  	Then User clicks on Continue button of BeginEnrollment Page
+    Then Select "<Enrollment Type>" and  Clicks continue button of Enrollment TIN Eligible page								     
+	Then User verifies page content from database				
+	Then Error Message when entering special character in business name and address
+	Then validates Headers display for selected Enrollment type
+	Then Cancel Enrollment,Back and Continue button  options displays on the page
+	Then click on cancel Enrollment,validates its content and click Yes to stop the enrollment flow,No to continue the flow
+	Then click continue without and entry and validate the error messages
+	Examples:
+										| EnrollmentType |
+										|     AO         |
+										|	  BS	     |	
 		
  
-  
+ 
   	Scenario Outline: US1048015_Test Cases for BS Tins
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
-    Then Select "<Enrollment Type>" and "<TIN status>" clicks Continue button and vaidate enrolledTIN Message and its content from DB 
-										      | Enrollment Type |						TIN Status					  |
-										      |       BS        | 				PreEnrolledBSTIN				|
-										      |       BS        | 				EnrolledActiveBSTIN			|
+  	Then User clicks on Continue button of BeginEnrollment Page
+    Then Select "<EnrollmentType>" and "<TINStatus>" clicks Continue button and vaidate enrolledTIN Message and its content from DB
+    Examples: 
+										      | EnrollmentType  |						TINStatus		  |
+										      |       BS        | 				PreEnrolledBSTIN		  |
+										      |       BS        | 				EnrolledActiveBSTIN		  |
 										    
 										      
 										      

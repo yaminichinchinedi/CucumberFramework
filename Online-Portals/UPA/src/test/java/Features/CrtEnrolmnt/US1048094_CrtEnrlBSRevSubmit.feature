@@ -1,12 +1,12 @@
 #Author: Madhavi Upputuri
-@CreateEnrollment @US1048094 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1048094 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: US1048094_Create Enrollment- Billing Service - Review and Submit
 
   Background: Create Enrollment_BS_Review and Submit 
  
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
