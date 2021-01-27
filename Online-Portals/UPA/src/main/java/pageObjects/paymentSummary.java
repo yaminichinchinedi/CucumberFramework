@@ -3123,7 +3123,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	public paymentSummary verifyQuickSrchFilterOptions(String portalAccess){
 		List<String> quickSrchOptions = new ArrayList<>(Arrays.asList("Last 30 days", "Last 60 days","Last 90 days","Last 4-6 months",
 			    		"Last 6-9 months","Last 9-13 months"));
-		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
+		drpDwnQuickSearch=Element.findElement(testConfig, "xpath", "//select[@id='periodId']");
 		Element.verifyElementPresent(drpDwnQuickSearch, "Quick Search");
 		String defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnQuickSearch, "text");
 		Helper.compareEquals(testConfig, "Default value of Quick Search filter", "Last 30 days", defaultVal);
