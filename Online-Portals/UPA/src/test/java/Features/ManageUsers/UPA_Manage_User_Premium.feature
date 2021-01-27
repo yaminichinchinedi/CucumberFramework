@@ -71,5 +71,16 @@ Feature: UPA Manage User Functionality for Premium TIN
       |    userType     |		System Mode	|
       |     PAY_Admin   |  		FEEBASED	|
       |     PAY_Admin   |  		LEGACY		|     
-           
-      	
+
+#Author: Sunanda      
+   @UPAPageTextPremium        
+  Scenario Outline: Access Payments - Manage users Page Text Premium During and Post Trial
+	Given User navigates to UPA portal and enters "<userType>" and login
+	When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
+	When  Click on Manage User Link  
+	Then  User verifies page text and footer 
+	Examples:
+	 |    userType     |   accessType   | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+	 |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
+   |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     I     |					A					 |				PS			 |
+	 	

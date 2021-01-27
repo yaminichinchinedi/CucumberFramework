@@ -116,7 +116,9 @@ public class BillingServiceInfo {
 			   Element.selectByVisibleText(userTypeDrpDwn, "Billing Service", "Billing Service dropdown");
 			   Element.click(txtboxTinNo, "Enter TIN");
 			   Element.enterData(txtboxTinNo, bsTIN, "Enter TIN for BS", "Enter BS TIN in CSR");
+			   Browser.wait(testConfig, 5);
 			   Element.click(btnSearch, "Click Search Button");
+			   Browser.waitForPageLoad(testConfig);
 	  	       break;
 	        }  
 	       case "PROV":
@@ -373,14 +375,12 @@ public void verifyAddProvConfirmPage(){
 }
 
 public void verifyTrialEndDateAndUpdateIfOver() throws Exception {
-	 int sqlRowNo = 1341;
-		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		String currentDate = Helper.getCurrentDate("yyyy/MM/dd");
 		if(testConfig.driver.findElements(By.xpath("//*[@id=\"billing-service-information-tabs\"]/div[1]/h2")).size()==0) {	
 			currentDate = Helper.getCurrentDate("yyyy/MM/dd").replace("/", "-");
 			testConfig.putRunTimeProperty("currentDate", currentDate);
 			testConfig.getRunTimeProperty("currentDate");
-			sqlRowNo = 1342;
+			int sqlRowNo = 1342;
 			int dataBase=DataBase.executeUpdateQuery(testConfig,sqlRowNo);
 			Element.click(testConfig, lnkHome, "Home Tab", 3);
 			Browser.waitForPageLoad(testConfig);

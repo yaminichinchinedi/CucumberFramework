@@ -1,6 +1,7 @@
 #Author: Sunanda
 @UPABSInfo
 Feature: UPA Billing Service Information Functionality 
+
 Scenario Outline: UPA Billing Service Information Page Text Verification
  Given User navigates to UPA portal and enters "<userType>" and login
  Then User clicks on Billing Service Information tab

@@ -1,12 +1,11 @@
 #Author: Amit Kushwah
-
-@CreateEnrollment @US1425410 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1425410 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: Create Enrollment - Select Payment Methods
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+    Then User clicks on Continue button of BeginEnrollment Page
 
 #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
 #TS01,TS06, TS07, TS08, TS12,TS13
@@ -68,15 +67,14 @@ Feature: Create Enrollment - Select Payment Methods
 #    Then User fills all the information on Identify Administrators page and click continue to W9
 
 #TS04
-@UPASanity
+@UPASanity 
 Scenario: Fills the relevent Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue
-
+	Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
 #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen   
 #TS09, TS10, TS11
 

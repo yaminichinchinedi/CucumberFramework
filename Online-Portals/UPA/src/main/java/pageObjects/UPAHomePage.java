@@ -25,7 +25,8 @@ public class UPAHomePage extends HomePage {
 	private ViewPaymentsDataProvider dataProvider;
 	
 	
-	@FindBy(linkText="Manage Users")
+	//@FindBy(linkText="Manage Users")
+	@FindBy(xpath="//a[@id=\"tabManageusers\"]")
 	WebElement lnkManageUsers;
 	
 	@FindBy(id="tabHome")
@@ -207,7 +208,7 @@ public class UPAHomePage extends HomePage {
 	}
 	public void clickOnOptumPaySolutionsTabUPA() {
 		Browser.wait(testConfig, 3);
-        Element.clickByJS(testConfig,lnkOptumPaySol, "Billing Service Information");
+        Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
 	}
 	
 }

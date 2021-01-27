@@ -298,6 +298,23 @@ public class UPAManageUserSteps extends TestBase {
 		testConfig.putRunTimeProperty("sysMode", systemMode);
     	manageUser.verifyAddUsrBtnVsblBySystem_ModeUPA(portalAccess, systemMode, userType);
 	}
+	
+	@Then("^User verifies page text and footer$")
+	public void user_verifies_page_text_and_footer() throws Throwable {
+		manageUser.verifyPageTextAndFooterForPremium();
+	}
+	@Then("^User verifies page text and footer for \"([^\"]*)\"$")
+	public void user_verifies_page_text_and_footer_for(String trialStatus) throws Throwable {
+		manageUser.verifyPageTextAndFooterForStandard(trialStatus);
+	}
+
+	@Then("^User verifies hover over the Add User button for \"([^\"]*)\"$")
+	public void user_verifies_hover_over_the_Add_User_button_for(String trialStatus) throws Throwable {
+	    manageUser.verifyHoverOverAddUserButton(trialStatus);
+	}
+
+
+
 
 	
 }

@@ -755,9 +755,58 @@ public String getTinForPaymentType(String paymentType)
 				sqlRowNo=1503;
 				break;
 				
+				
+			case "Last 30 days_AO_Premium":
+			case "Last 30 days_VO_Premium":
+			case "Last 30 days_AV_Premium":
+			case "Last 30 days_AO_Standard":
+			case "Last 30 days_VO_Standard":
+			case "Last 30 days_AV_Standard":
+				paySum.getQuickSearchDates("Last 30 days");
+				sqlRowNo=1611;
+				break;
+			case "Last 60 days_AO_Premium":
+			case "Last 60 days_VO_Premium":
+			case "Last 60 days_AV_Premium":
+			case "Last 60 days_AO_Standard":
+			case "Last 60 days_VO_Standard":
+			case "Last 60 days_AV_Standard":
+				paySum.getQuickSearchDates("Last 60 days");
+				sqlRowNo=1611;
+				break;
+			case "Last 90 days_AO_Premium":
+			case "Last 90 days_VO_Premium":
+			case "Last 90 days_AV_Premium":
+			case "Last 90 days_AO_Standard":
+			case "Last 90 days_VO_Standard":
+			case "Last 90 days_AV_Standard":
+				paySum.getQuickSearchDates("Last 90 days");
+				sqlRowNo=1611;
+				break;
+			case "Last 4-6 months_AO_Premium":
+			case "Last 4-6 months_VO_Premium":
+			case "Last 4-6 months_AV_Premium":
+			case "Last 4-6 months_AO_Standard":
+			case "Last 4-6 months_VO_Standard":
+			case "Last 4-6 months_AV_Standard":
+				paySum.getQuickSearchDates("Last 4-6 months");
+				sqlRowNo=1611;
+				break;
+			case "Last 6-9 months_AO_Premium":
+			case "Last 6-9 months_VO_Premium":
+			case "Last 6-9 months_AV_Premium":
+			case "Last 6-9 months_AO_Standard":
+			case "Last 6-9 months_VO_Standard":
+			case "Last 6-9 months_AV_Standard":
+				paySum.getQuickSearchDates("Last 6-9 months");
+				sqlRowNo=1611;
+				break;
 			case "Last 9-13 months_AO_Premium":
 			case "Last 9-13 months_VO_Premium":
 			case "Last 9-13 months_AV_Premium":
+			case "Last 9-13 months_AO_Standard":
+			case "Last 9-13 months_VO_Standard":
+			case "Last 9-13 months_AV_Standard":
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
@@ -770,6 +819,9 @@ public String getTinForPaymentType(String paymentType)
 				break;
 			case "TinWthAccuredFeeStat":
 				sqlRowNo=1615;
+				break;	
+			case "TinDuringOrPostTrial":
+				sqlRowNo=1343;
 				break;	
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");

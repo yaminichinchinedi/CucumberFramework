@@ -1,12 +1,11 @@
 #Author: Amit Kushwah
-
-@CreateEnrollment @US1248819 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1248819 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: Create Enrollment - Review and Submit -edit Identify Administrator Information
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+  	Then User clicks on Continue button of BeginEnrollment Page
 #TS01, TS02, TS04, TS05, TS06,TS07,TS08,TS09,TS10,TS11,TS12,TS17,TS36,TS37
 @UPASanity
 Scenario: Fills the relevent Info with AO Enroll Typ
@@ -15,7 +14,7 @@ Scenario: Fills the relevent Info with AO Enroll Typ
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User uploads the WNine form and click continue
     Then Validate Edit option appears next to Identify Administrators Information
     And Validate the Headers on Identify Admin Page.
@@ -52,13 +51,14 @@ Scenario: Fills the relevent Info with AO Enroll Typ
 #    And Validate the Headers on Identify Admin Page.
 
 #TS21-TS29,TS31,TS32,TS33,TS35,TS38-TS46,TS48,TS49,TS50,TS52,TS54
+
 Scenario: Fills the relevent Info with AO Enroll Typ
    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User uploads the WNine form and click continue
     Then Validate Edit option appears next to Identify Administrators Information
     And Fill Administrator Info and Verify error msgs for Primary Contacts.
@@ -71,7 +71,7 @@ Scenario: Fills the relevent Info with AO Enroll Typ
 										      |       AO        |
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User uploads the WNine form and click continue
     Then Validate Edit option appears next to Identify Administrators Information
     And ReFill the Admin Info and verify the saved changes.

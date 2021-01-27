@@ -10136,4 +10136,9 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 //			Element.click(returnBtn, "Return Button");
 //		}
 //	}
+	
+	public ClaimDetail clickClaimNumber(){
+		Element.click(claimHash,"Claim Number");
+		return new ClaimDetail(testConfig);
+	}
 }

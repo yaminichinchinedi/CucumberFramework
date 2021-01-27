@@ -59,7 +59,7 @@ public class ValidateEnrollmentTypePage {
 	@FindBy(xpath="//html/body/form/section/main/p[3]/a")
 	WebElement homePageLink;
 
-	@FindBy(xpath="//html/body/form/section/main/footer/a")
+	@FindBy(xpath="//html/body/form/section/main/div/a")
 	WebElement loginBtn;
 
 	@FindBy(xpath="//html/body/form/section/main/h4/strong")
@@ -314,9 +314,8 @@ public class ValidateEnrollmentTypePage {
 	
 	public ValidateEnrollmentTypePage verifyEnrolledPreEnrollmentStatusTIN() throws IOException
 	{
-		String enrolledTINMsg =  "Your TIN is pending enrollment status.";
+		String enrolledTINMsg =  "Your TIN is currently in a pending enrollment status.";
 		Element.verifyTextPresent(preEnrolledStatus,enrolledTINMsg);
-		Element.verifyElementPresent(homePageLink,"Home Page Link");
 		Element.verifyElementPresent(loginBtn,"Return to Login Button");		
 		return this;
 	}
@@ -596,7 +595,7 @@ public class ValidateEnrollmentTypePage {
 		listUI.add(secondaryContact.getText());
 		listUI.add(tinAndBusinessInfo.getText());
 		listUI.add(w9FormBS.getText());
-		listUI.add(downloadw9FormBS.getText());
+		listUI.add(downloadw9FormBS.getText().replace("linkto", "link to"));
 		for (String list : listUI) {
 			if (listDB.contains(list)) {
 				Log.Pass(list + " :" + " " + "matches in both UI and DB");

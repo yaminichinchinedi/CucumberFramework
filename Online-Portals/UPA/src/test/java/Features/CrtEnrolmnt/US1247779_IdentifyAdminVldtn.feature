@@ -1,11 +1,12 @@
 #Author: Rahul Krishna
+@UPACreateEnrollment 
 Feature: Create Enrollment Identify Admin validations
 
 		
 Scenario: US1247779 Identify Admin page content,llinks validations
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -19,7 +20,7 @@ Scenario: US1247779 Identify Admin page content,llinks validations
 Scenario: US1247779 Identify Admin page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -32,7 +33,7 @@ Scenario: US1247779 Identify Admin page
 Scenario Outline: US1247779 Identify Admin page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then user selects as "<EnrollmentType>" and  Clicks continue button of Enrollment TIN Eligible page
 	Then User fills all the information  and click on Continue
 	Then Validates all the headers from the Identify Administrators page 		
@@ -46,7 +47,7 @@ Scenario Outline: US1247779 Identify Admin page
 Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -64,7 +65,7 @@ Scenario Outline: US1247779 Identify Admin page Secondary Information Error Mess
 Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
@@ -78,7 +79,7 @@ Scenario Outline: US1247779 Identify Admin page Secondary Information Error Mess
 Scenario Outline: US1247779 Identify Admin page Primary Information Error Messages
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+	Then User clicks on Continue button of BeginEnrollment Page
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
