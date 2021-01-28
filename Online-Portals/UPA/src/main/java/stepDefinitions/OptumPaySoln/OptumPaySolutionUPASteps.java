@@ -23,5 +23,9 @@ public void user_verifies_Optum_Pay_Solution_Tab_for_standard_user_with_and(Stri
 		optumPaySol.verifySolutionsTabForPremium(trialStatus,portalAccess);
 }
 
+@Then("^Verify the Cancellation Popup based on \"([^\"]*)\"$")
+public void verify_the_Cancellation_Popup_based_on_trialStatus(String trialStatus) throws Throwable {
+	optumPaySol.verifyCancellationPopUp(trialStatus);
+}
 
 }
