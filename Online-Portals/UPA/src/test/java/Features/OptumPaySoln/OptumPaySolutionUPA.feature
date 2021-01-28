@@ -28,7 +28,7 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
 		 #I- Inactive
 		 
 		#Author:Sayonee 
-	 @US3060820
+	 @UPAUS3060820
 	 Scenario Outline: - Optum Pay Solutions - Verify Post Trial PopUp
    Given User navigates to UPA portal and enters "<userType>" and login
    When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
