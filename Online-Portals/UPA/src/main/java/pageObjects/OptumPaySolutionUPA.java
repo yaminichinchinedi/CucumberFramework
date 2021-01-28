@@ -75,7 +75,10 @@ public class OptumPaySolutionUPA {
 	WebElement duringTrialCancelPopUpBody3;
 	@FindBy(xpath="//div[@id='cancelationModal']//ul//li")
 	List<WebElement> duringTrialCancelPopUpBody2;
-	
+	@FindBy(xpath="//html//button[2]")
+	WebElement btnCancellationSubmitTrial;
+	@FindBy(xpath="//p[@id='errorswarning']")
+	WebElement errorCancelWithoutReason;
 	
 	
 		private TestBase testConfig;
@@ -178,6 +181,9 @@ public class OptumPaySolutionUPA {
 					j++;
 					}									
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","Upon cancellation of Optum Pay, you will continue to receive ACH payments and maintain limited portal access.",duringTrialCancelPopUpBody3.getText().toString());
+				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
+				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
+				Helper.compareEquals(testConfig, "Error thrown when reason is not selected", "Please enter Reason for Termination.", errorCancelWithoutReason.getText().toString());
 				for(WebElement cancelReasonUI :listTrialCancellationReason)
 					{
 					  if(cancelReasonUI.getText().toString().equalsIgnoreCase("Select One"))
