@@ -79,6 +79,8 @@ public class OptumPaySolutionUPA {
 	WebElement btnCancellationSubmitTrial;
 	@FindBy(xpath="//p[@id='errorswarning']")
 	WebElement errorCancelWithoutReason;
+	@FindBy(xpath="//*[@id='reason_selector']//option[8]")
+	WebElement otherOptionTrialCancellationReason;
 	
 	
 		private TestBase testConfig;
@@ -195,7 +197,10 @@ public class OptumPaySolutionUPA {
 						  i++;
 					   }
 					}
-				
+				Element.click(otherOptionTrialCancellationReason, "Selecting Other as the Reason");
+				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
+				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
+				Helper.compareEquals(testConfig, "Error thrown when other reason is not given", "Please enter Other reason for termination.", errorCancelWithoutReason.getText().toString());
 			}
 			
 		}
