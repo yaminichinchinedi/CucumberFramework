@@ -183,6 +183,14 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
 	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
 	    	homePage.selectTin(searchCriteria);
+	    	Browser.wait(testConfig,3);
 	 }
+	 
+	 @When("^User verifies HomePage Alert depending upon \"([^\"]*)\" and \"([^\"]*)\"$")
+	 public void user_verifies_HomePage_Alert_depending_upon_and(String portalAccess,String tinType) throws Throwable {
+	   	
+		 homePage.verifyHomePageAlertUPA(portalAccess,tinType);
+	 }
+
 
 }

@@ -26,3 +26,24 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
 		 #P- Pending, PD-Post Default
 		 #A- Active,  PS-Post Selection
 		 #I- Inactive
+		 
+		#Author:Sayonee 
+	 @US3060820
+	 Scenario Outline: - Optum Pay Solutions - Verify Post Trial PopUp
+   Given User navigates to UPA portal and enters "<userType>" and login
+   When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
+   And   User clicks on Optum Pay Solutions tab
+   Then Verify the Cancellation Popup based on "<trialStatus>"
+     Examples:
+   	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+      |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     I     |					A					 |				PS			 |
+      
+   @US3060825
+	 Scenario Outline: - Optum Pay Solutions - Verify During Trial PopUp
+   Given User navigates to UPA portal and enters "<userType>" and login
+   When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
+   And   User clicks on Optum Pay Solutions tab
+   Then Verify the Cancellation Popup based on "<trialStatus>"
+     Examples:
+   	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+      |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |

@@ -98,7 +98,10 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkBsInfo;
 	@FindBy(xpath = "//a[@id='tabOptumPay']") 
 	WebElement lnkOptumPaySol;
-	
+	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")
+	WebElement txthomepageAlert;
+	@FindBy(xpath="//table[@id='outerTable']//section/div[1]//p//a")
+	WebElement lnkFAQAlertText;
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -209,6 +212,26 @@ public class UPAHomePage extends HomePage {
 	public void clickOnOptumPaySolutionsTabUPA() {
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
+	}
+
+	public void verifyHomePageAlertUPA(String portalAccess,String tinType) {
+		if(tinType.equalsIgnoreCase("AO"))
+		{
+		 if(portalAccess.equalsIgnoreCase("Standard"))
+		    Helper.compareEquals(testConfig, "Standard Alert text", "You're going to lose important functionality by not activating, be sure to sign up before the free trial ends.", txthomepageAlert.getText().toString());
+		 else if(portalAccess.equalsIgnoreCase("Premium"))
+		   {      
+			   Helper.compareEquals(testConfig, "Premium Alert text", "Optum Pay will debit your bank account at the end of the billing cycle; please ensure you've taken the necessary steps by reviewing our FAQ's for important information.", txthomepageAlert.getText().toString());
+			   Element.clickByJS(testConfig, lnkFAQAlertText, "lnkFAQAlertText");
+			   String parentwindowhandle=testConfig.driver.getWindowHandle();
+			   Browser.switchToNewWindow(testConfig);
+			   String expectePrivacydURL = "epsFaqs.do?from=dropdown#how-am-i-billed";
+			   Browser.verifyURL(testConfig, expectePrivacydURL);
+			   Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+			   
+		  }
+		}
+		
 	}
 	
 }
