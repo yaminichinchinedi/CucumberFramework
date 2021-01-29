@@ -29,9 +29,9 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	@Given("^User navigates to UPA Sys Test application$")
 	public void user_navigates_to_UPA_Sys_Test_application () throws Throwable {
 		
-		
 		registrationPage = new UPARegistrationPage(testConfig);
-	    
+		
+	  
 	}
 
 	@When("^User Clicks on Enroll Now from the landing page$")
