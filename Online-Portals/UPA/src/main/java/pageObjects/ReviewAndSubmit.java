@@ -114,7 +114,7 @@ public class ReviewAndSubmit {
 	@FindBy(xpath = "//div[@class='float-right width-40 padding-left-beta padding-right-giga']/a")
 	WebElement termsAndConditionsLink;
 
-	@FindBy(xpath ="//a[@class='button--primary-hover float-right cancel-activation']")
+	@FindBy(xpath ="//a[@class='button--primary-hover float-right cancel-activation btn-secondary']")
 	WebElement cancelEnrolment;
 	
 	@FindBy(name="btnBack")
@@ -238,6 +238,7 @@ public class ReviewAndSubmit {
 	}
 	public void clickIdentifyEditLink()
 	{
+		Browser.wait(testConfig, 5);
 		Element.click(identifyedtlnkBS, "Edit Hyperlink");
 		String expectedURL="viewBillingServiceContacts.do?fromReview=Y&BSAdminedit=N";
 		Browser.verifyURL(testConfig, expectedURL);
@@ -303,7 +304,7 @@ public class ReviewAndSubmit {
 		  Element.verifyElementPresent(termsAndConditionsLink, "Download Terms and Conditions");
 		  Element.click(termsAndConditionsLink, "Download Terms and Conditions");
 		  if(enrollmentInfoPageObj.getEnrollType().equals("BS")) 
-			  Browser.switchToNewWindow(testConfig, "Optum_EPS_BillingService_Terms_Conditions.pdf");  
+			  Browser.switchToNewWindow(testConfig, "f_optum%20pay%20billing%20agent_terms%20and%20conditions.pdf");  
 	      else
 		  Browser.switchToNewWindow(testConfig, "Optum_EPS_Terms_Conditions.pdf");
 		  return this;
@@ -349,9 +350,9 @@ public class ReviewAndSubmit {
 		  clickCancelEnrollment();
 		  Element.verifyElementPresent(divCancelEnrollment, "Cancel Enrollment Pop up");
 		  //Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up text", expectedText,((txtCancelEnrollmentPopUp.getText() + txtCancelEnrollmentPopUpExtend.get(0).getText() + txtCancelEnrollmentPopUpExtend.get(1).getText()).replace("\n","")));
-		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUp.getText(), dataTest.get(13).get("TEXT_VAL"));
-		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUpExtend.get(0).getText(), dataTest.get(14).get("TEXT_VAL"));
-		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUpExtend.get(1).getText(), dataTest.get(15).get("TEXT_VAL"));
+		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUp.getText(), dataTest.get(12).get("TEXT_VAL"));
+		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUpExtend.get(0).getText(), dataTest.get(13).get("TEXT_VAL"));
+		  Helper.compareEquals(testConfig, "Billing Service Name", txtCancelEnrollmentPopUpExtend.get(1).getText(), dataTest.get(14).get("TEXT_VAL"));
 		  clickNoOnCancelEnrollment().clickCancelEnrollment().clickYesOnCancelEnrollment();
 		  return this;
 	  }
@@ -374,16 +375,16 @@ public class ReviewAndSubmit {
 		  return this;
 	  }
 
-	  public void verifyErrorMsgNull()
+	  public ReviewAndSubmit  verifyErrorMsgNull()
 	  {
 		  Element.clickByJS(testConfig,chkAccptance, "Accept terms and condition");
 		  Element.click(btnEnrllmnt, "Submit Enrollment");
 		  List <String> expectedErrorMsgs;
 		  Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
 		  if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-		  expectedErrorMsgs=Arrays.asList("- Review and Submit - Authorized Enroller First Name","- Review and Submit - Authorized Enroller Last Name","- Review and Submit - Authorized Enroller Telephone Number","- Review and Submit - Authorized Enroller Email Address","- Review and Submit - Authorized Enroller Re-type Email Address");
+		  expectedErrorMsgs=Arrays.asList("- Review and Submit - Authorized Enroller First Name","- Review and Submit - Authorized Enroller Last Name","- Review and Submit - Authorized Enroller Telephone Number","- Review and Submit - Authorized Enroller Email Address","- Review and Submit - Authorized Enroller Re-enter Email Address");
 		  else
-			  expectedErrorMsgs=Arrays.asList("- Review and Submit - Authorized Enroller First Name","- Review and Submit - Authorized Enroller Last Name","- Review and Submit - Authorized Enroller Title","- Review and Submit - Authorized Enroller Telephone Number","- Review and Submit - Authorized Enroller Email Address","- Review and Submit - Authorized Enroller Re-type Email Address");
+			  expectedErrorMsgs=Arrays.asList("- Review and Submit - Authorized Enroller First Name","- Review and Submit - Authorized Enroller Last Name","- Review and Submit - Authorized Enroller Title","- Review and Submit - Authorized Enroller Telephone Number","- Review and Submit - Authorized Enroller Email Address","- Review and Submit - Authorized Enroller Re-enter Email Address");
 		  for(int i=0;i<expectedErrorMsgs.size();i++)
 		  {
 			  Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
@@ -398,6 +399,7 @@ public class ReviewAndSubmit {
 				Element.click(links,links.getText());
 				Browser.verifyURL(testConfig, expectedURL);
 			}
+		  return this;
 
 	  }
 	  public void verifyMissingDataErrorMsg()
