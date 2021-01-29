@@ -178,11 +178,11 @@ public class CSRManageUserSteps extends TestBase {
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
     	manageUsers=searchPage.doSearch(userType, portalAccess);
     }
+
     
-    @Then("^User verifies Add User button visiblity for \"([^\"]*)\",\"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
-    public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String tinTyp, String portalAccess, String systemMode) throws Throwable
-      {
+    @Then("^User verifies Add User button visiblity for \"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy\\.$")
+    public void user_verifies_Add_User_button_visiblity_for_based_on_like_FeeBased_or_Legacy(String portalAccess, String systemMode) throws Throwable {
     	testConfig.putRunTimeProperty("sysMode", systemMode);
-    	manageUsers.verifyAddUsrBtnVsblBySystem_Mode("CSR",portalAccess);
-      }
+    	manageUsers.verifyAddUsrBtnVsblBySystem_Mode(portalAccess,systemMode);
+    }
 }
