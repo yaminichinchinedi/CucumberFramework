@@ -60,15 +60,11 @@ public class CSRHomePage {
 	@FindBy(name="addTincsr")
 	WebElement addTin;
 	
-	
-//	@FindBy(xpath="//td[contains(text(),'You are logged in to support :')]") 
-//	WebElement txtloggedIn;
-	
-//	@FindBy(xpath="//td[contains(text(),'You are logged in to support')]")  
-//		WebElement txtloggedIn; 
+
 
     @FindBy(css=".productName") 
 	WebElement txtloggedIn;
+
 	
 //	@FindBy(xpath="//p[contains(text(),'With EPS Online Enrollment you can:')]")
 //	WebElement txtloggedIn;
@@ -103,6 +99,12 @@ public class CSRHomePage {
 	
 	@FindBy(linkText="Home")
 	WebElement home;
+	
+	@FindBy(linkText="Optum Pay Solutions")
+	WebElement lnkOptPaySoln;
+	
+	@FindBy(linkText="Manage Internal Users")
+	WebElement lnkManageInternalUSer;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -162,4 +164,14 @@ public class CSRHomePage {
            Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
            
     }
+    public void clickOptmPaySolnLink()
+    {      Browser.wait(testConfig, 2);
+           Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
+           
+    }
+    public void clickManageInternalUserlink() {
+		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
+		
+		
+	}
 }
