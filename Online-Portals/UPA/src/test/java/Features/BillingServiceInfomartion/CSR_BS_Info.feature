@@ -1,6 +1,6 @@
 #Author: Athyusha Thota
 
-@CSRRegression  @CSRBSInfoTab @US2872239
+@CSRRegression  @CSRBSInfoTab @US2872239 
 Feature: CSR Billing Service Info Tab
 Scenario Outline: BS Info Functionality 
  
