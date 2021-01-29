@@ -243,15 +243,26 @@ public class ProviderInformationEFTERAEnroll {
 		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
 		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
 		
-//		Element.click(chkOther, "Other sub checkbox");
+		//Element.click(chkOther, "Other sub checkbox");
 
 	//	Element.click(btnContinue, "Continue button");
+		Browser.wait(testConfig, 5);
 		if(enrollmentInfoPageObj.getEnrollType().equals("BS"))
-
 		//Same xpath has been used both for Continue and save changes button.
-			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']/footer/a[1]"), "Continue/Save Changes Button");
+			if (testConfig.driver.getCurrentUrl().contains("CSR"))
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"), "Continue/Save Changes Button CSR");
+			else
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAenrBSForm']/div[3]/a[1]"), "Continue/Save Changes Button");
 		else
-			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
+		{
+			//Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
+		if (testConfig.driver.getCurrentUrl().contains("CSR"))
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"), "Continue/Save Changes Button CSR");
+		else
+			Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"), "Continue/Save Changes Button");
+
+		}
+
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
@@ -551,6 +562,16 @@ public class ProviderInformationEFTERAEnroll {
 				Element.verifyTextPresent(error, "Invalid Data");
 			else
 				Element.verifyTextPresent(error, "Invalid for City/State");
+		}
+		else if(element.equals(bsName))
+		{
+			if(error.getText().contains("Special"))
+				Element.verifyTextPresent(error, "Special characters not allowed");
+		}
+		else if(element.equals(city))
+		{
+			if(error.getText().contains("Special"))
+				Element.verifyTextPresent(error, "Special characters not allowed");
 		}
 		else if(element.equals(street))
 		{
