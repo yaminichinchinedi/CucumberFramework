@@ -141,7 +141,6 @@ public class SearchTinPageViewPayments {
             case "Tricare":
 	         {
 	        	 Element.selectVisibleText(prvdrTIN,tin +" - Enrolled","TIN Selection from Dropdown");
-	        	 //Element.enterData(tinDrpDwn, tin, "Entering Tricare TIN", "Entering Tricare TIN");
 		         break;
 	          }
 	         
@@ -152,22 +151,18 @@ public class SearchTinPageViewPayments {
                      Element.enterData(tinDrpDwn, tin, "Enter Tin", "Enter Tin");
 	        	     Element.click(srchBtn, "Search Button");
 	        	 
-	        	 //Element.enterData(tinDrpDwn, tin, "Entering Tricare TIN", "Entering Tricare TIN");
 		         break;
 	          }
 	         
             case "Multiple PLB":
 	         {
 	        	 Element.selectVisibleText(prvdrTIN, tin +" - Enrolled", "Entering Multiple PLB TIN");
-	        	 //Element.enterData(tinDrpDwn, "430687806", "Entering Multiple PLB TIN", "Entering Multiple PLB TIN");
 		         break;
 	          }
 	         
             case "PLB Adj Only":
 	         {
 	        	 Element.selectVisibleText(prvdrTIN,tin +" - Enrolled", "Entering PLB Adj Only TIN");
-	        	 //Element.enterData(tinDrpDwn, "371839681", "Entering PLB Adj Only TIN", "Entering PLB Adj Only TIN");
-		         //Log.Comment("TIN selected: 371839681");
 	             break;
 	          }
 	         
