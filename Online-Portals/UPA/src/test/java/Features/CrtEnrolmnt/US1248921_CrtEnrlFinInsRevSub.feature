@@ -1,23 +1,22 @@
 #Author: Madhavi Upputuri
-
-@CreateEnrollment @US1248921 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1248921 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institution Information
 
   Background: Create Enrollment_HO_Review and Submit 
  
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+  Then User clicks on Continue button of BeginEnrollment Page
 	
-	@UPASanity																
+	@UPASanity			 													
 	Scenario: TS_0001_Validate Edit Option next to each field on Review and Submit page.
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
-   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+    Then User fills all the information  and click on Continue
+    Then User fills all the information on Identify Administrators page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   And Validates Edit option next to each field on Review and Submit page 
   
@@ -28,40 +27,39 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   And Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
   
   #TC_003 and TC_004 covered in US1463317_TS004
   #TC_005 depricated	
-  
-  						
-	Scenario: TS_0006_Validate the data on Financial Information  page.
+  					
+Scenario: TS_0006_Validate the data on Financial Information  page.
 	
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
   And Validates buttons on Edit Financial Institution Information Page
   						
-	Scenario: TS_0007_Validate the navigation upon selection of Cancel changes.
+Scenario: TS_0007_Validate the navigation upon selection of Cancel changes. -- #Tech error
 	
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -74,9 +72,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -89,9 +87,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -105,9 +103,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then User click back button on Review and Submit Page
   And clicks back button on Upload WNine Page.
@@ -119,9 +117,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -152,9 +150,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -166,9 +164,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -181,9 +179,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
@@ -196,30 +194,30 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page
   And User give alphanumeric No in Telphone no fiels and click on save changes button
 
 
-	Scenario: TS_33/35_Upon correcting errors and selecting Save Changes again, updated information is saved and displays on Review and Submit page
-	
-	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-											|Enrollment Type|
-											|     AO        |
-											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
-  Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
-  Then User uploads the WNine form and click continue
-  Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
- And User validates fiels are editables on Financial Institution Information page
-  And Validates Non numeric data Error messages for Financial Institution Fields on click on save changes button
-  And User should navigate to Review and Submit Page upon Entering valid information
-  And Validate the changes are reflected on Review and Submit Page.
+#	Scenario: TS_33/35_Upon correcting errors and selecting Save Changes again, updated information is saved and displays on Review and Submit page
+#	
+#	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+#											|Enrollment Type|
+#											|     AO        |
+#											
+#  Then User navigates to Billing service information page and fill all fields and click on continue button
+#  Then User fills all the information on Identify Administrators page and click continue
+#   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
+#  Then User uploads the WNine form and click continue
+#  Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
+# And User validates fiels are editables on Financial Institution Information page
+#  And Validates Non numeric data Error messages for Financial Institution Fields on click on save changes button
+#  And User should navigate to Review and Submit Page upon Entering valid information
+#  And Validate the changes are reflected on Review and Submit Page.
   
   Scenario: TS_0036_Validate on edit of different voided check or bank letter, the Cancel Changes button gets disabled.
 	
@@ -227,9 +225,9 @@ Feature: US1248921_Create Enrollment- Review and Submit - Edit Financial Institu
 											|Enrollment Type|
 											|     AO        |
 											
-  Then User navigates to Billing service information page and fill all fields and click on continue button
+    Then User fills all the information  and click on Continue
   Then User fills all the information on Identify Administrators page and click continue
-  Then User fills all the information on Financial Institution Information page and click continue
+   Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
   Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
   And User validates fiels are editables on Financial Institution Information page

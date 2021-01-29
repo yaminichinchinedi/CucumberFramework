@@ -1,7 +1,9 @@
-
 #Author:Rahul Krishna
 #@CSRUS2673017
+@CSRCreateEnrollmentTest
 Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org Financial Institution Information
+
+
 		Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
 		When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
@@ -20,7 +22,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 
          |   credentials     |
          |    Super          |
-         |    RW             |
+         #|    RW             |
 
 		Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Error Messages Validation
 		When  ABN Validator Switch is set as 'Y'
@@ -39,7 +41,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		
 		         |   credentials     |
 		         |    Super          |
-		         |    RW             |
+		         #|    RW             |
  
   		Scenario Outline: ABN Validators Financial Institution Information AO-Error message Revalidations
 		When  ABN Validator Switch is set as 'Y'
@@ -62,7 +64,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		
 		         |   credentials     |
 		         |    Super          |
-		         |    RW             |
+		         #|    RW             |
 		         
 	  Scenario Outline: ABN Validators Financial Institution Information AO -Org Level Review and Submit
 	  When  ABN Validator Switch is set as 'Y'
@@ -86,7 +88,7 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 		
 		         |   credentials     |
 		         |    Super          |
-		         |    RW             |
+		         #|    RW             |
     
     
     Scenario Outline: Create Enrollment-CSR- RTN API Request/Response AV- Error Messages Validation
@@ -104,8 +106,8 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
     		Examples:
 		
 		         |   credentials     |
-		         |    Super          |
-		         |    RW             |
+		         #|    Super          |
+		         #|    RW             |
    
     Scenario Outline: ABN Validators Financial Institution Information AV -Error message Revalidations
     When  ABN Validator Switch is set as 'Y'
@@ -127,8 +129,8 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
 				Examples:
 		
 		         |   credentials     |
-		         |    Super          |
-		         |    RW             |
+		         #|    Super          |
+		         #|    RW             |
 		
 	
 		Scenario Outline: ABN Validators Financial Institution Information AV-Org Level Review and Submit
@@ -153,5 +155,5 @@ Feature: US2673017CSROrg-Create Enrollment CSR- RTN API Request/Response - Org F
     		Examples:
 		
 		         |   credentials     |
-		         |    Super          |
-		         |    RW             |
+		         #|    Super          |
+		        # |    RW             |

@@ -1,12 +1,11 @@
 #Author: Amit Kushwah
-
-@CreateEnrollment @US1348624 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1348624 @BothCSRUPAScenarios @UPARegression @UPACreateEnrollment
 Feature: Create Enrollment - Review and Submit -edit Organization Information
 
   Background: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
-    Then User Select a How you heard option and  click on Continue button
+  	Then User clicks on Continue button of BeginEnrollment Page
 #TS01#TS02#TS011
 @UPASanity
   Scenario: Fills the relevent Info with BS Enroll Typ

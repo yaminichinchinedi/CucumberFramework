@@ -1,13 +1,12 @@
 #Author: Madhavi Upputuri
-
-@CreateEnrollment @US1249134 @BothCSRUPAScenarios @UPARegression
+@CreateEnrollment @US1249134 @BothCSRUPAScenarios @UPARegression  @UPACreateEnrollment
 Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Review and Submit
 
   Background: Create Enrollment_BS_Review and Submit 
  
    Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
-  Then User Select a How you heard option and  click on Continue button
+  Then User clicks on Continue button of BeginEnrollment Page
   Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     BS        |
@@ -20,7 +19,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   Then User navigates to ReviewAndSubmit page and click on edit icon
   Then User navigates to Organization information page and validate fields are editable
   
-  @UPASanity
+  @UPASanity 
   Scenario: TS005_Create Enrollment_BS_Review and Submit - edit Identify Administrators_Cancel and Save Changes
    
   Then User navigates to Billing service information page and fill all fields and click on continue button
@@ -53,7 +52,7 @@ Feature: US1249134_Create Enrollment- Billing Service Identify Administrators Re
   #Then User uploads the WNine form and click continue
   #Then User navigates to ReviewAndSubmit page and click on edit icon
   #And Validates page content matches to UXDS html 
-   @UPASanity
+   @UPASanity 
    Scenario: TS003_Validate that Identify Administrators page text is content managed
    
    Then User navigates to Billing service information page and fill all fields and click on continue button
