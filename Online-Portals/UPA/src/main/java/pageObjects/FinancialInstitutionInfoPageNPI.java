@@ -80,7 +80,8 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(id="no")
 	WebElement rdoNPINo;
 
-	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/a[1]")
+	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/a[1]")
+	//@FindBy(xpath="//a[contains(text(),'Continue')]")
 	WebElement btnContinueSavChng;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
@@ -123,7 +124,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancEnroll;
 	
-	@FindBy(xpath="//form[@id='EFTERAregForm']/footer/input")
+	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/input")
 	WebElement btnCancChng;
 	
 	@FindBy(linkText="YES")
@@ -297,21 +298,21 @@ public class FinancialInstitutionInfoPageNPI{
 				break;
 		}
 		Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
-		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
-		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
-        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
-		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
-		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
+//		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
+//		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
+//        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
+//		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
+//		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
 //		enrollmentInfoPageObj.setFinInstName(financialInstName);
 //		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
 //		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
 
 		
-		  Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
-		  Element.selectVisibleText(finInstState, stateName,"Select City from excel");
-		  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
-		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
-		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+//		  Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
+//		  Element.selectVisibleText(finInstState, stateName,"Select City from excel");
+//		  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
+//		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+//		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		Browser.wait(testConfig, 2);
 		if (InputField.equalsIgnoreCase("NofileUpload")||InputField.equalsIgnoreCase("NonPdfUpload") )
 		{
@@ -602,7 +603,7 @@ public class FinancialInstitutionInfoPageNPI{
 	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoFromExcelABANPI() throws IOException 
 	{
 	  
-		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinueSavChng.getAttribute("disabled"));	  
+		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinueSavChng.getAttribute("disabled"));
 		  String npiNumber=Long.toString(Helper.generateRandomNumber(10));
 		  Element.enterData(finInstNPINo,npiNumber ,"Enter National Provider Identifier","finInstNPINo");  
 		  Element.enterKeys(finInstNPINo, Keys.TAB, "TAB Key entering", "TAB Key");
@@ -659,6 +660,7 @@ public class FinancialInstitutionInfoPageNPI{
 			 Log.Fail(" '-' is missing between phone nos");	 
 		 }
 		  uploadBankLetterPdfWithAcceptance();
+		  enrollmentInfoPageObj.setNpi(npiNumber);
 		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
 		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
 		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
@@ -817,7 +819,7 @@ public class FinancialInstitutionInfoPageNPI{
 		Browser.wait(testConfig, 1);
 		
 		Element.click(btnNo, "No Button of PopUp");
-		Browser.verifyURL(testConfig, "validateEFTERAFinancialInfo.do");
+		Browser.verifyURL(testConfig, "validateEFTERAFinancialInfoNPIRtn.do");
 		
 		Browser.wait(testConfig, 2);
 		Element.click(btnCancEnroll, "Cancel Enroll Button");
@@ -833,12 +835,6 @@ public class FinancialInstitutionInfoPageNPI{
 		Element.clickByJS(testConfig, btnContinueSavChng, "Continue");
 		ArrayList <String> errNames=new ArrayList<String>();
 		errNames.add("- Financial Information - National Provider Identifier(NPI)");
-		errNames.add("- Financial Information - Financial Institution/Bank Name");
-		errNames.add("- Financial Information - Financial Institution Address - Street");
-		errNames.add("- Financial Information - Financial Institution Address - City");
-		errNames.add("- Financial Information - Financial Institution Address - State");
-		errNames.add("- Financial Information - Financial Institution Address - Zip");
-		errNames.add("- Financial Information - Financial Institution Address - Telephone");
 		errNames.add("- Financial Information - Account Information - Financial Institution Routing Number");
 		errNames.add("- Financial Information - Account Information - NPI Account Number with Financial Institution");
 		errNames.add("- Financial Information - Account Information - Upload Voided Check/Bank Letter");
@@ -846,12 +842,6 @@ public class FinancialInstitutionInfoPageNPI{
 		
 		ArrayList <String> expectedURLs=new ArrayList<String>(); 
 		expectedURLs.add("npiField");
-		expectedURLs.add("npiFinInst");
-		expectedURLs.add("npiStreet");
-		expectedURLs.add("npiCity");
-		expectedURLs.add("npiState");
-		expectedURLs.add("npiZip");
-		expectedURLs.add("npiTele");
 		expectedURLs.add("npiRouting");
 		expectedURLs.add("npiAcctNbr");
 		expectedURLs.add("npiUploadDoc");
@@ -859,7 +849,7 @@ public class FinancialInstitutionInfoPageNPI{
 		
 		ArrayList <String> webErrNamesText=new ArrayList<String>();
 		int i=1;
-			while(i<11){
+			while(i<5){
 			String xpath="//form[@id=\"EFTERAregForm\"]/section[1]/fieldset[1]/div/ul/"+"li"+"["+i+"]"+"/a";
 			 
 			if (Element.findElement(testConfig, "xpath", xpath).getTagName().equals("a"))
@@ -885,32 +875,32 @@ public class FinancialInstitutionInfoPageNPI{
 			Helper.compareEquals(testConfig, "Verify Red color is highlighted in National Provider Identifier text box" , expectedColor, Color.fromString(finInstNPINo.getCssValue("border-top-color")).asHex());
 	
 			
-			Log.Comment("Verifying Error Msg is displayed for Financial Institution / Bank Name...");
-			Element.verifyTextPresent(finInstName.findElement(By.xpath("..//following::p[1]")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted in Finantial Institution/Bank text box" , expectedColor, Color.fromString(finInstName.getCssValue("border-top-color")).asHex());
-	
-			Log.Comment("Verifying Error Msg is displayed for Finantial Institution Street...");
-			Element.verifyTextPresent(finInstStreet.findElement(By.xpath("following::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Street Text Box..." , expectedColor, Color.fromString(finInstStreet.getCssValue("border-top-color")).asHex());
-
-
-			Log.Comment("Verifying Error Msg is displayed for Finantial Institution city...");
-			Element.verifyTextPresent(finInstCity.findElement(By.xpath("..//following-sibling::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(finInstCity.getCssValue("border-top-color")).asHex());
-
-			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  state...");
-			Element.verifyTextPresent(finInstState.findElement(By.xpath("..//following-sibling::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted in State text box" , expectedColor, Color.fromString(finInstState.getCssValue("border-top-color")).asHex());
-
-			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  Telephone...");
-			Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("..//following-sibling::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , expectedColor, Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
-
-			Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
-
-			Element.verifyTextPresent(finInstZip1.findElement(By.xpath("..//following::p[1]")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(finInstZip1.getCssValue("border-top-color")).asHex());
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(finInstZip2.getCssValue("border-top-color")).asHex());
+//			Log.Comment("Verifying Error Msg is displayed for Financial Institution / Bank Name...");
+//			Element.verifyTextPresent(finInstName.findElement(By.xpath("..//following::p[1]")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted in Finantial Institution/Bank text box" , expectedColor, Color.fromString(finInstName.getCssValue("border-top-color")).asHex());
+//	
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution Street...");
+//			Element.verifyTextPresent(finInstStreet.findElement(By.xpath("following::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Street Text Box..." , expectedColor, Color.fromString(finInstStreet.getCssValue("border-top-color")).asHex());
+//
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution city...");
+//			Element.verifyTextPresent(finInstCity.findElement(By.xpath("..//following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted in City text box" , expectedColor, Color.fromString(finInstCity.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  state...");
+//			Element.verifyTextPresent(finInstState.findElement(By.xpath("..//following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted in State text box" , expectedColor, Color.fromString(finInstState.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Finantial Institution  Telephone...");
+//			Element.verifyTextPresent(finInstPhone1.findElement(By.xpath("..//following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Telephone textbox" , expectedColor, Color.fromString(finInstPhone1.getCssValue("border-top-color")).asHex());
+//
+//			Log.Comment("Verifying Error Msg is displayed for Zip/Postal Code..");
+//
+//			Element.verifyTextPresent(finInstZip1.findElement(By.xpath("..//following::p[1]")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip1/Postal Code" , expectedColor, Color.fromString(finInstZip1.getCssValue("border-top-color")).asHex());
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Zip2 Code" , expectedColor, Color.fromString(finInstZip2.getCssValue("border-top-color")).asHex());
 
 			Log.Comment("Verifying Error Msg is displayed for Financial Institution Routing Number..");
 			Element.verifyTextPresent(finInstRoutNum.findElement(By.xpath("..//following-sibling::p")), expectedText);
@@ -920,9 +910,9 @@ public class FinancialInstitutionInfoPageNPI{
 			Element.verifyTextPresent(finInstAcctNum.findElement(By.xpath("..//following-sibling::p")), expectedText);
 			Helper.compareEquals(testConfig, "Verify Red color is highlighted for NPI AC No field" , expectedColor, Color.fromString(finInstAcctNum.getCssValue("border-top-color")).asHex());
 
-			Log.Comment("Verifying Error Msg is displayed for Voided Check");
-			Element.verifyTextPresent(finInstNPIFile.findElement(By.xpath("..//following-sibling::p")), expectedText);
-			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(finInstNPIFile.getCssValue("border-top-color")).asHex());
+//			Log.Comment("Verifying Error Msg is displayed for Voided Check");
+//			Element.verifyTextPresent(finInstNPIFile.findElement(By.xpath("..//following-sibling::p")), expectedText);
+//			Helper.compareEquals(testConfig, "Verify Red color is highlighted for Upload voided Check" , expectedColor, Color.fromString(finInstNPIFile.getCssValue("border-top-color")).asHex());
 	}
 	
 	public void verifyChangeButtons()
@@ -956,5 +946,9 @@ public class FinancialInstitutionInfoPageNPI{
 	public void verifyEditable(){
 		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstNPINo.getAttribute("readonly"));
 		Helper.compareEquals(testConfig, "EditValeCheck", null, finInstName.getAttribute("readonly"));
+	}
+	
+	public void clickSaveChanges() {
+		Element.clickByJS(testConfig, btnContinueSavChng, "CONTINUE");
 	}
 }
