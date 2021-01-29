@@ -102,6 +102,49 @@ public class UPAHomePage extends HomePage {
 	WebElement txthomepageAlert;
 	@FindBy(xpath="//table[@id='outerTable']//section/div[1]//p//a")
 	WebElement lnkFAQAlertText;
+	
+
+	@FindBy(xpath = "//a[contains(text(),'Resources')]")
+	WebElement  resourcesDropDown;
+	
+	@FindBy(linkText="FAQs")
+	WebElement  resourcesFaqs;
+	
+	@FindBy(linkText="VCP FAQs")
+	WebElement  vcpFaqs;
+	
+	@FindBy(linkText="Terms & Conditions")
+	WebElement  resourcesTnc;
+	
+	@FindBy(linkText="Cancel Form")
+	WebElement  resourcesCancelForm;
+	
+	@FindBy(id="guide-top")
+	WebElement  guideSection;
+	
+	@FindBy(linkText="SIGN IN") 
+	WebElement signInBtn;
+	
+	@FindBy(tagName="header") 
+	WebElement header;
+	
+
+	@FindBy(xpath="//b[contains(text(),'Terms and Conditions')]")
+	WebElement tncText;
+	
+	@FindBy(name = "acceptTerms")
+	WebElement tncChkBox;
+	
+	@FindBy(name = "btnSubmit")
+	WebElement btnSubmit;
+	
+	@FindBy(name = "btnCancel")
+	WebElement btnCancel;
+
+	@FindBy(linkText="Download Terms and Conditions")
+	WebElement tncPdf;
+	
+	
 	UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -233,5 +276,90 @@ public class UPAHomePage extends HomePage {
 		}
 		
 	}
+
+	public void clickOnResourceDropDown()
+	{
+		Element.verifyElementPresent(resourcesDropDown, "Resources Drp Dwn");
+		Element.mouseHoverByJS(testConfig, resourcesDropDown, "Resources Drp Dwn");
+	}
+	public void verifyFaqsFromResources()
+	{
+		Element.verifyElementNotPresent(vcpFaqs, "VCP FAQs");
+		Element.verifyElementPresent(resourcesFaqs, "FAQs");
+		
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(resourcesFaqs, "FAQs");
+		Browser.switchToNewWindow(testConfig);
+		String faqsUrl = "/epsFaqs.do";
+		Browser.verifyURL(testConfig, faqsUrl);
+		Element.verifyElementNotPresent(guideSection, "Guides");
+		Element.verifyElementNotPresent(signInBtn, "Sign In");
+		Element.verifyElementNotPresent(header, "Header");
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	public void verifyTncLinkUnderResources()
+	{
+		Element.verifyElementPresent(resourcesTnc, "TnC");
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(resourcesTnc, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
 	
+
+	public void verifyTncPageAppears()
+	{
+		Element.verifyElementPresent(tncText, "TnC text");
+		Element.verifyElementPresent(tncChkBox, "TnC accept checkbox");
+		Element.verifyElementPresent(btnSubmit, "Submit btn");
+		Element.verifyElementPresent(btnCancel, "Cancel btn");
+		Element.verifyElementPresent(tncPdf, "TnC Pdf");
+	}
+	
+	public void downloadTncPdf()
+	{
+		Element.verifyElementPresent(tncPdf, "TnC");
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(tncPdf, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	
+	public void acceptTncAndSubmit()
+	{
+		Map attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
+		if(attributes.containsKey("disabled"))
+		{
+			Log.Pass("Submit is disabled before the TnC is checked");
+		}
+		else 
+			Log.Fail("Submit mustn't be enabled before the TnC is checked");
+		
+		Element.clickByJS(testConfig, tncChkBox, "TnC accept checkbox");
+		
+		attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
+		if(!attributes.containsKey("disabled"))
+		{
+			Log.Pass("Submit is enabled after TnC is accepted");
+		}
+		else 
+			Log.Fail("Submit mustn't be disabled after TnC is accepted");
+		
+		Element.clickByJS(testConfig, btnSubmit, "Submit");
+		
+	}
+	
+	public void verifyIfTncIsUpdated()
+	{
+		int sql=7;
+		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
+		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
+		
+		if(tncAcceptStatus.compareToIgnoreCase("Y")==0)
+		{
+			Log.Pass("TnC updated successfully");
+		}
+		else
+			Log.Fail("TnC not updated successfully");
+	}
 }

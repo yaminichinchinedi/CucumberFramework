@@ -381,5 +381,29 @@ public class LoginUPA {
 		Element.verifyElementPresent(clickUPASignIn, "Sign in Button");
 		return this;
 	}
+
+	public void updateTncIfAccepted()
+	{
+		int sql=7;
+		int sqlUpdate=275;
+		
+		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
+		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
+		
+		if(tncAcceptStatus.compareToIgnoreCase("Y")==0)
+		{
+			DataBase.executeUpdateQuery(testConfig, sqlUpdate);
+			
+			Map tncStatusUpdate=DataBase.executeSelectQuery(testConfig, sql, 1);
+			tncAcceptStatus = tncStatusUpdate.get("TC_ACCEPT_IND").toString().trim();
+			
+			if(tncAcceptStatus.compareToIgnoreCase("N")==0)
+			{
+				Log.Pass("TnC status updated to Not accepted");
+			}
+			else 
+				Log.Fail("TnC status not updated to Not accepted");
+		}
+	}
 	
 }
