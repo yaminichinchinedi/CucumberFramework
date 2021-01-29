@@ -59,7 +59,7 @@ public class ValidateEnrollmentTypePage {
 	@FindBy(xpath="//html/body/form/section/main/p[3]/a")
 	WebElement homePageLink;
 
-	@FindBy(xpath="//html/body/form/section/main/footer/a")
+	@FindBy(xpath="//html/body/form/section/main/div/a")
 	WebElement loginBtn;
 
 	@FindBy(xpath="//html/body/form/section/main/h4/strong")
@@ -314,9 +314,8 @@ public class ValidateEnrollmentTypePage {
 	
 	public ValidateEnrollmentTypePage verifyEnrolledPreEnrollmentStatusTIN() throws IOException
 	{
-		String enrolledTINMsg =  "Your TIN is pending enrollment status.";
+		String enrolledTINMsg =  "Your TIN is currently in a pending enrollment status.";
 		Element.verifyTextPresent(preEnrolledStatus,enrolledTINMsg);
-		Element.verifyElementPresent(homePageLink,"Home Page Link");
 		Element.verifyElementPresent(loginBtn,"Return to Login Button");		
 		return this;
 	}
@@ -341,7 +340,7 @@ public class ValidateEnrollmentTypePage {
 	public ValidateEnrollmentTypePage verifyEnrolledInactiveAndBlockStatusTIN() throws IOException
 	{
 		String inActiveTIN =  "Your TIN cannot be enrolled at this time.";
-		String inActiveTINMsg = "The TIN you entered is currently in an inactive status and cannot be enrolled in Electronic Payments and Statements at this time.";
+		String inActiveTINMsg = "The TIN you entered is currently in an inactive status and cannot be enrolled in Optum Pay at this time.";
 		Element.verifyTextPresent(inActiveStatus,inActiveTIN);
 		Element.verifyTextPresent(inActiveStatusMsgUI,inActiveTINMsg);
 		Element.verifyElementPresent(loginBtn,"Return to Login Button");
@@ -370,7 +369,7 @@ public class ValidateEnrollmentTypePage {
 
 	public ValidateEnrollmentTypePage verifyBtnCancelPopup() throws IOException
 	{
-		String btnCancelPopupMsg =  "Are you sure you want to cancel your EPS enrollment application?";
+		String btnCancelPopupMsg =  "Are you sure you want to cancel your Optum Pay enrollment application?";
 		Element.verifyTextPresent(btnCancelPopUp, btnCancelPopupMsg);
 		Element.verifyElementPresent(btnYes,"Cancel Button Yes");
 		Element.verifyElementPresent(btnNo,"Cancel Button No");
@@ -596,7 +595,7 @@ public class ValidateEnrollmentTypePage {
 		listUI.add(secondaryContact.getText());
 		listUI.add(tinAndBusinessInfo.getText());
 		listUI.add(w9FormBS.getText());
-		listUI.add(downloadw9FormBS.getText());
+		listUI.add(downloadw9FormBS.getText().replace("linkto", "link to"));
 		for (String list : listUI) {
 			if (listDB.contains(list)) {
 				Log.Pass(list + " :" + " " + "matches in both UI and DB");
