@@ -133,7 +133,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	WebElement routingNumberPopup;
 	
 	//@FindBy(xpath=".//*[@id='EFTERAregForm']//section[2]/fieldset/div[2]/a")
-	@FindBy(xpath="//*[@id='div2']/section/fieldset/div[2]/a")
+	@FindBy(xpath="//*[@id='div2']/section/fieldset/div[5]/a")
 
 	WebElement routingNumberLink;
 
@@ -251,7 +251,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		expectedText="and required to submit additional information.";
 		//Element.verifyTextPresent(txtSecurity2,expectedText);
 		
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 5);
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
@@ -362,6 +362,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  //Check for the API down message "Service is down, please try again."
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
 		  Browser.wait(testConfig, 5);
+		  compareHeading();
 		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
 		  String AddronUIText=AddronUI.getText();
 		  try{
@@ -411,6 +412,19 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return this;
     }
 
+	public FinancialInstitutionInfoPage compareHeading() throws IOException 
+	{
+		int sqlRowNo=1613;
+		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+	String HeaderUI=Element.findElement(testConfig, "xpath", "//*[@id='headingAlertForRtn']").getText();
+		
+	Helper.compareContains(testConfig, "Header title1", dataTest.get(1).get("TEXT_VAL"), HeaderUI);
+	Helper.compareContains(testConfig, "Header title2", dataTest.get(2).get("TEXT_VAL"), HeaderUI);
+    Helper.compareContains(testConfig, "Header title3", dataTest.get(3).get("TEXT_VAL"), HeaderUI);
+
+	
+	return this;
+	}
 	
 	public FinancialInstitutionInfoPage fillFinancialInstInfoFromExcelABA() throws IOException 
 	{
@@ -428,8 +442,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  //finInstAcctNum.sendKeys(Keys.TAB);
 		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
 		  Browser.wait(testConfig, 2);
+		  compareHeading();
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
-		  Browser.wait(testConfig, 5);
+		  Browser.wait(testConfig, 8);
 		  WebElement AddronUI=Element.findElement(testConfig, "id", "bankDetailp");
 		  String AddronUIText=AddronUI.getText();
 		  try{
@@ -464,10 +479,20 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		 if (!( phone.substring(3,4).equals("-")  &&  phone.substring(7,8).equals("-") ) )
 		 Log.Fail(" '-' is missing between phone nos");	 
 		 
+		 String[] finCity = UIBankDetails.get(2).split(",");
+		 String [] finState = finCity[1].split(" ");
+
+		 String finZip = finState[2].replaceAll("-", "");
+		 String finPhone = UIBankDetails.get(4).replaceAll("-", "");
 		  uploadBankLetterPdfWithAcceptance();
 		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
 		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
 		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
+		  enrollmentInfoPageObj.setFinCity(finCity[0]);
+		  enrollmentInfoPageObj.setFinStreet(UIBankDetails.get(1));
+		  enrollmentInfoPageObj.setFinState(finState[1]);
+		  enrollmentInfoPageObj.setFinZip(finZip);
+		  enrollmentInfoPageObj.setFinPhoneNo(finPhone);
 		 }
 		  else
 			  Log.Fail("Please proceed with valid RTN");
@@ -723,36 +748,36 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		
 		
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/legend/h1")).getText(), dataTest.get(53).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/p[1]")).getText(), dataTest.get(50).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(32).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//*[@id='div2']/section/fieldset/h1")).getText(), dataTest.get(53).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Finantial Institution Informatioon", dataTest.get(50).get("TEXT_VAL"),(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/p[1]")).getText());
+		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(32).get("TEXT_VAL"));
 		String text=(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/p[2]")).getText();
 		int endIndex=text.indexOf(":");
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text.substring(0, endIndex+1) , dataTest.get(31).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/h4[2]/strong")).getText(), dataTest.get(51).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[2]/strong")).getText(), dataTest.get(51).get("TEXT_VAL"));
 		
-		Helper.compareEquals(testConfig, "Finantial Institution Name", (finInstName.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(22).get("TEXT_VAL"));
-		
-		Helper.compareEquals(testConfig, "Finantial Institution Street", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinStreet']/label")).getText(), dataTest.get(44).get("TEXT_VAL"));
-		//div[@id="finInstTinStreet"]/label
-		Helper.compareEquals(testConfig, "Finantial Institution City", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinCity']/label")).getText(), dataTest.get(43).get("TEXT_VAL"));
-		
-		Helper.compareEquals(testConfig, "Finantial Institution State", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinState']/label")).getText(), dataTest.get(42).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Zip Code", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinZip1']/legend")).getText(), dataTest.get(41).get("TEXT_VAL"));
-		
-		Helper.compareEquals(testConfig, "Finantial Institution Phone", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinPhone1']/legend")).getText(), dataTest.get(40).get("TEXT_VAL"));
-		
+//		Helper.compareEquals(testConfig, "Finantial Institution Name", (finInstName.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(22).get("TEXT_VAL"));
+//		
+//		Helper.compareEquals(testConfig, "Finantial Institution Street", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinStreet']/label")).getText(), dataTest.get(44).get("TEXT_VAL"));
+//		//div[@id="finInstTinStreet"]/label
+//		Helper.compareEquals(testConfig, "Finantial Institution City", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinCity']/label")).getText(), dataTest.get(43).get("TEXT_VAL"));
+//		
+//		Helper.compareEquals(testConfig, "Finantial Institution State", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinState']/label")).getText(), dataTest.get(42).get("TEXT_VAL"));
+//		Helper.compareEquals(testConfig, "Finantial Institution Zip Code", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinZip1']/legend")).getText(), dataTest.get(41).get("TEXT_VAL"));
+//		
+//		Helper.compareEquals(testConfig, "Finantial Institution Phone", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinPhone1']/legend")).getText(), dataTest.get(40).get("TEXT_VAL"));
+//		
 		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinRoutNum']/div/label")).getText(), dataTest.get(38).get("TEXT_VAL"));
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
 		
-		Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Type of Ac", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctType']/div/p[1]/label")).getText(), dataTest.get(35).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution Type of Ac", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctType']/div/p[1]/label")).getText(), dataTest.get(35).get("TEXT_VAL"));
 		//Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[2]/fieldset/div[4]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//div[@id='secondportiontohide']/div[2]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//div[@id='secondportiontohide']/div[2]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
 
-		Helper.compareEquals(testConfig, "Finantial Institution Msg File", (Element.findElement(testConfig, "xpath", "//div[@id='uploadVC']/p")).getText(), dataTest.get(17).get("TEXT_VAL")+dataTest.get(15).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution NPI bank AC", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinNpiAcctYorN']/div/p[1]/label")).getText(), dataTest.get(14).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution Msg File", (Element.findElement(testConfig, "xpath", "//div[@id='uploadVC']/p")).getText(), dataTest.get(17).get("TEXT_VAL")+dataTest.get(15).get("TEXT_VAL"));
+		//Helper.compareEquals(testConfig, "Finantial Institution NPI bank AC", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinNpiAcctYorN']/div/p[1]/label")).getText(), dataTest.get(14).get("TEXT_VAL"));
 	
 		  return this;
 	}
@@ -805,19 +830,20 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     
     public void verifyErrorMsg()
 	{
-    	clearFinsInstInfoFields();
+    	//clearFinsInstInfoFields();
     	Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
 		Element.click(saveChanges, "Save Changes Button");
 		
 		List <String> expectedErrorMsgs;
 		Element.verifyTextPresent(errorHeader, "Please correct the following fields before continuing the enrollment process:");
-		 expectedErrorMsgs=Arrays.asList("- Financial Institution Information - Financial Institution / Bank Name","- Financial Institution Information - Street","- Financial Institution Information - City","- Financial Institution Information - State","- Financial Institution Information - Zip","- Financial Institution Information - Phone","- Financial Institution Information - Financial Institution Routing Number","- Financial Institution Information - Provider's Account Number with Financial Institution","- Financial Institution Information - Upload Voided Check/Bank Letter");
-		for(int i=0;i<expectedErrorMsgs.size();i++)
+		 //expectedErrorMsgs=Arrays.asList("- Financial Institution Information - Financial Institution / Bank Name","- Financial Institution Information - Street","- Financial Institution Information - City","- Financial Institution Information - State","- Financial Institution Information - Zip","- Financial Institution Information - Phone","- Financial Institution Information - Financial Institution Routing Number","- Financial Institution Information - Provider's Account Number with Financial Institution","- Financial Institution Information - Upload Voided Check/Bank Letter");
+		 expectedErrorMsgs=Arrays.asList("- Financial Institution Information - Upload Voided Check/Bank Letter");
+		 for(int i=0;i<expectedErrorMsgs.size();i++)
 		{
 			Element.verifyTextPresent(individualErrors.get(i), expectedErrorMsgs.get(i));
 		}
 		
-		verifyFinInsMissingDataErrorMsg();
+		//verifyFinInsMissingDataErrorMsg();
 		
 	}
     public void clearFinsInstInfoFields(){
@@ -973,9 +999,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     
     public void  VerifyValidFinInstInfo() throws IOException {
     	
-    	clearFinsInstInfoFields();
+    	//clearFinsInstInfoFields();
     	Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
-    	fillFinancialInstInfo();
+    	//fillFinancialInstInfo();
     	Browser.verifyURL(testConfig, "uploadefterafile.do?fromreview=y");
     	Element.click(saveChanges, "Save Changes Button");
     	Browser.verifyURL(testConfig, "validateEFTERAFinancialInfo.do?fromReview=Y");
