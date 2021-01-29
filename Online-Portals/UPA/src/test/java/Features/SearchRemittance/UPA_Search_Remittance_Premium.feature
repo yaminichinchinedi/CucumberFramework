@@ -22,3 +22,15 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|	byElectronicPayNum  	|	PROV_Gen   	 |    PROV     |   Premium    |TinWthatlstOnePayNum   |  VO   |
 
 
+@UPAUS2838204
+	Scenario Outline: Validate Market type in Search remittance
+	
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Search Remittance link for UPA
+		Then Validate all the fields present in Search Remittance Page
+		
+		Examples:
+			|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN        |tinType|
+		 	|	PROV_Admin	 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
+		
