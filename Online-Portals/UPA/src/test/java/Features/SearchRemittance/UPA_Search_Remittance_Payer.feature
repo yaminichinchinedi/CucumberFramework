@@ -165,5 +165,18 @@ Examples:
 						|	   byDOP&SuPAYcriberID       |	 PAY_Gen  	|    PAY       | 	       byDOP                |	
 						| byCheckNoOfReoriginNacha      |	 PAY_Gen     |    PAY       | 	  byCheckNo                 |	
 						|    byCheckNoOfConslPayDtl     |	 PAY_Gen 	|    PAY       | 	     byCheckNo        	    |	
+	
+	
+	@test123
+Scenario Outline: Access Payments- Payer Portal Search Results
+
+	Given User navigates to UPA portal and enters "<credentials>" and login
+	Then User clicks on Search Remittance link for UPA
+	And User enters tin for UPA Search Remittance Tin Page for "<Search Criteria>" through "<usertype>" and click on continue button
+	
+
+Examples:
+						|		Search Criteria			| credentials 	|   usertype  |
+	         	|	       byDOP  	      |	 PAY_Admin   |    PAY       |	
 																															
 																		
