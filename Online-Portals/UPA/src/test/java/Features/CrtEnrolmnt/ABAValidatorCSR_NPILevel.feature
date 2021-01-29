@@ -1,14 +1,14 @@
 #Author:Rahul Krishna
-
 #@CSRUS2673017  
+@CSRCreateEnrollmentTest
 Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org Financial Institution Information NPI
-		
+
   Scenario Outline: ABN Validators Financial Institution Information AO -NPI Level Validations
   	When  ABN Validator Switch is set as 'Y'
-		Given User navigates to CSR portal and enters "<credentials>" and login
-		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
-		Then User Select User Type as "Provider" and enter unique TIN and click Search
-		Then User select Yes button of TIN not enrolled page
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+    Then User Select User Type as "Provider" and enter unique TIN and click Search
+    Then User select Yes button of TIN not enrolled page
   	Then User select User Type Enrollment as "AO" and click continue button
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
@@ -22,7 +22,7 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
 
          |   credentials     |
          |    Super          |
-         |    RW             |
+         #|    RW             |
 
 
 	 Scenario Outline: ABN Validators Financial Institution Information AO -Error Messages Validations
@@ -42,7 +42,7 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
 
          |   credentials     |
          |    Super          |
-         |    RW             | 
+         #|    RW             | 
     
         
     Scenario Outline: ABN Validators Financial Institution Information AO-NPI Level ReValidations
@@ -65,7 +65,7 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
 
          |   credentials     |
          |    Super          |
-         |    RW             |
+         #|    RW             |
     
   Scenario Outline: ABN Validators Financial Institution Information AV-NPI Level Validations
   	When  ABN Validator Switch is set as 'Y'
@@ -86,8 +86,8 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
      Examples:
 
          |   credentials     |
-         |    Super          |
-         |    RW             |
+         #|    Super          |
+         #|    RW             |
     
    	 Scenario Outline: ABN Validators Financial Institution Information AV -NPI Level Validations
    	 When  ABN Validator Switch is set as 'Y'
@@ -105,8 +105,8 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
      Examples:
 
          |   credentials     |
-         |    Super          |
-         |    RW             |
+         #|    Super          |
+         #|    RW             |
     
     Scenario Outline: ABN Validators Financial Institution Information AV -NPI Level ReValidations
     When  ABN Validator Switch is set as 'Y'
@@ -129,6 +129,6 @@ Feature: US2673017CSRNPI-Create Enrollment CSR- RTN API Request/Response - Org F
 		 Examples:
 
          |   credentials     |
-         |    Super          |
-         |    RW             |
+         #|    Super          |
+         #|    RW             |
       
