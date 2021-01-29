@@ -9,4 +9,4 @@
 	   Then User validates logo, Title, Enroll Now button,PDFs and Footer of this page
 	   And User also validates the How to Enroll page content
 	   
-	   
+	   	
