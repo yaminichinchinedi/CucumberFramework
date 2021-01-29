@@ -28,36 +28,38 @@ public class OptumPaySolutionUPA {
 	WebElement txtFeesHeader;
 	@FindBy(xpath = "//div[contains(text(),'Manage Subscriptions')]") 
 	WebElement txtManageSubHeader;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[1]/div/div[2]") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div[1]/div/div[2]") 
 	WebElement txtProvNameInfo;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div//div[2]//div[2]") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div//div[2]//div[2]") 
 	WebElement txtPlanTypeInfoVO;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div//div[3]//div[2]/b") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div//div[3]//div[2]/b") 
 	WebElement txtFeesInfoVO;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div//div[4]//div[2]/b") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div//div[4]//div[2]/b") 
 	WebElement txtManageSubInfo;
-	@FindBy(xpath = "//form[@id=\"showOptumPayForm\"]/div//h1") 
+	@FindBy(xpath = "//form[@id='showOptumPayForm']/div//h1") 
 	WebElement txtOnStandardPage;
-	@FindBy(xpath = "//div[@id=\"videoID1\"]//div") 
+	@FindBy(xpath = "//div[@id='videoID1']//div") 
 	WebElement video;
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
 	@FindBy(linkText="Home") 
 	WebElement lnkHome;
-	@FindBy(xpath = "//div[@id=\"optum-pay-tabs\"]//div[1]//p[2]") 
+	@FindBy(xpath = "//div[@id='optum-pay-tabs']//div[1]//p[2]") 
 	WebElement pageText;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div[3]//div[2]") 
 	WebElement txtFeesInfoAO;
 	@FindBy(linkText="Cancel My Subscription")  
 	WebElement lnkCancelSubscription;
-	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div[3]//div[2]") 
 	WebElement txtActivationAdminName;
-	@FindBy(xpath = "//div[@id=\"cancelationModal\"]/h2") 
+	@FindBy(xpath = "//div[@id='cancelationModal']/h2") 
 	WebElement duringTrialCancelPopUp;
-	@FindBy(xpath = "//div[@id=\"cancelationPostTrialModal\"]/h2") 
+	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']/h2") 
 	WebElement postTrialCancelPopUp;
 	@FindBy(xpath = "//div[2]/div[1]/button[1]/span[1]") 
 	WebElement btnCancelOnPopUp;
+	@FindBy(xpath = "//div[@id='optum-pay-options']//div[2]//b[2]") 
+	WebElement txtActDate;
 	
 		private TestBase testConfig;
 		public OptumPaySolutionUPA(TestBase testConfig) {
@@ -80,13 +82,17 @@ public class OptumPaySolutionUPA {
 		    Helper.compareEquals(testConfig, "Fees on 3rd tile", "N/A", txtFeesInfoVO.getText().trim());
 		    Helper.compareEquals(testConfig, "Manage Subscriptions on 4th tile", "N/A", txtManageSubInfo.getText().trim());	
 		    Element.click(testConfig, lnkHome, "Home", 3);
-			Element.click(testConfig, lnkLogout, "Logout", 3);
+			Browser.waitForPageLoad(testConfig);
+			Element.click(lnkLogout, "Logout");
+			Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 		}
 		public void verifySolutionsTabForStandard(String trialStatus, String portalAccess){
 			Helper.compareEquals(testConfig, "Optum Pay brings more power to your practice text on Standard view", "Optum Pay brings more power to your practice", txtOnStandardPage.getText().trim());
 			Element.verifyElementPresent(video, "Video");
 			Element.click(testConfig, lnkHome, "Home", 3);
-			Element.click(testConfig, lnkLogout, "Logout", 3);
+			Browser.waitForPageLoad(testConfig);
+			Element.click(lnkLogout, "Logout");
+			Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 		}
 		public void verifySolutionsTabForPremium(String trialStatus,String portalAccess) throws Exception{
 			if(trialStatus.equalsIgnoreCase("A")) {
@@ -98,7 +104,9 @@ public class OptumPaySolutionUPA {
 				Element.click(btnCancelOnPopUp, "Close pop-up 'X' button");
 				Element.verifyElementPresent(pageText, "Page Text");
 				Element.click(testConfig, lnkHome, "Home", 3);
-				Element.click(testConfig, lnkLogout, "Logout", 3);
+				Browser.waitForPageLoad(testConfig);
+				Element.click(lnkLogout, "Logout");
+				Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 			}
 			else if(trialStatus.equalsIgnoreCase("I")) {
 				verifyHeaders();
@@ -117,14 +125,15 @@ public class OptumPaySolutionUPA {
 		    Helper.compareEquals(testConfig, "Organization Name on 1st tile DB and UI", data.get("ORG_NM").toString().trim(),txtProvNameInfo.getText().trim());
 			Helper.compareEquals(testConfig, "2nd Tile text- Optum Pay", "Optum Pay", planTypeInfo.substring(0, 9).trim());	
 			Helper.compareEquals(testConfig, "2nd Tile text- Activation Admin", "Activation Admin:", planTypeInfo.substring(10, 28).trim());	
-			Helper.compareEquals(testConfig, "2nd Tile text- Activation Date", "Activation Date:", planTypeInfo.substring(37, 53).trim());	
+			Helper.compareEquals(testConfig, "2nd Tile text- Activation Date", "Activation Date:", txtActDate.getText().trim());	
 			sqlRowNo=1344;
 			testConfig.getRunTimeProperty("statusOfStandardRecd");
 			testConfig.getRunTimeProperty("$SelectedOrDefault");
 			data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			String activationDate= data.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
 			activationDate=Helper.changeDateFormat(activationDate, "yyyy-mm-dd", "mm/dd/yyyy");
-			Helper.compareEquals(testConfig, "2nd Tile Info- Activation Date", activationDate, planTypeInfo.substring(54, 64).trim());
+			String res = planTypeInfo.substring(planTypeInfo.length() - 10);
+			Helper.compareEquals(testConfig, "2nd Tile Info- Activation Date", activationDate, res.trim());
 			Helper.compareEquals(testConfig, "Fees on 3rd tile", "0.5% of Payment", txtFeesInfoAO.getText().trim());
 			Helper.compareEquals(testConfig, "Fees on 4th tile", "Free Trial End Date:", txtManageSubInfo.getText().trim());
 			sqlRowNo=1341;
