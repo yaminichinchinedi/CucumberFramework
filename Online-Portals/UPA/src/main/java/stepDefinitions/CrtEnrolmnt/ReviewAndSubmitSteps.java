@@ -172,4 +172,34 @@ public class ReviewAndSubmitSteps extends TestBase {
 	public void user_verifies_that_uploaded_document_is_present_on_Review_and_Submit_Page_on_TIN_Section() throws Throwable {
 		reviewAndSubmit.verifyUpldDoc("FII");
 	}
+	
+
+	@Then("^User clicks on  Edit Link of Billing Service Information section of Review and Submit page and validates its content from database$")
+	public void user_clicks_on_Edit_Link_of_Billing_Service_Information_section_of_Review_and_Submit_page_and_validates_its_content_from_database() throws Throwable {
+		reviewAndSubmit.clickEditLink().verifyUITextFromDBforBS();
+	}
+
+	@Then("^User validate headers of Billing Service Information page$")
+	public void user_validate_headers_of_this_page() throws Throwable {
+		String BoldFontwthCircle="Billing Service Information";
+		new HeaderContentValidation(testConfig).verifyHeaders(BoldFontwthCircle);
+	}
+
+	@Then("^User fills  information on Edit Billing Service Informatin with \"([^\"]*)\" and \"([^\"]*)\" and validate Error messages$")
+	public void user_fills_information_on_Edit_Billing_Service_Informatin_with_and_and_validate_Error_messages(String InputField, String dataFormat) throws Throwable {
+		if (dataFormat.contentEquals("blank")) {
+			new ProviderInformationEFTERAEnroll(testConfig).verifyFooterButton();
+			reviewAndSubmit.verifyErrorMsgNull();
+		}
+		if (dataFormat.contentEquals("Special Char"))
+			new ProviderInformationEFTERAEnroll(testConfig).validateBillingService("BSName", "&*min","SAVE CHANGES").validateBillingService("Street", "*(*(*","SAVE CHANGES").validateBillingService("City", "%^&&","SAVE CHANGES");
+		if (dataFormat.contentEquals("Post Box No"))
+			new ProviderInformationEFTERAEnroll(testConfig).validateBillingService("Street", "PO BOX 7530","SAVE CHANGES");
+		if (dataFormat.contentEquals("Invalid ZipCode"))
+			new ProviderInformationEFTERAEnroll(testConfig).validateBillingService("ZipCode", "70165","SAVE CHANGES");
+		if (dataFormat.contentEquals("Alphanumeric"))
+			new ProviderInformationEFTERAEnroll(testConfig).validateBillingService("ZipCode", "anjhu123","SAVE CHANGES");
+
+	}
+
 }
