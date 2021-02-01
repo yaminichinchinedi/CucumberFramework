@@ -1,23 +1,13 @@
 
 package main.java.stepDefinitions.CrtEnrolmnt;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
-import main.java.nativeFunctions.Element;
 import main.java.pageObjects.HowToEnroll;
-import main.java.pageObjects.CSRHomePage;
-import main.java.pageObjects.HomePage;
-import main.java.pageObjects.LoginCSR;
-import main.java.pageObjects.LoginUPA;
-import main.java.pageObjects.OptumIdLoginPage;
-import main.java.pageObjects.SearchRemittance;
-import main.java.pageObjects.SearchTinPageViewPayments;
-import main.java.pageObjects.UPAHomePage;
-import main.java.pageObjects.UPARegistrationPage;
+
 
 public class HowToEnrollSteps extends TestBase {
 	HowToEnroll howtoEnroll=new HowToEnroll(testConfig);
