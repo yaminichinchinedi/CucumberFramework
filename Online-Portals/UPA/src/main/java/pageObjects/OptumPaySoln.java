@@ -6,6 +6,7 @@ import java.util.Map;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 
@@ -20,6 +21,19 @@ public class OptumPaySoln {
 	
 	@FindBy(className="wrapperTooltip")
 	List <WebElement> titles;
+
+	@FindBy(xpath = "//li[contains(text(),'Please enter a existing 9 digit TIN number.')]") 
+	WebElement nonExistingTINmsgOptumPaySol;
+	
+	@FindBy(xpath = "//li[contains(text(),'Please enter a valid 9 digit TIN number.')]") 
+	WebElement InValidTINmsgOptumPaySol;
+	
+	@FindBy(xpath = "//input[@name='taxIndNbr']") 
+    WebElement enterTIN;
+	
+	@FindBy(xpath = "//input[@name='btnSubmit']")
+	WebElement searchBtn;
+
 	public OptumPaySoln(TestBase testBase)
 	{
 		this.testConfig=testBase;
@@ -54,6 +68,36 @@ public class OptumPaySoln {
 		Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
 
 		return this;
+	}
+	
+
+	public OptumPaySoln verifyInvalidTINonOptumPaySolution(String invalidTIN) throws Exception 
+	{
+		Element.expectedWait(enterTIN, testConfig, "TIN field","TIN Field");
+		Element.enterData(enterTIN, invalidTIN, "TIN entered as : "+invalidTIN, "EnterTIN");
+		Element.clickByJS(testConfig,searchBtn, "Search Button");
+		Browser.wait(testConfig, 4);
+		boolean isInteger;
+		try {
+		    int x = Integer.parseInt(invalidTIN);
+		    isInteger=true;
+		}
+		catch(NumberFormatException nFE) {
+			isInteger=false;
+		}
+		
+		if(isInteger && invalidTIN.length()==9)
+		{
+			String ErrorMsgText = nonExistingTINmsgOptumPaySol.getText();
+			Helper.compareEquals(testConfig, "Non-Existing TIN error msg", "Please enter a existing 9 digit TIN number.", ErrorMsgText);
+		}
+		else
+		{
+			String ErrorMsgText = InValidTINmsgOptumPaySol.getText();
+			Helper.compareEquals(testConfig, "InValid TIN error msg", "Please enter a valid 9 digit TIN number.", ErrorMsgText);
+		}
+		return this;
+	
 	}
 	
 }

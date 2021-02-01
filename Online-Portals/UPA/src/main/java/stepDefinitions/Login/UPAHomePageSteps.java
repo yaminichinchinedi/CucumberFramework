@@ -191,6 +191,50 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	   	
 		 homePage.verifyHomePageAlertUPA(portalAccess,tinType);
 	 }
+	 
+
+		@When("^User hovers on the Resources DropDown$")
+		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
+			homePage.hoverOnResourceDropDown();
+		}
+
+		@Then("^User clicks on Faqs link and verifies the FAQ page$")
+		public void user_clicks_on_Faqs_link_and_verifies_the_FAQ_page() throws Throwable {
+			homePage.verifyFaqsFromResources();
+		}
+		
+		@Then("^User clicks on Terms and Conditions$")
+		public void user_clicks_on_Terms_and_Conditions() throws Throwable {
+			homePage.verifyTncLinkUnderResources();
+		}
+		
+		
+		@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login when the Terms and Conditions are not accepted$")
+		public void user_navigates_to_UPA_portal_and_enters_and_login_when_the_Terms_and_Conditions_are_not_accepted(String userType) throws Throwable {
+			new UPARegistrationPage(testConfig); 
+			LoginUPA loginPage=new LoginUPA(testConfig);
+			loginPage.setUserProperties(userType);
+			loginPage.updateTncIfAccepted();
+			homePage=loginPage.doLoginUPA(userType);
+		}
+		
+
+		@Then("^The Terms and Conditions page is displayed$")
+		public void the_Terms_and_Conditions_page_is_displayed() throws Throwable {
+			homePage.verifyTncPageAppears();
+		}
+		
+		@Then("^The Terms and Conditions pdf is verified$")
+		public void the_Terms_and_Conditions_pdf_is_verified() throws Throwable {
+			homePage.downloadTncPdf();
+		}
+		
+		@Then("^User Accept the Terms and Conditions and Submit$")
+		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
+			homePage.acceptTncAndSubmit();
+			homePage.verifyIfTncIsUpdated();
+			homePage.logOutFromUPA();
+		}
 
 
 }
