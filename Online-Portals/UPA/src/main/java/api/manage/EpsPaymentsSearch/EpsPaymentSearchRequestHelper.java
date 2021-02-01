@@ -47,7 +47,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		
     }
 
-	
 	@Override
 	public Object convertResponseXMLToPojo(String response) throws JAXBException, IOException, SAXException, ParserConfigurationException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(EpsPaymentsSummarySearchResponse.class);
@@ -107,6 +106,6 @@ public class EpsPaymentSearchRequestHelper extends CreateConnection
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
 		marshaller.marshal(jaxbElement, stringWriter);
 		return stringWriter.toString();	
-	}	
-	
+	}
+
 }

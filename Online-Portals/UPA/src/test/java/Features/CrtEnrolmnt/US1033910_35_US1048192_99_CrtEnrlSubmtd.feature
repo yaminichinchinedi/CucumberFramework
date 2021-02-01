@@ -98,4 +98,4 @@ Feature: Create Enrollment Home Page Validations
    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
    And Also click on Print Enrollment page,download PDF and validates all the information from PDF page		
    
-   			
+   		

@@ -3167,7 +3167,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		{	
 		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
-		Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
 	    }
 		return this;
 	}
