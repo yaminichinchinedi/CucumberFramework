@@ -39,9 +39,6 @@ public class HowToEnroll {
 	//@FindBy(tagName = "strong")
 	//WebElement openingParagraphText;
 	
-	//@FindBy(xpath="//h1[@class='mega']/../ul[1]")
-	//private WebElement line3afterfourthcheck;
-	
 	@FindBy(xpath="//form[@id='signInForm']/article/p[1]")
 	private WebElement para1line1text;
 	
@@ -231,14 +228,7 @@ public class HowToEnroll {
             paraText = "If you are a Healthcare Organization you will need to have the following information to complete your enrollment online:";
             break;
         }
-        
-        /*case "line after fourth check":
-        {
-            ele = line3afterfourthcheck;
-            paraText = "We'll also ask you to upload copies of:";
-            break;
-        } */
-        
+                
         case "Para1 after last check":
         {
             ele = firstParagraphAfterLastCheckMark;
@@ -301,7 +291,6 @@ public class HowToEnroll {
 		this.verifyGreenTickMarkTexts(6);
 		this.verifyHowtoEnrollParaText("Para1 line1");
 		this.verifyHowtoEnrollParaText("Para1 line2");
-		//this.verifyHowtoEnrollParaText("line after fourth check");
 		this.verifyHowtoEnrollParaText("Para1 after last check");
 		this.verifyHowtoEnrollParaText("Para2 after last check");
 		this.verifyHowtoEnrollParaText("Para3 after last check");
