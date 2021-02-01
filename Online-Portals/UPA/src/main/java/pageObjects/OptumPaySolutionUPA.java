@@ -3,6 +3,7 @@ package main.java.pageObjects;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -52,14 +53,38 @@ public class OptumPaySolutionUPA {
 	WebElement lnkCancelSubscription;
 	@FindBy(xpath = "//div[@id='optum-pay-options']//div[3]//div[2]") 
 	WebElement txtActivationAdminName;
-	@FindBy(xpath = "//div[@id='cancelationModal']/h2") 
-	WebElement duringTrialCancelPopUp;
-	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']/h2") 
-	WebElement postTrialCancelPopUp;
-	@FindBy(xpath = "//div[2]/div[1]/button[1]/span[1]") 
-	WebElement btnCancelOnPopUp;
 	@FindBy(xpath = "//div[@id='optum-pay-options']//div[2]//b[2]") 
 	WebElement txtActDate;
+	@FindBy(xpath = "//div[@id='cancelationModal']//h2") 
+	WebElement duringTrialCancelPopUpHeading;
+	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']//h2") 
+	WebElement postTrialCancelPopUpHeading;
+	@FindBy(xpath = "//div[2]/div[1]/button[1]/span[1]") 
+	WebElement btnCancelOnPopUp;
+	@FindBy(xpath="//*[@id='reason_selector']//option")
+	List<WebElement> listTrialCancellationReason;
+	@FindBy(id="cancelationPostTrialModal")
+	WebElement popUpCancellationPostTrial;
+	@FindBy(xpath="//div[@id='cancelationPostTrialModal']//p")
+	WebElement postTrialCancelPopUpText;
+	@FindBy(id="cancelationModal")
+	WebElement popUpCancellationTrial;
+	@FindBy(id="reason_selector")
+	WebElement popUpCancellationReasonSelector;
+	@FindBy(xpath = "//div[@id='cancelationModal']//p[1]") 
+	WebElement duringTrialCancelPopUpBody1;
+	@FindBy(xpath = "//div[@id='cancelationModal']//p[2]") 
+	WebElement duringTrialCancelPopUpBody3;
+	@FindBy(xpath="//div[@id='cancelationModal']//ul//li")
+	List<WebElement> duringTrialCancelPopUpBody2;
+	@FindBy(xpath="//html//button[2]")
+	WebElement btnCancellationSubmitTrial;
+	@FindBy(xpath="//p[@id='errorswarning']")
+	WebElement errorCancelWithoutReason;
+	@FindBy(xpath="//*[@id='reason_selector']//option[8]")
+	WebElement otherOptionTrialCancellationReason;
+	
+
 	
 		private TestBase testConfig;
 		public OptumPaySolutionUPA(TestBase testConfig) {
@@ -100,7 +125,7 @@ public class OptumPaySolutionUPA {
 				Browser.waitForPageLoad(testConfig);
 				verifyHeaders();
 				planTypeInfoForPremium();
-				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUp.getText().trim());
+				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUpHeading.getText().trim());
 				Element.click(btnCancelOnPopUp, "Close pop-up 'X' button");
 				Element.verifyElementPresent(pageText, "Page Text");
 				Element.click(testConfig, lnkHome, "Home", 3);
@@ -111,7 +136,7 @@ public class OptumPaySolutionUPA {
 			else if(trialStatus.equalsIgnoreCase("I")) {
 				verifyHeaders();
 				planTypeInfoForPremium();
-				Helper.compareEquals(testConfig, "Post Trial Cancel pop-up", "Call to cancel", postTrialCancelPopUp.getText().trim());
+				Helper.compareEquals(testConfig, "Post Trial Cancel pop-up", "Call to cancel", postTrialCancelPopUpHeading.getText().trim());
 				Element.click(btnCancelOnPopUp, "Close pop-up 'X' button");
 				Element.verifyElementPresent(pageText, "Page Text");
 			}
@@ -145,5 +170,49 @@ public class OptumPaySolutionUPA {
 			Helper.compareEquals(testConfig, "Fees on 4th tile Info", trialEndDateDB, trialEndDateUI.substring(21, 31).trim());
 			Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
 		}
+		public void verifyCancellationPopUp(String trialStatus) throws IOException {
+			int sqlRowNo=1111,i=1,j=0;;
+			HashMap<Integer, HashMap<String, String>> cancelReasonDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
+			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Unlimited number of users");add("The ability to search claims");add("Years of claims and remittance history maintained for easy access");add("Multiple remittance options (835, EPRA or PPRA)");}};
+			
+			if(trialStatus.equalsIgnoreCase("I"))
+			{ 
+				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
+				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
+				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
+				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
+			}
+			else if(trialStatus.equalsIgnoreCase("A"))
+			{  
+				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
+				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
+				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","By cancelling your Optum Pay access, you will be losing features that many providers consider vital to their practice, including:",duringTrialCancelPopUpBody1.getText().toString());
+				for( WebElement cancelPopUptext : duringTrialCancelPopUpBody2)
+					{Helper.compareEquals(testConfig, "Pop Up Text List", popUpTextList.get(j).toString(), cancelPopUptext.getText().toString());
+					j++;
+					}									
+				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","Upon cancellation of Optum Pay, you will continue to receive ACH payments and maintain limited portal access.",duringTrialCancelPopUpBody3.getText().toString());
+				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
+				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
+				Helper.compareEquals(testConfig, "Error thrown when reason is not selected", "Please enter Reason for Termination.", errorCancelWithoutReason.getText().toString());
+				for(WebElement cancelReasonUI :listTrialCancellationReason)
+					{
+					  if(cancelReasonUI.getText().toString().equalsIgnoreCase("Select One"))
+						  continue;
+					  else
+					   {
+						  Helper.compareEquals(testConfig, "cancel List", cancelReasonDB.get(i).get("PAY_PROC_ACPT_CD_VAL_DESC").toString(), cancelReasonUI.getText().toString());
+						  Helper.compareEquals(testConfig, "cancel List", cancelReasonList.get(i-1).toString(), cancelReasonUI.getText().toString());
+						  i++;
+					   }
+					}
+				Element.click(otherOptionTrialCancellationReason, "Selecting Other as the Reason");
+				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
+				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
+				Helper.compareEquals(testConfig, "Error thrown when other reason is not given", "Please enter Other reason for termination.", errorCancelWithoutReason.getText().toString());
+			}
+			
 		}
+	}
 

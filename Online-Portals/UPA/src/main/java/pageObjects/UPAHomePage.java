@@ -98,6 +98,52 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkBsInfo;
 	@FindBy(xpath = "//a[@id='tabOptumPay']") 
 	WebElement lnkOptumPaySol;
+	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")
+	WebElement txthomepageAlert;
+	@FindBy(xpath="//table[@id='outerTable']//section/div[1]//p//a")
+	WebElement lnkFAQAlertText;
+	
+
+	@FindBy(xpath = "//a[contains(text(),'Resources')]")
+	WebElement  resourcesDropDown;
+	
+	@FindBy(linkText="FAQs")
+	WebElement  resourcesFaqs;
+	
+	@FindBy(linkText="VCP FAQs")
+	WebElement  vcpFaqs;
+	
+	@FindBy(linkText="Terms & Conditions")
+	WebElement  resourcesTnc;
+	
+	@FindBy(linkText="Cancel Form")
+	WebElement  resourcesCancelForm;
+	
+	@FindBy(id="guide-top")
+	WebElement  guideSection;
+	
+	@FindBy(linkText="SIGN IN") 
+	WebElement signInBtn;
+	
+	@FindBy(tagName="header") 
+	WebElement header;
+	
+
+	@FindBy(xpath="//b[contains(text(),'Terms and Conditions')]")
+	WebElement tncText;
+	
+	@FindBy(name = "acceptTerms")
+	WebElement tncChkBox;
+	
+	@FindBy(name = "btnSubmit")
+	WebElement btnSubmit;
+	
+	@FindBy(name = "btnCancel")
+	WebElement btnCancel;
+
+	@FindBy(linkText="Download Terms and Conditions")
+	WebElement tncPdf;
+	
 	
 	UPAHomePage(TestBase testConfig) 
 	{
@@ -210,5 +256,99 @@ public class UPAHomePage extends HomePage {
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
 	}
+
+	public void verifyHomePageAlertUPA(String portalAccess,String tinType) {
+		if(tinType.equalsIgnoreCase("AO"))
+		{
+		 if(portalAccess.equalsIgnoreCase("Standard"))
+		    Helper.compareEquals(testConfig, "Standard Alert text", "You're going to lose important functionality by not activating, be sure to sign up before the free trial ends.", txthomepageAlert.getText().toString());
+		 else if(portalAccess.equalsIgnoreCase("Premium"))
+		   {      
+			   Helper.compareEquals(testConfig, "Premium Alert text", "Optum Pay will debit your bank account at the end of the billing cycle; please ensure you've taken the necessary steps by reviewing our FAQ's for important information.", txthomepageAlert.getText().toString());
+			   Element.clickByJS(testConfig, lnkFAQAlertText, "lnkFAQAlertText");
+			   String parentwindowhandle=testConfig.driver.getWindowHandle();
+			   Browser.switchToNewWindow(testConfig);
+			   String expectePrivacydURL = "epsFaqs.do?from=dropdown#how-am-i-billed";
+			   Browser.verifyURL(testConfig, expectePrivacydURL);
+			   Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+			   
+		  }
+		}
+		
+	}
+
+	public void hoverOnResourceDropDown()
+	{
+		Element.verifyElementPresent(resourcesDropDown, "Resources Drp Dwn");
+		Element.mouseHoverByJS(testConfig, resourcesDropDown, "Resources Drp Dwn");
+	}
+	public void verifyFaqsFromResources()
+	{
+		Element.verifyElementNotPresent(vcpFaqs, "VCP FAQs");
+		Element.verifyElementPresent(resourcesFaqs, "FAQs");
+		
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(resourcesFaqs, "FAQs");
+		Browser.switchToNewWindow(testConfig);
+		String faqsUrl = "/epsFaqs.do";
+		Browser.verifyURL(testConfig, faqsUrl);
+		Element.verifyElementNotPresent(guideSection, "Guides");
+		Element.verifyElementNotPresent(signInBtn, "Sign In");
+		Element.verifyElementNotPresent(header, "Header");
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	public void verifyTncLinkUnderResources()
+	{
+		Element.verifyElementPresent(resourcesTnc, "TnC");
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(resourcesTnc, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Helper.compareEquals(testConfig, "Tnc windows", "2", Browser.getNoOfWindowHandles(testConfig));
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
 	
+
+	public void verifyTncPageAppears()
+	{
+		Element.verifyElementPresent(tncText, "TnC text");
+		Element.verifyElementPresent(tncChkBox, "TnC accept checkbox");
+		Element.verifyElementPresent(btnSubmit, "Submit btn");
+		Element.verifyElementPresent(btnCancel, "Cancel btn");
+		Element.verifyElementPresent(tncPdf, "TnC Pdf");
+	}
+	
+	public void downloadTncPdf()
+	{
+		Element.verifyElementPresent(tncPdf, "TnC");
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(tncPdf, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	
+	public void acceptTncAndSubmit()
+	{
+		Element.verifyElementNotEnabled(btnSubmit, "Submit button");
+		
+		Element.clickByJS(testConfig, tncChkBox, "TnC accept checkbox");
+		
+		Map attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
+		if(!attributes.containsKey("disabled"))
+		{
+			Log.Pass("Submit is enabled after TnC is accepted");
+		}
+		else 
+			Log.Fail("Submit mustn't be disabled after TnC is accepted");
+		
+		Element.clickByJS(testConfig, btnSubmit, "Submit");
+		
+	}
+	
+	public void verifyIfTncIsUpdated()
+	{
+		int sql=7;
+		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
+		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
+		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
+	}
 }

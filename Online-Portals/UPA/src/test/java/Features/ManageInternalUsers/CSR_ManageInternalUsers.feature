@@ -1,8 +1,8 @@
 #Author: Sayonee
-
+@CSRManageInternalUsers
 Feature: Manage Internal Users link on CSR
 
-  @US2944327 @tine
+  @US2944327
   Scenario Outline: Optum Pay Solutions transaction can be added/removed from RW and RO CSRs, and Publish roles
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Manage Internal Users link
