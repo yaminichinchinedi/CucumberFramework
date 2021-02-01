@@ -22,10 +22,10 @@ public class OptumPaySoln {
 	@FindBy(className="wrapperTooltip")
 	List <WebElement> titles;
 
-	@FindBy(xpath = "//*[contains(text(),'Please enter a existing 9 digit TIN number.')]") 
+	@FindBy(xpath = "//li[contains(text(),'Please enter a existing 9 digit TIN number.')]") 
 	WebElement nonExistingTINmsgOptumPaySol;
 	
-	@FindBy(xpath = "//*[contains(text(),'Please enter a valid 9 digit TIN number.')]") 
+	@FindBy(xpath = "//li[contains(text(),'Please enter a valid 9 digit TIN number.')]") 
 	WebElement InValidTINmsgOptumPaySol;
 	
 	@FindBy(xpath = "//input[@name='taxIndNbr']") 
@@ -89,12 +89,12 @@ public class OptumPaySoln {
 		if(isInteger && invalidTIN.length()==9)
 		{
 			String ErrorMsgText = nonExistingTINmsgOptumPaySol.getText();
-			testConfig.softAssert.assertEquals(ErrorMsgText, "Please enter a existing 9 digit TIN number.", "Non-Existing TIN Functionality");
+			Helper.compareEquals(testConfig, "Non-Existing TIN error msg", "Please enter a existing 9 digit TIN number.", ErrorMsgText);
 		}
 		else
 		{
 			String ErrorMsgText = InValidTINmsgOptumPaySol.getText();
-			testConfig.softAssert.assertEquals(ErrorMsgText, "Please enter a valid 9 digit TIN number.", "InValid TIN Functionality");
+			Helper.compareEquals(testConfig, "InValid TIN error msg", "Please enter a valid 9 digit TIN number.", ErrorMsgText);
 		}
 		return this;
 	

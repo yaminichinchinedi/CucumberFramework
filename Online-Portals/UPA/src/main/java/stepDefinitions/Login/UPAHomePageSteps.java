@@ -193,9 +193,9 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	 }
 	 
 
-		@When("^User clicks on the Resources DropDown$")
-		public void user_clicks_on_the_Resources_DropDown() throws Throwable {
-			homePage.clickOnResourceDropDown();
+		@When("^User hovers on the Resources DropDown$")
+		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
+			homePage.hoverOnResourceDropDown();
 		}
 
 		@Then("^User clicks on Faqs link and verifies the FAQ page$")

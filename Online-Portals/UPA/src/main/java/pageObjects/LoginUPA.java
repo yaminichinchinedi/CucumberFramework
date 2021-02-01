@@ -16,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 
 public class LoginUPA {
@@ -397,12 +398,8 @@ public class LoginUPA {
 			Map tncStatusUpdate=DataBase.executeSelectQuery(testConfig, sql, 1);
 			tncAcceptStatus = tncStatusUpdate.get("TC_ACCEPT_IND").toString().trim();
 			
-			if(tncAcceptStatus.compareToIgnoreCase("N")==0)
-			{
-				Log.Pass("TnC status updated to Not accepted");
-			}
-			else 
-				Log.Fail("TnC status not updated to Not accepted");
+			Helper.compareEquals(testConfig, "TnC updated", "N", tncAcceptStatus);
+		
 		}
 	}
 	

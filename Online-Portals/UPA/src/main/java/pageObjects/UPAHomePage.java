@@ -277,7 +277,7 @@ public class UPAHomePage extends HomePage {
 		
 	}
 
-	public void clickOnResourceDropDown()
+	public void hoverOnResourceDropDown()
 	{
 		Element.verifyElementPresent(resourcesDropDown, "Resources Drp Dwn");
 		Element.mouseHoverByJS(testConfig, resourcesDropDown, "Resources Drp Dwn");
@@ -303,6 +303,7 @@ public class UPAHomePage extends HomePage {
 		String parentwindowhandle=testConfig.driver.getWindowHandle();
 		Element.click(resourcesTnc, "TnC");
 		Browser.switchToNewWindow(testConfig);
+		Helper.compareEquals(testConfig, "Tnc windows", "2", Browser.getNoOfWindowHandles(testConfig));
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
 	
@@ -327,17 +328,11 @@ public class UPAHomePage extends HomePage {
 	
 	public void acceptTncAndSubmit()
 	{
-		Map attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
-		if(attributes.containsKey("disabled"))
-		{
-			Log.Pass("Submit is disabled before the TnC is checked");
-		}
-		else 
-			Log.Fail("Submit mustn't be enabled before the TnC is checked");
+		Element.verifyElementNotEnabled(btnSubmit, "Submit button");
 		
 		Element.clickByJS(testConfig, tncChkBox, "TnC accept checkbox");
 		
-		attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
+		Map attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
 		if(!attributes.containsKey("disabled"))
 		{
 			Log.Pass("Submit is enabled after TnC is accepted");
@@ -354,12 +349,6 @@ public class UPAHomePage extends HomePage {
 		int sql=7;
 		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
 		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
-		
-		if(tncAcceptStatus.compareToIgnoreCase("Y")==0)
-		{
-			Log.Pass("TnC updated successfully");
-		}
-		else
-			Log.Fail("TnC not updated successfully");
+		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
 	}
 }
