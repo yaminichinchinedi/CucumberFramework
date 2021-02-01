@@ -31,7 +31,7 @@ public class PaymentDataFiles_BS extends TestBase{
 	WebElement paymentDataFilesTab;
 	@FindBy(xpath="//input[@value='Submit']")
 	WebElement btnSubmit;
-	@FindBy(xpath = "//li[@class='activeclass']") 
+	@FindBy(xpath = "//ul[@id='payment-data-files__tabmenu']//li[1]//a") 
 	WebElement CreateDataBundle;
 	@FindBy(xpath = "//td[@class='subheader']")  
 	WebElement SubHeader;	
@@ -39,11 +39,11 @@ public class PaymentDataFiles_BS extends TestBase{
 	WebElement PageText;
 	@FindBy(xpath = "//u[contains(text(),'Detailed Instructions For Bundle Creation')]") 
 	WebElement DetailedInstrctns;
-	@FindBy(xpath = "//td[contains(text(),'Provider:')]")
+	@FindBy(xpath = "//span[contains(text(),'Provider:')]")
 	WebElement Provider;
 	@FindBy(xpath = "//span[contains(text(),'TIN:')]") 
 	WebElement TINvisible;
-	@FindBy(xpath = "//td[contains(text(),'Settlement Date Range:')]") 
+	@FindBy(xpath = "//td[contains(text(),'Settlement Date Range')]") 
 	WebElement StlDateRange;
 	@FindBy(xpath = "//td[contains(text(),'File Types:')]")
 	WebElement FileTypes;
@@ -111,6 +111,9 @@ public class PaymentDataFiles_BS extends TestBase{
 	WebElement SearchButton;
 	@FindBy(xpath = "//input[@value='Reset']")
 	WebElement ResetBtn;
+	@FindBy(xpath = "//body/div[2]")
+	WebElement standardPopUp;
+	
 	
 	TestBase testConfig=TestBase.getInstance();
 	int sqlRowNo;
@@ -178,8 +181,8 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS verifyAllValuesinCreateBundlePage() throws Exception
 
 	{
-		String subheader = SubHeader.getText().trim();
-		testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
+		//String subheader = SubHeader.getText().trim();
+		//testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";
 		testConfig.softAssert.assertEquals(PageTextContext, PageTextActual, "Page Text Context Displays: "+PageTextContext);
@@ -958,6 +961,17 @@ public class PaymentDataFiles_BS extends TestBase{
 		Element.click(btnSubmit, "Submit button");
 		return this;
 	}
-
-	
+ public PaymentDataFiles_BS fetchAndEnterBSTin() {
+		int sqlRow=1345;
+		testConfig.getRunTimeProperty("id");
+		Map schema=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		String prov_tin_nbr = schema.get("PROV_TIN_NBR").toString().trim();
+		Element.enterData(TINField, prov_tin_nbr, "Provider TIN entered: "+prov_tin_nbr, "TINField");
+		Element.click(SearchButton, "Search button");
+	 return this;
+ }
+ public PaymentDataFiles_BS verifyPopUp() {
+	 Element.verifyElementPresent(standardPopUp, "Maximize your efficiency pop up");
+	 return this;
+ }
 }

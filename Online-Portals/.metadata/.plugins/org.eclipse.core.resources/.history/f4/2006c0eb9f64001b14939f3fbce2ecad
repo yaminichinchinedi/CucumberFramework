@@ -219,7 +219,10 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
     	paySum.verifyQuickSrchFilterOptions(portalAccess);
     }
-
+    @Then("^Select (\\d+)-(\\d+) months from the drop down$")
+    public void select_months_from_the_drop_down(int arg1, int arg2) throws Throwable {
+    	paySum.selectFromQuickSearchFilter();
+    }
   /*  
     @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
     public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {

@@ -3173,10 +3173,14 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		{	
 		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
+		//Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
 	    }
 		return this;
 	}
-	
+	public paymentSummary selectFromQuickSearchFilter() {
+		Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
+		return this;
+	}
 	public paymentSummary verifyPaymentStatusFilter(String userType, String portalAccess){
 		String label = null;
 		if(userType.equalsIgnoreCase("PROV")) {
@@ -3400,6 +3404,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		}
 		
 		verifyQuickSrchFilterOptions("Standard");
+		//verifyPaymentStatusFilter("Standard");
 		verifyPaymentStatusFilter("PROV", "Standard");
 		return this;
 	}

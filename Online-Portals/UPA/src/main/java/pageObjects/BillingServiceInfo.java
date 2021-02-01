@@ -81,8 +81,8 @@ public class BillingServiceInfo {
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[1]") WebElement provTinOnAddProvTinPage;
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[2]") WebElement provNameOnAddProvTinPage;
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[3]") WebElement enrlStatusOnAddProvTinPage;	
-	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//h2") WebElement pageText1;
-	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//p[2]") WebElement pageText2;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//h2") WebElement pageText1;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//p[2]") WebElement pageText2;
 	@FindBy(linkText="Billing Service Information") WebElement lnkBsInfo;
 	@FindBy(linkText="Home") WebElement lnkHome;
 
@@ -178,7 +178,7 @@ public String getProvTinCSR(){
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
 		Browser.waitForPageLoad(testConfig);
 		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
-			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id=\"billingServiceViewInfoForm\"]//tr[16]//table//tr[1]/th["+i+"]").getText().trim();															
+			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().trim();															
 			tinsAssocHeaderUI.add(allOptions);
 		}		
 		Helper.compareEquals(testConfig, "Provider BS Info Tab First Row Headers", tinsAssocHeader, tinsAssocHeaderUI);
@@ -205,11 +205,11 @@ public void verifyProvSecondRow() throws ParseException{
 		List<String> pendingReqHeadersUI = new ArrayList<String>();
 		
 		for(int i=1; i<=pendingReqHeaders.size(); i++){																	
-			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
 			pendingReqHeadersUI.add(allOptions);
 		}
 		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendingReqHeaders, pendingReqHeadersUI);
-		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//tr");
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr[13]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
@@ -232,7 +232,7 @@ public void verifyProvSecondRow() throws ParseException{
 		ArrayList<String> historyheaders = new ArrayList<String>(Arrays.asList("Date","Provider TIN", "Name of Billing Service","Effective Date","End Date","Action Type","Name / Username"));
 		List<String> historyheadersui = new ArrayList<String>();
 		for(int i=1; i<=historyheaders.size(); i++){																
-			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[1]//th["+i+"]")).getText().trim();
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']//table//tr[19]//tr[1]//th["+i+"]")).getText().trim();
 			historyheadersui.add(allOptions);
 		}
 	    Helper.compareEquals(testConfig, "Provider BS Info Tab Third Row Headers", historyheaders, historyheadersui);
@@ -350,7 +350,7 @@ public void pendingRequestsFunction(){
 			break;
 		}
 	}
-		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
+		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id='billingServiceViewInfoForm']/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
 		Element.isValidFormat("mm/dd/yyyy",reqDate,Locale.ENGLISH);
 		Log.Comment("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", reqDate,Locale.ENGLISH));
 }
@@ -376,7 +376,7 @@ public void verifyAddProvConfirmPage(){
 
 public void verifyTrialEndDateAndUpdateIfOver() throws Exception {
 		String currentDate = Helper.getCurrentDate("yyyy/MM/dd");
-		if(testConfig.driver.findElements(By.xpath("//*[@id=\"billing-service-information-tabs\"]/div[1]/h2")).size()==0) {	
+		if(testConfig.driver.findElements(By.xpath("//*[@id='billing-service-information-tabs']/div[1]/h2")).size()==0) {	
 			currentDate = Helper.getCurrentDate("yyyy/MM/dd").replace("/", "-");
 			testConfig.putRunTimeProperty("currentDate", currentDate);
 			testConfig.getRunTimeProperty("currentDate");

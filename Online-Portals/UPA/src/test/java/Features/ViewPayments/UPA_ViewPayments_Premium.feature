@@ -3,13 +3,13 @@
 Feature: UPA Manage User Functionality for Premium TIN
 
   	#Author: AMIT
-  	@UPAViewPayments_US2793429 @OctRelease @ViewPaymentStable
+  	@UPAViewPayments_US2793429 @OctRelease @ViewPaymentStable	
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".
-		Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
 		Then Validate Archive column relabeled to Payment Status
@@ -29,7 +29,7 @@ Feature: UPA Manage User Functionality for Premium TIN
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Archive column relabeled to Payment Status
 		And  Set FISL Parameters "<key>" and "<value>"
@@ -87,7 +87,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Then Click on Payment number and go to Remittance Detail screen.
 		Then Click on Claim number on Remittance Detail screen and go to Claim Detail screen.
 		Then Click on Payment number on Claim detail screen and go to single Payment View Payment screen.
-		Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
 		Then Click on print Payment Summary button.
 		And  Set FISL Parameters "<key>" and "<value>"
 		Then Validate the data of Print Payment Summary page.
@@ -99,8 +99,23 @@ Feature: UPA Manage User Functionality for Premium TIN
       |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
     
 		
+	#Sunanda
+ @Joy
+	Scenario Outline: Access Payments - View Payments - BS Admin Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		When Click on View Payments Link for UPA
+		When User enters  "<tinType>" tin "<searchCriteria>" with "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" for "<userType>"
+ 		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".
+		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+ 		Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
+		Then Validate Archive column relabeled to Payment Status
+		Then Validate Archive/Save changes button is relabeled to Save
+		Then Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.
+		And User logs out the session
 		
-		
-		
+		Examples:
+		 |    credentials     |   userType    | 			searchCriteria				            |		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+     |      BS_Admin      |   BS     	    |		 	TinWithPaymentsAndBsAssociation		  |			Premium			  |		AO			|     I     |					A					 |				PS			 |
+     |      BS_Gen        |   BS     	    |		 	TinWithPaymentsAndBsAssociation		  |			Premium			  |		AO			|     I     |					A					 |				PS			 |
 		
 		

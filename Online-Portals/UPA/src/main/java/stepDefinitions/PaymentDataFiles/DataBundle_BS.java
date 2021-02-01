@@ -253,5 +253,19 @@ public class DataBundle_BS {
 	public void user_validates_the_completed_File_Name_in_the_Grid_for_Billing_Service() throws Throwable {
 		bsdatabundle.verifyZipFileName();
 	}
+	@Then("^User enters a tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void user_enters_a_tin_for_for_for_and_for(String tinType, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault) throws Throwable {
+		 testConfig.putRunTimeProperty("tinType", tinType);
+	     testConfig.putRunTimeProperty("portalAccess", portalAccess);
+	     testConfig.putRunTimeProperty("trialStatus", trialStatus);
+	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
+	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
+	    bsdatabundle.fetchAndEnterBSTin();
+	}
+
+	@When("^User verifies the Maximize your efficiency pop up for standard tin$")
+	public void user_verifies_the_Maximize_your_efficiency_pop_up_for_standard_tin() throws Throwable {
+		bsdatabundle.verifyPopUp();
+	}
 
 }

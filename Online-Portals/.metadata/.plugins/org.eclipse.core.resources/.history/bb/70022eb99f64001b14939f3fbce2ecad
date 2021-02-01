@@ -3173,18 +3173,24 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		{	
 		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
+		//Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
 	    }
 		return this;
 	}
-	
+	public paymentSummary selectFromQuickSearchFilter() {
+		Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
+		return this;
+	}
 	public paymentSummary verifyPaymentStatusFilter(String userType, String portalAccess){
 		String label = null;
 		if(userType.equalsIgnoreCase("PROV")) {
-			label=lblPaymentStatus.getText().trim(); 
+			label=lblPaymentStatus.getText().trim();
+		//if(testConfig.driver.findElements(By.xpath("//div[@id='view-payments']//tr[2]/td//tr[2]//div[2]//div[4]/p")).size()!=0) 
 		}
 		else if(userType.equalsIgnoreCase("BS")) {
 			 label=BsLblPaymentStatus.getText().trim();
 		}
+		//String label=lblPaymentStatus.getText().trim();
 		if(!label.equals("Active/Archived Payments"))
 			Log.Pass("Passed : Active/Archived Payments is relabeled");
 		else
@@ -3400,6 +3406,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		}
 		
 		verifyQuickSrchFilterOptions("Standard");
+		//verifyPaymentStatusFilter("Standard");
 		verifyPaymentStatusFilter("PROV", "Standard");
 		return this;
 	}

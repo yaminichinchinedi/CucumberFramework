@@ -117,7 +117,7 @@ public class OptumPaySolutionUPA {
 			}
 		}
 		public void planTypeInfoForPremium() throws Exception {
-			String planTypeInfo= Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]//div//div[2]//div[2]").getText();
+			String planTypeInfo= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-options']//div//div[2]//div[2]").getText();
 			Element.verifyElementPresent(pageText, "Page Text");
 			int sqlRowNo = 1;
 		    testConfig.getRunTimeProperty("tin");
@@ -140,7 +140,7 @@ public class OptumPaySolutionUPA {
 			data= DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			String trialEndDateDB= data.get("PROC_DATA").toString().trim();
 			trialEndDateDB=Helper.changeDateFormat(trialEndDateDB, "yyyy-mm-dd", "mm/dd/yyyy").trim();
-			String trialEndDateUI= Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]//div[4]//div[2]").getText().trim();
+			String trialEndDateUI= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-options']//div[4]//div[2]").getText().trim();
 			System.out.println(trialEndDateUI.substring(21, 31));
 			Helper.compareEquals(testConfig, "Fees on 4th tile Info", trialEndDateDB, trialEndDateUI.substring(21, 31).trim());
 			Element.click(lnkCancelSubscription, "Cancel My Subscription Link");

@@ -125,4 +125,15 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
 		
 	}
+	@When("^User enters  \"([^\"]*)\" tin \"([^\"]*)\" with \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void user_enters_tin_with_for_and_for_for(String tinType, String searchCriteria, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault, String userType) throws Throwable {
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		testConfig.putRunTimeProperty("trialStatus", trialStatus);
+		testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
+		testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
+		testConfig.getRunTimeProperty("id");
+		viewPaymentsTIN.enterPaymentTinUPA(searchCriteria, userType);
+	}
+
 }

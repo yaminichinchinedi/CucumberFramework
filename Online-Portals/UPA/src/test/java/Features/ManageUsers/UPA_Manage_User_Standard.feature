@@ -55,7 +55,7 @@ Feature: UPA Manage User Functionality for Standard TIN
 	Then  User verifies page text and footer for "<trialStatus>"
 	And   User verifies hover over the Add User button for "<trialStatus>"
 	Examples:
-	 |    userType     |   accessType   | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+	 |    userType     |   accessType   | 			searchCriteria				|		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
 	 |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Standard			  |		AO			|     A     |					P					 |				PD			 |
    |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Standard			  |		AO			|     I     |					A					 |				PD			 |
 	 

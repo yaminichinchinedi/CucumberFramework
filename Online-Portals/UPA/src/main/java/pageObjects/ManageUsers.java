@@ -264,16 +264,16 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@class='px-3 m-1 btn-secondary' and @value = '+ Add User']")
 	WebElement btnAddUserpayer;
 
-	@FindBy(xpath="//div[@id=\"manage-users-tabs\"]/div[1]/h2")
+	@FindBy(xpath="//div[@id='manage-users-tabs']/div[1]/h2")
 	WebElement pageTextHeader;
 	
-	@FindBy(xpath="//div[@id=\"manage-users-tabs\"]/div[1]/p")
+	@FindBy(xpath="//div[@id='manage-users-tabs']/div[1]/p")
 	WebElement pageText;
 	
-	@FindBy(xpath="//div[@id=\"manage-users-tabs\"]/div[3]/h2")
+	@FindBy(xpath="//div[@id='manage-users-tabs']/div[3]/h2")
 	WebElement footerTitle;
 	
-	@FindBy(xpath="//div[@id=\"manage-users-tabs\"]/div[3]/p")
+	@FindBy(xpath="//div[@id='manage-users-tabs']/div[3]/p")
 	WebElement footerText;
 	
 	@FindBy(linkText="Logout")
@@ -2783,15 +2783,15 @@ public void removetinadded()
 				String hovertextExpected="Upgrade now\n" + 
 						"By activating Optum Pay you will have the ability to set up an unlimited number of users.";
 				Element.mouseHoverByJS(testConfig, btnAddUserHover, "Add User button During Trial");	
-				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id=\"ui-id-1\"]/div").getText();
+				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id='ui-id-1']/div").getText();
 				Helper.compareEquals(testConfig, "Add User button hover, DURING trial", hovertextExpected.trim(), hovertextActual);	
 				Element.click(lnkHome, "Home"); 
 				Element.click(lnkLogout, "Logout"); 
 			}
 			else if(trialStatus.equals("I")){
-				WebElement disabledAddUser= Element.findElement(testConfig, "xpath", "//div[@id=\"manage-users\"]/table//tr/th[2]/span");
+				WebElement disabledAddUser= Element.findElement(testConfig, "xpath", "//div[@id='manage-users']/table//tr/th[2]/span");
 				Element.mouseHoverByJS(testConfig, disabledAddUser, "Add User button Post Trial");
-				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id=\"ui-id-1\"]/div").getText();
+				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id='ui-id-1']/div").getText();
 				Helper.compareEquals(testConfig, "Add User button hover, DURING trial", "To add a new user, you will need to delete an existing user or activate Optum Pay.", hovertextActual);				
 			}
 		}
