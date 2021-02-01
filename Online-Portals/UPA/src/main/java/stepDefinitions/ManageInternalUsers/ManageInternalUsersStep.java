@@ -10,7 +10,7 @@ public class ManageInternalUsersStep extends TestBase
 {
 	ManageInternalUsers manageInternalUser=new ManageInternalUsers(testConfig);
 	
-
+		
 	@Then("^Enter \"([^\"]*)\" in userid$")
 	public void enter_userId_inManageInternalUsers(String userId) throws Throwable {
 		manageInternalUser.enterUserId(userId);

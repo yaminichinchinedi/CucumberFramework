@@ -28,9 +28,9 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Search Remittance link for UPA
-		Then Validate all the fields present in Search Remittance Page
+		Then Validate the Market type field present in Search Remittance Page
 		
 		Examples:
 			|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN        |tinType|
-		 	|	PROV_Admin	 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
-		
+		 	|	PROV_Admin 	 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
+			|	PROV_Gen		 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |

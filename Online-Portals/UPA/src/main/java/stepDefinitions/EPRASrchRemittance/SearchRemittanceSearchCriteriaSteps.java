@@ -13,7 +13,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	
 	SearchRemittanceSearchCriteria srchCriteriaPage = new SearchRemittanceSearchCriteria(testConfig);
 	
-	@Then("^Validate all the fields present in Search Remittance Page")
+	@Then("^Validate the Market type field present in Search Remittance Page$")
 	public void validate_the_fields_in_Search_Remittance_Page() throws Throwable {
 	    srchCriteriaPage.verifyFieldName();
 	}
