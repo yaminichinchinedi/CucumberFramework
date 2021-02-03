@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,30 @@ public class OptumPaySoln {
 	
 	@FindBy(xpath = "//input[@name='btnSubmit']")
 	WebElement searchBtn;
+	@FindBy(linkText="Change Rate")
+	WebElement lnkChangeRate;
+	@FindBy(xpath="//*[@id=\"change_rate_reason_selector\"]/option[3]")
+	WebElement optionReasonForRateChange;
+   @FindBy(xpath="//*[@id=\"optum-pay-options\"]/div[3]/div[2]/input[2]")
+   WebElement btnSaveChangeRate;
+   @FindBy(id="confirmationModal")
+   WebElement popUpChangeRate;
+   @FindBy(xpath="/html/body/div[6]/div[3]/div/button[2]")
+   WebElement btnChangeRatePopupCancel;
+   @FindBy(xpath="/html/body/div[6]/div[3]/div/button[1]")
+   WebElement btnChangeRatePopupChange;	
+   @FindBy(xpath="//*[@id=\"optum-pay-options\"]/div[1]/div[1]/div[2]")
+   WebElement tilePlanType;
+   @FindBy(id="logOutId")
+   WebElement lnkLogOut;
+   @FindBy(xpath="//*[@id='ui-id-3']//div")
+	WebElement hoverPlanType;
+	@FindBy(xpath="//*[@id='ui-id-4']//div	")
+	WebElement hoverRate;
+	@FindBy(xpath="//*[@id='ui-id-5']/div")
+	WebElement hoverFees;
+	@FindBy(xpath="//*[@id='ui-id-6']/div")
+	WebElement hoverManageMyPlan;
 
 	public OptumPaySoln(TestBase testBase)
 	{
