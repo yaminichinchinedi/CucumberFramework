@@ -109,10 +109,10 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(id="zeroPaymentID")
 	WebElement zeroPaymentClaims;
 	
-	@FindBy(xpath="//*[@id=\"newSearchParamTable\"]/tbody/tr[14]/td[1]/span")
+	@FindBy(xpath="//table[@id='newSearchParamTable']/tbody/tr[14]/td[1]/span")
 	WebElement marketType;
 	
-	@FindBy(xpath="//*[@id=\"newSearchParamTable\"]/tbody/tr[15]/td[1]/table/tbody/tr[1]/td/span")
+	@FindBy(xpath="//table[@class='w-100']/tbody/tr[1]/td/span")
 	WebElement allMktType;
 	
 	@FindBy(id="allMarketTypeId")
