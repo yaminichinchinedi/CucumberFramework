@@ -748,7 +748,7 @@ public class ManageUsers extends AddUserDetails
 		tinIndex=getTinIndexfromTinGrid(newAddedTin);
 		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
 	    changeEmailNotifyInd(userType, newAddedTin,tinIndex);
-		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+	    verifyEmailNotifyAccLvlForN(userType, newAddedTin,tinIndex);
 	    HomePage home=clickCancel().clickYes();
 	    home.clickManageUsersTab().clickSpecificUserName(testConfig.getRunTimeProperty("activeUser"));
 	  
@@ -801,6 +801,7 @@ public class ManageUsers extends AddUserDetails
 	       testConfig.putRunTimeProperty("fst_nm", fst_nm);
 	       Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	       Helper.compareEquals(testConfig, "Access Level", emailChkboxUI, portalUserData.get("EMAIL_NTFY_IND").toString());
+	       
            tin = testConfig.getRunTimeProperty("tinNo");
 	       String  access_lvl1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]/option[@selected='selected']")).getText();
            String access_lvl = null;
@@ -2670,15 +2671,14 @@ public void removetinadded()
 		{
          	int sqlRowNo=1606;
 			Map system_Mode = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-
-			if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && ((portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy"))) 
-					&& (userType.contains("PROV")))
+			
+			if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && (portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy")) && (userType.contains("PROV")))
 			{
 				verifyAddUserBtnEnabledUPA(portalAccess);
 				deleteInsertedUserportal();
 			}
 			
-			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")) || (portalAccess.equalsIgnoreCase("Standard") &&  (userType.contains("PROV"))))
+			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")) && (portalAccess.equalsIgnoreCase("Standard") &&  (userType.contains("PROV"))))
 			{
 				int sqlRowNoStandardTinCount=1608;
 				Map noofRecords = DataBase.executeSelectQuery(testConfig,sqlRowNoStandardTinCount, 1);
@@ -2800,6 +2800,48 @@ public void removetinadded()
 			Helper.compareEquals(testConfig, "Footer title for post trail premium TIN", "Enrollment & Account Security Reminder", footerTitle.getText().trim());
 			Helper.compareEquals(testConfig, "Footer text for post trail premium TIN", footerTextUI, footerText.getText().trim());
 		}
+		
+		public void verifyEmailNotifyAccLvlForN(String userType,String newAddedTin,int tinIndex)
+		{
+			String emailChkboxUI = null;
+			if(userType.contains("PROV"))
+		    {
+	          
+		       Element.click(savebtn, "Save Button");
+		       String activeuser = usernameUI.getText();
+		       String lst_nm = activeuser.substring(0, activeuser.lastIndexOf(','));
+		       String fst_nm = activeuser.substring(activeuser.lastIndexOf(',')+1,activeuser.length()).trim();
+		       
+		       int sqlRowNo=279;
+		       testConfig.putRunTimeProperty("lst_nm", lst_nm);
+		       testConfig.putRunTimeProperty("fst_nm", fst_nm);
+		       Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		       Helper.compareEquals(testConfig, "Access Level", "N", portalUserData.get("EMAIL_NTFY_IND").toString());
+		       
+	           String tin = testConfig.getRunTimeProperty("tinNo");
+		       String  access_lvl1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]/option[@selected='selected']")).getText();
+	           String access_lvl = null;
+	           if(access_lvl1.contains("General"))
+	    	         access_lvl = "G";
+	    	   else
+	    	         Log.Fail("Access Level for that TIN");
+	    	   
+			   Helper.compareEquals(testConfig, "Access Level", access_lvl, portalUserData.get("ACCESS_LVL").toString().trim());
+	         }
+		}
+		
+		
+public void deleteaddedtin()
+{
+	String tin = testConfig.getRunTimeProperty("tinNo");
+	WebElement delete = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/div[contains(@class,'delete')]"));
+	delete.click();
+	Browser.waitForPageLoad(testConfig);
+	btnSave.click();
+}
+
+
+		
 }
 
 
