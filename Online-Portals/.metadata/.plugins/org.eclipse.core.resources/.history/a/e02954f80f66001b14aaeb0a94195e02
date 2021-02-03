@@ -23,7 +23,7 @@ Feature: UPA Manage User Functionality for Standard TIN
     When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on Manage User Link
     Then Verify user List on UI from DB for "<userType>" using "<searchCriteria>"
-    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
+    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
     Then Verify Access level and Email notification indicator can be updated for "<userType>".
     Then User perform validation by adding TIN with same TIN 
       Examples:
@@ -38,7 +38,7 @@ Feature: UPA Manage User Functionality for Standard TIN
     Given User navigates to UPA portal and enters "<userType>" and login
     When  User Selects a tin on HomePage for "<portalGroupName>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on Manage User Link
-    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
+    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
   
        
      Examples:
