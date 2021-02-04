@@ -20,8 +20,8 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Then Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.
  		Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
-      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
  			
  		#Author: AMIT
@@ -40,8 +40,8 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Examples:
 
 			|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|		Last 30 days	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Y|
-      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Y|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|		Last 30 days	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
  			 
  			 
 		
@@ -57,8 +57,8 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Then Validate the data of Print Payment Summary page.
     Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 30 days	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
-      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| Show All|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|			Show All		|	Last 30 days			| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|			Show All		|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
 		
 		#Author: AMIT
@@ -95,8 +95,8 @@ Feature: UPA Manage User Functionality for Premium TIN
     
 		 Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
-      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 			Show All		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Show All|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 		New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 		New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
     
 		
 		
