@@ -4,6 +4,7 @@ import java.util.Map;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
@@ -226,6 +227,7 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	@Then("^User enters tin for Search Remittance page for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
 	public void user_enters_tin_for_Search_Remittance_page_for_and_click_on_continue_button(String portalGroupName, String tinType, String portalAccess, String usertype) throws Throwable {
 		testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+		testConfig.putRunTimeProperty("portalAccess", portalAccess);
 		testConfig.putRunTimeProperty("tinType", tinType);
 		srchTinPage.enterTinCSR(portalGroupName, usertype);
 	}
@@ -274,6 +276,14 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	public void user_enters_tin_for_UPA_Search_Remittance_Tin_Page_for_through_and_click_on_continue_button(String searchBy,String usertype) throws Throwable {
 	   
 		srchTinPage.enterTinUPA(searchBy, usertype);
+	}
+	
+
+	@When("^User enters a tin  for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" through \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_enters_a_tin_for_for_for_through_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String usertype) throws Throwable {
+    	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		srchTinPage.enterTinUPA(searchCriteria, usertype);
 	}
 	
 }

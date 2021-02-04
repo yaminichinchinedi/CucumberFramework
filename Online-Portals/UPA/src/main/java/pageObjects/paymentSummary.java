@@ -1010,34 +1010,34 @@ public void verifyFailedPaymentPopUp()
 	 * gets the record count
 	 * @return number of payments
 	 */
-//	public String getRecordCountFromUI()
-//	{
-//		
-//		//on payment summary page
-//		 try
-//		  { 
-//			String recordCountElement[]=recordCount.getText().split(":");
-//			return recordCountElement[recordCountElement.length-1].trim();
-//		  }
-//		 
-//		 //On search remittance page
-//	    catch(org.openqa.selenium.NoSuchElementException e)
-//		 {
-//	    	searchRemittance=new SearchRemittance(testConfig,true);
-//	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-//	    	
-//	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
-//	    	if(criteria!=null)
-//	    	{
-//			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
-//					return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//			}
-//				
-//		 }
-//		 return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//		
-//		
-//	}
+	public String getRecordCountUISR()
+	{
+		
+		//on payment summary page
+		 try
+		  { 
+			String recordCountElement[]=recordCount.getText().split(":");
+			return recordCountElement[recordCountElement.length-1].trim();
+		  }
+		 
+		 //On search remittance page
+	    catch(org.openqa.selenium.NoSuchElementException e)
+		 {
+	    	searchRemittance=new SearchRemittance(testConfig,true);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	    	
+	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
+	    	if(criteria!=null)
+	    	{
+			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
+					return String.valueOf(searchRemittance.divSearchResults.size()-1);
+			}
+				
+		 }
+		 return String.valueOf(searchRemittance.divSearchResults.size()-1);
+		
+		
+	}
 	
 	public String getRecordCountFromUI(){
 		String resultCount=divShowRslts.getText().toString();
@@ -1055,7 +1055,8 @@ public void verifyFailedPaymentPopUp()
 		 }
 	    catch(org.openqa.selenium.NoSuchElementException e)	{
 	    	searchRemittance=new SearchRemittance(testConfig,true);
-	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+	    	//searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", "//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'search-remittance__table_header'))]");
 			return String.valueOf(searchRemittance.divSearchResults.size());
 	    }
 		catch(Exception e){
@@ -1505,6 +1506,21 @@ public void verifyFailedPaymentPopUp()
 		else
 		noOfPages=1;
     	return noOfPages;
+	 } 
+	
+	public int getNumberOfPagesSR()
+	 {
+		int noOfPages=0;
+		int recordsCount=Integer.parseInt(getRecordCountUISR());
+		if(recordsCount>30)
+		 {
+			noOfPages=recordsCount/30;
+			if(recordsCount%30>0)
+			noOfPages=noOfPages+1;
+		 }
+		else
+		noOfPages=1;
+   	return noOfPages;
 	 } 
 	
 	/**
@@ -3227,7 +3243,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
 		WebElement link =null;
-		int totalNoOfPages=getNumberOfPages();	
+		int totalNoOfPages=getNumberOfPagesSR();	
 		int i=1;
 		if (SearchCriteria.equals("Search Remittance"))
 		{
@@ -3399,7 +3415,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		boolean found=false;
 		WebElement link =null;
 		WebElement epraLink=null;
-		int totalNoOfPages=getNumberOfPages();		
+		int totalNoOfPages=getNumberOfPagesSR();		
     	
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();

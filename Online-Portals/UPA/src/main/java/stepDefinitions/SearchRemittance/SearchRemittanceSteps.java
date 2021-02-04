@@ -254,5 +254,16 @@ public class SearchRemittanceSteps extends TestBase{
     public void User_verifies_returned_reason_for_in_search_results(String criteriaType) throws Throwable {
     	srchRemittance.verifyReturnedReasonDisplayed(criteriaType);
     }
+    
+    @Then("^User clicks on Print Search Result button\\.$")
+    public void user_clicks_on_Print_Search_Result_button() throws Throwable {
+    	srchRemittance.clickprintbutton();
+    }
+
+    @Then("^Validate the data of Print Search Remmit Page for \"([^\"]*)\"$")
+    public void validate_the_data_of_Print_Search_Remmit_Page_for(String criteriaType) throws Throwable {
+    	testConfig.putRunTimeProperty("page", "printPaymentSummary");
+    	srchRemittance.verifyPrintSearchRemitPage(criteriaType);
+    }
 
 }

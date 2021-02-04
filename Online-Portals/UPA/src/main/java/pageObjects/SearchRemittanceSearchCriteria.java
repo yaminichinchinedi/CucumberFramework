@@ -64,16 +64,16 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(xpath = "//input[@name='paymentNumber']") WebElement paymentNumber;
 	
 	
-	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[3]/td[5]/a[2]/img")
+	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[3]/td[3]/a[2]/img")
 	WebElement dosTo;
 	
-	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[3]/td[5]/a[1]/img")
+	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[3]/td[3]/a[1]/img")
 	WebElement dosFrom;
 	
-	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[4]/td[5]/a[2]/img")
+	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[5]/td[3]/a[2]/img")
 	WebElement dopTo;
 	
-	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[4]/td[5]/a[1]/img")
+	@FindBy(xpath = ".//*[@id='newSearchParamTable']/tbody/tr[5]/td[3]/a[1]/img")
 	WebElement dopFrom;
 	
 	@FindBy(xpath = "//img[@alt='previous month']")
@@ -662,20 +662,22 @@ public class SearchRemittanceSearchCriteria {
 		    
 		    case "byDOSAndNpi":
 		    {
-		    	
+		    	testConfig.putRunTimeProperty("key","MARKET_TYPE");
+		    	testConfig.putRunTimeProperty("value","ALL");
 		    	String dosFrom=Helper.changeDateFormat(testConfig.getRunTimeProperty("fromDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 				String dosTo=Helper.changeDateFormat(testConfig.getRunTimeProperty("toDate"), "yyyy-mm-dd", "mm/dd/yyyy");
 				
-		    	Element.enterData(NPI,testConfig.getRunTimeProperty("NPI"),"Enter NPI No as : "+ testConfig.getRunTimeProperty("NPI"), "NPI");
 		    	clickFromDateIcon(criteriaType).setDate(dosFrom, criteriaType).clickToDateIcon(criteriaType).setDate(dosTo, criteriaType);
 		    	try {
-					new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
+					//new Select(drpDwnPayer).selectByVisibleText("UnitedHealthcare");
 					Log.Comment("Selected" + " " +  "United Health Care from Payer dropdown");
 		    	}
 			    catch(org.openqa.selenium.NoSuchElementException e) {
 					new Select(drpDwnPayer).selectByVisibleText("Optum VA CCN");
 					Log.Comment("Selected" + " " +  "UOptum VA CCN from Payer dropdown");
-			    }		    	
+			    }
+		    	Element.click(NPI, "NPI");
+		    	Element.enterData(NPI,testConfig.getRunTimeProperty("NPI"),"Enter NPI No as : "+ testConfig.getRunTimeProperty("NPI"), "NPI");
 		    	break;
 		    }
 
@@ -1578,12 +1580,12 @@ public class SearchRemittanceSearchCriteria {
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,DOSErrorMsg.getText());
      
      //by date of Payment before 14 month
-     expectedMsg="Start Date should not be earlier than the rolling 13 months.";
-           clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP");
+     expectedMsg="Start Date should not be earlier than the rolling 36 months.";
+           clickFromDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-1100,"MM/dd/yyyy"), "byDOP").clickToDateIcon("byDOP").setDate(Helper.getDateBeforeOrAfterDays(-490,"MM/dd/yyyy"), "byDOP");
      selectPayer("UnitedHealthcare");
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,strtDateErrorMsg.getText());
      
-     expectedMsg="End Date should not be earlier than the rolling 13 months.";
+     expectedMsg="End Date should not be earlier than the rolling 36 months.";
      Helper.compareEquals(testConfig, "Error Message",expectedMsg,endDateErrorMsg.getText());
 
      //now by date of service before 14 month      
@@ -1656,5 +1658,13 @@ public class SearchRemittanceSearchCriteria {
     		Helper.compareEquals(testConfig, "Default Option in Payer drop down", expected, actual);
     		
     	}
+    }
+    
+    public SearchRemittanceSearchCriteria verifySearchBtnEnabledOrDisabled(String portalAccess){
+    	if("Standard".equalsIgnoreCase(portalAccess))
+    		Helper.compareEquals(testConfig, "Button Disabled", "true", btnSearchRemittance.getAttribute("disabled"));
+    	else if("Premium".equalsIgnoreCase(portalAccess))
+    		Helper.compareEquals(testConfig, "Button Enabled", null, btnSearchRemittance.getAttribute("disabled"));
+    	return this;
     }
 }
