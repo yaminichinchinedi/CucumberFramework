@@ -187,7 +187,7 @@ public class SearchTinPageSearchRemittance {
 		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
 		
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
         
 		dataProvider.associateTinWithUser("PROV",tin);
 		
@@ -218,7 +218,7 @@ public class SearchTinPageSearchRemittance {
 		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
 		
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
         
 		//dataProvider.associateTinWithUser("PROV",tin);
 		//dataProvider.associateTinWithUser("BS",tin);
@@ -272,7 +272,7 @@ public class SearchTinPageSearchRemittance {
 	public String getTinCSR(String paymentType)
 	{
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return dataProvider.getTinForPaymentType(paymentType);
+		return "";//dataProvider.getTinForPaymentType(paymentType);
 	}
 	
 	public SearchTinPageSearchRemittance enterHCTin(String Tin)

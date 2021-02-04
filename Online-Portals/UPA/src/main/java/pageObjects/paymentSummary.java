@@ -1006,39 +1006,6 @@ public void verifyFailedPaymentPopUp()
 		return this;
 	}	
 
-	/**
-	 * gets the record count
-	 * @return number of payments
-	 */
-//	public String getRecordCountFromUI()
-//	{
-//		
-//		//on payment summary page
-//		 try
-//		  { 
-//			String recordCountElement[]=recordCount.getText().split(":");
-//			return recordCountElement[recordCountElement.length-1].trim();
-//		  }
-//		 
-//		 //On search remittance page
-//	    catch(org.openqa.selenium.NoSuchElementException e)
-//		 {
-//	    	searchRemittance=new SearchRemittance(testConfig,true);
-//	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-//	    	
-//	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
-//	    	if(criteria!=null)
-//	    	{
-//			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
-//					return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//			}
-//				
-//		 }
-//		 return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//		
-//		
-//	}
-	
 	public String getRecordCountFromUI(){
 		String resultCount=divShowRslts.getText().toString();
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
@@ -1153,10 +1120,6 @@ public void verifyFailedPaymentPopUp()
 	   ArrayList<String> headers=getHeadersFromResultTable();
 	   
 	   int totalNoOfPages=1;//getNumberOfPages();
-	   
-	   if(totalNoOfPages>2)
-		 totalNoOfPages=1;
-		   
 	   
 	   Log.Comment("Fetching all payments From UI..");
 	   
@@ -1308,18 +1271,12 @@ public void verifyFailedPaymentPopUp()
 	
 	public Map<String, LinkedHashMap<String, String>> getPaymentDetailsFromFISL(Object FISLResponse) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{
-		int totalPayments;
 		LinkedHashMap<String,String> innerMap;
 		Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	
 	    EpsConsolidatedClaimPaymentSummaries[] payments=((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getEpsConsolidatedClaimPaymentSummaries();
 		
-	    if((((EpsPaymentsSummarySearchResponse) FISLResponse).getData().getTotalCount()>30))
-			 totalPayments=30;
-		  else
-			totalPayments=payments.length;
-			
-		  for(int i=0;i<totalPayments;i++)
+		  for(int i=0;i<payments.length;i++)
 		  {
 			innerMap=new LinkedHashMap<String, String>();
 			
@@ -1650,7 +1607,7 @@ public void verifyFailedPaymentPopUp()
 	public paymentSummary payerTin(String paymentType) 
 	 {
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
 		txtBoxPayerTin = Element.findElement(testConfig, "name", "payerProvTin");
 		if(txtBoxPayerTin!=null)
 			Element.enterData(txtBoxPayerTin, tin,"Entered TIN", "Payer Tin");
@@ -1667,7 +1624,7 @@ public void verifyFailedPaymentPopUp()
 	public paymentSummary enterBSTin(String userType,String paymentType) 
 	 {
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
 		dataProvider.associateTinWithUser(userType,tin);
 		txtBoxBSTin = Element.findElement(testConfig, "name", "billingProvTin");
 		if(txtBoxBSTin!=null)
@@ -1700,10 +1657,6 @@ public void verifyFailedPaymentPopUp()
 		parameterMapList.add(parameterMap);
 		searchCriteria.setParameterMap(parameterMapList);
 
-		
-		testConfig.putRunTimeProperty("fromDate","2021-01-01");
-		testConfig.putRunTimeProperty("toDate","2021-01-20");
-		
 		PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
 		paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
@@ -3158,12 +3111,9 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		Element.verifyElementPresent(drpDwnQuickSearch, "Quick Search");
 		String defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnQuickSearch, "text");
 		Helper.compareEquals(testConfig, "Default value of Quick Search filter", "Last 30 days", defaultVal);
-		if (portalAccess.equalsIgnoreCase("Standard"))
-		{
-			System.out.println("Attribute: "+drpDwnQuickSearch.getAttribute("disabled"));
+		if (portalAccess.equalsIgnoreCase("Standard") && System.getProperty("Application").contains("UPA"))
 			Helper.compareEquals(testConfig, "Quick Search dropdown disablity", "true", drpDwnQuickSearch.getAttribute("disabled"));
-		}
-		else if (portalAccess.equalsIgnoreCase("Premium"))
+		else if (portalAccess.equalsIgnoreCase("Premium") || System.getProperty("Application").contains("CSR"))
 		{	
 		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
@@ -3242,6 +3192,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			    {
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+			    		   System.out.println("expected payment num : "+expectedPaymntNo);
 			    		   found=true;
 			    		   claimCount=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 			    		   if(claimCount.getText().toString().equals("0")){
@@ -3250,8 +3201,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			    			   }catch(ElementNotFoundException e){
 			    				   Log.Pass("Claim count is 0 and hyperlink is not present");
 			    			   }
-				    	 break;
-				     }
+			    			   break;
+			    		   }
 			    		   else if(!claimCount.getText().toString().equals("0")){
 						    	  link = claimCount.findElement(By.tagName("a"));
 						    	  Element.verifyElementPresent(link, "Claim count link is present");
@@ -3291,6 +3242,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		        {
 		    	actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
+		    		found=true;
 		    	   	epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
 					link = epraLink.findElement(By.tagName("a"));
 					Element.verifyElementPresent(link, "835 link is present");
@@ -3310,7 +3262,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 				    columnIndex=tblHeader.indexOf("Payer PRA");
 					epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+3);//.findElements(By.tagName("td")).get(0);
 					link = epraLink.findElement(By.tagName("span"));
-					System.out.println("data : "+link.getText().toString());
 					if(link.getText().toString().contains("PDF"))
 				    	Helper.compareEquals(testConfig, "PPRA", "PDF", epraLink.getText().toString());	
 					 else if( link.getText().toString().contains("N/A"))
@@ -3321,6 +3272,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 				    	Element.verifyElementPresent(link, "PPRA pdf link");
 				    }
 		    	   }
+		    	   if(found==true)break;
 		        }
 		     }
 			

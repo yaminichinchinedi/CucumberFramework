@@ -225,7 +225,7 @@ public class UPAHomePage extends HomePage {
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
 		
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
 		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
 		
