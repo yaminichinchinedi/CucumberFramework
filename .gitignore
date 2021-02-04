@@ -7,3 +7,5 @@ Online-Portals/.metadata/.mylyn/repositories.xml.zip
 *plugins*
 Online-Portals\UPA\test-output\*
 *html
+*.html
+*.js
