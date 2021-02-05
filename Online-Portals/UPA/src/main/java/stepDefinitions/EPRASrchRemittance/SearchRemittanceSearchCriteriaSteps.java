@@ -89,4 +89,8 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
     	srchCriteriaPage.verifyLargeNonLargeTin();
     }
 
+    @Then("^Validate search button is enabled or disabled for \"([^\"]*)\"$")
+    public void validate_search_button_is_enabled_or_disabled_for(String portalAccess) throws Throwable {
+    	srchCriteriaPage.verifySearchBtnEnabledOrDisabled(portalAccess);
+    }
 }
