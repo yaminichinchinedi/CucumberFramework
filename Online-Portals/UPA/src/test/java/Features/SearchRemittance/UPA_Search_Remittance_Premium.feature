@@ -59,7 +59,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|				byDOP		  |		PROV_Gen	 |    PROV     |   Premium    |		MoreThan13Months	   |  VO   |
 		|				byDOP		  |		PROV_Gen	 |    PROV     |   Premium    |		MoreThan13Months	   |  AV   |
 
-@PROVSearchRemittance
+@UPAPROVSearchRemittance
 Scenario Outline: Search Remittance 
 	Given User navigates to UPA portal and enters "<credentials>" and login
 	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
