@@ -43,3 +43,4 @@ Scenario Outline: US1350108_Test Cases for PreEnrolled Tin
 		Examples:
 										      | EnrollmentType |				TINStatus						|
 										      |       AO        |					 TINNotEnrolled		        |			
+
