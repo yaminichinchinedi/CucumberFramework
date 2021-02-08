@@ -51,7 +51,15 @@ public class SearchTinPageViewPayments {
       Element.enterData(txtboxTinNo, getTin(paymentType), "Enter Tin to proceed for View Payments", "Tin Textbox");
       return this;
     }
-	
+	public SearchTinPageViewPayments enterTinCSR(String paymentType)
+    {
+      
+      dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForPaymentType(paymentType);
+		Element.enterData(txtboxTinNo, tin, "Enter Tin to proceed for View Payments", "Tin Textbox");
+		
+      return this;
+    }
 	public SearchTinPageViewPayments enterPaymentTinUPA(String paymentType, String userType) {
 		switch (userType) {
 		case "PROV": {
@@ -258,6 +266,12 @@ public class SearchTinPageViewPayments {
 	        	 Element.enterData(tinDrpDwn, tin, "Entering TIN", "Entering TIN");
 		         Element.click(srchBtn, "Search Button");
 	        	 break;
+	         }
+            default:
+	         {
+	        	 Element.enterData(bstinDrpDwn, tin, "Entering BS TIN", "Entering BS TIN");
+	        	 Element.click(submitBtn, "Search Button");
+
 	         }
          }
     }
