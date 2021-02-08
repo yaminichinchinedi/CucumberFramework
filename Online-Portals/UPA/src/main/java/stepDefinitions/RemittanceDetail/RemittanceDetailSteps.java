@@ -303,4 +303,8 @@ public class RemittanceDetailSteps extends TestBase {
 	 public void click_on_Claim_number_on_Remittance_Detail_screen_and_go_to_Claim_Detail_screen() throws Throwable {
 		 remitDetail.clickClaimNumber();
 	 }
+	 @Then("^User verifies Print Request and Print Available button is disabled$")
+	 public void user_verifies_Print_Request_and_Print_Available_button_is_disabled() throws Throwable {
+		 remitDetail.verifyPrintAvilableRequestVisiblity();
+	 }
 }

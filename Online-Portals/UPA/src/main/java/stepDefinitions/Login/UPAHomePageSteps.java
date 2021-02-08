@@ -30,6 +30,11 @@ public class UPAHomePageSteps extends TestBase{
 	   new UPARegistrationPage(testConfig); 
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
+	   if (userType.equalsIgnoreCase("PROV_Admin"))
+	   testConfig.putRunTimeProperty("AccssLvl", "A");
+	   if (userType.equalsIgnoreCase("PROV_Gen"))
+	   testConfig.putRunTimeProperty("AccssLvl", "G");
+
     }
     
 	@Given("^User navigates to UPA portal for account activation,enters \"([^\"]*)\" and login$")

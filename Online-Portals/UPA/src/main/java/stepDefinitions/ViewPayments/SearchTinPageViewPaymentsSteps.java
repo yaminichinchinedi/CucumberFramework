@@ -125,4 +125,68 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
 		
 	}
+	
+	@Then("^User Enters TIN for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
+	public void user_Enters_TIN_for_and_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String TimePeriod) throws Throwable {
+		testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+    	String split[]=TimePeriod.split(" "); 
+		if(split[split.length-1].contains("days"))
+		{
+			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
+			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
+			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+			
+		}
+		
+		else 
+		{
+			String monthRange=(split[split.length-2]);
+			Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
+			testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
+			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
+
+		}	
+    	viewPaymentsTIN.enterTinForBS(searchCriteria);
+	}
+	
+	@When("^User Selects  tin on HomePage for \"([^\"]*)\" with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience$")
+	public void user_Selects_tin_on_HomePage_for_with_for_for_Portal_Experience(String userType,String trialStatus, String paidOption, String tinType, String portalAccess) throws Throwable {
+		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
+
+	}
+	@Given("^User Selects tin on HomePage for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
+	public void user_Selects_tin_on_HomePage_for_and_Portal_Experience(String userType, String searchCriteria, String tinType, String portalAccess) 
+	{
+		testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+    	String split[]=searchCriteria.split(" "); 
+		if(split[split.length-1].contains("days"))
+		{
+			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
+			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
+			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+			
+		}
+		
+		else 
+		{
+			String monthRange=(split[split.length-2]);
+			Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
+			testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
+			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
+
+		}	
+		searchCriteria=searchCriteria+"PPRARecord";
+		if (userType.equals("CSR"))
+		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
+		else
+		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
+
+	}
+	
+	@Then("^User Enters tin for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience and click on Search$")
+	public void user_Enters_tin_for_and_Portal_Experience_and_click_on_Search(String userType, String searchCriteria, String tinType, String portalAccess) throws Throwable {
+		user_Selects_tin_on_HomePage_for_and_Portal_Experience( userType,  searchCriteria,  tinType,  portalAccess);
+	}
 }
