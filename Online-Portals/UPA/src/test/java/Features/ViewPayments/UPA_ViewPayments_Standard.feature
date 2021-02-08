@@ -1,7 +1,7 @@
 #Author: Rahul Krishna
 @UPAViewPayments_Standard
 Feature: UPA View Payments Functionality for Premium TIN
-      @UPAUS2800914 @OctRelease @UPA_ViewPaymentStable
+      @UPAUS2800914 @OctRelease @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: TS_001,010,012--View Payments Standard TIN selection and validation       
     Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -22,7 +22,7 @@ Examples:
 
 
 #Author: AMIT
-@UPA_US3069347_1 @UPA_ViewPaymentStable
+@UPA_US3069347_1 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
 Scenario Outline: View Payments Pop up for Standard TIN        
    	Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -38,7 +38,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
   
   
   #Author: AMIT
-  @UPA_US3069347_2 @UPA_ViewPaymentStable
+  @UPA_US3069347_2 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -53,7 +53,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
              
              
              #Author: AMIT
-  @UPA_US3069347_BS @UPA_ViewPaymentStable
+  @UPA_US3069347_BS @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
 		When Click on View Payments Link for UPA
@@ -68,7 +68,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
              
              
              #Author: AMIT
-  @UPA_US3069347 @UPA_ViewPaymentStable
+  @UPA_US3069347 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
 		When Click on View Payments Link for UPA

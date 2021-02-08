@@ -3300,22 +3300,27 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	}
 	
 	public paymentSummary verifyColumnValuesNA(){
-		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr"); 
 	    for(int i=1;i<searchResultRows.size();i++)
 	     {
-	    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText());
-	    if(searchResultRows.get(i).findElements(By.tagName("td")).get(11).getText().equals("835"))
+	    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Claim Count")).getText());
+	    if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("835"))
+	    {
 	    	Log.Pass("Passed comparison of 835 label");
-	    else if(searchResultRows.get(i).findElements(By.tagName("td")).get(11).getText().equals("N/A"))
-	    	Log.Pass("Passed comparison of 835 label");
+	    	Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")+2).getText());
+	    }
+	    else if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("N/A"))
+	    	Log.Pass("Passed comparison of 835/EPRA label as: "+searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText());
 	    else
 	    	Log.Fail("Failed comparison of 835 label");
-	    Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(13).getText());
-	    Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(14).getText());
-	    Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(15).getText());
+	    
+	    Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payer PRA")).getText());
+	    Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getText());
 
 		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", "true", drpDwnArchiveFilter.getAttribute("disabled"));
-		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(11).getAttribute("disabled"));
+		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getAttribute("disabled"));
 
 	     }
 	    return this;
