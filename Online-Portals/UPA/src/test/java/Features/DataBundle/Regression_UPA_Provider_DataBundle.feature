@@ -3,7 +3,7 @@
 @UPADataBundle  @UPARegression   @BothCSRUPAScenarios
 Feature: UPA_Provider_Data Bundle_Regression
 
-	@TC001				
+	@TC001			
 	Scenario Outline: UI Validations for Data Bundle
  	Given User navigates to UPA portal and enters "<credentials>" to login as Provider
 	And User selects tin for UPA "<Search Criteria>"
@@ -14,7 +14,7 @@ Examples:
 				|    Search Criteria     |       credentials        |    
         |        Provider        |       PROV_Admin         |
 
-@TC002
+@TC002  @fix	
 	Scenario Outline: Verify Payer and PageButton Validations
 	Given User navigates to UPA portal and enters "<credentials>" to login as Provider
 	And User selects tin for UPA "<Search Criteria>" 

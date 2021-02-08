@@ -236,5 +236,36 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 			homePage.logOutFromUPA();
 		}
 
+		@Given("^Is to verify if atleast one standard \"([^\"]*)\" TIN with \"([^\"]*)\" is associated with \"([^\"]*)\" and has \"([^\"]*)\" with \"([^\"]*)\" and \"([^\"]*)\"$")
+		public void is_to_verify_if_atleast_one_standard_TIN_with_is_associated_with_and_has_with_and(String portalAccess, String tinType, String userType, String trialStatus, String SelectedOrDefault, String statusOfStandardRecd) throws Throwable {
+			testConfig.putRunTimeProperty("tinType", tinType);
+		    testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		    testConfig.putRunTimeProperty("trialStatus", trialStatus);
+		    testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
+		    testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
+		    new UPAHomePage(testConfig).verifyStandardTinAssociation(userType);
+		}
+
+		@Then("^User verifies the presence of Bring More Power pop-up and clicks No Thanks$")
+		public void user_verifies_the_presence_of_Bring_More_Power_pop_up_and_clicks_No_Thanks() throws Throwable {
+			homePage.clickNoThanksOnBringMorePowerPage();
+		}
+		@Then("^User verifies the presence of Bring More Power pop-up and clicks I Accept$")
+		public void user_verifies_the_presence_of_Bring_More_Power_pop_up_and_clicks_I_Accept() throws Throwable {
+			homePage.clickAcceptOnBringMorePowerPage();
+		}
+		@Then("^User verifies the insertion of pending PS record and inactivation of PD record in the product selection table for all the associated standard tins$")
+		public void user_verifies_the_insertion_of_pending_PS_record_and_inactivation_of_PD_record_in_the_product_selection_table_for_all_the_associated_standard_tins() throws Throwable {
+			homePage.verifyDbOnAcceptingPremium();
+		}
+		@Then("^User verifies if TC_ACCPT_IND is flipped to Y$")
+		public void user_verifies_if_TC_ACCPT_IND_is_flipped_to_Y() throws Throwable {
+			homePage.verifyIfTncIsUpdated();
+		}
+
+		@Then("^User verifies if homepage is presented when TC_ACCPT_IND is Y$")
+		public void user_verifies_if_homepage_is_presented_when_TC_ACCPT_IND_is_Y() throws Throwable {
+			homePage.verifyHomePage();
+		}
 
 }

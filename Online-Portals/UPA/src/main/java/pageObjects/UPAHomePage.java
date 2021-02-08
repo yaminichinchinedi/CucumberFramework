@@ -144,8 +144,20 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
 	
+	@FindBy(xpath="//p[contains(text(),'Bring more power to your practice')]")
+	WebElement bringMorePowerPopUp;
 	
-	UPAHomePage(TestBase testConfig) 
+	@FindBy(xpath="//span[contains(text(),'No, Thanks')]")
+	WebElement btnNoThanks;
+	
+	@FindBy(xpath="//div[@id='tabPrmryMenu']/ul")
+	WebElement tabMenu ;
+	
+	@FindBy(xpath="//span[contains(text(),\"I Accept, Let's get started\")]")
+	WebElement btnIAccept;
+	
+	
+	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
 		this.testConfig=testConfig;
@@ -350,5 +362,50 @@ public class UPAHomePage extends HomePage {
 		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
 		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
 		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
+	}
+	
+	public void verifyStandardTinAssociation(String userType) {
+		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
+		testConfig.putRunTimeProperty("id",id);
+		int sql=1348;
+		Map standardTin = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String rows=standardTin.get("ROWS").toString();
+		testConfig.putRunTimeProperty("rows",rows);
+		int count = Integer.parseInt(rows);
+		
+		if (count==0)			
+			Log.Fail("Insert any Standard TIN from backend");		
+		else	
+			Log.Pass(count+" "+"standard TIN(s) associated with the user, proceeding to check visibility of Bring More Power pop-up");
+		
+	}
+	public void verifyBringMorePowerPage() {
+		Browser.wait(testConfig, 3);
+		Element.verifyElementPresent(bringMorePowerPopUp, "Bring more power to your practice pop-up");
+		
+	}
+	public void clickNoThanksOnBringMorePowerPage() {
+		verifyBringMorePowerPage();
+		Element.click(btnNoThanks, "No, Thanks button");
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void clickAcceptOnBringMorePowerPage() {
+		verifyBringMorePowerPage();
+		Element.click(btnIAccept, "I Accept, Let's get started button");
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void verifyDbOnAcceptingPremium() {
+		int sql=1349;
+		Map AllTins = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String nbrOfTinsAssociated=AllTins.get("ALL_ASSOCIATED_TINS").toString();
+		
+		sql=1350;
+		Map premiumTins = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String nbrOfPaidTins=premiumTins.get("PAID_TINS_ROW_COUNT").toString();
+		
+		Helper.compareEquals(testConfig, "All associated Standard TINS should become Paid", nbrOfTinsAssociated, nbrOfPaidTins);
+	}
+	public void verifyHomePage() {
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
 	}
 }

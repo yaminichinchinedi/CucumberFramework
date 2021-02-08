@@ -100,7 +100,7 @@ Feature: UPA Manage User Functionality for Premium TIN
     
 		
 	#Sunanda
- @Joy
+ @Joy @UPAViewPaymentsPremiumBS
 	Scenario Outline: Access Payments - View Payments - BS Admin Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		When Click on View Payments Link for UPA

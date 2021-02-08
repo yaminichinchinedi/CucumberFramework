@@ -39,33 +39,35 @@ public class PaymentDataFiles_BS extends TestBase{
 	WebElement PageText;
 	@FindBy(xpath = "//u[contains(text(),'Detailed Instructions For Bundle Creation')]") 
 	WebElement DetailedInstrctns;
-	@FindBy(xpath = "//span[contains(text(),'Provider:')]")
+	//@FindBy(xpath = "//span[contains(text(),'Provider:')]")
+	@FindBy(xpath = "//div[@id='payment-data-files-body']//tr[5]//td")
 	WebElement Provider;
+	
 	@FindBy(xpath = "//span[contains(text(),'TIN:')]") 
 	WebElement TINvisible;
 	@FindBy(xpath = "//td[contains(text(),'Settlement Date Range')]") 
 	WebElement StlDateRange;
 	@FindBy(xpath = "//td[contains(text(),'File Types:')]")
 	WebElement FileTypes;
-	@FindBy(xpath = ".//td[@class='runtext']/input[@value='835s']")
+	@FindBy(xpath = ".//td[@class='runtext pt-2']/input[@value='835s']")
 	WebElement FileType835;
 	@FindBy(xpath = ".//td[@class='runtext']/input[@value='Payer PRAs']")
 	WebElement FileTypePRA;
 	@FindBy(xpath = ".//td[@class='runtext']/input[@value='EPRAs']")
 	WebElement FileTypeEPRA;
-	@FindBy(xpath = "//input[@value='       Add >      ']")
+	@FindBy(xpath = "//input[@value='       Add       ']")
 	WebElement AddBtn;
-	@FindBy(xpath = "//input[@value='    Add All >>  ']")
+	@FindBy(xpath = "//input[@value='    Add All   ']")
 	WebElement AddAllBtn;
-	@FindBy(xpath = "//input[@value='   < Remove    ']")
+	@FindBy(xpath = "//input[@value='    Remove    ']")
 	WebElement RemoveBtn;
-	@FindBy(xpath = "//input[@value='<< Remove All']") 
+	@FindBy(xpath = "//input[@value=' Remove All']") 
 	WebElement RemoveAllBtn;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement RallyPayer;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement SelectedRallyPayer;
-	@FindBy(xpath = "//select[@name='availablePayerTinNbrs']/option[contains(text(),'Rally Pay Member Payments')]")
+	@FindBy(xpath = "//select[@id='availablePayerTinNbrs']//option[1]") 
+	WebElement FirstPayer;
+	@FindBy(xpath = "//select[@id='selectedPayerTinNbrs']//option[1]") 
+	WebElement SelectedFirstPayer;
+	@FindBy(xpath = "//select[@name='availablePayerTinNbrs']//option[1]")
 	WebElement AvailablePayer;
 	@FindBy(xpath = "//*[@name='selectedPayerTinNbrs']")
 	WebElement SelectedPayer;
@@ -95,15 +97,15 @@ public class PaymentDataFiles_BS extends TestBase{
     WebElement BundleSubmission;
 	@FindBy(xpath = "//td[contains(text(),'Payer Selection:')]") 
 	WebElement PayerSelection;
-	@FindBy(xpath = "//li[contains(text(),'Download Data Bundle')]")
+	@FindBy(xpath = "//a[contains(text(),'Download Data Bundle')]")
 	WebElement DownloadDataBundle;
-	@FindBy(xpath = "(//tr[@class='subheadernormal'])[2]")
+	@FindBy(xpath = "//div[@id='payment-data-files']/div/p")
 	WebElement DownloadDataBundlePage;
-	@FindBy(xpath = "(//u[contains(text(),'View Bundle Detail')])[1]")
+	@FindBy(xpath = "(//div[@id='payment-data-files-body']//tr[2]//a//u)[1]")
 	WebElement ViewDetailLink;
-	@FindBy(xpath = "(//td[@class='runtext'])[1]")
+	@FindBy(xpath = "//form[@id='downloadDataDeliveryForm']//tr[1]/td[2]")
 	WebElement BundleFileName;
-	@FindBy(xpath = "(//td[@class='runtext'])[2]")
+	@FindBy(xpath = "//form[@id='downloadDataDeliveryForm']//tr[2]/td[2]")
 	WebElement BundleFileType;
 	@FindBy(xpath = "//input[@name='paProvTinNbr']")
 	WebElement TINField;
@@ -192,14 +194,15 @@ public class PaymentDataFiles_BS extends TestBase{
 		
 		String ProviderName = Provider.getText().trim();
 		int sqlRow=236;
+		testConfig.getRunTimeProperty("Prov_tin_nbr");
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String orgName = orgNameDB.get("ORG_NM").toString().trim();
 		String ProvName = "Provider: "+orgName;
-		testConfig.softAssert.assertEquals(ProviderName, ProvName, "Provider Name Displaying:- " +orgName);
+		Helper.compareEquals(testConfig, "Provider Name", ProvName, ProviderName);
 		
 		
 		String SettlementDate = StlDateRange.getText().trim(); 
-		testConfig.softAssert.assertEquals(SettlementDate, "Settlement Date Range:", "Settlement Date Text Displaying.");
+		testConfig.softAssert.assertEquals(SettlementDate, "Settlement Date Range", "Settlement Date Text Displaying.");
 		
 		String FileType = FileTypes.getText().trim(); 
 		testConfig.softAssert.assertEquals(FileType, "File Types:", "FileTypes Displaying.");
@@ -229,7 +232,7 @@ public class PaymentDataFiles_BS extends TestBase{
 		Browser.wait(testConfig, 2);
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 3);
-		String ErrorHeaderMsg = ErrorHeader.getText();
+		//String ErrorHeaderMsg = ErrorHeader.getText();
 		 
 		 // To verify Settlement Date Range Error
 		String SettlerrorMsg = Settlerror.getText();
@@ -245,7 +248,7 @@ public class PaymentDataFiles_BS extends TestBase{
 		String FileErrorMsg = FileError.getText();
 		testConfig.softAssert.assertEquals(FileErrorMsg, "File Types : Missing Data", "File Type Error Displays: " + FileErrorMsg);
 		 
-		 Log.Pass("All the Three error messages are displaying correctly. Error Messages are Displayed as: "+ErrorHeaderMsg);
+		 //Log.Pass("All the Three error messages are displaying correctly. Error Messages are Displayed as: "+ErrorHeaderMsg);
 	 	 Browser.wait(testConfig, 2);
 	 	 Element.click(ResetBtn, "Reset Button");
 		 Browser.wait(testConfig, 3);
@@ -256,7 +259,7 @@ public class PaymentDataFiles_BS extends TestBase{
 	{
 		Element.click(ResetBtn, "Reset Button");
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		 Browser.wait(testConfig, 2);
 
@@ -278,15 +281,17 @@ public class PaymentDataFiles_BS extends TestBase{
 		java.util.Date date = new java.util.Date();
 		int mmn = date.getMonth()+1; 
 		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
-		 
+			month = String.valueOf(mmn);		 	
+		else 			
+			month = "0"+mmn;		
+			 
 		int days = date.getDate();
-		if(days<10) 
-		{			 day = "0"+days;		 }
-		else
-		{			 day = String.valueOf(days);		 }
-		 
+		
+		if(days<10) 	 
+			day = "0"+days;		 		
+		else				 
+			day = String.valueOf(days);		
+				 
 		int year  = date.getYear()+1900;
 		 
 		String curnt_dt = month + "/" +day+"/"+year;
@@ -307,7 +312,7 @@ public class PaymentDataFiles_BS extends TestBase{
 	 
 	public PaymentDataFiles_BS verifyErrorWithoutFileType() throws Exception
 	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		
 		String date1=SettlementDate();
@@ -328,21 +333,29 @@ public class PaymentDataFiles_BS extends TestBase{
 	
 	public PaymentDataFiles_BS verifyErrorForMore30days() throws Exception
 	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(FirstPayer, "First Payer");
 		Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 			 
 		String month, day;
 		java.util.Date date = new java.util.Date();
 		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
+		
+		if(mmn==10 || mmn== 11 || mmn == 12){
+			month = String.valueOf(mmn);		 
+			}
+		else {			
+			month = "0"+mmn;
+			}
 		int days = date.getDate();
 		if(days<10) 
-		{			 day = "0"+days;		 }
+		{			 
+			day = "0"+days;		 
+			}
 		else
-		{			 day = String.valueOf(days);		 }
+		{			 
+			day = String.valueOf(days);		 
+			}
 		int year  = date.getYear()+1899;
 		String date1 = month + "/" +day+"/"+year;
 			 
@@ -354,8 +367,8 @@ public class PaymentDataFiles_BS extends TestBase{
 		Element.click(btnSubmit, "Click on Submit Button");	
 		Browser.wait(testConfig, 3);
 		String SettlmntErrorMoreThan30Days = SettlErrorMore30Days.getText();
-		testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : From Date must not be greater than 30 Days prior to To date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
-		
+		//testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : From Date must not be greater than 30 Days prior to To date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
+		testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : To Date must be same as or after From Date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
 		return this;
@@ -363,7 +376,7 @@ public class PaymentDataFiles_BS extends TestBase{
   
 	public PaymentDataFiles_BS verifyErrorForPriorDates() throws Exception
 	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 
@@ -697,7 +710,7 @@ public class PaymentDataFiles_BS extends TestBase{
 			 }
 		 }
 		 else {
-			 Log.Pass("No Data Bundle Request have been completed in Last 7 Days");
+			 Log.Pass("No Data Bundle Request has been completed in Last 7 Days");
 		 }	
 		 return this;
 	}
@@ -739,11 +752,10 @@ public class PaymentDataFiles_BS extends TestBase{
 			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
 			String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
 			if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("N") && value835.equalsIgnoreCase("N"))
-			{
-			Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully  with EPRA indicator as: "+valueEPRA);	
-			}
-			else {Log.Fail("Error in Data Bundle Request");
-			}
+				Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully  with EPRA indicator as: "+valueEPRA);	
+			else 
+				Log.Fail("Error in Data Bundle Request");
+			
 			return this;
 	}
 		
@@ -838,35 +850,32 @@ public class PaymentDataFiles_BS extends TestBase{
 			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
 		}
-		   
+		   /*
 		   Browser.wait(testConfig, 3);
 		   sqlRowNo = 231;
 		   ArrayList<String> PayerListDB = new ArrayList<String>();
-		   HashMap<Integer, HashMap<String, String>> PayerListDB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		   		
-		   for (int i = 1; i <= PayerListDB1.size(); i++) 
-           {
-			   PayerListDB.add(PayerListDB1.get(i).get("PAYR_DSPL_NM"));
-           }
-		   		   
+		   Map PayerListDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo,1);
+		   String firstPayer=PayerListDB1.get("PAYR_DSPL_NM").toString();
+		   //for (int i = 1; i <= PayerListDB1.size(); i++) 
+           //{
+			   PayerListDB.add(firstPayer);
+          // }
+		   	*/	   
 		   Browser.wait(testConfig, 3);
-		   sqlRowNo = 232;
+		   sqlRowNo = 1347;
+		   testConfig.getRunTimeProperty("Prov_tin_nbr");
 		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
 		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		   for (int i = 1; i <= PayerListDB2.size(); i++) 
-           {
+		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
 			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
            }
 		   
-		   PayerListDB.addAll(PayerListDBAll);
+		  // PayerListDB.addAll(PayerListDBAll);
 		   
-		   if(PayerListDB.equals(PayerListUI))
-		   {
-			   Log.Pass("Available Payers:- ");
-		   }
-		   else {
-			   Log.Comment("Payer List Not Matching. Payers from UI: "+PayerListUI + " And List from DB: "+PayerListDB);
-		   }
+		   if(PayerListDBAll.equals(PayerListUI))		 
+			   Log.Pass("Available Payers:- ");		 
+		   else 
+			   Log.Fail("Payer List Not Matching. Payers from UI: "+PayerListUI + " And List from DB: "+PayerListDBAll);		   
 		   
 		   return this;
 	}
@@ -892,16 +901,16 @@ public class PaymentDataFiles_BS extends TestBase{
 	 public PaymentDataFiles_BS verifyAddButton() throws Exception
 	 {	
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
-		 testConfig.softAssert.assertEquals(SelectedRallyPayer.getText(), RallyPayer.getText(), "Add Button Functionality");
+		 testConfig.softAssert.assertEquals(SelectedFirstPayer.getText(), FirstPayer.getText(), "Add Button Functionality");
 		 return this;	
 	 }
 		   
 	 public PaymentDataFiles_BS verifyRemoveButton() throws Exception
 	 {
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(RemoveBtn, "Remove Button");
 		 testConfig.softAssert.assertEquals(AvailablePayer.getText().trim(), "Rally Pay Member Payments", "Remove Button Functionality");
 		 return this;
@@ -966,8 +975,11 @@ public class PaymentDataFiles_BS extends TestBase{
 		testConfig.getRunTimeProperty("id");
 		Map schema=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String prov_tin_nbr = schema.get("PROV_TIN_NBR").toString().trim();
+		testConfig.putRunTimeProperty("Prov_tin_nbr", prov_tin_nbr);
 		Element.enterData(TINField, prov_tin_nbr, "Provider TIN entered: "+prov_tin_nbr, "TINField");
 		Element.click(SearchButton, "Search button");
+	    String Setl_dt = "2020-04-09";
+		testConfig.putRunTimeProperty("Setl_dt", Setl_dt);
 	 return this;
  }
  public PaymentDataFiles_BS verifyPopUp() {

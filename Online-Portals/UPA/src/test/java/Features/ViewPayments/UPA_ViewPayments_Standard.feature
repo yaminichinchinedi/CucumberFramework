@@ -82,7 +82,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |    	   BS_Gen        | 			 Standard  			|			BS  			|TinWthatlstOnePayNum					|  	AO			|
 
 #Sunanda  
- 
+@UPAViewPaymentsStandardBS
   Scenario Outline: BS user View Payments functionality for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
     When Click on View Payments Link for UPA 

@@ -27,46 +27,46 @@ public class PaymentDataFiles_UPA extends TestBase{
 
 	@FindBy(id = "taxIndNbrId")
 	WebElement drpDwnTin;
-	@FindBy(id = "tabDataFiles")
+	@FindBy(xpath="//a[@id='tabDataFiles']")
 	WebElement paymentDataFilesTab;
 	@FindBy(xpath="//input[@value='Submit']")
 	WebElement btnSubmit;
-	@FindBy(xpath = "//li[@class='activeclass']") 
+	@FindBy(xpath = "//a[contains(text(), 'Create Data Bundle')]") 
 	WebElement CreateDataBundle;
 	@FindBy(xpath = "//td[@class='subheader']")  
 	WebElement SubHeader;	
-	@FindBy(xpath = "//td[contains(text(),'The Payment Data File feature enables faster and e')]")
+	@FindBy(xpath = "//td[contains(text(),'The Payment Data File feature enables faster')]")
 	WebElement PageText;
 	@FindBy(xpath = "//u[contains(text(),'Detailed Instructions For Bundle Creation')]") 
 	WebElement DetailedInstrctns;
-	@FindBy(xpath = "//td[contains(text(),'Provider:')]")
+	@FindBy(xpath = "//div[@id='payment-data-files-body']//tr//tr//td//td[1]")
 	WebElement Provider;
 	@FindBy(xpath = "//span[contains(text(),'TIN:')]") 
 	WebElement TINvisible;
-	@FindBy(xpath = "//td[contains(text(),'Settlement Date Range:')]") 
+	@FindBy(xpath = "//td[contains(text(),'Settlement Date Range')]") 
 	WebElement StlDateRange;
 	@FindBy(xpath = "//td[contains(text(),'File Types:')]")
 	WebElement FileTypes;
-	@FindBy(xpath = ".//td[@class='runtext']/input[@value='835s']")
+	@FindBy(xpath = "//td[@class='runtext pt-2']/input[@value='835s']")
 	WebElement FileType835;
-	@FindBy(xpath = ".//td[@class='runtext']/input[@value='Payer PRAs']")
+	@FindBy(xpath = "//td[@class='runtext']/input[@value='Payer PRAs']")
 	WebElement FileTypePRA;
-	@FindBy(xpath = ".//td[@class='runtext']/input[@value='EPRAs']")
+	@FindBy(xpath = "//td[@class='runtext']/input[@value='EPRAs']")
 	WebElement FileTypeEPRA;
-	@FindBy(xpath = "//input[@value='       Add >      ']")
+	@FindBy(xpath = "//input[@value='       Add       ']")
 	WebElement AddBtn;
-	@FindBy(xpath = "//input[@value='    Add All >>  ']")
+	@FindBy(xpath = "//input[@value='    Add All   ']")
 	WebElement AddAllBtn;
-	@FindBy(xpath = "//input[@value='   < Remove    ']")
+	@FindBy(xpath = "//input[@value='    Remove    ']")
 	WebElement RemoveBtn;
-	@FindBy(xpath = "//input[@value='<< Remove All']") 
+	@FindBy(xpath = "//input[@value=' Remove All']") 
 	WebElement RemoveAllBtn;
 	@FindBy(xpath = "//input[@value='Reset']")
 	WebElement ResetBtn;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement RallyPayer;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement SelectedRallyPayer;
+	@FindBy(xpath = "//select[@id='availablePayerTinNbrs']//option[1]") 
+	WebElement FirstPayer;
+	@FindBy(xpath = "//select[@id='selectedPayerTinNbrs']//option[1]") 
+	WebElement SelectedFirstPayer;
 	@FindBy(xpath = "//select[@name='availablePayerTinNbrs']/option[contains(text(),'Rally Pay Member Payments')]")
 	WebElement AvailablePayer;
 	@FindBy(xpath = "//th[contains(text(),'Please correct the following fields before submit')]") 
@@ -141,7 +141,7 @@ public class PaymentDataFiles_UPA extends TestBase{
         testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TAX_ID_NBR").toString().trim());
         testConfig.putRunTimeProperty("Setl_dt", paymentdetails.get("SETL_DT").toString().trim());*/
         
-        String Prov_tin_nbr = "133757370";
+        String Prov_tin_nbr = "001747328";
         String Setl_dt = "2020-01-17";
         
         testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
@@ -157,10 +157,14 @@ public class PaymentDataFiles_UPA extends TestBase{
 	
 	public PaymentDataFiles_UPA clickPaymentDataFilesTab() 
 	{
-		Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
+		Browser.wait(testConfig, 2);
+		//Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
+		WebElement paymentDataFilesTab=Element.findElement(testConfig, "xpath", "//a[@id='tabDataFiles']");
 		Element.click(paymentDataFilesTab, "Payment Data Files tab");
+		 paymentDataFilesTab=Element.findElement(testConfig, "xpath", "//a[@id='tabDataFiles']");
+		Element.clickByJS(testConfig, paymentDataFilesTab, "Payment Data Files tab");
 		return this;
-
+		
 	}
 	
 	public PaymentDataFiles_UPA verifyCreateDataBundlePage() throws Exception
@@ -177,8 +181,8 @@ public class PaymentDataFiles_UPA extends TestBase{
 	
 	public PaymentDataFiles_UPA verifyAllValuesinCreateBundlePage() throws Exception
 	{
-		String subheader = SubHeader.getText().trim();
-		testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
+		//String subheader = SubHeader.getText().trim();
+		//testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";
 		
@@ -192,11 +196,11 @@ public class PaymentDataFiles_UPA extends TestBase{
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String orgName = orgNameDB.get("ORG_NM").toString().trim();
 		String ProvName = "Provider: "+orgName;
-		testConfig.softAssert.assertEquals(ProviderName, ProvName, "Provider Name Displaying:- " +orgName);
+		Helper.compareEquals(testConfig, "Provider Name", ProvName, ProviderName);
 		
 		
 		String SettlementDate = StlDateRange.getText().trim(); 
-		testConfig.softAssert.assertEquals(SettlementDate, "Settlement Date Range:", "Settlement Date Text Displaying.");
+		testConfig.softAssert.assertEquals(SettlementDate, "Settlement Date Range", "Settlement Date Text Displaying.");
 		
 		String FileType = FileTypes.getText().trim(); 
 		testConfig.softAssert.assertEquals(FileType, "File Types:", "FileTypes Displaying.");
@@ -278,9 +282,9 @@ public class PaymentDataFiles_UPA extends TestBase{
 
 	 {	
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
-		 testConfig.softAssert.assertEquals(SelectedRallyPayer.getText(), RallyPayer.getText(), "Add Button Functionality");
+		 testConfig.softAssert.assertEquals(SelectedFirstPayer.getText(), FirstPayer.getText(), "Add Button Functionality");
 		 
 		 return this;	
 	 }
@@ -288,7 +292,7 @@ public class PaymentDataFiles_UPA extends TestBase{
 	 public PaymentDataFiles_UPA verifyRemoveButton() throws Exception
 	 {
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "Rally Payer");
 		 Element.click(RemoveBtn, "Remove Button");
 		 testConfig.softAssert.assertEquals(AvailablePayer.getText().trim(), "Rally Pay Member Payments", "Remove Button Functionality");
 		 
@@ -369,7 +373,7 @@ public class PaymentDataFiles_UPA extends TestBase{
 	 {
 		 Element.click(ResetBtn, "Reset Button");
 		 Browser.wait(testConfig, 3);
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		 Browser.wait(testConfig, 2);
 		 
@@ -420,7 +424,7 @@ public class PaymentDataFiles_UPA extends TestBase{
 	 
 	 public PaymentDataFiles_UPA verifyErrorWithoutFileType() throws Exception
 	 {
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		 String date1 = SettlementDate();
 		 Browser.wait(testConfig, 1);
@@ -439,7 +443,7 @@ public class PaymentDataFiles_UPA extends TestBase{
 
 	 public PaymentDataFiles_UPA verifyErrorForMore30days() throws Exception
 	 {
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 
@@ -474,7 +478,7 @@ public class PaymentDataFiles_UPA extends TestBase{
   
 	 public PaymentDataFiles_UPA verifyErrorForPriorDates() throws Exception
 	 {
-		 Element.click(RallyPayer, "Rally Payer");
+		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 
