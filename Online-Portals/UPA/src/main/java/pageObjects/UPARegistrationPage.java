@@ -47,8 +47,8 @@ public class UPARegistrationPage extends TestBase{
 
 	@FindBy(xpath="//a[contains(text(),'SIGN IN')]")
 
-
-	WebElement lnkSignInWithOptumId;
+	//@FindBy(xpath="//input[@name='btnSubmit']")
+	private WebElement lnkSignInWithOptumId;
 	
 	@FindBy(tagName="nobr")
 	private WebElement footerText;

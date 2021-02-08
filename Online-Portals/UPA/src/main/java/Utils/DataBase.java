@@ -140,6 +140,9 @@ public class DataBase
 			e.printStackTrace();
 		}
 		String selectQuery = sqlData.GetData(sqlRow, "Query");
+		
+		System.out.println("The select SQL: " + selectQuery);
+		
 		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
 		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		

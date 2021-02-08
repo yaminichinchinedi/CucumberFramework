@@ -24,4 +24,38 @@ public void user_verifies_Optum_Pay_Solution_Tab_for_standard_user_with_and(Stri
 }
 
 
+//Added by Mohammad Khalid
+@Then("^User verifies page text \"([^\"]*)\" messaging in Optum Pay Solutions page$")
+public void user_verifies_page_text_messaging_in_Optum_Pay_Solutions_page(String pageText) throws Throwable 
+{
+	switch (pageText)
+	{
+	case "Premium_TopMsg":
+	{
+		optumPaySol.verifyPageText_Top_Premium();
+		break;
+	}
+	case "Premium_FooterMsg":
+	{
+		optumPaySol.verifyPageText_Footer_Premium();
+		break;
+	}
+	case "Standard_Msg_1":
+	{
+		optumPaySol.verifyPageText_Message1_Standard();
+		break;
+	}
+	
+	case "Standard_Msg_2":
+	{
+		optumPaySol.verifyPageText_Message2_Standard();
+		break;
+	}
+	
+	}
+	
+	
+}
+
+
 }

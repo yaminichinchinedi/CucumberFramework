@@ -64,6 +64,8 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();
     }
+    
+   
 
   
     @When("^Click on View Payments Link in UPA$")   
