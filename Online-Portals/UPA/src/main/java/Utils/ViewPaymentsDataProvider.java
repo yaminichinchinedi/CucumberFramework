@@ -108,7 +108,8 @@ public String getTinForPaymentType(String paymentType)
  		     
  		 case "byCheckNo":
  		 case "byElectronicPaymentNo":
- 			 sqlRowNo=50;
+ 			 //sqlRowNo=50;
+ 			 sqlRowNo=431;
  			 break;
  		case "byElectronicPaymentNoRemit":
 			 sqlRowNo=1901;
@@ -121,7 +122,8 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndNpi":
  		 case "byDOPAndClaimNo":
  		 case "byDOPAndPatientNm":	 
-			 sqlRowNo=41;
+			 //sqlRowNo=41;
+			 sqlRowNo=430;
 			 break;
 			 
  		 case "byDOPAndZeroPaymentClaims":
@@ -135,22 +137,26 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		 case "byDOSAndSubscriberId":
- 			 sqlRowNo=156;
+ 			 //sqlRowNo=156;
+ 			 sqlRowNo=432;
  			 break;
  			 
  		 case "byDOS":
  		 case "byDOSAndAcntNo":
- 			 sqlRowNo=252;
+ 			 sqlRowNo=429;
+ 			 //sqlRowNo=252;
  			 break;
  			 
  		 case "byDOSAndNpi":
- 			 sqlRowNo=245;
+ 			 sqlRowNo=434;
+ 			 //sqlRowNo=245;
  			 //sqlRowNo=253;
  			 break;
 
  		 case "byDOSAndClmNo":
  		 case "byDOSAndPtntNm":
- 			 sqlRowNo=60;
+ 			 sqlRowNo=433;
+ 			 //sqlRowNo=60;
  			 break;
  			 
  		 case "byDOSAndMarketType":

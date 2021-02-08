@@ -26,7 +26,7 @@ public class UPAHomePageSteps extends TestBase{
 	LoginUPA loginPage=null;
 	
     @Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
-    	public void user_navigates_to_UPA_portal_and_enters_and_login(String userType) throws Throwable {
+	public void user_navigates_to_UPA_portal_and_enters_and_login(String userType) throws Throwable {
 	   new UPARegistrationPage(testConfig); 
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
@@ -60,6 +60,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
     public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
     	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();
@@ -191,6 +192,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	   	
 		 homePage.verifyHomePageAlertUPA(portalAccess,tinType);
 	 }
+	 
 
 		@When("^User hovers on the Resources DropDown$")
 		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
