@@ -13,6 +13,11 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	
 	SearchRemittanceSearchCriteria srchCriteriaPage = new SearchRemittanceSearchCriteria(testConfig);
 	
+	@Then("^Validate the Market type field present in Search Remittance Page$")
+	public void validate_the_fields_in_Search_Remittance_Page() throws Throwable {
+	    srchCriteriaPage.verifyFieldName();
+	}
+	
 	@Then("^User enters \"([^\"]*)\" and click on search button\\.$")
 	public void user_enters_and_click_on_search_button(String srchCriteria) throws Throwable {
 		srchCriteriaPage.doSearch(srchCriteria); 

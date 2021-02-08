@@ -1,5 +1,4 @@
 #Author: Rahul Krishna
-
     @CSRUS3136637
     Feature: Optum Pay Solutions Scenarios for Premium Tins
     
@@ -16,8 +15,7 @@
          |    RO	           |	AO			|  Premium	 |
          
          
-    @CSRUS3136627
-    
+    @CSRUS3136627sss
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
@@ -32,6 +30,7 @@
          |    Super          |		withoutAccuredFee	|
          |    RW	           |		withoutAccuredFee	|
          |    RO   		       |		withoutAccuredFee	|
+
    
    #Author: Sayonee
     @CSRUS3136567
@@ -59,8 +58,8 @@
          |    Super          |	AO			|  Premium	 |
          |    RW   		       |	AO			|  Premium	 |
          |    RO	           |	AO			|  Premium	 |
+   
     @CSRUS3157067
-    
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Optum Pay Soultions link on CSR HomePage

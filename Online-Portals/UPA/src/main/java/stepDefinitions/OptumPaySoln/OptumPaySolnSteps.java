@@ -24,6 +24,7 @@ public class OptumPaySolnSteps extends TestBase {
 	public void User_Validates_Error_Message_upon_Entering_Invalid_Tin_on_Optum_Pay_Solution(String InvalidTIN) throws Throwable {
 		optPaySoln.verifyInvalidTINonOptumPaySolution(InvalidTIN);
 	}
+
 	@Then("^User validates contents of Plan Type tile of this page$")
 	public void user_validates_contents_of_Plan_Type_tile_of_this_page() throws Throwable {
 		optPaySoln.validatePlanTypeTile();
@@ -36,4 +37,5 @@ public class OptumPaySolnSteps extends TestBase {
 	public void user_validates_the_hover_on_info_icon_on_the_tiles() throws Throwable {
 		optPaySoln.validateInfoIconHover();
 	}
+
 }

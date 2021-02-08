@@ -92,4 +92,4 @@ Scenario Outline: US1247779 Identify Admin page Primary Information Error Messag
 											|   email                                                       |Incorrect|
 											|First Name, Middle Name ,Last Name                             |Alphanumeric|
 											|First Name, Middle Name, Last Name                             |Special Char|	
-										           
+
