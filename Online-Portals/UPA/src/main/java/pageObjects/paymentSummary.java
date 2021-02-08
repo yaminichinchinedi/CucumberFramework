@@ -1128,7 +1128,7 @@ public void verifyFailedPaymentPopUp()
 		   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page")))
 			   Element.findElements(testConfig, "xpath", "//table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
 		   else
-			   Element.findElements(testConfig, "xpath", ".//*[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr"); 
+			   Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr"); 
 			
 			
 			for(int i=1;i<searchResultRows.size();i++)
@@ -1142,8 +1142,7 @@ public void verifyFailedPaymentPopUp()
 			    	 details=searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
 			     else{
 				     if(headers.get(j).equals("Payment Status")){
-				    	 System.out.println("size : "+searchResultRows.size()+" i: "+i+" j: "+j);
-				    	colVal=searchResultRows.get(i).findElements(By.tagName("td")).get(j+4).findElement(By.tagName("select"));
+				    	colVal=searchResultRows.get(i).findElements(By.tagName("td")).get(j).findElement(By.tagName("select"));
 				    	details=Element.getFirstSelectedOption(testConfig,colVal , "text");
 				     }
 				     else 
@@ -3305,23 +3304,21 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr"); 
 	    for(int i=1;i<searchResultRows.size();i++)
 	     {
-	    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Claim Count")).getText());
-	    if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("835"))
-	    {
-	    	Log.Pass("Passed comparison of 835 label");
-	    	Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")+2).getText());
-	    }
-	    else if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("N/A"))
-	    	Log.Pass("Passed comparison of 835/EPRA label as: "+searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText());
-	    else
-	    	Log.Fail("Failed comparison of 835 label");
-	    
-	    Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payer PRA")).getText());
-	    Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getText());
-
-		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", "true", drpDwnArchiveFilter.getAttribute("disabled"));
-		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getAttribute("disabled"));
-
+		    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Claim Count")).getText());
+		    if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("835"))
+		    {
+		    	Log.Pass("Passed comparison of 835 label");
+		    	Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")+2).getText());
+		    }
+		    else if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("N/A"))
+		    	Log.Pass("Passed comparison of 835/EPRA label as: "+searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText());
+		    else
+		    	Log.Fail("Failed comparison of 835 label");
+		    
+		    Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payer PRA")).getText());
+		    Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getText());
+			Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", "true", drpDwnArchiveFilter.getAttribute("disabled"));
+			Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getAttribute("disabled"));
 	     }
 	    return this;
 		}
@@ -3339,7 +3336,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			testConfig.putRunTimeProperty("StandardTin", Tin.substring(0, 9));
 			Map standardTin = DataBase.executeSelectQuery(testConfig,sqlrowno, 1);
 			if (standardTin !=null)			{
-			Element.selectByVisibleText(drpDwnTin,standardTin.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : " );
+			Element.selectByVisibleText(drpDwnTin,standardTin.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "+standardTin.get("PROV_TIN_NBR").toString() );
 			Browser.waitForLoad(testConfig.driver);
 			break;
 			}
