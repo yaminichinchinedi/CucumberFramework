@@ -21,7 +21,7 @@ Feature: UPA Manage User Functionality for Premium TIN
  		Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
       |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      #|   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
  			
  		#Author: AMIT
@@ -58,7 +58,7 @@ Feature: UPA Manage User Functionality for Premium TIN
     Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
       |   PROV_Admin	  | 		PROV		|			Last 30 days |		 Premium		|		AO		|			Show All		|	Last 30 days			| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      #|   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|			Show All		|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|			Show All		|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
 		
 		#Author: AMIT

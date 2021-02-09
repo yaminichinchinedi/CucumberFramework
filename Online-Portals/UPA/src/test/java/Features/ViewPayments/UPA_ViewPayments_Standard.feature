@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 @UPAViewPayments_Standard
-Feature: UPA View Payments Functionality for Premium TIN
+Feature: UPA View Payments Functionality for Standard TIN
       @UPAUS2800914 @OctRelease @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: TS_001,010,012--View Payments Standard TIN selection and validation       
     Given User navigates to UPA portal and enters "<credentials>" and login
