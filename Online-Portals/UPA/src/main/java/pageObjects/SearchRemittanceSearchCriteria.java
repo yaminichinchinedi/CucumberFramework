@@ -1620,9 +1620,9 @@ public class SearchRemittanceSearchCriteria {
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
            if(userType=="SUBPAYER"||userType.equals("PAY"))
-        	   return dataProvider.getTinForPaymentType(paymentType);
+        	   return "";//dataProvider.getTinForPaymentType(paymentType);
            else
-           return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
+           return "";//dataProvider.associateTinWithUser(userType,dataProvider.getTinForPaymentType(paymentType));
     }
     
     public void verifyLargeNonLargeTin() throws IOException

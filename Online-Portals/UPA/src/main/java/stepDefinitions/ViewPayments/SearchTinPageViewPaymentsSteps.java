@@ -22,19 +22,19 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
     @Then("^User enters tin on View Payments Tin \"([^\"]*)\" and click continue$")
     public void user_enters_tin_on_View_Payments_Tin_and_click_continue(String srchCriteria) throws Throwable {
         
-    	viewPaymentsTIN.enterTin(srchCriteria).clickSearchBtn();
+//    	viewPaymentsTIN.enterTin(srchCriteria).clickSearchBtn();
     }
     
 	@Given("^User enters tin for UPA \"([^\"]*)\"$")
 	public void user_enters_tin_for_UPA(String srchCriteria) throws Throwable {
 	    
-		viewPaymentsTIN.enterTinUPA(srchCriteria);
+//		viewPaymentsTIN.enterTinUPA(srchCriteria);
 	}
 	
 	@Then("^User enters tin for UPA \"([^\"]*)\" for BS$")
 	public void user_enters_tin_for_UPA_for_BS(String srchCriteria) throws Throwable {
 	   
-		viewPaymentsTIN.enterTinForBS(srchCriteria);
+//		viewPaymentsTIN.enterTinForBS(srchCriteria);
 	}
 	
 	@When("^User enters tin for BS UPA \"([^\"]*)\" for BS for \"([^\"]*)\" and click on continue button$")
@@ -53,7 +53,7 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 			testConfig.putRunTimeProperty("priority", "2");
 		}
 
-		viewPaymentsTIN.enterTinForBS(srchCriteria);
+//		viewPaymentsTIN.enterTinForBS(srchCriteria);
 	}
 
 	@When("^User enters tin for BS UPA \"([^\"]*)\" for BS for \"([^\"]*)\",\"([^\"]*)\" and click on continue button$")
@@ -76,54 +76,31 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 					testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
 
 				}	
-		viewPaymentsTIN.enterTinForBS(srchCriteria);
-//		int sqlRowNo=246;
-//		String tin=System.getProperty("tin");
-//		testConfig.putRunTimeProperty("tin", tin);
-//		 Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//		 testConfig.putRunTimeProperty("dspl_consl_pay_nbr",tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
+//		viewPaymentsTIN.enterTinForBS(srchCriteria);
 	}
 	@Given("^User enters tin for UPA \"([^\"]*)\" for Payer$")
 	public void user_enters_tin_for_UPA_for_Payer(String srchCriteria) throws Throwable {
-	   
-		viewPaymentsTIN.enterTinForPayer(srchCriteria);
+//		viewPaymentsTIN.enterTinForPayer(srchCriteria);
 	}
 	
 	@Then("^User enters tin for View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria$")
 	public void user_enters_tin_for_View_Payments_UPA_for_and_search_criteria(String paymentType, String userType) throws Throwable {
-    	viewPaymentsTIN.enterPaymentTinUPA(paymentType, userType);
+//    	viewPaymentsTIN.enterPaymentTinUPA(paymentType, userType);
     }
 	
 	@Then("^User enters tin for BS View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria$")
 	public void user_enters_tin_for_BS_View_Payments_UPA_for_and_search_criteria(String userType, String paymentType) throws Throwable {
     	payment.enterBSTin(paymentType, userType);
 	}
-	
-	
-	@Then("^User enters tin for BS View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
-	public void user_enters_tin_for_BS_View_Payments_UPA_for_and_search_criteria_for_for_for_Portal_Experience(String paymentType, String userType, String tinType, String portalAccess) throws Throwable {
-		testConfig.putRunTimeProperty("tinType", tinType);
-		testConfig.putRunTimeProperty("portalAccess", portalAccess);
-		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
-	}
-	
-	@Then("^Select the TIN for \"([^\"]*)\" CSR Portal$")
-	public void user_enters_tin_for_ViewPayment(String paymentType) throws Throwable {
-		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
-	}
-	
-	@Then("^Enter \"([^\"]*)\" portal access tin for \"([^\"]*)\" and \"([^\"]*)\" criteria and click submit button$")
-	public void enter_portal_access_tin_for_and_criteria_and_click_submit_button(String portalAccess, String tinType, String searchCriteria) throws Throwable {
-		String paymentType=searchCriteria+"_"+tinType+"_"+portalAccess;
-		testConfig.putRunTimeProperty("tinType", tinType);
-		testConfig.putRunTimeProperty("portalAccess", portalAccess);
-		viewPaymentsTIN.enterTin(paymentType).clickSearchBtn();
+
+	@Then("^Enter \"([^\"]*)\" portal access tin on CSR for \"([^\"]*)\" having \"([^\"]*)\" and \"([^\"]*)\" criteria and click submit button$")
+	public void enter_portal_access_tin_on_CSR_for_having_and_criteria_and_click_submit_button(String portalAccess, String userType, String tinType, String searchCriteria) throws Throwable {
+		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess).clickSearchBtn();  
 	}
 	
 	@When("^User Enters tin for \"([^\\\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_Enters_tin_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
-		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
-		
+		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
 	}
 	
 	@Then("^User Enters TIN for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
@@ -147,12 +124,12 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
 
 		}	
-    	viewPaymentsTIN.enterTinForBS(searchCriteria);
+//    	viewPaymentsTIN.enterTinForBS(searchCriteria);
 	}
 	
 	@When("^User Selects  tin on HomePage for \"([^\"]*)\" with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience$")
 	public void user_Selects_tin_on_HomePage_for_with_for_for_Portal_Experience(String userType,String trialStatus, String paidOption, String tinType, String portalAccess) throws Throwable {
-		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
+//		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
 
 	}
 	@Given("^User Selects tin on HomePage for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
@@ -178,10 +155,10 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 
 		}	
 		searchCriteria=searchCriteria+"PPRARecord";
-		if (userType.equals("CSR"))
-		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
-		else
-		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
+//		if (userType.equals("CSR"))
+//		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
+//		else
+//		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
 
 	}
 	
