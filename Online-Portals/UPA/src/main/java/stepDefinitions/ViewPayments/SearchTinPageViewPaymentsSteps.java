@@ -124,12 +124,12 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
 
 		}	
-    	viewPaymentsTIN.enterTinForBS(searchCriteria);
+//    	viewPaymentsTIN.enterTinForBS(searchCriteria);
 	}
 	
 	@When("^User Selects  tin on HomePage for \"([^\"]*)\" with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience$")
 	public void user_Selects_tin_on_HomePage_for_with_for_for_Portal_Experience(String userType,String trialStatus, String paidOption, String tinType, String portalAccess) throws Throwable {
-		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
+//		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
 
 	}
 	@Given("^User Selects tin on HomePage for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
@@ -155,10 +155,10 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 
 		}	
 		searchCriteria=searchCriteria+"PPRARecord";
-		if (userType.equals("CSR"))
-		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
-		else
-		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
+//		if (userType.equals("CSR"))
+//		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
+//		else
+//		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
 
 	}
 	

@@ -33,18 +33,17 @@ Feature: CSR View Payments for Standard TIN
     Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
     Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then Validate Archive column relabeled to Payment Status
-    And  Set FISL Parameters "<key>" and "<value>"
-		Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>" With "<archivefilter>"
    	Then Validate user is able to change the value of Payment Status column
    
     Examples: 
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|		Last 60 days	 |		 Standard		|		AV		|	Show All				|		Last 60 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|		Last 90 days	 |		 Standard		|		VO		|	Show All				|		Last 90 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      |   		Super	 	  | 		PROV		|	Last 4-6 months  |		 Standard		|		AO		|	Show All				|	Last 4-6 months		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|	Last 6-9 months  |		 Standard		|		AV		|	Show All				|	Last 6-9 months		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	    | 		PROV		|	Last 9-13 months |		 Standard		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|		Last 30 days		| 			New		  |
+			|   		Super	 	  | 		PROV		|		Last 60 days	 |		 Standard		|		AV		|	Show All				|		Last 60 days		| 			New		  |
+			|   		Super	 	  | 		PROV		|		Last 90 days	 |		 Standard		|		VO		|	Show All				|		Last 90 days		| 			New		  |
+      |   		Super	 	  | 		PROV		|	Last 4-6 months  |		 Standard		|		AO		|	Show All				|	Last 4-6 months		| 			New		  |
+			|   		Super	 	  | 		PROV		|	Last 6-9 months  |		 Standard		|		AV		|	Show All				|	Last 6-9 months		| 			New		  |
+			|   		Super	    | 		PROV		|	Last 9-13 months |		 Standard		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |
+
 			
 			
 				@CSR_ViewPayments_US3129195 @FebRelease @CSR_ViewPaymentStable

@@ -35,18 +35,16 @@ Feature: View Payment Access Payment
     Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
     Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then Validate Archive column relabeled to Payment Status
-    And  Set FISL Parameters "<key>" and "<value>"
-		Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>" With "<archivefilter>"
     Then Validate user is able to change the value of Payment Status column
    
     Examples:
-			|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|		Last 60 days	 |		 Premium		|		AO		|	Show All				|		Last 60 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|		Last 90 days	 |		 Premium		|		AV		|	Show All				|		Last 90 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	 	  | 		PROV		|	Last 4-6 months  |		 Premium		|		VO		|	Show All				|	Last 4-6 months		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      |   		Super	 	  | 		PROV		| Last 6-9 months  |		 Premium		|		AO		|	Show All				|	Last 6-9 months		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-			|   		Super	    | 		PROV		|	Last 9-13 months |		 Premium		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
+			|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |
+			|   		Super	 	  | 		PROV		|		Last 60 days	 |		 Premium		|		AO		|	Show All				|		Last 60 days		| 			New		  |
+			|   		Super	 	  | 		PROV		|		Last 90 days	 |		 Premium		|		AV		|	Show All				|		Last 90 days		| 			New		  |
+			|   		Super	 	  | 		PROV		|	Last 4-6 months  |		 Premium		|		VO		|	Show All				|	Last 4-6 months		| 			New		  |
+      |   		Super	 	  | 		PROV		| Last 6-9 months  |		 Premium		|		AO		|	Show All				|	Last 6-9 months		| 			New		  |
+			|   		Super	    | 		PROV		|	Last 9-13 months |		 Premium		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |
 			
 			
 			   	@CSR_ViewPayments_US3129195_P @FebRelease @CSR_ViewPaymentStable
@@ -54,12 +52,13 @@ Feature: View Payment Access Payment
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		When Click on View Payments Link
 		Then Enter "<portalAccess>" portal access tin on CSR for "<userType>" having "<tinType>" and "<searchCriteria>" criteria and click submit button
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is displayed.
 		Then Validate amount is displayed for payments present in debit fee rate table.
 
   	 Examples: 
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-      |   		Super	 	  | 		PROV		|		Last 30 days	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Y|
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+      |   		Super	 	  | 		PROV		|		Last 30 days	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |
     
     
      @CSRUS3015574
