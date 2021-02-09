@@ -38,6 +38,7 @@ public class EpsConsolidatedClaimPaymentSummaries {
     private Long claimCountTotal;
     private Long epsClaimCount;
     private String nationalProviderIdentifier;
+    private String paymentStatusTypeDateTime;
     private String traceNumber;
     private PayerSummary payerSummary;
     private ProviderSummary providerSummary;
@@ -257,6 +258,15 @@ public class EpsConsolidatedClaimPaymentSummaries {
     public void setNationalProviderIdentifier(String nationalProviderIdentifier) {
         this.nationalProviderIdentifier = nationalProviderIdentifier;
     }
+    
+    public String getPaymentStatusTypeDateTime() {
+        return paymentStatusTypeDateTime;
+    }
+
+    public void setPaymentStatusTypeDateTime(String paymentStatusTypeDateTime) {
+        this.paymentStatusTypeDateTime = paymentStatusTypeDateTime;
+    }
+    
     public String getTraceNumber() {
         return traceNumber;
     }

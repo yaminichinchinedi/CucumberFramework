@@ -32,5 +32,6 @@ Feature: Create Enrollment InactiveUnBlockedTIN TIN status Enrolled message
 	Then User validates Cancel Enrollment and Continue button presence
 	When User clicks on Cancel Enromment button,verify its popup content and also YES/NO button functionality 
 		Examples:
-										      | EnrollmentType |						TINStatus					  |
-										      |       BS        | 				InactiveUnBlockedTIN		|
+										      | EnrollmentType |TINStatus |
+										      |       BS       | InactiveUnBlockedTIN|
+

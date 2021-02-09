@@ -1010,34 +1010,34 @@ public void verifyFailedPaymentPopUp()
 	 * gets the record count
 	 * @return number of payments
 	 */
-//	public String getRecordCountFromUI()
-//	{
-//		
-//		//on payment summary page
-//		 try
-//		  { 
-//			String recordCountElement[]=recordCount.getText().split(":");
-//			return recordCountElement[recordCountElement.length-1].trim();
-//		  }
-//		 
-//		 //On search remittance page
-//	    catch(org.openqa.selenium.NoSuchElementException e)
-//		 {
-//	    	searchRemittance=new SearchRemittance(testConfig,true);
-//	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
-//	    	
-//	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
-//	    	if(criteria!=null)
-//	    	{
-//			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
-//					return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//			}
-//				
-//		 }
-//		 return String.valueOf(searchRemittance.divSearchResults.size()-1);
-//		
-//		
-//	}
+	public String getRecordCountUISR()
+	{
+		
+		//on payment summary page
+		 try
+		  { 
+			String recordCountElement[]=recordCount.getText().split(":");
+			return recordCountElement[recordCountElement.length-1].trim();
+		  }
+		 
+		 //On search remittance page
+	    catch(org.openqa.selenium.NoSuchElementException e)
+		 {
+	    	searchRemittance=new SearchRemittance(testConfig,true);
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	    	
+	    	String criteria=testConfig.getRunTimeProperty("criteriaType");
+	    	if(criteria!=null)
+	    	{
+			  if(criteria.equals("byElectronicPaymentNo")||criteria.equals("byCheckNo")||criteria.equals("byDOPAndRenderingProvider")||criteria.equals("byDOSAndNpi"))
+					return String.valueOf(searchRemittance.divSearchResults.size()-1);
+			}
+				
+		 }
+		 return String.valueOf(searchRemittance.divSearchResults.size()-1);
+		
+		
+	}
 	
 	public String getRecordCountFromUI(){
 		String resultCount=divShowRslts.getText().toString();
@@ -1055,7 +1055,8 @@ public void verifyFailedPaymentPopUp()
 		 }
 	    catch(org.openqa.selenium.NoSuchElementException e)	{
 	    	searchRemittance=new SearchRemittance(testConfig,true);
-	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+	    	//searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'columnHeaderText'))]");
+	    	searchRemittance.divSearchResults=Element.findElements(testConfig, "xpath", "//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[not(contains(@class,'search-remittance__table_header'))]");
 			return String.valueOf(searchRemittance.divSearchResults.size());
 	    }
 		catch(Exception e){
@@ -1505,6 +1506,21 @@ public void verifyFailedPaymentPopUp()
 		else
 		noOfPages=1;
     	return noOfPages;
+	 } 
+	
+	public int getNumberOfPagesSR()
+	 {
+		int noOfPages=0;
+		int recordsCount=Integer.parseInt(getRecordCountUISR());
+		if(recordsCount>30)
+		 {
+			noOfPages=recordsCount/30;
+			if(recordsCount%30>0)
+			noOfPages=noOfPages+1;
+		 }
+		else
+		noOfPages=1;
+   	return noOfPages;
 	 } 
 	
 	/**
@@ -3036,6 +3052,10 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			System.setProperty("CONSL_PAY_NBR", expectedPaymntNo);
 			//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table//tr[7]/td/table/tbody/tr/td/table/tbody/tr");
 		}
+		else if(srchType.equals("View Payments"))
+		{
+			expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		}
 		else 
 		{
 			i=2;		
@@ -3068,7 +3088,18 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 				 if ( expectedPaymntNo.length()>=15)
 	            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
 				Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
-			}		
+			}
+			else if(srchType.equals("View Payments"))
+			{
+				//searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+				
+				//searchResultRows=Element.findElements(testConfig, "xpath", "//*[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr[2]/td[4]");
+
+				expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+				if ( expectedPaymntNo.length()>=15)
+		            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
+					Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
+			}
     		else 
     		{
     			i=2;		
@@ -3167,7 +3198,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		{	
 		List <String> drpDownOptionsUI=Element.getAllOptionsInSelect(testConfig,drpDwnQuickSearch);
 		Helper.compareEquals(testConfig, "Options of Quick Search Filter", quickSrchOptions,drpDownOptionsUI );
-		Element.selectByVisibleText(drpDwnQuickSearch, "Last 9-13 months", "Last 9-13 months selected");
 	    }
 		return this;
 	}
@@ -3227,7 +3257,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
 		WebElement link =null;
-		int totalNoOfPages=getNumberOfPages();	
+		int totalNoOfPages=getNumberOfPagesSR();	
 		int i=1;
 		if (SearchCriteria.equals("Search Remittance"))
 		{
@@ -3399,7 +3429,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		boolean found=false;
 		WebElement link =null;
 		WebElement epraLink=null;
-		int totalNoOfPages=getNumberOfPages();		
+		int totalNoOfPages=getNumberOfPagesSR();		
     	
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
@@ -3636,7 +3666,189 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			Log.Fail("Payment number not found on page");
 		return this;
 	}
-}
+
+	
+	public paymentSummary verifyMessages(String credentials, String trialStatus, String paidOption){
+		
+		if (credentials.equalsIgnoreCase("PROV_Admin"))
+		{
+			credentials.substring(0, 4);
+			testConfig.putRunTimeProperty("Maj_Cat", credentials.substring(5).toUpperCase());
+		}
+		if (credentials.equalsIgnoreCase("PROV_Gen"))
+		{
+			credentials.substring(0, 4);
+			testConfig.putRunTimeProperty("Maj_Cat", "GENERAL");
+		}
+		if (trialStatus.equalsIgnoreCase("WithinTrial"))
+		{
+			testConfig.putRunTimeProperty("Cont_NM", "TR");
+		}
+		if (trialStatus.equalsIgnoreCase("PostTrial"))
+		{
+			testConfig.putRunTimeProperty("Cont_NM", "PT");
+		}
+		if (paidOption.equals("NotPaid") && !testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+			testConfig.putRunTimeProperty("Min_Cat", "STANDARD");	
+		}
+		if (paidOption.equals("Paid")&& !testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+			testConfig.putRunTimeProperty("Min_Cat", "PREMIUM");	
+		}
+		if (testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+			testConfig.putRunTimeProperty("Min_Cat", "VCP");	
+		}
+		int sqlRowNo=1621;
+		Map messages = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		String msg=messages.get("CLOBVAL").toString();
+		String UITextheader=Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/h2").getText();
+		Helper.compareContains(testConfig, "UI vs DB header ", UITextheader, msg);
+		
+		String UIText=Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[2]").getText();
+		if (paidOption.equals("NotPaid")&& !testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+		Helper.compareContains(testConfig, "UI vs DB ", UIText.substring(0,119), msg);
+		Helper.compareContains(testConfig, "UI vs DB ", UIText.substring(120), msg);
+		}
+		if (paidOption.equals("Paid")|| testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+		Helper.compareContains(testConfig, "UI vs DB text", UIText, msg);
+		}
+		if (paidOption.equals("NotPaid")&&trialStatus.equalsIgnoreCase("PostTrial")&& !testConfig.getRunTimeProperty("tinType").equals("VO"))
+		{
+		
+		//Click on Grey Area and compare messages
+			WebElement greyArea=null;
+			greyArea = searchResultRows.get(1).findElements(By.tagName("td")).get(6);	
+			 Element.clickByJS(testConfig, greyArea, "GreyArea Portion clicked");	
+			 
+			 int sqlRowNoPopup=1623;
+			 if (credentials.equalsIgnoreCase("PROV_Admin"))
+				{
+				 testConfig.putRunTimeProperty("Sub_Cat","txt.VIEWP-POP-004");
+				}
+			 else if(credentials.equalsIgnoreCase("PROV_Gen"))
+				{
+				 testConfig.putRunTimeProperty("Sub_Cat","txt.VIEWP-POP-003");
+				}
+				Map messagespopUp = DataBase.executeSelectQuery(testConfig,sqlRowNoPopup, 1);
+				String msgPopup=messagespopUp.get("CLOBVAL").toString();
+				
+//				String UITextheader=Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/h2").getText();
+//				Helper.compareContains(testConfig, "UI vs DB header ", UITextheader, msg);
+//				
+//				String UIText=Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[2]").getText();
+//			 
+			 
+			String UIpopUPTextheader=Element.findElement(testConfig, "xpath", "//*[@id='viewPaymentsPremium']/h2").getText();
+			Helper.compareContains(testConfig, "UI vs DB popup header ", UIpopUPTextheader, msgPopup);
+			String popUpUIText=Element.findElement(testConfig, "xpath", "//*[@id='viewPaymentsPremium']/p[2]").getText();
+			
+			Helper.compareContains(testConfig, "UI vs DB popup ", popUpUIText,msgPopup);
+			//Helper.compareContains(testConfig, "UI vs DB popup ", popUpUIText.substring(79), msg);
+
+		}
+		return this;
+	}
+		public paymentSummary clickpPRAlink()
+	{
+		
+        String actualPaymntNo="";
+		String expectedPaymntNo="";
+		boolean found=false;
+		int i=1;
+		int totalNoOfPages=getNumberOfPages();		
+    	Log.Comment("Total No. of pages are :" + totalNoOfPages);
+    	for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+    		
+				expectedPaymntNo=testConfig.getRunTimeProperty("dsp_consl_pay_nbr");
+				if ( expectedPaymntNo.length()>=15)
+		            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
+					Log.Comment("The DSP_CONSL_PAY_NBR is :" + expectedPaymntNo);
+			 if(testConfig.driver.getPageSource().toString().contains(expectedPaymntNo) && !found) 
+		     {
+		       for(;i<searchResultRows.size();i++)
+		        {
+		    	   
+					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
+					 Log.Comment("The Actual Payment no is:" + actualPaymntNo);
+		    	   Log.Comment("The expected Payment no is:" + expectedPaymntNo);
+		    	   WebElement lnkPaymntNo=null;
+			      if(actualPaymntNo.contains(expectedPaymntNo))
+			      {	
+			    	  found=true;
+			 lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
+			 WebElement	lnkppraPdf=null;
+			 if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
+			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td/span/a");
+			 if(testConfig.getRunTimeProperty("testSuite").equals("CSR"))		
+			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[15]/table/tbody/tr/td/span/a");
+
+				 Browser.scrollTillAnElement(testConfig, lnkppraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+		       Element.verifyElementPresent(lnkppraPdf, "PPRA pdf Link");
+		       
+		       Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);
+		       Element.clickByJS(testConfig, lnkppraPdf, "PDF Link for PPRA");
+		       if(testConfig.getRunTimeProperty("testSuite").equals("UPA")){
+		       String oldWindow=Browser.switchToNewWindow(testConfig,"PPRADisplayWindow");
+		       //WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
+		            
+		      Browser.switchToParentWindow(testConfig,oldWindow);
+		      }
+		       Browser.wait(testConfig, 5);
+		      break; 
+			       }
+		        }
+		     }
+    	    if(found==true )
+    	    	break;
+    	    
+			      else if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			      {  
+						 int pageToBeClicked=pageNo+1;
+						 Log.Comment("Payment Number not found on page number " + pageNo);
+						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
+						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+						Log.Comment("Clicked Page number : " + pageToBeClicked);
+						 Browser.waitForLoad(testConfig.driver);
+			      		}
+		   	    
+					  else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+					  {
+						   Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+					       Element.click(lnkNextPage,"Next Link");
+					       Browser.waitForLoad(testConfig.driver);
+					       Browser.wait(testConfig,3);
+
+			          }
+					  else
+						  Log.Fail("Unable to identify Payment Number");
+					  
+				    }
+		return this;
+	}
+		public paymentSummary verifyPPRA_Status()
+		{
+			int sqlRowNo=1625;		
+			Map ppraStatusTbl = null;	
+			
+			ppraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
+			if (ppraStatusTbl.get("SETL_DT").toString().isEmpty() ||
+				ppraStatusTbl.get("PROV_TIN_NBR").toString().isEmpty()||
+				ppraStatusTbl.get("DSPL_CONSL_PAY_NBR").toString().isEmpty())
+				Log.Fail("One of the Column SETL_DT or PROV_TIN_NBR or DSPL_CONSL_PAY_NBR is empty");
+			else
+				Log.Pass("Record Inserted in PPRA_STATUS Table");
+			
+			int sqldeleteRow=1626;
+			DataBase.executeDeleteQuery(testConfig, 1626);
+			return this;
+		}
+	}
         
 
 

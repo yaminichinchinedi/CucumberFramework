@@ -30,6 +30,11 @@ public class UPAHomePageSteps extends TestBase{
 	   new UPARegistrationPage(testConfig); 
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
+	   if (userType.equalsIgnoreCase("PROV_Admin"))
+	   testConfig.putRunTimeProperty("AccssLvl", "A");
+	   if (userType.equalsIgnoreCase("PROV_Gen"))
+	   testConfig.putRunTimeProperty("AccssLvl", "G");
+
     }
     
 	@Given("^User navigates to UPA portal for account activation,enters \"([^\"]*)\" and login$")
@@ -60,6 +65,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
     public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
     	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();
@@ -185,6 +191,58 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
 	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
 	    	homePage.selectTin(searchCriteria);
+	    	Browser.wait(testConfig,3);
 	 }
+	 
+	 @When("^User verifies HomePage Alert depending upon \"([^\"]*)\" and \"([^\"]*)\"$")
+	 public void user_verifies_HomePage_Alert_depending_upon_and(String portalAccess,String tinType) throws Throwable {
+	   	
+		 homePage.verifyHomePageAlertUPA(portalAccess,tinType);
+	 }
+	 
+
+		@When("^User hovers on the Resources DropDown$")
+		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
+			homePage.hoverOnResourceDropDown();
+		}
+
+		@Then("^User clicks on Faqs link and verifies the FAQ page$")
+		public void user_clicks_on_Faqs_link_and_verifies_the_FAQ_page() throws Throwable {
+			homePage.verifyFaqsFromResources();
+		}
+		
+		@Then("^User clicks on Terms and Conditions$")
+		public void user_clicks_on_Terms_and_Conditions() throws Throwable {
+			homePage.verifyTncLinkUnderResources();
+		}
+		
+		
+		@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login when the Terms and Conditions are not accepted$")
+		public void user_navigates_to_UPA_portal_and_enters_and_login_when_the_Terms_and_Conditions_are_not_accepted(String userType) throws Throwable {
+			new UPARegistrationPage(testConfig); 
+			LoginUPA loginPage=new LoginUPA(testConfig);
+			loginPage.setUserProperties(userType);
+			loginPage.updateTncIfAccepted();
+			homePage=loginPage.doLoginUPA(userType);
+		}
+		
+
+		@Then("^The Terms and Conditions page is displayed$")
+		public void the_Terms_and_Conditions_page_is_displayed() throws Throwable {
+			homePage.verifyTncPageAppears();
+		}
+		
+		@Then("^The Terms and Conditions pdf is verified$")
+		public void the_Terms_and_Conditions_pdf_is_verified() throws Throwable {
+			homePage.downloadTncPdf();
+		}
+		
+		@Then("^User Accept the Terms and Conditions and Submit$")
+		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
+			homePage.acceptTncAndSubmit();
+			homePage.verifyIfTncIsUpdated();
+			homePage.logOutFromUPA();
+		}
+
 
 }

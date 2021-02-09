@@ -9,15 +9,16 @@ Feature: UPA Manage User Functionality for Premium TIN
     When Click on Manage User Link
     Then Verifies details for "<accessType>" and "<accessLevelOfNewUser>" New Provider user
     Then Verify user List on UI from DB for "<userType>" using "<searchCriteria>"
-    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
+    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
     Then Verify Access level and Email notification indicator can be updated for "<userType>".
     Then User perform validation by adding TIN with same TIN 
     
+    
   Examples:
-   	  |    userType     |   accessType  |		accessLevelOfNewUser	| 			searchCriteria				|		portalAccess	| tinType		|
-      |      PROV_Admin |   PROV     		|					General			    |  		TinWithMoreThnMaxUsr 		|			Premium			|		AO			|
-      |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		AV			|
-      |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		VO			|
+   	  |    userType     |   accessType  |		accessLevelOfNewUser	| 			searchCriteria				|		portalAccess	| tinType		| System Mode|
+      |      PROV_Admin |   PROV     		|					General			    |  		TinWithMoreThnMaxUsr 		|			Premium			|		AO			| FEEBASED   |
+      |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		AV			| FEEBASED   |
+      |      PROV_Admin |   PROV     		|					General			    | 	 	TinWithMoreThnMaxUsr		|			Premium			|		VO			| FEEBASED   |
  
     @US2801047 
  Scenario Outline: US2801047_ UPA Provider Admin ManageUsers_AddUserFunctionality for Premium Tins
@@ -37,7 +38,7 @@ Feature: UPA Manage User Functionality for Premium TIN
     Given User navigates to UPA portal and enters "<userType>" and login
     When  User Selects a tin on HomePage for "<portalGroupName>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on Manage User Link
-    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA 
+    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
           
      Examples:
    	  |    userType     | accessLevelOfNewUser	| 		portalGroupName       	|		portalAccess	| tinType		|System Mode|
@@ -53,7 +54,7 @@ Feature: UPA Manage User Functionality for Premium TIN
     Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to UPA portal and enters "<userType>" and login
     When Click on Manage User Link
-    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
+    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
         
              	  Examples:
 		      |    userType     | System Mode|  
@@ -66,7 +67,7 @@ Feature: UPA Manage User Functionality for Premium TIN
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 	Given User navigates to UPA portal and enters "<userType>" and login
 	When  Click on Manage User Link
-  Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
+  Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
 	Examples:
       |    userType     |		System Mode	|
       |     PAY_Admin   |  		FEEBASED	|

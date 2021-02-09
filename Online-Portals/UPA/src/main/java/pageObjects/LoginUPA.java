@@ -16,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.DataBase;
+import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 
 public class LoginUPA {
@@ -380,6 +381,26 @@ public class LoginUPA {
 	{
 		Element.verifyElementPresent(clickUPASignIn, "Sign in Button");
 		return this;
+	}
+
+	public void updateTncIfAccepted()
+	{
+		int sql=7;
+		int sqlUpdate=275;
+		
+		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
+		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
+		
+		if(tncAcceptStatus.compareToIgnoreCase("Y")==0)
+		{
+			DataBase.executeUpdateQuery(testConfig, sqlUpdate);
+			
+			Map tncStatusUpdate=DataBase.executeSelectQuery(testConfig, sql, 1);
+			tncAcceptStatus = tncStatusUpdate.get("TC_ACCEPT_IND").toString().trim();
+			
+			Helper.compareEquals(testConfig, "TnC updated", "N", tncAcceptStatus);
+		
+		}
 	}
 	
 }

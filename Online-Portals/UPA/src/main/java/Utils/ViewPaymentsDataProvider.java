@@ -108,7 +108,8 @@ public String getTinForPaymentType(String paymentType)
  		     
  		 case "byCheckNo":
  		 case "byElectronicPaymentNo":
- 			 sqlRowNo=50;
+ 			 //sqlRowNo=50;
+ 			 sqlRowNo=431;
  			 break;
  		case "byElectronicPaymentNoRemit":
 			 sqlRowNo=1901;
@@ -121,7 +122,8 @@ public String getTinForPaymentType(String paymentType)
  		 case "byDOPAndNpi":
  		 case "byDOPAndClaimNo":
  		 case "byDOPAndPatientNm":	 
-			 sqlRowNo=41;
+			 //sqlRowNo=41;
+			 sqlRowNo=430;
 			 break;
 			 
  		 case "byDOPAndZeroPaymentClaims":
@@ -135,22 +137,26 @@ public String getTinForPaymentType(String paymentType)
  			break;
  			
  		 case "byDOSAndSubscriberId":
- 			 sqlRowNo=156;
+ 			 //sqlRowNo=156;
+ 			 sqlRowNo=432;
  			 break;
  			 
  		 case "byDOS":
  		 case "byDOSAndAcntNo":
- 			 sqlRowNo=252;
+ 			 sqlRowNo=429;
+ 			 //sqlRowNo=252;
  			 break;
  			 
  		 case "byDOSAndNpi":
- 			 sqlRowNo=245;
+ 			 sqlRowNo=434;
+ 			 //sqlRowNo=245;
  			 //sqlRowNo=253;
  			 break;
 
  		 case "byDOSAndClmNo":
  		 case "byDOSAndPtntNm":
- 			 sqlRowNo=60;
+ 			 sqlRowNo=433;
+ 			 //sqlRowNo=60;
  			 break;
  			 
  		 case "byDOSAndMarketType":
@@ -822,6 +828,8 @@ public String getTinForPaymentType(String paymentType)
 				break;	
 			case "TinDuringOrPostTrial":
 				sqlRowNo=1343;
+			case "TINwithTimeperiod":
+				sqlRowNo=1617;	
 				break;	
 				
 			case "PremiumOrStandardTIN":	
@@ -831,7 +839,8 @@ public String getTinForPaymentType(String paymentType)
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
-
+ 		if(paymentType.contains("PPRARecord"))
+ 			sqlRowNo=1624;
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + paymentType);
@@ -844,6 +853,32 @@ public String getTinForPaymentType(String paymentType)
 		       
 		       if(sqlRowNo==1611)
                    testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		      
+		       if(sqlRowNo==1617)
+                   {
+		    	   testConfig.putRunTimeProperty("PAYR_SCHM_NM",tinNumbers.get("PAYR_SCHM_NM").toString().trim());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CLAIMCOUNT",tinNumbers.get("CLAIMCOUNT").toString());
+
+		    	   if(Integer.parseInt(tinNumbers.get("CLAIMCOUNT").toString())< 75)
+		    	   	{
+		    	   		testConfig.putRunTimeProperty("PRIORITY","1");
+		    	   	}
+		    	   else
+		    	   {
+		    	   		testConfig.putRunTimeProperty("PRIORITY","2");
+
+		    	   }
+		    	   		
+		    	   testConfig.putRunTimeProperty("PORTAL_USER_ID",tinNumbers.get("PORTAL_USER_ID").toString());
+		    	   testConfig.putRunTimeProperty("SETL_DT",tinNumbers.get("SETL_DT").toString());
+                   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+                   	}
+		       if(sqlRowNo==1624)
+		       {
+		    	   testConfig.putRunTimeProperty("dsp_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       		testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
+		       }
 		       
 		       if(paymentType.contains("byDOS"))
 		       {
@@ -2192,7 +2227,44 @@ public ArrayList getEnrollmentContent(String content) {
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
-
+ 		if(paymentType.contains("PPRARecord"))
+ 			sqlRowNo=1624;	
+ 	 			
+ 		if( (paymentType.contains("WithinTrial and NotPaid"))||
+ 			(paymentType.contains("WithinTrial and Paid")) ||
+ 			(paymentType.contains("PostTrial and NotPaid"))||
+ 			(paymentType.contains("PostTrial and Paid"))
+ 			
+ 				)
+ 			
+ 		{
+ 			if (paymentType.contains("WithinTrial and NotPaid")&& !tinType.equals("VO"))
+ 				{
+ 				testConfig.putRunTimeProperty("portalAcs", "Standard");
+ 				testConfig.putRunTimeProperty("portalStat", "PD");
+ 				sqlRowNo=1620;
+ 				}
+ 			if (paymentType.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
+				{
+			testConfig.putRunTimeProperty("portalAcs", "Premium");
+			testConfig.putRunTimeProperty("portalStat", "PS");
+			sqlRowNo=1620;
+				}
+ 			if (paymentType.contains("PostTrial and NotPaid") && !tinType.equals("VO"))
+				{
+				testConfig.putRunTimeProperty("portalAcs", "Standard");
+				testConfig.putRunTimeProperty("portalStat", "PD");
+				sqlRowNo=1622;
+				}
+			if (paymentType.contains("PostTrial and Paid") || tinType.equals("VO"))
+			{
+				testConfig.putRunTimeProperty("portalAcs", "Premium");
+				testConfig.putRunTimeProperty("portalStat", "PS");
+				sqlRowNo=1622;
+			}
+ 				
+ 		}
+ 			
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + paymentType);
@@ -2205,6 +2277,11 @@ public ArrayList getEnrollmentContent(String content) {
 		       
 		       if(sqlRowNo==1606)
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       if(sqlRowNo==1624)
+		       {
+		    	   testConfig.putRunTimeProperty("dsp_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       		testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
+		       }
 		       if(paymentType.contains("byDOS"))
 		       {
 		    	 if(tinNumbers.get("CLM_STRT_DT")!=null)
