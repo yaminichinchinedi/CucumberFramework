@@ -1142,7 +1142,12 @@ public void verifyFailedPaymentPopUp()
 			    	 details=searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
 			     else{
 				     if(headers.get(j).equals("Payment Status")){
-				    	colVal=searchResultRows.get(i).findElements(By.tagName("td")).get(j).findElement(By.tagName("select"));
+				    	try{
+				    	 colVal=searchResultRows.get(i).findElements(By.tagName("td")).get(j+4).findElement(By.tagName("select"));
+				    	}catch(Exception e)
+				    	{
+				    		colVal=searchResultRows.get(i).findElements(By.tagName("td")).get(j).findElement(By.tagName("select"));
+				    	}
 				    	details=Element.getFirstSelectedOption(testConfig,colVal , "text");
 				     }
 				     else 
@@ -1160,6 +1165,7 @@ public void verifyFailedPaymentPopUp()
 			   innerMap.remove("Payer/Patient");
 			   innerMap.remove("Type");
 			   innerMap.remove("Payer");
+			   innerMap.remove("Fee Amount");
 			   innerMap.remove("Returned Reason");
 			   innerMap.remove("835 / EPRA");
 			   innerMap.remove("Updated Payment Dt");
@@ -3574,8 +3580,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
 					String feeAmountUI=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).getText().toString();
-					//getdetails from FISL and fetch the corresponding consol number from FISL response, save it in run time
-					
 					int sqlRowNo=1510;
 					Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 					if(results==null)

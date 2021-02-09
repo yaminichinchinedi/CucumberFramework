@@ -1238,7 +1238,10 @@ public ArrayList getEnrollmentContent(String content) {
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       
 		       if(sqlRowNo==1611)
+		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+		       }
 		       if(paymentType.contains("byDOS"))
 		       {
 		    	 if(tinNumbers.get("CLM_STRT_DT")!=null)

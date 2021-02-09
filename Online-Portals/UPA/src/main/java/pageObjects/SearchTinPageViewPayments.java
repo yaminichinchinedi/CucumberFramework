@@ -82,16 +82,18 @@ public class SearchTinPageViewPayments {
 				 {
 					Element.click(homeTab, "home Tab");
 					Browser.waitForLoad(TestBase.driver);
-					Browser.wait(testConfig, 3);
+					Browser.wait(testConfig, 2);
 					Element.expectedWait(prvdrTIN, testConfig, "Tin dropdown", "Tin dropdown");
 				 }
 				Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
 				break;
 			case "BS": 
+				Browser.wait(testConfig, 2);
 				Element.enterData(bstinDrpDwn, tin, "Enter Tin "+tin+" to proceed for View Payments","Tin Textbox");
 				Element.click(submitBtn, "Search Button");
 				break;
 			case "Payer": 
+				Browser.wait(testConfig, 2);
 				Element.enterData(payertinDrpDwn, tin, "Enter Tin to proceed for View Payments","Tin Textbox");
 				Element.click(submitBtn, "Search Button");
 				break;
