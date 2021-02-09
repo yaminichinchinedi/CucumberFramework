@@ -3550,7 +3550,6 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	}
 	
 	public paymentSummary vaidateHeadersColumns(String page) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
-		//getPaymentDetailsFromUI();
 		ArrayList<String> headers=getHeadersFromResultTable();
 		headers.remove("835 / EPRA");
 		headers.remove(10);

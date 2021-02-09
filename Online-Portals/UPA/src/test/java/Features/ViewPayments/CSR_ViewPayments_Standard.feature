@@ -47,7 +47,7 @@ Feature: CSR View Payments for Standard TIN
 			|   		Super	    | 		PROV		|	Last 9-13 months |		 Standard		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 			
 			
-				@CSR_ViewPayments_US3129195 @FebRelease
+				@CSR_ViewPayments_US3129195 @FebRelease @CSR_ViewPaymentStable
 		Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		When Click on View Payments Link
@@ -57,4 +57,5 @@ Feature: CSR View Payments for Standard TIN
 	
 			|   credentials     |	usertype   |  tinType	|	portalAccess	|	searchCriteria 	|
     	|      Super        |	  PROV     |		AO		|	  Standard		|		Last 30 days	|
+    	|      Super        |	  PROV     |		VO		|	  Premium		|		Last 30 days	|
   

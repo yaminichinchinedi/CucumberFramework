@@ -17,7 +17,7 @@ Feature: View Payment Access Payment
     Then Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.
     Examples:
 			|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		VO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
 			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 		Closed	  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Y|
 			|   		Super	 	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 		Pending	  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	P|
 			|   		Super	 	  | 		PROV		|		Last 60 days	 |		 Premium		|		AV		|	Show All				|		Last 60 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
@@ -27,7 +27,7 @@ Feature: View Payment Access Payment
       |   		Super	 	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
   
   #Author: AMIT
-  @CSR_ViewPayments_US2801189 @OctRelease @CSR_ViewPaymentStable
+  @CSR_ViewPayments_US2801189_P @OctRelease @CSR_ViewPaymentStable
   Scenario Outline: Access Payments - View Payments Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
@@ -49,7 +49,7 @@ Feature: View Payment Access Payment
 			|   		Super	    | 		PROV		|	Last 9-13 months |		 Premium		|		VO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 			
 			
-			   	@CSR_ViewPayments_US3129195 @FebRelease 
+			   	@CSR_ViewPayments_US3129195_P @FebRelease @CSR_ViewPaymentStable
 		Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		When Click on View Payments Link
