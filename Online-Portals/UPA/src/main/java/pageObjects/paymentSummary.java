@@ -3482,7 +3482,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
 		int columnIndex=tblHeader.indexOf("Claim Count");
-		Element.click(searchResultRows.get(1).findElements(By.tagName("td")).get(columnIndex), "Grayed Claim Count");
+		Browser.wait(testConfig, 1);
+		Element.clickByJS(testConfig, searchResultRows.get(1).findElements(By.tagName("td")).get(columnIndex), "Grayed Claim Count");
 		return this;
 	}
 	
@@ -3493,24 +3494,24 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		switch(userType){
 		
 		case "PROV_Admin":
-			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay.";
+			popUptext="Activate Optum Pay for broader, deeper data\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay.";
 			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
 			break;
 			
 		case "PROV_Gen":
-			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page are not available without activating Optum Pay. Contact your administrator for access.";
+			popUptext="Activate Optum Pay for broader, deeper data\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Ask your administrator to activate Optum Pay.";
 			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
 			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
 			break;
 			
 		case "BS_Admin":
-			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider for access.";
+			popUptext="Activate Optum Pay for broader, deeper data\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider client for access.";
 			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
 			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
 			break;
 			
 		case "BS_Gen":
-			popUptext="Leverage broader, deeper data management with Optum Pay\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider for access.";
+			popUptext="Activate Optum Pay for broader, deeper data\nMultiple features on this page, including the PDF remittance documents, are not available without activating Optum Pay. Contact your provider client for access.";
 			Helper.compareEquals(testConfig, "Pop Up Text", popUptext, popUpViewPay.getText().toString());
 			Element.verifyElementNotPresent(btnGetStarted,"Get Started button");
 			break;
