@@ -1226,7 +1226,44 @@ public ArrayList getEnrollmentContent(String content) {
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
-
+ 		if(paymentType.contains("PPRARecord"))
+ 			sqlRowNo=1624;	
+ 	 			
+ 		if( (paymentType.contains("WithinTrial and NotPaid"))||
+ 			(paymentType.contains("WithinTrial and Paid")) ||
+ 			(paymentType.contains("PostTrial and NotPaid"))||
+ 			(paymentType.contains("PostTrial and Paid"))
+ 			
+ 				)
+ 			
+ 		{
+ 			if (paymentType.contains("WithinTrial and NotPaid")&& !tinType.equals("VO"))
+ 				{
+ 				testConfig.putRunTimeProperty("portalAcs", "Standard");
+ 				testConfig.putRunTimeProperty("portalStat", "PD");
+ 				sqlRowNo=1620;
+ 				}
+ 			if (paymentType.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
+				{
+			testConfig.putRunTimeProperty("portalAcs", "Premium");
+			testConfig.putRunTimeProperty("portalStat", "PS");
+			sqlRowNo=1620;
+				}
+ 			if (paymentType.contains("PostTrial and NotPaid") && !tinType.equals("VO"))
+				{
+				testConfig.putRunTimeProperty("portalAcs", "Standard");
+				testConfig.putRunTimeProperty("portalStat", "PD");
+				sqlRowNo=1622;
+				}
+			if (paymentType.contains("PostTrial and Paid") || tinType.equals("VO"))
+			{
+				testConfig.putRunTimeProperty("portalAcs", "Premium");
+				testConfig.putRunTimeProperty("portalStat", "PS");
+				sqlRowNo=1622;
+			}
+ 				
+ 		}
+ 			
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + paymentType);
@@ -1240,7 +1277,12 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+			   }
+		       if(sqlRowNo==1624)
+		       {
+		    	   testConfig.putRunTimeProperty("dsp_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       		testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
 		       }
 		       if(paymentType.contains("byDOS"))
 		       {

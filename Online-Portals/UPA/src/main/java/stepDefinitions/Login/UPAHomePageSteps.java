@@ -30,11 +30,11 @@ public class UPAHomePageSteps extends TestBase{
 	   new UPARegistrationPage(testConfig); 
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
-	   
-	   if(userType.equals("PROV_Admin"))
-		   testConfig.putRunTimeProperty("AccssLvl", "A");
-	   else if(userType.equals("PROV_Gen"))
-		   testConfig.putRunTimeProperty("AccssLvl", "G");
+	   if (userType.equalsIgnoreCase("PROV_Admin"))
+	   testConfig.putRunTimeProperty("AccssLvl", "A");
+	   if (userType.equalsIgnoreCase("PROV_Gen"))
+	   testConfig.putRunTimeProperty("AccssLvl", "G");
+
     }
     
 	@Given("^User navigates to UPA portal for account activation,enters \"([^\"]*)\" and login$")
@@ -65,6 +65,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
     public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
     	testConfig.putRunTimeProperty("tinType", tinType);
+    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();

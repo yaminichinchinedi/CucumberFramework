@@ -54,7 +54,7 @@ Feature: UPA Manage User Functionality for Premium TIN
     Scenario Outline: Access Payments - Manage users Provider for Premium Experience
     Given User navigates to UPA portal and enters "<userType>" and login
     When Click on Manage User Link
-    Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
+    Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
         
              	  Examples:
 		      |    userType     | System Mode|  
@@ -67,7 +67,7 @@ Feature: UPA Manage User Functionality for Premium TIN
   Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 	Given User navigates to UPA portal and enters "<userType>" and login
 	When  Click on Manage User Link
-  Then User verifies Add User button visiblity for "<portalAccess>" and "<System Mode>" based on "<userType>" like FeeBased or Legacy for UPA
+  Then User verifies Add User button visiblity for "userType" and "<portalAccess>" based on "<System Mode>" like FeeBased or Legacy for UPA
 	Examples:
       |    userType     |		System Mode	|
       |     PAY_Admin   |  		FEEBASED	|

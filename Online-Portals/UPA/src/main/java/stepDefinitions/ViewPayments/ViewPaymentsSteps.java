@@ -368,5 +368,20 @@ public class ViewPaymentsSteps extends TestBase {
 	public void validate_amount_is_displayed_for_payments_present_in_debit_fee_rate_table() throws Throwable {
 		paySum.verifyFeeAmountDash();
 	}
+	
+	 @Then("^User verifies different  messages based on \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+	public void user_verifies_different_messages_based_on_and(String credentials, String trialStatus, String paidOption) throws Throwable {
+    	paySum.verifyMessages(credentials,trialStatus,paidOption);
+	}
+    @Then("^User clicks on pPRA link$")
+    public void user_clicks_on_pPRA_link()  {
+    	paySum.clickpPRAlink();
+    }
+
+    @Then("^User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date$")
+    public void user_verifies_record_is_inserted_in_PPRA_STATUS_Table_with_Tin_No_Consolidated_No_and_Settlement_date()  {
+    	paySum.verifyPPRA_Status();
+    }
+	
 
 }

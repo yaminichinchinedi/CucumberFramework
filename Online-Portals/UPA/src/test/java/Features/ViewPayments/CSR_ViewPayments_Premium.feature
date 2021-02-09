@@ -61,5 +61,18 @@ Feature: View Payment Access Payment
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
       |   		Super	 	  | 		PROV		|		Last 30 days	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	Y|
     
+    
+     @CSRUS3015574
+    Scenario Outline: Access Payments - View Payments Provider for Premium Experience
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on View Payments Link
+		And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
+    Then User clicks on pPRA link 
+    And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
+     
+     Examples:
+    				 |    credentials          |	 	 userType  	| 	portalAccess    |	searchCriteria      | tinType		|
+             |       Super        		 |  CSR			    	|			Premium		  	|  Last 30 days       |    AO			|
+
     	
   

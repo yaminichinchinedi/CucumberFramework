@@ -39,4 +39,3 @@ Feature: Create Enrollment BS Enrollment Type to Identify Administrators page
 										|	ZipCode                      |Invalid ZipCode|
 										|	ZipCode                  	 |Alphanumeric|
 										|   BSName, Street, City ,ZipCode|  blank     |
-										

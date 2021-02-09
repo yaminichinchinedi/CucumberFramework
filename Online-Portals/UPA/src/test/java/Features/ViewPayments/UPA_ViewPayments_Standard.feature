@@ -80,4 +80,33 @@ Scenario Outline: View Payments Pop up for Standard TIN
     Examples:     
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			|
-  
+	     
+	     
+	 @UPAUS2955416
+     	Scenario Outline: Access Payments - View Payments - Header Page Text
+     Given User navigates to UPA portal and enters "<credentials>" and login
+    When  User Selects  tin on HomePage for "<userType>" with "<Trial Status>","<Paid option>", "<tinType>" for "<portalAccess>" for Portal Experience
+    Then Click on View Payments Link for UPA 
+    And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
+     
+     Examples:
+        	 |    credentials          |	 	      userType    | 	portalAccess    |	Trial Status   |Paid option   | tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Standard			|  WithinTrial   |  NotPaid    |	  AO			|
+             |      	PROV_Gen         | 			 PROV  			    |			Standard 			|  WithinTrial	 |   NotPaid		|   AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Standard	  	|  PostTrial     |   NotPaid 		  |	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Standard	  	|  PostTrial     |   NotPaid 		  |	  AO			|
+              
+   @UPAUS2999491
+ 		Scenario Outline: Access Payments - View Payments - Provider Premium
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
+		When Click on View Payments Link for UPA
+		Then User Enters TIN for "<TINwithTimeperiod>","<tinType>","<portalAccess>" and "<quicksearchfilter>" Portal Experience
+		Then Click on Payment number and go to Remittance Detail screen.
+		Then User verifies Print Request and Print Available button is disabled
+		
+		
+    Examples:
+      |       credentials       |		portalAccess    	    |   usertype    |    TINwithTimeperiod        | tinType			|	quicksearchfilter | 
+      |       BS_Admin          | 			 Standard  		  	|			BS			  |TINwithTimeperiod					  |  	AO				|	30 days           | 
+      |       BS_Gen            | 			 Standard  		  	|			BS			  |TINwithTimeperiod					  |  	AO				|	30 days           | 
+      

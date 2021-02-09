@@ -100,7 +100,52 @@ Feature: UPA Manage User Functionality for Premium TIN
     
 		
 		
-		
+ @UPAUS2955416
+     	Scenario Outline: Access Payments - View Payments - Header Page Text
+     Given User navigates to UPA portal and enters "<credentials>" and login
+    When  User Selects  tin on HomePage for "<userType>" with "<Trial Status>","<Paid option>", "<tinType>" for "<portalAccess>" for Portal Experience
+    Then Click on View Payments Link for UPA 
+    And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
+     
+     Examples:
+    				 |    credentials          |	 	      userType    | 	portalAccess    |	Trial Status   |Paid option   | tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial   |   Paid 		  |	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial   |   Paid 		  |	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial     |   Paid 		  |	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial     |   Paid 		  |	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial     |   NotPaid 		  |	  VO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial     |   NotPaid 		  |	  VO			|
+             
+                
+             
+     @UPAUS3015574
+     	Scenario Outline: Access Payments - View Payments - Header Page Text
+     Given User navigates to UPA portal and enters "<credentials>" and login
+    And   User Selects tin on HomePage for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience
+    Then Click on View Payments Link for UPA 
+    Then User clicks on pPRA link 
+    And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
+     
+     Examples:
+    				 |    credentials          |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  Last 30 days       |    AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  Last 30 days       | 	 AO	  	|
+            
+        
+         @UPAUS3015574_BS     
+       	Scenario Outline: Access Payments - View Payments - Header Page Text
+     Given User navigates to UPA portal and enters "<credentials>" and login
+     Then Click on View Payments Link for UPA 
+     And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
+    Then User clicks on pPRA link 
+    And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
+     
+     Examples:
+    				 |    credentials          |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
+             |       BS_Admin        | 			 BS			    	|			Premium		  	|  Last 30 days       |    AO			|
+             |       BS_Gen          | 			 BS		    	|			Premium		  	|  Last 30 days       | 	 AO	  	|          
+             
+    	
 		
 		
 		
