@@ -1158,6 +1158,8 @@ public ArrayList getEnrollmentContent(String content) {
 			case "Last 30 days_VO_Premium":
 			case "Last 30 days_AV_Premium":
 			case "Last 30 days_AO_Standard":
+				sqlRowNo=1617;
+				break;
 			case "Last 30 days_VO_Standard":
 			case "Last 30 days_AV_Standard":
 				paySum.getQuickSearchDates("Last 30 days");
@@ -1220,6 +1222,8 @@ public ArrayList getEnrollmentContent(String content) {
 				break;	
 			case "TinDuringOrPostTrial":
 				sqlRowNo=1343;
+//			case "TINwithTimeperiod":
+//				sqlRowNo=1617;	
 				break;	
  		
  		   default:
@@ -1279,6 +1283,26 @@ public ArrayList getEnrollmentContent(String content) {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
 			   }
+				if(sqlRowNo==1617)
+                   {
+		    	   testConfig.putRunTimeProperty("PAYR_SCHM_NM",tinNumbers.get("PAYR_SCHM_NM").toString().trim());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CLAIMCOUNT",tinNumbers.get("CLAIMCOUNT").toString());
+
+		    	   if(Integer.parseInt(tinNumbers.get("CLAIMCOUNT").toString())< 75)
+		    	   	{
+		    	   		testConfig.putRunTimeProperty("PRIORITY","1");
+		    	   	}
+		    	   else
+		    	   {
+		    	   		testConfig.putRunTimeProperty("PRIORITY","2");
+
+		    	   }
+		    	   		
+		    	   testConfig.putRunTimeProperty("PORTAL_USER_ID",tinNumbers.get("PORTAL_USER_ID").toString());
+		    	   testConfig.putRunTimeProperty("SETL_DT",tinNumbers.get("SETL_DT").toString());
+                   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+                   	}
 		       if(sqlRowNo==1624)
 		       {
 		    	   testConfig.putRunTimeProperty("dsp_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());

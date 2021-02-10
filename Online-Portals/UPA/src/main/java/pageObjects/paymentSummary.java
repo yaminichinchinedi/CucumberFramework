@@ -3152,8 +3152,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 						if(srchType.equals("EPRAViewPay")|| srchType.equals("EPRABSViewPay") )	 
 						Element.findElement(testConfig,"xpath",".//*[@id='paymentsummaryform']/table[1]/tbody/tr[4]/td/span//a[contains(text()," + pageToBeClicked + ")]").click();
 						else
-						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
-	
+					//	Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+						Element.findElement(testConfig,"xpath","//*[@id='view-payments']/table/tbody/tr[1]/td/div[2]/div[2]/span/a[contains(text()," + pageToBeClicked + ")]").click();
 						 Log.Comment("Clicked Page number : " + pageToBeClicked);
 						 Browser.waitForLoad(testConfig.driver);
 
@@ -3783,11 +3783,13 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			 lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
 			 WebElement	lnkppraPdf=null;
 			 if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
-			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td/span/a");
+			 //	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td/span/a");
+			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td[3]");
+
 			 if(testConfig.getRunTimeProperty("testSuite").equals("CSR"))		
 			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[15]/table/tbody/tr/td/span/a");
 
-				 Browser.scrollTillAnElement(testConfig, lnkppraPdf, "Epra Link found for Display Consolidated No. :" + actualPaymntNo);
+				 Browser.scrollTillAnElement(testConfig, lnkppraPdf, "Ppra Link found for Display Consolidated No. :" + actualPaymntNo);
 		       Element.verifyElementPresent(lnkppraPdf, "PPRA pdf Link");
 		       
 		       Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);
@@ -3811,7 +3813,9 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 						 int pageToBeClicked=pageNo+1;
 						 Log.Comment("Payment Number not found on page number " + pageNo);
 						 System.out.println("The Page to be Clciked is :" + pageToBeClicked);
-						Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+					//	Element.findElement(testConfig,"xpath","//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/span/a[contains(text()," + pageToBeClicked + ")]").click();
+						Element.findElement(testConfig,"xpath","//*[@id='view-payments']/table/tbody/tr[1]/td/div[2]/div[2]/span/a[contains(text()," + pageToBeClicked + ")]").click();
+
 						Log.Comment("Clicked Page number : " + pageToBeClicked);
 						 Browser.waitForLoad(testConfig.driver);
 			      		}
