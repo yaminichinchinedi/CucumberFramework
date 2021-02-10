@@ -66,12 +66,13 @@ Feature: View Payment Access Payment
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on View Payments Link
 		And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
-    Then User clicks on pPRA link 
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
+		Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
      
      Examples:
-    				 |    credentials          |	 	 userType  	| 	portalAccess    |	searchCriteria      | tinType		|
-             |       Super        		 |  CSR			    	|			Premium		  	|  Last 30 days       |    AO			|
+    				 |    credentials          |	 	 userType  	| 	portalAccess    |	searchCriteria      | tinType		|filterpayments	|	quicksearchfilter	| archivefilter|
+             |       Super        		 |  CSR			    	|			Premium		  	|  Last 60 days       |    AO			|Show All				|			Last 60 days	| 			New		 |
 
     	
   

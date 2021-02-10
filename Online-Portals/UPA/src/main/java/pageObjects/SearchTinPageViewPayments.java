@@ -100,7 +100,10 @@ public class SearchTinPageViewPayments {
 			}
 		}
 		else if(System.getProperty("Application").contains("CSR"))
+		{
 			Element.enterData(txtboxTinNo, tin, "Enter Tin "+tin+" to proceed for View Payments", "Tin Textbox");
+		    Element.click(srchBtn, "Search Button");
+		}
 		return this;
 	}
 

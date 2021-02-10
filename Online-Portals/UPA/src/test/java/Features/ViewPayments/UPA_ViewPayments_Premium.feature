@@ -123,27 +123,29 @@ Feature: UPA Manage User Functionality for Premium TIN
      Given User navigates to UPA portal and enters "<credentials>" and login
     And   User Selects tin on HomePage for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience
     Then Click on View Payments Link for UPA 
+    Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
      
      Examples:
-    				 |    credentials          |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  Last 30 days       |    AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  Last 30 days       | 	 AO	  	|
+    				 |    credentials          |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|filterpayments	|	quicksearchfilter	| archivefilter 			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  Last 60 days       |    AO			|Show All				|			Last 60 days	| 			New		        |
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  Last 60 days       | 	 AO	  	|Show All				|			Last 60 days	| 			New		        |
             
         
-         @UPAUS3015574_BS     
+         @UPAUS3015574   
        	Scenario Outline: Access Payments - View Payments - PPRA link for BS
      Given User navigates to UPA portal and enters "<credentials>" and login
      Then Click on View Payments Link for UPA 
      And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
      
      Examples:
-    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
-             |       BS_Admin        | 			 BS			    	  	|			Premium		  	|  Last 6-9 months       |    AO			|
-             |       BS_Gen          | 			 BS		    				|			Premium		  	|  Last 6-9 months       | 	 AO	  	|          
+    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria       | tinType		|filterpayments	|	quicksearchfilter	| archivefilter 			|
+             |       BS_Admin        | 			 BS			    	  	|			Premium		  	|  Last 60 days       |    AO			|Show All				|			Last 60 days	| 			New		        |
+             |       BS_Gen          | 			 BS		    				|			Premium		  	|  Last 60 days       | 	 AO	  	|Show All				|			Last 60 days	| 			New		        |          
              
     	
 		

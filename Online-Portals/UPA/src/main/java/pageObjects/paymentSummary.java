@@ -3783,11 +3783,12 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			 lnkPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("a"));	
 			 WebElement	lnkppraPdf=null;
 			 if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
-			 //	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td/span/a");
-			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[12]/table/tbody/tr/td[3]");
+			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[13]/table/tbody/tr/td/span/a");
+			 //	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[13]/table/tbody/tr/td[3]");
 
 			 if(testConfig.getRunTimeProperty("testSuite").equals("CSR"))		
-			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[15]/table/tbody/tr/td/span/a");
+			// 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[15]/table/tbody/tr/td/span/a");
+			 	lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='view-payments']/table/tbody/tr[2]/td/table/tbody/tr["+(i+1)+"]/td[16]/table/tbody/tr/td/span/a");
 
 				 Browser.scrollTillAnElement(testConfig, lnkppraPdf, "Ppra Link found for Display Consolidated No. :" + actualPaymntNo);
 		       Element.verifyElementPresent(lnkppraPdf, "PPRA pdf Link");
