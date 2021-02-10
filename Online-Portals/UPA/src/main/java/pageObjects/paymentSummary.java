@@ -937,6 +937,7 @@ public void verifyFailedPaymentPopUp()
 //		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.wait(testConfig,2);
 		Browser.waitForLoad(testConfig.driver);
+		Element.waitForPresenceOfElementLocated(testConfig, By.id("archiveFilterType"), 60);
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
 		if(checkArchiveFilter!=null)
         {
@@ -944,6 +945,7 @@ public void verifyFailedPaymentPopUp()
         	Browser.waitForLoad(testConfig.driver);
     		Browser.wait(testConfig,2);
         }
+		Element.waitForPresenceOfElementLocated(testConfig, By.id("periodId"), 60);
 		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
