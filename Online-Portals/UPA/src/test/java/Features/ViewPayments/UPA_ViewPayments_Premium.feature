@@ -141,9 +141,9 @@ Feature: UPA Manage User Functionality for Premium TIN
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date
      
      Examples:
-    				 |    credentials          |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
-             |       BS_Admin        | 			 BS			    	|			Premium		  	|  Last 6-9 months       |    AO			|
-             |       BS_Gen          | 			 BS		    	|			Premium		  	|  Last 6-9 months       | 	 AO	  	|          
+    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria      | tinType		|
+             |       BS_Admin        | 			 BS			    	  	|			Premium		  	|  Last 6-9 months       |    AO			|
+             |       BS_Gen          | 			 BS		    				|			Premium		  	|  Last 6-9 months       | 	 AO	  	|          
              
     	
 		

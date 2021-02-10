@@ -100,9 +100,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
 		When Click on View Payments Link for UPA
-		#Then User Enters TIN for "<usertype>","<TINwithTimeperiod>","<tinType>","<portalAccess>" and "<quicksearchfilter>" Portal Experience
 		And   User Enters tin for "<userType>","<searchCriteria>","<tinType>"  and "<portalAccess>" for Portal Experience. 
-		
 		Then Click on Payment number and go to Remittance Detail screen.
 		Then User verifies Print Request and Print Available button is disabled
 		
@@ -112,7 +110,5 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |    	   BS_Admin        | 			 Standard  		|			BS  		  |			Last 30 days		|  	AO			| 
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			| 
       
-      #|       credentials       |		portalAccess    	    |   usertype    |    TINwithTimeperiod        | tinType			|	quicksearchfilter | 
-      #|       BS_Admin          | 			 Standard  		  	|			BS			  |TINwithTimeperiod					  |  	AO				|	30 days           | 
-      #|       BS_Gen            | 			 Standard  		  	|			BS			  |TINwithTimeperiod					  |  	AO				|	30 days           | 
+     
       
