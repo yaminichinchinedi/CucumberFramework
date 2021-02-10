@@ -935,7 +935,7 @@ public void verifyFailedPaymentPopUp()
 	public paymentSummary setSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
 	{
 //		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
-		Browser.wait(testConfig,2);
+		Browser.wait(testConfig,3);
 		Browser.waitForLoad(testConfig.driver);
 		Element.waitForPresenceOfElementLocated(testConfig, By.id("archiveFilterType"), 60);
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
