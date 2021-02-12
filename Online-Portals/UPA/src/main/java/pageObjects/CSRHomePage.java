@@ -106,6 +106,9 @@ public class CSRHomePage {
 	@FindBy(linkText="Manage Internal Users")
 	WebElement lnkManageInternalUSer;
 	
+	@FindBy(linkText="Run Reports")
+    WebElement linkRunReports;
+	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -171,7 +174,11 @@ public class CSRHomePage {
     }
     public void clickManageInternalUserlink() {
 		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
-		
-		
+				
+	}
+    public void clickRunReportLink() {
+    	Element.clickByJS(testConfig,linkRunReports,"CLick the RunReport link");
+    	Browser.wait(testConfig, 1);
+     
 	}
 }
