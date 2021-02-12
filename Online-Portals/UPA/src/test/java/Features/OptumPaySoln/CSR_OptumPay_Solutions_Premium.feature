@@ -82,7 +82,7 @@
      Examples:
 
          |   credentials     |  tinTyp  |portalAccess|  		changeRateValue	   |changeRateReason|
-        # |    Super          |	AO			|  Premium	 |	 	 	valid value	       |			Other			|
+         |    Super          |	AO			|  Premium	 |	 	 	valid value	       |			Other			|
          |    Super          |	AO			|  Premium	 |	 	 	Invalid value      |	UHC requested	|
        
         

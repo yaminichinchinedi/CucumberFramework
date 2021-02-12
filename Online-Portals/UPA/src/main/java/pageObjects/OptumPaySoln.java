@@ -204,8 +204,8 @@ public class OptumPaySoln {
 			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this" ,popUpChangeRate.getText().trim());
 			Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
 				
-	        Element.verifyElementPresent(btnChangeRatePopupChange, "change btn");
-	        Element.verifyElementPresent(btnChangeRatePopupCancel, "cancel btn");
+	        //Element.verifyElementPresent(btnChangeRatePopupChange, "change btn");
+	        //Element.verifyElementPresent(btnChangeRatePopupCancel, "cancel btn");
 	        Element.clickByJS(testConfig, btnChangeRatePopupChange, "Change btn click");
 			
 	        if (changeRateValue.equals("Invalid value")|| changeRateReason.equalsIgnoreCase("Other with Blank") )
