@@ -23,6 +23,20 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 
 
+@UPAUS2838204
+	Scenario Outline: Validate Market type in Search remittance
+	
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Search Remittance link for UPA
+		Then Validate the Market type field present in Search Remittance Page
+		
+		Examples:
+			|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN        |tinType|
+		 	|	PROV_Admin 	 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
+			|	PROV_Gen		 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
+
+
 
 		@US2948676 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
@@ -165,5 +179,6 @@ Scenario Outline: - verify search results for search remittance
 		|   byDOSAndClmNo   |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndClmNo    |  AO   |
 		|   byDOSAndPtntNm   |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndPtntNm          |  AO   |
 		#|byDOSAndNpi         |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndNpi           |  AO   |
+
 
 

@@ -270,20 +270,17 @@ public class ViewPaymentsSteps extends TestBase {
     @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
     	paySum.verifyQuickSrchFilterOptions(portalAccess);
-
     }
 
     @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
     public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
     	paySum.verifyPaymentStatusFilter(portalAccess);
-
     }
 
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
     	paySum.verifySavArchbtnNotPresent();
     }
-    
 
 	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
 	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
@@ -371,5 +368,20 @@ public class ViewPaymentsSteps extends TestBase {
 	public void validate_amount_is_displayed_for_payments_present_in_debit_fee_rate_table() throws Throwable {
 		paySum.verifyFeeAmountDash();
 	}
+	
+	 @Then("^User verifies different  messages based on \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
+	public void user_verifies_different_messages_based_on_and(String credentials, String trialStatus, String paidOption) throws Throwable {
+    	paySum.verifyMessages(credentials,trialStatus,paidOption);
+	}
+    @Then("^User clicks on pPRA link$")
+    public void user_clicks_on_pPRA_link()  {
+    	paySum.clickpPRAlink();
+    }
+
+    @Then("^User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date$")
+    public void user_verifies_record_is_inserted_in_PPRA_STATUS_Table_with_Tin_No_Consolidated_No_and_Settlement_date()  {
+    	paySum.verifyPPRA_Status();
+    }
+	
 
 }

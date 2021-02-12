@@ -298,7 +298,7 @@ public class HomePage extends LoginUPA {
 		 {
 			dataProvider=new ViewPaymentsDataProvider(testConfig);
 			
-			String tin=dataProvider.getTinForPaymentType(paymentType);
+			String tin="";//dataProvider.getTinForPaymentType(paymentType);
 			dataProvider.associateTinWithUser(tin);
 			
 			List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);

@@ -109,6 +109,12 @@ public class SearchRemittanceSearchCriteria {
 	@FindBy(id="zeroPaymentID")
 	WebElement zeroPaymentClaims;
 	
+	@FindBy(xpath="//table[@id='newSearchParamTable']/tbody/tr[14]/td[1]/span")
+	WebElement marketType;
+	
+	@FindBy(xpath="//table[@class='w-100']/tbody/tr[1]/td/span")
+	WebElement allMktType;
+	
 	@FindBy(id="allMarketTypeId")
 	WebElement allMarketType;
 	
@@ -160,6 +166,12 @@ public class SearchRemittanceSearchCriteria {
 //		WebElement check=Element.findElement(testConfig, "name", "taxIdNbr");
 		if(txtboxTinNo==null)
 			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
+	}
+	
+	public void verifyFieldName()
+	{
+		Helper.compareEquals(testConfig, "Market Type text", marketType.getText(), "Market Type");
+		Helper.compareEquals(testConfig, "All Market Types", allMktType.getText(), "All Market Types");
 	}
 	
 	public SearchRemittance doSearch(String criteriaType) throws ParseException 
@@ -1608,9 +1620,9 @@ public class SearchRemittanceSearchCriteria {
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
            if(userType=="SUBPAYER"||userType.equals("PAY"))
-        	   return dataProvider.getTinForPaymentType(paymentType);
+        	   return "";//dataProvider.getTinForPaymentType(paymentType);
            else
-           return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
+           return "";//dataProvider.associateTinWithUser(userType,dataProvider.getTinForPaymentType(paymentType));
     }
     
     public void verifyLargeNonLargeTin() throws IOException

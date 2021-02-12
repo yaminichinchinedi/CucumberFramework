@@ -3956,7 +3956,7 @@ case "Payer":
 private String getTinCSR(String paymentType) {
 	
 	dataProvider=new ViewPaymentsDataProvider(testConfig);
-	return dataProvider.getTinForPaymentType(paymentType);
+	return "";//dataProvider.getTinForPaymentType(paymentType);
 }
 
 public void enterTINMultiplePLBAdjUPA() throws Exception
@@ -7544,7 +7544,36 @@ public void verifyRemittancePageDataUPA() throws Exception
 	}
 	
 }
+public RemittanceDetail verifyPrintAvilableRequestVisiblity()
+{
 
+	
+
+	Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//input[@value='Print Request' and @type = 'button']"), "Print Request");
+	Element.verifyElementPresent(btnPrint, "Print Request Button");
+	Helper.compareEquals(testConfig, "Print Request button", "true", btnPrint.getAttribute("disabled"));
+	//Insert record in OLE.EPRA_STATUS Table and check the Print Avilable button	
+	String PAYR_SCHM_NM=testConfig.getRunTimeProperty("PAYR_SCHM_NM").trim();
+	String CONSL_PAY_NBR=testConfig.getRunTimeProperty("CONSL_PAY_NBR").trim();
+	String CLAIMCOUNT=testConfig.getRunTimeProperty("CLAIMCOUNT").trim();
+	String PRIORITY=testConfig.getRunTimeProperty("PRIORITY");
+	String PORTAL_USER_ID=testConfig.getRunTimeProperty("PORTAL_USER_ID");
+	String SETL_DT=testConfig.getRunTimeProperty("SETL_DT");
+	String ELECTRONIC_PAYMENT_NUMBER=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+
+	int insertQueryRowNo=1618;
+    DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+    
+    Browser.browserRefresh(testConfig);
+    Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//input[@value='Print Available' and @type = 'button']"), "Print Available");
+	Element.verifyElementPresent(btnPrntavailable, "Print Available Button");
+	Helper.compareEquals(testConfig, "Print Avilable button", "true", btnPrntavailable.getAttribute("disabled"));
+	
+	Browser.wait(testConfig, 2);
+	DataBase.executeDeleteQuery(testConfig, 1619);
+
+	return this;
+}
 
 public RemittanceDetail clickPrintRequestButton()
 {

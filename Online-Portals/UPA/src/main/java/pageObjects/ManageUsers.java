@@ -1725,7 +1725,8 @@ public class ManageUsers extends AddUserDetails
 	
 	public void deleteInsertedUserportal()
 	{
-	    int sqlRowNo = 1920;
+	    //int sqlRowNo = 1920;
+	    int sqlRowNo = 13;
 		String email = System.getProperty("email");
 		testConfig.putRunTimeProperty("email", email);
 		Map portal_id = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
