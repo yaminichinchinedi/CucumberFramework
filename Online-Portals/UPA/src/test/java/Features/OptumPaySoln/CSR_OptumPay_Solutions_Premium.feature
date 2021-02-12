@@ -73,7 +73,7 @@
          |    RW   		       |	AO			|  Premium	 |
          |    RO	           |	AO			|  Premium	 |            
          
-         @CSRUS3138933_123
+         @CSRUS3138933
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
