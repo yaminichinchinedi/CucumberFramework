@@ -28,4 +28,16 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 	  |   RW         	   | 							|		
 	  
 	    
-   
+      @CSRUS3138933
+    Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Optum Pay Soultions link on CSR HomePage
+		Then User enters "<tinTyp>" TIN with "<portalAccess>" and click on Search button
+		Then User then validates the Change Rate popup based "<credentials>"
+     Examples:
+
+         |   credentials     |  tinTyp  |portalAccess|
+         |    Super          |	AO			|  Standard	 |
+         |    RW   		       |	AO			|  Premium	 |
+         |    RO	           |	AO			|  Premium	 |
+         

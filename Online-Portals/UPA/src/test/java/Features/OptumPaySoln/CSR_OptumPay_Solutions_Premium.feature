@@ -46,7 +46,7 @@
          |    RW   		       |	AO			|  Premium	 |
          |    RO	           |	AO			|  Premium	 |       
          
-    @CSRUS3138920
+    @CSRUS3138920 @CSRUS3138933
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
@@ -58,6 +58,7 @@
          |    Super          |	AO			|  Premium	 |
          |    RW   		       |	AO			|  Premium	 |
          |    RO	           |	AO			|  Premium	 |
+         |    Super	         |	VO			|  Premium	 |
    
     @CSRUS3157067
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
@@ -72,5 +73,17 @@
          |    RW   		       |	AO			|  Premium	 |
          |    RO	           |	AO			|  Premium	 |            
          
-         
+         @CSRUS3138933_123
+    Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Optum Pay Soultions link on CSR HomePage
+		Then User enters "<tinTyp>" TIN with "<portalAccess>" and click on Search button
+		Then User then validates the Change Rate scenarios based on "<credentials>","<changeRateValue>","<changeRateReason>"
+     Examples:
+
+         |   credentials     |  tinTyp  |portalAccess|  		changeRateValue	   |changeRateReason|
+        # |    Super          |	AO			|  Premium	 |	 	 	valid value	       |			Other			|
+         |    Super          |	AO			|  Premium	 |	 	 	Invalid value      |	UHC requested	|
+       
+        
                       

@@ -1,7 +1,12 @@
 package main.java.stepDefinitions.OptumPaySoln;
 
+import java.math.BigDecimal;
+import java.util.Map;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import main.java.Utils.DataBase;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.MyProfile;
 import main.java.pageObjects.OptumPaySoln;
@@ -37,5 +42,28 @@ public class OptumPaySolnSteps extends TestBase {
 	public void user_validates_the_hover_on_info_icon_on_the_tiles() throws Throwable {
 		optPaySoln.validateInfoIconHover();
 	}
-
+	@Then("^User then validates the Change Rate scenarios based on \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+	public void user_then_validates_the_Change_Rate_scenarios_based_on(String credentials, String changeRateValue, String changeRateReason) {
+			
+		String rateValue="";
+		int sqlRowNo=1627;
+		Map rate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		
+		BigDecimal globalVal=BigDecimal.valueOf(Double.parseDouble(rate.get("RATE_PCT").toString().trim())).multiply(new BigDecimal(100));
+		if (changeRateValue.equals("Invalid value"))
+		{
+			rateValue=globalVal.add(new BigDecimal("0.001")).toString();
+			optPaySoln.clickChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+			rateValue="-0.12";
+			optPaySoln.clickChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+		}
+		if (changeRateValue.equals("valid value"))
+		{
+			rateValue=globalVal.add(new BigDecimal("-0.001")).toString();
+			optPaySoln.clickChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+			Browser.wait(testConfig, 1);
+			optPaySoln.clickChangeRateEvents(credentials,rateValue,changeRateValue,"Other with Blank");
+		}
+		
+	}
 }
