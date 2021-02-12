@@ -201,6 +201,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 
 		@When("^User hovers on the Resources DropDown$")
 		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
+			Browser.wait(testConfig, 1);
 			homePage.hoverOnResourceDropDown();
 		}
 
@@ -239,6 +240,12 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
 			homePage.acceptTncAndSubmit();
 			homePage.verifyIfTncIsUpdated();
+			homePage.logOutFromUPA();
+		}
+		
+		@Then("^User clicks on Capitation Reports and verifies the link that opens$")
+		public void user_clicks_on_Capitation_Reports_and_verifies_the_link_that_opens() throws Throwable {
+			homePage.clickCapitationReportsandVerifyLink();
 			homePage.logOutFromUPA();
 		}
 

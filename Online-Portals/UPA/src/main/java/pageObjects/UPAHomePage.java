@@ -105,6 +105,7 @@ public class UPAHomePage extends HomePage {
 	
 
 	@FindBy(xpath = "//a[contains(text(),'Resources')]")
+	//@FindBy(xpath="//*[@id=\"withoutHomeId\"]/a[1]")
 	WebElement  resourcesDropDown;
 	
 	@FindBy(linkText="FAQs")
@@ -143,6 +144,9 @@ public class UPAHomePage extends HomePage {
 
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
+	@FindBy(linkText="Capitation Reports")
+	WebElement  lnkResourcesCapitationReport;
+
 	
 	
 	UPAHomePage(TestBase testConfig) 
@@ -351,4 +355,13 @@ public class UPAHomePage extends HomePage {
 		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
 		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
 	}
-}
+
+	public void clickCapitationReportsandVerifyLink() {
+		   String parentwindowhandle=testConfig.driver.getWindowHandle();
+		   Element.click(lnkResourcesCapitationReport, "capitation report");
+		   Browser.switchToNewWindow(testConfig);
+		   Browser.verifyURL(testConfig, "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html");
+		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
+	}
+
+	}
