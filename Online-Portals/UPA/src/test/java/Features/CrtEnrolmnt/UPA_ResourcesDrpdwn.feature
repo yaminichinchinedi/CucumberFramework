@@ -18,17 +18,3 @@ Feature: UPA Resource Dropdown
       |      PAY_Admin     	| 
       |      PAY_Gen     	  |  
       
-#Author :Sayonee
- @UPAUS3221207
-  Scenario Outline: Resource Tab dropdown Post Login
-		Given User navigates to UPA portal and enters "<userType>" and login
-    When User hovers on the Resources DropDown
-    Then User clicks on Capitation Reports and verifies the link that opens
-    Examples:
-      |      userType       |   
-      |      PROV_Admin     |   
-      |      PROV_Gen       |   
-      |      BS_Admin       |  
-      |      BS_Gen         | 
-      |      PAY_Admin     	| 
-      |      PAY_Gen     	  |  

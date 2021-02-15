@@ -243,11 +243,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 			homePage.logOutFromUPA();
 		}
 		
-		@Then("^User clicks on Capitation Reports and verifies the link that opens$")
-		public void user_clicks_on_Capitation_Reports_and_verifies_the_link_that_opens() throws Throwable {
-			homePage.clickCapitationReportsandVerifyLink();
-			homePage.logOutFromUPA();
-		}
+
 
 
 }
