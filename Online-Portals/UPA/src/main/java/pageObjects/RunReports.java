@@ -268,24 +268,16 @@ public void validatSaveAsExcelBtn() {
 
 
 public void enterTinAndDateRange(String userType) {
-	if(userType.equalsIgnoreCase("PROV"))
-	{  String tin_fin;
-		sqlRowNo=15;//1101;//1109
+	if(userType.equalsIgnoreCase("PROV")) {
+		  sqlRowNo=1112;
 		   Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		   String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
 		   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
-		   Log.Comment(dateTemp);
-		   Log.Comment( SearchedDate.get("PROV_TIN_NBR").toString().trim());
-		   tin_fin=SearchedDate.get("PROV_TIN_NBR").toString().trim();
-		   testConfig.putRunTimeProperty("tin_fin",tin_fin);
-		 
 		   Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
 		   Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-		   Element.enterData(txtTin,tin_fin, "Enter Tin " ,"tin_fin");
-	
-	       Element.verifyElementPresent( btnViewReport," view Report btn present?");
-		   Element.click( btnViewReport,"CLick the view Report btn");
-		   WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+		   Element.enterData(txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin " ,"tin_fin");
+	       Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
+		   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
 		   if(null == table)
 			 Log.Fail("No active data available in Database for " +"Please execute the test case manually");
 		  else
@@ -293,30 +285,19 @@ public void enterTinAndDateRange(String userType) {
 	}
 	else
 	{
-		sqlRowNo=16;//1104
+		 sqlRowNo=1113;
 		 Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-	    String  tin_bs=SearchedDate.get("IDENTIFIER_NBR").toString().trim();
-		String biling_id=SearchedDate.get("BILLING_SERVICE_ID").toString().trim();
-		//testConfig.putRunTimeProperty("tin_bs",tin_bs);
-		//testConfig.putRunTimeProperty("biling_id",biling_id);
-		   
-		   //sqlRowNo=1103;//1116
-		   //Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		   String dateTemp=SearchedDate.get("CREAT_DTTM").toString().trim().substring(0,10).replace('-', '/');
-		   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
-			Log.Comment(dateTemp);
-		 
-		  Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
-		  Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-		  Element.enterData(txtTin,tin_bs, "Enter Tin " ,"tin_bs");
-		   
-		   
-				 Element.click(btnViewReport,"CLick the view Report btn");
-				 WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-				 if(null == table)
-						Log.Fail("No active data available in Database for " +"Please execute the test case manually");
-				 else
-				         Log.Comment("Data Available");
+		 String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
+		 dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
+		 Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
+		 Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
+		 Element.enterData(txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS " ,"tin bs");  
+		 Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
+		 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+		 if(null == table)
+			Log.Fail("No active data available in Database for " +"Please execute the test case manually");
+		 else
+		    Log.Comment("Data Available");
 	}
+ }
 }
-}//class ends

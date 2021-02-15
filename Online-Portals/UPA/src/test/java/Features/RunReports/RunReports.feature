@@ -2,8 +2,8 @@
  @CSRRegression
 
 Feature: CSR Run Reports Feature
-     
-     @OrgUserHistory2 @tine1
+        
+     @OrgUserHistory @CSRUS2048441
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -17,7 +17,7 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
      
-   @OrgBSHistory2 @tine1
+   @OrgBSHistory @CSRUS2048441
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -32,7 +32,8 @@ Feature: CSR Run Reports Feature
       | Super       | BS       | 
       
 #Feature: mouse hover functionality in Run Reports CSR
- @ReportingHoverMessage1
+ @ReportingHoverMessage1 @CSRUS2987360
+
     Scenario Outline: Verify mouse hover functionality CSR for HIPAA Error Summary Report
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -44,7 +45,7 @@ Feature: CSR Run Reports Feature
       | Super       | PROV     |
       
       
- @ReportingHoverMessage2
+ @ReportingHoverMessage2 @CSRUS2987360
     Scenario Outline: Verify mouse hover functionality CSR for Payment/Remit Only Payment Summary Report
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -54,7 +55,7 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
       
-  @ReportingHoverMessage3
+  @ReportingHoverMessage3 @CSRUS2987360
     Scenario Outline: Verify mouse hover functionality CSR for Payment Summary Report
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -65,7 +66,7 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
       
-  @ReportingHoverMessage4
+  @ReportingHoverMessage4 @CSRUS2987360
     Scenario Outline: Verify mouse hover functionality CSR for Transaction Summary Report
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
