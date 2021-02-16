@@ -1,8 +1,8 @@
-#Marsha
-@PostLoginTermsAndConditionsPage
+#Author: Marsha
+@UPAPostLoginTermsAndConditionsPage
 Feature: Terms and Conditions-Post Login
 
-	@US2948683TnC
+	@UPAUS2948683TnC
 	Scenario Outline: T&C Re-acceptance - All-Payer Accept 
 	Given User navigates to UPA portal and enters "<userType>" and login when the Terms and Conditions are not accepted
 	Then The Terms and Conditions page is displayed
