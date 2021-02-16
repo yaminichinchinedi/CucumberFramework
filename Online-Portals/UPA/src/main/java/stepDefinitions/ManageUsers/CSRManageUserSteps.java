@@ -254,9 +254,10 @@ public class CSRManageUserSteps extends TestBase {
     	else
     	{
     	//searchPage.selectUserType(userType).searchToDeleteBS();
-       searchPage.doSearch(userType);
-        new ManageUsers(testConfig).clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
-        manageUsers.verifyModTypeCd(userType,"PCN");
+       searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
+       ManageUsers manageUsers=new ManageUsers(testConfig);
+       manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
+        manageUsers.verifyModTypeCd("BS","PCN");
         manageUsers.clickHome();
     	}
   } 	

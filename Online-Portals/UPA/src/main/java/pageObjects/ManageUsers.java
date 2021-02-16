@@ -192,7 +192,8 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
 	WebElement termsAndCondDate;
 	
-	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	//@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
 
 	@FindBy(id="provTinAssociateId")
@@ -2841,10 +2842,10 @@ public void deleteaddedtin()
 	Browser.waitForPageLoad(testConfig);
 	btnSave.click();
 }
-public void verifyModTypeCd(String userType, String value) {
+public ManageUsers verifyModTypeCd(String userType, String value) {
 	
 	String modTypCdDB="";
-	Map SearchedData;
+	Map SearchedData=null;
 	int flag=1;
 	if(userType.equalsIgnoreCase("PROV"))
 	{
@@ -2855,47 +2856,48 @@ public void verifyModTypeCd(String userType, String value) {
 	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
 	
 	}
-	else
+	else if(userType.equalsIgnoreCase("BS"))
 	{
 	   int sqlRowNo=1117;//1115
-	   testConfig.getRunTimeProperty("billing_service_id");
+	   String x=testConfig.getRunTimeProperty("billing_service_id");
 	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
 			
 	}
-	if(value.equalsIgnoreCase("null"))
-	{
-		if(modTypCdDB.length()==0)
-			flag=0;
-	}
-	
-	if(value.equalsIgnoreCase("PCD"))
-	{
-		if(modTypCdDB.equalsIgnoreCase("PCD"))
-			flag=0;
-	}
-	
-	if(value.equalsIgnoreCase("BSPAY"))
-	{
-		if(modTypCdDB.equalsIgnoreCase("BSPAY"))
-			flag=0;
-	}
-	if(value.equalsIgnoreCase("PCN"))
-	{
-		if(modTypCdDB.equalsIgnoreCase("pcn"))
-			flag=0;
-	}
-	
-	if(value.equalsIgnoreCase("pcm"))
-	{
-		if(modTypCdDB.equalsIgnoreCase("pcm"))
-			flag=0;
-	}
-	if(flag==0)
-		Log.Comment("mod type cd is correct");
+//	if(value.equalsIgnoreCase("null"))
+//	{
+//		if(modTypCdDB.length()==0)
+//			flag=0;
+//	}
+//	
+//	if(value.equalsIgnoreCase("PCD"))
+//	{
+//		if(modTypCdDB.equalsIgnoreCase("PCD"))
+//			flag=0;
+//	}
+//	
+//	if(value.equalsIgnoreCase("BSPAY"))
+//	{
+//		if(modTypCdDB.equalsIgnoreCase("BSPAY"))
+//			flag=0;
+//	}
+//	if(value.equalsIgnoreCase("PCN"))
+//	{
+//		if(modTypCdDB.equalsIgnoreCase("pcn"))
+//			flag=0;
+//	}
+//	
+//	if(value.equalsIgnoreCase("pcm"))
+//	{
+//		if(modTypCdDB.equalsIgnoreCase("pcm"))
+//			flag=0;
+//	}
+	//if(flag==0)
+	if(value.equalsIgnoreCase(modTypCdDB))
+		Log.Comment("mod type cd is correct" + modTypCdDB);
 	else
 		Log.Comment("mod type cd is incorrect "+modTypCdDB);
-	
+	return this;
 }
 
 

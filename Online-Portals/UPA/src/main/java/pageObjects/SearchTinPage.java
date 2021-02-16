@@ -315,6 +315,16 @@ public class SearchTinPage {
 			Element.enterData(txtboxTinNo.get(1), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"),"txtboxTinNo");	
 		return this;
 	}
+
+	public SearchTinPage searchToEditBS() {
+		int sqlRow=1119;
+		Map tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+		testConfig.putRunTimeProperty("tin", tinDetails.get("IDENTIFIER_NBR").toString());
+		Element.enterData(txtboxTinNo.get(1),tinDetails.get("IDENTIFIER_NBR").toString(),"Enter tin number as :" + " " + tinDetails.get("IDENTIFIER_NBR").toString(),"txtboxTinNo");
+		String x=tinDetails.get("BILLING_SERVICE_ID").toString();
+				testConfig.putRunTimeProperty("billing_service_id", tinDetails.get("BILLING_SERVICE_ID").toString());
+		return this;
+	}
 	
 	
 }
