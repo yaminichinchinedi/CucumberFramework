@@ -663,7 +663,8 @@ public class ManageUsers extends AddUserDetails
 			}
 		}
 		// Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		return new ManageUsers(testConfig);
+		//return new ManageUsers(testConfig);
+		return this;
 	}
 
 	/**
@@ -2840,8 +2841,88 @@ public void deleteaddedtin()
 	Browser.waitForPageLoad(testConfig);
 	btnSave.click();
 }
+public void verifyModTypeCd(String userType, String value) {
+	
+	String modTypCdDB="";
+	Map SearchedData;
+	int flag=1;
+	if(userType.equalsIgnoreCase("PROV"))
+	{
+	int sqlRowNo=424;//1114;//1107
+	 testConfig.getRunTimeProperty("tin");
+	// testConfig.getRunTimeProperty("email");
+	 SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+	
+	}
+	else
+	{
+	   int sqlRowNo=1117;//1115
+	   testConfig.getRunTimeProperty("billing_service_id");
+	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+			
+	}
+	if(value.equalsIgnoreCase("null"))
+	{
+		if(modTypCdDB.length()==0)
+			flag=0;
+	}
+	
+	if(value.equalsIgnoreCase("PCD"))
+	{
+		if(modTypCdDB.equalsIgnoreCase("PCD"))
+			flag=0;
+	}
+	
+	if(value.equalsIgnoreCase("BSPAY"))
+	{
+		if(modTypCdDB.equalsIgnoreCase("BSPAY"))
+			flag=0;
+	}
+	if(value.equalsIgnoreCase("PCN"))
+	{
+		if(modTypCdDB.equalsIgnoreCase("pcn"))
+			flag=0;
+	}
+	
+	if(value.equalsIgnoreCase("pcm"))
+	{
+		if(modTypCdDB.equalsIgnoreCase("pcm"))
+			flag=0;
+	}
+	if(flag==0)
+		Log.Comment("mod type cd is correct");
+	else
+		Log.Comment("mod type cd is incorrect "+modTypCdDB);
+	
+}
 
 
+public void clickHome() {
+	WebElement linkHome=testConfig.driver.findElement(By.linkText("Home"));
+	Element.clickByJS(testConfig, linkHome, "home link clicked");
+}
+
+
+
+public ManageUsers clickSpecificUserNametoedit(String userType) {
+	int sqlRowNo;
+	
+	if(userType.equalsIgnoreCase("PROV"))
+	 sqlRowNo=1116;//1118
+	
+	else
+		sqlRowNo=1118;//1117
+	
+	Map portalBSData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String username= portalBSData.get("LST_NM").toString() + ", " +portalBSData.get("FST_NM").toString();
+	testConfig.putRunTimeProperty("username", username);	
+	
+	
+	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+	   return new ManageUsers(testConfig);
+}
 		
 }
 

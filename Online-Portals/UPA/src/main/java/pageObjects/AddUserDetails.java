@@ -112,7 +112,8 @@ public class AddUserDetails {
 	WebElement errorRetypeEmail;
 	
 	
-	@FindBy(xpath="//input[@value='+ Add TIN/NPI']")
+	//@FindBy(xpath="//input[@value='+ Add TIN/NPI']")
+	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin_NPI;
 	
 	@FindBy(css=".rowDark>td>select")
@@ -232,17 +233,19 @@ public class AddUserDetails {
 	{
 		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
-		 Browser.wait(testConfig,2);
-		 Element.click(btnSave, "Click Save Button");
+		// Browser.wait(testConfig,2);
+		 //Element.click(btnSave, "Click Save Button");
+		// Browser.wait(testConfig,2);
 		// this.verifyDetailsOfNewUser(userType);
-		return null;
+		return this;
 		 
 	}
 	
 	public ManageUsers clickSave()
 	{
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		Element.click(btnSave, "Save");
+		//Element.click(btnSave, "Save");
+		Element.clickByJS(testConfig,btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}
@@ -273,7 +276,7 @@ public class AddUserDetails {
 		Map portalUser=null;
 		Browser.waitForPageLoad(testConfig);
 		for(WebElement userName:userNames)
-		{ 
+		{ String x=userName.getText();
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
 				      Element.click(userName, "UserName: "+ " " +firstNameTxt);

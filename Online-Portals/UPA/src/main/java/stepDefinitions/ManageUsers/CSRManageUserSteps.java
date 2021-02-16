@@ -1,6 +1,7 @@
 package main.java.stepDefinitions.ManageUsers;
 
 import cucumber.api.java.en.Then;
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.ManageUsers;
 import main.java.pageObjects.SearchTinPage;
@@ -185,4 +186,78 @@ public class CSRManageUserSteps extends TestBase {
     	testConfig.putRunTimeProperty("sysMode", systemMode);
     	manageUsers.verifyAddUsrBtnVsblBySystem_Mode(portalAccess,systemMode);
     }
+    
+    @Then("^create new user of \"([^\"]*)\" , \"([^\"]*)\"$")
+    public void create_new_user_of(String userType,String accessLevelOfNewUser) throws Throwable {
+    	if(userType.equalsIgnoreCase("PROV"))
+            {
+    		manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().addTinCSR().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+    		manageUsers.verifyModTypeCd(userType,"null") ;
+            }
+       
+            else
+            {
+            	
+           manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
+       	   manageUsers.verifyModTypeCd(userType,"bspay") ;
+       	   }
+    	manageUsers.clickHome();
+    	
+    }
+
+    @Then("^Delete the \"([^\"]*)\" user$")
+    public void delete_the_user(String userType) throws Throwable {
+    	
+        if(userType.equalsIgnoreCase("PROV"))
+        {
+       searchPage.selectUserType("PROV").searchToDelete("PROV").clickSearch();
+    	//searchPage.clickSearch();  
+        	//manageUsers = searchPage.doSearch(userType);   
+      // System.getProperty("firstName");
+       String fstname=System.getProperty("firstName");
+		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
+		testConfig.putRunTimeProperty("username", username);	
+		 manageUsers.clickSpecificUserName(username).deleteAndVerifyUserIsDeleted();
+       
+       // manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
+        }
+        else
+        {
+        searchPage.selectUserType("BS").searchToDelete("BS").clickSearch("BS");
+        String fstname=System.getProperty("firstName");
+		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
+		testConfig.putRunTimeProperty("username", username);	
+		 manageUsers.clickSpecificUserName(username).deleteAndVerifyUserIsDeleted();
+        }
+       
+        manageUsers.verifyModTypeCd(userType,"pcd") ;
+        manageUsers.clickHome();
+        }
+
+
+  @Then("^User enters \"([^\"]*)\"and update existing user$")
+    public void user_enters_and_update_existing_user(String userType) throws Throwable {
+    	if(userType.equalsIgnoreCase("PROV"))
+    	{
+    	//searchPage.clicklinkmnguser().selectUserType(userType);
+    	//searchPage.selectUserType(userType);
+       String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
+        manageUsers = searchPage.clickSearch();
+        //manageUsers.clickSpecificUserNametoedit(userType).editEmailWithExistingAdress().verifyYourChangesWereUpdatedSuccessfully();
+        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully(); 
+    	//searchPage.clicklinkmnguser().selectUserType(userType).searchToDelete().clickSearch();
+        manageUsers.verifyModTypeCd(userType,"PCN");
+        manageUsers.clickHome();
+      
+       }
+    	
+    	else
+    	{
+    	//searchPage.selectUserType(userType).searchToDeleteBS();
+       searchPage.doSearch(userType);
+        new ManageUsers(testConfig).clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
+        manageUsers.verifyModTypeCd(userType,"PCN");
+        manageUsers.clickHome();
+    	}
+  } 	
 }

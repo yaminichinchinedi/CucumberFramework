@@ -68,6 +68,15 @@ public class RunReportsStep extends TestBase {
 	public void validate_if_the_Save_As_Excel_button_is_present() throws Throwable {
 		runReports.validatSaveAsExcelBtn();
 	}
+	 @Then("^verify reports for \"([^\"]*)\"$")
+	    public void verify_reports_for_userType(String userType) throws Throwable {
+	       	if(userType.equalsIgnoreCase("PROV"))
+	          	runReports.clickOrgUserHistory().verifyOrgUserHistory();	
+	    	else
+	            runReports.clickBSUserHistory().verifyBSUserHistory();
+	       	runReports.clickHome();
+	    	
+	    }
 	
 	
 }
