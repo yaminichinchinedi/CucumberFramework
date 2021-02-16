@@ -123,4 +123,8 @@ public class CSRHomePageSteps extends TestBase{
 		public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
 			homePage.clickManageInternalUserlink();
 		}
+		@Given("^User clicks on Run Reports link$")
+		public void user_clicks_on_Run_Reports_link() throws Throwable {
+			homePage.clickRunReportLink();
+		 }
 }
