@@ -280,7 +280,7 @@ public void enterTinAndDateRange(String userType) {
 		   Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
 		   Element.enterData(txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin " ,"tin_fin");
 	       Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
-		   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+		   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
 		   if(table == null)
 			 Log.Fail("No active data available in Database for " +"Please execute the test case manually");
 		  else
@@ -298,7 +298,7 @@ public void enterTinAndDateRange(String userType) {
 		 Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
 		 Element.enterData(txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS " ,"tin bs");  
 		 Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
-		 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+		 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
 		 if(table == null)
 			Log.Fail("No active data available in Database for " +"Please execute the test case manually");
 		 else
@@ -306,37 +306,38 @@ public void enterTinAndDateRange(String userType) {
 	}
  }
 public void verifyOrgUserHistory() {
-	 String  fnameUI="",lnameUI="";
-	  String mailUI="";
-	  String moddescUI="";
-	  Browser.wait(testConfig, 2);
-	String d=Helper.getCurrentDate("MM-dd-yyyy");
+//	 String  fnameUI="",lnameUI="";
+//	  String mailUI="";
+//	  String moddescUI="";
+	  sqlRowNo=1115; 
+	 String d=Helper.getCurrentDate("MM-dd-yyyy");
 	d=d.replace('-', '/');
 	Element.enterData(txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date" ,"fromDate");
 	 Element.enterData(txtToDate ,d , "Enter To date  " ,"toDate");
 	 Element.enterData(txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin " ,"tin_fin");
-	 Element.click( btnViewReport,"CLick the view Report btn");
-	 WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+	 Element.clickByJS( testConfig,btnViewReport,"CLick the view Report btn");
+	 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
 	 if(table == null)
 			Log.Fail("No active data available in Database for " +"Please execute the test case manually");
 	 else
 	         Log.Comment("Data Available");
-	 Element.findElement(testConfig, "xpath", "//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a");
-	 Element.clickByJS(testConfig,testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
+	 Element.findElement(testConfig, "xpath", "//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table/tbody/tr[1]/td[1]/a");
+	 Element.clickByJS(testConfig,testConfig.driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
 	 Browser.wait(testConfig, 1);
-	 List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-
-	        fnameUI=reportTable.get(1).findElements(By.tagName("td")).get(4).getText();
-	        lnameUI=reportTable.get(1).findElements(By.tagName("td")).get(5).getText();
-	        mailUI=reportTable.get(1).findElements(By.tagName("td")).get(7).getText();
-	        moddescUI=reportTable.get(1).findElements(By.tagName("td")).get(10).getText();
+	
+	  Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	 List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
+//
+//	        fnameUI=reportTable.get(1).findElements(By.tagName("td")).get(4).getText();
+//	        lnameUI=reportTable.get(1).findElements(By.tagName("td")).get(5).getText();
+//	        mailUI=reportTable.get(1).findElements(By.tagName("td")).get(7).getText();
+//	        moddescUI=reportTable.get(1).findElements(By.tagName("td")).get(10).getText();
 	 
-	sqlRowNo=1115;
-	Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-	Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), fnameUI);
-	Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), lnameUI);
-	Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(), mailUI); 
-	Helper.compareEquals(testConfig, "mod typ desc", SearchedData.get("MOD_TYP_DESC").toString().trim(), moddescUI);
+	
+	Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(4).getText());
+	Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(5).getText());
+	Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(),reportTable.get(1).findElements(By.tagName("td")).get(7).getText()); 
+	Helper.compareEquals(testConfig, "mod typ desc", SearchedData.get("MOD_TYP_DESC").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(10).getText());
 			
 		 
 }
@@ -344,52 +345,39 @@ public void verifyOrgUserHistory() {
 
 
 public void verifyBSUserHistory() {
-String  fnameUI="",lnameUI="",mailUI="",moddescUI="";
+//String  fnameUI="",lnameUI="",mailUI="",moddescUI="";
+sqlRowNo=1117;
 String d=Helper.getCurrentDate("MM-dd-yyyy");
 d=d.replace('-', '/');
 String fromDate=Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy");
 Element.enterData(txtFromDate ,fromDate, "Enter From date" ,"fromDate");
 Element.enterData(txtToDate ,d , "Enter To date  " ,"toDate");
-String tr=testConfig.getRunTimeProperty("tin");
-Element.enterData(txtTin,tr, "Enter Tin " ,"tin_fin");
-Element.click( btnViewReport,"CLick the view Report btn");
+//String tr=testConfig.getRunTimeProperty("tin");
+Element.enterData(txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin " ,"tin_fin");
+Element.clickByJS(testConfig, btnViewReport,"CLick the view Report btn");
 WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-if(null == table)
+if(table == null)
 		Log.Fail("No active data available in Database for " +"Please execute the test case manually");
 else
         Log.Comment("Data Available");
 Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
 Browser.wait(testConfig, 2);
 List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-////	////*[@id="reportForm"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[2]/td[1]
-//	  int c=0;
-//		 for(WebElement r : table_fin) 
-//		  {c++;
-//		  if(c==5)
-//			  fnameUI=r.getText().toString().trim();
-//		  if(c==8)
-//			  mailUI=r.getText().toString().trim();
-//	     if(c==11)
-//	    	 moddescUI=r.getText().trim();
-//			//  Log.Comment(r.getText());  
-//           //Log.Comment(r.getText());
-//		  }
+
 		 
-fnameUI=reportTable.get(1).findElements(By.tagName("td")).get(3).getText();
-lnameUI=reportTable.get(1).findElements(By.tagName("td")).get(4).getText();
-mailUI=reportTable.get(1).findElements(By.tagName("td")).get(5).getText();
+//fnameUI=reportTable.get(1).findElements(By.tagName("td")).get(3).getText();
+//lnameUI=reportTable.get(1).findElements(By.tagName("td")).get(4).getText();
+//mailUI=reportTable.get(1).findElements(By.tagName("td")).get(5).getText();
 
-
-			sqlRowNo=1117;
-		   Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		   String fnameDB=SearchedData.get("FST_NM").toString().trim();
-		   String mailDB=SearchedData.get("EMAIL_ADR_TXT").toString().trim();
-		   Log.Comment(SearchedData.get("FST_NM").toString().trim());
-		   Log.Comment(SearchedData.get("EMAIL_ADR_TXT").toString().trim());
-		   Log.Comment(fnameUI+" "+mailUI+" "+lnameUI);
-		   Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), fnameUI);
-		   Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), lnameUI);
-		   Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(), mailUI); 
+   Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//		   String fnameDB=SearchedData.get("FST_NM").toString().trim();
+//		   String mailDB=SearchedData.get("EMAIL_ADR_TXT").toString().trim();
+//		   Log.Comment(SearchedData.get("FST_NM").toString().trim());
+//		   Log.Comment(SearchedData.get("EMAIL_ADR_TXT").toString().trim());
+//		   Log.Comment(fnameUI+" "+mailUI+" "+lnameUI);
+		   Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(3).getText());
+		   Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(4).getText());
+		   Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(5).getText()); 
 		
 }
 

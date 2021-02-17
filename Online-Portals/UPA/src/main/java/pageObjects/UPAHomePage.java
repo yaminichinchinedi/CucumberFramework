@@ -116,6 +116,12 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Terms & Conditions")
 	WebElement  resourcesTnc;
+
+	@FindBy(linkText="Document Vault")
+	WebElement  resourcesDocVault;
+	
+	@FindBy(xpath = "//b[contains(text(),'Partner Links')]")
+	WebElement  resourcesPartnerLink;
 	
 	@FindBy(linkText="Cancel Form")
 	WebElement  resourcesCancelForm;
@@ -282,23 +288,31 @@ public class UPAHomePage extends HomePage {
 
 	public void hoverOnResourceDropDown()
 	{
-		Element.verifyElementPresent(resourcesDropDown, "Resources Drp Dwn");
 		Element.mouseHoverByJS(testConfig, resourcesDropDown, "Resources Drp Dwn");
 	}
 	public void verifyFaqsFromResources()
 	{
 		Element.verifyElementNotPresent(vcpFaqs, "VCP FAQs");
 		Element.verifyElementPresent(resourcesFaqs, "FAQs");
-		
 		String parentwindowhandle=testConfig.driver.getWindowHandle();
 		Element.click(resourcesFaqs, "FAQs");
 		Browser.switchToNewWindow(testConfig);
 		String faqsUrl = "/epsFaqs.do";
 		Browser.verifyURL(testConfig, faqsUrl);
+		
+		verifyElementNotPresentOnFaq();
+		
+		Helper.compareEquals(testConfig, "Tnc windows", 2, Browser.getNoOfWindowHandles(testConfig));
+		Browser.closeBrowser(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	
+	public void verifyElementNotPresentOnFaq()
+	{
 		Element.verifyElementNotPresent(guideSection, "Guides");
 		Element.verifyElementNotPresent(signInBtn, "Sign In");
 		Element.verifyElementNotPresent(header, "Header");
-		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+
 	}
 	public void verifyTncLinkUnderResources()
 	{
@@ -306,7 +320,8 @@ public class UPAHomePage extends HomePage {
 		String parentwindowhandle=testConfig.driver.getWindowHandle();
 		Element.click(resourcesTnc, "TnC");
 		Browser.switchToNewWindow(testConfig);
-		Helper.compareEquals(testConfig, "Tnc windows", "2", Browser.getNoOfWindowHandles(testConfig));
+		Helper.compareEquals(testConfig, "Tnc windows", 2, Browser.getNoOfWindowHandles(testConfig));
+		Browser.closeBrowser(testConfig);		
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
 	
@@ -355,6 +370,23 @@ public class UPAHomePage extends HomePage {
 		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
 	}
 	
-
-
+	
+	public void verifyPartnersLink()
+	{
+		Element.verifyElementPresent(resourcesPartnerLink, "Partner Link");
+		Element.click(resourcesPartnerLink, "Partner Link");
+		Helper.compareEquals(testConfig, "Partner Link windows", 1, Browser.getNoOfWindowHandles(testConfig));
 	}
+	
+	public void verifyDocumentVaultLink()
+	{
+		Element.verifyElementPresent(resourcesDocVault, "Document Vault");
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(resourcesDocVault, "Document Vault");
+		Browser.switchToNewWindow(testConfig,"document-vault");
+		Helper.compareEquals(testConfig, "Document Vault windows", 2, Browser.getNoOfWindowHandles(testConfig));
+		Browser.closeBrowser(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+}
+

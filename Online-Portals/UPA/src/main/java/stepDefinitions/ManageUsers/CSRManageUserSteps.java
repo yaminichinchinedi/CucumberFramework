@@ -251,7 +251,7 @@ public class CSRManageUserSteps extends TestBase {
       
        }
     	
-    	else
+    	else if (userType.equalsIgnoreCase("PROV"))
     	{
     	//searchPage.selectUserType(userType).searchToDeleteBS();
        searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
