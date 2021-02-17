@@ -144,8 +144,10 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
 	
+	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
+	WebElement prvdrTIN;
 	
-	UPAHomePage(TestBase testConfig) 
+	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
 		this.testConfig=testConfig;
@@ -221,29 +223,6 @@ public class UPAHomePage extends HomePage {
 			return new UPAHomePage(testConfig);
 	}
 	
-	public UPAHomePage selectTin(String paymentType) 
-	 {
-		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		
-		String tin="";//dataProvider.getTinForPaymentType(paymentType);
-		testConfig.putRunTimeProperty("tin", tin);
-		dataProvider.associateTinWithUser(tin);
-		
-		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-		tin=tin+" - Enrolled";
-		
-		if((!tinList.contains(tin))){
-		   Element.click(homeTab, "home Tab");
-		   Browser.waitForLoad(testConfig.driver);
-		   Browser.wait(testConfig, 3);
-		   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
-		 }
-		
-		Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
-		Browser.waitForLoad(testConfig.driver);
-		return this;
-	}
-
 	public void clickManageUsersLink()
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
@@ -351,4 +330,45 @@ public class UPAHomePage extends HomePage {
 		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
 		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
 	}
+	
+	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
+		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
+			Helper.getPayerSchema(testConfig,searchCriteria);	
+		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		System.setProperty("tin", tin);
+		switch (userType)
+			{
+			   case "PROV": 
+				 WebElement homeTab = Element.findElement(testConfig, "id", "tabHome");
+				 List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
+	
+				 String Enrolledtin = tin + " - Enrolled";
+				 if ((!tinList.contains(Enrolledtin))) 
+				 {
+					Element.click(homeTab, "home Tab");
+					Browser.waitForLoad(TestBase.driver);
+					Browser.wait(testConfig, 2);
+					Element.expectedWait(prvdrTIN, testConfig, "Tin dropdown", "Tin dropdown");
+				 }
+				Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
+				break;
+			case "BS": 
+				Log.Comment("Tin fetched as per search criteria is : "+tin);
+				break;
+			case "Payer": 
+				Log.Comment("Tin fetched as per search criteria is : "+tin);
+				break;
+			}
+		return this;
+	}
+
+	public String getTin(String userType,String searchCriteria,String tinType,String portalAccess)
+	{
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForSearchCriteria(searchCriteria,tinType,portalAccess);
+		dataProvider.associateTinWithUser(userType,tin);
+		return tin;
+	}
+	
+
 }

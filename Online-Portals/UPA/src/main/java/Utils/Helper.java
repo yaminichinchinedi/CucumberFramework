@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.paymentSummary;
+import main.java.pageObjects.ViewPayments;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;

@@ -41,6 +41,7 @@ import main.java.reporting.Log;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -55,7 +56,7 @@ import main.java.Utils.ViewPaymentsDataProvider;
 import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 
-public class paymentSummary extends ViewPaymentsDataProvider{
+public class ViewPayments extends ViewPaymentsDataProvider{
 	
 	
 	@FindBy(xpath="//a[contains(text(),'PDF')]")
@@ -185,23 +186,65 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	@FindBy(xpath="//span[contains(text(),'No, Thanks')]")
 	WebElement btnNoThnx;
-	
-	Map dataRequiredForSearch;
-	
-
-	public SearchRemittance searchRemittance;
 
 	@FindBy(xpath="//*[@id='paymentsummaryform']/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[2]/td/span/input[1]")
 	WebElement txtBoxPayerTin2;
+	
 
+	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
+	@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
+	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement seacrhBtn;
+	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
+	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
+	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
+	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
+	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
+	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
+	@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
+	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
+	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement firstPayerName;
+	@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
+	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
+	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
+	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
+	@FindBy(xpath = "//td[starts-with(text(),'Payment Number')]/a") WebElement paymentNumHyper;
+	@FindBy(xpath = "//td[@class='subheader']") WebElement viewPaymentsSubHeader;
+	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
+	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement activeDrpDown;
+	@FindBy(xpath = "//a[contains(text(),'Payer')]") WebElement payerHeader;
+	@FindBy(xpath = "//td[contains(text(),'Payer')]") WebElement payerHeaderPrintPaymentSummary;
+	@FindBy(xpath = "//a[contains(text(),'Payment Date')]") WebElement payDateHeader;
+	@FindBy(xpath = "//a[contains(text(),'NPI')]") WebElement npiHeader;
+	@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNum;
+	@FindBy(xpath = "//th[contains(text(),'Proxy')]") WebElement proxyNum;
+	@FindBy(xpath = "//a[contains(text(),'Amount')]") WebElement amountHeader;
+	@FindBy(xpath = "//a[starts-with(text(),'Type')]") WebElement typeHeader;
+	@FindBy(xpath = "//th[starts-with(text(),'Payment')]") WebElement paymentStatusHeader;
+	@FindBy(xpath = "//th[contains(text(),'Redemption')]") WebElement redemptionHeader;
+	@FindBy(xpath = "//a[contains(text(),'Market Type')]") WebElement marketTypeHeader;
+	@FindBy(xpath = "//span[contains(text(),'Returned Reason')]") WebElement returnedReasonHeader;
+	@FindBy(xpath = "//th[contains(text(),'Updated Payment Dt')]") WebElement updatedHeader;
+	@FindBy(xpath = "//th[contains(text(),'Resend Payment')]") WebElement resendHeader;
+	@FindBy(xpath = "//span[contains(text(),'835 / EPRA')]") WebElement epraHeader;
+	@FindBy(xpath = "//span[contains(text(),'Payer')]") WebElement ppraHeader;
+	@FindBy(xpath = "//a[contains(text(),'Archive')]") WebElement archiveHeader;
+	@FindBy(xpath = "//input[@value='Print Payment Summary']") WebElement printBtn;
+	@FindBy(xpath = "//input[@id='saveArchive']") WebElement saveBtn;
+	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
+	@FindBy(xpath = "//input[@name='btnSearch']") WebElement srchBtn;
+	@FindBy(xpath = "//td[contains(text(),'No payments')]") WebElement errormsg;
+	@FindBy(xpath = "//td[@class='errors']") WebElement errormsgcsr;
+	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
+		
 	
-	
+	Map dataRequiredForSearch;
+	public SearchRemittance searchRemittance;
 	private TestBase testConfig=TestBase.getInstance();
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	PaymentSummaryFislService service = null;
 	
-	public paymentSummary(TestBase testConfig)
+	public ViewPayments(TestBase testConfig)
 	{
 		super(testConfig);
 		//this.testConfig=testConfig;
@@ -226,7 +269,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		
 	}
 	
-	public paymentSummary(TestBase testConfig,String filter)
+	public ViewPayments(TestBase testConfig,String filter)
 	{
 		super(testConfig);
 //		this.testConfig=testConfig;
@@ -234,7 +277,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
 
-	public paymentSummary(TestBase testConfig,boolean flag) {
+	public ViewPayments(TestBase testConfig,boolean flag) {
 //		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 	}
@@ -246,7 +289,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 * @param tin
 	 * @return payment sumary page
 	 */
-	public paymentSummary setQuickSearchFilter(String paymentType)
+	public ViewPayments setQuickSearchFilter(String paymentType)
 	{
 		String setlDate=null;
 		
@@ -267,7 +310,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
 	
-	public paymentSummary clickEpraPDFLinkSrchRemit(String srchType)
+	public ViewPayments clickEpraPDFLinkSrchRemit(String srchType)
     {
           String actualPaymntNo="";
           String expectedPaymntNo="";
@@ -357,7 +400,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
  }
 	
 	
-	public paymentSummary clickEpraPDFLink(String srchType)
+	public ViewPayments clickEpraPDFLink(String srchType)
     {
           String actualPaymntNo="";
           String expectedPaymntNo="";
@@ -541,7 +584,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
           
 
 	
-	public paymentSummary verifyEpraStatus(String expectedStatus) 
+	public ViewPayments verifyEpraStatus(String expectedStatus) 
 	 {
          Browser.browserRefresh(testConfig);
          
@@ -558,7 +601,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 		
 		
 	 }
-	public paymentSummary verifyEpraStatus(String srchType,int dummy) 
+	public ViewPayments verifyEpraStatus(String srchType,int dummy) 
 	 {
 		int sqlRowNo=206;
 		String expectedStatus="";
@@ -604,7 +647,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	 } 
 	
 	
-	public paymentSummary getPDFfileNameEPRA() 
+	public ViewPayments getPDFfileNameEPRA() 
 	 {
 		
 		int sqlRowNo=206;
@@ -616,7 +659,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	}
 
 	
-	public paymentSummary verifyEpraClaimCntAndPriority()
+	public ViewPayments verifyEpraClaimCntAndPriority()
 	{
 		String expectedPaymntNo="";
 		Browser.wait(testConfig, 7);
@@ -684,7 +727,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	
 	
-	public paymentSummary verifyEpraClaimCntAndPrioritySrch()
+	public ViewPayments verifyEpraClaimCntAndPrioritySrch()
 	{
 
 		String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
@@ -702,7 +745,7 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 }
 	
 	
-public paymentSummary verifyEpraStatusSrchRemit(String expectedStatus) 
+public ViewPayments verifyEpraStatusSrchRemit(String expectedStatus) 
 {
        Browser.browserRefresh(testConfig);
        //testConfig.putRunTimeProperty("CONSL_PAY_NBR", "CONSL_PAY_NBR");
@@ -718,7 +761,7 @@ public paymentSummary verifyEpraStatusSrchRemit(String expectedStatus)
 }  
 	
 		
-public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
+public ViewPayments verifyEpraClaimCntAndPriority(String srchType)
 {
 
 	String paymentNumDB=null; 
@@ -751,7 +794,7 @@ public paymentSummary verifyEpraClaimCntAndPriority(String srchType)
 	
 	
 
-public paymentSummary verifyEpraDownloadStatus(String expectedStatus)
+public ViewPayments verifyEpraDownloadStatus(String expectedStatus)
 {
 	
 	String expectedPaymntNo="";
@@ -875,7 +918,7 @@ public void verifyFailedPaymentPopUp()
 	 * @return object of this page
 	 */
 	
-	public paymentSummary verifyDefaultSearchResultCount() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public ViewPayments verifyDefaultSearchResultCount() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
 	{   
 		int i=0;
 		String expectedSelectedOption="Show All";
@@ -932,7 +975,7 @@ public void verifyFailedPaymentPopUp()
 	 */
 	
 	
-	public paymentSummary setSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
+	public ViewPayments setSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
 	{
 //		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.wait(testConfig,3);
@@ -966,7 +1009,7 @@ public void verifyFailedPaymentPopUp()
 	 * @return Payment Summary Page
 	 */
 	
-	public paymentSummary setSearchFiltersPayer(String filterPayments,String quickSearchFilter,String MktTypeFilter)
+	public ViewPayments setSearchFiltersPayer(String filterPayments,String quickSearchFilter,String MktTypeFilter)
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
@@ -987,7 +1030,7 @@ public void verifyFailedPaymentPopUp()
 	 * @return payment summary page
 	 */
 	
-	public paymentSummary getQuickSearchDates(String quickSearchFilter) 
+	public ViewPayments getQuickSearchDates(String quickSearchFilter) 
 	{
 	    String split[]=quickSearchFilter.split(" "); 
 		if(split[split.length-1].contains("days"))
@@ -1285,7 +1328,7 @@ public void verifyFailedPaymentPopUp()
 	 */
 	
 	
-	public paymentSummary verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public ViewPayments verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
 	{	
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse();
 		String totalRecordsFromFISL=String.valueOf(searchResponse.getData().getTotalCount());
@@ -1590,7 +1633,7 @@ public void verifyFailedPaymentPopUp()
  * @throws ParserConfigurationException
  */
 	
-	public paymentSummary verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public ViewPayments verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{	
 		String archiveFilter = "Show All";	
 		String actualPaymntNo = "";
@@ -1647,7 +1690,7 @@ public void verifyFailedPaymentPopUp()
     	return this;
 	}
 	
-	public paymentSummary payerTin(){
+	public ViewPayments payerTin(){
 		
 		int sqlRow=35;
 		
@@ -1661,7 +1704,7 @@ public void verifyFailedPaymentPopUp()
 		return this;
 	}
 	
-	public paymentSummary payerTin(String paymentType) 
+	public ViewPayments payerTin(String paymentType) 
 	 {
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
 		String tin="";//dataProvider.getTinForPaymentType(paymentType);
@@ -1678,7 +1721,7 @@ public void verifyFailedPaymentPopUp()
 		return this;
 	}
 	
-	public paymentSummary enterBSTin(String userType,String paymentType) 
+	public ViewPayments enterBSTin(String userType,String paymentType) 
 	 {
 		ViewPaymentsDataProvider dataProvider=new ViewPaymentsDataProvider(testConfig);		
 		String tin="";//dataProvider.getTinForPaymentType(paymentType);
@@ -1821,7 +1864,7 @@ public void verifyFailedPaymentPopUp()
 	
 	//Methods related to BS User
 
-	public paymentSummary bsTin(String providerTIN) 
+	public ViewPayments bsTin(String providerTIN) 
 	{
 		testConfig.putRunTimeProperty("tin", providerTIN);
 		Element.enterData(txtBoxBSTin, providerTIN,"Entered TIN", "Provider Tin");
@@ -2832,7 +2875,7 @@ public void verifyFailedPaymentPopUp()
     	}
      }
 	
-	public paymentSummary newSetSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
+	public ViewPayments newSetSearchFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter)
 	{
 		if(filterPayments != null) {
 			Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
@@ -2876,7 +2919,7 @@ public void verifyFailedPaymentPopUp()
 	 * @return Outer map
 	 * @throws IOException 
 	 */	
-public paymentSummary verifyPayerRolePayments() throws IOException{
+public ViewPayments verifyPayerRolePayments() throws IOException{
 		
 		ArrayList<String> payerListFromDB = new ArrayList<String>();
 		/*List<String> payerListFromUI = new ArrayList<String>();
@@ -2990,7 +3033,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	
 	
 
-	public paymentSummary verifyMktType(String marketType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public ViewPayments verifyMktType(String marketType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{	
 		String archiveFilter = "Show All";	
         String dateToValidate = testConfig.getRunTimeProperty("setlDate");
@@ -3176,7 +3219,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return new RemittanceDetail(testConfig);
 	}
 
-	public paymentSummary verifyQuickSrchFilterOptions(String portalAccess){
+	public ViewPayments verifyQuickSrchFilterOptions(String portalAccess){
 		List<String> quickSrchOptions = new ArrayList<>(Arrays.asList("Last 30 days", "Last 60 days","Last 90 days","Last 4-6 months",
 			    		"Last 6-9 months","Last 9-13 months"));
 		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
@@ -3193,7 +3236,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyPaymentStatusFilter(String portalAccess){
+	public ViewPayments verifyPaymentStatusFilter(String portalAccess){
 		String label=lblPaymentStatus.getText().trim();
 		if(!label.equals("Active/Archived Payments"))
 			Log.Pass("Passed : Active/Archived Payments is relabeled");
@@ -3219,7 +3262,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyColumnPresent(String columnName){
+	public ViewPayments verifyColumnPresent(String columnName){
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
 		if(tblHeader.contains(columnName))
@@ -3229,7 +3272,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyColumnIsNotPresent(String columnName){
+	public ViewPayments verifyColumnIsNotPresent(String columnName){
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
 		if(tblHeader.contains(columnName))
@@ -3294,7 +3337,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		 }
 	}
 	
-	public paymentSummary verify835EPRAlink(){
+	public ViewPayments verify835EPRAlink(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
@@ -3354,7 +3397,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifySavArchbtnNotPresent(){
+	public ViewPayments verifySavArchbtnNotPresent(){
 		String label=btnSave.getAttribute("value").trim();
 		Helper.compareEquals(testConfig, "Save button relabeled", "Save", label);
 		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archieve')]")== null)
@@ -3363,14 +3406,14 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		
 	}
 	
-	public paymentSummary verifySaveBtnDisplay(String portalAccess){
+	public ViewPayments verifySaveBtnDisplay(String portalAccess){
 		if("Standard".equals(portalAccess))
 			Element.verifyElementNotPresent(testConfig, "id", "savePaymentArchive", "Save Button");
 		return this;
 		
 	}
 	
-	public paymentSummary verifyColumnValuesNA(){
+	public ViewPayments verifyColumnValuesNA(){
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
 		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr"); 
@@ -3397,7 +3440,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	    return this;
 		}
 	
-	public paymentSummary selectTinNverfyPagRfrsh(){
+	public ViewPayments selectTinNverfyPagRfrsh(){
 		
 		String tin=testConfig.getRunTimeProperty("tin")+" - Enrolled";
 		List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
@@ -3426,7 +3469,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 
-	public paymentSummary verify835EPRAlink(String SearchCriteria){
+	public ViewPayments verify835EPRAlink(String SearchCriteria){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
@@ -3468,7 +3511,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyPaymentStatusColumnDropdwn(){
+	public ViewPayments verifyPaymentStatusColumnDropdwn(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
@@ -3530,13 +3573,13 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		    }
 	}
 	
-	public paymentSummary clickPrintPaymentBtn(){
+	public ViewPayments clickPrintPaymentBtn(){
 		Browser.wait(testConfig, 3);
 		Element.click(btnPrntPaymntSummary, "Payment Summary Button"); 
 		return this;
 	}
 	
-	public paymentSummary verifyPrintPaymentSummaryPage() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+	public ViewPayments verifyPrintPaymentSummaryPage() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
 		String parentWin=Browser.switchToNewWindow(testConfig);
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse();
 		Helper.compareMaps(testConfig, "Payments Details Comparison",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromUI());	
@@ -3544,7 +3587,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary clickGrayedClaimCount(){
+	public ViewPayments clickGrayedClaimCount(){
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
 		int columnIndex=tblHeader.indexOf("Claim Count");
@@ -3553,7 +3596,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyPopUp(String userType){
+	public ViewPayments verifyPopUp(String userType){
 		Element.verifyElementPresent(popUpViewPay, "View Payments PopUp");
 		String popUptext="";
 		
@@ -3586,13 +3629,13 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary clickGetStarted(){
+	public ViewPayments clickGetStarted(){
 		Element.verifyElementPresent(popUpViewPay, "View Payments PopUp");
 		Element.click(btnGetStarted, "Get started button");
 		return this;
 	}
 	
-	public paymentSummary verifyGetStartedModal(){
+	public ViewPayments verifyGetStartedModal(){
 		Element.verifyElementPresent(popUpGetStarted, "Bring More power to you");
 		Element.click(btnNoThnx, "No Thanx Button");
 		Element.verifyElementNotPresent(popUpGetStarted, "Bring More power to you");
@@ -3602,20 +3645,20 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyPrdctSlctnTbl(){
+	public ViewPayments verifyPrdctSlctnTbl(){
 		int sqlRowNo=1509;
 		Map prdctSelection = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "Product Selection Active Record", "A", prdctSelection.get("PRTL_PRDCT_SELECTED_STS_CD"));
 		return this;
 	}
 	
-	public paymentSummary clickCloseOnPopUp(){
+	public ViewPayments clickCloseOnPopUp(){
 		Element.click(btnClosePopup, "Close Pop Up");
 		Element.verifyElementNotPresent(popUpViewPay, "View Payments PopUp");
 		return this;
 	}
 	
-	public paymentSummary vaidateHeadersColumns(String page) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+	public ViewPayments vaidateHeadersColumns(String page) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
 		ArrayList<String> headers=getHeadersFromResultTable();
 		headers.remove("835 / EPRA");
 		headers.remove(10);
@@ -3629,7 +3672,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public paymentSummary verifyFeeAmountDash(){
+	public ViewPayments verifyFeeAmountDash(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
 		boolean found=false;
@@ -3669,7 +3712,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	}
 
 	
-	public paymentSummary verifyMessages(String credentials, String trialStatus, String paidOption){
+	public ViewPayments verifyMessages(String credentials, String trialStatus, String paidOption){
 		
 		if (credentials.equalsIgnoreCase("PROV_Admin"))
 		{
@@ -3753,7 +3796,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		}
 		return this;
 	}
-		public paymentSummary clickpPRAlink()
+		public ViewPayments clickpPRAlink()
 	{
 		
         String actualPaymntNo="";
@@ -3839,7 +3882,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 				    }
 		return this;
 	}
-		public paymentSummary verifyPPRA_Status()
+		public ViewPayments verifyPPRA_Status()
 		{
 			int sqlRowNo=1625;		
 			Map ppraStatusTbl = null;	
@@ -3856,6 +3899,407 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 			DataBase.executeDeleteQuery(testConfig, 1626);
 			return this;
 		}
+		
+	public void verifyAllOtherDrpDwns() throws Exception
+	{
+		String[] arr= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+
+	    for(String s: arr)
+	    {
+	    	Browser.wait(testConfig, 5);
+	        Element.selectVisibleText(quickSearch,s,"Quick Search from View Payments");
+	        Browser.wait(testConfig, 5);
+	        
+	        try{
+	        	
+	        	if(!errormsg.isDisplayed())
+	        	{	
+	        	    System.out.println("Error Message is not displayed");
+	        		break;
+	        	}	
+	        }
+	        catch(NoSuchElementException e)
+	    	{
+	        	break;
+	         }
+	    }
+
+			Element.selectVisibleText(marketTyp,"Show All","Market Type from View Payments");
+			Log.Comment("Market Type Dropdown Selected: Show All");
+			Browser.wait(testConfig, 7);
+
+			Element.selectVisibleText(payerDrpDown,"Show All","Payer Dropdown from View Payments");
+			Log.Comment("PayerDrpDown Dropdown Selected: Show All");
+			Browser.wait(testConfig, 5);
+			
+			Element.selectVisibleText(archiveDrpDwn,"Show All","Active/Archived Payments Dropdown from View Payments");
+			Log.Comment("Active/Archived Payments Dropdown Selected: Show All");
+			Browser.wait(testConfig, 5);
+			
+			Element.selectVisibleText(filterDrpDown,"Show All","Filter Payments Dropdown from View Payments");
+			Log.Comment("Filter Payments Dropdown Selected: Show All");
+			Browser.wait(testConfig, 5);
+	    
+	}
+		
+	public void verifyAllOtherDrpDwnsinUPA() throws Exception
+	{
+		
+		String[] arr= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+
+	    for(String s: arr)
+	    {
+	        Element.selectVisibleText(quickSearch,s,"Quick Search from View Payments");
+	   
+	        
+	        try{
+	        	
+	        	if(!errormsg.isDisplayed())
+	        		break;
+	        }
+	        catch(NoSuchElementException e)
+	    	{
+	        	break;
+	         }
+
+		Element.selectVisibleText(marketTyp,"Show All","Market Type from View Payments");
+		Log.Comment("Market Type Dropdown Selected: Show All");
+
+		Element.selectVisibleText(filterDrpDown,"Show All","Filter Payments Dropdown from View Payments");
+		Log.Comment("Filter Payments Dropdown Selected: Show All");
+		
+	    }
+	}
+
+
+
+	public void verifyAllColumnsViewPay(String TimePeriod) 
+	{
+		
+		String[] arr= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+		
+		if (TimePeriod.equals("Last 30 days"))
+		Element.selectVisibleText(quickSearch,"Last 30 days","Quick Search from View Payments");
+		if (TimePeriod.equals("Last 60 days"))
+		Element.selectVisibleText(quickSearch,"Last 60 days","Quick Search from View Payments");
+		if (TimePeriod.equals("Last 90 days"))
+		Element.selectVisibleText(quickSearch,"Last 90 days","Quick Search from View Payments");
+		if (TimePeriod.equals("Last 4-6 months"))
+		Element.selectVisibleText(quickSearch,"Last 4-6 months","Quick Search from View Payments");
+		if (TimePeriod.equals("Last 6-9 months"))
+		Element.selectVisibleText(quickSearch,"Last 6-9 months","Quick Search from View Payments");
+		if (TimePeriod.equals("Last 9-13 months"))
+		Element.selectVisibleText(quickSearch,"Last 9-13 months","Quick Search from View Payments");
+			
+
+			Element.selectVisibleText(marketTyp,"Show All","Market Type from View Payments");
+			Log.Comment("Market Type Dropdown Selected: Show All");
+
+			Element.selectVisibleText(filterDrpDown,"Show All","Filter Payments Dropdown from View Payments");
+			Log.Comment("Filter Payments Dropdown Selected: Show All");
+			Element.selectVisibleText(activeDrpDown,"Show All","Payments type Dropdown from View Payments");
+			Log.Comment("Payments Type Dropdown Selected: Show All");
+	}
+
+
+	public void verifyAllOtherDrpDwnsinUPAPayer() throws Exception 
+	{
+
+		    
+		    String[] arr= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
+
+		    for(String s: arr)
+		    {
+		        Element.selectVisibleText(quickSearch,s,"Quick Search from View Payments");
+		   
+		        
+		        try{
+		        	
+		        	if(!errormsg.isDisplayed())
+		        		break;
+		        }
+		        catch(NoSuchElementException e)
+		    	{
+		        	break;
+		         }
+
+			Element.selectVisibleText(marketTyp,"Show All","Market Type from View Payments");
+			Log.Comment("Market Type Dropdown Selected: Show All");
+
+			Element.selectVisibleText(filterDrpDown,"Show All","Filter Payments Dropdown from View Payments");
+			Log.Comment("Filter Payments Dropdown Selected: Show All");
+			
+		    }
+	}
+
+
+
+	public void verifyPaymentNumberHypherLinkClaimDtl() throws Exception
+	{
+		
+		Element.click(paymentNumHyper, "Payment Number Hyper Link");
+		Browser.wait(testConfig, 5);
+		
+		Boolean filterDrpDownUI = filterDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Filter Payments Drop Down", true, filterDrpDownUI);
+		
+		Boolean quickSearchUI = quickSearch.isDisplayed();
+		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
+		
+		Boolean marketTypUI = marketTyp.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Drop Down", true, marketTypUI);
+		
+		Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Active/Archived Payments Drop Down", true, activeDrpDownUI);
+		
+		Boolean payerHeaderUI = payerHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer Header", true, payerHeaderUI);
+		
+		Boolean npiHeaderUI = npiHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "NPI Header", true, npiHeaderUI);
+		
+		Boolean paymentNumUI = paymentNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNumUI);
+		
+		Boolean proxyNumUI = proxyNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Proxy Number Header", true, proxyNumUI);
+		
+		Boolean amountHeaderUI = amountHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Amount Header", true, amountHeaderUI);
+		
+		Boolean typeHeaderUI = typeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Type Header", true, typeHeaderUI);
+		
+		Boolean paymentStatusHeaderUI = paymentStatusHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "PaymentStatus Header", true, paymentStatusHeaderUI);
+		
+		Boolean redemptionHeaderUI = redemptionHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Redemption Date Header", true, redemptionHeaderUI);
+		
+		Boolean marketTypeHeaderUI = marketTypeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Header", true, marketTypeHeaderUI);
+		
+		Boolean updatedHeaderUI = updatedHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Updated Payment Date Header", true, updatedHeaderUI);
+		
+		Boolean resendHeaderUI = resendHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Resend Payment Header", true, resendHeaderUI);
+		
+		Boolean epraHeaderUI = epraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "835/EPRA Header", true, epraHeaderUI);
+		
+		Boolean ppraHeaderUI = ppraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer PRA Header", true, ppraHeaderUI);
+		
+		Boolean archiveHeaderUI = archiveHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
+		
+		Boolean printBtnUI = printBtn.isDisplayed();
+		Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
+		
+		Boolean saveBtnUI = saveBtn.isDisplayed();
+		Helper.compareEquals(testConfig, "Save Button", true, saveBtnUI);
+
+		
+	}
+
+
+	public void clickViewPaymentsTab() throws Exception
+	{
+		 Browser.wait(testConfig, 5);
+	     Element.clickByJS(testConfig,viewPaymentsTab, "View Payments");
+	}
+
+	public void verifyPayNumHypherLinkClaimDtlUPA() throws Exception
+	{
+		
+		Element.click(paymentNumHyper, "Payment Number Hyper Link");
+		Browser.wait(testConfig, 5);
+		
+		Boolean filterDrpDownUI = filterDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Filter Payments Drop Down", true, filterDrpDownUI);
+		
+		Boolean quickSearchUI = quickSearch.isDisplayed();
+		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
+		
+		Boolean marketTypUI = marketTyp.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Drop Down", true, marketTypUI);
+		
+		Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Active/Archived Payments Drop Down", true, activeDrpDownUI);
+		
+		Boolean payerHeaderUI = payerHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer Header", true, payerHeaderUI);
+		
+		Boolean npiHeaderUI = npiHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "NPI Header", true, npiHeaderUI);
+		
+		Boolean paymentNumUI = paymentNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNumUI);
+		
+		Boolean proxyNumUI = proxyNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Proxy Number Header", true, proxyNumUI);
+		
+		Boolean amountHeaderUI = amountHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Amount Header", true, amountHeaderUI);
+		
+		Boolean typeHeaderUI = typeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Type Header", true, typeHeaderUI);
+		
+		Boolean paymentStatusHeaderUI = paymentStatusHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "PaymentStatus Header", true, paymentStatusHeaderUI);
+		
+		Boolean redemptionHeaderUI = redemptionHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Redemption Date Header", true, redemptionHeaderUI);
+		
+		Boolean marketTypeHeaderUI = marketTypeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Header", true, marketTypeHeaderUI);
+
+		Boolean epraHeaderUI = epraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "835/EPRA Header", true, epraHeaderUI);
+		
+		Boolean ppraHeaderUI = ppraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer PRA Header", true, ppraHeaderUI);
+		
+		Boolean archiveHeaderUI = archiveHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
+		
+		Boolean printBtnUI = printBtn.isDisplayed();
+		Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
+	}
+
+	public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
+	{
+		
+		Element.click(paymentNumHyper, "Payment Number Hyper Link");
+		Browser.wait(testConfig, 5);
+		
+		Boolean filterDrpDownUI = filterDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Filter Payments Drop Down", true, filterDrpDownUI);
+		
+		Boolean quickSearchUI = quickSearch.isDisplayed();
+		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
+		
+		Boolean marketTypUI = marketTyp.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Drop Down", true, marketTypUI);
+		
+		Boolean payerHeaderUI = payerHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer Header", true, payerHeaderUI);
+		
+		Boolean payDateHeaderUI = payDateHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payment Date Header", true, payDateHeaderUI);
+		
+		Boolean npiHeaderUI = npiHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "NPI Header", true, npiHeaderUI);
+		
+		Boolean paymentNumUI = paymentNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNumUI);
+		
+		Boolean proxyNumUI = proxyNum.isDisplayed();
+		Helper.compareEquals(testConfig, "Proxy Number Header", true, proxyNumUI);
+		
+		Boolean amountHeaderUI = amountHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Amount Header", true, amountHeaderUI);
+		
+		Boolean typeHeaderUI = typeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Type Header", true, typeHeaderUI);
+		
+		Boolean paymentStatusHeaderUI = paymentStatusHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "PaymentStatus Header", true, paymentStatusHeaderUI);
+		
+		Boolean redemptionHeaderUI = redemptionHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Redemption Date Header", true, redemptionHeaderUI);
+		
+		Boolean marketTypeHeaderUI = marketTypeHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Market Type Header", true, marketTypeHeaderUI);
+
+		Boolean epraHeaderUI = epraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "835/EPRA Header", true, epraHeaderUI);
+		
+		Boolean ppraHeaderUI = ppraHeader.isDisplayed();
+		Helper.compareEquals(testConfig, "Payer PRA Header", true, ppraHeaderUI);
+		
+		Boolean printBtnUI = printBtn.isDisplayed();
+		Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
+
+		
+	  }
+
+
+
+	public void verifyDisable()
+	{
+		Boolean quickSearchUI = quickSearch.isDisplayed();
+		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
+		
+		Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
+		Helper.compareEquals(testConfig, "Active/Archived Payments Drop Down", true, activeDrpDownUI);	
+//		if (archiveDrpDwn == null)
+//			Log.Comment("Save Archive Changes button is not on the Page");
+	}
+
+		public void selectTimePeriod(String TimePeriod) {
+
+			if (TimePeriod.equals("Last 30 days"))
+				Element.selectVisibleText(quickSearch, "Last 30 days", "Quick Search from View Payments");
+			if (TimePeriod.equals("Last 60 days"))
+				System.out.println("xxxxxxxxxxxxxxxxxxxxxx");
+				Element.selectVisibleText(quickSearch, "Last 60 days", "Quick Search from View Payments");
+			if (TimePeriod.equals("Last 90 days"))
+				Element.selectVisibleText(quickSearch, "Last 90 days", "Quick Search from View Payments");
+			if (TimePeriod.equals("Last 4-6 months"))
+				Element.selectVisibleText(quickSearch, "Last 4-6 months", "Quick Search from View Payments");
+			if (TimePeriod.equals("Last 6-9 months"))
+				Element.selectVisibleText(quickSearch, "Last 6-9 months", "Quick Search from View Payments");
+			if (TimePeriod.equals("Last 9-13 months"))
+				Element.selectVisibleText(quickSearch, "Last 9-13 months", "Quick Search from View Payments");
+
+		}
+
+		public void selectMarketType(String filter) {
+				Element.selectVisibleText(marketTyp, filter, "Market Type filter selected on View Payments as :" + filter);
+		}
+
+		public void verifyPayerText(String credentials) {
+			if (credentials.equals("CSR")) {
+				Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeader.getText());
+			} else {
+				Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeader.getText());
+				Browser.scrollToBottom(testConfig);
+				Element.click(printBtn, "Print Payment Summary");
+				String oldWindow = Browser.switchToNewWindow(testConfig, "printPaymentSummary.do");
+				Helper.compareEquals(testConfig, "Payer Text", "Payer", payerHeaderPrintPaymentSummary.getText());
+				Browser.switchToParentWindow(testConfig, oldWindow);
+			}
+		}
+
+		
+		public void verifyEPRAAndPayerPRA(String credentials) {
+			if (credentials.equals("CSR")) {
+				if (payerTable.get(2).findElements(By.tagName("td")).get(9).getText().contentEquals("Patient Payments")) {
+					Helper.compareEquals(testConfig, "Payer PRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(17).getText());
+					payerTable.get(2).findElements(By.tagName("td")).get(14).isDisplayed();
+					Helper.compareEquals(testConfig, "835", "835", payerTable.get(2).findElements(By.tagName("td")).get(14).getText());
+					Helper.compareEquals(testConfig, "EPRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(16).getText());
+
+			} }else {
+				Helper.compareEquals(testConfig, "Payer PRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(14).getText());
+				payerTable.get(2).findElements(By.tagName("td")).get(11).isDisplayed();
+				Helper.compareEquals(testConfig, "835", "835", payerTable.get(2).findElements(By.tagName("td")).get(11).getText());
+				Helper.compareEquals(testConfig, "EPRA", "N/A", payerTable.get(2).findElements(By.tagName("td")).get(13).getText());
+			}
+		}
+
+		public void verifyandClickPayment() throws Exception
+		{
+			Boolean firstPaymentNbr = firstPaymentNumber.isDisplayed();
+			Helper.compareEquals(testConfig, "First payment Number", true, firstPaymentNbr);
+		    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
+			
+		}
+
+
+
 	}
         
 

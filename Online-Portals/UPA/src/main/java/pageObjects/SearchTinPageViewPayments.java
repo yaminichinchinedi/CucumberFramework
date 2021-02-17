@@ -50,10 +50,10 @@ public class SearchTinPageViewPayments {
 	  PageFactory.initElements(testConfig.driver, this);
     }
 	
-	public paymentSummary clickSearchBtn()
+	public ViewPayments clickSearchBtn()
     {
       Element.clickByJS(testConfig,btnSubmit, "Search Button");
-      return new paymentSummary(testConfig);
+      return new ViewPayments(testConfig);
     }
 	
 	public String getTin(String userType,String paymentType,String tinType,String portalAccess)
@@ -104,6 +104,28 @@ public class SearchTinPageViewPayments {
 			Element.enterData(txtboxTinNo, tin, "Enter Tin "+tin+" to proceed for View Payments", "Tin Textbox");
 		    Element.click(srchBtn, "Search Button");
 		}
+		return this;
+	}
+	
+	public SearchTinPageViewPayments enterTinAndSrch(String userType){
+		switch (userType)
+		{
+			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
+				Browser.wait(testConfig, 2);
+				Element.enterDataByJS(testConfig,txtboxTinNo, testConfig.getRunTimeProperty("tin"), "tin textbox");
+			    Element.click(srchBtn, "Search Button");
+				break;
+			case "BS": 
+				Browser.wait(testConfig, 2);
+				Element.enterDataByJS(testConfig,bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "tin textbox");
+				Element.click(submitBtn, "Search Button");
+				break;
+			case "Payer": 
+				Browser.wait(testConfig, 2);
+				Element.enterDataByJS(testConfig,payertinDrpDwn,testConfig.getRunTimeProperty("tin"), "tin textbox");
+				Element.click(submitBtn, "Search Button");
+				break;
+			}
 		return this;
 	}
 

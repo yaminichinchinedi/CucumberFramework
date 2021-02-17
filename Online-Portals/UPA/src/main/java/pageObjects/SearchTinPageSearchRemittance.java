@@ -286,7 +286,7 @@ public class SearchTinPageSearchRemittance {
 		System.out.println("*****enterTinUPA 1");
 		int sqlRowNo=0;
 		String payType="";
-		paymentSummary paySum=new paymentSummary(testConfig,"filter");
+		ViewPayments paySum=new ViewPayments(testConfig,"filter");
 
 		switch(paymentType) 
 		{

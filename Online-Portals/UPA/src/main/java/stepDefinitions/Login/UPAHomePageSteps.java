@@ -23,7 +23,10 @@ import main.java.pageObjects.UPARegistrationPage;
 public class UPAHomePageSteps extends TestBase{
 	
 	UPAHomePage homePage=null;
+//	UPAHomePage homePage=new UPAHomePage(testConfig);
 	LoginUPA loginPage=null;
+	
+	SearchTinPageViewPayments viewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
 	
     @Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_UPA_portal_and_enters_and_login(String userType) throws Throwable {
@@ -70,7 +73,11 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
     	homePage.selectTin(searchCriteria);
     	homePage.clickHomeTab();
     }
-
+	
+	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_fetch_tin_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
+		homePage.fetchTin(userType, searchCriteria, tinType, portalAccess);
+	}
   
     @When("^Click on View Payments Link in UPA$")   
     public void click_on_View_Payments_Link_in_UPA() throws Throwable {

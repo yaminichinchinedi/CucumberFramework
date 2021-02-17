@@ -5,19 +5,14 @@ import java.util.Map;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.RemittanceDetail;
-import main.java.pageObjects.ValidateEnrollmentTypePage;
-import main.java.pageObjects.ViewPayments_Page;
-import main.java.pageObjects.paymentSummary;
 import main.java.pageObjects.SearchTinPageViewPayments;
 
 public class SearchTinPageViewPaymentsSteps extends TestBase {
 	
     SearchTinPageViewPayments viewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
-	paymentSummary payment= new paymentSummary(testConfig); 
+//	paymentSummary payment= new paymentSummary(testConfig); 
     
     @Then("^User enters tin on View Payments Tin \"([^\"]*)\" and click continue$")
     public void user_enters_tin_on_View_Payments_Tin_and_click_continue(String srchCriteria) throws Throwable {
@@ -90,7 +85,7 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	
 	@Then("^User enters tin for BS View Payments UPA for \"([^\"]*)\" and \"([^\"]*)\" search criteria$")
 	public void user_enters_tin_for_BS_View_Payments_UPA_for_and_search_criteria(String userType, String paymentType) throws Throwable {
-    	payment.enterBSTin(paymentType, userType);
+//    	payment.enterBSTin(paymentType, userType);
 	}
 
 	@Then("^Enter \"([^\"]*)\" portal access tin on CSR for \"([^\"]*)\" having \"([^\"]*)\" and \"([^\"]*)\" criteria and click submit button$")
@@ -102,6 +97,12 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_Enters_tin_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
 		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
 	}
+	
+	@Then("^User Enters tin and click on search button for \"([^\"]*)\"\\.$")
+	public void user_Enters_tin_and_click_on_search_button_for(String userType) throws Throwable {
+		viewPaymentsTIN.enterTinAndSrch(userType);
+	}
+	
 	@Then("^User Enters TIN for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience$")
 	public void user_Enters_TIN_for_and_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess, String TimePeriod) throws Throwable {
 		testConfig.putRunTimeProperty("tinType", tinType);
@@ -121,7 +122,6 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	
 	@When("^User Selects  tin on HomePage for \"([^\"]*)\" with \"([^\"]*)\",\"([^\"]*)\", \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience$")
 	public void user_Selects_tin_on_HomePage_for_with_for_for_Portal_Experience(String userType,String trialStatus, String paidOption, String tinType, String portalAccess) throws Throwable {
-//		viewPaymentsTIN.enterPaymentTinUPA(userType,trialStatus+" and "+paidOption, tinType,portalAccess);
 		String searchCriteria=trialStatus+" and "+paidOption;
 		Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
 		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
@@ -131,32 +131,9 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	{
 		testConfig.putRunTimeProperty("tinType", tinType);
     	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-//    	String split[]=searchCriteria.split(" "); 
-//		if(split[split.length-1].contains("days"))
-//		{
-//			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
-//			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
-//			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
-//			
-//		}
-//		
-//		else 
-//		{
-//			String monthRange=(split[split.length-2]);
-//			Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
-//			testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
-//			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
-//
-//		}	
-    	
     	Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
 		searchCriteria=searchCriteria+"PPRARecord";
 		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
-//		if (userType.equals("CSR"))
-//		viewPaymentsTIN.enterTinCSR(searchCriteria).clickSearchBtn();
-//		else
-//		viewPaymentsTIN.enterPaymentTinUPA(userType,searchCriteria, tinType,portalAccess);
-
 	}
 	
 	@Then("^User Enters tin for \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\" Portal Experience and click on Search$")

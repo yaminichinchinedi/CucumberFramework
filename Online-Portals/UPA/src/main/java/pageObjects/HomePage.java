@@ -317,12 +317,12 @@ public class HomePage extends LoginUPA {
 		}
 	
 
-	public paymentSummary clickViewPaymentsTab() 
+	public ViewPayments clickViewPaymentsTab() 
 	{
 		Browser.wait(testConfig,2);
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.clickByJS(testConfig,viewPaymentsTab, "View Payments Tab");
-		return new paymentSummary(testConfig);
+		return new ViewPayments(testConfig);
 	}
 	
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
