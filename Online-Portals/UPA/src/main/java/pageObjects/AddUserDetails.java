@@ -166,9 +166,11 @@ public class AddUserDetails {
 		Browser.wait(testConfig, 7);
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
 		Browser.wait(testConfig, 7);
-		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		//Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
+		Element.enterDataByJS(testConfig,email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr);
 		Browser.wait(testConfig, 2);
-		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		//Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		Element.enterDataByJS(testConfig,verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr);
 		Browser.wait(testConfig, 2);
 		//Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
 		Element.enterDataByJS(testConfig,firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt);
