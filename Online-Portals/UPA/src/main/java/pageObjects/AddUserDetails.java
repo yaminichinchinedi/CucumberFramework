@@ -170,7 +170,8 @@ public class AddUserDetails {
 		Browser.wait(testConfig, 2);
 		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		Browser.wait(testConfig, 2);
-		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		//Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
+		Element.enterDataByJS(testConfig,firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt);
 		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
 	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");

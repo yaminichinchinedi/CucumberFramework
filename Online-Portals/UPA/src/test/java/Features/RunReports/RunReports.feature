@@ -46,7 +46,7 @@ Feature: CSR Run Reports Feature
        |      BS         |      Super       |  	 General       		  |
       
       
-     @OrgUserHistory @CSRUS2048441
+     @CSROrgUserHistory @CSRUS2048441
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
@@ -60,7 +60,7 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
      
-   @OrgBSHistory @CSRUS2048441
+   @CSROrgBSHistory @CSRUS2048441
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
