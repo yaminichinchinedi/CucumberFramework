@@ -207,12 +207,14 @@ public void clickOrgAddressHistoryReport() {
 }
 public RunReports clickOrgUserHistory() {
        Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
+       Browser.wait(testConfig,2);
         return this;
 	
 }
 
 public RunReports clickBSUserHistory() {
 	Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
+	Browser.wait(testConfig,2);
 	 return this;
 }
 

@@ -239,22 +239,17 @@ public class CSRManageUserSteps extends TestBase {
     public void user_enters_and_update_existing_user(String userType) throws Throwable {
     	if(userType.equalsIgnoreCase("PROV"))
     	{
-    	//searchPage.clicklinkmnguser().selectUserType(userType);
-    	//searchPage.selectUserType(userType);
-       String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
+         String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
         manageUsers = searchPage.clickSearch();
-        //manageUsers.clickSpecificUserNametoedit(userType).editEmailWithExistingAdress().verifyYourChangesWereUpdatedSuccessfully();
         manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully(); 
-    	//searchPage.clicklinkmnguser().selectUserType(userType).searchToDelete().clickSearch();
         manageUsers.verifyModTypeCd(userType,"PCN");
         manageUsers.clickHome();
       
        }
     	
-    	else if (userType.equalsIgnoreCase("PROV"))
+    	else if (userType.equalsIgnoreCase("BS"))
     	{
-    	//searchPage.selectUserType(userType).searchToDeleteBS();
-       searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
+        searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
        ManageUsers manageUsers=new ManageUsers(testConfig);
        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
         manageUsers.verifyModTypeCd(userType,"PCN");

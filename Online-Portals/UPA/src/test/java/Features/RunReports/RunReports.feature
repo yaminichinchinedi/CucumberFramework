@@ -3,7 +3,7 @@
 
 Feature: CSR Run Reports Feature
 
-   @OrgUserHistory1 @OrgBSUserHistory1 @CSRUS2048441
+   @OrgUserHistory1 @OrgBSUserHistory1 @CSRUS2048441   @adtoy
     Scenario Outline: Validating if the create edit and delete users affects the org user history report
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
@@ -23,7 +23,28 @@ Feature: CSR Run Reports Feature
     Examples:
       |    userType     |   credentials    |  accessLevelOfNewUser |
       |      PROV       |      Super      |  	 General       		  |
-      |      BS         |      Super       |  	 General       		  |
+
+        @OrgUserHistory1 @OrgBSUserHistory1 @CSRUS2048441
+    Scenario Outline: Validating if the create edit and delete users affects the org user history report
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    When Click on CSRManage User Link
+   Then create new user of "<userType>" , "<accessLevelOfNewUser>" 
+    And User clicks on Run Reports link
+    Then verify reports for "<userType>"
+    When Click on CSRManage User Link
+    Then Delete the "<userType>" user
+    And User clicks on Run Reports link
+    Then verify reports for "<userType>"
+    When Click on CSRManage User Link
+    Then User enters "<userType>"and update existing user
+    And User clicks on Run Reports link
+    Then verify reports for "<userType>"
+
+   
+    Examples:
+      |    userType     |   credentials    |  accessLevelOfNewUser |
+       |      BS         |      Super       |  	 General       		  |
+      
       
      @OrgUserHistory @CSRUS2048441
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory

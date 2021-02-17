@@ -242,7 +242,8 @@ public class AddUserDetails {
 	}
 	
 	public ManageUsers clickSave()
-	{
+	{   
+		Browser.wait(testConfig, 2);
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
 		//Element.click(btnSave, "Save");
 		Element.clickByJS(testConfig,btnSave, "Save");

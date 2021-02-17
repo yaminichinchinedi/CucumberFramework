@@ -2849,7 +2849,7 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	int flag=1;
 	if(userType.equalsIgnoreCase("PROV"))
 	{
-	int sqlRowNo=1114;//424;//1114;//1107
+	int sqlRowNo=1114;
 	 testConfig.getRunTimeProperty("tin");
 	 testConfig.getRunTimeProperty("email");
 	 SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -2858,7 +2858,7 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	}
 	else if(userType.equalsIgnoreCase("BS"))
 	{
-	   int sqlRowNo=1117;//1115
+	   int sqlRowNo=1117;
 	   testConfig.getRunTimeProperty("billing_service_id");
 	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
@@ -2888,10 +2888,10 @@ public ManageUsers clickSpecificUserNametoedit(String userType) {
 	int sqlRowNo;
 	
 	if(userType.equalsIgnoreCase("PROV"))
-	 sqlRowNo=1116;//1118
+	 sqlRowNo=1116;
 	
 	else
-		sqlRowNo=1118;//1117
+		sqlRowNo=1118;
 	
 	Map portalBSData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	String username= portalBSData.get("LST_NM").toString() + ", " +portalBSData.get("FST_NM").toString();
@@ -2901,7 +2901,7 @@ public ManageUsers clickSpecificUserNametoedit(String userType) {
 		testConfig.putRunTimeProperty("email", portalBSData.get("EMAIL_ADR_TXT").toString());
 	
 	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
-	   return new ManageUsers(testConfig);
+	   return this;
 }
 		
 }
