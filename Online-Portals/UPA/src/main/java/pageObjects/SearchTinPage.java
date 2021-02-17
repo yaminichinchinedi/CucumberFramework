@@ -79,7 +79,8 @@ public class SearchTinPage {
 			   
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			  // Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
-			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			 //  Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.enterDataByJS(testConfig, txtboxTinNo.get(0), tin, "txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 			   break;
 		   }
