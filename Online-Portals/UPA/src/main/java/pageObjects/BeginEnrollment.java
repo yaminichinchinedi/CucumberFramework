@@ -159,8 +159,6 @@ public class BeginEnrollment {
 		Element.verifyElementPresent(dwnldAchGuide, "Download ACH Enrollment Guide");
 		Element.verifyElementPresent(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Element.verifyElementPresent(dwnldBSGuide, "Download Billing Service Enrollment Guide");
-		Element.verifyElementPresent(aboutEPS, "To get started, please let us know how you heard about EPS?");
-		Element.verifyTextPresent(rdoHealthPlanCommunication, "Health plan communication");
 	}
 	
 	public BeginEnrollmentContinue selectOtherToValidateErrorMessage() {
@@ -206,14 +204,14 @@ public class BeginEnrollment {
 	public void validateUserIsAbleToDwnldEnrlmntPdf() {
 		validateBeginEnrollment();
 		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
-		String handle =Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_ACH_v6.pdf"); 
+		String handle =Browser.switchToNewWindow(testConfig, "How%20to%20enroll_%20ACH%20user%20guide.pdf"); 
 
 		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
-		Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_VCP_v6.pdf");
+		Browser.switchToNewWindow(testConfig, "How%20to%20enroll_VCP%20user%20guide.pdf");
 		Browser.switchToParentWindow(testConfig, handle);
 		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
-		String window =Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_Billing_Services_v4.pdf");
+		String window =Browser.switchToNewWindow(testConfig, "How%20to%20enroll_Billing%20Service%20user%20guide.pdf");
 		Browser.switchToParentWindow(testConfig, window);
 		}
 	
