@@ -16,19 +16,8 @@ public class BenefitsOfOptumPayContinueSteps extends TestBase {
 //	BeginEnrollmentContinue beginEnrollmentContinuePage=null;
 //	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
 	
-	BenefitsOfOptumPay benOfOptumPay =null;
+	BenefitsOfOptumPay benOfOptumPay = new BenefitsOfOptumPay(testConfig);
 	BenefitsOfOptumPayContinueSteps benOfOptumPayContinue = null;
-	
-	@Given("^User navigates to UPA Sys Test application$")
-	public void user_navigates_to_UPA_Sys_Test_application () throws Throwable {
-		registrationPage = new UPARegistrationPage(testConfig); 
-	}
-
-	@When("^User Clicks on Benefits Of Optum Pay from the landing page$")
-	public void user_Clicks_on_Benefits_Of_Optum_Pay_from_the_landing_page() throws Throwable
-	{
-		benOfOptumPay = registrationPage.clickBenefitsOfOptumPayLink();
-	}
 	
 	@Then("^User validates Page title$")
 	public void user_validates_Page_title() throws Throwable
@@ -58,7 +47,7 @@ public class BenefitsOfOptumPayContinueSteps extends TestBase {
 	@Then("^User Validates \"([^\"]*)\" paragraph$")
 	public void user_Validates_paragraph(String paraName) throws Throwable 
 	{
-		benOfOptumPay.verifyparagraphTextOnOptumPayPage(paraName);
+		benOfOptumPay.verifyParagraphTextOnOptumPayPage(paraName);
 	}
 	
 	

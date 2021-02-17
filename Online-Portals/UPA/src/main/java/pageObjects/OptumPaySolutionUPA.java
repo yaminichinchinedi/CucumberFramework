@@ -135,8 +135,8 @@ public class OptumPaySolutionUPA {
 	String footer1_Premium = "If a provider cancels the full functionality of Optum Pay, their access will be limited to 2 users. However, if they were enrolled in Optum Pay prior to the upgrade (January 2021), then active portal users will retain access. Other features not available without a paid activation include search functionality, access to more than 30 days of historical data, multiple remittance options, and data bundling.";
 	String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
 	
-	String Message1_Standard = "Optum Pay brings more power to your practice";
-	String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
+	String message1_Standard = "Optum Pay brings more power to your practice";
+	String message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 	
 
 	public void verifyHeaders() {
@@ -192,7 +192,7 @@ public class OptumPaySolutionUPA {
 	
 	public void verifyPageText_Message1_Standard()
 	{
-		Helper.compareEquals(testConfig, "Message 1 Standard", Message1_Standard, msg1_Standard.getText().trim());
+		Helper.compareEquals(testConfig, "Message 1 Standard", message1_Standard, msg1_Standard.getText().trim());
 	}
 	
 
@@ -294,7 +294,7 @@ public class OptumPaySolutionUPA {
 
 	public void verifyPageText_Message2_Standard()
 	{
-		Helper.compareEquals(testConfig, "Message 2 Standard", Message2_Standard, msg2_Standard.getText().trim());
+		Helper.compareEquals(testConfig, "Message 2 Standard", message2_Standard, msg2_Standard.getText().trim());
 	}
 	
 	

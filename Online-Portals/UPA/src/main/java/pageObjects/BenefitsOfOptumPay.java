@@ -123,7 +123,7 @@ public class BenefitsOfOptumPay {
 	public void verifyGreenTickMark1Paragraph(int paraNum)
 	{
 
-		WebElement ele = null;
+		WebElement eleGreenTick = null;
 		String paraText = null;
 		
 		
@@ -131,45 +131,39 @@ public class BenefitsOfOptumPay {
 		{
 		case 1:
 		{
-			ele = greenTick1ParagraphText;
+			eleGreenTick = greenTick1ParagraphText;
 			paraText = "You select the payment method that best meets the needs of your practice - either ACH/direct deposit";
 			break;
 		}
 		case 2:
 		{
-			ele = greenTick2ParagraphText;
+			eleGreenTick = greenTick2ParagraphText;
 			paraText = "Payments made using ACH/direct deposit are deposited directly into your designated bank account.";
 			break;
 		}
 		
 		case 3:
 		{
-			ele = greenTick3ParagraphText;
+			eleGreenTick = greenTick3ParagraphText;
 			paraText = "VCP payments are loaded onto a virtual card and are processed by you using your point of sale credit card terminal, like the way patient co-pays would be processed.";
 			break;
 		}
 		
 		}
 		
-		
-		String text = ele.getText();
-		if (text.contains(paraText))
-		{
-		Log.Pass(ele + " " +"contains text" + " " + paraText);
-		}
+		if (eleGreenTick.getText().contains(paraText))
+		Log.Pass(eleGreenTick + " " +"contains text" + " " + paraText);
 		else
-		{
-		Log.Fail(ele + " " + "does not contains text" + " " + paraText);
-		}
+		Log.Fail(eleGreenTick + " " + "does not contains text" + " " + paraText);
 		
 	}
 	
 	
 	
-	public void verifyparagraphTextOnOptumPayPage(String paraName)
+	public void verifyParagraphTextOnOptumPayPage(String paraName)
 	{
 		
-		WebElement ele = null;
+		WebElement elePara = null;
 		String paraText = null;
 		
 		
@@ -177,7 +171,7 @@ public class BenefitsOfOptumPay {
 		{
 		case "Access can be restricted":
 		{
-			ele = accessCanBeRestirctedParagraphText;
+			elePara = accessCanBeRestirctedParagraphText;
 			paraText = "You can set the level of access to payment and claims information for each individual on your staff. This lets you restrict access to sensitive banking information while allowing staff to reconcile claims payments and initiate patient billing.";
 			break;
 		}
@@ -185,30 +179,19 @@ public class BenefitsOfOptumPay {
 		
 		case "We are only a call away":
 		{
-			ele = weAreOnlyACallAway;
+			elePara = weAreOnlyACallAway;
 			paraText = "We're only a call away";
 			break;
 		}
 		
 		}
 		
-		
-		String text = ele.getText();
-		if (text.contains(paraText))
-		{
-		Log.Pass(ele + " " +"contains text" + " " + paraText);
-		}
+		if (elePara.getText().contains(paraText))
+		Log.Pass(elePara + " " +"contains text" + " " + paraText);
 		else
-		{
-		Log.Fail(ele + " " + "does not contains text" + " " + paraText);
-		}
+		Log.Fail(elePara + " " + "does not contains text" + " " + paraText);
 		
 	}
-
-	
-	
-	
-	
 
 
 

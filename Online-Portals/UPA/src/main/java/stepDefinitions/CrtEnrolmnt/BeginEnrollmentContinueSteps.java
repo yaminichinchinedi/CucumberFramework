@@ -22,7 +22,7 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	String option="Health plan communication";
 	int excelRow=0;
 	UPARegistrationPage registrationPage=null;
-	BeginEnrollment beginEnrollmentPage=null;
+	BeginEnrollment beginEnrollmentPage= new BeginEnrollment(testConfig);
 	BeginEnrollmentContinue beginEnrollmentContinuePage=null;
 	ProviderEFTERAEnrollPage providerEFTERAEnrollPage=null;
 	
@@ -34,11 +34,11 @@ public class BeginEnrollmentContinueSteps extends TestBase {
 	    
 	}*/
 
-	@When("^User Clicks on Enroll Now from the landing page$")
+	/*@When("^User Clicks on Enroll Now from the landing page$")
 	public void user_Clicks_on_Enroll_Now_from_the_landing_page() throws Throwable {
 	   
 		 beginEnrollmentPage=  registrationPage.clickEnrollNow();   
-	}
+	}*/
 
 	@Then("^User Validates link Download Virtual Card Payment Enrollment Guide Link  and click on it$")
 	public void user_Validates_link_Download_Virtual_Card_Payment_Enrollment_Guide_Link_and_click_on_it() throws Throwable {

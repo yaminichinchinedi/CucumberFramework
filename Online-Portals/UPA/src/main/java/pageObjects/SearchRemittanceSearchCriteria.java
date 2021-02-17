@@ -154,24 +154,24 @@ public class SearchRemittanceSearchCriteria {
 	
 	//Added by Mohammad
 	@FindBy(xpath="//div[@class='topMessaggeDiv']/p[contains(text(),'As a reminder')]")
-	WebElement PremiumMsgTop_Provider;
+	WebElement premiumMsgTop_Provider;
 	
 	@FindBy(xpath="//div[@id='seachRemittancePremium']/h2")
-	WebElement StandardMsgTop_Header;
+	WebElement standardMsgTop_Header;
 	
 	@FindBy(xpath="//div[@id='seachRemittancePremium']/p[contains(text(),'Your basic level')]")
-	WebElement StandardMsgTop_Content;
+	WebElement standardMsgTop_Content;
 	
 	@FindBy(xpath="(//span[@class='ui-button-text'])[2]")
-	WebElement StandardMsgTop_GetStartedLink;
+	WebElement standardMsgTop_GetStartedLink;
 	
 	
 	//The messages for the Search Remittance page
 	
-	String MsgTop_Prov = "As a reminder with the full functionality of Optum Pay, you have access to historical remittance and claims payment data dating back 36 months. ";
-	String StandardMsgTop_Header_Prov = "Activate Optum Pay now";
-	String StandardMsgTop_Content_Prov_Adm = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, activate the full functionality of Optum Pay today.";
-	String StandardMsgTop_Content_Prov_Gen = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, ask your account administrator to activate Optum Pay.";
+	String msgTop_Prov = "As a reminder with the full functionality of Optum Pay, you have access to historical remittance and claims payment data dating back 36 months. ";
+	String standardMsgTop_Header_Prov = "Activate Optum Pay now";
+	String standardMsgTop_Content_Prov_Adm = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, activate the full functionality of Optum Pay today.";
+	String standardMsgTop_Content_Prov_Gen = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, ask your account administrator to activate Optum Pay.";
 	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
@@ -1702,12 +1702,12 @@ public class SearchRemittanceSearchCriteria {
     	{
     	case "PremiumPrvAdm":
     	{
-    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Premium TIN", MsgTop_Prov, PremiumMsgTop_Provider.getText().trim());
+    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Premium TIN", msgTop_Prov, premiumMsgTop_Provider.getText().trim());
     		break;
     	}
     	case "PremiumPrvGen":
     	{
-    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Standard TIN", MsgTop_Prov, PremiumMsgTop_Provider.getText().trim());
+    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Standard TIN", msgTop_Prov, premiumMsgTop_Provider.getText().trim());
     		break;
     	}
     	}
@@ -1721,13 +1721,13 @@ public class SearchRemittanceSearchCriteria {
     	{
     	case "StandardPrvAdm":
     	{
-    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Header Standard TIN", StandardMsgTop_Header_Prov, StandardMsgTop_Header.getText().trim());
-    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Content Standard TIN", StandardMsgTop_Content_Prov_Adm, StandardMsgTop_Content.getText().trim());
+    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Header Standard TIN", standardMsgTop_Header_Prov, standardMsgTop_Header.getText().trim());
+    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Content Standard TIN", standardMsgTop_Content_Prov_Adm, standardMsgTop_Content.getText().trim());
     		break;
     	}
     	case "StandardPrvGen":
     	{
-    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Standard TIN", MsgTop_Prov, PremiumMsgTop_Provider.getText().trim());
+    		Helper.compareEquals(testConfig, "Validate Provider Admin Top Msg Standard TIN", msgTop_Prov, premiumMsgTop_Provider.getText().trim());
     		break;
     	}
     	}
