@@ -278,9 +278,9 @@ public void enterTinAndDateRange(String userType) {
 		   String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
 		   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
 		   testConfig.putRunTimeProperty("tin",SearchedDate.get("PROV_TIN_NBR").toString().trim());
-		   Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
-		   Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-		   Element.enterData(txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin " ,"tin_fin");
+		   Element.enterDataByJS(testConfig, txtFromDate, dateTemp, "Enter From date");
+		   Element.enterDataByJS(testConfig,txtToDate , dateTemp , "Enter To date");
+		   Element.enterDataByJS(testConfig ,txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin ");
 	       Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
 		   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
 		   if(table == null)
