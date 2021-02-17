@@ -84,4 +84,13 @@ Feature: UPA Manage User Functionality for Premium TIN
 	 |    userType     |   accessType   | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
 	 |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
    |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     I     |					A					 |				PS			 |
-	 	
+
+
+  @US3179215
+  Scenario Outline: UPA Billing Service Manage Users Header and Footer Validation
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When Click on Manage User Link
+    Then Verify Manage Users Header and Footer Text Validation
+    Examples:
+      | userType | accessType |
+      | BS_Admin | BS         |

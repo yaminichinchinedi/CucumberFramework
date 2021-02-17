@@ -37,6 +37,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
+import org.testng.Assert;
 
 public class ManageUsers extends AddUserDetails
 {
@@ -2840,6 +2841,36 @@ public void deleteaddedtin()
 	Browser.waitForPageLoad(testConfig);
 	btnSave.click();
 }
+
+	public void verifyManageUsersHeaderAndFooterTextValidation() {
+
+
+		String[] expectedTexts = {
+				"An unlimited number of administrative and general users is available with Optum Pay.",
+				"Enrollment & Account Security Reminder",
+				"A business issued email is required when adding a new user. Personal emails will not be accepted. New users that fail to complete the registration process will be removed from Optum Pay. In addition, existing users with no login activity after six months will be purged. Please review your user list periodically to ensure that all contact information is accurate. If at any time you need to remove a user, please contact our Provider Support Center at 1-877-620-6194."
+		};
+
+		String headerActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[1]/p[2]").getText().trim();
+
+		String footerHeaderTextActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/h2").getText().trim();
+
+		String footerptagText = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/p[2]").getText().trim();
+
+
+		String[] actualTexts = {
+				headerActual,
+				footerHeaderTextActual,
+				footerptagText
+		};
+
+
+		for(int i=0; i<expectedTexts.length; i++){
+			Assert.assertTrue(expectedTexts[i].equals(actualTexts[i]), "Text Validation Failed");
+			Log.Comment("Text Validation successful : \n"+actualTexts[i]);
+		}
+
+	}
 
 
 		
