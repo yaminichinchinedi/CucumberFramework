@@ -2849,9 +2849,9 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	int flag=1;
 	if(userType.equalsIgnoreCase("PROV"))
 	{
-	int sqlRowNo=424;//1114;//1107
+	int sqlRowNo=1114;//424;//1114;//1107
 	 testConfig.getRunTimeProperty("tin");
-	// testConfig.getRunTimeProperty("email");
+	 testConfig.getRunTimeProperty("email");
 	 SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
 	
@@ -2859,44 +2859,20 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	else if(userType.equalsIgnoreCase("BS"))
 	{
 	   int sqlRowNo=1117;//1115
-	   String x=testConfig.getRunTimeProperty("billing_service_id");
+	   testConfig.getRunTimeProperty("billing_service_id");
 	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
 			
 	}
-//	if(value.equalsIgnoreCase("null"))
-//	{
-//		if(modTypCdDB.length()==0)
-//			flag=0;
-//	}
-//	
-//	if(value.equalsIgnoreCase("PCD"))
-//	{
-//		if(modTypCdDB.equalsIgnoreCase("PCD"))
-//			flag=0;
-//	}
-//	
-//	if(value.equalsIgnoreCase("BSPAY"))
-//	{
-//		if(modTypCdDB.equalsIgnoreCase("BSPAY"))
-//			flag=0;
-//	}
-//	if(value.equalsIgnoreCase("PCN"))
-//	{
-//		if(modTypCdDB.equalsIgnoreCase("pcn"))
-//			flag=0;
-//	}
-//	
-//	if(value.equalsIgnoreCase("pcm"))
-//	{
-//		if(modTypCdDB.equalsIgnoreCase("pcm"))
-//			flag=0;
-//	}
-	//if(flag==0)
-	if(value.equalsIgnoreCase(modTypCdDB))
+	if(value.equalsIgnoreCase("null"))
+		{
+			if(modTypCdDB.length()==0)
+				flag=0;
+		}
+	if(value.equalsIgnoreCase(modTypCdDB)|| flag==0)
 		Log.Comment("mod type cd is correct" + modTypCdDB);
 	else
-		Log.Comment("mod type cd is incorrect "+modTypCdDB);
+		Log.Fail("mod type cd is incorrect "+modTypCdDB);
 	return this;
 }
 
@@ -2921,6 +2897,8 @@ public ManageUsers clickSpecificUserNametoedit(String userType) {
 	String username= portalBSData.get("LST_NM").toString() + ", " +portalBSData.get("FST_NM").toString();
 	testConfig.putRunTimeProperty("username", username);	
 	
+	if(userType.equalsIgnoreCase("PROV"))
+		testConfig.putRunTimeProperty("email", portalBSData.get("EMAIL_ADR_TXT").toString());
 	
 	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
 	   return new ManageUsers(testConfig);

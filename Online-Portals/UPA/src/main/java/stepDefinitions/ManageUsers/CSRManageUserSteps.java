@@ -199,7 +199,7 @@ public class CSRManageUserSteps extends TestBase {
             {
             	
            manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
-       	   manageUsers.verifyModTypeCd(userType,"bspay") ;
+       	   manageUsers.verifyModTypeCd(userType,"BSAY") ;
        	   }
     	manageUsers.clickHome();
     	
@@ -257,7 +257,7 @@ public class CSRManageUserSteps extends TestBase {
        searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
        ManageUsers manageUsers=new ManageUsers(testConfig);
        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
-        manageUsers.verifyModTypeCd("BS","PCN");
+        manageUsers.verifyModTypeCd(userType,"PCN");
         manageUsers.clickHome();
     	}
   } 	
