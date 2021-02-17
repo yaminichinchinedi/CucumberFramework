@@ -172,10 +172,14 @@ public class AddUserDetails {
 		Browser.wait(testConfig, 2);
 		//Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
 		Element.enterDataByJS(testConfig,firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt);
-		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
-	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
-		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
-		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		Element.enterDataByJS(testConfig,lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt);
+	    Element.enterDataByJS(testConfig,phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo);
+		Element.enterDataByJS(testConfig,phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo);
+		Element.enterDataByJS(testConfig,phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField);
+//		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
+//	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
+//		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
+//		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
 		testConfig.putRunTimeProperty("firstName", firstNameTxt);	
 		System.setProperty("email", userEmailAdr);
 		String email = System.getProperty("email");
