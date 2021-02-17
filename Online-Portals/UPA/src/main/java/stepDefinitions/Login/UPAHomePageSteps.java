@@ -1,10 +1,13 @@
 package main.java.stepDefinitions.Login;
 
+import static org.testng.Assert.assertEquals;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.Browser;
+import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BenefitsOfOptumPay;
 import main.java.pageObjects.CSRHomePage;
@@ -254,6 +257,29 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		@Then("^User clicks on Document Vault and verifies the page$")
 		public void user_clicks_on_Document_Vault_and_verifies_the_page() throws Throwable {
 			homePage.verifyDocumentVaultLink();
+		}
+		
+		@Then("^Validate the texts in Make My Plan Tile$")
+		public void validate_the_texts_in_Make_My_Plan_Tile() throws Throwable {
+			homePage.validate_ManageMyPlanText();
+			homePage.validate_CancelMyPlanTextLink();
+			Element.verifyTextNotPresent("Free Trial End Date:");
+		}
+
+		@Then("^Delete the tin from the user$")
+		public void delete_the_tin_from_the_user() throws Throwable {
+		       homePage.Delete_Tin_from_user();
+
+		}
+
+		@When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" Portal Experience\\.$")
+		public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String accessType) throws Throwable {
+			testConfig.putRunTimeProperty("tinType", tinType);
+			testConfig.putRunTimeProperty("prdctSelected",portalAccess);
+			homePage.selectTin(searchCriteria, tinType, portalAccess, accessType);
+	    	Browser.wait(testConfig,3);
+
+
 		}
 
 }

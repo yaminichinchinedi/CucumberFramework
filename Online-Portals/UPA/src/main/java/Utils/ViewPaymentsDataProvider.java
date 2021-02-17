@@ -1051,7 +1051,6 @@ public ArrayList getEnrollmentContent(String content) {
 			break;
 		}
 		
-		
 		case "Multiple_PLB":
 		{
 			break;
@@ -1210,7 +1209,10 @@ public ArrayList getEnrollmentContent(String content) {
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
-				
+			
+			case "LegacyOrPremiOrStandard_AO_Premium":
+				sqlRowNo=1605;
+				break;	
 			case "LegacyOrPremiOrStandard":
 				sqlRowNo=1605;
 				break;	

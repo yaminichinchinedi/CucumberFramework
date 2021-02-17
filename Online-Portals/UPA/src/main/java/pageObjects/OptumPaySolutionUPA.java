@@ -161,7 +161,8 @@ public class OptumPaySolutionUPA {
 			Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
 		}
 		public void verifyCancellationPopUp(String trialStatus) throws IOException {
-			int sqlRowNo=1111,i=1,j=0;;
+			testConfig.putRunTimeProperty("pay_proc_cd","55");
+			int sqlRowNo=1111,i=1,j=0;
 			HashMap<Integer, HashMap<String, String>> cancelReasonDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
 			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Unlimited number of users");add("The ability to search claims");add("Years of claims and remittance history maintained for easy access");add("Multiple remittance options (835, EPRA or PPRA)");}};
