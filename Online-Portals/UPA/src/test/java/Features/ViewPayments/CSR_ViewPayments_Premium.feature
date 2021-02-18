@@ -67,8 +67,9 @@ Feature: View Payment Access Payment
      @CSRUS3015574
     Scenario Outline: Access Payments - View Payments Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on View Payments Link
-		And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
+		Then User Enters tin and click on search button for "<userType>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date

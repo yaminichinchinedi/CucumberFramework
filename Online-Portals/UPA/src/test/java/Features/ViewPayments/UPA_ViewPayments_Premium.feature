@@ -27,7 +27,6 @@ Feature: UPA Manage User Functionality for Premium TIN
  		#Author: AMIT
  		@UPAViewPayments_US2783429 @OctRelease @UPA_ViewPaymentStable
  		Scenario Outline: Access Payments - View Payments - Provider Premium
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
@@ -65,9 +64,10 @@ Feature: UPA Manage User Functionality for Premium TIN
 		#Author: AMIT
 		@UPAViewPayments_US2908671 @UPA_ViewPaymentStable
  		Scenario Outline: Access Payments - View Payments - Provider Premium
- 	Given User navigates to UPA portal and enters "<credentials>" and login
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Click on print Payment Summary button.
 		And  Set FISL Parameters "<key>" and "<value>"
@@ -81,7 +81,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		#Author: Amit
 		@UPAViewPayments_US2973009 @NovRelease @UPA_ViewPaymentStable
 		Scenario Outline: Access Payments - View Payments - Provider Premium
- 	Given User navigates to UPA portal and enters "<credentials>" and login
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
@@ -102,36 +102,23 @@ Feature: UPA Manage User Functionality for Premium TIN
 		
 		
  @UPAUS2955416
-     	Scenario Outline: Access Payments - View Payments - Header Page Text
-     Given User navigates to UPA portal and enters "<credentials>" and login
-    #When  User Selects  tin on HomePage for "<userType>" with "<Trial Status>","<Paid option>", "<tinType>" for "<portalAccess>" for Portal Experience
+   	Scenario Outline: Access Payments - View Payments - Header Page Text
+    Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
     And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
      
      Examples:
-    #				 |    credentials          |	 	      userType    | 	portalAccess    |	Trial Status   |Paid option   | tinType		|
-             #|       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial   |   Paid 		  |	  AO			|
-             #|       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial   |   Paid 		  |	  AO			|
-             #|       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial     |   Paid 		  |	  AO			|
-             #|       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial     |   Paid 		  |	  AO			|
-             #|       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial     |   NotPaid 		  |	  VO			|
-             #|       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial     |   NotPaid 		  |	  VO			|
-             
-              |    credentials          |	 	      userType    | 	portalAccess    |	searchCriteria   | tinType		|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 		  |	  AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 		  |	  AO			|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		  |	  AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		  |	  AO			|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 		  |	  VO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 		  |	  VO			|
-             
-             
-                
+             |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 	|	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
              
      @UPAUS3015574
-     	Scenario Outline: Access Payments - View Payments - PPRA link for Prov
-    And   User Selects tin on HomePage for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience
+   	Scenario Outline: Access Payments - View Payments - PPRA link for Prov
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
@@ -146,10 +133,11 @@ Feature: UPA Manage User Functionality for Premium TIN
             
         
          @UPAUS3015574   
-       	Scenario Outline: Access Payments - View Payments - PPRA link for BS
+   	Scenario Outline: Access Payments - View Payments - PPRA link for BS
     Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date

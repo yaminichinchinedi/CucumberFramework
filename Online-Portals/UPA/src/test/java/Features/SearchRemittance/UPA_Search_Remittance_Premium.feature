@@ -80,7 +80,7 @@ Scenario Outline: Search Remittance
 #	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
+	Then verify search results for "<Search Criteria>"
 
 	Examples:
 		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|

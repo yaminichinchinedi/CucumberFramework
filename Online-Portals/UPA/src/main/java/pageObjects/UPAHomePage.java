@@ -23,9 +23,7 @@ public class UPAHomePage extends HomePage {
 	private WebDriver driver;
 	private TestBase testConfig;
 	private ViewPaymentsDataProvider dataProvider;
-	
-	
-	//@FindBy(linkText="Manage Users")
+
 	@FindBy(xpath="//a[@id=\"tabManageusers\"]")
 	WebElement lnkManageUsers;
 	
@@ -84,25 +82,26 @@ public class UPAHomePage extends HomePage {
 	@FindBy(name="GridListResults[0].accessLevel")
 	WebElement drpDwnAccessLevel;
 	
-	
 	@FindBy(xpath="//input[@value='Save']")
 	WebElement btnSaveUser;
 	
 	@FindBy(linkText="Search Remittance")
     WebElement lnkSearchRemittance;
 	
-	
-	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	@FindBy(id="taxIndNbrId") 
+	WebElement tinDrpDwn;
 	
 	@FindBy(xpath = "//a[@id='tabBillingService']") 
 	WebElement lnkBsInfo;
+	
 	@FindBy(xpath = "//a[@id='tabOptumPay']") 
 	WebElement lnkOptumPaySol;
+	
 	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")
 	WebElement txthomepageAlert;
+	
 	@FindBy(xpath="//table[@id='outerTable']//section/div[1]//p//a")
 	WebElement lnkFAQAlertText;
-	
 
 	@FindBy(xpath = "//a[contains(text(),'Resources')]")
 	WebElement  resourcesDropDown;
@@ -127,7 +126,6 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(tagName="header") 
 	WebElement header;
-	
 
 	@FindBy(xpath="//b[contains(text(),'Terms and Conditions')]")
 	WebElement tncText;
@@ -151,8 +149,7 @@ public class UPAHomePage extends HomePage {
 	{
  		super(testConfig);
 		this.testConfig=testConfig;
-		PageFactory.initElements(testConfig.driver, this);
-		//Element.fluentWait(testConfig, txtWelcomeScreen, 100, 5, "Welcome Screen Text ");	
+		PageFactory.initElements(TestBase.driver, this);
 	}
 
 	public ManageUsers clickManageUsersTab()
@@ -174,63 +171,28 @@ public class UPAHomePage extends HomePage {
            return new SearchTinPageSearchRemittance(testConfig);
     }
 
-	
-	public void selectTINforUPA() 
-	{
-		
-		Element.selectVisibleText(tinDrpDwn,"133757370 - Enrolled","TIN Selection from Dropdown");
-		Log.Comment("TIN selected: 133757370 - Enrolled");
-	}
-	
-	
 	public void clickViewPaymentsLinkUPA() 
 	{
-		
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
-		
 	}
-	
 	
 	public void clickSearchRemitUPA() 
 	{
-		
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance");
-		
-	}
-
-	public UPAHomePage selectTin() 
-	 {
-			int sqlRow=23;
-			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-			Element.selectByVisibleText(tinDrpDwn,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-			Browser.waitForLoad(testConfig.driver);
-			Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown ",  "Tin dropdown");
-			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
-			return new UPAHomePage(testConfig);
-	}
-
-
-	public UPAHomePage selectPursedTin() 
-	 {
-			int sqlRow=271;
-			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-			Element.selectByVisibleText(tinDrpDwn,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-			Browser.waitForLoad(testConfig.driver);
-			Element.expectedWait(tinDrpDwn, testConfig, "Tin dropdown ",  "Tin dropdown");
-			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
-			return new UPAHomePage(testConfig);
 	}
 	
 	public void clickManageUsersLink()
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
 	}
+	
 	public void clickOnBSInfoTabUPA() {
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkBsInfo, "Billing Service Information");
 	}
+	
 	public void clickOnOptumPaySolutionsTabUPA() {
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkOptumPaySol, "Optum Pay Solutions");
@@ -245,15 +207,13 @@ public class UPAHomePage extends HomePage {
 		   {      
 			   Helper.compareEquals(testConfig, "Premium Alert text", "Optum Pay will debit your bank account at the end of the billing cycle; please ensure you've taken the necessary steps by reviewing our FAQ's for important information.", txthomepageAlert.getText().toString());
 			   Element.clickByJS(testConfig, lnkFAQAlertText, "lnkFAQAlertText");
-			   String parentwindowhandle=testConfig.driver.getWindowHandle();
+			   String parentwindowhandle=TestBase.driver.getWindowHandle();
 			   Browser.switchToNewWindow(testConfig);
 			   String expectePrivacydURL = "epsFaqs.do?from=dropdown#how-am-i-billed";
 			   Browser.verifyURL(testConfig, expectePrivacydURL);
 			   Browser.switchToParentWindow( testConfig,  parentwindowhandle);
-			   
 		  }
 		}
-		
 	}
 
 	public void hoverOnResourceDropDown()
@@ -261,12 +221,12 @@ public class UPAHomePage extends HomePage {
 		Element.verifyElementPresent(resourcesDropDown, "Resources Drp Dwn");
 		Element.mouseHoverByJS(testConfig, resourcesDropDown, "Resources Drp Dwn");
 	}
+	
 	public void verifyFaqsFromResources()
 	{
 		Element.verifyElementNotPresent(vcpFaqs, "VCP FAQs");
 		Element.verifyElementPresent(resourcesFaqs, "FAQs");
-		
-		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		String parentwindowhandle=TestBase.driver.getWindowHandle();
 		Element.click(resourcesFaqs, "FAQs");
 		Browser.switchToNewWindow(testConfig);
 		String faqsUrl = "/epsFaqs.do";
@@ -279,14 +239,13 @@ public class UPAHomePage extends HomePage {
 	public void verifyTncLinkUnderResources()
 	{
 		Element.verifyElementPresent(resourcesTnc, "TnC");
-		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		String parentwindowhandle=TestBase.driver.getWindowHandle();
 		Element.click(resourcesTnc, "TnC");
 		Browser.switchToNewWindow(testConfig);
 		Helper.compareEquals(testConfig, "Tnc windows", "2", Browser.getNoOfWindowHandles(testConfig));
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
 	
-
 	public void verifyTncPageAppears()
 	{
 		Element.verifyElementPresent(tncText, "TnC text");
@@ -299,7 +258,7 @@ public class UPAHomePage extends HomePage {
 	public void downloadTncPdf()
 	{
 		Element.verifyElementPresent(tncPdf, "TnC");
-		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		String parentwindowhandle=TestBase.driver.getWindowHandle();
 		Element.click(tncPdf, "TnC");
 		Browser.switchToNewWindow(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
@@ -308,9 +267,7 @@ public class UPAHomePage extends HomePage {
 	public  UPAHomePage acceptTncAndSubmit()
 	{
 		Element.verifyElementNotEnabled(btnSubmit, "Submit button");
-		
 		Element.clickByJS(testConfig, tncChkBox, "TnC accept checkbox");
-		
 		Map attributes=Element.getAllAttributes(testConfig, btnSubmit, "Update button");
 		if(!attributes.containsKey("disabled"))
 		{
@@ -320,7 +277,6 @@ public class UPAHomePage extends HomePage {
 			Log.Fail("Submit mustn't be disabled after TnC is accepted");
 		Element.clickByJS(testConfig, btnSubmit, "Submit");
 		return this;
-		
 	}
 	
 	public  UPAHomePage verifyIfTncIsUpdated()
@@ -370,6 +326,4 @@ public class UPAHomePage extends HomePage {
 		dataProvider.associateTinWithUser(userType,tin);
 		return tin;
 	}
-	
-
 }
