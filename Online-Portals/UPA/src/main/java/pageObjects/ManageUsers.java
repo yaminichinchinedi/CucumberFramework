@@ -1417,7 +1417,7 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers editLastName(String newName)
 	{
-		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
+		Element.enterDataByJS(testConfig,lastName,newName,"Enter new first name as : " + newName);
 		clickSave();
 		return this;
 	}
