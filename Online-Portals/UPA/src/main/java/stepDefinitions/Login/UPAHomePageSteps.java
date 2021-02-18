@@ -175,18 +175,25 @@ public class UPAHomePageSteps extends TestBase{
 		homePage=loginPage.doLoginUPA(userType);
 	}
 		
-	@Then("^The Terms and Conditions page is displayed$")
-	public void the_Terms_and_Conditions_page_is_displayed() throws Throwable {
-		homePage.verifyTncPageAppears();
-	}
-	
-	@Then("^The Terms and Conditions pdf is verified$")
-	public void the_Terms_and_Conditions_pdf_is_verified() throws Throwable {
-		homePage.downloadTncPdf();
-	}
-	
-	@Then("^User Accept the Terms and Conditions and Submit$")
-	public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
-		homePage.acceptTncAndSubmit().verifyIfTncIsUpdated().logOutFromUPA();
-	}
+		@Then("^User Accept the Terms and Conditions and Submit$")
+		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
+			homePage.acceptTncAndSubmit();
+			homePage.verifyIfTncIsUpdated();
+		}
+		
+		@Then("^User clicks on Partners link and verifies the page$")
+		public void user_clicks_on_Partners_link_and_verifies_the_page() throws Throwable {
+		    homePage.verifyPartnersLink();
+		}
+
+		@Then("Verify Home Page Carousel Text for \"([^\"]*)\"")
+		public void verifyHomePageCarouselText(String userType){
+			homePage.verifyHomePageCarouselText(userType);
+		}
+  
+		@Then("^User clicks on Document Vault and verifies the page$")
+		public void user_clicks_on_Document_Vault_and_verifies_the_page() throws Throwable {
+			homePage.verifyDocumentVaultLink();
+		}
+
 }
