@@ -40,9 +40,9 @@ public class Hooks extends TestBase{
 		if(System.getProperty("Application").contains("UPA")){
 			int sqlRowNo=1911;
 			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
-			sqlRowNo=1922;
+			sqlRowNo=1921;
 			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
-			sqlRowNo=1919;
+			sqlRowNo=1512;
 			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
 		}
 		endTest(scn);
