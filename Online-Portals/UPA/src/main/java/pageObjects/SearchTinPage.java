@@ -228,8 +228,8 @@ public class SearchTinPage {
 		if(typeOfTin.contentEquals("tinwithTermAndConditionBS"))
 			Element.enterData(txtboxTinNo.get(1),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
 		else
-			Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
-		Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+			//Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+		     Element.enterDataByJS(testConfig,txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0));
 		testConfig.putRunTimeProperty("username", userAndTinDetails.get(1));
 		return userAndTinDetails.get(0);
 	}
