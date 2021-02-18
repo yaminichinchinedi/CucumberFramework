@@ -2,9 +2,9 @@
 @UPAViewPayments_Standard
 Feature: UPA View Payments Functionality for Standard TIN
       @UPAUS2800914 @OctRelease @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
-  Scenario Outline: TS_001,010,012--View Payments Standard TIN selection and validation       
+  Scenario Outline: View Payments Standard TIN selection and validation       
     Given User navigates to UPA portal and enters "<credentials>" and login
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
     Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
     Then Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
@@ -12,20 +12,18 @@ Feature: UPA View Payments Functionality for Standard TIN
     Then Validate Save button is not displayed for "<portalAccess>".
    	Then Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and 835field as enabled.
    	Then Validate selecting different standard TIN page gets refreshed and will display limited UI View
-   	
-Examples:     
+		Examples:     
        
              |       credentials       |		portalAccess    	|   userType    |    searchCriteria | tinType		|
              |       PROV_Admin        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
              |      	 PROV_Gen        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
 
 
-
 #Author: AMIT
 @UPA_US3069347_1 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
 Scenario Outline: View Payments Pop up for Standard TIN        
    	Given User navigates to UPA portal and enters "<credentials>" and login
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
     Then User clicks on claim count grayed out column.
     Then User verifies the pop up for user type having access as "<credentials>".
@@ -41,7 +39,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
   @UPA_US3069347_2 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
     Then User clicks on claim count grayed out column.
     Then User verifies the pop up for user type having access as "<credentials>".
@@ -52,12 +50,13 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |       PROV_Gen        | 			 Standard  			|			PROV			|		Last 30 days	|  	AO			|
              
              
-             #Author: AMIT
+             #Author: AMIT 
   @UPA_US3069347_BS @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+		Then User Enters tin and click on search button for "<userType>".
     Then User clicks on claim count grayed out column.
     Then User verifies the pop up for user type having access as "<credentials>".
     Then User click on cross to close the pop up.
@@ -71,8 +70,9 @@ Scenario Outline: View Payments Pop up for Standard TIN
   @UPA_US3069347 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+		Then User Enters tin and click on search button for "<userType>".
     Then User clicks on claim count grayed out column.
     Then User verifies the pop up for user type having access as "<credentials>".
     Then User click on cross to close the pop up.
@@ -83,27 +83,27 @@ Scenario Outline: View Payments Pop up for Standard TIN
 	     
 	     
 	 @UPAUS2955416
-     	Scenario Outline: Access Payments - View Payments - Header Page Text
-     Given User navigates to UPA portal and enters "<credentials>" and login
-    When  User Selects  tin on HomePage for "<userType>" with "<Trial Status>","<Paid option>", "<tinType>" for "<portalAccess>" for Portal Experience
+   Scenario Outline: Access Payments - View Payments - Header Page Text
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then Click on View Payments Link for UPA 
     And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
      
      Examples:
-        	 |    credentials          |	 	      userType    | 	portalAccess    |	Trial Status   |Paid option   | tinType		|
-             |       PROV_Admin        | 			 PROV			    	|			Standard			|  WithinTrial   |  NotPaid    |	  AO			|
-             |      	PROV_Gen         | 			 PROV  			    |			Standard 			|  WithinTrial	 |   NotPaid		|   AO			|
-             |       PROV_Admin        | 			 PROV			    	|			Standard	  	|  PostTrial     |   NotPaid 		  |	  AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Standard	  	|  PostTrial     |   NotPaid 		  |	  AO			|
+       	 		 |    credentials          |	 	      userType    | 	portalAccess    |			searchCriteria 			    | tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Standard			|  WithinTrial and NotPaid    |	  AO			|
+             |      	PROV_Gen         | 			 PROV  			    |			Standard 			|  WithinTrial and NotPaid		|   AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Standard	  	|  PostTrial and NotPaid 		  |	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Standard	  	|  PostTrial and NotPaid 		  |	  AO			|
               
    @UPAUS2999491
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		And   User Enters tin for "<userType>","<searchCriteria>","<tinType>"  and "<portalAccess>" for Portal Experience. 
+		Then User Enters tin and click on search button for "<userType>".
 		Then Click on Payment number and go to Remittance Detail screen.
 		Then User verifies Print Request and Print Available button is disabled
-		
 		
     Examples:
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|

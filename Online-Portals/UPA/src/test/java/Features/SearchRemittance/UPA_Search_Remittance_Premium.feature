@@ -76,10 +76,11 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 @PROVSearchRemittance
 Scenario Outline: Search Remittance 
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+#	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
+	Then verify search results for "<Search Criteria>"
 
 	Examples:
 		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
@@ -116,6 +117,7 @@ Scenario Outline: Search Remittance
 Scenario Outline: - verify search results for search remittance
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
+	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	When User enters a tin  for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" through "<usertype>" for Portal Experience.
 	Then User enters "<Search Criteria>" and click on search button.
