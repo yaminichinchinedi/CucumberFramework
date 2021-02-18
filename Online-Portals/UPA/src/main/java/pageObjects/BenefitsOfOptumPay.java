@@ -63,7 +63,7 @@ public class BenefitsOfOptumPay {
 		
 		Element.expectedWait(textBenefitsOfOptumPay, testConfig, "Benefits of Optum Pay", "Benefits of Optum Pay");
 		Browser.verifyURL(testConfig, expectedURL);
-		//Element.verifyElementPresent(lnkPaymentSavingsCalc, "Payment Saving Calculator");		
+		Element.verifyElementPresent(lnkPaymentSavingsCalc, "Payment Saving Calculator");		
 	}
 	
 	public void verifyOptumPayText(WebElement ele) {
