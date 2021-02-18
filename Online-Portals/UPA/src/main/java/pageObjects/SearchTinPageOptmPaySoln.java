@@ -33,7 +33,7 @@ public class SearchTinPageOptmPaySoln {
 	public SearchTinPageOptmPaySoln enterTin(String paymentType)
     {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
 		
 		Element.enterData(txtboxTinNo, tin, "Enter Tin to proceed for Optum Pay Solutions", "Tin Textbox");
       return this;

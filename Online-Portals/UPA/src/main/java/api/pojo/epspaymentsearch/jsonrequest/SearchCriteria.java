@@ -6,7 +6,7 @@ import java.util.StringJoiner;
 public class SearchCriteria {
 
 	private int fromRecord = 0;
-	private int maxResult = 20;
+	private int maxResult = 30;
 	private String sortDirection = "DESC";
 	private int sortFieldNumber = 12;
 	private ArrayList<ParameterMap> parameterMap;

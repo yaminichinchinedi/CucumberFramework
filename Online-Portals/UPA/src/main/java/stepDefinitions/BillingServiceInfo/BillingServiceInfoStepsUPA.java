@@ -20,4 +20,9 @@ public class BillingServiceInfoStepsUPA extends TestBase {
     public void user_verifies_the_page_text_during_trial() throws Throwable {
     	bsInfoPage.verifyPageText();
     }
+
+    @Then("Verify Billing Service Header Text")
+    public void verifyBillingServiceHeaderText() {
+        bsInfoPage.verifyBillingServiceHeaderText();
+    }
 }

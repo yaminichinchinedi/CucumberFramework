@@ -270,20 +270,17 @@ public class ViewPaymentsSteps extends TestBase {
     @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
     	paySum.verifyQuickSrchFilterOptions(portalAccess);
-
     }
 
     @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
     public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
     	paySum.verifyPaymentStatusFilter(portalAccess);
-
     }
 
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
     	paySum.verifySavArchbtnNotPresent();
     }
-    
 
 	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
 	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
@@ -388,3 +385,4 @@ public class ViewPaymentsSteps extends TestBase {
 	
 
 }
+

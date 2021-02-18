@@ -33,6 +33,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
@@ -395,5 +396,15 @@ public void verifyPageText() {
 Helper.compareContains(testConfig, "Page Text in bold", "Do you need full access to provider claim payment data?", pageText1.getText().trim());
 Helper.compareContains(testConfig, "Page Text", "If you need access to historical claim data and search tools, talk to your provider administrator about activating the full functionality of Optum Pay.", pageText2.getText().trim());
 }
+
+	public void verifyBillingServiceHeaderText() {
+
+		String expected = "As a billing service, you will need your provider client to activate Optum Pay so that you have full access to their claims and remittance data and historical files. If not having this information is impacting your work, contact the provider and talk to them about activating Optum Pay.";
+
+		String actual = Element.findElement(testConfig, "xpath", "//*[@id=\"billing-service-information-tabs\"]/div[1]/p[2]").getText().trim();
+
+		Assert.assertTrue(expected.equals(actual), "Text validation failed");
+		Log.Comment("Text Validation successful : \n"+actual);
+	}
 }
 	

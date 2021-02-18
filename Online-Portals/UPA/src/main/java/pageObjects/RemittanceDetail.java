@@ -3956,7 +3956,7 @@ case "Payer":
 private String getTinCSR(String paymentType) {
 	
 	dataProvider=new ViewPaymentsDataProvider(testConfig);
-	return dataProvider.getTinForPaymentType(paymentType);
+	return "";//dataProvider.getTinForPaymentType(paymentType);
 }
 
 public void enterTINMultiplePLBAdjUPA() throws Exception

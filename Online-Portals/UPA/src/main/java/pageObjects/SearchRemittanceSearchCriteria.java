@@ -1,3 +1,4 @@
+
 package main.java.pageObjects;
 
 import java.io.IOException;
@@ -151,27 +152,27 @@ public class SearchRemittanceSearchCriteria {
 	WebElement btnSearch;
 	Map dataRequiredForSearch;
 	
-	
 	//Added by Mohammad
-	@FindBy(xpath="//div[@class='topMessaggeDiv']/p[contains(text(),'As a reminder')]")
-	WebElement premiumMsgTop_Provider;
-	
-	@FindBy(xpath="//div[@id='seachRemittancePremium']/h2")
-	WebElement standardMsgTop_Header;
-	
-	@FindBy(xpath="//div[@id='seachRemittancePremium']/p[contains(text(),'Your basic level')]")
-	WebElement standardMsgTop_Content;
-	
-	@FindBy(xpath="(//span[@class='ui-button-text'])[2]")
-	WebElement standardMsgTop_GetStartedLink;
-	
-	
-	//The messages for the Search Remittance page
-	
-	String msgTop_Prov = "As a reminder with the full functionality of Optum Pay, you have access to historical remittance and claims payment data dating back 36 months. ";
-	String standardMsgTop_Header_Prov = "Activate Optum Pay now";
-	String standardMsgTop_Content_Prov_Adm = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, activate the full functionality of Optum Pay today.";
-	String standardMsgTop_Content_Prov_Gen = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, ask your account administrator to activate Optum Pay.";
+		@FindBy(xpath="//div[@class='topMessaggeDiv']/p[contains(text(),'As a reminder')]")
+		WebElement premiumMsgTop_Provider;
+		
+		@FindBy(xpath="//div[@id='seachRemittancePremium']/h2")
+		WebElement standardMsgTop_Header;
+		
+		@FindBy(xpath="//div[@id='seachRemittancePremium']/p[contains(text(),'Your basic level')]")
+		WebElement standardMsgTop_Content;
+		
+		@FindBy(xpath="(//span[@class='ui-button-text'])[2]")
+		WebElement standardMsgTop_GetStartedLink;
+		
+		
+		//The messages for the Search Remittance page
+		
+		String msgTop_Prov = "As a reminder with the full functionality of Optum Pay, you have access to historical remittance and claims payment data dating back 36 months. ";
+		String standardMsgTop_Header_Prov = "Activate Optum Pay now";
+		String standardMsgTop_Content_Prov_Adm = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, activate the full functionality of Optum Pay today.";
+		String standardMsgTop_Content_Prov_Gen = "Your basic level of Optum Pay does not provide access to historical remittance and claim data. For data dating back 36 months, ask your account administrator to activate Optum Pay.";
+		
 	
 	public SearchRemittanceSearchCriteria(TestBase testConfig)
 	{
@@ -1348,7 +1349,6 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittance searchByElectronicPaymentToVerifyPaymentStatusforVCP(String criteriaType)
 	{
-		dataRequiredForSearch=dataProvider(criteriaType);
     	Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Select payment number type");
     	Element.clickByJS(testConfig,paymentNumber, "Selecting Filter Criteria");	
     	Element.enterData(paymentNumber, dataRequiredForSearch.get("DSPL_CONSL_PAY_NBR").toString(), "Filling Electronic payment number", "payment number");
@@ -1642,9 +1642,9 @@ public class SearchRemittanceSearchCriteria {
            int insertQueryRowNo=61;
            dataProvider=new ViewPaymentsDataProvider(testConfig);
            if(userType=="SUBPAYER"||userType.equals("PAY"))
-        	   return dataProvider.getTinForPaymentType(paymentType);
+        	   return "";//dataProvider.getTinForPaymentType(paymentType);
            else
-           return dataProvider.associateTinWithUser(dataProvider.getTinForPaymentType(paymentType),sqlRowNo,insertQueryRowNo);
+           return "";//dataProvider.associateTinWithUser(userType,dataProvider.getTinForPaymentType(paymentType));
     }
     
     public void verifyLargeNonLargeTin() throws IOException
@@ -1694,7 +1694,7 @@ public class SearchRemittanceSearchCriteria {
     	}
     }
     
-
+    
     
     public void verifyTopMsgProv_Premium(String msgTop)
     {
@@ -1711,9 +1711,9 @@ public class SearchRemittanceSearchCriteria {
     		break;
     	}
     	}
-    	
-    	
     }
+    	
+    	
     
     public void verifyMsgProv_Standard(String msgTopStd)
     {
@@ -1733,8 +1733,6 @@ public class SearchRemittanceSearchCriteria {
     	}
     }
     
-    
-
     public SearchRemittanceSearchCriteria verifySearchBtnEnabledOrDisabled(String portalAccess){
     	if("Standard".equalsIgnoreCase(portalAccess))
     		Helper.compareEquals(testConfig, "Button Disabled", "true", btnSearchRemittance.getAttribute("disabled"));
@@ -1742,5 +1740,5 @@ public class SearchRemittanceSearchCriteria {
     		Helper.compareEquals(testConfig, "Button Enabled", null, btnSearchRemittance.getAttribute("disabled"));
     	return this;
     }
-
 }
+

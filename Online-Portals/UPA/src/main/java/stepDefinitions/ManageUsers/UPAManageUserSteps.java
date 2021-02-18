@@ -313,8 +313,13 @@ public class UPAManageUserSteps extends TestBase {
 	    manageUser.verifyHoverOverAddUserButton(trialStatus);
 	}
 
+	@Then("Verify Manage Users Header and Footer Text Validation")
+	public void verifyManageUsersHeaderAndFooterTextValidation() {
+		manageUser.verifyManageUsersHeaderAndFooterTextValidation();
+	}
 
 
 
 	
 }
+
