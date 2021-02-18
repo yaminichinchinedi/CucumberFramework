@@ -218,15 +218,17 @@ public void clickOrgAddressHistoryReport() {
 	
 }
 public RunReports clickOrgUserHistory() {
+	   Browser.wait(testConfig,1);
        Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
-       Browser.wait(testConfig,2);
+       Browser.wait(testConfig,1);
         return this;
 	
 }
 
 public RunReports clickBSUserHistory() {
+	Browser.wait(testConfig,1);
 	Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
-	Browser.wait(testConfig,2);
+	Browser.wait(testConfig,1);
 	 return this;
 }
 public void clickViewReportButton() {
