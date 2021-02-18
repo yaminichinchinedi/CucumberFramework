@@ -47,17 +47,3 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
      Examples:
    	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
-      
-  #Author:Aravind
-  @US3248244
-	Scenario Outline: - Optum Pay Solutions - Verify Manage My Plan Tile UPA
-	Given User navigates to UPA portal and enters "<userType>" and login
-	When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<accessType>" Portal Experience.
-	And   User clicks on Optum Pay Solutions tab
-	Then  Validate the texts in Make My Plan Tile 
-	Then  Delete the tin from the user
-
-	 Examples:
-	   |    userType     |   accessType   |   searchCriteria	           | tinType | portalAccess |
-	   |    PROV_Admin   |    PROV        |		LegacyOrPremiOrStandard    |    AO   |   Premium    |
-      

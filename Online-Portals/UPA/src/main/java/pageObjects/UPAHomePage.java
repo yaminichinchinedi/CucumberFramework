@@ -151,12 +151,6 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
 	
-	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
-	WebElement manageMyPlanText;
-
-	@FindBy(xpath="//a[contains(text(),'Cancel My Plan')]")
-	WebElement cancelMyPlanTextLink;
-	
 	
 	UPAHomePage(TestBase testConfig) 
 	{
@@ -460,19 +454,4 @@ public class UPAHomePage extends HomePage {
 		Browser.closeBrowser(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
-	
-	public void validate_ManageMyPlanText() {
-
-		Element.verifyTextPresent(manageMyPlanText,"Manage My Plan");
-	}
-
-	public void validate_CancelMyPlanTextLink() {
-
-		Element.verifyTextPresent(cancelMyPlanTextLink,"Cancel My Plan");
-	}
-
-    public void Delete_Tin_from_user() {
-    	int sqlrow = 25;
-    	DataBase.executeDeleteQuery(testConfig, sqlrow);
-    }
 }
