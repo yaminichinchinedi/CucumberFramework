@@ -375,9 +375,9 @@ public void enterTinAndDateRangeForBSUserHistory() {
 	 String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
 	 dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
 	 testConfig.putRunTimeProperty("identifier_number",SearchedDate.get("IDENTIFIER_NBR").toString().trim());
-	 Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
-	 Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-	 Element.enterData(txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS " ,"tin bs");  
+	 Element.enterDataByJS(testConfig,txtFromDate , dateTemp , "Enter From date");
+	 Element.enterDataByJS(testConfig,txtToDate , dateTemp , "Enter To date  ");
+	 Element.enterDataByJS(testConfig,txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS ");  
 	 clickViewReportButton();
 	 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
 	 if(table == null)
