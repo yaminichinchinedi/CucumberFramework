@@ -295,9 +295,9 @@ public void verifyOrgUserHistory() {
 	  sqlRowNo=1115; 
 	 String d=Helper.getCurrentDate("MM-dd-yyyy");
 	d=d.replace('-', '/');
-	Element.enterData(txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date" ,"fromDate");
-	 Element.enterData(txtToDate ,d , "Enter To date  " ,"toDate");
-	 Element.enterData(txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin " ,"tin_fin");
+	Element.enterDataByJS(testConfig,txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date");
+	 Element.enterDataByJS(testConfig,txtToDate ,d , "Enter To date  ");
+	 Element.enterDataByJS(testConfig,txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin ");
 	 clickViewReportButton();
 	 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
 	 if(table == null)
@@ -323,21 +323,20 @@ public void verifyOrgUserHistory() {
 
 public void verifyBSUserHistory() {
 
-sqlRowNo=1117;
-String d=Helper.getCurrentDate("MM-dd-yyyy");
-d=d.replace('-', '/');
-String fromDate=Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy");
-Element.enterData(txtFromDate ,fromDate, "Enter From date" ,"fromDate");
-Element.enterData(txtToDate ,d , "Enter To date  " ,"toDate");
-Element.enterData(txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin " ,"tin_fin");
-clickViewReportButton();
-WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-if(table == null)
+  sqlRowNo=1117;
+   String d=Helper.getCurrentDate("MM-dd-yyyy");
+   d=d.replace('-', '/');
+   Element.enterDataByJS(testConfig,txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date");
+   Element.enterDataByJS(testConfig,txtToDate ,d , "Enter To date  ");
+   Element.enterDataByJS(testConfig,txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin ");
+   clickViewReportButton();
+   WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+   if(table == null)
 		Log.Fail("No active data available in Database for " +"Please execute the test case manually");
-else
+   else
         Log.Comment("Data Available");
-Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
-Browser.wait(testConfig, 2);
+    Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
+     Browser.wait(testConfig, 2);
     List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
            Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
            Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(3).getText());
