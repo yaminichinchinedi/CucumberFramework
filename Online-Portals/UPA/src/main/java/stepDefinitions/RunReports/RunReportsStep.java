@@ -52,10 +52,15 @@ public class RunReportsStep extends TestBase {
 	public void user_clicks_on_Biling_Service_History() throws Throwable {
 		runReports.clickBSUserHistory();
 	 }
-	@When("^Input the data range and tin for \"([^\"]*)\"$")
-	public void input_the_data_range_and_tin_for(String userType) throws Throwable {
-		 runReports.enterTinAndDateRange(userType);
-	 }
+	@When("^Input the data range and tin for Organization User History$")
+	public void input_the_data_range_and_tin_for_Organization_User_History() throws Throwable {
+		runReports.enterTinAndDateRangeForOrgUserHistory();
+	}
+
+	@When("^Input the data range and tin for Billing Service User History$")
+	public void input_the_data_range_and_tin_for_Billing_Service_User_History() throws Throwable {
+		runReports.enterTinAndDateRangeForBSUserHistory();
+	}
 	@Then("^Validate if description link is present$")
 	public void validate_if_description_link_is_present() throws Throwable {
 		runReports.validateDescriptionLink();

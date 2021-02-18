@@ -3,7 +3,7 @@
 
 Feature: CSR Run Reports Feature
 
-    @CSROrgProvUserHistory1 @CSRUS2048441 @adtoy
+    @CSROrgProvUserHistory1
     Scenario Outline: Validating if the create edit and delete users affects the org user history report
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
@@ -24,7 +24,7 @@ Feature: CSR Run Reports Feature
       |    userType     |   credentials    |  accessLevelOfNewUser |
       |      PROV       |      Super      |  	 General       		  |
 
-    @CSROrgBSUserHistory1 @CSRUS2048441
+    @CSROrgBSUserHistory1
     Scenario Outline: Validating if the create edit and delete users affects the org user history report
     Given User navigates to CSR portal and enters "<credentials>" and login
     When Click on CSRManage User Link
@@ -46,12 +46,12 @@ Feature: CSR Run Reports Feature
        |      BS         |      Super       |  	 General       		  |
       
       
-     @CSROrgUserHistory @CSRUS2048441
+     @CSROrgUserHistory
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
     When User clicks on Organization User History
-    And Input the data range and tin for "<userType>"
+    And Input the data range and tin for Organization User History
     Then Validate if description link is present
     And Validate if the print button is present
     And Validate if the Save As Excel button is present
@@ -60,12 +60,12 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
      
-   @CSROrgBSHistory @CSRUS2048441
+   @CSROrgBSHistory
     Scenario Outline: Validating if the report is in printable form and Change Description available in OrgUserHistory
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User clicks on Run Reports link
     When User clicks on Biling Service History
-    And Input the data range and tin for "<userType>"
+    And Input the data range and tin for Billing Service User History
     Then Validate if description link is present
     And Validate if the print button is present
     And Validate if the Save As Excel button is present
