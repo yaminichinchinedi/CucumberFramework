@@ -311,7 +311,8 @@ public class SearchTinPage {
 	public SearchTinPage searchToDelete(String userType) {
 		
 		if(userType.equalsIgnoreCase("PROV"))
-		 Element.enterData(txtboxTinNo.get(0), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"),"txtboxTinNo");
+		// Element.enterData(txtboxTinNo.get(0), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"),"txtboxTinNo");
+			Element.enterDataByJS(testConfig,txtboxTinNo.get(0), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"));
 		else if(userType.equalsIgnoreCase("BS"))
 			Element.enterData(txtboxTinNo.get(1), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"),"txtboxTinNo");	
 		return this;

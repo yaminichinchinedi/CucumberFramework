@@ -163,9 +163,11 @@ public class AddUserDetails {
 	public AddUserDetails fillNewUserInfo()
 	{
 		Browser.waitForPageLoad(testConfig);
-		Browser.wait(testConfig, 7);
+		//Browser.wait(testConfig, 7);
+		Browser.wait(testConfig, 2);
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
-		Browser.wait(testConfig, 7);
+		//Browser.wait(testConfig, 7);
+		Browser.wait(testConfig, 2);
 		//Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Element.enterDataByJS(testConfig,email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr);
 		Browser.wait(testConfig, 2);
@@ -217,7 +219,8 @@ public class AddUserDetails {
 	
 	public AddUserDetails addTinCSR()
 	{
-		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
+		//Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
+		Element.enterDataByJS(testConfig,addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin");
 		clickAddTin();
 		return this;
 	}
