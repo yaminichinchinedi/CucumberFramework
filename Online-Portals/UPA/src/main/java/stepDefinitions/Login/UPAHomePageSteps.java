@@ -249,6 +249,11 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		
 
 
+		@Then("Verify Home Page Carousel Text for \"([^\"]*)\"")
+		public void verifyHomePageCarouselText(String userType){
+			homePage.verifyHomePageCarouselText(userType);
+		}
+  
 		@Then("^User clicks on Document Vault and verifies the page$")
 		public void user_clicks_on_Document_Vault_and_verifies_the_page() throws Throwable {
 			homePage.verifyDocumentVaultLink();
