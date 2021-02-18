@@ -207,20 +207,21 @@ public class CSRManageUserSteps extends TestBase {
 
     @Then("^Delete the \"([^\"]*)\" user$")
     public void delete_the_user(String userType) throws Throwable {
-    	
+    	String fstname=System.getProperty("firstName");
+		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
         if(userType.equalsIgnoreCase("PROV"))
         {
        searchPage.selectUserType("PROV").searchToDelete("PROV").clickSearch();
-         String fstname=System.getProperty("firstName");
-		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
+        // String fstname=System.getProperty("firstName");
+		//String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
 		testConfig.putRunTimeProperty("username", username);	
 		 manageUsers.clickSpecificUserName(username).deleteAndVerifyUserIsDeleted();
         }
         else
         {
         searchPage.selectUserType("BS").searchToDelete("BS").clickSearch("BS");
-        String fstname=System.getProperty("firstName");
-		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
+        //String fstname=System.getProperty("firstName");
+		//String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
 		testConfig.putRunTimeProperty("username", username);	
 		 manageUsers.clickSpecificUserName(username).deleteAndVerifyUserIsDeleted();
         }
