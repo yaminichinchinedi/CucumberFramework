@@ -38,7 +38,7 @@ Scenario Outline: View Payments Pop up for Standard TIN
   
   
   #Author: AMIT
-  @UPA_US3069347_2 @UPA_ViewPaymentStable
+  @UPA_US3069347_2 @UPA_ViewPaymentStable @trixie
   Scenario Outline: View Payments Pop up for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
 		And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -82,20 +82,20 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |    	   BS_Gen        | 			 Standard  			|			BS  			|TinWthatlstOnePayNum					|  	AO			|
 
 #Sunanda  
-@UPAViewPaymentsStandardBS
+@UPAViewPaymentsStandardBS  
   Scenario Outline: BS user View Payments functionality for Standard TIN        
     Given User navigates to UPA portal and enters "<credentials>" and login
     When Click on View Payments Link for UPA 
-    When User enters  "<tinType>" tin "<searchCriteria>" with "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" for "<userType>"
+   	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
     Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
     Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
     Then Validate Save button is not displayed for "<portalAccess>".
    	Then Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and 835field as enabled.
-   	And User logs out the session
-		Examples:
-		 |    credentials     |   userType    | 			searchCriteria				            |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-     |      BS_Admin      |   BS     	    |		 	TinWithPaymentsAndBsAssociation		  |			Standard			  |		AO			|     I     |					A					 |				PD			 |
-     |      BS_Gen        |   BS     	    |		 	TinWithPaymentsAndBsAssociation		  |			Standard			  |		AO			|     I     |					A					 |				PD			 |
+   	And User logs out the session		
+Examples:		
+      | credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|
+      |   BS_Admin	 | 		BS		  |	  Last 30 days   |		 Standard		|		AO		|	Show All				|	  Last 30 days	  | 		New		          |
+      |   BS_Gen	   | 		BS		  |		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 		New		          |
 		
 

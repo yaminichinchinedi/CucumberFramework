@@ -153,7 +153,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(xpath="//div[@id='tabPrmryMenu']/ul")
 	WebElement tabMenu ;
 	
-	@FindBy(xpath="//span[contains(text(),\"I Accept, Let's get started\")]")
+	@FindBy(xpath="//span[contains(text(),'I Accept, Activate Premium Services')]")
 	WebElement btnIAccept;
 	
 	
@@ -233,11 +233,11 @@ public class UPAHomePage extends HomePage {
 			return new UPAHomePage(testConfig);
 	}
 	
-	public UPAHomePage selectTin(String paymentType) 
+	public UPAHomePage selectTin(String paymentType,String tinType,String portalAccess) 
 	 {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		
-		String tin="";//dataProvider.getTinForPaymentType(paymentType);
+		String tin=dataProvider.getTinForSearchCriteria(paymentType,tinType,portalAccess);
+		//String tin="";//dataProvider.getTinForPaymentType(paymentType);
 		testConfig.putRunTimeProperty("tin", tin);
 		dataProvider.associateTinWithUser(tin);
 		
@@ -246,13 +246,13 @@ public class UPAHomePage extends HomePage {
 		
 		if((!tinList.contains(tin))){
 		   Element.click(homeTab, "home Tab");
-		   Browser.waitForLoad(testConfig.driver);
+		   Browser.waitForLoad(TestBase.driver);
 		   Browser.wait(testConfig, 3);
 		   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
 		 }
 		
 		Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
-		Browser.waitForLoad(testConfig.driver);
+		 Browser.waitForLoad(TestBase.driver);
 		return this;
 	}
 

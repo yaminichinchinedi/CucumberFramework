@@ -162,8 +162,10 @@ public class paymentSummary extends ViewPaymentsDataProvider{
 	
 	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	
-	@FindBy(id="savePaymentArchive")
-	WebElement btnSave;
+	//@FindBy(id="savePaymentArchive")
+	//WebElement btnSave;
+	
+	@FindBy(xpath = "//input[@id='savePaymentArchive']") WebElement btnSave;
 	
 	@FindBy(name="B3")
 	WebElement btnPrntPaymntSummary;
@@ -3202,7 +3204,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 				//verify if claim count is 0, hyperlink is not present and if its not 0 then click
 				for(;i<searchResultRows.size();i++)
 			    {
-					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n", "");
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 			    		   System.out.println("expected payment num : "+expectedPaymntNo);
 			    		   found=true;
@@ -3220,7 +3222,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 						    	  Element.verifyElementPresent(link, "Claim count link is present");
 						    	  Element.click(link, "Claim count hyperlink");
 						    	  Browser.wait(testConfig, 3);
-						    	  Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//div[@id='onlyplb']/table/tbody/tr[1]/td/table/tbody/tr[1]/td").getText(), "Remittance Detail");
+						    	  //Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//div[@id='onlyplb']/table/tbody/tr[1]/td/table/tbody/tr[1]/td").getText(), "Remittance Detail");
+						    	  Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//h4[contains(text(),'Remittance Detail')]").getText(), "Remittance Detail");
 						    	  if (SearchCriteria.equals("Search Remittance"))
 						    		  Element.click(Element.findElement(testConfig, "xpath", "//input[@value='Return to Search Results']"), "Return to search results");
 						    	  break;
@@ -3297,7 +3300,7 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	public paymentSummary verifySavArchbtnNotPresent(){
 		String label=btnSave.getAttribute("value").trim();
 		Helper.compareEquals(testConfig, "Save button relabeled", "Save", label);
-		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archieve')]")== null)
+		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archive')]")== null)
 			Log.Pass("Save Archive button is not present");
 		return this;
 		
@@ -3311,21 +3314,35 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 	}
 	
 	public paymentSummary verifyColumnValuesNA(){
-		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
-	    for(int i=1;i<searchResultRows.size();i++)
-	     {
-	    Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText());
-	    Helper.compareEquals(testConfig, "Values compared 835", "835", searchResultRows.get(i).findElements(By.tagName("td")).get(11).getText());
-	    Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(13).getText());
-	    Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(14).getText());
-	    Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(15).getText());
+        ArrayList<String> tblHeader=new ArrayList<String>();
+        tblHeader=getHeadersFromResultTable();
+        searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr"); 
+        for(int i=1;i<searchResultRows.size();i++)
+         {
+        Helper.compareEquals(testConfig, "Values compared Claim Count", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Claim Count")).getText());
+        if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("835"))
+        {
+            Log.Pass("Passed comparison of 835 label");
+            Helper.compareEquals(testConfig, "Values compared EPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")+2).getText());
+        }
+        else if(searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText().equals("N/A"))
+            Log.Pass("Passed comparison of 835/EPRA label as: "+searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("835 / EPRA")).getText());
+        else
+            Log.Fail("Failed comparison of 835 label");
+        
+        Helper.compareEquals(testConfig, "Values compared pPRA", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payer PRA")).getText());
+        Helper.compareEquals(testConfig, "Values compared Payment Status", "N/A", searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getText());
 
-		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", "true", drpDwnArchiveFilter.getAttribute("disabled"));
-		Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(11).getAttribute("disabled"));
+ 
 
-	     }
-	    return this;
-		}
+        Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", "true", drpDwnArchiveFilter.getAttribute("disabled"));
+        Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(i).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getAttribute("disabled"));
+
+ 
+
+         }
+        return this;
+        }
 	
 	public paymentSummary selectTinNverfyPagRfrsh(){
 		
@@ -3600,7 +3617,8 @@ public paymentSummary verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	public paymentSummary logoutSession() {
-		Element.click(lnkLogout, "Logout");
+		Browser.wait(testConfig, 3);
+		Element.clickByJS(testConfig, lnkLogout, "Logout");
 		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 		return this;
 	}

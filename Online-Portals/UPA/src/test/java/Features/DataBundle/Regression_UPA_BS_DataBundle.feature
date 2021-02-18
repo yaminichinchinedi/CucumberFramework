@@ -3,29 +3,22 @@
  @UPADataBundleNEW  @UPARegression    @BothCSRUPAScenarios
 Feature: UPA_Billing_Service_Data Bundle_Regression
 
-	@TC001 			@wait				
+	@TC001 						
 	Scenario Outline: UI Validations for Data Bundle
- 	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+ 	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
-	#When User enters  "<tinType>" tin "<searchCriteria>" with "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" for "<userType>" for Payment Data Files functionality
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	Then Verify the values in Create Data Bundle Page for Billing Service
 	And User logs out the session
-	Examples:
-		 |    credentials     |   userType    | 			searchCriteria				            |		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-     |      BS_Admin      |   BS     	    |		 	TinWithPaymentsAndBsAssociation		  |			Premium			  |		AO			|     I     |					A					 |				PS			 |
-  #Examples:
-	 #|    credentials      | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   #|      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-         
-@TC002 	
+	 Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 9-13 months   |		 Premium		|		AO		|	
+@TC002 		
 	Scenario Outline: Verify Payer and PageButton Validations
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Verify Payer Name List in Payer Selection Grid for Billing Service
 	And User Verify All the PageButtons Available: Add, Add All, Remove, Remove All for Billing Service
@@ -35,16 +28,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	Then Verify User is able to access Add All Button Functioanlity for Billing Service
  	And Verify User is able to access Remove All Button Functionality for Billing Service
  	And User logs out the session
- Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-
+Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months   |		 Premium		|		AO		|	
 @TC003	
  	Scenario Outline: Validations to check errors 
- 	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+ 	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
  	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And Verify Error Message upon clicking Submit Button without selecting any Fields for Billing Service
 	And Verify Error Message when Settlement Date is not Selected for Billing Service
@@ -54,15 +45,13 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And Verify Error Message when No Payer is Selected for Billing Service
 	And User logs out the session
  Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
- 
-@TC004  @UPASanity  @UPADataBundleSanity 
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	
+@TC004  @UPASanity  @UPADataBundleSanity @lol
 	Scenario Outline: Data Bundle Submission : EPRAs
-  Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+  Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -71,16 +60,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type for Billing Service
 	And User verifies the EPRA indicator in Database entry for Billing Service
 	And User logs out the session
-  Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-  
+ Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	
 @TC005 
 	Scenario Outline: Data Bundle Submission : PPRAs
-  Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+ Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -89,17 +76,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type for Billing Service
 	And User verifies the PPRA indicator in Database entry for Billing Service
 	And User logs out the session
- 	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-   
+ 	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	
 @TC006 
  Scenario Outline: Data Bundle Submission : 835s
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
-	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
 	And User verifies All the Three File Type Options for Billing Service
@@ -107,16 +91,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And User Verifies Data Bundle Request entry in Download Data Bundle Page for 835 File Type for Billing Service
 	And User verifies the 835 indicator in Database entry for Billing Service
 	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-   
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	 
 @TC007  
  Scenario Outline: Validate the Data Bundle Submission of EPRA and PPRA
- 	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+  Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -125,16 +107,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
   And User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and PPRA File Type for Billing Service
   And User verifies the EPRA and PPRA indicator in Database entry for Billing Service
 	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-  
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	   
 @TC008  
 	Scenario Outline: Validate the Data Bundle Submission of EPRA and 835s
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>" 
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+  And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -143,16 +123,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and 835 File Type for Billing Service
 	And User verifies the EPRA and 835 indicator in Database entry for Billing Service
 	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-   
- @TC009  
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	  
+ @TC009 
  Scenario Outline: Validate the Data Bundle Submission of PPRA and 835s
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>"
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>"  
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.  
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -161,16 +139,14 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
 	And User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and 835 File Type for Billing Service
 	And User verifies the PPRA and 835 indicator in Database entry for Billing Service
 	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-   
- @TC010  
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	  
+ @TC010   
 	Scenario Outline: Validate the Data Bundle Submission of EPRA, PPRA and 835s
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>"
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>"  
+  And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User Enter Settlement Date in TO and From Date Range for Billing Service
 	And User selects All Payers from the Payer List for Billing Service
@@ -179,21 +155,19 @@ Feature: UPA_Billing_Service_Data Bundle_Regression
  	And User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA PPRA and 835 File Type for Billing Service
  	And User verifies the EPRA, PPRA and 835 indicator in Database entry for Billing Service
  	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
-    
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	   
 @TC011  
 	Scenario Outline: Validate Data Bundle Request Completed in Last 7 Days
-	Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+	Given User navigates to UPA portal and enters "<credentials>" and login
 	When User clicks on Data Bundle Tab for Billing Service
-	#And User enters Provider Tin associated to BS for UPA "<Search Criteria>"
-	Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>"  
+  And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
 	And Verify User navigates to Create Data Bundle Page on UI for Billing Service
 	And User verifies the Data Bundle Request Completed in Last 7 Days for Billing Service User
 	And User Click on Download Data Bundle Tab on UI for Billing Service
 	Then User validates the completed File Name in the Grid for Billing Service
 	And User logs out the session
-	 Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Premium			    |		AO			|     I     |					A					 |				PS			 |
+	Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 4-6 months    |		 Premium		|		AO		|	 

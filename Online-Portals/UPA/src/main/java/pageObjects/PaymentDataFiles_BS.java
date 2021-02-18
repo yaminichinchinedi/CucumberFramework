@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -75,6 +76,9 @@ public class PaymentDataFiles_BS extends TestBase{
 	WebElement ErrorHeader;
 	@FindBy(xpath = "//font[contains(text(),'Settlement Date Range: From and To Dates are required ')]") 
 	WebElement Settlerror;
+	@FindBy(xpath = "//tr[@id='errorswarning']//tr//font") 
+	WebElement errorMsg;
+	
 	@FindBy(xpath = "//font[contains(text(),'Payer Selection : Missing Data')]") 
 	WebElement PayerError;
 	@FindBy(xpath = "//font[contains(text(),'File Types : Missing Data')]")
@@ -121,44 +125,8 @@ public class PaymentDataFiles_BS extends TestBase{
 	int sqlRowNo;
 	
 	public PaymentDataFiles_BS(TestBase testConfig) {
-		
-//		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		PageFactory.initElements(testConfig.driver, this);
-	}
-	
-	public PaymentDataFiles_BS enterBSTin(String srchCriteria)
-	 {
-		/*int sqlRow;
-		System.out.println("TIN selected for "+srchCriteria);
-		
-		//Get the Payer from the User
-		sqlRow=237;
-		Map schema=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		String Schema = schema.get("PAYR_SCHM_NM").toString().trim();
-		String PayerName = schema.get("PAYR_DSPL_NM").toString().trim();
-		System.out.println(Schema);
-		System.out.println(PayerName);
-		testConfig.putRunTimeProperty("Schema", schema.get("PAYR_SCHM_NM").toString().trim());
-		
-		sqlRow=238;
-		Map paymentdetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		String Prov_tin_nbr = paymentdetails.get("PROV_TAX_ID_NBR").toString().trim();
-		String Setl_dt = paymentdetails.get("SETL_DT").toString().trim();
-		
-		testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TAX_ID_NBR").toString().trim());
-		testConfig.putRunTimeProperty("Setl_dt", paymentdetails.get("SETL_DT").toString().trim());*/
-		
-		String Prov_tin_nbr = "860841271";
-		String Setl_dt = "2020-04-09";
-		
-		testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
-		testConfig.putRunTimeProperty("Setl_dt", Setl_dt);
-		
-		Element.enterData(TINField, Prov_tin_nbr, "Provider TIN entered: "+Prov_tin_nbr, "TINField");
-		Element.click(SearchButton, "Search Button");
-		
-		return this;
 	}
 	
 	public PaymentDataFiles_BS clickPaymentDataFilesTab() 
@@ -183,8 +151,6 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS verifyAllValuesinCreateBundlePage() throws Exception
 
 	{
-		//String subheader = SubHeader.getText().trim();
-		//testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";
 		testConfig.softAssert.assertEquals(PageTextContext, PageTextActual, "Page Text Context Displays: "+PageTextContext);
@@ -194,7 +160,8 @@ public class PaymentDataFiles_BS extends TestBase{
 		
 		String ProviderName = Provider.getText().trim();
 		int sqlRow=236;
-		testConfig.getRunTimeProperty("Prov_tin_nbr");
+		String Prov_tin_nbr=System.getProperty("tin");
+		testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String orgName = orgNameDB.get("ORG_NM").toString().trim();
 		String ProvName = "Provider: "+orgName;
@@ -232,8 +199,10 @@ public class PaymentDataFiles_BS extends TestBase{
 		Browser.wait(testConfig, 2);
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 3);
-		//String ErrorHeaderMsg = ErrorHeader.getText();
-		 
+		//String errorMsgExpected="Please enter a valid Tax Identification Number. The Tax Identification Number (TIN) that was entered is either not enrolled for Optum Pay or the TIN is not 9 digits in length.";
+		
+		//String errorMsgActual = errorMsg.getText();
+		//Helper.compareEquals(testConfig, "Error message", errorMsgExpected, errorMsgActual);
 		 // To verify Settlement Date Range Error
 		String SettlerrorMsg = Settlerror.getText();
 		testConfig.softAssert.assertEquals(SettlerrorMsg, "Settlement Date Range: From and To Dates are required", "Settlement Error Displays: " + SettlerrorMsg);
@@ -248,16 +217,16 @@ public class PaymentDataFiles_BS extends TestBase{
 		String FileErrorMsg = FileError.getText();
 		testConfig.softAssert.assertEquals(FileErrorMsg, "File Types : Missing Data", "File Type Error Displays: " + FileErrorMsg);
 		 
-		 //Log.Pass("All the Three error messages are displaying correctly. Error Messages are Displayed as: "+ErrorHeaderMsg);
 	 	 Browser.wait(testConfig, 2);
 	 	 Element.click(ResetBtn, "Reset Button");
 		 Browser.wait(testConfig, 3);
+		
 		 return this;
 	 }
 
 	public PaymentDataFiles_BS verifyErrorWithoutSettlementDates() throws Exception
 	{
-		Element.click(ResetBtn, "Reset Button");
+		 Element.click(ResetBtn, "Reset Button");
 		 Browser.wait(testConfig, 3);
 		 Element.click(FirstPayer, "First Payer");
 		 Element.click(AddBtn, "Add Button");
@@ -275,48 +244,13 @@ public class PaymentDataFiles_BS extends TestBase{
 		return this;
 	}
 			  
-	public String currentDate() 
-	{
-		String month, day;
-		java.util.Date date = new java.util.Date();
-		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-			month = String.valueOf(mmn);		 	
-		else 			
-			month = "0"+mmn;		
-			 
-		int days = date.getDate();
-		
-		if(days<10) 	 
-			day = "0"+days;		 		
-		else				 
-			day = String.valueOf(days);		
-				 
-		int year  = date.getYear()+1900;
-		 
-		String curnt_dt = month + "/" +day+"/"+year;
-		return curnt_dt;
-	}
-	public String SettlementDate()
-	{
-		String Setl_Dt = testConfig.getRunTimeProperty("Setl_dt");
-		String[] sDBDate=Setl_Dt.split("-");  		    
-			
-		String sDBYear=sDBDate[0];
-		String sDBMonth=sDBDate[1];
-		String sDBDay=sDBDate[2];
-		String SetDate = sDBMonth+"/"+sDBDay+"/"+sDBYear;
-		Log.Comment("Payment Date from DB is: " + SetDate);
-		return SetDate;
-	}
-	 
 	public PaymentDataFiles_BS verifyErrorWithoutFileType() throws Exception
 	{
 		Element.click(FirstPayer, "First Payer");
-		 Element.click(AddBtn, "Add Button");
+		Element.click(AddBtn, "Add Button");
 		
-		String date1=SettlementDate();
-	
+		String date1=testConfig.getRunTimeProperty("setl_dt");
+		date1= Helper.changeDateFormat(date1, "yyyy-mm-dd", "mm/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date1, "To Date: "+date1, "todate");
@@ -333,33 +267,14 @@ public class PaymentDataFiles_BS extends TestBase{
 	
 	public PaymentDataFiles_BS verifyErrorForMore30days() throws Exception
 	{
-		Element.click(FirstPayer, "First Payer");
+		Element.click(ResetBtn, "Reset Button");
+		Browser.wait(testConfig, 3);
+		Element.click(FirstPayer, "First Payers");
 		Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 			 
-		String month, day;
-		java.util.Date date = new java.util.Date();
-		int mmn = date.getMonth()+1; 
-		
-		if(mmn==10 || mmn== 11 || mmn == 12){
-			month = String.valueOf(mmn);		 
-			}
-		else {			
-			month = "0"+mmn;
-			}
-		int days = date.getDate();
-		if(days<10) 
-		{			 
-			day = "0"+days;		 
-			}
-		else
-		{			 
-			day = String.valueOf(days);		 
-			}
-		int year  = date.getYear()+1899;
-		String date1 = month + "/" +day+"/"+year;
-			 
-		String date2 =currentDate();
+		String date1 = Helper.getDateBeforeOrAfterDays(-366,"MM/dd/yyyy");
+		String date2= Helper.getCurrentTime("MM/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date2, "To Date: "+date2, "todate");
@@ -367,8 +282,8 @@ public class PaymentDataFiles_BS extends TestBase{
 		Element.click(btnSubmit, "Click on Submit Button");	
 		Browser.wait(testConfig, 3);
 		String SettlmntErrorMoreThan30Days = SettlErrorMore30Days.getText();
-		//testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : From Date must not be greater than 30 Days prior to To date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
-		testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : To Date must be same as or after From Date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
+		testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : From Date must not be greater than 30 Days prior to To date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
+		//testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : To Date must be same as or after From Date", "Error for More Than 30 Days Displays: " + SettlmntErrorMoreThan30Days);
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
 		return this;
@@ -377,26 +292,14 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS verifyErrorForPriorDates() throws Exception
 	{
 		Element.click(FirstPayer, "First Payer");
-		 Element.click(AddBtn, "Add Button");
+		Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 
-		String date1 =currentDate();
-		java.util.Date date = new java.util.Date();
-		String month, day;
-		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
-		int days = date.getDate();
-		if(days<10) 
-		{			 day = "0"+days;		 }
-		else
-		{			 day = String.valueOf(days);		 }
-		int year  = date.getYear()+1901;
-		String date2 = month + "/" +day+"/"+year;
+		String date1=Helper.getCurrentDate("MM/dd/yyyy");
+		String date2 = Helper.getDateBeforeOrAfterDays(366,"MM/dd/yyyy");
 		Browser.wait(testConfig, 1);
-		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
-		Element.enterData(todate, date2, "To Date: "+date2, "todate");
+		Element.enterDataByJS(testConfig, fromdate, date1,  " fromdate");
+		Element.enterDataByJS(testConfig, todate, date2, " todate");
 		Browser.wait(testConfig, 3);
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 3);
@@ -412,9 +315,11 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS verifyErrorForPayerSelection() throws Exception
 	{
 		Browser.wait(testConfig, 3);
-		String date1 = currentDate();
-		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
-		Element.enterData(todate, date1, "To Date: "+date1, "todate");
+		String date1=Helper.getCurrentDate("MM/dd/yyyy");
+		Element.enterDataByJS(testConfig, fromdate, date1, "From Date: "+date1+ "fromdate");
+		Element.enterDataByJS(testConfig, todate, date1, "From Date: "+date1+ "todate");
+		//Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
+		//Element.enterData(todate, date1, "To Date: "+date1, "todate");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
@@ -430,25 +335,11 @@ public class PaymentDataFiles_BS extends TestBase{
 		return this;	   
 	}
 	
-	
-	public PaymentDataFiles_BS getTINnDate() 
-	{
-		int sqlRow=233;
-		Map<String,String> TINAndSetlDate= new HashMap<String, String>();
-		Map displayNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-			
-		TINAndSetlDate.put("TINNumber", displayNo.get("PROV_TAX_ID_NBR").toString());
-		TINAndSetlDate.put("setlDate", displayNo.get("SETL_DT").toString());
-		 
-		testConfig.putRunTimeProperty("TINNumber", displayNo.get("PROV_TAX_ID_NBR").toString()); 
-		testConfig.putRunTimeProperty("setlDate", displayNo.get("SETL_DT").toString());
-		return this;
-	}
 	 
-	public PaymentDataFiles_BS enterPaymentDate() throws InterruptedException 
+	public PaymentDataFiles_BS enterPaymentDate() throws InterruptedException, Exception 
 	{
-		
-		 String DateEntered = SettlementDate();
+		 String DateEntered=testConfig.getRunTimeProperty("setl_dt");
+		 DateEntered= Helper.changeDateFormat(DateEntered, "yyyy-mm-dd", "mm/dd/yyyy");
 		 Browser.wait(testConfig, 1);
 		 Element.enterData(fromdate, DateEntered, "From Date Entered: "+DateEntered, "fromdate");
 		 Element.enterData(todate, DateEntered, "To Date Entered: "+DateEntered, "todate");
@@ -514,7 +405,6 @@ public class PaymentDataFiles_BS extends TestBase{
 	{
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
-		 //Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
 		 Browser.wait(testConfig, 3);
 		 		   
@@ -528,7 +418,6 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS verifySubmitepra835DataBundle() throws Exception
 	{
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
-		 //Element.click(prachkbox, "Click on PPRA Check Box");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
 		 Browser.wait(testConfig, 3);
@@ -541,7 +430,6 @@ public class PaymentDataFiles_BS extends TestBase{
 
 	public PaymentDataFiles_BS verifySubmitppra835DataBundle() throws Exception
 	{
-		 //Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
@@ -678,6 +566,7 @@ public class PaymentDataFiles_BS extends TestBase{
 	public PaymentDataFiles_BS getCompletedIN() 
 	{
 		 int sqlRow=239;
+		 testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		 Map<String,String> TINAndFileName= new HashMap<String, String>();
 		 Map displayNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		 if (displayNo != null)
@@ -717,7 +606,7 @@ public class PaymentDataFiles_BS extends TestBase{
 		  
 	public PaymentDataFiles_BS verifyDatabunldeDb()
 	{
-		String TIN = testConfig.getRunTimeProperty("Prov_tin_nbr");
+		testConfig.putRunTimeProperty("Prov_tin_nbr",System.getProperty("tin"));
 		int sqlRow=234;
 		Map Indicator=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		testConfig.putRunTimeProperty("DataBundleID", Indicator.get("DATA_BUNDLE_ID").toString());
@@ -840,38 +729,23 @@ public class PaymentDataFiles_BS extends TestBase{
 	}
 		   
 	public PaymentDataFiles_BS verifyPayerList() throws InterruptedException, IOException
-	{		Browser.wait(testConfig, 5);
-		//Map PayerListDB=null;
-		
+	{		
+		Browser.wait(testConfig, 5);
 		List<String> PayerListUI=new ArrayList<>();
 		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option");
 				for(int i=1; i<= payer.size(); i++)
 		{
 			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
-		}
-		   /*
-		   Browser.wait(testConfig, 3);
-		   sqlRowNo = 231;
-		   ArrayList<String> PayerListDB = new ArrayList<String>();
-		   Map PayerListDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo,1);
-		   String firstPayer=PayerListDB1.get("PAYR_DSPL_NM").toString();
-		   //for (int i = 1; i <= PayerListDB1.size(); i++) 
-           //{
-			   PayerListDB.add(firstPayer);
-          // }
-		   	*/	   
+		}   
 		   Browser.wait(testConfig, 3);
 		   sqlRowNo = 1347;
-		   testConfig.getRunTimeProperty("Prov_tin_nbr");
+		  testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
 		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
 			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
-           }
-		   
-		  // PayerListDB.addAll(PayerListDBAll);
-		   
+           }		   
 		   if(PayerListDBAll.equals(PayerListUI))		 
 			   Log.Pass("Available Payers:- ");		 
 		   else 
@@ -970,18 +844,6 @@ public class PaymentDataFiles_BS extends TestBase{
 		Element.click(btnSubmit, "Submit button");
 		return this;
 	}
- public PaymentDataFiles_BS fetchAndEnterBSTin() {
-		int sqlRow=1345;
-		testConfig.getRunTimeProperty("id");
-		Map schema=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		String prov_tin_nbr = schema.get("PROV_TIN_NBR").toString().trim();
-		testConfig.putRunTimeProperty("Prov_tin_nbr", prov_tin_nbr);
-		Element.enterData(TINField, prov_tin_nbr, "Provider TIN entered: "+prov_tin_nbr, "TINField");
-		Element.click(SearchButton, "Search button");
-	    String Setl_dt = "2020-04-09";
-		testConfig.putRunTimeProperty("Setl_dt", Setl_dt);
-	 return this;
- }
  public PaymentDataFiles_BS verifyPopUp() {
 	 Element.verifyElementPresent(standardPopUp, "Maximize your efficiency pop up");
 	 return this;

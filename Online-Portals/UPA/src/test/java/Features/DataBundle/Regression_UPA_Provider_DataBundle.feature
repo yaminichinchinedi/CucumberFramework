@@ -5,19 +5,20 @@ Feature: UPA_Provider_Data Bundle_Regression
 
 	@TC001			
 	Scenario Outline: UI Validations for Data Bundle
- 	Given User navigates to UPA portal and enters "<credentials>" to login as Provider
-	And User selects tin for UPA "<Search Criteria>"
+ 	Given User navigates to UPA portal and enters "<credentials>" and login
+	#And User selects tin for UPA "<Search Criteria>"
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When User clicks on Data Bundle Tab for Provider
 	And Verify User navigates to Create Data Bundle Page on UI for Provider
 	Then Verify the values in Create Data Bundle Page for Provider
-Examples: 
-				|    Search Criteria     |       credentials        |    
-        |        Provider        |       PROV_Admin         |
+Examples:		
+      | credentials    |  userType 	  |		searchCriteria |	portalAccess	| tinType	|	
+      |   PROV_Admin	 | 		PROV		  |	  Last 30 days   |		 Standard		|		AO		|	
 
 @TC002  @fix	
 	Scenario Outline: Verify Payer and PageButton Validations
-	Given User navigates to UPA portal and enters "<credentials>" to login as Provider
-	And User selects tin for UPA "<Search Criteria>" 
+	Given User navigates to UPA portal and enters "<credentials>" and login
+	And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When User clicks on Data Bundle Tab for Provider
 	And Verify User navigates to Create Data Bundle Page on UI for Provider
 	And User Verify Payer Name List in Payer Selection Grid for Provider
@@ -27,10 +28,9 @@ Examples:
 	Then Verify User is able to access Add All Button Functioanlity for Provider
  	And Verify User is able to access Remove All Button Functionality for Provider
  	And Verify User is able to access Reset Functionality for Provider
-Examples: 
-				|    Search Criteria     |       credentials        |    
-        |        Provider        |       PROV_Admin         |
-        
+    Examples:     
+             |       credentials       |		portalAccess    	|   userType    |  searchCriteria     | tinType		|
+             |       PROV_Admin        | 			 Premium  			|			PROV			|		Last 9-13 months	|  	AO			|
 @TC003
  	Scenario Outline: Validations to check errors 
  	Given User navigates to UPA portal and enters "<credentials>" to login as Provider

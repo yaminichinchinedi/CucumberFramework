@@ -3,13 +3,11 @@
 Feature: UPA Payment Data Files Functionality for Standard TIN
 @Tessy					
 Scenario Outline: UI Validations for Data Bundle
-Given User navigates to UPA portal and enters "<credentials>" to login as Billing Service
+Given User navigates to UPA portal and enters "<credentials>" and login
 When User clicks on Data Bundle Tab for Billing Service
-Then User enters a tin for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" 
+And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And  User verifies the Maximize your efficiency pop up for standard tin
 
-	Examples:
-	 |    credentials     | 	Search Criteria       |		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
-   |      BS_Admin 			|		 	Billing Service 		|			Standard			  |		AO			|     I     |					A					 |				PD			 |
-   
-	 
+Examples:
+	 | credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|	
+   |   BS_Admin	  | 		BS		  |	  Last 30 days       |		 Standard		|		AO		|	

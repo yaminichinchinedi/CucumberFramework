@@ -102,7 +102,7 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_Enters_tin_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
 		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
 	}
-	@When("^User enters  \"([^\"]*)\" tin \"([^\"]*)\" with \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+	/*@When("^User enters  \"([^\"]*)\" tin \"([^\"]*)\" with \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
 	public void user_enters_tin_with_for_and_for_for(String tinType, String searchCriteria, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault, String userType) throws Throwable {
 		testConfig.putRunTimeProperty("tinType", tinType);
 		testConfig.putRunTimeProperty("portalAccess", portalAccess);
@@ -110,7 +110,7 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
 		testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
 		testConfig.getRunTimeProperty("id");
-		viewPaymentsTIN.enterPaymentTinUPA(searchCriteria, userType);
-	}
+		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
+	}*/
 
 }

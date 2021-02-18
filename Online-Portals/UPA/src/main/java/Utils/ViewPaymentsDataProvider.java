@@ -93,7 +93,6 @@ public class ViewPaymentsDataProvider {
 		}
 		
 		testConfig.putRunTimeProperty("tin", tin);
-		
 		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
@@ -500,660 +499,668 @@ public ArrayList getEnrollmentContent(String content) {
 		String env = "";
 		String id = "";
 		
-		testConfig.putRunTimeProperty("tinType", tinType);
-		testConfig.putRunTimeProperty("portalAccess", portalAccess);
 		paymentSummary paySum=new paymentSummary(testConfig,"filter");
- 		switch(paymentType+"_"+tinType+"_"+portalAccess) 
- 		 {
- 		    case "failedPayment": 
- 			sqlRowNo=29;
- 		 	break;
- 		
- 		   case "NPI": 
- 	 			sqlRowNo=249;
- 	 		 	break;
- 	 		 	
- 		    case "payerFilter":
- 			sqlRowNo=27;
- 			break;
- 			
- 		    case "remitPayment":
- 			sqlRowNo=31;//35; 
- 			break;
- 			
- 		    case "generalPayment":
- 	 		sqlRowNo=127;//37; 
- 	 		break;
- 			
- 		   case "generalPayment30Days":
- 	 	 		sqlRowNo=129;//37; 
- 	 	 		break;
- 	 	 		
- 		  case "EPRAViewPay":
-	 	 		sqlRowNo=220;
-	 	 		break;	
- 	 	 			
- 		   case "nonEpraPayment":
- 		   { 
- 		      testConfig.putRunTimeProperty("paymentNo",getPaymentNoDetails("nonEpraPayment").get("paymentNo").toString());
- 	 		  sqlRowNo=27; 
- 	 		  break;
- 		   }
- 		   
- 		  case "ACH":
- 		     sqlRowNo=35; 
- 		      break;
- 		       
- 		 case "VCP":
- 		     sqlRowNo=36; 
- 		     break;
- 		     
- 		 case "byCheckNo":
- 		 case "byElectronicPaymentNo":
- 			 sqlRowNo=50;
- 			 break;
- 		case "byElectronicPaymentNoRemit":
-			 sqlRowNo=1901;
-			 break;
- 			 
- 			 
- 		 case "byDOP":
- 		 case "byDOPAndAccountNo":
- 		 case "byDOP&SubscriberID":
- 		 case "byDOPAndNpi":
- 		 case "byDOPAndClaimNo":
- 		 case "byDOPAndPatientNm":	 
-			 sqlRowNo=41;
-			 break;
-			 
- 		 case "byDOPAndZeroPaymentClaims":
- 			sqlRowNo=47;
- 			break;
- 			
-  		case "byDOSAndZeroPmntClms":
-  			//sqlRowNo=251;
-  			sqlRowNo=243;
- 			break;
- 			
- 		 case "byDOSAndSubscriberId":
- 			 sqlRowNo=156;
- 			 break;
- 			 
- 		 case "byDOS":
- 		 case "byDOSAndAcntNo":
- 			 sqlRowNo=252;
- 			 break;
- 			 
- 		 case "byDOSAndNpi":
- 			 sqlRowNo=245;
- 			 //sqlRowNo=253;
- 			 break;
-
- 		 case "byDOSAndClmNo":
- 		 case "byDOSAndPtntNm":
- 			 sqlRowNo=60;
- 			 break;
- 			 
- 		 case "byDOSAndMarketType":
- 			 //sqlRowNo=254;
- 			 sqlRowNo=246;
- 			 break;
- 			 
-
-		 case "NON":
-	 		 sqlRowNo=35; 
-	 		 break;
-		 case "NPI_SingleTIN":
-	 		 sqlRowNo=408; 
-	 		 break;
-		 case "NPI_MultipleTIN":
-	 		 sqlRowNo=409; 
-	 		 break;
-			 
-		    case "PatientPayment":
-			sqlRowNo=417; 
-	 		break;
-	 			
-	 			
-           case "EPRA":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     testConfig.putRunTimeProperty("id", id);
-		     System.setProperty("id", id);
-		      sqlRowNo=204;
-	 			break;		
-
-		 case "EPRAgenerated":
-    	 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
-				sqlRowNo=205;
-				break;
-				
-         case "EPRAPROVAdmin":
-
-		      sqlRowNo=204;
-	 			break;	
-	 			
-         case "EPRAgeneratedPROVAdmin":
-			 sqlRowNo=205;
-			 break;	
-		
-         case "EPRAPROVGen":		 
-
-				sqlRowNo=204;
-				break;	
-				
-         case "EPRAgeneratedPROVGen":
-
-				sqlRowNo=205;
-				break;			
-		
-         case "EPRAPayerAdmin": 
-           sqlRowNo=210;
-	 			break;	
-	 			
-         case "EPRAPayerGen":
-
-		      sqlRowNo=212;
-	 			break;	
-	 			
-         case "EPRAPayergeneratedAdmin": 
-				sqlRowNo=217;
-				break;	
-				
-		 case "EPRAPayergeneratedGen": 
-				sqlRowNo=217;
-				break;	
-  	 			
-		 case "EPRABSAdmin":
-			  sqlRowNo=218;
-		 	break;	
-		 				
-           case "EPRABSGen":
-  		      sqlRowNo=218;
-  	 			break;	
-          				
-           case "EPRAgeneratedBSAdmin":
-  		       sqlRowNo=219;
-  	 		 	break;
-           case "EPRAgeneratedBSGen":	 
-    		      sqlRowNo=219;
-    	 			break;				
-	
-		 case "EPRAPayer":
-	 			sqlRowNo=210;
+		if(tinType==null && portalAccess==null) {
+			switch(paymentType) {
+			case "failedPayment": 
+	 			sqlRowNo=29;
+	 		 	break;
+	 		
+	 		   case "NPI": 
+	 	 			sqlRowNo=249;
+	 	 		 	break;
+	 	 		 	
+	 		    case "payerFilter":
+	 			sqlRowNo=27;
 	 			break;
 	 			
-		 case "EPRAPayergenerated":
-				sqlRowNo=205;
-				break;	
-         
-		 case "EPRABS":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
-		     System.setProperty("id", id);
-		     testConfig.putRunTimeProperty("id", id);
-		      sqlRowNo=204;
-	 			break;	
+	 		    case "remitPayment":
+	 			sqlRowNo=31;//35; 
+	 			break;
 	 			
- 		case "byElectronicPaymentForVCP":
- 			testConfig.putRunTimeProperty("type","VCP");
- 			sqlRowNo=52;
- 			break;
+	 		    case "generalPayment":
+	 	 		sqlRowNo=127;//37; 
+	 	 		break;
+	 			
+	 		   case "generalPayment30Days":
+	 	 	 		sqlRowNo=129;//37; 
+	 	 	 		break;
+	 	 	 		
+	 		  case "EPRAViewPay":
+		 	 		sqlRowNo=220;
+		 	 		break;	
+	 	 	 			
+	 		   case "nonEpraPayment":
+	 		   { 
+	 		      testConfig.putRunTimeProperty("paymentNo",getPaymentNoDetails("nonEpraPayment").get("paymentNo").toString());
+	 	 		  sqlRowNo=27; 
+	 	 		  break;
+	 		   }
+	 		   
+	 		  case "ACH":
+	 		     sqlRowNo=35; 
+	 		      break;
+	 		       
+	 		 case "VCP":
+	 		     sqlRowNo=36; 
+	 		     break;
+	 		     
+	 		 case "byCheckNo":
+	 		 case "byElectronicPaymentNo":
+	 			 sqlRowNo=50;
+	 			 break;
+	 		case "byElectronicPaymentNoRemit":
+				 sqlRowNo=1901;
+				 break;
+	 			 
+	 			 
+	 		 case "byDOP":
+	 		 case "byDOPAndAccountNo":
+	 		 case "byDOP&SubscriberID":
+	 		 case "byDOPAndNpi":
+	 		 case "byDOPAndClaimNo":
+	 		 case "byDOPAndPatientNm":	 
+				 sqlRowNo=41;
+				 break;
+				 
+	 		 case "byDOPAndZeroPaymentClaims":
+	 			sqlRowNo=47;
+	 			break;
+	 			
+	  		case "byDOSAndZeroPmntClms":
+	  			//sqlRowNo=251;
+	  			sqlRowNo=243;
+	 			break;
+	 			
+	 		 case "byDOSAndSubscriberId":
+	 			 sqlRowNo=156;
+	 			 break;
+	 			 
+	 		 case "byDOS":
+	 		 case "byDOSAndAcntNo":
+	 			 sqlRowNo=252;
+	 			 break;
+	 			 
+	 		 case "byDOSAndNpi":
+	 			 sqlRowNo=245;
+	 			 //sqlRowNo=253;
+	 			 break;
 
- 		 case "byElectronicPaymenForACH":
- 		 case "selectTin":
- 			 testConfig.putRunTimeProperty("type","ACH");
- 			 sqlRowNo=56;
- 			 break;
- 			 
- 		case "byDOPAndRenderingProvider":
- 			sqlRowNo=70;
-			 break;
+	 		 case "byDOSAndClmNo":
+	 		 case "byDOSAndPtntNm":
+	 			 sqlRowNo=60;
+	 			 break;
+	 			 
+	 		 case "byDOSAndMarketType":
+	 			 //sqlRowNo=254;
+	 			 sqlRowNo=246;
+	 			 break;
+	 			 
 
- 		case "byCheckNoOfReoriginNacha":
- 			sqlRowNo=247;
- 			break;
- 			
- 		case "byCheckNoOfConslPayDtl":
- 			sqlRowNo=248;
- 			break;
+			 case "NON":
+		 		 sqlRowNo=35; 
+		 		 break;
+			 case "NPI_SingleTIN":
+		 		 sqlRowNo=408; 
+		 		 break;
+			 case "NPI_MultipleTIN":
+		 		 sqlRowNo=409; 
+		 		 break;
+				 
+			    case "PatientPayment":
+				sqlRowNo=417; 
+		 		break;
+		 			
+		 			
+	           case "EPRA":
+				 env=System.getProperty("env");
+			     Browser.wait(testConfig, 5);
+			     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+			     testConfig.putRunTimeProperty("id", id);
+			     System.setProperty("id", id);
+			      sqlRowNo=204;
+		 			break;		
 
- 		case "generalPaymentForTIN":
-			sqlRowNo=51; 
-			break;
+			 case "EPRAgenerated":
+	    	 env=System.getProperty("env");
+			     Browser.wait(testConfig, 5);
+			     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+			     System.setProperty("id", id);
+			     testConfig.putRunTimeProperty("id", id);
+					sqlRowNo=205;
+					break;
+					
+	         case "EPRAPROVAdmin":
 
-		case "generalPaymentForNPI_30days":
-		{
-			 paySum.getQuickSearchDates("Last 30 days");
-			 sqlRowNo=131;
-			 break;
-		}
-		     
-		case "generalPaymentForNPI_60days":
-		{
-			 paySum.getQuickSearchDates("Last 60 days");
-			 sqlRowNo=130;
-			 break;
-		}
+			      sqlRowNo=204;
+		 			break;	
+		 			
+	         case "EPRAgeneratedPROVAdmin":
+				 sqlRowNo=205;
+				 break;	
 			
-		case "generalPaymentForNPI_90days":
-		{
-			paySum.getQuickSearchDates("Last 90 days");
-			sqlRowNo=147;
-			break;
-		}
+	         case "EPRAPROVGen":		 
+
+					sqlRowNo=204;
+					break;	
+					
+	         case "EPRAgeneratedPROVGen":
+
+					sqlRowNo=205;
+					break;			
+			
+	         case "EPRAPayerAdmin": 
+	           sqlRowNo=210;
+		 			break;	
+		 			
+	         case "EPRAPayerGen":
+
+			      sqlRowNo=212;
+		 			break;	
+		 			
+	         case "EPRAPayergeneratedAdmin": 
+					sqlRowNo=217;
+					break;	
+					
+			 case "EPRAPayergeneratedGen": 
+					sqlRowNo=217;
+					break;	
+	  	 			
+			 case "EPRABSAdmin":
+				  sqlRowNo=218;
+			 	break;	
+			 				
+	           case "EPRABSGen":
+	  		      sqlRowNo=218;
+	  	 			break;	
+	          				
+	           case "EPRAgeneratedBSAdmin":
+	  		       sqlRowNo=219;
+	  	 		 	break;
+	           case "EPRAgeneratedBSGen":	 
+	    		      sqlRowNo=219;
+	    	 			break;				
 		
-		case "generalPaymentForNPI_4-6months":
-		{
-			paySum.getQuickSearchDates("Last 4-6 months");
-			sqlRowNo=132; 
-	 		break;
-		}
+			 case "EPRAPayer":
+		 			sqlRowNo=210;
+		 			break;
+		 			
+			 case "EPRAPayergenerated":
+					sqlRowNo=205;
+					break;	
+	         
+			 case "EPRABS":
+				 env=System.getProperty("env");
+			     Browser.wait(testConfig, 5);
+			     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"BS_Admin"+"_"+env);
+			     System.setProperty("id", id);
+			     testConfig.putRunTimeProperty("id", id);
+			      sqlRowNo=204;
+		 			break;	
+		 			
+	 		case "byElectronicPaymentForVCP":
+	 			testConfig.putRunTimeProperty("type","VCP");
+	 			sqlRowNo=52;
+	 			break;
+
+	 		 case "byElectronicPaymenForACH":
+	 		 case "selectTin":
+	 			 testConfig.putRunTimeProperty("type","ACH");
+	 			 sqlRowNo=56;
+	 			 break;
+	 			 
+	 		case "byDOPAndRenderingProvider":
+	 			sqlRowNo=70;
+				 break;
+
+	 		case "byCheckNoOfReoriginNacha":
+	 			sqlRowNo=247;
+	 			break;
+	 			
+	 		case "byCheckNoOfConslPayDtl":
+	 			sqlRowNo=248;
+	 			break;
+
+	 		case "generalPaymentForTIN":
+				sqlRowNo=51; 
+				break;
+
+			case "generalPaymentForNPI_30days":
+			{
+				 paySum.getQuickSearchDates("Last 30 days");
+				 sqlRowNo=131;
+				 break;
+			}
+			     
+			case "generalPaymentForNPI_60days":
+			{
+				 paySum.getQuickSearchDates("Last 60 days");
+				 sqlRowNo=130;
+				 break;
+			}
+				
+			case "generalPaymentForNPI_90days":
+			{
+				paySum.getQuickSearchDates("Last 90 days");
+				sqlRowNo=147;
+				break;
+			}
+			
+			case "generalPaymentForNPI_4-6months":
+			{
+				paySum.getQuickSearchDates("Last 4-6 months");
+				sqlRowNo=132; 
+		 		break;
+			}
+			
+			case "generalPaymentForNPI_6-9months"+"Premium":
+			{
+				  paySum.getQuickSearchDates("Last 6-9 months");
+				  sqlRowNo=132; 
+			 	  break;
+				
+			}
+			case "generalPaymentForNPI_9-13months":
+			{
+				  paySum.getQuickSearchDates("Last 9-13 months");
+				  sqlRowNo=132; 
+			 	  break;
+			}
+			case "generalPayment90Days":
+			{ 
+				paySum.getQuickSearchDates("Last 90 days");
+	 	 		sqlRowNo=143; 
+	 	 		break;
+			}
+	 	 		  
+			case "Last 4-6 months":
+			{     
+				  paySum.getQuickSearchDates("Last 4-6 months");
+				  sqlRowNo=127; 
+		 		  break;
+			}
+			
+			case "Last 9-13 months":
+			{
+				  paySum.getQuickSearchDates("Last 9-13 months");
+				  sqlRowNo=127; 
+			 	  break;
+				
+			}
+			
+			case "Last 6-9 months":
+			{
+				  paySum.getQuickSearchDates("Last 6-9 months");
+				  sqlRowNo=127; 
+			 	  break;
+				
+			}
+			
+			case "generalPaymentForTIN_30days":
+			{
+				  paySum.getQuickSearchDates("Last 30 days");
+				  sqlRowNo=133; 
+			 	  break;
+				
+			}
 		
-		case "generalPaymentForNPI_6-9months"+"Premium":
-		{
-			  paySum.getQuickSearchDates("Last 6-9 months");
-			  sqlRowNo=132; 
-		 	  break;
+			case "generalPaymentForTIN_60days":
+			{
+				  paySum.getQuickSearchDates("Last 60 days");
+				  sqlRowNo=134; 
+			 	  break;
+				
+			}		
 			
-		}
-		case "generalPaymentForNPI_9-13months":
-		{
-			  paySum.getQuickSearchDates("Last 9-13 months");
-			  sqlRowNo=132; 
-		 	  break;
-		}
-			 
+			case "archiveOnly30Days":
+			{
+				 paySum.getQuickSearchDates("Last 30 days");
+				 sqlRowNo=136; 
+			 	 break;
+			}
 			
-		case "generalPayment60Days_AO_Premium":
+			case "archiveOnly60Days":
+			{
+				 paySum.getQuickSearchDates("Last 60 days");
+				 sqlRowNo=137; 
+			 	 break;
+			}
+			
+			case "archiveOnly90Days":
+			{
+				 paySum.getQuickSearchDates("Last 90 days");
+				 sqlRowNo=145; 
+			 	 break;
+			}
+			
+			case "archiveOnly4_6months":
+			{
+				 paySum.getQuickSearchDates("Last 4-6 months");
+				 sqlRowNo=138; 
+			 	 break;
+			}
+			
+			case "archiveOnly6_9months":
+			{
+				 paySum.getQuickSearchDates("Last 6-9 months");
+				 sqlRowNo=138; 
+			 	 break;
+			}
+			case "archiveOnly9_13months":
+			{
+				 paySum.getQuickSearchDates("Last 9-13 months");
+				 sqlRowNo=138; 
+			 	 break;
+			}
+				
+			
+			case "activeOnly30Days":
+			{
+				 paySum.getQuickSearchDates("Last 30 days");
+				 sqlRowNo=139; 
+			 	 break;
+			}
+			
+			case "activeOnly60Days":
+			{
+				 paySum.getQuickSearchDates("Last 60 days");
+				 sqlRowNo=140; 
+			 	 break;
+			}
+			
+			case "activeOnly90Days":
+			{
+				 paySum.getQuickSearchDates("Last 90 days");
+				 sqlRowNo=146; 
+			 	 break;
+			}
+			
+			case "activeOnly4_6months":
+			{
+				 paySum.getQuickSearchDates("Last 4-6 months");
+				 sqlRowNo=141; 
+			 	 break;
+			}
+			
+			case "activeOnly6_9months":
+			{
+				 paySum.getQuickSearchDates("Last 6-9 months");
+				 sqlRowNo=141; 
+			 	 break;
+			}
+			case "activeOnly9_13months":
+			{
+				 paySum.getQuickSearchDates("Last 9-13 months");
+				 sqlRowNo=141; 
+			 	 break;
+			}
+			
+			case "generalPaymentForTIN_4_6months":
+			{
+				  paySum.getQuickSearchDates("Last 4-6 months");
+				  sqlRowNo=135; 
+			 	  break;
+				
+			}
+			case "generalPaymentForTIN_6_9months":
+			{
+				  paySum.getQuickSearchDates("Last 6-9 months");
+				  sqlRowNo=135; 
+			 	  break;
+				
+			}
+			
+			case "generalPaymentForTIN_9_13months":
+			{
+				  paySum.getQuickSearchDates("Last 9-13 months");
+				  sqlRowNo=135; 
+			 	  break;
+				
+			}
+				
+			case "medicalFilter":
+			{
+				payType="medicalPayment";
+				getPaymentNoDetails(payType);
+			}  
+		 	    break;
+		 	    
+			case "byDOPAndMarketType":
+			{
+				sqlRowNo=249;
+				break;
+			}  
+		 	    
+			case "RemitDetail_ProvGen":
+		 	  {
+			      sqlRowNo=211;
+		 		  break;
+		 	  }
+		 	  
+			case "RemitDetail_ProvAdmin":
+		 	  {
+
+			      sqlRowNo=211;
+		 		  break;
+		 	  }
+		 	  
+			case "RemitDetail":
+		 	  {
+
+			      sqlRowNo=211;
+		 			break;
+		 	  }
+		 	  
+			case "RemitDetail_BSAdmin":
+		 	  {  
+			      sqlRowNo=211;
+		 		  break;
+		 	  }
+		 	  
+			case "RemitDetail_BSGen":
+		 	  {
+
+			      sqlRowNo=211;
+		 		  break;
+		 	  }
+		 	  
+			case "Provider_Admin":
+			{
+			      sqlRowNo=211;
+		 			break;
+		 	}
+			
+			case "Provider_Gen":
+			{
+
+			     sqlRowNo=211;
+		 			break;
+		 	}
+			
+			
+			case "BS_Admin":
+			{
+				 sqlRowNo = 211;
+				break;
+			}
+			
+			
+			case "BS_Gen":
+			{
+				 sqlRowNo = 211;
+				 break;
+
+			}
+			
+			
+			case "Prov":
+			{
+				sqlRowNo = 213;
+				break;
+
+			}
+			case "Payer_Admin":
+			{
+			     sqlRowNo = 213;
+	   			 
+	   		     break;
+			}
+			
+			case "Payer_Gen":
+			{
+			     sqlRowNo = 213;
+	   			 
+	   		     break;
+			}	
+		 	 
+			case "Tricare":
+			{
+				sqlRowNo = 196;
+				break;
+			}	
+			
+			case "Tricare_BS":
+			{
+				sqlRowNo = 196;
+				break;
+			}
+			
+			case "EPRAElectronicPaymentNo":
+			{
+				sqlRowNo = 204;
+				break;
+			}
+			
+			
+			case "Multiple_PLB":
+			{
+				break;
+			}	
+			
+			case "Multiple_PLB_ProvAdmin":
+			{
+	          sqlRowNo = 1904;
+				 break;
+			}	
+			
+			case "Multiple_PLB_ProvGen":
+			{
+				 sqlRowNo = 222;
+				 break;
+			}	
+			
+			case "Multiple_PLB_BSAdmin":
+			{
+			     sqlRowNo = 1907;
+				 break;
+			}	
+			
+			case "Multiple_PLB_BSGen":
+			{
+				 sqlRowNo = 222;
+				 break;
+			}	
+			
+			case "PLB Adj Only":
+			{
+				sqlRowNo = 188;
+				break;
+			}	
+			
+			case "PLB_Adj_Only_ProvAdmin":
+			{
+			     sqlRowNo = 1905;
+				 break;
+			}	
+			
+			case "PLB_Adj_Only_ProvGen":
+			{
+				 sqlRowNo = 222;
+				 break;
+			}	
+			
+			case "PLB_Adj_Only_BSAdmin":
+			{
+	        sqlRowNo = 1908;
+				 break;
+			}	
+			
+			case "PLB_Adj_Only_Pay_Admin":
+			{
+	             sqlRowNo = 212;
+				 Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			     String payerSchema2 = payerSchema1.toString();
+		   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
+			     testConfig.putRunTimeProperty("schema",schema);
+			     sqlRowNo = 214;
+				break;
+			}	
+			case "PLB_Adj_Only_Pay_Gen":
+			{
+			     sqlRowNo = 212;
+			     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			     String payerSchema2 = payerSchema1.toString();
+		   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
+			     testConfig.putRunTimeProperty("schema",schema);
+			     sqlRowNo = 214;
+				break;
+			}	
+			
+			case "byElectronicPaymentNoRemitBS":
+			{
+				 sqlRowNo = 1906;
+				 break;
+			}	
+			
+				case "EPRABSViewPay":
+			{
+				sqlRowNo = 218;
+				break;	
+			}
+				case "TinWthAccuredFeeStat":
+					sqlRowNo=1615;
+					break;
+			 default:
+	 			   Log.Comment("Payment Type " + paymentType + " not found");
+	 			   
+			}
+			}
+		
+		else {
+			testConfig.putRunTimeProperty("tinType", tinType);
+			testConfig.putRunTimeProperty("portalAccess", portalAccess);
+ 		switch(paymentType+"_"+tinType+"_"+portalAccess) {
+ 		
+ 		   case "generalPayment60Days_AO_Premium":
 		{
 			 paySum.getQuickSearchDates("Last 60 days");
 			 sqlRowNo=1611; 
 	 		 break;
-		}
-		
-		case "generalPayment90Days":
-		{ 
-			paySum.getQuickSearchDates("Last 90 days");
- 	 		sqlRowNo=143; 
- 	 		break;
-		}
- 	 		  
-		case "Last 4-6 months":
-		{     
-			  paySum.getQuickSearchDates("Last 4-6 months");
-			  sqlRowNo=127; 
-	 		  break;
-		}
-		
-		case "Last 9-13 months":
-		{
-			  paySum.getQuickSearchDates("Last 9-13 months");
-			  sqlRowNo=127; 
-		 	  break;
-			
-		}
-		
-		case "Last 6-9 months":
-		{
-			  paySum.getQuickSearchDates("Last 6-9 months");
-			  sqlRowNo=127; 
-		 	  break;
-			
-		}
-		
-		case "generalPaymentForTIN_30days":
-		{
-			  paySum.getQuickSearchDates("Last 30 days");
-			  sqlRowNo=133; 
-		 	  break;
-			
-		}
+		}		
 	
-		case "generalPaymentForTIN_60days":
-		{
-			  paySum.getQuickSearchDates("Last 60 days");
-			  sqlRowNo=134; 
-		 	  break;
-			
-		}
-		
 		case "generalPaymentForTIN_90days_AO_Premium":
 		{
 			  paySum.getQuickSearchDates("Last 90 days");
 			  sqlRowNo=1611; 
-		 	  break;
-			
+		 	  break;			
 		}
 		
-		case "generalPaymentForTIN_4_6months":
-		{
-			  paySum.getQuickSearchDates("Last 4-6 months");
-			  sqlRowNo=135; 
-		 	  break;
-			
-		}
-		case "generalPaymentForTIN_6_9months":
-		{
-			  paySum.getQuickSearchDates("Last 6-9 months");
-			  sqlRowNo=135; 
-		 	  break;
-			
-		}
-		
-		case "generalPaymentForTIN_9_13months":
-		{
-			  paySum.getQuickSearchDates("Last 9-13 months");
-			  sqlRowNo=135; 
-		 	  break;
-			
-		}
-		
-		case "archiveOnly30Days":
-		{
-			 paySum.getQuickSearchDates("Last 30 days");
-			 sqlRowNo=136; 
-		 	 break;
-		}
-		
-		case "archiveOnly60Days":
-		{
-			 paySum.getQuickSearchDates("Last 60 days");
-			 sqlRowNo=137; 
-		 	 break;
-		}
-		
-		case "archiveOnly90Days":
-		{
-			 paySum.getQuickSearchDates("Last 90 days");
-			 sqlRowNo=145; 
-		 	 break;
-		}
-		
-		case "archiveOnly4_6months":
-		{
-			 paySum.getQuickSearchDates("Last 4-6 months");
-			 sqlRowNo=138; 
-		 	 break;
-		}
-		
-		case "archiveOnly6_9months":
-		{
-			 paySum.getQuickSearchDates("Last 6-9 months");
-			 sqlRowNo=138; 
-		 	 break;
-		}
-		case "archiveOnly9_13months":
-		{
-			 paySum.getQuickSearchDates("Last 9-13 months");
-			 sqlRowNo=138; 
-		 	 break;
-		}
-			
-		
-		case "activeOnly30Days":
-		{
-			 paySum.getQuickSearchDates("Last 30 days");
-			 sqlRowNo=139; 
-		 	 break;
-		}
-		
-		case "activeOnly60Days":
-		{
-			 paySum.getQuickSearchDates("Last 60 days");
-			 sqlRowNo=140; 
-		 	 break;
-		}
-		
-		case "activeOnly90Days":
-		{
-			 paySum.getQuickSearchDates("Last 90 days");
-			 sqlRowNo=146; 
-		 	 break;
-		}
-		
-		case "activeOnly4_6months":
-		{
-			 paySum.getQuickSearchDates("Last 4-6 months");
-			 sqlRowNo=141; 
-		 	 break;
-		}
-		
-		case "activeOnly6_9months":
-		{
-			 paySum.getQuickSearchDates("Last 6-9 months");
-			 sqlRowNo=141; 
-		 	 break;
-		}
-		case "activeOnly9_13months":
-		{
-			 paySum.getQuickSearchDates("Last 9-13 months");
-			 sqlRowNo=141; 
-		 	 break;
-		}
-			
-		case "medicalFilter":
-		{
-			payType="medicalPayment";
-			getPaymentNoDetails(payType);
-		}  
-	 	    break;
-	 	    
-		case "byDOPAndMarketType":
-		{
-			sqlRowNo=249;
-			break;
-		}  
-	 	    
-		case "RemitDetail_ProvGen":
-	 	  {
-		      sqlRowNo=211;
-	 		  break;
-	 	  }
-	 	  
-		case "RemitDetail_ProvAdmin":
-	 	  {
-
-		      sqlRowNo=211;
-	 		  break;
-	 	  }
-	 	  
-		case "RemitDetail":
-	 	  {
-
-		      sqlRowNo=211;
-	 			break;
-	 	  }
-	 	  
-		case "RemitDetail_BSAdmin":
-	 	  {  
-		      sqlRowNo=211;
-	 		  break;
-	 	  }
-	 	  
-		case "RemitDetail_BSGen":
-	 	  {
-
-		      sqlRowNo=211;
-	 		  break;
-	 	  }
-	 	  
-		case "Provider_Admin":
-		{
-		      sqlRowNo=211;
-	 			break;
-	 	}
-		
-		case "Provider_Gen":
-		{
-
-		     sqlRowNo=211;
-	 			break;
-	 	}
-		
-		
-		case "BS_Admin":
-		{
-			 sqlRowNo = 211;
-			break;
-		}
-		
-		
-		case "BS_Gen":
-		{
-			 sqlRowNo = 211;
-			 break;
-
-		}
-		
-		
-		case "Prov":
-		{
-			sqlRowNo = 213;
-			break;
-
-		}
-		case "Payer_Admin":
-		{
-		     sqlRowNo = 213;
-   			 
-   		     break;
-		}
-		
-		case "Payer_Gen":
-		{
-		     sqlRowNo = 213;
-   			 
-   		     break;
-		}	
-	 	 
-		case "Tricare":
-		{
-			sqlRowNo = 196;
-			break;
-		}	
-		
-		case "Tricare_BS":
-		{
-			sqlRowNo = 196;
-			break;
-		}
-		
-		case "EPRAElectronicPaymentNo":
-		{
-			sqlRowNo = 204;
-			break;
-		}
-		
-		
-		case "Multiple_PLB":
-		{
-			break;
-		}	
-		
-		case "Multiple_PLB_ProvAdmin":
-		{
-          sqlRowNo = 1904;
-			 break;
-		}	
-		
-		case "Multiple_PLB_ProvGen":
-		{
-			 sqlRowNo = 222;
-			 break;
-		}	
-		
-		case "Multiple_PLB_BSAdmin":
-		{
-		     sqlRowNo = 1907;
-			 break;
-		}	
-		
-		case "Multiple_PLB_BSGen":
-		{
-			 sqlRowNo = 222;
-			 break;
-		}	
-		
-		case "PLB Adj Only":
-		{
-			sqlRowNo = 188;
-			break;
-		}	
-		
-		case "PLB_Adj_Only_ProvAdmin":
-		{
-		     sqlRowNo = 1905;
-			 break;
-		}	
-		
-		case "PLB_Adj_Only_ProvGen":
-		{
-			 sqlRowNo = 222;
-			 break;
-		}	
-		
-		case "PLB_Adj_Only_BSAdmin":
-		{
-        sqlRowNo = 1908;
-			 break;
-		}	
-		
-		case "PLB_Adj_Only_Pay_Admin":
-		{
-             sqlRowNo = 212;
-			 Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		     String payerSchema2 = payerSchema1.toString();
-	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
-		     testConfig.putRunTimeProperty("schema",schema);
-		     sqlRowNo = 214;
-			break;
-		}	
-		case "PLB_Adj_Only_Pay_Gen":
-		{
-		     sqlRowNo = 212;
-		     Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		     String payerSchema2 = payerSchema1.toString();
-	   		 String schema = (payerSchema2.substring(payerSchema2.indexOf("=")+1, payerSchema2.length()-1)).trim();
-		     testConfig.putRunTimeProperty("schema",schema);
-		     sqlRowNo = 214;
-			break;
-		}	
-		
-		case "byElectronicPaymentNoRemitBS":
-		{
-			 sqlRowNo = 1906;
-			 break;
-		}	
-		
-			case "EPRABSViewPay":
-		{
-			sqlRowNo = 218;
-			break;	
-		}
-		
-			case "TinWithLessThnMaxUsr":
+			case "TinWithLessThnMaxUsr_VO_Premium":
+			case "TinWithLessThnMaxUsr_AO_Premium":
+			case "TinWithLessThnMaxUsr_AV_Premium":
+			case "TinWithLessThnMaxUsr_AV_Standard":
+			case "TinWithLessThnMaxUsr_AO_Standard":
 				sqlRowNo=1503;
 				break;
 				
-			case "TinWithMoreThnMaxUsr":
+			case "TinWithMoreThnMaxUsr_VO_Premium":
+			case "TinWithMoreThnMaxUsr_AO_Premium":
+			case "TinWithMoreThnMaxUsr_AV_Premium":
+			case "TinWithMoreThnMaxUsr_AO_Standard":
+			case "TinWithMoreThnMaxUsr_AV_Standard":
 				sqlRowNo=1504;
 				break;
-				
-			case "generalStandardTin":
-			sqlRowNo=225;
-			break;
-			
-			case "generalPremiumTin":
-				sqlRowNo=226;
-				break;
-				
+
 			case "Last 30 days_AO_Premium":
 			case "Last 30 days_VO_Premium":
 			case "Last 30 days_AV_Premium":
@@ -1203,30 +1210,39 @@ public ArrayList getEnrollmentContent(String content) {
 			case "Last 9-13 months_VO_Premium":
 			case "Last 9-13 months_AV_Premium":
 			case "Last 9-13 months_AO_Standard":
-			case "Last 9-13 months_VO_Standard":
 			case "Last 9-13 months_AV_Standard":
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
 				
-			case "LegacyOrPremiOrStandard":
+			case "LegacyOrPremiOrStandard_AO_Premium":
+			case "LegacyOrPremiOrStandard_VO_Premium":
+			case "LegacyOrPremiOrStandard_AV_Premium":
+			case "LegacyOrPremiOrStandard_AO_Standard":
+			case "LegacyOrPremiOrStandard_AV_Standard":
 				sqlRowNo=1605;
 				break;	
-			case "TinWthatlstOnePayNum":
+			case "TinWthatlstOnePayNum_AO_Premium":
+			case "TinWthatlstOnePayNum_VO_Premium":
+			case "TinWthatlstOnePayNum_AV_Premium":
+			case "TinWthatlstOnePayNum_AO_Standard":
+			case "TinWthatlstOnePayNum_AV_Standard":
 				sqlRowNo=1610;
 				break;
-			case "TinWthAccuredFeeStat":
-				sqlRowNo=1615;
-				break;	
-			case "TinDuringOrPostTrial":
+	
+			case "TinDuringOrPostTrial_AO_Premium":
+			case "TinDuringOrPostTrial_VO_Premium":
+			case "TinDuringOrPostTrial_AV_Premium":
+			case "TinDuringOrPostTrial_AO_Standard":
+			case "TinDuringOrPostTrial_AV_Standard":				
 				sqlRowNo=1343;
 				break;	
- 		
+ 		 
  		   default:
  			   Log.Comment("Payment Type " + paymentType + " not found");
  		
  		}
-
+		}
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + paymentType);
@@ -1239,6 +1255,7 @@ public ArrayList getEnrollmentContent(String content) {
 		       
 		       if(sqlRowNo==1611)
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       	   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 		       if(paymentType.contains("byDOS"))
 		       {
 		    	 if(tinNumbers.get("CLM_STRT_DT")!=null)
