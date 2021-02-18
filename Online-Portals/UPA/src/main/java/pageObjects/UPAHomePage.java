@@ -151,6 +151,8 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
 
+	@FindBy(linkText="Capitation Reports")
+	WebElement  lnkResourcesCapitationReport;
 
 	
 	
@@ -387,6 +389,15 @@ public class UPAHomePage extends HomePage {
 		Helper.compareEquals(testConfig, "Document Vault windows", 2, Browser.getNoOfWindowHandles(testConfig));
 		Browser.closeBrowser(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+	}
+	public void verifyCapitationReportLinkUnderResources() {
+		   String parentwindowhandle=testConfig.driver.getWindowHandle();
+		   Element.click(lnkResourcesCapitationReport, "capitation report");
+		   Browser.switchToNewWindow(testConfig);
+		   String expectePrivacydURL = "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html";
+		   Browser.verifyURL(testConfig, expectePrivacydURL);
+		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
+		
 	}
 }
 
