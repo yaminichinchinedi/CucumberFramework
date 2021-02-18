@@ -179,7 +179,7 @@ public class HomePage extends LoginUPA {
 
 	public void VerifyAllTabsAreDisplayedAfterSelectingTin(String userType) 
 	{
-		selectTin().verifyNewsSectionIsDisplayed();
+//		selectTin().verifyNewsSectionIsDisplayed();
 
 		// Verify all tabs are displayed after tin is selected
 
@@ -281,7 +281,7 @@ public class HomePage extends LoginUPA {
 		}
 	}
 
-	
+	/*
 	public HomePage selectTin() 
 	 {
 			int sqlRow=23;
@@ -315,8 +315,7 @@ public class HomePage extends LoginUPA {
 			Browser.waitForLoad(testConfig.driver);
 			return this;
 		}
-	
-
+	*/
 	public ViewPayments clickViewPaymentsTab() 
 	{
 		Browser.wait(testConfig,2);
@@ -340,7 +339,6 @@ public class HomePage extends LoginUPA {
 
 	}
 	
-	
 	public PaymentDataFiles clickPaymentDataFilesTab() 
 	{
 		Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
@@ -362,8 +360,6 @@ public class HomePage extends LoginUPA {
 		return new LoginUPA(testConfig);
 	}
 	
-	
-
 	public SearchRemittanceSearchCriteria clickSearchRemittanceTab()
 	{
 	Element.expectedWait(searchRemittanceTab, testConfig, "Search Remittance Tab", "Search Remittance Tab");
@@ -371,21 +367,9 @@ public class HomePage extends LoginUPA {
 	return new SearchRemittanceSearchCriteria(testConfig);
 	}
 
-
-	/*public void logOutAndReLogin(TestBase testConfig)
-	{
-		Element.clickByJS(testConfig,lnkLogOut, "Log out");
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    optumIDLoginPage.fillCredsAndSignIn("", "");
-	}*/
-	
 	public HomePage clickHomeTab()
 	{
 		Element.click(homeTab, "Home Tab");
 		return this;
 	}
-
-	
-
 }

@@ -19,13 +19,7 @@ public class Hooks extends TestBase{
 		setupTestMethod(scn);
 	}
 
-//	@After
-//	public void Aftertest()
-//	{
-//		testConfig.tearDown();
-//	}
-	
-	 @After
+	@After
 	    public void afterhook(Scenario scn) 
 	 {
 		
@@ -43,7 +37,10 @@ public class Hooks extends TestBase{
 		 {
 	    	Log.Fail("Failed to capture screenshot due to exception : " + e);
 	     }
-
+		
+		
+		
+		
 	 endTest(scn);
 }
 }

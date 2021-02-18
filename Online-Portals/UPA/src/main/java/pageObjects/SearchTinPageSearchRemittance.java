@@ -104,7 +104,7 @@ public class SearchTinPageSearchRemittance {
           }  
       case "BS":
          {
-        	 Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+        	 Element.enterData(bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "Enter TIN", "Enter TIN into Provider Column");
         	 Element.click(submitBtn, "Click Search Button");
         	 break;
           }

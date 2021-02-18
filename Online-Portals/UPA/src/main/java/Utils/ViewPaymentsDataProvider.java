@@ -42,34 +42,6 @@ public class ViewPaymentsDataProvider {
 		
 	}
 	
-	/**
-	 * This functions checks if the 
-	 * required tin is already associated 
-	 * with the logged in user or not.
-	 * if in case its not associated it fires an insert query
-	 * to get it associated 	
-	 */
-	public String associateTinWithUser(String tin) 
-	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
-		int isTinAssociated;
-		
-		testConfig.putRunTimeProperty("tin", tin);
-		
-		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
-		if(isTinAssociated == 0) 
-		 {
-		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
-		   Log.Comment("Associated tin " + tin + "With Logged in user");
-		   testConfig.putRunTimeProperty("TobeDeleted", "deletedTINProv");
-		 }
-		else
-		Log.Comment("Tin No " + tin + " is already associated with logged in user");
-		return tin;
-	}
-	
 	public String associateTinWithUser(String userType,String tin) 
 	{ 		
 		int sqlRowNo=0;
@@ -209,23 +181,6 @@ public class ViewPaymentsDataProvider {
 		testConfig.putRunTimeProperty("paymentNo",displayConsNo.get("DSPL_CONSL_PAY_NBR").toString());
 		return paymentNoAndSetlDate;
 	}
-	
-	
-	/**
-	 * Gets the Tin Number associated with consol number 
-	 * that is not in
-	 * EPRA Status Table
-	 * @return 
-	 * it associates the retrieved tin with logged in user
-	 */
-	public String getTinForPaymentNo_NotInEPRAStatus()
-	{
-		int sqlRow=27;
-		getPaymentNo_NotInEPRAStatus();
-		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
-	}
-		
 	
 	public String getQuickSearchFilterCriteria(String setlDate)
 	{

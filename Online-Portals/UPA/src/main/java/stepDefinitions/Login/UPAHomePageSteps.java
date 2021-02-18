@@ -23,7 +23,6 @@ import main.java.pageObjects.UPARegistrationPage;
 public class UPAHomePageSteps extends TestBase{
 	
 	UPAHomePage homePage=null;
-//	UPAHomePage homePage=new UPAHomePage(testConfig);
 	LoginUPA loginPage=null;
 	
 	SearchTinPageViewPayments viewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
@@ -52,27 +51,27 @@ public class UPAHomePageSteps extends TestBase{
     	homePage.selectTin();
     }
     
-
-@Then("^Select the TIN for UPA Portal for \"([^\"]*)\"$")
-public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-	homePage.selectTin(paymentType);
-}
+//
+//@Then("^Select the TIN for UPA Portal for \"([^\"]*)\"$")
+//public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwable {
+//    // Write code here that turns the phrase above into concrete actions
+//	homePage.selectTin(paymentType);
+//}
    
     
-    @When("^User Selects a tin on HomePage for \"([^\"]*)\"$")
-    public void user_Selects_a_tin_on_HomePage_for(String searchCriteria) throws Throwable {
-    	homePage.selectTin(searchCriteria);
-    }
+//    @When("^User Selects a tin on HomePage for \"([^\"]*)\"$")
+//    public void user_Selects_a_tin_on_HomePage_for(String searchCriteria) throws Throwable {
+//    	homePage.selectTin(searchCriteria);
+//    }
     
-    @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
-    public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
-    	testConfig.putRunTimeProperty("tinType", tinType);
-    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
-    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-    	homePage.selectTin(searchCriteria);
-    	homePage.clickHomeTab();
-    }
+//    @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+//    public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
+//    	testConfig.putRunTimeProperty("tinType", tinType);
+//    	testConfig.putRunTimeProperty("portalAccess", portalAccess);
+//    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
+//    	homePage.selectTin(searchCriteria);
+//    	homePage.clickHomeTab();
+//    }
 	
 	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_fetch_tin_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
@@ -188,16 +187,16 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		 homePage.clickOnOptumPaySolutionsTabUPA();
 	}
 
-	 @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" Portal Experience\\.$")
-	 public void user_Selects_a_tin_on_HomePage_for_for_for_for_and_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault) throws Throwable {
-		 testConfig.putRunTimeProperty("tinType", tinType);
-	     testConfig.putRunTimeProperty("portalAccess", portalAccess);
-	     testConfig.putRunTimeProperty("trialStatus", trialStatus);
-	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
-	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
-	    	homePage.selectTin(searchCriteria);
-	    	Browser.wait(testConfig,3);
-	 }
+//	 @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" Portal Experience\\.$")
+//	 public void user_Selects_a_tin_on_HomePage_for_for_for_for_and_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault) throws Throwable {
+//		 testConfig.putRunTimeProperty("tinType", tinType);
+//	     testConfig.putRunTimeProperty("portalAccess", portalAccess);
+//	     testConfig.putRunTimeProperty("trialStatus", trialStatus);
+//	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
+//	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
+//	    	homePage.selectTin(searchCriteria);
+//	    	Browser.wait(testConfig,3);
+//	 }
 	 
 	 @When("^User verifies HomePage Alert depending upon \"([^\"]*)\" and \"([^\"]*)\"$")
 	 public void user_verifies_HomePage_Alert_depending_upon_and(String portalAccess,String tinType) throws Throwable {
@@ -244,9 +243,7 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		
 		@Then("^User Accept the Terms and Conditions and Submit$")
 		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
-			homePage.acceptTncAndSubmit();
-			homePage.verifyIfTncIsUpdated();
-			homePage.logOutFromUPA();
+			homePage.acceptTncAndSubmit().verifyIfTncIsUpdated().logOutFromUPA();
 		}
 
 

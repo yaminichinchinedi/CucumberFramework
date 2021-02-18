@@ -305,7 +305,7 @@ public class UPAHomePage extends HomePage {
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
 	
-	public void acceptTncAndSubmit()
+	public  UPAHomePage acceptTncAndSubmit()
 	{
 		Element.verifyElementNotEnabled(btnSubmit, "Submit button");
 		
@@ -318,17 +318,18 @@ public class UPAHomePage extends HomePage {
 		}
 		else 
 			Log.Fail("Submit mustn't be disabled after TnC is accepted");
-		
 		Element.clickByJS(testConfig, btnSubmit, "Submit");
+		return this;
 		
 	}
 	
-	public void verifyIfTncIsUpdated()
+	public  UPAHomePage verifyIfTncIsUpdated()
 	{
 		int sql=7;
 		Map tncStatus=DataBase.executeSelectQuery(testConfig, sql, 1);
 		String tncAcceptStatus = tncStatus.get("TC_ACCEPT_IND").toString().trim();
 		Helper.compareEquals(testConfig, "Terms and conditions accept status", "Y", tncAcceptStatus);
+		return this;
 	}
 	
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {

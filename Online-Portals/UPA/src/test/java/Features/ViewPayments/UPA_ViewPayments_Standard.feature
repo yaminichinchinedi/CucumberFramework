@@ -5,6 +5,7 @@ Feature: UPA View Payments Functionality for Standard TIN
   Scenario Outline: TS_001,010,012--View Payments Standard TIN selection and validation       
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    Then Enter "<portalAccess>" portal access tin on CSR for "<userType>" having "<tinType>" and "<searchCriteria>" criteria and click submit button
 		When Click on View Payments Link for UPA
     Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
     Then Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
@@ -18,7 +19,6 @@ Examples:
              |       credentials       |		portalAccess    	|   userType    |    searchCriteria | tinType		|
              |       PROV_Admin        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
              |      	 PROV_Gen        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
-
 
 
 #Author: AMIT
