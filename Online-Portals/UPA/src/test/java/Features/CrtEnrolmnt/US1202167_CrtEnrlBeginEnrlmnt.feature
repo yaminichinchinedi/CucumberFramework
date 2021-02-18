@@ -38,4 +38,6 @@ Scenario: Create Enrollment HO Financial Institution Information Continue from I
     Then Select Enrollment Type as Enrollment Type and validates various messgaes by Entering null,less than 9 char,Alphanumeric char,Specia char in TIN
     										      | Enrollment Type |
 										      |       AO       |
+
     Then User also validats captcha Error by turning ON and OFF captcha 
+

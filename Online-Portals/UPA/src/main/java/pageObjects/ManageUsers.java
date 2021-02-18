@@ -37,6 +37,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
+import org.testng.Assert;
 
 public class ManageUsers extends AddUserDetails
 {
@@ -748,7 +749,7 @@ public class ManageUsers extends AddUserDetails
 		tinIndex=getTinIndexfromTinGrid(newAddedTin);
 		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
 	    changeEmailNotifyInd(userType, newAddedTin,tinIndex);
-		verifyEmailNotifyAccLvlFromDB(userType, newAddedTin,tinIndex);
+	    verifyEmailNotifyAccLvlForN(userType, newAddedTin,tinIndex);
 	    HomePage home=clickCancel().clickYes();
 	    home.clickManageUsersTab().clickSpecificUserName(testConfig.getRunTimeProperty("activeUser"));
 	  
@@ -801,6 +802,7 @@ public class ManageUsers extends AddUserDetails
 	       testConfig.putRunTimeProperty("fst_nm", fst_nm);
 	       Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	       Helper.compareEquals(testConfig, "Access Level", emailChkboxUI, portalUserData.get("EMAIL_NTFY_IND").toString());
+	       
            tin = testConfig.getRunTimeProperty("tinNo");
 	       String  access_lvl1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]/option[@selected='selected']")).getText();
            String access_lvl = null;
@@ -1724,7 +1726,8 @@ public class ManageUsers extends AddUserDetails
 	
 	public void deleteInsertedUserportal()
 	{
-	    int sqlRowNo = 1920;
+	    //int sqlRowNo = 1920;
+	    int sqlRowNo = 13;
 		String email = System.getProperty("email");
 		testConfig.putRunTimeProperty("email", email);
 		Map portal_id = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
@@ -2670,15 +2673,14 @@ public void removetinadded()
 		{
          	int sqlRowNo=1606;
 			Map system_Mode = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-
-			if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && ((portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy"))) 
-					&& (userType.contains("PROV")))
+			
+			if(system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED") && (portalAccess.equalsIgnoreCase("Premium")||  portalAccess.equalsIgnoreCase("Legacy")) && (userType.contains("PROV")))
 			{
 				verifyAddUserBtnEnabledUPA(portalAccess);
 				deleteInsertedUserportal();
 			}
 			
-			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")) || (portalAccess.equalsIgnoreCase("Standard") &&  (userType.contains("PROV"))))
+			else if((system_Mode.get("PROC_DATA").toString().equalsIgnoreCase("FEEBASED")) && (portalAccess.equalsIgnoreCase("Standard") &&  (userType.contains("PROV"))))
 			{
 				int sqlRowNoStandardTinCount=1608;
 				Map noofRecords = DataBase.executeSelectQuery(testConfig,sqlRowNoStandardTinCount, 1);
@@ -2800,6 +2802,78 @@ public void removetinadded()
 			Helper.compareEquals(testConfig, "Footer title for post trail premium TIN", "Enrollment & Account Security Reminder", footerTitle.getText().trim());
 			Helper.compareEquals(testConfig, "Footer text for post trail premium TIN", footerTextUI, footerText.getText().trim());
 		}
+		
+		public void verifyEmailNotifyAccLvlForN(String userType,String newAddedTin,int tinIndex)
+		{
+			String emailChkboxUI = null;
+			if(userType.contains("PROV"))
+		    {
+	          
+		       Element.click(savebtn, "Save Button");
+		       String activeuser = usernameUI.getText();
+		       String lst_nm = activeuser.substring(0, activeuser.lastIndexOf(','));
+		       String fst_nm = activeuser.substring(activeuser.lastIndexOf(',')+1,activeuser.length()).trim();
+		       
+		       int sqlRowNo=279;
+		       testConfig.putRunTimeProperty("lst_nm", lst_nm);
+		       testConfig.putRunTimeProperty("fst_nm", fst_nm);
+		       Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		       Helper.compareEquals(testConfig, "Access Level", "N", portalUserData.get("EMAIL_NTFY_IND").toString());
+		       
+	           String tin = testConfig.getRunTimeProperty("tinNo");
+		       String  access_lvl1 = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/select[contains(@name,'GridListResults')]/option[@selected='selected']")).getText();
+	           String access_lvl = null;
+	           if(access_lvl1.contains("General"))
+	    	         access_lvl = "G";
+	    	   else
+	    	         Log.Fail("Access Level for that TIN");
+	    	   
+			   Helper.compareEquals(testConfig, "Access Level", access_lvl, portalUserData.get("ACCESS_LVL").toString().trim());
+	         }
+		}
+		
+		
+public void deleteaddedtin()
+{
+	String tin = testConfig.getRunTimeProperty("tinNo");
+	WebElement delete = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/div[contains(@class,'delete')]"));
+	delete.click();
+	Browser.waitForPageLoad(testConfig);
+	btnSave.click();
+}
+
+	public void verifyManageUsersHeaderAndFooterTextValidation() {
+
+
+		String[] expectedTexts = {
+				"An unlimited number of administrative and general users is available with Optum Pay.",
+				"Enrollment & Account Security Reminder",
+				"A business issued email is required when adding a new user. Personal emails will not be accepted. New users that fail to complete the registration process will be removed from Optum Pay. In addition, existing users with no login activity after six months will be purged. Please review your user list periodically to ensure that all contact information is accurate. If at any time you need to remove a user, please contact our Provider Support Center at 1-877-620-6194."
+		};
+
+		String headerActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[1]/p[2]").getText().trim();
+
+		String footerHeaderTextActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/h2").getText().trim();
+
+		String footerptagText = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/p[2]").getText().trim();
+
+
+		String[] actualTexts = {
+				headerActual,
+				footerHeaderTextActual,
+				footerptagText
+		};
+
+
+		for(int i=0; i<expectedTexts.length; i++){
+			Assert.assertTrue(expectedTexts[i].equals(actualTexts[i]), "Text Validation Failed");
+			Log.Comment("Text Validation successful : \n"+actualTexts[i]);
+		}
+
+	}
+
+
+		
 }
 
 

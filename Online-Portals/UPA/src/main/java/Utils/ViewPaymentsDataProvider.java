@@ -17,7 +17,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.HomePage;
-import main.java.pageObjects.paymentSummary;
+import main.java.pageObjects.ViewPayments;
 import main.java.reporting.Log;
 
 public class ViewPaymentsDataProvider {
@@ -42,44 +42,18 @@ public class ViewPaymentsDataProvider {
 		
 	}
 	
-	/**
-	 * This functions checks if the 
-	 * required tin is already associated 
-	 * with the logged in user or not.
-	 * if in case its not associated it fires an insert query
-	 * to get it associated 	
-	 */
-	public String associateTinWithUser(String tin) 
-	{ 		
-		int sqlRowNo=28;
-		int insertQueryRowNo=24;
-		int isTinAssociated;
-		
-		testConfig.putRunTimeProperty("tin", tin);
-		
-		Map associatedTins = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
-		if(isTinAssociated == 0) 
-		 {
-		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
-		   Log.Comment("Associated tin " + tin + "With Logged in user");
-		   testConfig.putRunTimeProperty("TobeDeleted", "deletedTINProv");
-		 }
-		else
-		Log.Comment("Tin No " + tin + " is already associated with logged in user");
-		return tin;
-	}
-	
 	public String associateTinWithUser(String userType,String tin) 
 	{ 		
 		int sqlRowNo=0;
 		int insertQueryRowNo=0;
+		int insertPortalUserBSTIN=0;
 		int isTinAssociated;
-		
+		testConfig.putRunTimeProperty("userType", userType);
 		if(userType.equals("BS"))
 		{
 			sqlRowNo=62;
 			insertQueryRowNo=61;
+			insertPortalUserBSTIN=1511;
 		}
 		else if(userType.equals("PROV"))
 		{ 
@@ -97,7 +71,10 @@ public class ViewPaymentsDataProvider {
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
 		 {
+			testConfig.putRunTimeProperty("associationDone", "true");
 		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
+		   if(userType.equals("BS"))
+			   DataBase.executeInsertQuery(testConfig, insertPortalUserBSTIN);
 		   Log.Comment("Associated tin " + tin + " with Logged in user");
 		   testConfig.putRunTimeProperty("TobeDeleted", userType);
 		   }
@@ -205,23 +182,6 @@ public class ViewPaymentsDataProvider {
 		return paymentNoAndSetlDate;
 	}
 	
-	
-	/**
-	 * Gets the Tin Number associated with consol number 
-	 * that is not in
-	 * EPRA Status Table
-	 * @return 
-	 * it associates the retrieved tin with logged in user
-	 */
-	public String getTinForPaymentNo_NotInEPRAStatus()
-	{
-		int sqlRow=27;
-		getPaymentNo_NotInEPRAStatus();
-		Map tinForDisplayConsNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		return associateTinWithUser(tinForDisplayConsNo.get("PROV_TAX_ID_NBR").toString());
-	}
-		
-	
 	public String getQuickSearchFilterCriteria(String setlDate)
 	{
 		String filterCriteria="Last 30 days"; 
@@ -243,7 +203,7 @@ public class ViewPaymentsDataProvider {
 	    else if (setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("fromDate").toString()) >=0 &&  setlDate.compareTo(Helper.getStartAndEndPeriod("9-13").get("toDate").toString()) <=0)
 		filterCriteria="Last 9-13 months";
 	    
-	    paymentSummary pay=new paymentSummary(testConfig,"quickSearchDates");
+	    ViewPayments pay=new ViewPayments(testConfig,"quickSearchDates");
 	    pay.getQuickSearchDates(filterCriteria);
 	
 	    return filterCriteria;
@@ -491,7 +451,7 @@ public ArrayList getEnrollmentContent(String content) {
 		
 	}
 	
-	public String getTinForSearchCriteria(String paymentType,String tinType,String portalAccess )
+	public String getTinForSearchCriteria(String searchCriteria,String tinType,String portalAccess )
 	{
 		int sqlRowNo=0;
 		String payType="";
@@ -499,9 +459,10 @@ public ArrayList getEnrollmentContent(String content) {
 		String env = "";
 		String id = "";
 		
-		paymentSummary paySum=new paymentSummary(testConfig,"filter");
+
+		ViewPayments  paySum=new ViewPayments (testConfig,"filter");
 		if(tinType==null && portalAccess==null) {
-			switch(paymentType) {
+			switch(searchCriteria) {
 			case "failedPayment": 
 	 			sqlRowNo=29;
 	 		 	break;
@@ -1121,7 +1082,7 @@ public ArrayList getEnrollmentContent(String content) {
 					sqlRowNo=1615;
 					break;
 			 default:
-	 			   Log.Comment("Payment Type " + paymentType + " not found");
+	 			   Log.Comment("Payment Type " + searchCriteria + " not found");
 	 			   
 			}
 			}
@@ -1129,7 +1090,7 @@ public ArrayList getEnrollmentContent(String content) {
 		else {
 			testConfig.putRunTimeProperty("tinType", tinType);
 			testConfig.putRunTimeProperty("portalAccess", portalAccess);
- 		switch(paymentType+"_"+tinType+"_"+portalAccess) {
+ 		switch(searchCriteria+"_"+tinType+"_"+portalAccess) {
  		
  		   case "generalPayment60Days_AO_Premium":
 		{
@@ -1165,6 +1126,8 @@ public ArrayList getEnrollmentContent(String content) {
 			case "Last 30 days_VO_Premium":
 			case "Last 30 days_AV_Premium":
 			case "Last 30 days_AO_Standard":
+//				sqlRowNo=1617;
+//				break;
 			case "Last 30 days_VO_Standard":
 			case "Last 30 days_AV_Standard":
 				paySum.getQuickSearchDates("Last 30 days");
@@ -1236,27 +1199,97 @@ public ArrayList getEnrollmentContent(String content) {
 			case "TinDuringOrPostTrial_AO_Standard":
 			case "TinDuringOrPostTrial_AV_Standard":				
 				sqlRowNo=1343;
+//			case "TINwithTimeperiod":
+//				sqlRowNo=1617;	
 				break;	
  		 
  		   default:
- 			   Log.Comment("Payment Type " + paymentType + " not found");
+ 			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
  		}
+
 		}
+
+ 		if(searchCriteria.contains("PPRARecord"))
+ 			sqlRowNo=1624;	
+ 	 			
+ 		if( (searchCriteria.contains("WithinTrial and NotPaid"))||
+ 			(searchCriteria.contains("WithinTrial and Paid")) ||
+ 			(searchCriteria.contains("PostTrial and NotPaid"))||
+ 			(searchCriteria.contains("PostTrial and Paid"))
+ 			
+ 				)
+ 			
+ 		{
+ 			if (searchCriteria.contains("WithinTrial and NotPaid")&& !tinType.equals("VO"))
+ 				{
+ 				testConfig.putRunTimeProperty("portalAcs", "Standard");
+ 				testConfig.putRunTimeProperty("portalStat", "PD");
+ 				sqlRowNo=1620;
+ 				}
+ 			if (searchCriteria.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
+				{
+			testConfig.putRunTimeProperty("portalAcs", "Premium");
+			testConfig.putRunTimeProperty("portalStat", "PS");
+			sqlRowNo=1620;
+				}
+ 			if (searchCriteria.contains("PostTrial and NotPaid") && !tinType.equals("VO"))
+				{
+				testConfig.putRunTimeProperty("portalAcs", "Standard");
+				testConfig.putRunTimeProperty("portalStat", "PD");
+				sqlRowNo=1622;
+				}
+			if (searchCriteria.contains("PostTrial and Paid") || tinType.equals("VO"))
+			{
+				testConfig.putRunTimeProperty("portalAcs", "Premium");
+				testConfig.putRunTimeProperty("portalStat", "PS");
+				sqlRowNo=1622;
+			}
+ 				
+ 		}
+ 			
+
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
-		   Log.Comment("Getting tin for  " + paymentType);
+		   Log.Comment("Getting tin for  " + searchCriteria);
 		   Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		   
 		    try
 		     {
-		       Log.Comment("Tin retreived from query for " + paymentType + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
+		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       
 		       if(sqlRowNo==1611)
+		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-		       	   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
-		       if(paymentType.contains("byDOS"))
+				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+			   }
+				if(sqlRowNo==1617)
+                   {
+		    	   testConfig.putRunTimeProperty("PAYR_SCHM_NM",tinNumbers.get("PAYR_SCHM_NM").toString().trim());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CLAIMCOUNT",tinNumbers.get("CLAIMCOUNT").toString());
+
+		    	   if(Integer.parseInt(tinNumbers.get("CLAIMCOUNT").toString())< 75)
+		    	   	{
+		    	   		testConfig.putRunTimeProperty("PRIORITY","1");
+		    	   	}
+		    	   else
+		    	   {
+		    	   		testConfig.putRunTimeProperty("PRIORITY","2");
+
+		    	   }
+		    	   		
+		    	   testConfig.putRunTimeProperty("PORTAL_USER_ID",tinNumbers.get("PORTAL_USER_ID").toString());
+		    	   testConfig.putRunTimeProperty("SETL_DT",tinNumbers.get("SETL_DT").toString());
+                   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+                   	}
+		       if(sqlRowNo==1624)
+		       {
+		    	   testConfig.putRunTimeProperty("dsp_consl_pay_nbr",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       		testConfig.putRunTimeProperty("consl_pay_nbr",tinNumbers.get("CONSL_PAY_NBR").toString());
+		       }
+		       if(searchCriteria.contains("byDOS"))
 		       {
 		    	 if(tinNumbers.get("CLM_STRT_DT")!=null)
 		    	  {
@@ -1264,20 +1297,20 @@ public ArrayList getEnrollmentContent(String content) {
 		    	    testConfig.putRunTimeProperty("toDate",tinNumbers.get("CLM_END_DT").toString());
 		    	  }
 		    	
-		    	 if(paymentType.equalsIgnoreCase("byDOSAndSubscriberId"))
+		    	 if(searchCriteria.equalsIgnoreCase("byDOSAndSubscriberId"))
 		    	 {
 		    		testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
 			    	testConfig.putRunTimeProperty("value", tinNumbers.get("SBSCR_ID").toString());
 		    	 }
 		    	
 		    	//claim and dos
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndClmNo"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndClmNo"))
 		    	{
 		    		testConfig.putRunTimeProperty("key", "CLAIM_IDENTIFIER");
 			    	testConfig.putRunTimeProperty("value", tinNumbers.get("CLM_NBR").toString());
 		    	} 
 		    	
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndPtntNm"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndPtntNm"))
 		    	{
 		    		testConfig.putRunTimeProperty("key", "PATIENT_FIRST_NAME");
 			    	testConfig.putRunTimeProperty("value", tinNumbers.get("PTNT_FST_NM").toString());
@@ -1285,41 +1318,41 @@ public ArrayList getEnrollmentContent(String content) {
 			    	testConfig.putRunTimeProperty("value1", tinNumbers.get("PTNT_LST_NM").toString());
 		    	}
 		    	
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndZeroPmntClms"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndZeroPmntClms"))
 		    	{
 		    		testConfig.putRunTimeProperty("key", "ZERO_PAYMENT_CLAIMS");
 			    	testConfig.putRunTimeProperty("value", "Y");
 		    	}
 		    	 
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndMarketType"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndMarketType"))
 		    	{
 		    		testConfig.putRunTimeProperty("key","MARKET_TYPE");
 			    	testConfig.putRunTimeProperty("value",tinNumbers.get("PAYMENT_TYPE_INDICATOR").toString());
 		         }
 		    	 
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndAcntNo"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndAcntNo"))
 		    	{
 		    		testConfig.putRunTimeProperty("key", "ACCOUNT_NUMBER");
 		    		testConfig.putRunTimeProperty("value", tinNumbers.get("PTNT_ACCT_NBR").toString());
 		    	}
 		    	 
-		    	else if (paymentType.equalsIgnoreCase("byDOSAndNpi"))
+		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndNpi"))
 		    	{
 		    		testConfig.putRunTimeProperty("NPI", tinNumbers.get("PROV_NPI_NBR").toString());
 		    	}
 		    }
-		     else if(paymentType.equalsIgnoreCase("byDOPAndZeroPaymentClaims"))
+		     else if(searchCriteria.equalsIgnoreCase("byDOPAndZeroPaymentClaims"))
 		     {
 		    	testConfig.putRunTimeProperty("fromDate",tinNumbers.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate",tinNumbers.get("SETL_DT").toString());
 		     }
 		       
 		       
-		     else if(paymentType.equalsIgnoreCase("EPRAPROVAdmin")||paymentType.equalsIgnoreCase("EPRAPROVGen")
-		    		 ||paymentType.equalsIgnoreCase("EPRAgeneratedPROVAdmin")||paymentType.equalsIgnoreCase("EPRAgeneratedPROVGen")
-		    		 ||paymentType.equalsIgnoreCase("EPRABSAdmin")||paymentType.equalsIgnoreCase("EPRAgeneratedBSAdmin")||paymentType.equalsIgnoreCase("EPRAPayerAdmin")
-		    		 ||paymentType.equalsIgnoreCase("EPRAPayerGen")||paymentType.equalsIgnoreCase("EPRAPayergeneratedAdmin")||paymentType.equalsIgnoreCase("EPRAPayergeneratedGen")
-		    		 ||paymentType.equalsIgnoreCase("EPRA")||paymentType.equalsIgnoreCase("EPRAgenerated"))
+		     else if(searchCriteria.equalsIgnoreCase("EPRAPROVAdmin")||searchCriteria.equalsIgnoreCase("EPRAPROVGen")
+		    		 ||searchCriteria.equalsIgnoreCase("EPRAgeneratedPROVAdmin")||searchCriteria.equalsIgnoreCase("EPRAgeneratedPROVGen")
+		    		 ||searchCriteria.equalsIgnoreCase("EPRABSAdmin")||searchCriteria.equalsIgnoreCase("EPRAgeneratedBSAdmin")||searchCriteria.equalsIgnoreCase("EPRAPayerAdmin")
+		    		 ||searchCriteria.equalsIgnoreCase("EPRAPayerGen")||searchCriteria.equalsIgnoreCase("EPRAPayergeneratedAdmin")||searchCriteria.equalsIgnoreCase("EPRAPayergeneratedGen")
+		    		 ||searchCriteria.equalsIgnoreCase("EPRA")||searchCriteria.equalsIgnoreCase("EPRAgenerated"))
 			 {
 
 				  testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
@@ -1340,13 +1373,13 @@ public ArrayList getEnrollmentContent(String content) {
 					 
 			  }
 		    
-		    else if(paymentType.equalsIgnoreCase("byCheckNoOfReoriginNacha")||paymentType.equalsIgnoreCase("byCheckNoOfConslPayDtl"))
+		    else if(searchCriteria.equalsIgnoreCase("byCheckNoOfReoriginNacha")||searchCriteria.equalsIgnoreCase("byCheckNoOfConslPayDtl"))
 		    {
 			  testConfig.putRunTimeProperty("key", "CHECK_NUMBER");
 		      testConfig.putRunTimeProperty("value", tinNumbers.get("CHECK_NBR").toString());
 		    }
 		       
-		   else if(paymentType.equalsIgnoreCase("byDOPAndMarketType"))
+		   else if(searchCriteria.equalsIgnoreCase("byDOPAndMarketType"))
 		     {
 		    	testConfig.putRunTimeProperty("fromDate",tinNumbers.get("SETL_DT").toString());
 		    	testConfig.putRunTimeProperty("toDate",tinNumbers.get("SETL_DT").toString());
@@ -1354,7 +1387,7 @@ public ArrayList getEnrollmentContent(String content) {
 		    	testConfig.putRunTimeProperty("value",tinNumbers.get("PAYMENT_TYPE_INDICATOR").toString());
 		     }
 		       
-		  else if(paymentType.equalsIgnoreCase("byDOPAndRenderingProvider"))
+		  else if(searchCriteria.equalsIgnoreCase("byDOPAndRenderingProvider"))
 		  {
 			 testConfig.putRunTimeProperty("fromDate",tinNumbers.get("SETL_DT").toString());
 		     testConfig.putRunTimeProperty("toDate",tinNumbers.get("SETL_DT").toString());
@@ -1362,8 +1395,8 @@ public ArrayList getEnrollmentContent(String content) {
 		     testConfig.putRunTimeProperty("value", tinNumbers.get("LST_NM").toString());
 		  }
 		       
-		  else if (paymentType.equalsIgnoreCase("Multiple_PLB_ProvAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin")||paymentType.equalsIgnoreCase("byElectronicPaymentNoRemitBS")
-				  ||paymentType.equalsIgnoreCase("Multiple_PLB_BSAdmin")||paymentType.equalsIgnoreCase("PLB_Adj_Only_BSAdmin"))
+		  else if (searchCriteria.equalsIgnoreCase("Multiple_PLB_ProvAdmin")||searchCriteria.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin")||searchCriteria.equalsIgnoreCase("byElectronicPaymentNoRemitBS")
+				  ||searchCriteria.equalsIgnoreCase("Multiple_PLB_BSAdmin")||searchCriteria.equalsIgnoreCase("PLB_Adj_Only_BSAdmin"))
 		  {
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			  System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());

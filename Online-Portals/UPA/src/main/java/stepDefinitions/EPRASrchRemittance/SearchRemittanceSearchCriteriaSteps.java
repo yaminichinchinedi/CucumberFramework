@@ -13,6 +13,11 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	
 	SearchRemittanceSearchCriteria srchCriteriaPage = new SearchRemittanceSearchCriteria(testConfig);
 	
+	@Then("^Validate the Market type field present in Search Remittance Page$")
+	public void validate_the_fields_in_Search_Remittance_Page() throws Throwable {
+	    srchCriteriaPage.verifyFieldName();
+	}
+	
 	@Then("^User enters \"([^\"]*)\" and click on search button\\.$")
 	public void user_enters_and_click_on_search_button(String srchCriteria) throws Throwable {
 		srchCriteriaPage.doSearch(srchCriteria); 
@@ -89,4 +94,8 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
     	srchCriteriaPage.verifyLargeNonLargeTin();
     }
 
+    @Then("^Validate search button is enabled or disabled for \"([^\"]*)\"$")
+    public void validate_search_button_is_enabled_or_disabled_for(String portalAccess) throws Throwable {
+    	srchCriteriaPage.verifySearchBtnEnabledOrDisabled(portalAccess);
+    }
 }

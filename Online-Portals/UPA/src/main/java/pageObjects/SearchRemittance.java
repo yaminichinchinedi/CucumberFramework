@@ -50,7 +50,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class SearchRemittance extends paymentSummary {
+public class SearchRemittance extends ViewPayments {
 	
 	//@FindBy(xpath="//td[@class='errors']")
 	@FindBy(xpath = "//td[contains(text(),'No records match the selected search criteria. Cho')]")
@@ -63,9 +63,15 @@ public class SearchRemittance extends paymentSummary {
 	WebElement recordCount;
 	
 	//amit
-	@FindBy(xpath = "//div[@id='SearchHeader']//table//tr") 
+	//@FindBy(xpath = "//div[@id='SearchHeader']//table//tr") 
+	@FindBy(xpath = "//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr")
+	//*[@id="SearchHeader"]/table/tbody/tr[1]
+	//*[@id="search-remmitance"]/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr[2]/td[1]
 	public List<WebElement> divSearchResults;
 
+	@FindBy(xpath = "//*[@id='SearchHeader']/table/tbody/tr")
+	public List<WebElement> divSearchResultsUPA;
+	
 	@FindBy(id = "SearchCriteriaVal")
 	WebElement divSearchCriteria;
 
@@ -123,9 +129,12 @@ public class SearchRemittance extends paymentSummary {
 	@FindBy(linkText = "Archive")
 	WebElement lnkArchive;
 	
-	@FindBy(xpath="//tr[@class='columnHeaderText']")
-	//@FindBy(xpath="//tr[@class='search-remittance__table_header']")
+	//@FindBy(xpath="//tr[@class='columnHeaderText']")
+	@FindBy(xpath="//tr[@class='search-remittance__table_header']")
 	List<WebElement> searchResultsHeaderRow;
+	
+	@FindBy(xpath="//tr[@class='columnHeaderText']")
+	List<WebElement> searchResultsPrintHeaderRow;
 	
 	@FindBy(id = "saveArchive")
 	WebElement btnSaveArchive;
@@ -179,7 +188,7 @@ public class SearchRemittance extends paymentSummary {
 		
 		if(testConfig.getRunTimeProperty("testSuite").equals("UPA"))
 		 {
-			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUI());
+			Helper.compareEquals(testConfig, "Record Count from FISL and UI :",totalRecordsFromFISL,getRecordCountFromUISR());
 		   if(!totalRecordsFromFISL.equalsIgnoreCase("0"))
 			Helper.compareMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
 		  else
@@ -187,7 +196,8 @@ public class SearchRemittance extends paymentSummary {
 //		   Helper.compareEquals(testConfig, "Record Count from FISL and DB :",totalRecordsFromFISL,getRecordCountFromDB(requestType));
 		}
 		else 
-			verifyPaymentDetailsForCSR(requestType,searchResponse);
+			Helper.compareMaps(testConfig, "Payments Details Comparison ",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));	
+			//verifyPaymentDetailsForCSR(requestType,searchResponse);
      }
 	
 	
@@ -224,14 +234,16 @@ public class SearchRemittance extends paymentSummary {
 	{
 		Object request = null;
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
-		if (requestType.contains("DOP")|| requestType.equals("byElectronicPaymentNo")) {
+		if (requestType.contains("DOP")|| requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo")) {
 			DOP dop = new DOP();
 	        dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 	        dop.setUserRole("PROVIDER");
 	        PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
 	        paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 	        paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-			if (requestType.equals("byElectronicPaymentNo")) {
+			String[] identifier = new String[] {};
+			dop.setEpsNationalProviderIdentifiers(identifier);
+			if (requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo") ) {
 				SearchCriteria searchCriteria = dop.getSearchCriteria();
 				ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
 				ParameterMap parameterMap = new ParameterMap();
@@ -240,12 +252,14 @@ public class SearchRemittance extends paymentSummary {
 				parameterMap.setComparator("Equals");
 				parameterMapList.add(parameterMap);
 				parameterMap = new ParameterMap();
-				parameterMap.setKey("ELECTRONIC_PAYMENT_NUMBER");
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
 				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
 				parameterMap.setComparator("Equals");
 				parameterMapList.add(parameterMap);
 
 				searchCriteria.setParameterMap(parameterMapList);
+				String[] identifiers = new String[] {};
+				dop.setEpsNationalProviderIdentifiers(identifiers);
 			}
 			if (requestType.equals("byDOPAndNpi")) {
 			String[] identifiers = new String[] {testConfig.getRunTimeProperty("NPI").trim()};
@@ -254,12 +268,35 @@ public class SearchRemittance extends paymentSummary {
 	        System.out.println("DOP=" + dop.toString());
 	        request = dop;
 		}
-		if (requestType.equals("byDOS")) {
+		if (requestType.equals("byDOS") || requestType.equals("byDOSAndAcntNo") || requestType.equals("byDOSAndSubscriberId") || requestType.equals("byDOSAndClmNo") || (requestType.equals("byDOSAndPtntNm")) || (requestType.equals("byDOSAndNpi"))) {
 			DOS dos = new DOS();
 			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dos.setUserRole("PROVIDER");
-			String[] identifiers = new String[] {"03432","04271","04567","06111","19402","31417","36273","37602","56693","56758", "62952","65088","66214","78857","81400","86047","86050","87726","91785","94265","95378","95467","95959","96385","99726", "APP01","ECHOH","ERIE1","MCLRN","MDWS5","NYU01","PINNA","RPMP5","SAM1","TEX01","UFNEP","UMR01","VACCN","WID01"};
-			dos.setEpsSecondaryPayerReferenceIdentifiers(identifiers);
+			SearchCriteria searchCriteria = dos.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey(testConfig.getRunTimeProperty("key"));
+			parameterMap.setValue(testConfig.getRunTimeProperty("value"));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+			if (requestType.equals("byDOSAndPtntNm")) {
+				parameterMap = new ParameterMap();
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+			}
+			searchCriteria.setParameterMap(parameterMapList);
+
+			//String[] identifiers = new String[] {"03432","04271","04567","06111","19402","31417","36273","37602","56693","56758", "62952","65088","66214","78857","81400","86047","86050","87726","91785","94265","95378","95467","95959","96385","99726", "APP01","ECHOH","ERIE1","MCLRN","MDWS5","NYU01","PINNA","RPMP5","SAM1","TEX01","UFNEP","UMR01","VACCN","WID01"};
+			if (requestType.equals("byDOSAndNpi")) {
+			String[] identifiers = new String[] {testConfig.getRunTimeProperty("NPI").trim()};
+			dos.setEpsNationalProviderIdentifiers(identifiers);
+			}
+			else {
+			String[] identifiers = new String[] {};
+			dos.setEpsNationalProviderIdentifiers(identifiers);
+			}
 			ClaimServiceDateRange claimServiceDateRange = dos.getClaimServiceDateRange();
 			claimServiceDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 			claimServiceDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
@@ -267,26 +304,7 @@ public class SearchRemittance extends paymentSummary {
 			request = dos;
 		}
 
-		if (requestType.equals("byDOP&SuPAYcriberID")) {
-			DOP dosSubscriber = new DOP();
-			dosSubscriber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
-			dosSubscriber.setUserRole("PROVIDER");
-
-			SearchCriteria searchCriteria = dosSubscriber.getSearchCriteria();
-			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
-			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("SUBSCRIBER_IDENTIFIER");
-			parameterMap.setValue("0093167647"); // TODO parameterize value
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-			searchCriteria.setParameterMap(parameterMapList);
-			PaymentMadeOnDateRange paymentMadeOnDateRange = dosSubscriber.getPaymentMadeOnDateRange();
-			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-			request = dosSubscriber;
-		}
-
-		if (requestType.equals("byDOPAndAccountNo")) {
+		if (requestType.equals("byDOPAndAccountNo") || requestType.equals("byDOP&SubscriberID") || requestType.equals("byDOPAndClaimNo") || (requestType.equals("byDOPAndPatientNm"))) {
 			DOP dopAccountNumber = new DOP();
 			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopAccountNumber.setUserRole("PROVIDER");
@@ -294,73 +312,28 @@ public class SearchRemittance extends paymentSummary {
 			SearchCriteria searchCriteria = dopAccountNumber.getSearchCriteria();
 			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
 			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("ACCOUNT_NUMBER");
-			parameterMap.setValue("10406822");// TODO parameterize value
+			parameterMap.setKey(testConfig.getRunTimeProperty("key"));
+			parameterMap.setValue(testConfig.getRunTimeProperty("value"));
 			parameterMap.setComparator("Equals");
 			parameterMapList.add(parameterMap);
-
+			if (requestType.equals("byDOPAndPatientNm")) {
+				parameterMap = new ParameterMap();
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+			}
 			searchCriteria.setParameterMap(parameterMapList);
-
 			PaymentMadeOnDateRange paymentMadeOnDateRange = dopAccountNumber.getPaymentMadeOnDateRange();
 			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
 			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			String[] identifier = new String[] {};
+			dopAccountNumber.setEpsNationalProviderIdentifiers(identifier);
 			System.out.println("\nDOP Account Number=" + dopAccountNumber.toString());
 			request = dopAccountNumber;
 
 		}
 
-		if (requestType.equals("byDOPAndClaimNo")) {
-			DOP dopClaim = new DOP();
-			dopClaim.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
-			dopClaim.setUserRole("PROVIDER");
-
-			SearchCriteria searchCriteria = dopClaim.getSearchCriteria();
-			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
-			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("CLAIM_IDENTIFIER");// TODO parameterize value
-			parameterMap.setValue("20180607000463");
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-
-			searchCriteria.setParameterMap(parameterMapList);
-
-			PaymentMadeOnDateRange paymentMadeOnDateRange = dopClaim.getPaymentMadeOnDateRange();
-			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-
-			System.out.println("\nDOP Claim=" + dopClaim.toString());
-			request = dopClaim;
-
-		}
-
-		if (requestType.equals("byDOPAndPatientNm")) {
-			DOP dopPatientName = new DOP();
-			dopPatientName.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
-			dopPatientName.setUserRole("PROVIDER");
-
-			SearchCriteria searchCriteria = dopPatientName.getSearchCriteria();
-			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
-			ParameterMap parameterMap = new ParameterMap();
-			parameterMap.setKey("PATIENT_FIRST_NAME");
-			parameterMap.setValue("SHELLY");// TODO parameterize value
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-
-			parameterMap.setKey("PATIENT_LAST_NAME");
-			parameterMap.setValue("ROE");
-			parameterMap.setComparator("Equals");
-			parameterMapList.add(parameterMap);
-
-			searchCriteria.setParameterMap(parameterMapList);
-
-			PaymentMadeOnDateRange paymentMadeOnDateRange = dopPatientName.getPaymentMadeOnDateRange();
-			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
-
-			System.out.println("\nDOP Patient Name=" + dopPatientName.toString());
-			request = dopPatientName;
-
-		}
 
 			EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
 	return searchResponse;
@@ -938,7 +911,7 @@ public class SearchRemittance extends paymentSummary {
 	{	   
 		
 	   /**Gets headers List which will be key for following map*/
-	   int startingLoop=2;
+	   int startingLoop=1;
 		if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi"))
 			startingLoop=1;
 	
@@ -946,24 +919,40 @@ public class SearchRemittance extends paymentSummary {
 	
 	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	   ArrayList<String> headers=getHeadersFromResultTable();
-	   int totalNoOfPages=getNumberOfPages();
+	   int totalNoOfPages=getNumberOfPagesSR();
 	   if(totalNoOfPages>2)
 		 totalNoOfPages=1;
-		   
-	   if(requestType.equalsIgnoreCase("byDOPAndNpi")||requestType.equalsIgnoreCase("byDOSAndNpi"))
-		   divSearchResults=Element.findElements(testConfig, "xpath", "//table[@class='form']//table//tr");
-	   else
-	   if(divSearchResults.size()==0)
-		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='searchRemittanceResultsForm']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+	 
+		   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
+		   		divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='SearchHeader']/table/tbody/tr/td/table/tbody/tr");
+		   }
+		   else {
+	   			divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='SearchHeader']/table/tbody/tr");
+		   }
 	   
+	   if(requestType.equalsIgnoreCase("byElectronicPaymentNo") || requestType.equalsIgnoreCase("byCheckNo")) {
+		   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
+			   divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+		   }
+		   else {
+			   divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
+		   }
+	   }
+	   if(requestType.equalsIgnoreCase("byDOPAndNpi") || requestType.equalsIgnoreCase("byDOSAndNpi")) {
+		   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
+			   divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='searchRemittanceResultsForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+	   }
+		   else {
+			   divSearchResultsUPA=Element.findElements(testConfig, "xpath", "//*[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
+		   }
+	   }
 	   Log.Comment("Fetching all payments From UI..");
 	   String details="";
 	   String amount="";
 	
-	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
-			for(int i=startingLoop;i<divSearchResults.size();i++)
+			for(int i=startingLoop;i<divSearchResultsUPA.size();i++)
 		    {
 			   innerMap=new LinkedHashMap<String,String>();
 			   
@@ -971,7 +960,7 @@ public class SearchRemittance extends paymentSummary {
 			    {	
 				   if(headers.get(j).equals("Payer PRA"))
 					   k=k+4;
-				  details=divSearchResults.get(i).findElements(By.tagName("td")).get(k).getText();
+				  details=divSearchResultsUPA.get(i).findElements(By.tagName("td")).get(k).getText();
 			      //details=details.replace("\n", "");
 			      if(headers.get(j).contains("Payment Status")) {
 			    	  String[] detail = details.split("\n");
@@ -981,15 +970,15 @@ public class SearchRemittance extends paymentSummary {
 			      innerMap.put(headers.get(j), details);	
 				 }
 			    
-			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi"))
+			   if(requestType.equalsIgnoreCase("byElectronicPaymentNo")||requestType.equalsIgnoreCase("byCheckNo")||requestType.equalsIgnoreCase("byDOPAndNpi") || requestType.equalsIgnoreCase("byDOSAndNpi"))
 			    { 
 			      if(innerMap.get("Amount").contains(","))
 			      {
 			         amount=innerMap.get("Amount").replace(",", "");
 			         innerMap.put("Amount", amount);
 			      }
-			      if(innerMap.get("Amount").equals("$0.00")&& (innerMap.get("Type").equals("NON")||innerMap.get("Type").equals("DD")))
-					     innerMap.put("Type","Non||DD");
+//			      if(innerMap.get("Amount").equals("$0.00")&& (innerMap.get("Type").equals("NON")||innerMap.get("Type").equals("DD")))
+//					     innerMap.put("Type","Non||DD");
 			    }
 			   else
 			   {
@@ -1017,9 +1006,11 @@ public class SearchRemittance extends paymentSummary {
 			   innerMap.remove("Payer");
 			   innerMap.remove("835 / EPRA");
 			   innerMap.remove("Payer PRA");
-			   innerMap.remove("Archive");
+			   innerMap.remove("Returned Reason");
 //			   innerMap.put("Payment Status",innerMap.get("Payment Status / Trace Number"));
-//			   innerMap.remove("Payment Status / Trace Number");in
+			   innerMap.remove("ACH Trace Number");
+			   innerMap.remove("Payment Status");
+
 			   
 			   String cl=null;
 			 
@@ -1029,10 +1020,11 @@ public class SearchRemittance extends paymentSummary {
 					cl=innerMap.get("Payment Date");
 			 
 			   outerMap.put(innerMap.get("Payment Number")+"_"+innerMap.get("Patient Name")+"_"+innerMap.get("Subscriber ID")+"_"+cl, innerMap);
-			   if(requestType.equalsIgnoreCase("byDOPAndNpi"))
-				   i=i+2;
-				   else if(requestType.equalsIgnoreCase("byDOSAndNpi"))
-					   i=i+1;
+//			   if(requestType.equalsIgnoreCase("byDOPAndNpi"))
+//				   i=i+2;
+//				   else 
+//			   if(requestType.equalsIgnoreCase("byDOSAndNpi"))
+//				   i=i+1;
 		    }
 			  
 			  if(pageNo%10!=0 && pageNo<totalNoOfPages)
@@ -1071,10 +1063,10 @@ public class SearchRemittance extends paymentSummary {
 	   Map<String, LinkedHashMap<String,String> > outerMap = new LinkedHashMap<String,LinkedHashMap<String,String>>();
 	   ArrayList<String> headers=getHeadersFromResultTable();
 	   
-	   int totalNoOfPages=getNumberOfPages();
+	   //int totalNoOfPages=getNumberOfPages();
 	   
-	   if(totalNoOfPages>2)
-		 totalNoOfPages=1;
+	   //if(totalNoOfPages>2)
+		 int totalNoOfPages=1;
 		   
 	   //if(divSearchResults.size()==0)
 		   divSearchResults=Element.findElements(testConfig, "xpath", ".//*[@id='search-remmitance']/table/tbody/tr[7]/td/table/tbody/tr/td/table/tbody/tr");
@@ -1086,7 +1078,7 @@ public class SearchRemittance extends paymentSummary {
 	   
 	   for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
 		 {  
-			for(int i=2;i<divSearchResults.size();i++)
+			for(int i=1;i<divSearchResults.size();i++)
 		    {
 			   innerMap=new LinkedHashMap<String,String>();
 			   
@@ -1239,12 +1231,24 @@ public class SearchRemittance extends paymentSummary {
 	 */
 	public ArrayList<String> getHeadersFromResultTable()
 	{
+		int noOfHeaders = 0;
+	     String header;
 	   List <String> headerList=new ArrayList<String>();
-	   int noOfHeaders=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).size();
+	   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
+		   noOfHeaders=searchResultsPrintHeaderRow.get(0).findElements(By.tagName("td")).size();
+		   }
+	   else {
+		   noOfHeaders=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).size();
+	   }
 	   for (int i=0;i<noOfHeaders;i++)
 	   {
-	     String header=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).get(i).getText();
-	     headerList.add(header);
+		   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
+			   	 header=searchResultsPrintHeaderRow.get(0).findElements(By.tagName("td")).get(i).getText();
+		   }
+		   else {
+			     header=searchResultsHeaderRow.get(0).findElements(By.tagName("td")).get(i).getText();
+		   }
+		headerList.add(header);
 		}
 	return (ArrayList<String>) headerList;
 	   
@@ -1276,7 +1280,9 @@ public class SearchRemittance extends paymentSummary {
 			patientName=patientName.replace("null ", "").trim();
 			
 			
-			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP")||requestType.equals("byDOPAndRenderingProvider"))
+			if(requestType.equals("byDOPAndAccountNo")||requestType.equals("byDOP")||requestType.equals("byDOPAndRenderingProvider")|| requestType.equals("byDOPAndPatientNm") ||
+					requestType.equals("byDOSAndAcntNo")||requestType.equals("byDOS")||requestType.equals("byDOSAndRenderingProvider")|| requestType.equals("byDOSAndPatientNm") || requestType.equals("byDOSAndSubscriberId") || requestType.equals("byDOSAndClmNo") || requestType.equals("byDOPAndClaimNo")
+					|| requestType.equals("byDOSAndPtntNm"))
 			 {
 			   if(payments[i].getClaimDate()!=null)
 			   innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
@@ -1284,9 +1290,9 @@ public class SearchRemittance extends paymentSummary {
 			  innerMap.put("Claim Date","");
 			 }
 			else
-				if(payments[i].getClaimDate()!=null)
-					 innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
-				else
+//				if(payments[i].getClaimDate()!=null)
+//					 innerMap.put("Claim Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getClaimDate(),"yyyy-MM-dd", "MM-dd-yyyy")));
+//				else
 			  innerMap.put("Payment Date",Helper.changeDateFormatSeperator(Helper.changeDateFormat(payments[i].getPaymentMadeOn(),"yyyy-MM-dd", "MM-dd-yyyy")));
 		  
 			if(payments[i].getNationalProviderIdentifier()!=null)
@@ -1296,17 +1302,17 @@ public class SearchRemittance extends paymentSummary {
 			innerMap.put("Payment Number",payments[i].getDisplayConsolidatedPaymentNumber());
 			
 			
-			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi")))
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi")||requestType.equals("byDOSAndNpi")))
 			 {
 			    if(patientName!="")
 			      innerMap.put("Patient Name",patientName);
 			 }
 			   
-	
-			if(payments[i].getSubscriberIdentifier()!=null)
-			innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
-			
-			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi")))
+			if(!(requestType.equals("byDOPAndNpi") || requestType.equals("byDOSAndNpi"))) {
+				if(payments[i].getSubscriberIdentifier()!=null)
+				innerMap.put("Subscriber ID",payments[i].getSubscriberIdentifier());
+			}
+			if(!(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.equals("byDOPAndNpi") || requestType.equals("byDOSAndNpi")))
 			{
 				if(payments[i].getPatientAccountNumber()!=null)
 					innerMap.put("Account Number",payments[i].getPatientAccountNumber().replace(" ",""));
@@ -1314,9 +1320,18 @@ public class SearchRemittance extends paymentSummary {
 					innerMap.put("Account Number","");
 			}
 				
+			if(requestType.equals("byElectronicPaymentNo") || requestType.equals("byDOPAndNpi") || requestType.equals("byCheckNo") || requestType.equals("byDOSAndNpi")){
+				if(payments[i].getClaimCountTotal()!=null)
+					innerMap.put("Claim Count",String.valueOf(payments[i].getClaimCountTotal()));
+//				else if(outerMap.containsValue("Claim Count")) {
+//					innerMap.put("Claim Count" ,"");
+//				}
+				else
+					innerMap.put("Claim Count","0");
+			}
 			
 			
-			
+			if(!(requestType.equals("byElectronicPaymentNo") || requestType.equals("byDOPAndNpi") || requestType.equals("byCheckNo") || requestType.equals("byDOSAndNpi"))){
 			if(payments[i].getClaimIdentifier()!=null)
 			 {
 			   innerMap.put("Claim #",payments[i].getClaimIdentifier());
@@ -1336,6 +1351,7 @@ public class SearchRemittance extends paymentSummary {
 			    	
 			  }
 			}
+			}
 			else
 			{
 				DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -1343,24 +1359,24 @@ public class SearchRemittance extends paymentSummary {
 			    innerMap.put("Amount","$"+ amount);
 			}
 			
-			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
-			if(innerMap.get("Amount")!=null)
-			{ 
-			    if(innerMap.get("Amount").equals("$0.00"))
-				     innerMap.put("Type","Non||DD");
-			}
+//			innerMap.put("Type",payments[i].getPayeePaymentMethod().getPaymentMethodCode().getCode());
+//			if(innerMap.get("Amount")!=null)
+//			{ 
+//			    if(innerMap.get("Amount").equals("$0.00"))
+//				     innerMap.put("Type","Non||DD");
+//			}
 			
 			 
- 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.contains("byDOP")||requestType.contains("byDOS")||requestType.equals("byDOSAndAcntNo"))
- 			{
- 				if(payments[i].getPaymentStatusCode().getDescription()!=null)
- 					innerMap.put("Payment Status".trim(),payments[i].getPaymentStatusCode().getDescription());
- 				else
- 					if(innerMap.get("Type").equals("ACH"))
- 						innerMap.put("Payment Status".trim(),"Successful ACH");
- 					else
- 					innerMap.put("Payment Status".trim(),"N/A");
- 			}
+// 			if(requestType.equals("byElectronicPaymentNo")||requestType.equals("byCheckNo")||requestType.contains("byDOP")||requestType.contains("byDOS")||requestType.equals("byDOSAndAcntNo"))
+// 			{
+// 				if(payments[i].getPaymentStatusCode().getDescription()!=null)
+// 					innerMap.put("Payment Status".trim(),payments[i].getPaymentStatusCode().getDescription());
+// 				else
+// 					if(innerMap.get("Type").equals("ACH"))
+// 						innerMap.put("Payment Status".trim(),"Successful ACH");
+// 					else
+// 					innerMap.put("Payment Status".trim(),"N/A");
+// 			}
  			 
 			innerMap.put("Market Type",getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			innerMap.remove("Payer");
@@ -1814,7 +1830,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	}
 	
-	public paymentSummary verifyppraStatus(String expectedStatus) 
+	public ViewPayments verifyppraStatus(String expectedStatus) 
 	 {
 		int sqlRowNo=229;//34;		
 		Map ppraStatusTbl = null;	
@@ -1843,7 +1859,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	 } 
 	
-	public paymentSummary getPDFfileName() 
+	public ViewPayments getPDFfileName() 
 	 {
 		int sqlRowNo=229;//34;
 		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
@@ -1858,7 +1874,7 @@ public class SearchRemittance extends paymentSummary {
 	
 	public SearchRemittance validateHyfen()
 {
-		if (Element.findElement(testConfig, "xpath", "//form[@id='searchRemittanceResultsForm']/table/tbody/tr[4]").getText().contains("-"))
+		if (Element.findElement(testConfig, "xpath", "//*[@id='SearchCriteria']/table/tbody/tr/td").getText().contains("-"))
 			Log.Fail("Search Criteria contains hyphen");
 		else
 			Log.Pass("Search Criteria do not contains hyphen");
@@ -1895,6 +1911,19 @@ public class SearchRemittance extends paymentSummary {
 			}
 		}
 
+	}
+	
+	public SearchRemittance clickprintbutton(){
+		Element.click(btnPrinttSearchResult, "Print Search Result Button");
+		return this;
+	}
+
+	public ViewPayments verifyPrintSearchRemitPage(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+		String parentWin=Browser.switchToNewWindow(testConfig);
+		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
+		Helper.compareMaps(testConfig, "Print Search Remit Details Comparison",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));
+		Browser.switchToParentWindow(testConfig, parentWin);
+		return this;
 	}
 	
 }

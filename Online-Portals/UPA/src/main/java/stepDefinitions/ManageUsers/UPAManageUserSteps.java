@@ -109,7 +109,7 @@ public class UPAManageUserSteps extends TestBase {
 
 	@Then("^User perform validation by adding TIN with same TIN$")
 	public void user_perform_validation_by_adding_TIN_with_same_TIN() throws Throwable {
-	manageUser.clickActiveUserName("PROV").validateAddingSameTIN();
+	manageUser.clickActiveUserName("PROV").validateAddingSameTIN().deleteaddedtin();
 	}
 	
 	@Then("^verify Add user button is enabled\\.$")
@@ -294,7 +294,7 @@ public class UPAManageUserSteps extends TestBase {
 	}
 
 	@Then("^User verifies Add User button visiblity for \"([^\"]*)\" and \"([^\"]*)\" based on \"([^\"]*)\" like FeeBased or Legacy for UPA$")
-	public void user_verifies_Add_User_button_visiblity_for_and_based_on_like_FeeBased_or_Legacy_for_UPA(String systemMode, String portalAccess, String userType) throws Throwable {
+	public void user_verifies_Add_User_button_visiblity_for_and_based_on_like_FeeBased_or_Legacy_for_UPA(String portalAccess, String systemMode, String userType) throws Throwable {
 		testConfig.putRunTimeProperty("sysMode", systemMode);
     	manageUser.verifyAddUsrBtnVsblBySystem_ModeUPA(portalAccess, systemMode, userType);
 	}
@@ -313,6 +313,10 @@ public class UPAManageUserSteps extends TestBase {
 	    manageUser.verifyHoverOverAddUserButton(trialStatus);
 	}
 
+	@Then("Verify Manage Users Header and Footer Text Validation")
+	public void verifyManageUsersHeaderAndFooterTextValidation() {
+		manageUser.verifyManageUsersHeaderAndFooterTextValidation();
+	}
 
 
 

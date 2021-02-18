@@ -18,22 +18,20 @@ import main.java.pageObjects.SearchTinPageViewPayments;
 import main.java.pageObjects.UPAHomePage;
 import main.java.pageObjects.UPARegistrationPage;
 
-
-
 public class UPAHomePageSteps extends TestBase{
 	
 	UPAHomePage homePage=null;
 	LoginUPA loginPage=null;
+	SearchTinPageViewPayments viewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
 	
     @Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_UPA_portal_and_enters_and_login(String userType) throws Throwable {
 	   new UPARegistrationPage(testConfig); 
 	   LoginUPA loginPage=new LoginUPA(testConfig);
 	   homePage=loginPage.doLoginUPA(userType);
-	   
-	   if(userType.equals("PROV_Admin"))
+	   if (userType.equalsIgnoreCase("PROV_Admin"))
 		   testConfig.putRunTimeProperty("AccssLvl", "A");
-	   else if(userType.equals("PROV_Gen"))
+	   if (userType.equalsIgnoreCase("PROV_Gen"))
 		   testConfig.putRunTimeProperty("AccssLvl", "G");
     }
     
@@ -44,32 +42,10 @@ public class UPAHomePageSteps extends TestBase{
 		loginPage.doLoginUPAActivateAccount(userType);
 	}
 	
-    @When("^User Selects a tin on HomePage$")
-    public void user_Selects_a_tin_on_HomePage() throws Throwable {
-    	homePage.selectTin();
-    }
-    
-
-@Then("^Select the TIN for UPA Portal for \"([^\"]*)\"$")
-public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-	homePage.selectTin(paymentType);
-}
-   
-    
-    @When("^User Selects a tin on HomePage for \"([^\"]*)\"$")
-    public void user_Selects_a_tin_on_HomePage_for(String searchCriteria) throws Throwable {
-    	homePage.selectTin(searchCriteria);
-    }
-    
-    @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
-    public void user_Selects_a_tin_on_HomePage_for_for_for_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess) throws Throwable {
-    	testConfig.putRunTimeProperty("tinType", tinType);
-    	testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-    	homePage.selectTin(searchCriteria);
-    	homePage.clickHomeTab();
-    }
-
+	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_fetch_tin_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
+		homePage.fetchTin(userType, searchCriteria, tinType, portalAccess);
+	}
   
     @When("^Click on View Payments Link in UPA$")   
     public void click_on_View_Payments_Link_in_UPA() throws Throwable {
@@ -86,17 +62,6 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
    	homePage.clickMaintainEnrollmentTab();
    }
    
-   @Then("^Select the TIN for \"([^\"]*)\" UPA Portal$")
-	public void select_the_TIN_for_UPA_Portal(String userType) throws Throwable {
-		if(userType.equalsIgnoreCase("PROV"))
-			homePage.selectTin();
-	}
-
-   @Then("^Select the Purged TIN from the dropdown$")
-   public void select_the_Purged_TIN_from_the_dropdown() throws Throwable {
-		homePage.selectPursedTin();
-
-   }
 	@When("^Click on UPA - My Profile Link$")
 	public void click_on_Upa_My_Profile_Link() throws Throwable {
 		homePage.clickMyProfileTab();
@@ -170,76 +135,57 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 	public void click_on_Upa_Manage_User_Link() throws Throwable {
 	    homePage.clickManageUsersLink();
 	}
+	
 	@Then("^User clicks on Billing Service Information tab$")
     public void user_clicks_on_Billing_Service_Information_tab() throws Throwable {
 	 homePage.clickOnBSInfoTabUPA();
-       
     }
+	
 	@When("^User clicks on Optum Pay Solutions tab$")
 	public void user_clicks_on_Optum_Pay_Solutions_tab() throws Throwable {
 		 homePage.clickOnOptumPaySolutionsTabUPA();
 	}
 
-	 @When("^User Selects a tin on HomePage for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" Portal Experience\\.$")
-	 public void user_Selects_a_tin_on_HomePage_for_for_for_for_and_for_Portal_Experience(String searchCriteria, String tinType, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault) throws Throwable {
-		 testConfig.putRunTimeProperty("tinType", tinType);
-	     testConfig.putRunTimeProperty("portalAccess", portalAccess);
-	     testConfig.putRunTimeProperty("trialStatus", trialStatus);
-	     testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
-	     testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
-	    	homePage.selectTin(searchCriteria);
-	    	Browser.wait(testConfig,3);
-	 }
-	 
 	 @When("^User verifies HomePage Alert depending upon \"([^\"]*)\" and \"([^\"]*)\"$")
 	 public void user_verifies_HomePage_Alert_depending_upon_and(String portalAccess,String tinType) throws Throwable {
-	   	
 		 homePage.verifyHomePageAlertUPA(portalAccess,tinType);
 	 }
-	 
 
-		@When("^User hovers on the Resources DropDown$")
-		public void user_hovers_on_the_Resources_DropDown() throws Throwable {
-			homePage.hoverOnResourceDropDown();
-		}
+	@When("^User hovers on the Resources DropDown$")
+	public void user_hovers_on_the_Resources_DropDown() throws Throwable {
+		homePage.hoverOnResourceDropDown();
+	}
 
-		@Then("^User clicks on Faqs link and verifies the FAQ page$")
-		public void user_clicks_on_Faqs_link_and_verifies_the_FAQ_page() throws Throwable {
-			homePage.verifyFaqsFromResources();
-		}
+	@Then("^User clicks on Faqs link and verifies the FAQ page$")
+	public void user_clicks_on_Faqs_link_and_verifies_the_FAQ_page() throws Throwable {
+		homePage.verifyFaqsFromResources();
+	}
 		
-		@Then("^User clicks on Terms and Conditions$")
-		public void user_clicks_on_Terms_and_Conditions() throws Throwable {
-			homePage.verifyTncLinkUnderResources();
-		}
-		
-		
-		@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login when the Terms and Conditions are not accepted$")
-		public void user_navigates_to_UPA_portal_and_enters_and_login_when_the_Terms_and_Conditions_are_not_accepted(String userType) throws Throwable {
-			new UPARegistrationPage(testConfig); 
-			LoginUPA loginPage=new LoginUPA(testConfig);
-			loginPage.setUserProperties(userType);
-			loginPage.updateTncIfAccepted();
-			homePage=loginPage.doLoginUPA(userType);
-		}
-		
-
-		@Then("^The Terms and Conditions page is displayed$")
-		public void the_Terms_and_Conditions_page_is_displayed() throws Throwable {
-			homePage.verifyTncPageAppears();
-		}
-		
-		@Then("^The Terms and Conditions pdf is verified$")
-		public void the_Terms_and_Conditions_pdf_is_verified() throws Throwable {
-			homePage.downloadTncPdf();
-		}
+	@Then("^User clicks on Terms and Conditions$")
+	public void user_clicks_on_Terms_and_Conditions() throws Throwable {
+		homePage.verifyTncLinkUnderResources();
+	}
+	
+	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login when the Terms and Conditions are not accepted$")
+	public void user_navigates_to_UPA_portal_and_enters_and_login_when_the_Terms_and_Conditions_are_not_accepted(String userType) throws Throwable {
+		new UPARegistrationPage(testConfig); 
+		LoginUPA loginPage=new LoginUPA(testConfig);
+		loginPage.setUserProperties(userType);
+		loginPage.updateTncIfAccepted();
+		homePage=loginPage.doLoginUPA(userType);
+	}
 		
 		@Then("^User Accept the Terms and Conditions and Submit$")
 		public void user_Accept_the_Terms_and_Conditions_and_Submit() throws Throwable {
 			homePage.acceptTncAndSubmit();
 			homePage.verifyIfTncIsUpdated();
-			homePage.logOutFromUPA();
 		}
+		
+		@Then("^User clicks on Partners link and verifies the page$")
+		public void user_clicks_on_Partners_link_and_verifies_the_page() throws Throwable {
+		    homePage.verifyPartnersLink();
+		}
+
 
 		@Given("^Is to verify if atleast one standard \"([^\"]*)\" TIN with \"([^\"]*)\" is associated with \"([^\"]*)\" and has \"([^\"]*)\" with \"([^\"]*)\" and \"([^\"]*)\"$")
 		public void is_to_verify_if_atleast_one_standard_TIN_with_is_associated_with_and_has_with_and(String portalAccess, String tinType, String userType, String trialStatus, String SelectedOrDefault, String statusOfStandardRecd) throws Throwable {
@@ -271,6 +217,16 @@ public void select_the_TIN_for_UPA_Portal_for(String paymentType) throws Throwab
 		@Then("^User verifies if homepage is presented when TC_ACCPT_IND is Y$")
 		public void user_verifies_if_homepage_is_presented_when_TC_ACCPT_IND_is_Y() throws Throwable {
 			homePage.verifyHomePage();
+		}
+		@Then("Verify Home Page Carousel Text for \"([^\"]*)\"")
+		public void verifyHomePageCarouselText(String userType){
+			homePage.verifyHomePageCarouselText(userType);
+		}
+  
+		@Then("^User clicks on Document Vault and verifies the page$")
+		public void user_clicks_on_Document_Vault_and_verifies_the_page() throws Throwable {
+			homePage.verifyDocumentVaultLink();
+
 		}
 
 }

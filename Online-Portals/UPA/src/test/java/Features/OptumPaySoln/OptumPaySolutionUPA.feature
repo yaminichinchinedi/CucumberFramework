@@ -8,6 +8,7 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
     Given User navigates to UPA portal and enters "<credentials>" and login
     And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User clicks on Optum Pay Solutions tab
     Then  User verifies their plan type information form the tiles
      Examples:
