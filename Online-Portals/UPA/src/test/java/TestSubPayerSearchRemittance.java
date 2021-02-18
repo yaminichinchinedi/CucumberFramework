@@ -15,7 +15,7 @@ import main.java.pageObjects.SearchRemittance;
 import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.pageObjects.SearchTinPageSearchRemittance;
 import main.java.pageObjects.UPARegistrationPage;
-import main.java.pageObjects.paymentSummary;
+import main.java.pageObjects.ViewPayments;
 
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

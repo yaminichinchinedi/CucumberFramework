@@ -839,7 +839,7 @@ public static void enterDataByJS(TestBase testConfig, WebElement element,String 
 {
 	 JavascriptExecutor js = (JavascriptExecutor)testConfig.driver;
     js.executeScript("arguments[0].value='" + data + "';", element);
-    Log.Comment("Entered" + data + "in" + namOfElement);
+    Log.Comment("Entered : " + data + " in " + namOfElement);
 }
 
 public static boolean isValidFormat(String format, String value, Locale locale) {

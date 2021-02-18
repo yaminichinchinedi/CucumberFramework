@@ -8,7 +8,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.HomePage;
 import main.java.pageObjects.OptumIdLoginPage;
 import main.java.pageObjects.UPARegistrationPage;
-import main.java.pageObjects.paymentSummary;
+import main.java.pageObjects.ViewPayments;
 
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
@@ -303,7 +303,7 @@ public class TestBSViewPayments extends TestBase {
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
  		HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 		paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);	 		
+ 		ViewPayments paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);	 		
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, MktTypeFilter, MktTypeFilter);        
     }
    
@@ -339,7 +339,7 @@ public class TestBSViewPayments extends TestBase {
        UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
        OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
- 	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);
+ 	   ViewPayments paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);
  		
        home.clickViewPaymentsTab().setSearchFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments);
        paymentSummaryPage.verifyPaymentDateSorting("Desc");
@@ -375,7 +375,7 @@ public class TestBSViewPayments extends TestBase {
         UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
         OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	    HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	    paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);
+	    ViewPayments paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType);
         paymentSummaryPage.verifySearchResultsWithFilters(filterPayments, quickSearchFilter, filterPayments, filterPayments); 	
    }
    
@@ -418,7 +418,7 @@ public class TestBSViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType).setQuickSearchFilter(paymentType);  
+	   ViewPayments paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType).setQuickSearchFilter(paymentType);  
        paymentSummaryPage.verifyRemitPaymentPopUp();  
 	}
 
@@ -433,7 +433,7 @@ public class TestBSViewPayments extends TestBase {
 	   UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
 	   OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
 	   HomePage home=optumIDLoginPage.loginWithOptumID(userType,accessType);
-	   paymentSummary paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType).setQuickSearchFilter(paymentType);    
+	   ViewPayments paymentSummaryPage= home.clickViewPaymentsTab().enterBSTin(userType,paymentType).setQuickSearchFilter(paymentType);    
        paymentSummaryPage.verifyFailedPaymentPopUp();  
 
 	}   
