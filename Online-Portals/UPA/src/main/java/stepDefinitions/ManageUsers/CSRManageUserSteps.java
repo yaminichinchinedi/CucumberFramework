@@ -211,15 +211,10 @@ public class CSRManageUserSteps extends TestBase {
         if(userType.equalsIgnoreCase("PROV"))
         {
        searchPage.selectUserType("PROV").searchToDelete("PROV").clickSearch();
-    	//searchPage.clickSearch();  
-        	//manageUsers = searchPage.doSearch(userType);   
-      // System.getProperty("firstName");
-       String fstname=System.getProperty("firstName");
+         String fstname=System.getProperty("firstName");
 		String username= fstname.toUpperCase() + "," +" " + fstname.toUpperCase();
 		testConfig.putRunTimeProperty("username", username);	
 		 manageUsers.clickSpecificUserName(username).deleteAndVerifyUserIsDeleted();
-       
-       // manageUsers.verifyDetailsOfNewUser(userType).deleteAndVerifyUserIsDeleted();
         }
         else
         {
@@ -241,10 +236,7 @@ public class CSRManageUserSteps extends TestBase {
     	{
          String tinNo=searchPage.selectUserType(userType).enterTin("tinWithOneActiveAdmin");
         manageUsers = searchPage.clickSearch();
-        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully(); 
-        manageUsers.verifyModTypeCd(userType,"PCN");
-        manageUsers.clickHome();
-      
+        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();       
        }
     	
     	else if (userType.equalsIgnoreCase("BS"))
@@ -252,8 +244,9 @@ public class CSRManageUserSteps extends TestBase {
         searchPage.selectUserType(userType).searchToEditBS().clickSearch("BS");
        ManageUsers manageUsers=new ManageUsers(testConfig);
        manageUsers.clickSpecificUserNametoedit(userType).editLastName(Helper.generateRandomAlphabetsString(3)).verifyYourChangesWereUpdatedSuccessfully();
-        manageUsers.verifyModTypeCd(userType,"PCN");
-        manageUsers.clickHome();
     	}
+    	
+    	manageUsers.verifyModTypeCd(userType,"PCN");
+        manageUsers.clickHome();
   } 	
 }
