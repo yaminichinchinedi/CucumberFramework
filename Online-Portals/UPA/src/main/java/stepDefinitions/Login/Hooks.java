@@ -1,5 +1,6 @@
 package main.java.stepDefinitions.Login;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import org.openqa.selenium.OutputType;
@@ -37,13 +38,18 @@ public class Hooks extends TestBase{
 		{
 	    	Log.Fail("Failed to capture screenshot due to exception : " + e);
 	    }
-		if(System.getProperty("Application").contains("UPA")){
+		if(System.getProperty("Application").contains("UPA") && "true".equals(testConfig.getRunTimeProperty("associationDone"))){
+			
 			int sqlRowNo=1911;
-			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
-			sqlRowNo=1921;
-			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
-			sqlRowNo=1512;
-			DataBase.executeDeleteQuery(testConfig, sqlRowNo);
+			if("BS".equals(testConfig.getRunTimeProperty("userType"))){
+				DataBase.executeDeleteQuery(testConfig, sqlRowNo);
+				sqlRowNo=1512;
+				DataBase.executeDeleteQuery(testConfig, sqlRowNo);
+			}
+			else if("PROV".equals(testConfig.getRunTimeProperty("userType"))){
+				sqlRowNo=1921;
+				DataBase.executeDeleteQuery(testConfig, sqlRowNo);
+			}
 		}
 		endTest(scn);
 	 }

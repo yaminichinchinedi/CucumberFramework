@@ -48,7 +48,7 @@ public class ViewPaymentsDataProvider {
 		int insertQueryRowNo=0;
 		int insertPortalUserBSTIN=0;
 		int isTinAssociated;
-		
+		testConfig.putRunTimeProperty("userType", userType);
 		if(userType.equals("BS"))
 		{
 			sqlRowNo=62;
@@ -72,6 +72,7 @@ public class ViewPaymentsDataProvider {
 		isTinAssociated=Integer.valueOf((String) associatedTins.get("TIN_COUNT"));
 		if(isTinAssociated == 0) 
 		 {
+			testConfig.putRunTimeProperty("associationDone", "true");
 		   DataBase.executeInsertQuery(testConfig, insertQueryRowNo);
 		   if(userType.equals("BS"))
 			   DataBase.executeInsertQuery(testConfig, insertPortalUserBSTIN);
