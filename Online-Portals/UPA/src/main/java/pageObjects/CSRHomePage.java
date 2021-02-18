@@ -1,5 +1,7 @@
 package main.java.pageObjects;
 
+import java.util.List;
+
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -11,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.Helper;
+import main.java.Utils.ViewPaymentsDataProvider;
 
 public class CSRHomePage {
 	
@@ -60,7 +63,7 @@ public class CSRHomePage {
 	@FindBy(name="addTincsr")
 	WebElement addTin;
 	
-
+	private ViewPaymentsDataProvider dataProvider;
 
     @FindBy(css=".productName") 
 	WebElement txtloggedIn;
@@ -171,7 +174,24 @@ public class CSRHomePage {
     }
     public void clickManageInternalUserlink() {
 		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
-		
-		
 	}
+
+
+
+	public CSRHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
+		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
+			Helper.getPayerSchema(testConfig,searchCriteria);	
+		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		System.setProperty("tin", tin);
+		return this;
+	}
+	
+	public String getTin(String userType,String searchCriteria,String tinType,String portalAccess)
+	{
+		dataProvider=new ViewPaymentsDataProvider(testConfig);
+		String tin=dataProvider.getTinForSearchCriteria(searchCriteria,tinType,portalAccess);
+		return tin;
+	}
+	
+
 }
