@@ -6,8 +6,9 @@ Feature: View Payment Access Payment
   @CSR_ViewPayments_US2801170_P @US2879948 @OctRelease @CSR_ViewPaymentStable
   Scenario Outline: Access Payments - View Payments Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
-    When Click on View Payments Link
-    Then Enter "<portalAccess>" portal access tin on CSR for "<userType>" having "<tinType>" and "<searchCriteria>" criteria and click submit button
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link
+		Then User Enters tin and click on search button for "<userType>".
     Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".
     Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
@@ -30,8 +31,9 @@ Feature: View Payment Access Payment
   @CSR_ViewPayments_US2801189_P @OctRelease @CSR_ViewPaymentStable
   Scenario Outline: Access Payments - View Payments Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
-    When Click on View Payments Link
-    Then Enter "<portalAccess>" portal access tin on CSR for "<userType>" having "<tinType>" and "<searchCriteria>" criteria and click submit button
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link
+		Then User Enters tin and click on search button for "<userType>".
     Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
     Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then Validate Archive column relabeled to Payment Status
@@ -50,8 +52,9 @@ Feature: View Payment Access Payment
 			   	@CSR_ViewPayments_US3129195_P @FebRelease @CSR_ViewPaymentStable
 		Scenario Outline: Access Payments - Manage users Provider for Premium Experience
 		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link
-		Then Enter "<portalAccess>" portal access tin on CSR for "<userType>" having "<tinType>" and "<searchCriteria>" criteria and click submit button
+		Then User Enters tin and click on search button for "<userType>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is displayed.
 		Then Validate amount is displayed for payments present in debit fee rate table.
@@ -64,8 +67,9 @@ Feature: View Payment Access Payment
      @CSRUS3015574
     Scenario Outline: Access Payments - View Payments Provider for Premium Experience
     Given User navigates to CSR portal and enters "<credentials>" and login
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on View Payments Link
-		And User Enters tin for "<userType>","<searchCriteria>","<tinType>" and "<portalAccess>" Portal Experience and click on Search
+		Then User Enters tin and click on search button for "<userType>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then User clicks on pPRA link 
     And User verifies record is inserted in PPRA_STATUS Table with Tin No,Consolidated No and Settlement date

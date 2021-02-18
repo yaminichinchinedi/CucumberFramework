@@ -104,7 +104,7 @@ public class SearchTinPageSearchRemittance {
           }  
       case "BS":
          {
-        	 Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+        	 Element.enterData(bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "Enter TIN", "Enter TIN into Provider Column");
         	 Element.click(submitBtn, "Click Search Button");
         	 break;
           }
@@ -286,7 +286,7 @@ public class SearchTinPageSearchRemittance {
 		System.out.println("*****enterTinUPA 1");
 		int sqlRowNo=0;
 		String payType="";
-		paymentSummary paySum=new paymentSummary(testConfig,"filter");
+		ViewPayments paySum=new ViewPayments(testConfig,"filter");
 
 		switch(paymentType) 
 		{
