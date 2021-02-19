@@ -50,7 +50,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class SearchRemittance extends paymentSummary {
+public class SearchRemittance extends ViewPayments {
 	
 	//@FindBy(xpath="//td[@class='errors']")
 	@FindBy(xpath = "//td[contains(text(),'No records match the selected search criteria. Cho')]")
@@ -1830,7 +1830,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	}
 	
-	public paymentSummary verifyppraStatus(String expectedStatus) 
+	public ViewPayments verifyppraStatus(String expectedStatus) 
 	 {
 		int sqlRowNo=229;//34;		
 		Map ppraStatusTbl = null;	
@@ -1859,7 +1859,7 @@ public class SearchRemittance extends paymentSummary {
 		
 	 } 
 	
-	public paymentSummary getPDFfileName() 
+	public ViewPayments getPDFfileName() 
 	 {
 		int sqlRowNo=229;//34;
 		Map epraStatusTbl=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
@@ -1918,7 +1918,7 @@ public class SearchRemittance extends paymentSummary {
 		return this;
 	}
 
-	public paymentSummary verifyPrintSearchRemitPage(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+	public ViewPayments verifyPrintSearchRemitPage(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
 		String parentWin=Browser.switchToNewWindow(testConfig);
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse(requestType);
 		Helper.compareMaps(testConfig, "Print Search Remit Details Comparison",getSRDetailsFromFISL(requestType,searchResponse), getSRDetailsFromUI(requestType));
@@ -1927,3 +1927,4 @@ public class SearchRemittance extends paymentSummary {
 	}
 	
 }
+

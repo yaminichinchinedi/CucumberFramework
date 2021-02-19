@@ -1,3 +1,4 @@
+
 package main.java.stepDefinitions.EPRASrchRemittance;
 
 import java.util.Map;
@@ -11,12 +12,12 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.pageObjects.SearchTinPageSearchRemittance;
-import main.java.pageObjects.paymentSummary;
+import main.java.pageObjects.ViewPayments;
 
 public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	//SearchRemittanceSearchCriteria searcTin = new SearchRemittanceSearchCriteria(testConfig);
 	SearchTinPageSearchRemittance srchTinPage=new SearchTinPageSearchRemittance(testConfig);
-	private paymentSummary paysumm;	
+	private ViewPayments paysumm;	
 	@Then("^User enters tin on Search Remittance Tin Page for \"([^\"]*)\" and \"([^\"]*)\" click on continue button$")
 	public void user_enters_tin_on_Search_Remittance_Tin_Page_for_and_click_on_continue_button(String priority, String searchBy) throws Throwable {
 		if(searchBy.equals("EPRA"))
@@ -287,3 +288,4 @@ public class SearchTinPageSearchRemittanceSteps extends TestBase {
 	}
 	
 }
+

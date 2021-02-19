@@ -22,7 +22,6 @@ import org.seleniumhq.jetty9.server.session.DatabaseAdaptor;
 
 public class HomePage extends LoginUPA {
 
-	private WebDriver driver;
 	private TestBase testConfig;
 
 	@FindBy(xpath = "//span[contains(text(),'Welcome Screen')]")
@@ -110,19 +109,10 @@ public class HomePage extends LoginUPA {
 	@FindBy(xpath = "//td[contains(text(),'Create and download bundled daily 835 files, Payer PRA, and ePRAs in one easily retrievable zip file.')]")
 	WebElement txtCreateDownload;
 
-
-	
-	
-//	private paymentSummary paymentSummaryPage;
-	
-	private ViewPaymentsDataProvider dataProvider;
-	
-
 	public HomePage(TestBase testConfig) {
 		super(testConfig);
 		this.testConfig = testConfig;
-		PageFactory.initElements(testConfig.driver, this);
-		//Element.expectedWait(txtWelcomeScreen, testConfig,"WelcomeScreenText","Welcome Screen Text ");
+		PageFactory.initElements(TestBase.driver, this);
 	}
 	
 	//Default constructor
@@ -177,33 +167,6 @@ public class HomePage extends LoginUPA {
 		Element.click(CurrentNewsSection, "Click Archive Section tab");
 	}
 
-	public void VerifyAllTabsAreDisplayedAfterSelectingTin(String userType) 
-	{
-		selectTin().verifyNewsSectionIsDisplayed();
-
-		// Verify all tabs are displayed after tin is selected
-
-		Element.verifyElementPresent(viewPaymentsTab, "Payer tab");
-		Element.verifyElementPresent(searchRemittanceTab,"Search Remittance tab");
-		Element.verifyElementPresent(paymentDataFilesTab,"Payment Data Files Tab");
-		Element.verifyElementPresent(maintainEnrlTab, "Maintain Enrollment");
-		Element.verifyElementPresent(myProfileTab, "My Profile tab");
-		Element.verifyElementPresent(lnkResources, "Resources link");
-
-		if(userType.equalsIgnoreCase("Admin"))
-		{
-		   Element.verifyElementPresent(manageUsersTab, "Manage Users tab");
-		   Element.verifyElementPresent(BillingInfoTab, "Billing Info tab");   
-		}
-		else if(userType.equalsIgnoreCase("Gen"))
-		{
-			Element.verifyElementNotPresent(manageUsersTab, "Manage Users tab");
-			Element.verifyElementNotPresent(BillingInfoTab, "Billing Info tab");
-		}
-	}
-	
-	
-
 	public void VerifyResourcesLinks() 
 	{
 		String expectedURLFAQs = "forms/OHFS_EPS_FAQs_040813.pdf";
@@ -248,7 +211,6 @@ public class HomePage extends LoginUPA {
 	public void verifyAssociatedTins() throws IOException
 	{
 		int sqlRowNo = 8;
-		
 		ArrayList<String> tinsListFromDB = new ArrayList<String>();
 		List<String> tinsListFromUI = new ArrayList<String>();
 		HashMap<Integer, HashMap<String, String>> associatedTins = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -265,10 +227,8 @@ public class HomePage extends LoginUPA {
 			newListFromUI.add(tin[0].trim());
 		}
 		
-	   
 		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI);
 		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB);
-		
 		for (String tinNo : tinsListFromDB) 
 		{
 		  if (newListFromUI.contains(tinNo))
@@ -281,48 +241,12 @@ public class HomePage extends LoginUPA {
 		}
 	}
 
-	
-	public HomePage selectTin() 
-	 {
-			int sqlRow=23;
-			Map provDetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-			Element.selectByVisibleText(drpDwnTin,provDetails.get("PROV_TIN_NBR").toString()+" - Enrolled", " Selected Tin is : "  +provDetails.get("PROV_TIN_NBR").toString());
-			Browser.waitForLoad(testConfig.driver);
-			Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown ",  "Tin dropdown");
-			testConfig.putRunTimeProperty("tin", provDetails.get("PROV_TIN_NBR").toString());
-			return new HomePage(testConfig);
-	}
-		
-		
-	public HomePage selectTin(String paymentType) 
-		 {
-			dataProvider=new ViewPaymentsDataProvider(testConfig);
-			
-			String tin="";//dataProvider.getTinForPaymentType(paymentType);
-			dataProvider.associateTinWithUser(tin);
-			
-			List <String> tinList=Element.getAllOptionsInSelect(testConfig,drpDwnTin);
-			tin=tin+" - Enrolled";
-			
-			if((!tinList.contains(tin))){
-			   Element.click(homeTab, "home Tab");
-			   Browser.waitForLoad(testConfig.driver);
-			   Browser.wait(testConfig, 3);
-			   Element.expectedWait(drpDwnTin, testConfig, "Tin dropdown", "Tin dropdown"); 
-			 }
-			
-			Element.selectByVisibleText(drpDwnTin,tin, "Tin is : "  + tin);
-			Browser.waitForLoad(testConfig.driver);
-			return this;
-		}
-	
-
-	public paymentSummary clickViewPaymentsTab() 
+	public ViewPayments clickViewPaymentsTab() 
 	{
 		Browser.wait(testConfig,2);
 		Element.expectedWait(viewPaymentsTab, testConfig, "View Payments Tab", "View Payments Tab");
 		Element.clickByJS(testConfig,viewPaymentsTab, "View Payments Tab");
-		return new paymentSummary(testConfig);
+		return new ViewPayments(testConfig);
 	}
 	
 	public MaintainEnrollment clickMaintainEnrollmentTab() 
@@ -339,7 +263,6 @@ public class HomePage extends LoginUPA {
 		return new ManageUsers(testConfig);
 
 	}
-	
 	
 	public PaymentDataFiles clickPaymentDataFilesTab() 
 	{
@@ -362,8 +285,6 @@ public class HomePage extends LoginUPA {
 		return new LoginUPA(testConfig);
 	}
 	
-	
-
 	public SearchRemittanceSearchCriteria clickSearchRemittanceTab()
 	{
 	Element.expectedWait(searchRemittanceTab, testConfig, "Search Remittance Tab", "Search Remittance Tab");
@@ -371,21 +292,10 @@ public class HomePage extends LoginUPA {
 	return new SearchRemittanceSearchCriteria(testConfig);
 	}
 
-
-	/*public void logOutAndReLogin(TestBase testConfig)
-	{
-		Element.clickByJS(testConfig,lnkLogOut, "Log out");
-		UPARegistrationPage registrationPage = new UPARegistrationPage(testConfig);
-	    OptumIdLoginPage optumIDLoginPage=registrationPage.clickSignInWithOptumId();
-	    optumIDLoginPage.fillCredsAndSignIn("", "");
-	}*/
-	
 	public HomePage clickHomeTab()
 	{
 		Element.click(homeTab, "Home Tab");
 		return this;
 	}
-
-	
 
 }

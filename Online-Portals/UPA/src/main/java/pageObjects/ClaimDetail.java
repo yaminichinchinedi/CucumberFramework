@@ -1539,9 +1539,9 @@ public void verifyTricareMaskingClaimDtl() throws Exception
   }
 
 
-		public paymentSummary clickPaymentNumber(){
+		public ViewPayments clickPaymentNumber(){
 			Element.click(paymentno, "Payment Number");
-			return new paymentSummary(testConfig);
+			return new ViewPayments(testConfig);
 		}
 	
 }
