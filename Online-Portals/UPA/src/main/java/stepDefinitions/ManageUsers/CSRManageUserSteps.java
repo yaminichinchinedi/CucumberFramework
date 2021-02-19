@@ -192,7 +192,7 @@ public class CSRManageUserSteps extends TestBase {
     	if(userType.equalsIgnoreCase("PROV"))
             {
     		manageUsers = searchPage.doSearch(userType).clickAddNewUser().fillNewUserInfo().addTinCSR().selectTinAccessLvl(accessLevelOfNewUser).clickSave();
-    		manageUsers.verifyModTypeCd(userType,"null") ;
+    		manageUsers.verifyModTypeCd(userType,"null") ;///this NULL is a String parameter passed and NOT DATATYPE NULL
             }
        
             else

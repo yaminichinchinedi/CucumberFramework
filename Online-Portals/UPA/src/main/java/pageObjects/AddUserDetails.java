@@ -111,8 +111,6 @@ public class AddUserDetails {
 	@FindBy(xpath="//font[contains(text(),'Invalid Retype Email')]")
 	WebElement errorRetypeEmail;
 	
-	
-	//@FindBy(xpath="//input[@value='+ Add TIN/NPI']")
 	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin_NPI;
 	
@@ -239,7 +237,6 @@ public class AddUserDetails {
 	
 	public ManageUsers clickSave()
 	{   
-		Browser.wait(testConfig, 2);
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
 		Element.clickByJS(testConfig,btnSave, "Save");
 		return new ManageUsers(testConfig) ;
@@ -272,7 +269,7 @@ public class AddUserDetails {
 		Map portalUser=null;
 		Browser.waitForPageLoad(testConfig);
 		for(WebElement userName:userNames)
-		{ String x=userName.getText();
+		{ 
 			if(userName.getText().toString().contains(firstNameTxt))
 					{
 				      Element.click(userName, "UserName: "+ " " +firstNameTxt);

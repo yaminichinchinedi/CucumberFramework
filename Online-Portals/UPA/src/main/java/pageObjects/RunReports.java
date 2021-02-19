@@ -115,9 +115,6 @@ WebElement radioPaymentSummaryReport;
 @FindBy(xpath="//input[@value='transactionSummaryReport']")
 WebElement radioTransactionSummaryReport;	
 	
-@FindBy(xpath="//*[@id='conslEngStatusForm']//table//tbody//tr[2]//td//table//tbody//tr[1]//td//table//tbody//tr//td[2]//span//a//img")
-WebElement txtprocessDate;
-
 @FindBy(name="fromDate")
 WebElement txtFromDate;
 
@@ -196,7 +193,7 @@ public RunReports clickHipaaErrorSummaryReport() {
 public RunReports clickPaymentRemitOnlyPaymentSummaryReport() {
 	 
     Element.clickByJS(testConfig,radioPaymentRemitOnlySummaryReport,"CLick the PaymentRemitOnlySummaryReportt");
-    Browser.wait(testConfig, 1);
+    Element.expectedWait(radioDateRangePaymentRemitOnlySummary, testConfig, "CLick the Date Range PaymentRemitOnlySummaryReport", "radioDateRangePaymentRemitOnlySummary");
     Element.clickByJS(testConfig,radioDateRangePaymentRemitOnlySummary,"CLick the Date Range PaymentRemitOnlySummaryReport");
 	return this;
 	
@@ -219,17 +216,14 @@ public void clickOrgAddressHistoryReport() {
 	
 }
 public RunReports clickOrgUserHistory() {
-	   Browser.wait(testConfig,1);
-       Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
-       Browser.wait(testConfig,1);
+	Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
         return this;
 	
 }
 
 public RunReports clickBSUserHistory() {
-	Browser.wait(testConfig,1);
-	Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
-	Browser.wait(testConfig,1);
+      Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
+	
 	 return this;
 }
 public void clickViewReportButton() {

@@ -193,7 +193,6 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
 	WebElement termsAndCondDate;
 	
-	//@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
 	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
 
@@ -1417,7 +1416,7 @@ public class ManageUsers extends AddUserDetails
 	}
 	
 	public ManageUsers editLastName(String newName)
-	{   Element.clearData(lastName, "last name textbox");
+	{
 		Element.enterDataByJS(testConfig,lastName,newName,"Enter new first name as : " + newName);
 		clickSave();
 		return this;

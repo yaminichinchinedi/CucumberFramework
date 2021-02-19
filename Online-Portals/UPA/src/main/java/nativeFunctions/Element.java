@@ -845,8 +845,7 @@ public static void enterDataByJS(TestBase testConfig, WebElement element,String 
    }
 catch(Exception e)
  {
- Log.Fail("Unable to enter"+data+"in"+ namOfElement+ "<br>" + e);
- e.printStackTrace();
+ Log.Fail("Unable to enter"+data+"in"+ namOfElement+ "<br>" + e );
  }
 }
 
