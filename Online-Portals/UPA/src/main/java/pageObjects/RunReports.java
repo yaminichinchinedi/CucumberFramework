@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
+
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 
@@ -73,7 +74,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import main.java.nativeFunctions.TestBase;
-
 import main.java.reporting.Log;
 import main.java.nativeFunctions.Element;
 import main.java.Utils.DataBase;
@@ -315,34 +315,71 @@ public void enterTinAndDateRange(String userType) {
 	}
  }
  
- 	public RunReports validateSortColumn(){
+ 	public RunReports validateSortColumn() throws IOException{
 			
 
-			List <String> sortedColumn=new ArrayList<String>();
-			
-			
+			List <String> sortedDBColumn=new ArrayList<String>();
+			List <String> storedUIColumn=new ArrayList<String>();
+			int sqlNo=1628;
 			for (int j=0;j<6;j++)
 			{
 				
 				List<WebElement> uIList=Element.findElements(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr");
-
-				Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a").click();
+				WebElement header=Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a");
+				Element.waitForElementTobeClickAble(testConfig, header, 60);
+				Element.clickByJS(testConfig, header, "Header link");
+				//Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a").click();
 				Browser.wait(testConfig, 2);
 				
 				for (int i=1;i<uIList.size();i++)
 				{
 					//WebElement uiColumn=uIList.get(i).findElement(By.xpath("./td["+(j+1)+"]"));
 					WebElement uiColumn=Element.findElement(testConfig,"xpath","//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td["+(j+1)+"]");
-					sortedColumn.add(uiColumn.getText());
+					//sortedDBColumn.add(uiColumn.getText());
+					storedUIColumn.add(uiColumn.getText());
+
 				}
 				if (j==1||j==3||j==5)
-				Collections.sort(sortedColumn,String.CASE_INSENSITIVE_ORDER);
-				else
-				{	
-				Collections.sort(sortedColumn,String.CASE_INSENSITIVE_ORDER);
-				Collections.reverse(sortedColumn);
+				{
+					if (j==1)
+					{	
+					testConfig.putRunTimeProperty("bysortColumn", "RATE_SUB_LEVEL");
+					testConfig.putRunTimeProperty("byslctColumn", "RATE_SUB_LEVEL");}
+					if (j==3)	
+					{
+					testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_DTTM");
+					testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_DTTM");}
+
+					if (j==5){	
+					testConfig.putRunTimeProperty("bysortColumn", "REASON");
+					testConfig.putRunTimeProperty("byslctColumn", "PAY_PROC_ACPT_CD_VAL_DESC ASC,REAS_DESC");}
+
+					
+				testConfig.putRunTimeProperty("ascdesc", "ASC");
 				}
-	
+				else
+				{
+					if (j==0){
+					testConfig.putRunTimeProperty("bysortColumn", "ORG_NM");
+					testConfig.putRunTimeProperty("byslctColumn", "ORG_NM");}
+
+					if (j==2){	
+					testConfig.putRunTimeProperty("bysortColumn", "RATE_PCT");
+					testConfig.putRunTimeProperty("byslctColumn", "RATE_PCT");}
+
+					if (j==4){	
+					testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_ID");
+					testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_ID");}
+
+				testConfig.putRunTimeProperty("ascdesc", "DESC");
+				}
+				HashMap<Integer, HashMap<String, String>> ColumnName = DataBase.executeSelectQueryALL(testConfig,sqlNo);
+				for(Integer tmp : ColumnName.keySet()){
+					sortedDBColumn.add(ColumnName.get(tmp).get(testConfig.getRunTimeProperty("bysortColumn")).toString().trim());
+				}
+				Helper.compareEquals(testConfig, "Sorted Column", sortedDBColumn, storedUIColumn);
+				sortedDBColumn.clear();
+				storedUIColumn.clear();
 			}
 			return this;
 		}
