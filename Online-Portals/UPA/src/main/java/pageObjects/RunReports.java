@@ -182,6 +182,7 @@ public RunReports(TestBase testConfig)
 {
 	this.testConfig=testConfig;
 	PageFactory.initElements(testConfig.driver, this);
+	Element.verifyElementPresent(radioOrgAddressChangeReport, "Organization History radio");
 }
 
 
@@ -330,14 +331,14 @@ public void verifyBSUserHistory() {
    Element.enterDataByJS(testConfig,txtToDate ,d , "Enter To date  ");
    Element.enterDataByJS(testConfig,txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin ");
    clickViewReportButton();
-   WebElement table=driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
    if(table == null)
 		Log.Fail("No active data available in Database for " +"Please execute the test case manually");
    else
         Log.Comment("Data Available");
-    Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
+    Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
      Browser.wait(testConfig, 2);
-    List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+    List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
     testConfig.getRunTimeProperty("tin");
            Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
            Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(3).getText());
