@@ -663,8 +663,6 @@ public class ManageUsers extends AddUserDetails
 				break;
 			}
 		}
-		// Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		//return new ManageUsers(testConfig);
 		return this;
 	}
 
