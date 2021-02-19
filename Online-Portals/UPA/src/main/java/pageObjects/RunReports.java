@@ -307,7 +307,7 @@ public void verifyOrgUserHistory() {
 	 Element.findElement(testConfig, "xpath", "//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table/tbody/tr[1]/td[1]/a");
 	 Element.clickByJS(testConfig,testConfig.driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
 	 Browser.wait(testConfig, 1);
-	
+	 testConfig.getRunTimeProperty("tin");
 	  Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 	 List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
 
@@ -338,6 +338,7 @@ public void verifyBSUserHistory() {
     Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
      Browser.wait(testConfig, 2);
     List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id=\"reportForm\"]/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+    testConfig.getRunTimeProperty("tin");
            Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
            Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(3).getText());
 		   Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(4).getText());
