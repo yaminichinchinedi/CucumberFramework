@@ -185,6 +185,8 @@ public class UPAHomePageSteps extends TestBase{
 		public void user_clicks_on_Partners_link_and_verifies_the_page() throws Throwable {
 		    homePage.verifyPartnersLink();
 		}
+		
+
 
 		@Then("Verify Home Page Carousel Text for \"([^\"]*)\"")
 		public void verifyHomePageCarouselText(String userType){
@@ -194,6 +196,10 @@ public class UPAHomePageSteps extends TestBase{
 		@Then("^User clicks on Document Vault and verifies the page$")
 		public void user_clicks_on_Document_Vault_and_verifies_the_page() throws Throwable {
 			homePage.verifyDocumentVaultLink();
+		}
+		@Then("^User clicks on Capitation Report$")
+		public void user_clicks_on_Capitation_Report() throws Throwable {
+			homePage.verifyCapitationReportLinkUnderResources();
 		}
 
 }

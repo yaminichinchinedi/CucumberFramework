@@ -47,4 +47,3 @@ Examples:
 Examples:
 	  |    userType   |   credentials     |System Mode|
     |      PAY       |   Super     	    |FEEBASED  |
-   														

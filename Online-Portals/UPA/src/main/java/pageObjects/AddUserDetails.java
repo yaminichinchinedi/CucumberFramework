@@ -111,8 +111,7 @@ public class AddUserDetails {
 	@FindBy(xpath="//font[contains(text(),'Invalid Retype Email')]")
 	WebElement errorRetypeEmail;
 	
-	
-	@FindBy(xpath="//input[@value='+ Add TIN/NPI']")
+	@FindBy(xpath="//input[@value='Add TIN/NPI']")
 	WebElement btnAddTin_NPI;
 	
 	@FindBy(css=".rowDark>td>select")
@@ -162,18 +161,18 @@ public class AddUserDetails {
 	public AddUserDetails fillNewUserInfo()
 	{
 		Browser.waitForPageLoad(testConfig);
-		Browser.wait(testConfig, 7);
+		Browser.wait(testConfig, 2);
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
-		Browser.wait(testConfig, 7);
-		Element.enterData(email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Browser.wait(testConfig, 2);
-		Element.enterData(verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
+		Element.enterDataByJS(testConfig,email, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr);
 		Browser.wait(testConfig, 2);
-		Element.enterData(firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
-		Element.enterData(lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt,"lastName");
-	    Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
-		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
-		Element.enterData(phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField ,"phoneNum2");
+		Element.enterDataByJS(testConfig,verifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr);
+		Browser.wait(testConfig, 2);
+		Element.enterDataByJS(testConfig,firstName, firstNameTxt, "Enter First Name as : " + firstNameTxt);
+		Element.enterDataByJS(testConfig,lastName, firstNameTxt, "Enter Last Name as : " + firstNameTxt);
+	    Element.enterDataByJS(testConfig,phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo);
+		Element.enterDataByJS(testConfig,phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo);
+		Element.enterDataByJS(testConfig,phoneNum2, phNoLstField, "Enter Phone number in field 3 as:" + " "+phNoLstField);
 		testConfig.putRunTimeProperty("firstName", firstNameTxt);	
 		System.setProperty("email", userEmailAdr);
 		String email = System.getProperty("email");
@@ -209,7 +208,7 @@ public class AddUserDetails {
 	
 	public AddUserDetails addTinCSR()
 	{
-		Element.enterData(addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin","addTin");
+		Element.enterDataByJS(testConfig,addTin,testConfig.getRunTimeProperty("tin"), "Associate to tin");
 		clickAddTin();
 		return this;
 	}
@@ -232,17 +231,14 @@ public class AddUserDetails {
 	{
 		 List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
 		 Element.selectByVisibleText(accessLvls.get(0), accessLevel, accessLevel+ ":" + " " + "as access level");
-		 Browser.wait(testConfig,2);
-		 Element.click(btnSave, "Click Save Button");
-		// this.verifyDetailsOfNewUser(userType);
-		return null;
+		return this;
 		 
 	}
 	
 	public ManageUsers clickSave()
-	{
+	{   
 		Element.expectedWait(btnSave, testConfig, "Save button", "Save button");
-		Element.click(btnSave, "Save");
+		Element.clickByJS(testConfig,btnSave, "Save");
 		return new ManageUsers(testConfig) ;
 		
 	}

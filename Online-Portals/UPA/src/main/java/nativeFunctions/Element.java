@@ -836,10 +836,17 @@ catch(Exception e)
 
 
 public static void enterDataByJS(TestBase testConfig, WebElement element,String data,String namOfElement)
-{
-	 JavascriptExecutor js = (JavascriptExecutor)testConfig.driver;
+{ 
+	try {
+	Element.clearData(element, namOfElement);
+	JavascriptExecutor js = (JavascriptExecutor)testConfig.driver;
     js.executeScript("arguments[0].value='" + data + "';", element);
     Log.Comment("Entered : " + data + " in " + namOfElement);
+   }
+catch(Exception e)
+ {
+ Log.Fail("Unable to enter"+data+"in"+ namOfElement+ "<br>" + e );
+ }
 }
 
 public static boolean isValidFormat(String format, String value, Locale locale) {

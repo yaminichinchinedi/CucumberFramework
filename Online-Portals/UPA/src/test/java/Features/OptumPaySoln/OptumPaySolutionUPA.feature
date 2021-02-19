@@ -39,7 +39,7 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
    	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     I     |					A					 |				PS			 |
       
-   @US3060825
+   @UPAUS3060825
 	 Scenario Outline: - Optum Pay Solutions - Verify During Trial PopUp
    Given User navigates to UPA portal and enters "<userType>" and login
    When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
@@ -48,3 +48,5 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
      Examples:
    	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
+      
+      

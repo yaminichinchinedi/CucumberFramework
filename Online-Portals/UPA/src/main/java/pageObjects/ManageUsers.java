@@ -193,7 +193,7 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
 	WebElement termsAndCondDate;
 	
-	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
 
 	@FindBy(id="provTinAssociateId")
@@ -663,8 +663,7 @@ public class ManageUsers extends AddUserDetails
 				break;
 			}
 		}
-		// Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		return new ManageUsers(testConfig);
+		return this;
 	}
 
 	/**
@@ -1416,7 +1415,7 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers editLastName(String newName)
 	{
-		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
+		Element.enterDataByJS(testConfig,lastName,newName,"Enter new first name as : " + newName);
 		clickSave();
 		return this;
 	}
@@ -2841,6 +2840,39 @@ public void deleteaddedtin()
 	Browser.waitForPageLoad(testConfig);
 	btnSave.click();
 }
+public ManageUsers verifyModTypeCd(String userType, String value) {
+	
+	String modTypCdDB="";
+	Map SearchedData=null;
+	int flag=1;
+	if(userType.equalsIgnoreCase("PROV"))
+	{
+	int sqlRowNo=1114;
+	 testConfig.getRunTimeProperty("tin");
+	 testConfig.getRunTimeProperty("email");
+	 SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+	
+	}
+	else if(userType.equalsIgnoreCase("BS"))
+	{
+	   int sqlRowNo=1117;
+	   testConfig.getRunTimeProperty("billing_service_id");
+	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+			
+	}
+	if(value.equalsIgnoreCase("null"))
+		{
+			if(modTypCdDB.length()==0)
+				flag=0;
+		}
+	if(value.equalsIgnoreCase(modTypCdDB)|| flag==0)
+		Log.Comment("mod type cd is correct" + modTypCdDB);
+	else
+		Log.Fail("mod type cd is incorrect "+modTypCdDB);
+	return this;
+}
 
 	public void verifyManageUsersHeaderAndFooterTextValidation() {
 
@@ -2873,6 +2905,32 @@ public void deleteaddedtin()
 	}
 
 
+public void clickHome() {
+	WebElement linkHome=testConfig.driver.findElement(By.linkText("Home"));
+	Element.clickByJS(testConfig, linkHome, "home link clicked");
+}
+
+
+
+public ManageUsers clickSpecificUserNametoedit(String userType) {
+	int sqlRowNo;
+	
+	if(userType.equalsIgnoreCase("PROV"))
+	 sqlRowNo=1116;
+	
+	else
+		sqlRowNo=1118;
+	
+	Map portalBSData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String username= portalBSData.get("LST_NM").toString() + ", " +portalBSData.get("FST_NM").toString();
+	testConfig.putRunTimeProperty("username", username);	
+	
+	if(userType.equalsIgnoreCase("PROV"))
+		testConfig.putRunTimeProperty("email", portalBSData.get("EMAIL_ADR_TXT").toString());
+	
+	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+	   return this;
+}
 		
 }
 
