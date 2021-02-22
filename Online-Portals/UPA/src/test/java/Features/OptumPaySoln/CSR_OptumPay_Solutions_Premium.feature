@@ -36,15 +36,16 @@
     @CSRUS3136567
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
-		Then User enters "<tinTyp>" TIN with "<portalAccess>" and click on Search button
+		Then User Enters tin for OPS and click on search button for "<userType>".
 		Then User validates contents of Plan Type tile of this page 
      Examples:
 
-         |   credentials     |  tinTyp  |portalAccess|
-         |    Super          |	AO			|  Premium	 |
-         |    RW   		       |	AO			|  Premium	 |
-         |    RO	           |	AO			|  Premium	 |       
+         |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
+         |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
+         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+         |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|      
          
     @CSRUS3138920
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins

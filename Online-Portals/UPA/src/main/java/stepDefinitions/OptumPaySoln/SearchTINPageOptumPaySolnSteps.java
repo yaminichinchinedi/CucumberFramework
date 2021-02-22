@@ -6,7 +6,7 @@ import main.java.pageObjects.SearchTinPageOptmPaySoln;
 
 public class SearchTINPageOptumPaySolnSteps extends TestBase {
 
-	SearchTinPageOptmPaySoln srchTinpage=new SearchTinPageOptmPaySoln(testConfig);
+	SearchTinPageOptmPaySoln srchTinOPSPage=new SearchTinPageOptmPaySoln(testConfig);
 	
 	
 	
@@ -17,7 +17,7 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 		else if(accuredFeeStatus.equalsIgnoreCase("withoutAccuredFee"))
 		testConfig.putRunTimeProperty("nullStatus", "is null");	
 		
-		srchTinpage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
+		srchTinOPSPage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
 	}
 	@Then("^User enters \"([^\"]*)\" TIN with \"([^\"]*)\" and click on Search button$")
 	public void user_enters_TIN_with_and_click_on_Search_button(String tinTyp, String portalAccess) throws Throwable {
@@ -25,7 +25,11 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 
 		testConfig.putRunTimeProperty("tinType", tinTyp);
 		testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-		srchTinpage.enterTin("LegacyOrPremiOrStandard").clickSearchBtn();
+		srchTinOPSPage.enterTin("LegacyOrPremiOrStandard").clickSearchBtn();
 
+	}
+	@Then("^User Enters tin for OPS and click on search button for \"([^\"]*)\"\\.$")
+	public void user_Enters_tin_for_OPS_and_click_on_search_button_for(String userType) throws Throwable {
+		srchTinOPSPage.enterTinAndSrch(userType);
 	}
 }

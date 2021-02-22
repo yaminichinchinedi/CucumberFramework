@@ -2,8 +2,8 @@
 @UPAOptumPaySolutions
 Feature: - Optum Pay Solutions - VO Provider Options Page 
 
-  @OptumPaySolutionsUPA1 @OPSUPA @US3115910
-		Scenario Outline: - Optum Pay Solutions - VO Provider Options Page 
+  @OptumPaySolutionsUPA1 @OPSUPA @US3115910  
+ 		Scenario Outline: - Optum Pay Solutions - VO Provider Options Page 
     Given User navigates to UPA portal and enters "<userType>" and login
     When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -49,4 +49,27 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
    	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
       
+     
+  
+      
+      @UPAUS3121676
+		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover)
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+   Then  User verifies the Optum Pay Solutions tiles For VO
+     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   PROV_Admin    |     PROV     	|		 	PostTrial and Paid		|			Premium			|		VO			|
+      
+      @UPAUS3121676
+		Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    Then  User verifies the Optum Pay Solutions tiles For VO
+     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   BS_Admin    |     BS     	|		 	PostTrial and Paid		|			Premium			|		VO			|
       

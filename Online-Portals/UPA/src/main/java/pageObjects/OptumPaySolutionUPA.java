@@ -81,6 +81,10 @@ public class OptumPaySolutionUPA {
 	WebElement errorCancelWithoutReason;
 	@FindBy(xpath="//*[@id='reason_selector']//option[8]")
 	WebElement otherOptionTrialCancellationReason;
+	@FindBy(className="wrapperTooltip")
+	List <WebElement> tilesHeaderUI;
+	@FindBy(xpath="//*[@id=\"optum-pay-options\"]/div/div/div/div/div[2]")
+	List <WebElement> tileContentUI;
 
 	
 		private TestBase testConfig;
@@ -205,6 +209,51 @@ public class OptumPaySolutionUPA {
 			}
 			
 		}
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//write here
+		public void verifyOPSTilesForVO() {
+			ArrayList<String> expectdtitles=new ArrayList<String>(); 
+			expectdtitles.add("Plan Type");
+			expectdtitles.add("Rate");
+			expectdtitles.add("Fees");
+			expectdtitles.add("Manage My Plan");
+		
+			ArrayList<String> UIOpsTiles=new ArrayList<String>(); 
+			for(WebElement tiles: tilesHeaderUI)
+			{
+				UIOpsTiles.add(tiles.getText());
+				Element.mouseHoverByJS(testConfig, tiles, "tile hover");
+			}
+			Helper.compareEquals(testConfig, "Title comparision", expectdtitles, UIOpsTiles);
+			
+			ArrayList<String> expectedTileContent=new ArrayList<String>(); 
+			expectedTileContent.add("VCP Only");
+			expectedTileContent.add("N/A");
+			expectedTileContent.add("N/A");
+			expectedTileContent.add("N/A");
+		
+			ArrayList<String> contentTilesUIText=new ArrayList<String>(); 
+			for(WebElement tiles: tileContentUI)
+			{
+			contentTilesUIText.add(tiles.getText().trim());
+			}
+			Helper.compareEquals(testConfig, "Title comparision", expectedTileContent, contentTilesUIText);
+		}
 	}
 

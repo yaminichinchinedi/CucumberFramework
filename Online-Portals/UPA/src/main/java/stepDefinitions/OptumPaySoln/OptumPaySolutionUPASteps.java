@@ -28,4 +28,19 @@ public void verify_the_Cancellation_Popup_based_on_trialStatus(String trialStatu
 	optumPaySol.verifyCancellationPopUp(trialStatus);
 }
 
+
+
+
+
+
+
+
+
+
+
+//write here
+@Then("^User verifies the Optum Pay Solutions tiles For VO$")
+public void user_verifies_the_tiles_in_UPA_VO() throws Throwable {
+	optumPaySol.verifyOPSTilesForVO();
+}
 }
