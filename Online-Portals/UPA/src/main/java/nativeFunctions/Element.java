@@ -32,6 +32,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.sun.mail.iap.Argument;
 
+import main.java.Utils.Helper;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
@@ -398,7 +399,53 @@ import main.java.reporting.Log;
 			
 	}
 }
-		
+	
+	//Verifies element is present on the page. This accepts only the string as parameter.
+    public static void verifyTextPresent(String actualText)
+    {
+
+ 
+
+
+        try {
+            Boolean expectedText = testConfig.driver.getPageSource().toString().contains(actualText);
+            Helper.compareEquals(testConfig, "Asserting whether given text "+actualText+"is present on the page", expectedText.toString(),"true");
+            Log.Comment("Assertion passed successfully");
+        }
+        catch (Exception e)
+        {
+            Log.Fail("Exception occured" + '\n' + e);            
+        }
+
+ 
+
+
+    }
+
+ 
+
+
+    //Verifies element is not present on the page. This accepts only the string as parameter.
+    public static void verifyTextNotPresent(String actualText)
+    {
+
+ 
+
+
+        try{
+            Boolean expectedText = testConfig.driver.getPageSource().toString().contains(actualText);
+            Helper.compareEquals(testConfig, "Asserting whether given text "+actualText+"is not present on the page", expectedText.toString(),"false");
+            Log.Comment("Assertion passed successfully");
+        }
+        catch(Exception e)
+        {
+            Log.Fail("Exception occured" + '\n' + e);            
+        }
+
+ 
+
+
+    }
 	//Verifies element is not present on the page
 	public static void verifyElementNotPresent(WebElement element,String namOfElement)
 		{
