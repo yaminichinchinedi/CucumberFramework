@@ -1,9 +1,11 @@
 package main.java.stepDefinitions.OptumPaySoln;
+
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Browser;
+import main.java.nativeFunctions.Element;
 import main.java.pageObjects.OptumPaySolutionUPA;
 
 
@@ -30,17 +32,15 @@ public void verify_the_Cancellation_Popup_based_on_trialStatus(String trialStatu
 
 
 
+@Then("^Validate the texts in Manage My Plan Tile$")
+public void validate_the_texts_in_Manage_My_Plan_Tile() throws Throwable {
+	  optumPaySol.validate_ManageMyPlanText();
+	    optumPaySol.validate_CancelMyPlanTextLink();
+	    Element.verifyTextNotPresent("Free Trial End Date:");
 
-
-
-
-
-
-
-
-//write here
-@Then("^User verifies the Optum Pay Solutions tiles For VO$")
-public void user_verifies_the_tiles_in_UPA_VO() throws Throwable {
-	optumPaySol.verifyOPSTilesForVO();
 }
+@Then("^User verifies the Optum Pay Solutions tiles For VO$")
+	  public void user_verifies_the_tiles_in_UPA_VO() throws Throwable {
+	  	optumPaySol.verifyOPSTilesForVO();
+	  }
 }

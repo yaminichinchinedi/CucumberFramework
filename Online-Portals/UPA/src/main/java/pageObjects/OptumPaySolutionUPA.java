@@ -49,7 +49,7 @@ public class OptumPaySolutionUPA {
 	WebElement pageText;
 	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
 	WebElement txtFeesInfoAO;
-	@FindBy(linkText="Cancel My Subscription")  
+	@FindBy(linkText="Cancel My Plan")  
 	WebElement lnkCancelSubscription;
 	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
 	WebElement txtActivationAdminName;
@@ -85,6 +85,8 @@ public class OptumPaySolutionUPA {
 	List <WebElement> tilesHeaderUI;
 	@FindBy(xpath="//*[@id=\"optum-pay-options\"]/div/div/div/div/div[2]")
 	List <WebElement> tileContentUI;
+	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
+	WebElement manageMyPlanText;
 
 	
 		private TestBase testConfig;
@@ -171,14 +173,14 @@ public class OptumPaySolutionUPA {
 			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
 			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Unlimited number of users");add("The ability to search claims");add("Years of claims and remittance history maintained for easy access");add("Multiple remittance options (835, EPRA or PPRA)");}};
 			
-			if(trialStatus.equalsIgnoreCase("I"))
+			if(trialStatus.equalsIgnoreCase("PostTrial and Paid"))
 			{ 
 				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
 				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
 				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
 				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
 			}
-			else if(trialStatus.equalsIgnoreCase("A"))
+			else if(trialStatus.equalsIgnoreCase("WithinTrial and Paid"))
 			{  
 				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
@@ -209,51 +211,46 @@ public class OptumPaySolutionUPA {
 			}
 			
 		}
+
+	    
+        
+		public void validate_ManageMyPlanText() {
+            Element.verifyTextPresent(manageMyPlanText,"Manage My Plan");
+            }
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//write here
-		public void verifyOPSTilesForVO() {
-			ArrayList<String> expectdtitles=new ArrayList<String>(); 
-			expectdtitles.add("Plan Type");
-			expectdtitles.add("Rate");
-			expectdtitles.add("Fees");
-			expectdtitles.add("Manage My Plan");
-		
-			ArrayList<String> UIOpsTiles=new ArrayList<String>(); 
-			for(WebElement tiles: tilesHeaderUI)
-			{
-				UIOpsTiles.add(tiles.getText());
-				Element.mouseHoverByJS(testConfig, tiles, "tile hover");
-			}
-			Helper.compareEquals(testConfig, "Title comparision", expectdtitles, UIOpsTiles);
-			
-			ArrayList<String> expectedTileContent=new ArrayList<String>(); 
-			expectedTileContent.add("VCP Only");
-			expectedTileContent.add("N/A");
-			expectedTileContent.add("N/A");
-			expectedTileContent.add("N/A");
-		
-			ArrayList<String> contentTilesUIText=new ArrayList<String>(); 
-			for(WebElement tiles: tileContentUI)
-			{
-			contentTilesUIText.add(tiles.getText().trim());
-			}
-			Helper.compareEquals(testConfig, "Title comparision", expectedTileContent, contentTilesUIText);
+		public void validate_CancelMyPlanTextLink() {
+			Element.verifyTextPresent(lnkCancelSubscription,"Cancel My Plan");
 		}
+    
+
+
+	    public void verifyOPSTilesForVO() {
+					ArrayList<String> expectdtitles=new ArrayList<String>(); 
+					expectdtitles.add("Plan Type");
+					expectdtitles.add("Rate");
+					expectdtitles.add("Fees");
+					expectdtitles.add("Manage My Plan");
+				
+					ArrayList<String> UIOpsTiles=new ArrayList<String>(); 
+					for(WebElement tiles: tilesHeaderUI)
+					{
+						UIOpsTiles.add(tiles.getText());
+						Element.mouseHoverByJS(testConfig, tiles, "tile hover");
+					}
+					Helper.compareEquals(testConfig, "Title comparision", expectdtitles, UIOpsTiles);
+					
+					ArrayList<String> expectedTileContent=new ArrayList<String>(); 
+					expectedTileContent.add("VCP Only");
+					expectedTileContent.add("N/A");
+					expectedTileContent.add("N/A");
+					expectedTileContent.add("N/A");
+				
+					ArrayList<String> contentTilesUIText=new ArrayList<String>(); 
+					for(WebElement tiles: tileContentUI)
+					{
+					contentTilesUIText.add(tiles.getText().trim());
+					}
+					Helper.compareEquals(testConfig, "Title comparision", expectedTileContent, contentTilesUIText);
+				}
 	}
 
