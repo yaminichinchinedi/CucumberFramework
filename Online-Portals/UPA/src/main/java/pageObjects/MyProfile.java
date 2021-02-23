@@ -119,7 +119,6 @@ public class MyProfile {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.verifyElementPresent(lnkChangePwd, "Page is loaded and Change Password Link");
 	}
 
 	//Default constructor
@@ -186,7 +185,6 @@ public class MyProfile {
 			Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getPayerTinsFromUI());
 		else
 		Helper.compareEquals(testConfig, "Associated Tins" , tinsListFromDB, getTinsFromUI());
-	//	Log.passWithScreenshot("Verifies user details on my profile page successully");
 		return this;
 	}
 	
@@ -278,13 +276,14 @@ public class MyProfile {
 		
 		
 		//Enter existing email address in both email and verify email
-		 
+		int sql=6;
+		Map emailData = DataBase.executeSelectQuery(testConfig, sql, 1);
+		String existingRandomEmail= emailData.get("EMAIL_ADR_TXT").toString();
 		Log.Comment("Scenario :Enter existing email address in both email and verify email");
-		Element.enterData(txtBoxEmail,existingEmailAdr, "Enter existing email address as : " + existingEmailAdr,"email");
-		Element.enterData(txtBoxVerifyEmail, existingEmailAdr,"Enter verify existing email address as : " + existingEmailAdr,"Verify Email");
+		Element.enterData(txtBoxEmail,existingRandomEmail, "Enter existing email address as : " + existingRandomEmail,"email");
+		Element.enterData(txtBoxVerifyEmail, existingRandomEmail,"Enter verify existing email address as : " + existingRandomEmail,"Verify Email");
 		Element.click(btnSave, "Save button");
 		Element.waitTillTextAppears(errorEmail, "Email Address already exists in our database", testConfig);
-		//Log.passWithScreenshot("Verifies all error msgs successfully");
 		
 	}
 	
@@ -355,14 +354,6 @@ public class MyProfile {
 		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
 		Map multiple=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "mod_typ_cd", multiple.get("MOD_TYP_CD").toString().trim(), "PCM");
-		
-		
-//		emailChkbox.click();
-//		Element.click(btnSave, "Save button");
-//		Element.verifyTextPresent(updateMsg, "Your profile changes were updated successfully.");
-//		query=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//		mod_typ_cd =query.get("MOD_TYP_CD").toString().trim();
-//		Helper.compareEquals(testConfig, "mod_typ_cd", mod_typ_cd, "PCC");
 
 	}
 	
@@ -385,31 +376,14 @@ public class MyProfile {
 	
 	public void verifyChangePwdSecurity() 
 	{
-//		if(testConfig.driver.findElements(By.xpath("//a[contains(text(),'Change Password')]")).size()== 0)
-//			Log.Pass("Change Password Link/Text is not present");
-//		else
-//			Log.Fail("Change Password Link/Text is present");
-//		
-//		if(testConfig.driver.findElements(By.xpath("//a[contains(text(),'Manage Security Questions')]")).size()== 0)
-//			Log.Pass("Manage Security Questions Link/Text is not present");
-//		else
-//			Log.Fail("Manage Security Questions Link/Text is present");
-		
 		Element.verifyElementNotPresent(chngPwd, "Change Password Link/Text");
 		Element.verifyElementNotPresent(mngSecQuestns, "Manage Security Questions Link/Text");
 		
 	}
 	
 	public void verifyOptumID()
-	{
-	
-//		if(testConfig.driver.findElements(By.xpath("//td[contains(text(),'Optum ID:')]")).size() != 0)
-//			Log.Pass("Optum ID Link/Text is present");
-//		else
-//			Log.Fail("Optum ID Link/Text is not present");
-		
-		Element.verifyElementPresent(optumID, "Optum ID Option");
-			
+	{	
+		Element.verifyElementPresent(optumID, "Optum ID Option");	
 	}
 	
 	
