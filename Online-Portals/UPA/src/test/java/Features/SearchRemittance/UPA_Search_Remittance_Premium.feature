@@ -5,7 +5,7 @@ Feature: UPA Search Remittance for Premium access portal
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
   Then User enters "<Search Criteria>" and click on search button.
   Then Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace
@@ -17,7 +17,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 	
 	Examples:
-		|		Search Criteria			|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN        |tinType|
+		|		Search Criteria			|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN        |tinType|
 		|	byElectronicPayNum	  |	PROV_Admin	 |    PROV     |   Premium    |TinWthatlstOnePayNum   |  VO   |
 		|	byElectronicPayNum  	|	PROV_Gen   	 |    PROV     |   Premium    |TinWthatlstOnePayNum   |  VO   |
 
@@ -27,12 +27,12 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Scenario Outline: Validate Market type in Search remittance
 	
 		Given User navigates to UPA portal and enters "<credentials>" and login
-		When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Search Remittance link for UPA
 		Then Validate the Market type field present in Search Remittance Page
 		
 		Examples:
-			|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN        |tinType|
+			|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN        |tinType|
 		 	|	PROV_Admin 	 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
 			|	PROV_Gen		 |    PROV     |   Premium    |TinWthatlstOnePayNum   			 |  AO   |
 
@@ -41,7 +41,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		@US2948676 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then Validate search button is enabled or disabled for "<portalAccess>"
 	Then User enters "<Search Criteria>" and click on search button.
@@ -50,7 +50,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Then Validate the data of Print Search Remmit Page for "<Search Criteria>"
 
 	Examples:
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	Super	 |    PROV     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	Super	 |    PROV     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	Super	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
@@ -58,14 +58,14 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		@US2793563 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then verify error messages in search results
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"	
 
 	Examples:
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  AO   |
 		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  VO   |
 		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  AV   |
@@ -76,14 +76,13 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 @UPAPROVSearchRemittance
 Scenario Outline: Search Remittance 
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-#	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"
 
 	Examples:
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	PROV_Admin	 |    PROV     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	PROV_Admin	 |    PROV     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	PROV_Admin	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
@@ -113,19 +112,21 @@ Scenario Outline: Search Remittance
 		|   byDOSAndPtntNm   |	PROV_Gen	 |    PROV     |   Premium    |	  byDOSAndPtntNm          |  AO   |
 		#|byDOSAndNpi         |	PROV_Gen	 |    PROV     |   Premium    |	  byDOSAndNpi           |  AO   |
 
-@BSSearchRemittance
+
+		
+@BSSearchRemittance 
 Scenario Outline: - verify search results for search remittance
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
-	When User enters a tin  for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" through "<usertype>" for Portal Experience.
+	Then User Enters Search Remittance tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Criteria Type>"	
 
 Examples:
 
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	BS_Admin	 |    BS     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	BS_Admin	 |    BS     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	BS_Admin	 |    BS     |   Premium    |	byElectronicPaymentNo  |  AO   |
@@ -160,13 +161,14 @@ Examples:
 Scenario Outline: - verify search results for search remittance
 
 	Given User navigates to UPA portal and enters "<credentials>" and login
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
-	When User enters a tin  for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" through "<usertype>" for Portal Experience.
+	Then User Enters Search Remittance tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Criteria Type>"	
 	Examples:
 
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|	
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	PAY_Admin	 |    PAY     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	PAY_Admin	 |    PAY     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	PAY_Admin	 |    PAY     |   Premium    |	byElectronicPaymentNo  |  AO   |

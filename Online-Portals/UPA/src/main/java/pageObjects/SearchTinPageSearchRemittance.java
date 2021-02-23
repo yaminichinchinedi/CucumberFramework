@@ -330,5 +330,25 @@ public class SearchTinPageSearchRemittance {
 		} 
         
       }
+	
+	public SearchTinPageSearchRemittance enterTinAndSrch(String userType){
+		switch (userType)
+		{
+			case "PROV": 
+				Browser.wait(testConfig, 2);
+				break;
+			case "BS": 
+				Browser.wait(testConfig, 2);
+				Element.enterDataByJS(testConfig,bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "tin textbox");
+				Element.click(submitBtn, "Search Button");
+				break;
+			case "Payer": 
+				Browser.wait(testConfig, 2);
+				Element.enterDataByJS(testConfig,payertinDrpDwn,testConfig.getRunTimeProperty("tin"), "tin textbox");
+				Element.click(submitBtn, "Search Button");
+				break;
+			}
+		return this;
+	}
 
 }
