@@ -42,9 +42,9 @@ public class OptumPaySoln {
    WebElement btnSaveChangeRate;
    @FindBy(id="confirmationModal")
    WebElement popUpChangeRate;
-   @FindBy(xpath="/html/body/div[6]/div[3]/div/button[2]")
+   @FindBy(xpath="//button[contains(text(),'Cancel')]")
    WebElement btnChangeRatePopupCancel;
-   @FindBy(xpath="/html/body/div[6]/div[3]/div/button[1]")
+   @FindBy(xpath="//button[contains(text(),'Change')]")
    WebElement btnChangeRatePopupChange;	
    @FindBy(xpath="//*[@id=\"optum-pay-options\"]/div[1]/div[1]/div[2]")
    WebElement tilePlanType;
