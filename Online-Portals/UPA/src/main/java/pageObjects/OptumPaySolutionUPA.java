@@ -250,7 +250,7 @@ public class OptumPaySolutionUPA {
 					{
 					contentTilesUIText.add(tiles.getText().trim());
 					}
-					Helper.compareEquals(testConfig, "Title comparision", expectedTileContent, contentTilesUIText);
+					Helper.compareEquals(testConfig, "Tile Content comparision", expectedTileContent, contentTilesUIText);
 				}
 	}
 

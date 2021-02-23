@@ -38,7 +38,7 @@ Feature: - Optum Pay Solutions - VO Provider Options Page
    Then  Validate the texts in Manage My Plan Tile
    Then Verify the Cancellation Popup based on "<searchCriteria>"
      Examples:
-|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+       |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid   	|	  AO			|
      
