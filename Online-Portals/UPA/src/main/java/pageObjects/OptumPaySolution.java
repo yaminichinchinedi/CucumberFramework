@@ -49,7 +49,7 @@ public class OptumPaySolution {
 	WebElement pageText;
 	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
 	WebElement txtFeesInfoAO;
-	@FindBy(linkText="Cancel My Plan")  
+	@FindBy(linkText="Cancel My Plan")
 	WebElement lnkCancelSubscription;
 	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
 	WebElement txtActivationAdminName;
@@ -87,7 +87,11 @@ public class OptumPaySolution {
 	List <WebElement> tileContentUI;
 	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
 	WebElement manageMyPlanText;
-
+	@FindBy(id="openCancelationPostTrialPopup")
+	WebElement lnkCancelPlanPostTrial;
+	@FindBy(id="openCancelationPopup")
+	WebElement lnkCancelPlanDuringTrial;
+	
 	@FindBy(className="wrapperTooltip")
 	List <WebElement> titles;
 
@@ -202,14 +206,14 @@ public class OptumPaySolution {
 			
 			if(trialStatus.equalsIgnoreCase("PostTrial and Paid"))
 			{ 
-				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
+				Element.click(lnkCancelPlanPostTrial, "Cancel My Subscription Link");
 				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
 				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
 				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
 			}
 			else if(trialStatus.equalsIgnoreCase("WithinTrial and Paid"))
 			{  
-				Element.click(lnkCancelSubscription, "Cancel My Subscription Link");
+				Element.click(lnkCancelPlanDuringTrial, "Cancel My Subscription Link");
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","By cancelling your Optum Pay access, you will be losing features that many providers consider vital to their practice, including:",duringTrialCancelPopUpBody1.getText().toString());
 				for( WebElement cancelPopUptext : duringTrialCancelPopUpBody2)
