@@ -25,7 +25,7 @@ public class OptumPaySolnSteps extends TestBase {
 		optPaySoln.verifyInvalidTINonOptumPaySolution(InvalidTIN);
 	}
 
-	@Then("^User validates contents of Plan Type tile of this page$")
+
 	public void user_validates_contents_of_Plan_Type_tile_of_this_page() throws Throwable {
 		optPaySoln.validatePlanTypeTile();
 	}

@@ -13,10 +13,6 @@ public class OptumPaySolutionUPASteps extends TestBase {
 	
 OptumPaySolutionUPA optumPaySol = new OptumPaySolutionUPA(testConfig);
 
-@Then("^User verifies their plan type information form the tiles$")
-public void user_verifies_their_plan_type_information_form_the_tiles() throws Throwable {
-	optumPaySol.verifyPlanTypeInfoForVCP();
-}
 @Then("^User verifies Optum Pay Solution Tab for standard user with \"([^\"]*)\" and \"([^\"]*)\"$")
 public void user_verifies_Optum_Pay_Solution_Tab_for_standard_user_with_and(String trialStatus, String portalAccess) throws Throwable {
 	if(portalAccess.equalsIgnoreCase("Standard"))

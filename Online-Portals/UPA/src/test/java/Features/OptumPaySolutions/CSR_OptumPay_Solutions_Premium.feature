@@ -1,13 +1,12 @@
 #Author: Rahul Krishna
-    
+@CSROptumPaySolutions    
     Feature: Optum Pay Solutions Scenarios for Premium Tins
-    @CSRUS3136637 @tine
+    @CSRUS3136637
     Scenario Outline: Optum Pay Soution New Layout Scenario
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
 		Then User Enters tin for OPS and click on search button for "<userType>".
-		#Then User enters "<tinTyp>" TIN with "<portalAccess>" and click on Search button 
 		Then User validates Tiles of this page in order
     		Examples:
 
@@ -16,7 +15,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|   
          
-    #wasnot able to fix     
+    #was not able to fix as not sure of the requirements
     @CSRUS3136627sss
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login

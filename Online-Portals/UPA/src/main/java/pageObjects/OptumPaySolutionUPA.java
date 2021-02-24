@@ -100,18 +100,6 @@ public class OptumPaySolutionUPA {
 			Helper.compareEquals(testConfig, "3rd Tile Header", "Fees", txtFeesHeader.getText().trim());
 			Helper.compareEquals(testConfig, "4th Tile Header", "Manage Subscriptions", txtManageSubHeader.getText().trim());	
 		}
-		public void verifyPlanTypeInfoForVCP(){
-			verifyHeaders();
-			int sqlRowNo = 1;
-		    testConfig.getRunTimeProperty("tin");
-		    Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    Helper.compareEquals(testConfig, "Organization Name on 1st tile DB and UI", data.get("ORG_NM").toString().trim(),txtProvNameInfo.getText().trim());
-		    Helper.compareEquals(testConfig, "Plan Type on 2nd tile", "VCP Only", txtPlanTypeInfoVO.getText().trim());
-		    Helper.compareEquals(testConfig, "Fees on 3rd tile", "N/A", txtFeesInfoVO.getText().trim());
-		    Helper.compareEquals(testConfig, "Manage Subscriptions on 4th tile", "N/A", txtManageSubInfo.getText().trim());	
-		    Element.click(testConfig, lnkHome, "Home", 3);
-			Element.click(testConfig, lnkLogout, "Logout", 3);
-		}
 		public void verifySolutionsTabForStandard(String trialStatus, String portalAccess){
 			Helper.compareEquals(testConfig, "Optum Pay brings more power to your practice text on Standard view", "Optum Pay brings more power to your practice", txtOnStandardPage.getText().trim());
 			Element.verifyElementPresent(video, "Video");
@@ -225,32 +213,31 @@ public class OptumPaySolutionUPA {
 
 
 	    public void verifyOPSTilesForVO() {
-					ArrayList<String> expectdtitles=new ArrayList<String>(); 
-					expectdtitles.add("Plan Type");
-					expectdtitles.add("Rate");
-					expectdtitles.add("Fees");
-					expectdtitles.add("Manage My Plan");
+					ArrayList<String> expectedContent=new ArrayList<String>(); 
+					expectedContent.add("Plan Type");
+					expectedContent.add("Rate");
+					expectedContent.add("Fees");
+					expectedContent.add("Manage My Plan");
 				
-					ArrayList<String> UIOpsTiles=new ArrayList<String>(); 
+					ArrayList<String> actualContentUI=new ArrayList<String>(); 
 					for(WebElement tiles: tilesHeaderUI)
 					{
-						UIOpsTiles.add(tiles.getText());
-						Element.mouseHoverByJS(testConfig, tiles, "tile hover");
+						actualContentUI.add(tiles.getText());
 					}
-					Helper.compareEquals(testConfig, "Title comparision", expectdtitles, UIOpsTiles);
+					Helper.compareEquals(testConfig, "Title comparision", expectedContent, actualContentUI);
 					
-					ArrayList<String> expectedTileContent=new ArrayList<String>(); 
-					expectedTileContent.add("VCP Only");
-					expectedTileContent.add("N/A");
-					expectedTileContent.add("N/A");
-					expectedTileContent.add("N/A");
+					expectedContent.clear(); 
+					expectedContent.add("VCP Only");
+					expectedContent.add("N/A");
+					expectedContent.add("N/A");
+					expectedContent.add("N/A");
 				
-					ArrayList<String> contentTilesUIText=new ArrayList<String>(); 
+					actualContentUI.clear();
 					for(WebElement tiles: tileContentUI)
 					{
-					contentTilesUIText.add(tiles.getText().trim());
+						actualContentUI.add(tiles.getText().trim());
 					}
-					Helper.compareEquals(testConfig, "Tile Content comparision", expectedTileContent, contentTilesUIText);
+					Helper.compareEquals(testConfig, "Tile Content comparision", expectedContent, actualContentUI);
 				}
 	}
 

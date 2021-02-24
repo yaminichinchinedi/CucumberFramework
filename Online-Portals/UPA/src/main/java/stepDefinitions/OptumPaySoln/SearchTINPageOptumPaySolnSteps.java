@@ -19,15 +19,6 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 		
 		srchTinOPSPage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
 	}
-	/*@Then("^User enters \"([^\"]*)\" TIN with \"([^\"]*)\" and click on Search button$")
-	public void user_enters_TIN_with_and_click_on_Search_button(String tinTyp, String portalAccess) throws Throwable {
-	    
-
-		testConfig.putRunTimeProperty("tinType", tinTyp);
-		testConfig.putRunTimeProperty("prdctSelected", portalAccess);
-		srchTinOPSPage.enterTin("LegacyOrPremiOrStandard").clickSearchBtn();
-
-	}*/
 	@Then("^User Enters tin for OPS and click on search button for \"([^\"]*)\"\\.$")
 	public void user_Enters_tin_for_OPS_and_click_on_search_button_for(String userType) throws Throwable {
 		srchTinOPSPage.enterTinAndSrch(userType);
