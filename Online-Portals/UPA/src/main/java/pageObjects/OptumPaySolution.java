@@ -287,8 +287,7 @@ public class OptumPaySolution {
 			expectdtitles.add("Rate");
 			expectdtitles.add("Fees");
 			expectdtitles.add("Manage My Plan");
-			//String[] titles1={"Plan Type","Rate","Fees","Manage My Plan"};
-			
+						
 			ArrayList<String> UItitles=new ArrayList<String>(); 
 			for(WebElement title: titles)
 			{
