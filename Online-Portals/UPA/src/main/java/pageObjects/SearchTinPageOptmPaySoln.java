@@ -31,24 +31,6 @@ public class SearchTinPageOptmPaySoln {
       this.testConfig=testConfig;
 	  PageFactory.initElements(testConfig.driver, this);
     }
-	
-	//below 2 functions need to be removed
-	public SearchTinPageOptmPaySoln enterTin(String paymentType)
-    {
-		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin="";//dataProvider.getTinForPaymentType(paymentType);
-		
-		Element.enterData(txtboxTinNo, tin, "Enter Tin to proceed for Optum Pay Solutions", "Tin Textbox");
-      return this;
-    }
-	
-	
-	public SearchTinPageOptmPaySoln clickSearchBtn()
-    {
-      Element.clickByJS(testConfig,btnSubmit, "Search Button");
-      return this;
-    }
-//above two functions need to be needed
 
 	public SearchTinPageOptmPaySoln enterTinAndSrch(String userType) {
 		switch (userType)

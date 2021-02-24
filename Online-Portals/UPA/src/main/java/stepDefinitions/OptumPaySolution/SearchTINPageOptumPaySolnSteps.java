@@ -17,7 +17,7 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 		else if(accuredFeeStatus.equalsIgnoreCase("withoutAccuredFee"))
 		testConfig.putRunTimeProperty("nullStatus", "is null");	
 		
-		srchTinOPSPage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
+		//srchTinOPSPage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
 	}
 	@Then("^User Enters tin for OPS and click on search button for \"([^\"]*)\"\\.$")
 	public void user_Enters_tin_for_OPS_and_click_on_search_button_for(String userType) throws Throwable {
