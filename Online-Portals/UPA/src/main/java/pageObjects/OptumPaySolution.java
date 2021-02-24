@@ -87,7 +87,7 @@ public class OptumPaySolution {
 	List <WebElement> tileContentUI;
 	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
 	WebElement manageMyPlanText;
-	//////////////////////////
+
 	@FindBy(className="wrapperTooltip")
 	List <WebElement> titles;
 
@@ -280,7 +280,6 @@ public class OptumPaySolution {
 				}
 	    
 	    
-	    ///////////////////////////////////////////////////////////////////////////////////////
 		public OptumPaySolution validateTitleNames(){
 			
 			ArrayList<String> expectdtitles=new ArrayList<String>(); 
