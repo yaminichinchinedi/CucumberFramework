@@ -328,14 +328,11 @@ public void enterTinAndDateRange(String userType) {
 				WebElement header=Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a");
 				Element.waitForElementTobeClickAble(testConfig, header, 60);
 				Element.clickByJS(testConfig, header, "Header link");
-				//Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a").click();
-				Browser.wait(testConfig, 2);
+					Browser.wait(testConfig, 2);
 				
 				for (int i=1;i<uIList.size();i++)
 				{
-					//WebElement uiColumn=uIList.get(i).findElement(By.xpath("./td["+(j+1)+"]"));
 					WebElement uiColumn=Element.findElement(testConfig,"xpath","//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td["+(j+1)+"]");
-					//sortedDBColumn.add(uiColumn.getText());
 					storedUIColumn.add(uiColumn.getText());
 
 				}
