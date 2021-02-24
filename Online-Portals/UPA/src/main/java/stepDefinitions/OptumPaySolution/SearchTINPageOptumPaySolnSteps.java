@@ -1,4 +1,4 @@
-package main.java.stepDefinitions.OptumPaySoln;
+package main.java.stepDefinitions.OptumPaySolution;
 
 import cucumber.api.java.en.Then;
 import main.java.nativeFunctions.TestBase;

@@ -32,7 +32,7 @@ public class SearchTinPageOptmPaySoln {
 	  PageFactory.initElements(testConfig.driver, this);
     }
 	
-	
+	//below 2 functions need to be removed
 	public SearchTinPageOptmPaySoln enterTin(String paymentType)
     {
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
@@ -43,12 +43,12 @@ public class SearchTinPageOptmPaySoln {
     }
 	
 	
-	public OptumPaySoln clickSearchBtn()
+	public SearchTinPageOptmPaySoln clickSearchBtn()
     {
       Element.clickByJS(testConfig,btnSubmit, "Search Button");
-      return new OptumPaySoln(testConfig);
+      return this;
     }
-
+//above two functions need to be needed
 
 	public SearchTinPageOptmPaySoln enterTinAndSrch(String userType) {
 		switch (userType)
