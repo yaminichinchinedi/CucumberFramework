@@ -487,22 +487,6 @@ public class OptumPaySolution {
 	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
 	 	   testConfig.putRunTimeProperty("currMonthsSecondDateDB", currMonthsSecondDateDB);
 	 	   testConfig.putRunTimeProperty("futureDateInSameMonthDB", futureDateInSameMonthDB);
-		              
-	 	   //Database variables
-	 	   System.out.println("Current date in database is : " +currDateDB);
-	 	   System.out.println("Future date in database is : " +futureDateInSameMonthDB);
-	 	   System.out.println("past date in database is : " +pastDateDB);
-	 	   System.out.println("Current month in database is : " +getCurrentMonthDB);
-	 	   System.out.println("Current months first date in database is : " +currMonthsFirstDateDB);
-	 	   System.out.println("Current months second date in database is : " +currMonthsSecondDateDB);
-	 	   
-	 	   //UI variables
-	 	   System.out.println("Current date is : " +currDate);
-	 	   System.out.println("Future date is : " +futureDateInSameMonth);
-	 	   System.out.println("past date is : " +pastDate);
-	 	   System.out.println("Current month is : " +getCurrentMonth);
-	 	   System.out.println("Current months first date is : " +currMonthsFirstDate);
-	 	   System.out.println("Current months second date is : " +currMonthsSecondDate);
 		             
 	 	   //Pre-requisite Updating the Global Fee start date to the start of previous month
 	 	   updatingStartDateOfGlobalLevelFee();
