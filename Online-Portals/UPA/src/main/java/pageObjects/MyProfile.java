@@ -276,7 +276,8 @@ public class MyProfile {
 		
 		
 		//Enter existing email address in both email and verify email
-		int sql=6;
+		int sql=125;
+		testConfig.putRunTimeProperty("email", existingEmailAdr);
 		Map emailData = DataBase.executeSelectQuery(testConfig, sql, 1);
 		String existingRandomEmail= emailData.get("EMAIL_ADR_TXT").toString();
 		Log.Comment("Scenario :Enter existing email address in both email and verify email");
