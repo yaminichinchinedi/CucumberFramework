@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 public class OptumPaySolution {
 	                 
@@ -130,6 +132,20 @@ public class OptumPaySolution {
 	WebElement hoverFees;
 	@FindBy(xpath="//*[@id='ui-id-6']/div")
 	WebElement hoverManageMyPlan;
+	
+	@FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]")
+    private WebElement standardPerPaymentFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]")
+    private WebElement customPerPaymentFee;       
+    @FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]/../..")
+    private WebElement globalFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../..")
+    private WebElement customFee;   
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../../../p[2]")
+    private WebElement customFeeDate;   
+    @FindBy(xpath="//span[contains(text(),'Rate')]/../..//div[contains(text(),'N/A')]")
+    private WebElement validateNA;
+
 
 	
 		private TestBase testConfig;
@@ -242,19 +258,20 @@ public class OptumPaySolution {
 			}
 			
 		}
-
-	    
-        
-		public void validate_ManageMyPlanText() {
+       
+	    public  OptumPaySolution validateManageMyPlanText() {
             Element.verifyTextPresent(manageMyPlanText,"Manage My Plan");
-            }
+            return this;
+         }
 		
-		public void validate_CancelMyPlanTextLink() {
+		public void validateCancelMyPlanTextLink() {
 			Element.verifyTextPresent(lnkCancelSubscription,"Cancel My Plan");
 		}
+		
+		public void validateFreeTrialTextNotPresent(String text) {  
+            Element.verifyTextNotPresent(text);
+        }
     
-
-
 	    public void verifyOPSTilesForVO() {
 					ArrayList<String> expectedContent=new ArrayList<String>(); 
 					expectedContent.add("Plan Type");
@@ -433,5 +450,171 @@ public class OptumPaySolution {
 						"cycle.",hoverManageMyPlan.getText().trim());
 			
 			}
+			
+	 public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
+		          
+	 	   if(tinType.equals("VO") || portalAccess.equals("Standard")) {  
+	 		   String naMessage1 = validateNA.getText().trim();
+	 		   String naMessage = naMessage1.substring(0, 3);
+	 		   Helper.compareContains(testConfig, "Validating N/A is present for VO or Standard Tins","N/A",naMessage);
+	 		   return;
+	 	   }
+	 	   //For Database
+	 	   String currDateDB = Helper.getCurrentDate("YYYY-MM-dd");
+	 	   String getCurrentMonthDB = currDateDB.substring(5, 7);
+	 	   String getCurrentYearDB = currDateDB.substring(0,4);
+	 	   String futureDateInSameMonthDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"20";
+	 	   String pastDateDB = Helper.getDateBeforeOrAfterDays(-31, "YYYY-MM-dd");
+	 	   String tomorrowsDateDB = Helper.getDateBeforeOrAfterDays(1, "YYYY-MM-dd");
+	 	   String currMonthsFirstDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"01";
+	 	   String currMonthsSecondDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"02";
+	 	   
+	 	   //For UI
+	 	   String currDate = Helper.getCurrentDate("MM/dd");
+	 	   String getCurrentMonth = currDate.substring(0, 2);
+	 	   String currDay = currDate.substring(currDate.length()-2);
+	 	   String futureDateInSameMonth = getCurrentMonth+"/20";
+	 	   String currMonthsFirstDate = getCurrentMonth+"/01";
+	 	   String currMonthsSecondDate = getCurrentMonth+"/02";
+	 	   String pastDate = Helper.getDateBeforeOrAfterDays(-31, "MM/dd");
+	 	   String tomorrowsDate = Helper.getDateBeforeOrAfterDays(1, "MM/dd");
+	 	   String lastDateOfCurrentMonth = Helper.getLastDateOfMonth("MM/dd");
+		              
+	 	   testConfig.putRunTimeProperty("currDateDB", currDateDB);
+	 	   testConfig.putRunTimeProperty("pastDateDB", pastDateDB);
+	 	   testConfig.putRunTimeProperty("tomorrowsDateDB", tomorrowsDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsSecondDateDB", currMonthsSecondDateDB);
+	 	   testConfig.putRunTimeProperty("futureDateInSameMonthDB", futureDateInSameMonthDB);
+		              
+	 	   //Database variables
+	 	   System.out.println("Current date in database is : " +currDateDB);
+	 	   System.out.println("Future date in database is : " +futureDateInSameMonthDB);
+	 	   System.out.println("past date in database is : " +pastDateDB);
+	 	   System.out.println("Current month in database is : " +getCurrentMonthDB);
+	 	   System.out.println("Current months first date in database is : " +currMonthsFirstDateDB);
+	 	   System.out.println("Current months second date in database is : " +currMonthsSecondDateDB);
+	 	   
+	 	   //UI variables
+	 	   System.out.println("Current date is : " +currDate);
+	 	   System.out.println("Future date is : " +futureDateInSameMonth);
+	 	   System.out.println("past date is : " +pastDate);
+	 	   System.out.println("Current month is : " +getCurrentMonth);
+	 	   System.out.println("Current months first date is : " +currMonthsFirstDate);
+	 	   System.out.println("Current months second date is : " +currMonthsSecondDate);
+		             
+	 	   //Pre-requisite Updating the Global Fee start date to the start of previous month
+	 	   updatingStartDateOfGlobalLevelFee();
+		              
+	 	   validatingGlobalFeeInUI(); //Scenario 1 - Asserting Global Fee
+		              
+	 	   //Insert Tin Level fee into database 
+	 	   DataBase.executeInsertQuery(testConfig, 2002);
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingCustomFeeInUI();  //Scenario 2
+		               
+	 	   //Update Tin Level Fee for case 3
+	 	   DataBase.executeUpdateQuery(testConfig, 2003);
+	 	   Browser.browserRefresh(testConfig);  
+	 	   if(currDay.equals("01")) {            //Scenario 3        
+	 		   validatingCustomFeeInUI();
+	 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();  
+	 		   validatingCustomFeeInUI();
+	 	   } 
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
+	 	   
+	 	   //Update Tin Level Fee for case 4
+	 	   DataBase.executeUpdateQuery(testConfig, 2004);
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingGlobalFeeInUI();  //Scenario 4
+	 	   validatingCustomFeeInUI();
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
+	 	   
+	 	   //Update Tin Level Fee for case 5
+	 	   DataBase.executeUpdateQuery(testConfig, 2005);
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingGlobalFeeInUI();  //Scenario 5
+	 	   validatingCustomFeeInUI();
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
+		              
+	 	   DataBase.executeDeleteQuery(testConfig, 2007);
+	 	   Log.Comment("Entry was deleted from Rate Fee table");
+	 }
+		    
+	 public void validate_standardPerPaymentFeeText() {
+		 Element.verifyTextPresent(standardPerPaymentFee,"Standard Per Payment fee:");
+	 }
+		      
+	 public void validate_customPerPaymentFeeText() {
+		 Element.verifyTextPresent(customPerPaymentFee,"Custom Per Payment fee:");
+	 }
+		         
+	 public void validatingGlobalFeeInUI() {  
+		          
+		 String globalFeeFromDB = null;
+		 String globalFeeFromUI = null;
+		 
+		 if(globalFeeFromDB == null & globalFeeFromUI==null) {
+			 Map<String, String> globalFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2001, 1);
+			 globalFeeFromDB = globalFeeFromDatabase.get("RATE_PCT");
+		              
+			 if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0' && globalFeeFromDB.charAt(globalFeeFromDB.length()-2)=='0') {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.0");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 else if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0'){
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 else {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }             
+		 }
+		          
+		 String stdFee1 = globalFee.getText().trim();
+		 String split[] = stdFee1.split(": ");
+		 String stdFee = split[split.length-1].trim();
+		          
+		 Helper.compareContains(testConfig,"Validating whether the Global Fee is displayed properly in the Rate Tile UI", stdFee, globalFeeFromUI+"%"); 
+		 validate_standardPerPaymentFeeText();
+	 }
+		      
+	 	public void validatingCustomFeeInUI() {
+	 		String customFeeFromDB = null;
+	 		String customFeeFromUI = null;
+		          
+	 		if(customFeeFromDB == null & customFeeFromUI==null) {
+	 			Map<String, String> customFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2006, 1);
+	 			customFeeFromDB = customFeeFromDatabase.get("RATE_PCT");
+	 			
+	 			DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+	 			customFeeFromUI = decimalFormat.format(Float.parseFloat(customFeeFromDB)*100);
+	 		} 
+	 		String custFee1 = customFee.getText().trim();
+	 		String split[] = custFee1.split(": ");
+	 		String custFee = split[split.length-1].trim();
+	 		
+	 		Helper.compareContains(testConfig,"Validating whether the custom Fee is displayed properly in the Rate Tile UI", custFee, customFeeFromUI+"%");    
+	 		validate_customPerPaymentFeeText();
+	 	}
+		      
+	 	public String validatingCustomFeeDate() {
+	 		String custFeeDate = customFeeDate.getText().trim();
+	 		return custFeeDate; 
+	 	} 
+		      
+	 	public void updatingStartDateOfGlobalLevelFee() {
+	 		Map<String, String> rateKeyIdGlobalFee = DataBase.executeSelectQuery(testConfig, 2008, 1);
+	 		String rateKeyId = rateKeyIdGlobalFee.get("RATE_KEY_ID");
+	 		System.out.println("The rateKeyId is : " +rateKeyId);
+	 		testConfig.putRunTimeProperty("rateKeyId", rateKeyId);
+	 		DataBase.executeUpdateQuery(testConfig, 2009);
+		          
+	 	}		
+	   
 	}
 

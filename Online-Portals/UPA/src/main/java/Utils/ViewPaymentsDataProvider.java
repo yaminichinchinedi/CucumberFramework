@@ -1171,7 +1171,9 @@ public ArrayList getEnrollmentContent(String content) {
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
-				
+			case "LegacyOrPremiOrStandard_AO_Standard":
+				sqlRowNo=1605;
+				break;	
 			case "LegacyOrPremiOrStandard":
 				sqlRowNo=1605;
 				break;	
@@ -1190,6 +1192,9 @@ public ArrayList getEnrollmentContent(String content) {
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
+ 		}
+ 		if(searchCriteria.equals("TinWithNoCustomFeeRate")) {
+ 			sqlRowNo=2000;
  		}
  		if(searchCriteria.contains("PPRARecord"))
  			sqlRowNo=1624;	

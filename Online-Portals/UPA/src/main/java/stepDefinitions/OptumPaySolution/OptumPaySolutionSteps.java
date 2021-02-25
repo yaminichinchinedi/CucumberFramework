@@ -28,9 +28,8 @@ public void verify_the_Cancellation_Popup_based_on_trialStatus(String trialStatu
 
 @Then("^Validate the texts in Manage My Plan Tile$")
 public void validate_the_texts_in_Manage_My_Plan_Tile() throws Throwable {
-	  optumPaySol.validate_ManageMyPlanText();
-	    optumPaySol.validate_CancelMyPlanTextLink();
-	    Element.verifyTextNotPresent("Free Trial End Date:");
+	  optumPaySol.validateManageMyPlanText().validateCancelMyPlanTextLink();
+	  optumPaySol.validateFreeTrialTextNotPresent("Free Trial End Date:");
 
 }
 @Then("^User verifies the Optum Pay Solutions tiles For VO$")
@@ -64,4 +63,10 @@ public void user_then_validates_the_Change_Rate_popup_based(String credentials) 
 public void user_validates_the_hover_on_info_icon_on_the_tiles() throws Throwable {
 	optumPaySol.validateInfoIconHover();
 }
+
+@Then("^User validates the Text, Dates, Rates on the Rate Tile section for given \"([^\"]*)\" and \"([^\"]*)\"$")
+public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_given_and(String tinType, String portalAccess) throws Throwable {
+	optumPaySol.rateTileCSRFeeAndDateVerification(tinType,portalAccess);
+}
+
 }
