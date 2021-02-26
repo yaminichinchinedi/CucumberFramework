@@ -130,6 +130,14 @@ public class OptumPaySolution {
 	WebElement hoverFees;
 	@FindBy(xpath="//*[@id='ui-id-6']/div")
 	WebElement hoverManageMyPlan;
+	@FindBy(id="rate")
+	WebElement rateTxtBox;
+	
+	@FindBy(id="change_rate_reason_selector")
+	WebElement rsnRtChngdrpdwn;
+
+	@FindBy(id="otherReasonForChange")
+	WebElement otrRsnTxtAra;
 
 	
 		private TestBase testConfig;
@@ -382,7 +390,47 @@ public class OptumPaySolution {
 			
 			Element.clickByJS(testConfig,lnkLogOut , "logging Out of the portal");
 		}
+		public void clickChangeRateEvents(String credentials,String rateValue,String changeRateValue, String changeRateReason) {
 			
+			if(credentials.equalsIgnoreCase("Super") &&
+			  testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium") &&
+			  testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") || testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AV") )
+			{
+			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");	
+			Element.enterData(rateTxtBox, rateValue, "change rate", "rate change textbox");
+			
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Element.selectByVisibleText(rsnRtChngdrpdwn, "Other", "reason for change dropdown");
+			else
+			Element.selectByVisibleText(rsnRtChngdrpdwn, changeRateReason, "reason for change dropdown");
+			
+			if (changeRateReason.equalsIgnoreCase("Other"))
+			Element.enterData(otrRsnTxtAra, "Testing", "Other Change rate", "Other Change TextArea");
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Element.enterData(otrRsnTxtAra, "", "Other Change rate", "Other Change TextArea");
+			
+			Browser.wait(testConfig,1);
+			Element.clickByJS(testConfig,btnSaveChangeRate,"Save Rate Change");
+			System.out.println(popUpChangeRate.getText());
+			Helper.compareContains(testConfig, "PopUp text", "Are you sure?" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			
+	        Element.clickByJS(testConfig, btnChangeRatePopupChange, "Change btn click");
+			
+	        if (changeRateValue.equals("Invalid value")|| changeRateReason.equalsIgnoreCase("Other with Blank") )
+	        {
+	        String actual= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-tabs']/div[1]").getText();
+	        if (changeRateValue.equals("Invalid value"))
+	        Helper.compareContains(testConfig, "Error Validation", "The rate must be greater than or equal to 0 and less than the system global rate", actual);
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Helper.compareContains(testConfig, "Error Validation", "Enter a reason for the rate change", actual);
+	        }
+			}
+			else
+				Element.verifyElementNotPresent(lnkChangeRate, "Change Rate link");
+			
+		}
 			public void validateInfoIconHover() {
 				for(WebElement title: titles)
 				  Element.mouseHoverByJS(testConfig, title, "title");

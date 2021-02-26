@@ -120,4 +120,16 @@ Feature: CSR Run Reports Feature
       | credentials | userType |
       | Super       | PROV     |
       
+     @CSRUS3206668
+  Scenario Outline: TIN Report generation reports
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    And User clicks on Run Reports link
+    When User clicks on Customised TIN Rate radio button
+    And Validate if the print button is present
+    And Validate if the Save As Excel button is present
+    And Validate if the New Report button is present
+    And Validates that each column is sortable
    
+    Examples: 
+      | credentials |
+      | Super       |
