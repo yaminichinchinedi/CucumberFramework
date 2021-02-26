@@ -233,14 +233,24 @@ public class SearchRemittance extends ViewPayments {
 	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		Object request = null;
+		String[] pay_835_id;
+		if("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
+			 pay_835_id = new String[] {"87726"};
+		}
+		else {
+			 pay_835_id = new String[] {};
+		}
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
 		if (requestType.contains("DOP")|| requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo")) {
 			DOP dop = new DOP();
-	        dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dop.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			dop.setTaxIdentifier("200304197");
 	        dop.setUserRole("PROVIDER");
 	        PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
-	        paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-	        paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+	        //paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+	       // paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+	        paymentMadeOnDateRange.setFromDate("2018-01-01");
+	        paymentMadeOnDateRange.setToDate("2019-08-25");
 			String[] identifier = new String[] {};
 			dop.setEpsNationalProviderIdentifiers(identifier);
 			if (requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo") ) {
@@ -270,7 +280,9 @@ public class SearchRemittance extends ViewPayments {
 		}
 		if (requestType.equals("byDOS") || requestType.equals("byDOSAndAcntNo") || requestType.equals("byDOSAndSubscriberId") || requestType.equals("byDOSAndClmNo") || (requestType.equals("byDOSAndPtntNm")) || (requestType.equals("byDOSAndNpi"))) {
 			DOS dos = new DOS();
-			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dos.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			//dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dos.setTaxIdentifier("200304197");
 			dos.setUserRole("PROVIDER");
 			SearchCriteria searchCriteria = dos.getSearchCriteria();
 			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
@@ -286,7 +298,7 @@ public class SearchRemittance extends ViewPayments {
 				parameterMap.setComparator("Equals");
 				parameterMapList.add(parameterMap);
 			}
-			searchCriteria.setParameterMap(parameterMapList);
+			//searchCriteria.setParameterMap(parameterMapList);
 
 			//String[] identifiers = new String[] {"03432","04271","04567","06111","19402","31417","36273","37602","56693","56758", "62952","65088","66214","78857","81400","86047","86050","87726","91785","94265","95378","95467","95959","96385","99726", "APP01","ECHOH","ERIE1","MCLRN","MDWS5","NYU01","PINNA","RPMP5","SAM1","TEX01","UFNEP","UMR01","VACCN","WID01"};
 			if (requestType.equals("byDOSAndNpi")) {
@@ -298,14 +310,17 @@ public class SearchRemittance extends ViewPayments {
 			dos.setEpsNationalProviderIdentifiers(identifiers);
 			}
 			ClaimServiceDateRange claimServiceDateRange = dos.getClaimServiceDateRange();
-			claimServiceDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-			claimServiceDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			//claimServiceDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			//claimServiceDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			claimServiceDateRange.setFromDate("2018-01-01");
+			claimServiceDateRange.setToDate("2019-08-25");
 			System.out.println("\nDOS=" + dos.toString());
 			request = dos;
 		}
 
 		if (requestType.equals("byDOPAndAccountNo") || requestType.equals("byDOP&SubscriberID") || requestType.equals("byDOPAndClaimNo") || (requestType.equals("byDOPAndPatientNm"))) {
 			DOP dopAccountNumber = new DOP();
+			dopAccountNumber.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
 			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopAccountNumber.setUserRole("PROVIDER");
 
@@ -335,7 +350,9 @@ public class SearchRemittance extends ViewPayments {
 		}
 
 
-			EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
+			EpsPaymentsSummarySearchResponse searchResponse;
+			searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
+
 	return searchResponse;
 	}
 	
@@ -373,7 +390,9 @@ public class SearchRemittance extends ViewPayments {
 	    setPayerID(epsSearchRemittanceSearchRequest);
 
 	    /**Posting the modified request and getting response*/
-	    EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
+	    EpsPaymentsSummarySearchResponse searchResponse;
+			searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
+	
 	   return searchResponse;
 	}
 	

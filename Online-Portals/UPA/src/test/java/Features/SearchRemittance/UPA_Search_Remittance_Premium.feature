@@ -113,6 +113,7 @@ Scenario Outline: Search Remittance
 		#|byDOSAndNpi         |	PROV_Gen	 |    PROV     |   Premium    |	  byDOSAndNpi           |  AO   |
 
 
+ 
 		
 @BSSearchRemittance 
 Scenario Outline: - verify search results for search remittance
@@ -122,7 +123,7 @@ Scenario Outline: - verify search results for search remittance
 	Then User clicks on Search Remittance link for UPA
 	Then User Enters Search Remittance tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Criteria Type>"	
+	Then verify search results for "<Search Criteria>"	
 
 Examples:
 
@@ -156,7 +157,8 @@ Examples:
 		|   byDOSAndPtntNm   |	BS_Gen	 |    BS     |   Premium    |	  byDOSAndPtntNm          |  AO   |
 		#|byDOSAndNpi         |	BS_Gen	 |    BS     |   Premium    |	  byDOSAndNpi           |  AO   |
 		
-		
+	
+				
 @PAYSearchRemittance
 Scenario Outline: - verify search results for search remittance
 

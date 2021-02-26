@@ -343,6 +343,7 @@ public class SearchTinPageSearchRemittance {
 				Element.click(submitBtn, "Search Button");
 				break;
 			case "Payer": 
+			case "PAY": 
 				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,payertinDrpDwn,testConfig.getRunTimeProperty("tin"), "tin textbox");
 				Element.click(submitBtn, "Search Button");

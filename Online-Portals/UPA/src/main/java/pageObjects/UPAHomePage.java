@@ -314,6 +314,7 @@ public class UPAHomePage extends HomePage {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		//String tin = "200304197"; 
 		System.setProperty("tin", tin);
 		switch (userType)
 			{

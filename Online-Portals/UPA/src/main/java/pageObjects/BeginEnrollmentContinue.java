@@ -155,6 +155,8 @@ public class BeginEnrollmentContinue {
 			enrollmentInfoObj.setEnrollType("HO");
 			clickRdoHealthOrg();
 			Element.expectedWait(rdoAchOnly, testConfig, "radio button ACH only payment type", "radio button ACH only payment type");
+			Element.verifyElementPresent(rdoAchOnly, "I would like to enroll in direct deposit (ACH) only.");
+			Element.verifyElementPresent(rdoVoOnly, "I would like to enroll in virtual card payments (VCP) only.");
 
 			switch (enrollmentPaymentType)
 			{
