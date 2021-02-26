@@ -37,5 +37,3 @@ Feature: UPA Resource Dropdown
       |      BS_Gen         | 
       |      PAY_Admin     	| 
       |      PAY_Gen     	  | 
-
-

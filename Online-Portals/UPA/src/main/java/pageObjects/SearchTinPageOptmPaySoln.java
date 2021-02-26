@@ -57,5 +57,5 @@ public class SearchTinPageOptmPaySoln {
 		return new OptumPaySolution(testConfig);
 	}
 	
-	
 }
+

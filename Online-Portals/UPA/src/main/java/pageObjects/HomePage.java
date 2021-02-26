@@ -297,4 +297,5 @@ public class HomePage extends LoginUPA {
 		Element.click(homeTab, "Home Tab");
 		return this;
 	}
+
 }

@@ -17,8 +17,6 @@ Feature: UPA View Payments Functionality for Standard TIN
              |       credentials       |		portalAccess    	|   userType    |    searchCriteria | tinType		|
              |       PROV_Admin        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
              |      	 PROV_Gen        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
-
-
 #Author: AMIT
 @UPA_US3069347_1 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
 Scenario Outline: View Payments Pop up for Standard TIN        
@@ -109,6 +107,3 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
              |    	   BS_Admin        | 			 Standard  		|			BS  		  |			Last 30 days		|  	AO			| 
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			| 
-      
-     
-      

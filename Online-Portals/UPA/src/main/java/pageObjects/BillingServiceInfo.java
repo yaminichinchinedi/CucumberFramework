@@ -356,3 +356,4 @@ Helper.compareContains(testConfig, "Page Text", "If you need access to historica
 	}
 }
 	
+
