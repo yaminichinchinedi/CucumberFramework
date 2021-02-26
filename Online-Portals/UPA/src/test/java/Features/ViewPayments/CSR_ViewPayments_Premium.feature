@@ -77,6 +77,3 @@ Feature: View Payment Access Payment
      Examples:
     				 |    credentials          |	 	 userType  	| 	portalAccess    |	searchCriteria      | tinType		|filterpayments	|	quicksearchfilter	| archivefilter|
              |       Super        		 |  CSR			    	|			Premium		  	|  Last 60 days       |    AO			|Show All				|			Last 60 days	| 			New		 |
-
-    	
-  

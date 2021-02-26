@@ -93,6 +93,14 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
     public void verify_large_non_large_tin_in_search_results() throws Throwable {
     	srchCriteriaPage.verifyLargeNonLargeTin();
     }
+    
+    
+    //Added by Mohammad
+    @Then("^User verifies page text message \"([^\"]*)\"$")
+    public void user_verifies_page_text_message(String typeMsg) throws Throwable 
+    {
+       srchCriteriaPage.verifyTopMsgProv_Premium(typeMsg);
+    }
 
     @Then("^Validate search button is enabled or disabled for \"([^\"]*)\"$")
     public void validate_search_button_is_enabled_or_disabled_for(String portalAccess) throws Throwable {
