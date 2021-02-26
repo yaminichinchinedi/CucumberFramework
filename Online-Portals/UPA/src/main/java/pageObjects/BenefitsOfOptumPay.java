@@ -107,15 +107,8 @@ public class BenefitsOfOptumPay {
 	}
 	
 	public BenefitsOfOptumPay verifyBenefitsOfOptumPayPage() {
-		
-		//this.verifyOptumLogo();
-		//this.verifyFooter();
-		//this.verifyBenefitsofOptumPayHeader();
+	
 		this.verifyOptumPayText(openingParagraphText);
-		//this.verifyOptumPayText(secondParagraphText);
-		//this.verifyOptumPayText(paragraphBelowClockText);
-		//this.verifyOptumPayText(lastParagraphText);
-		//this.clickAndVerifyOptumPaySavingsCalculator();
 		return new BenefitsOfOptumPay(testConfig);
 	}
 	
