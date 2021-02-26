@@ -114,8 +114,8 @@ public class CSRHomePageSteps extends TestBase{
 		       
 			   homePage.clickBillingServiceInfoLink();
 		   }
-		@Then("^User clicks on Optum Pay Soultions link on CSR HomePage$")
-		public void user_clicks_on_Optum_Pay_Soultions_link_on_CSR_HomePage() throws Throwable {
+		@Then("^User clicks on Optum Pay Solutions link on CSR HomePage$")
+		public void user_clicks_on_Optum_Pay_Solutions_link_on_CSR_HomePage() throws Throwable {
 			homePage.clickOptmPaySolnLink();
 		}
 		
@@ -127,6 +127,12 @@ public class CSRHomePageSteps extends TestBase{
 	
 	@Given("^User fetch tin on CSR for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_fetch_tin_on_CSR_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {
+		homePage.fetchTin(userType, searchCriteria, tinType, portalAccess);
+	}
+	
+	@Given("^User fetch tin on CSR for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_fetch_tin_on_CSR_for_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria,String tinType, String portalAccess,String selectedOrDefault) throws Throwable {
+		testConfig.putRunTimeProperty("selectedOrDefault", selectedOrDefault);
 		homePage.fetchTin(userType, searchCriteria, tinType, portalAccess);
 	}
 
