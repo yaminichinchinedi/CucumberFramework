@@ -1186,7 +1186,7 @@ public ArrayList getEnrollmentContent(String content) {
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
-			case "PremiumOrStandardTIN":	
+			case "PremiumOrStandardTIN_AO_Premium":	
 				sqlRowNo=1605;
 				break;
  		
