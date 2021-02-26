@@ -60,4 +60,3 @@ Feature: CSR View Payments for Standard TIN
 			|   credentials     |	userType   |  tinType	|	portalAccess	|	searchCriteria 	|
     	|      Super        |	  PROV     |		AO		|	  Standard		|		Last 30 days	|
     	|      Super        |	  PROV     |		VO		|	  Premium			|		Last 30 days	|
-  
