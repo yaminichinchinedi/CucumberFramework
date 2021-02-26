@@ -2,11 +2,10 @@
 @UPAMyProfile
 Feature: UPA My Profile Functionality
 
-@UpaMyProfile1 
+
   Scenario Outline: UPA My Profile UI Functionality Verifies User Details displayed on My profile Page from user details saved in Database for logged in user
 
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the TIN for "<accessType>" UPA Portal
     When Click on UPA - My Profile Link
     Then Verifies "<accessType>" User Details displayed on My profile Page from user details saved in Database for logged in user
     Examples:
@@ -19,7 +18,6 @@ Feature: UPA My Profile Functionality
   Scenario Outline: UPA My Profile UI Functionality Verifies Error messages for provider
 
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the TIN for "<accessType>" UPA Portal
     When Click on UPA - My Profile Link
     Then Verifies "<accessType>" Error messages for provider
     Examples:
@@ -67,7 +65,6 @@ Feature: UPA My Profile Functionality
   Scenario Outline: UPA My Profile UI Functionality Update and Verify User Details displayed on My profile Page from user details saved in Database for logged in user
 
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the TIN for "<accessType>" UPA Portal
     When Click on UPA - My Profile Link
     Then User updates fields on My profile Page and verifies in Database for logged in user
     Examples:
@@ -80,7 +77,6 @@ Feature: UPA My Profile Functionality
 Scenario Outline: UPA My Profile UI Functionality Update and verify user details for provider
 
     Given User navigates to UPA portal and enters "<userType>" and login
-    Then Select the TIN for "<accessType>" UPA Portal
     When Click on UPA - My Profile Link
     Then User updates fields on My profile Page for provider and verifies in Database for logged in user
     Examples:

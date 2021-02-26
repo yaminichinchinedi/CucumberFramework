@@ -462,6 +462,7 @@ public ArrayList getEnrollmentContent(String content) {
 		
 		testConfig.putRunTimeProperty("tinType", tinType);
 		testConfig.putRunTimeProperty("portalAccess", portalAccess);
+		testConfig.putRunTimeProperty("prdctSelected",portalAccess);
 		ViewPayments paySum=new ViewPayments(testConfig,"filter");
  		switch(searchCriteria+"_"+tinType+"_"+portalAccess) 
  		 {

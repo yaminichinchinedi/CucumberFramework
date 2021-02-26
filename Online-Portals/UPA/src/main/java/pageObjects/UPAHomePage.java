@@ -1,4 +1,3 @@
-
 package main.java.pageObjects;
 
 import main.java.nativeFunctions.Browser;
@@ -106,6 +105,7 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkFAQAlertText;
 
 	@FindBy(xpath = "//a[contains(text(),'Resources')]")
+	//@FindBy(xpath="//*[@id=\"withoutHomeId\"]/a[1]")
 	WebElement  resourcesDropDown;
 	
 	@FindBy(linkText="FAQs")
@@ -149,6 +149,10 @@ public class UPAHomePage extends HomePage {
 
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
+
+	@FindBy(linkText="Capitation Reports")
+	WebElement  lnkResourcesCapitationReport;
+
 	
 	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
 	WebElement prvdrTIN;
@@ -431,5 +435,13 @@ public class UPAHomePage extends HomePage {
 		Browser.closeBrowser(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
+	public void verifyCapitationReportLinkUnderResources() {
+		   String parentwindowhandle=testConfig.driver.getWindowHandle();
+		   Element.click(lnkResourcesCapitationReport, "capitation report");
+		   Browser.switchToNewWindow(testConfig);
+		   String expectePrivacydURL = "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html";
+		   Browser.verifyURL(testConfig, expectePrivacydURL);
+		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
+		
+	}
 }
-
