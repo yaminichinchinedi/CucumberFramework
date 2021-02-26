@@ -13,3 +13,4 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		viewPaymentsTIN.enterTinAndSrch(userType);
 	}
 }
+

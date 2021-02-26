@@ -145,9 +145,4 @@ Feature: UPA Manage User Functionality for Premium TIN
      Examples:
     				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria       | tinType		|filterpayments	|	quicksearchfilter	| archivefilter 			|
              |       BS_Admin        | 			 BS			    	  	|			Premium		  	|  Last 60 days       |    AO			|Show All				|			Last 60 days	| 			New		        |
-             |       BS_Gen          | 			 BS		    				|			Premium		  	|  Last 60 days       | 	 AO	  	|Show All				|			Last 60 days	| 			New		        |          
-             
-    	
-		
-		
-		
+             |       BS_Gen          | 			 BS		    				|			Premium		  	|  Last 60 days       | 	 AO	  	|Show All				|			Last 60 days	| 			New		        |        
