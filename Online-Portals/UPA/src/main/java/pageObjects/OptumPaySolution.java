@@ -476,8 +476,6 @@ public class OptumPaySolution {
 	 	   String futureDateInSameMonth = getCurrentMonth+"/20";
 	 	   String currMonthsFirstDate = getCurrentMonth+"/01";
 	 	   String currMonthsSecondDate = getCurrentMonth+"/02";
-	 	   String pastDate = Helper.getDateBeforeOrAfterDays(-31, "MM/dd");
-	 	   String tomorrowsDate = Helper.getDateBeforeOrAfterDays(1, "MM/dd");
 	 	   String lastDateOfCurrentMonth = Helper.getLastDateOfMonth("MM/dd");
 		              
 	 	   testConfig.putRunTimeProperty("currDateDB", currDateDB);
@@ -592,11 +590,11 @@ public class OptumPaySolution {
 	 	} 
 		      
 	 	public void updatingStartDateOfGlobalLevelFee() {
-	 		Map<String, String> rateKeyIdGlobalFee = DataBase.executeSelectQuery(testConfig, 2008, 1);
+	 		Map<String, String> rateKeyIdGlobalFee = DataBase.executeSelectQuery(testConfig, 2001, 1);
 	 		String rateKeyId = rateKeyIdGlobalFee.get("RATE_KEY_ID");
 	 		System.out.println("The rateKeyId is : " +rateKeyId);
 	 		testConfig.putRunTimeProperty("rateKeyId", rateKeyId);
-	 		DataBase.executeUpdateQuery(testConfig, 2009);
+	 		DataBase.executeUpdateQuery(testConfig, 2008);
 		          
 	 	}		
 	   
