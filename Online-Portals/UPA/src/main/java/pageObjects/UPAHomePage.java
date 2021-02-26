@@ -167,7 +167,8 @@ public class UPAHomePage extends HomePage {
 	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
 	WebElement prvdrTIN;
 	
-
+	@FindBy(linkText="Logout") 
+	WebElement lnkLogout;
 	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -491,5 +492,11 @@ public class UPAHomePage extends HomePage {
 	}
 	public void verifyHomePage() {
 		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void logoutSession() {
+		Browser.wait(testConfig, 3);
+		Element.clickByJS(testConfig, lnkLogout, "Logout");
+		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
+	
 	}
 }

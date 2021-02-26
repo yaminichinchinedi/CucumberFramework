@@ -228,5 +228,8 @@ public class UPAHomePageSteps extends TestBase{
 			homePage.verifyDocumentVaultLink();
 
 		}
-
+		@Then("^User logs out the session$")
+		public void user_logs_out_the_session() throws Throwable {
+			homePage.logoutSession();
+		}
 }

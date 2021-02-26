@@ -264,13 +264,13 @@ public class HomePage extends LoginUPA {
 
 	}
 	
-	public PaymentDataFiles clickPaymentDataFilesTab() 
-	{
-		Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
-		Element.click(paymentDataFilesTab, "Payment Data Files tab");
-		return new PaymentDataFiles(testConfig);
-
-	}
+//	public PaymentDataFiles clickPaymentDataFilesTab() 
+//	{
+//		Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
+//		Element.click(paymentDataFilesTab, "Payment Data Files tab");
+//		return new PaymentDataFiles(testConfig);
+//
+//	}
 	
 	public MyProfile clickMyProfileTab() 
 	{

@@ -461,7 +461,8 @@ public ArrayList getEnrollmentContent(String content) {
 		
 
 		ViewPayments  paySum=new ViewPayments (testConfig,"filter");
-		if(tinType==null && portalAccess==null) {
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("portalAccess", portalAccess);	
 			switch(searchCriteria) {
 			case "failedPayment": 
 	 			sqlRowNo=29;
@@ -734,28 +735,6 @@ public ArrayList getEnrollmentContent(String content) {
 	 	 		break;
 			}
 	 	 		  
-			case "Last 4-6 months":
-			{     
-				  paySum.getQuickSearchDates("Last 4-6 months");
-				  sqlRowNo=127; 
-		 		  break;
-			}
-			
-			case "Last 9-13 months":
-			{
-				  paySum.getQuickSearchDates("Last 9-13 months");
-				  sqlRowNo=127; 
-			 	  break;
-				
-			}
-			
-			case "Last 6-9 months":
-			{
-				  paySum.getQuickSearchDates("Last 6-9 months");
-				  sqlRowNo=127; 
-			 	  break;
-				
-			}
 			
 			case "generalPaymentForTIN_30days":
 			{
@@ -1081,16 +1060,11 @@ public ArrayList getEnrollmentContent(String content) {
 				case "TinWthAccuredFeeStat":
 					sqlRowNo=1615;
 					break;
-			 default:
-	 			   Log.Comment("Payment Type " + searchCriteria + " not found");
-	 			   
-			}
-			}
-		
-		else {
-			testConfig.putRunTimeProperty("tinType", tinType);
-			testConfig.putRunTimeProperty("portalAccess", portalAccess);
- 		switch(searchCriteria+"_"+tinType+"_"+portalAccess) {
+				
+				case "ActiveBSTin":
+				    sqlRowNo=16;
+				    break;
+
  		
  		   case "generalPayment60Days_AO_Premium":
 		{
@@ -1106,99 +1080,55 @@ public ArrayList getEnrollmentContent(String content) {
 		 	  break;			
 		}
 		
-			case "TinWithLessThnMaxUsr_VO_Premium":
-			case "TinWithLessThnMaxUsr_AO_Premium":
-			case "TinWithLessThnMaxUsr_AV_Premium":
-			case "TinWithLessThnMaxUsr_AV_Standard":
-			case "TinWithLessThnMaxUsr_AO_Standard":
+			case "TinWithLessThnMaxUsr":
 				sqlRowNo=1503;
 				break;
 				
-			case "TinWithMoreThnMaxUsr_VO_Premium":
-			case "TinWithMoreThnMaxUsr_AO_Premium":
-			case "TinWithMoreThnMaxUsr_AV_Premium":
-			case "TinWithMoreThnMaxUsr_AO_Standard":
-			case "TinWithMoreThnMaxUsr_AV_Standard":
+			case "TinWithMoreThnMaxUsr":
 				sqlRowNo=1504;
 				break;
 
-			case "Last 30 days_AO_Premium":
-			case "Last 30 days_VO_Premium":
-			case "Last 30 days_AV_Premium":
-			case "Last 30 days_AO_Standard":
-//				sqlRowNo=1617;
-//				break;
-			case "Last 30 days_VO_Standard":
-			case "Last 30 days_AV_Standard":
+			case "Last 30 days":
 				paySum.getQuickSearchDates("Last 30 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 60 days_AO_Premium":
-			case "Last 60 days_VO_Premium":
-			case "Last 60 days_AV_Premium":
-			case "Last 60 days_AO_Standard":
-			case "Last 60 days_VO_Standard":
-			case "Last 60 days_AV_Standard":
+			
+			case "Last 60 days":
 				paySum.getQuickSearchDates("Last 60 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 90 days_AO_Premium":
-			case "Last 90 days_VO_Premium":
-			case "Last 90 days_AV_Premium":
-			case "Last 90 days_AO_Standard":
-			case "Last 90 days_VO_Standard":
-			case "Last 90 days_AV_Standard":
+			
+			case "Last 90 days":
 				paySum.getQuickSearchDates("Last 90 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 4-6 months_AO_Premium":
-			case "Last 4-6 months_VO_Premium":
-			case "Last 4-6 months_AV_Premium":
-			case "Last 4-6 months_AO_Standard":
-			case "Last 4-6 months_VO_Standard":
-			case "Last 4-6 months_AV_Standard":
+				
+			case "Last 4-6 months":
 				paySum.getQuickSearchDates("Last 4-6 months");
 				sqlRowNo=1611;
 				break;
-			case "Last 6-9 months_AO_Premium":
-			case "Last 6-9 months_VO_Premium":
-			case "Last 6-9 months_AV_Premium":
-			case "Last 6-9 months_AO_Standard":
-			case "Last 6-9 months_VO_Standard":
-			case "Last 6-9 months_AV_Standard":
+			
+			case "Last 6-9 months":
 				paySum.getQuickSearchDates("Last 6-9 months");
 				sqlRowNo=1611;
 				break;
-			case "Last 9-13 months_AO_Premium":
-			case "Last 9-13 months_VO_Premium":
-			case "Last 9-13 months_AV_Premium":
-			case "Last 9-13 months_AO_Standard":
-			case "Last 9-13 months_AV_Standard":
+			
+			case "Last 9-13 months":
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
 				
-			case "LegacyOrPremiOrStandard_AO_Premium":
-			case "LegacyOrPremiOrStandard_VO_Premium":
-			case "LegacyOrPremiOrStandard_AV_Premium":
-			case "LegacyOrPremiOrStandard_AO_Standard":
-			case "LegacyOrPremiOrStandard_AV_Standard":
+			case "LegacyOrPremiOrStandard":
 				sqlRowNo=1605;
 				break;	
-			case "TinWthatlstOnePayNum_AO_Premium":
-			case "TinWthatlstOnePayNum_VO_Premium":
-			case "TinWthatlstOnePayNum_AV_Premium":
-			case "TinWthatlstOnePayNum_AO_Standard":
-			case "TinWthatlstOnePayNum_AV_Standard":
+			
+			case "TinWthatlstOnePayNum":
 				sqlRowNo=1610;
 				break;
 	
-			case "TinDuringOrPostTrial_AO_Premium":
-			case "TinDuringOrPostTrial_VO_Premium":
-			case "TinDuringOrPostTrial_AV_Premium":
-			case "TinDuringOrPostTrial_AO_Standard":
-			case "TinDuringOrPostTrial_AV_Standard":				
+			case "TinDuringOrPostTrial":				
 				sqlRowNo=1343;
+				
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
@@ -1208,7 +1138,7 @@ public ArrayList getEnrollmentContent(String content) {
  		
  		}
 
-		}
+		//}
 
  		if(searchCriteria.contains("PPRARecord"))
  			sqlRowNo=1624;	
@@ -1262,7 +1192,8 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   //testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				if(sqlRowNo==1617)
                    {
@@ -1401,8 +1332,8 @@ public ArrayList getEnrollmentContent(String content) {
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			  System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 		  }
-		  
-		    
+		  if(sqlRowNo==16) 
+			  testConfig.putRunTimeProperty("bsname",tinNumbers.get("BS_NM").toString());  
 		  }
 		    
 		  catch(Exception e)

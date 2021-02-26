@@ -4,52 +4,25 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.Payment_DataFiles_Page;
+import main.java.pageObjects.PaymentDataFilesCSR;
 import main.java.pageObjects.CSRHomePage;   
 import main.java.pageObjects.LoginCSR;      
 
 
 
-public class DataBundle_CSR_Step extends TestBase {
+public class PaymentDataFilesCSRSteps extends TestBase {
 
 	TestBase testConfig = TestBase.getInstance();
-	Payment_DataFiles_Page clickDataBundle = new Payment_DataFiles_Page(testConfig);
-	//CSRHomePage homePage=new CSRHomePage(testConfig);
-	
-	
-/*@Given("^User navigates to CSR portal and enters \"([^\"]*)\" and login$")
-	public void user_navigates_to_CSR_portal_and_enters_and_login(String userType) throws Throwable {
-		LoginCSR loginPage=new LoginCSR(testConfig);
-		CSRHomePage homePage=loginPage.doLogin(userType);
-	}*/
+	PaymentDataFilesCSR clickDataBundle = new PaymentDataFilesCSR(testConfig);
 
 @When("^User clicks on Payment Data Files Link$")
 public void user_clicks_on_Payment_Data_Files_Link() throws Throwable {
 	clickDataBundle.verifyPaymentDataFilesTab();  
 }
 
-@When("^User Validates Error Message upon Entering \"([^\"]*)\"$")
-public void User_Validates_Error_Message_upon_Entering_Invalid_Tin(String InvalidTIN) throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-	clickDataBundle.verifyInvalidTIN(InvalidTIN);
-}
-
-
-@When("^User enters the ValidTIN number$")
-public void user_enters_the_number() throws Throwable  {
-	clickDataBundle.enterTIN();
-}
-
-@When("^User enters the Valid tin number$")
-public void user_enters_the_Valid_tin_number() throws Throwable {   
-	clickDataBundle.enterTin();
-}
-
-@Then("^Validates the System upon entering \"([^\"]*)\"$")
-public void Validate_system_upon_entering_Valid_TIN(String ValidTIN) throws Throwable {
-    // Write code here that turns the phrase above into concrete actions
-	clickDataBundle.verifyValidTIN(ValidTIN);
-    
+@When("^User Validates Error Message upon Entering invalid TIN$")
+public void User_Validates_Error_Message_upon_Entering_invalid_TIN() throws Throwable {
+	clickDataBundle.verifyInvalidTIN();
 }
 
 @When("^Verify User navigates to Create Data Bundle Page$")
@@ -144,14 +117,14 @@ public void submit_EPRA_File_Data_Bundle() throws Throwable {
 	clickDataBundle.verifySubmitEPRAsDataBundle();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_File_Type() throws Throwable {
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_File_Type_on_CSR() throws Throwable {
 	clickDataBundle.eprafiletype();
 }
 
 
-@Then("^User verifies the EPRA indicator in Database entry$")
-public void user_verifies_the_EPRA_indicator_in_Database_entry() throws Throwable {
+@Then("^User verifies the EPRA indicator in Database entry on CSR$")
+public void user_verifies_the_EPRA_indicator_in_Database_entry_on_CSR() throws Throwable {
 	clickDataBundle.verifyEPRAInd();
 }
 
@@ -160,13 +133,13 @@ public void submit_PPRA_File_Data_Bundle() throws Throwable {
 	clickDataBundle.verifySubmitPRAsDataBundle();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_PPRA_File_Type() throws Throwable {
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_PPRA_File_Type_on_CSR() throws Throwable {
 	clickDataBundle.pprafiletype();
 }
 
-@Then("^User verifies the PPRA indicator in Database entry$")
-public void user_verifies_the_PPRA_indicator_in_Database_entry() throws Throwable {
+@Then("^User verifies the PPRA indicator in Database entry on CSR$")
+public void user_verifies_the_PPRA_indicator_in_Database_entry_on_CSR() throws Throwable {
 	clickDataBundle.verifyPPRAInd();
 }
 
@@ -176,75 +149,75 @@ public void submit_File_Data_Bundle(int arg1) throws Throwable {
 }
 
 
-@Then("^User verifies the (\\d+) indicator in Database entry$")
-public void user_verifies_the_indicator_in_Database_entry(int arg1) throws Throwable {
+@Then("^User verifies the (\\d+) indicator in Database entry on CSR$")
+public void user_verifies_the_indicator_in_Database_entry_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.verify835Ind();
 }
 
-@Then("^User verifies the EPRA and PPRA indicator in Database entry$")
-public void user_verifies_the_EPRA_and_PPRA_indicator_in_Database_entry() throws Throwable {    
+@Then("^User verifies the EPRA and PPRA indicator in Database entry on CSR$")
+public void user_verifies_the_EPRA_and_PPRA_indicator_in_Database_entry_on_CSR() throws Throwable {    
 	clickDataBundle.verifyEPRAnPPRAInd();
 }
 
-@Then("^User verifies the EPRA and (\\d+) indicator in Database entry$")
-public void user_verifies_the_EPRA_and_indicator_in_Database_entry(int arg1) throws Throwable {
+@Then("^User verifies the EPRA and (\\d+) indicator in Database entry on CSR$")
+public void user_verifies_the_EPRA_and_indicator_in_Database_entry_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.verifyEPRAn835Ind();
 }
 
-@Then("^User verifies the PPRA and (\\d+) indicator in Database entry$")
-public void user_verifies_the_PPRA_and_indicator_in_Database_entry(int arg1) throws Throwable {
+@Then("^User verifies the PPRA and (\\d+) indicator in Database entry on CSR$")
+public void user_verifies_the_PPRA_and_indicator_in_Database_entry_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.verifyPPRAn835Ind();
 }
 
-@Then("^User verifies the EPRA, PPRA and (\\d+) indicator in Database entry$")
-public void user_verifies_the_EPRA_PPRA_and_indicator_in_Database_entry(int arg1) throws Throwable {
+@Then("^User verifies the EPRA, PPRA and (\\d+) indicator in Database entry on CSR$")
+public void user_verifies_the_EPRA_PPRA_and_indicator_in_Database_entry_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.verifyEPRAn835nPPRAInd();
 }
 
-@Then("^User selects File Type as EPRA and PPRA and Submit File Data Bundle$")
-public void submit_EPRA_and_PPRA_File_Data_Bundle() throws Throwable {
+@Then("^User selects File Type as EPRA and PPRA and Submit File Data Bundle on CSR$")
+public void submit_EPRA_and_PPRA_File_Data_Bundle_on_csr() throws Throwable {
 	clickDataBundle.VerifyEPRAandPPRA();
 }
 
-@Then("^User selects File Type as EPRA and (\\d+) and Submit File Data Bundle$")
-public void submit_EPRA_and_File_Data_Bundle(int arg1) throws Throwable {
+@Then("^User selects File Type as EPRA and (\\d+) and Submit File Data Bundle on CSR$")
+public void submit_EPRA_and_File_Data_Bundle_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.VerifyEPRAand835(); 
 }
 
-@Then("^User selects File Type as PPRA and (\\d+) and Submit File Data Bundle$")
-public void submit_PPRA_and_File_Data_Bundle(int arg1) throws Throwable {
+@Then("^User selects File Type as PPRA and (\\d+) and Submit File Data Bundle on CSR$")
+public void submit_PPRA_and_File_Data_Bundle_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.VerifyPPRAand835();
 }
 
-@Then("^User selects File Type as EPRA PPRA and (\\d+) and Submit File Data Bundle$")
-public void submit_EPRA_and_PPRA_and_File_Data_Bundle(int arg1) throws Throwable {
+@Then("^User selects File Type as EPRA PPRA and (\\d+) and Submit File Data Bundle on CSR$")
+public void submit_EPRA_and_PPRA_and_File_Data_Bundle_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.VerifyEPRAandPPRAand835();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for (\\d+) File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_File_Type(int arg1) throws Throwable {
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for (\\d+) File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_File_Type_on_CSR(int arg1) throws Throwable {
 	clickDataBundle.eight35filetype();
 	
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and PPRA File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_and_PPRA_File_Type() throws Throwable {
-	clickDataBundle.epranpprafiletype();
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and PPRA File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_and_PPRA_File_Type_on_CSR() throws Throwable {
+	clickDataBundle.EPRAnPPRAFileType();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and (\\d+) File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_and_File_Type(int arg1) throws Throwable {
-	clickDataBundle.epran835filetype();
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and (\\d+) File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_and_File_Type_on_CSR(int arg1) throws Throwable {
+	clickDataBundle.EPRAn835FileType();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and (\\d+) File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_PPRA_and_File_Type(int arg1) throws Throwable {
-	clickDataBundle.ppran835filetype();
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and (\\d+) File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_PPRA_and_File_Type_on_CSR(int arg1) throws Throwable {
+	clickDataBundle.PPRAn835FileType();
 }
 
-@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA PPRA and (\\d+) File Type$")
-public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_PPRA_and_File_Type(int arg1) throws Throwable {
-	clickDataBundle.epran835npprafiletype();
+@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA PPRA and (\\d+) File Type on CSR$")
+public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_PPRA_and_File_Type_on_CSR(int arg1) throws Throwable {
+	clickDataBundle.EPRAn835nPPRAFileType();
 }
 
 @When("^User enters the TIN number of completed Data Bundle Requests$")
@@ -258,17 +231,15 @@ public void user_Click_on_Download_Data_Bundle_Tab() throws Throwable {
     
 }
 
-@Then("^User validates the completed File Name in the Grid$")
-public void user_validates_the_completed_File_Name_in_the_Grid() throws Throwable 
-{
-	
+@Then("^User validates the completed File Name in the Grid on CSR$")
+public void user_validates_the_completed_File_Name_in_the_Grid_on_CSR() throws Throwable {	
 	clickDataBundle.verifyZipFileName();
 }
 
 
 @Then("^User Verify Patient Payment Payer appear on top of the list$")
 public void user_Verify_Patient_Payment_Payer_appear_on_top_of_the_list() throws Throwable {
-	clickDataBundle.verifyPatientPatientOnTopOfTheList();
+	clickDataBundle.verifyPatientPaymentOnTopOfTheList();
 }
 
 @Then("^User Verify for Note appears that Payer PRAs and EPRAs are not available for Patient Payments$")

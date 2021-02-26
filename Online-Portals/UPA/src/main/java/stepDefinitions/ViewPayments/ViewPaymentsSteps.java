@@ -363,11 +363,6 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyMessages(credentials,trialStatus,paidOption);
 	}
 
-	@Then("^User logs out the session$")
-	public void user_logs_out_the_session() throws Throwable {
-		viewPayment.logoutSession();
-	}
-
     @Then("^User clicks on pPRA link$")
     public void user_clicks_on_pPRA_link()  {
     	viewPayment.clickpPRAlink();

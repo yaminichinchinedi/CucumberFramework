@@ -193,12 +193,6 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//span[contains(text(),'No, Thanks')]")
 	WebElement btnNoThnx;
 
-	
-	@FindBy(linkText="Logout") 
-	WebElement lnkLogout;
-	
-
-
 	@FindBy(xpath="//*[@id='paymentsummaryform']/table/tbody/tr[2]/td/table/tbody/tr[3]/td[2]/table/tbody/tr[2]/td/span/input[1]")
 	WebElement txtBoxPayerTin2;
 	
@@ -3647,12 +3641,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 
-	public ViewPayments logoutSession() {
-		Browser.wait(testConfig, 3);
-		Element.clickByJS(testConfig, lnkLogout, "Logout");
-		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
-		return this;
-	}
+
 
 
 

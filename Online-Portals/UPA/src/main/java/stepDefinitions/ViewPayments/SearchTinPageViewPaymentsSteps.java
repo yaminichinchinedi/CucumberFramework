@@ -12,15 +12,5 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_Enters_tin_and_click_on_search_button_for(String userType) throws Throwable {
 		viewPaymentsTIN.enterTinAndSrch(userType);
 	}
-	/*@When("^User enters  \"([^\"]*)\" tin \"([^\"]*)\" with \"([^\"]*)\" for \"([^\"]*)\" and \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
-	public void user_enters_tin_with_for_and_for_for(String tinType, String searchCriteria, String portalAccess, String trialStatus, String statusOfStandardRecd, String SelectedOrDefault, String userType) throws Throwable {
-		testConfig.putRunTimeProperty("tinType", tinType);
-		testConfig.putRunTimeProperty("portalAccess", portalAccess);
-		testConfig.putRunTimeProperty("trialStatus", trialStatus);
-		testConfig.putRunTimeProperty("statusOfStandardRecd", statusOfStandardRecd);
-		testConfig.putRunTimeProperty("SelectedOrDefault", SelectedOrDefault);
-		testConfig.getRunTimeProperty("id");
-		viewPaymentsTIN.enterPaymentTin(userType,searchCriteria, tinType,portalAccess);
-	}*/
 
 }

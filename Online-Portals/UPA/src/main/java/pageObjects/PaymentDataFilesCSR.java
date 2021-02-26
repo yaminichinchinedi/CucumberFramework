@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
-public class Payment_DataFiles_Page extends TestBase
+public class PaymentDataFilesCSR extends TestBase
 {
 	@FindBy(xpath = "//a[contains(text(),'Payment Data Files')]") 
 	WebElement PaymentDataFiles;
@@ -28,7 +29,7 @@ public class Payment_DataFiles_Page extends TestBase
 	WebElement SearchBtn;
 	@FindBy(xpath = "//td[contains(text(),'Please enter valid Tax Identification Number')]") 
 	WebElement InValidTINmsg;
-	@FindBy(xpath = "//li[@class='activeclass']") 
+	@FindBy(xpath = "//li[contains(text(),'Create Data Bundle')]") 
 	WebElement CreateDataBundle;
 	@FindBy(xpath = "//td[@class='subheader']")
 	WebElement SubHeaderCreate;
@@ -64,11 +65,11 @@ public class Payment_DataFiles_Page extends TestBase
 	WebElement RemoveAllBtn;
 	@FindBy(xpath = "//input[@value='     Reset     ']")
 	WebElement ResetBtn;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement RallyPayer;
-	@FindBy(xpath = "//option[contains(text(),'Rally Pay Member Payments')]") 
-	WebElement SelectedRallyPayer;
-	@FindBy(xpath = "//select[@name='availablePayers']/option[contains(text(),'Rally Pay Member Payments')]") 
+	@FindBy(xpath = "//select[@name='availablePayers']//option[1]") 
+	WebElement firstPayer;
+	@FindBy(xpath = "//select[@name='selectedPayers']//option[1]") 
+	WebElement SelectedFirstPayer;
+	@FindBy(xpath = "//select[@name='availablePayers']//option[1]") 
 	WebElement AvailablePayer;
 	@FindBy(xpath = "//input[@value='     Submit     ']")
 	WebElement btnSubmit;
@@ -110,96 +111,43 @@ public class Payment_DataFiles_Page extends TestBase
 	@FindBy(name = "availablePayers")
 	WebElement payerName;
 	
-	@FindBy(xpath = "//span[contains(text(),'Note: Payer PRAs and EPRAs are not available for P')]")
+	@FindBy(xpath = "//span[contains(text(),'Note: Payer PRAs and EPRAs may not be available for all Payers.')]")
 	WebElement payerPRANote;
 	
 	@FindBy(xpath = "//*[contains(text(),'Data Bundle requests for Patient Payments will be available soon')]")
 	WebElement patientPaymentsNote;
 	
-	public Payment_DataFiles_Page(TestBase testConfig)
+	public PaymentDataFilesCSR(TestBase testConfig)
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 }
 	
-	public Payment_DataFiles_Page verifyPaymentDataFilesTab()
+	public PaymentDataFilesCSR verifyPaymentDataFilesTab()
     {
 		Element.expectedWait(PaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");
-		Element.click(PaymentDataFiles, "Payment Data Files Link");
+		Element.clickByJS(testConfig,PaymentDataFiles, "Payment Data Files Link");
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifyInvalidTIN(String InvalidTIN) throws Exception 
-	{
+	public PaymentDataFilesCSR verifyInvalidTIN() throws Exception {
+		String invalidTIN=Helper.generateRandomAlphaNumericString(9);
 		Element.expectedWait(EnterTIN, testConfig, "TIN field","TIN Field");
-		Element.enterData(EnterTIN, InvalidTIN, "TIN entered as : "+InvalidTIN, "EnterTIN");
+		Element.enterData(EnterTIN, invalidTIN, "TIN entered as : "+invalidTIN, "EnterTIN");
 		Element.clickByJS(testConfig,SearchBtn, "Search Button");
 		Browser.wait(testConfig, 4);
-		
-		String ErrorMsgText = InValidTINmsg.getText();
-		testConfig.softAssert.assertEquals(ErrorMsgText, "Please enter valid Tax Identification Number", "InValid TIN Functionality");
+		testConfig.softAssert.assertEquals(InValidTINmsg.getText(), "Please enter valid Tax Identification Number", "InValid TIN Functionality");
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifyValidTIN(String ValidTIN) throws Exception
-	{
-		Element.expectedWait(EnterTIN, testConfig, "TIN field","TIN Field");
-		Element.enterData(EnterTIN, ValidTIN, "TIN entered as : "+ValidTIN, "EnterTIN");
-		Element.clickByJS(testConfig,SearchBtn, "Search Button");
-		Browser.wait(testConfig, 4);
-		
-		String DataBundlePage = CreateDataBundle.getText();
-		Browser.wait(testConfig, 3);
-		testConfig.softAssert.assertEquals(DataBundlePage, "Create Data Bundle","Navigation to Create Data Bundle Page");
-		Browser.wait(testConfig, 3);
-		testConfig.softAssert.assertAll();
-		return this;
-	}
-	
-	public Payment_DataFiles_Page enterTIN() throws Exception 
-	{
-		int sqlRow;
-		String PAYR_SCHM_NM = "PP001";
-		testConfig.putRunTimeProperty("Schema", PAYR_SCHM_NM);
-		
-		sqlRow=238;
-		Map paymentdetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		String Prov_tin_nbr = paymentdetails.get("PROV_TAX_ID_NBR").toString().trim();
-		String Setl_dt = paymentdetails.get("SETL_DT").toString().trim();
-		testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TAX_ID_NBR").toString().trim());
-		testConfig.putRunTimeProperty("Setl_dt", paymentdetails.get("SETL_DT").toString().trim());
-		
-		Element.enterData(EnterTIN, Prov_tin_nbr, "Provider TIN entered: "+Prov_tin_nbr, "TINField");
-		Element.click(SearchBtn, "Search Button");
-		Browser.wait(testConfig, 3);
-		return this;
-	}
-	
-	public Payment_DataFiles_Page enterTin() throws Exception 
-	{
-		int sqlRow;
-		sqlRow=15;
-		Map paymentdetails=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
-		String Prov_tin_nbr = paymentdetails.get("PROV_TIN_NBR").toString().trim();
-		testConfig.putRunTimeProperty("Prov_tin_nbr", paymentdetails.get("PROV_TIN_NBR").toString().trim());
-		
-		Element.enterData(EnterTIN, Prov_tin_nbr, "Provider TIN entered: "+Prov_tin_nbr, "TINField");
-		Element.click(SearchBtn, "Search Button");
-		Browser.wait(testConfig, 3);
-		return this;
-	}
-	
-	public Payment_DataFiles_Page verifyCreateDataBundlePage() throws Exception
-	{
-
+	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
 		String DataBundlePage = CreateDataBundle.getText();
 		Browser.wait(testConfig, 3);
 		testConfig.softAssert.assertEquals(DataBundlePage, "Create Data Bundle", "Navigation to Create Data Bundle Page");
 		return this;
 	}
 
-	public Payment_DataFiles_Page verifyAllValuesinCreateBundlePage() throws Exception
-	{
+	public PaymentDataFilesCSR verifyAllValuesinCreateBundlePage() throws Exception{
 		String subheader = SubHeaderCreate.getText().trim();
 		testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
@@ -211,6 +159,8 @@ public class Payment_DataFiles_Page extends TestBase
 		
 		String ProviderName = Provider.getText().trim();
 		int sqlRow=236;
+		String Prov_tin_nbr=System.getProperty("tin");
+		testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String orgName = orgNameDB.get("ORG_NM").toString().trim();
 		String ProvName = "Provider: "+orgName;
@@ -229,52 +179,33 @@ public class Payment_DataFiles_Page extends TestBase
 	   return this;	
 	}
 	
-	public Payment_DataFiles_Page verifyPayerList() throws InterruptedException, Exception
-	{
-		int sqlRowNo; 
+	public PaymentDataFilesCSR verifyPayerList() throws InterruptedException, Exception
+	{				
 		Browser.wait(testConfig, 5);
-		//Map PayerListDB=null;
-		
-		List<String> PayerListUI=new ArrayList<>();//availablePayerTinNbrs
-		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayers']/option");
-		for(int i=1; i<= payer.size(); i++)
+		List<String> PayerListUI=new ArrayList<>();
+		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayers']//option");
+				for(int i=1; i<= payer.size(); i++)
 		{
-			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']/option["+i+"]").getText().trim();
+			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']//option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
-		}
-		Browser.wait(testConfig, 3);
-		sqlRowNo = 231;
-		ArrayList<String> PayerListDB = new ArrayList<String>();
-		HashMap<Integer, HashMap<String, String>> PayerListDB1 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		   		
-		for (int i = 1; i <= PayerListDB1.size(); i++) 
-		{
-			PayerListDB.add(PayerListDB1.get(i).get("PAYR_DSPL_NM"));
-		}
-		   		   
-		Browser.wait(testConfig, 3);
-		sqlRowNo = 232;
-		ArrayList<String> PayerListDBAll = new ArrayList<String>();
-		HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		for (int i = 1; i <= PayerListDB2.size(); i++) 
-		{
-			PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
-		}
-		   
-		PayerListDB.addAll(PayerListDBAll);
-		   
-		if(PayerListDB.equals(PayerListUI))
-		{
-			Log.Pass("Available Payers:- ");
-		}
-		else {
-			Log.Comment("Payer List Not Matching. Payers from UI: "+PayerListUI + " And List from DB: "+PayerListDB);
-		}
-		   
-		return this;
+		}   
+		   Browser.wait(testConfig, 3);
+		   int sqlRowNo = 1347;
+		   testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
+		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
+		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
+			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
+           }		   
+		   if(PayerListDBAll.equals(PayerListUI))		 
+			   Log.Pass("Available Payers:- ");		 
+		   else 
+			   Log.Fail("Payer List Not Matching. Payers from UI: "+PayerListUI + " And List from DB: "+PayerListDBAll);		   
+		
+		   return this;
 	}
 	
-	public Payment_DataFiles_Page verifyButtonsList() throws Exception
+	public PaymentDataFilesCSR verifyButtonsList() throws Exception
 	{
 	   Browser.wait(testConfig, 3);
 	   Boolean AddButtonPresent = AddBtn.isDisplayed();
@@ -292,26 +223,26 @@ public class Payment_DataFiles_Page extends TestBase
 	  return this;
 	}
 	
-	public Payment_DataFiles_Page verifyAddButton() throws Exception
+	public PaymentDataFilesCSR verifyAddButton() throws Exception
 	{
 		Browser.wait(testConfig, 3);
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Browser.wait(testConfig, 1);
 		Element.click(AddBtn, "Add Button");
-		testConfig.softAssert.assertEquals(SelectedRallyPayer.getText().trim(), RallyPayer.getText().trim(), "Add Button Functionality");
+		testConfig.softAssert.assertEquals(SelectedFirstPayer.getText().trim(), firstPayer.getText().trim(), "Add Button Functionality");
 		return this;	
 	}
 		   
-	public Payment_DataFiles_Page verifyRemoveButton() throws Exception
+	public PaymentDataFilesCSR verifyRemoveButton() throws Exception
 	{
 		Browser.wait(testConfig, 3);
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.click(RemoveBtn, "Remove Button");
-		testConfig.softAssert.assertEquals(AvailablePayer.getText().trim(), "Rally Pay Member Payments", "Remove Button Functionality");
+		testConfig.softAssert.assertEquals(AvailablePayer.getText().trim(), "First Payer", "Remove Button Functionality");
 		return this; 
 	}
 		   
-	public Payment_DataFiles_Page verifyAddAllButton() throws Exception
+	public PaymentDataFilesCSR verifyAddAllButton() throws Exception
 	{
 		Browser.wait(testConfig, 3);
 		List<WebElement> list1= Element.findElements(testConfig, "xpath", "//*[@name='availablePayers']/option");
@@ -321,7 +252,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 		   
-	public Payment_DataFiles_Page verifyRemoveAllButton() throws Exception
+	public PaymentDataFilesCSR verifyRemoveAllButton() throws Exception
 	{
 		Browser.wait(testConfig, 3);
 		List<WebElement> list2= Element.findElements(testConfig, "xpath", "//*[@name='selectedPayers']/option");
@@ -331,16 +262,15 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 		   
-	public Payment_DataFiles_Page verifyResetButton() throws Exception
+	public PaymentDataFilesCSR verifyResetButton() throws Exception
 	{
 		Browser.wait(testConfig, 3);
 		List<WebElement> list1= Element.findElements(testConfig, "xpath", "//*[@name='availablePayers']/option");
 		Element.click(AddAllBtn, "Add All Button");
-		List<WebElement> list2= Element.findElements(testConfig, "xpath", "//*[@name='selectedPayers']/option");
-		 
+		List<WebElement> list2= Element.findElements(testConfig, "xpath", "//*[@name='selectedPayers']/option");		 
 		if(list1.size() == list2.size())
 		 {
-			 Element.click(ResetBtn, "Reset Button");
+			 Element.clickByJS(testConfig,ResetBtn, "Reset Button");
 			 List<WebElement> list3=Element.findElements(testConfig, "xpath", "//*[@name='availablePayers']/option");
 			 testConfig.softAssert.assertEquals(list1.size(), list3.size(), "Reset Functionality");
 		 }
@@ -351,7 +281,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 
-	public Payment_DataFiles_Page verifyErrorWithoutSubmiitingAnyField() throws Exception
+	public PaymentDataFilesCSR verifyErrorWithoutSubmiitingAnyField() throws Exception
 	{
 		Browser.wait(testConfig, 2);
 		Element.click(btnSubmit, "Click on Submit Button");
@@ -380,11 +310,11 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 
-	public Payment_DataFiles_Page verifyErrorWithoutSettlementDates() throws Exception
+	public PaymentDataFilesCSR verifyErrorWithoutSettlementDates() throws Exception
 	{
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.click(AddBtn, "Add Button");
 		Browser.wait(testConfig, 2);
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
@@ -399,113 +329,55 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 			  
-	public String currentDate() 
+	public PaymentDataFilesCSR verifyErrorWithoutFileType() throws Exception
 	{
-		String month, day;
-		java.util.Date date = new java.util.Date();
-		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
-		 
-		int days = date.getDate();
-		if(days<10) 
-		{			 day = "0"+days;		 }
-		else
-		{			 day = String.valueOf(days);		 }
-		
-		int year  = date.getYear()+1900;
-		 
-		String curnt_dt = month + "/" +day+"/"+year;
-		return curnt_dt;
-	}
-	 
-	public String SettlementDate()
-	{
-		String Setl_Dt = testConfig.getRunTimeProperty("Setl_dt");
-		String[] sDBDate=Setl_Dt.split("-");  		    
-		
-		String sDBYear=sDBDate[0];
-		String sDBMonth=sDBDate[1];
-		String sDBDay=sDBDate[2];
-		String SetDate = sDBMonth+"/"+sDBDay+"/"+sDBYear;
-		return SetDate;
-	}
-	 
-	public Payment_DataFiles_Page verifyErrorWithoutFileType() throws Exception
-	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.click(AddBtn, "Add Button");
-		String date1 = SettlementDate();
+		String date1=testConfig.getRunTimeProperty("setl_dt");
+		date1= Helper.changeDateFormat(date1, "yyyy-mm-dd", "mm/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date1, "To Date: "+date1, "todate");
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 3);
 		 
-		String FileErrorMsg = FileError.getText();
-		testConfig.softAssert.assertEquals(FileErrorMsg, "File Types : Missing Data", "File Type Error Displays");
+		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", FileError.getText());
 		
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
 		return this;
 	}	
 
-	public Payment_DataFiles_Page verifyErrorForMore30days() throws Exception
+	public PaymentDataFilesCSR verifyErrorForMore30days() throws Exception
 	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		
-		String month, day;
-		java.util.Date date = new java.util.Date();
-		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
-		int days = date.getDate();
-		if(days<10) 
-		{			 day = "0"+days;		 }
-		else
-		{			 day = String.valueOf(days);		 }
-		int year  = date.getYear()+1899;
-		String date1 = month + "/" +day+"/"+year;
-		 
-		String date2 =currentDate();
+		String date1 = Helper.getDateBeforeOrAfterDays(-366,"MM/dd/yyyy");
+		String date2= Helper.getCurrentTime("MM/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date2, "To Date: "+date2, "todate");
 		Browser.wait(testConfig, 3);
 		Element.click(btnSubmit, "Click on Submit Button");	
 		Browser.wait(testConfig, 3);
-		String SettlmntErrorMoreThan30Days = SettlErrorMore30Days.getText();
-		testConfig.softAssert.assertEquals(SettlmntErrorMoreThan30Days, "Settlement Date Range : From Date must not be greater than 30 Days prior to To date.", "Error for More Than 30 Days Displays");
+		
+		Helper.compareEquals(testConfig, "Error for More Than 30 Days Displays: ", "Settlement Date Range : From Date must not be greater than 30 Days prior to To date.", SettlErrorMore30Days.getText());
 		
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
 		return this;
 	}
  
-	public Payment_DataFiles_Page verifyErrorForPriorDates() throws Exception
+	public PaymentDataFilesCSR verifyErrorForPriorDates() throws Exception
 	{
-		Element.click(RallyPayer, "Rally Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.click(AddBtn, "Add Button");
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		
-		String date1 =currentDate();
-		java.util.Date date = new java.util.Date();
-		String month, day;
-		int mmn = date.getMonth()+1; 
-		if(mmn==10 || mmn== 11 || mmn == 12)
-		{			 month = String.valueOf(mmn);		 }
-		else {			 month = "0"+mmn;		 }
-		int days = date.getDate();
-		if(days<10) 
-		{			 day = "0"+days;		 }
-		else
-		{			 day = String.valueOf(days);		 }
-		int year  = date.getYear()+1901;
-		String date2 = month + "/" +day+"/"+year;
+		String date1=Helper.getCurrentDate("MM/dd/yyyy");
+		String date2 = Helper.getDateBeforeOrAfterDays(366,"MM/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(todate, date2, "To Date: "+date2, "todate");
@@ -513,19 +385,20 @@ public class Payment_DataFiles_Page extends TestBase
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 3);
 		 
-		String SettlmntDatePriorErrorMsg = SettlmntDatePriorError.getText();
-		testConfig.softAssert.assertEquals(SettlmntDatePriorErrorMsg, "Settlement Date Range : To and From Dates must be prior to or same as current date.", "Error for Prior Days Displays");
+		Helper.compareEquals(testConfig, "Error for Prior Days Displays: ", "Settlement Date Range : To and From Dates must be prior to or same as current date.", SettlmntDatePriorError.getText());
 		
 		Element.click(ResetBtn, "Reset Button");
 		Browser.wait(testConfig, 3);
 		return this;
 	}	
 
-	public Payment_DataFiles_Page verifyErrorForPayerSelection() throws Exception
+	public PaymentDataFilesCSR verifyErrorForPayerSelection() throws Exception
 	{
-		String date1 = currentDate();
-		Element.enterData(fromdate, date1, "From Date: "+date1, "fromdate");
-		Element.enterData(todate, date1, "To Date: "+date1, "todate");
+		Browser.wait(testConfig, 3);
+		String date1=Helper.getCurrentDate("MM/dd/yyyy");
+		Element.enterDataByJS(testConfig, fromdate, date1, "From Date: "+date1+ "fromdate");
+		Element.enterDataByJS(testConfig, todate, date1, "From Date: "+date1+ "todate");
+
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
@@ -541,7 +414,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;	   
 	}	
 
-	public Payment_DataFiles_Page verifyPayerSelection() throws Exception
+	public PaymentDataFilesCSR verifyPayerSelection() throws Exception
 	{
 		Element.click(AddAllBtn, "Add All Button");
 		Browser.wait(testConfig, 3);
@@ -549,9 +422,10 @@ public class Payment_DataFiles_Page extends TestBase
 
 	}
 	   
-	public Payment_DataFiles_Page enterPaymentDate() throws InterruptedException 
+	public PaymentDataFilesCSR enterPaymentDate() throws InterruptedException, Exception 
 	{
-		String DateEntered = SettlementDate();
+		String DateEntered=testConfig.getRunTimeProperty("setl_dt");
+		 DateEntered= Helper.changeDateFormat(DateEntered, "yyyy-mm-dd", "mm/dd/yyyy");
 		Browser.wait(testConfig, 1);
 		Element.enterData(fromdate, DateEntered, "From Date Entered: "+DateEntered, "fromdate");
 		Element.enterData(todate, DateEntered, "To Date Entered: "+DateEntered, "todate");
@@ -559,7 +433,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifySubmitEPRAsDataBundle() throws Exception
+	public PaymentDataFilesCSR verifySubmitEPRAsDataBundle() throws Exception
 	{
 		Element.click(eprachkbox, "Click on EPRA Check Box");
 		Element.click(btnSubmit, "Click on Submit Button");
@@ -572,7 +446,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}	
 
-	public Payment_DataFiles_Page downloaddatabundle() throws Exception
+	public PaymentDataFilesCSR downloadDataBundle() throws Exception
 	{
 		Element.click(DownloadDataBundle, "Click on Download Data Bundle Tab");
 		Browser.wait(testConfig, 3);
@@ -603,18 +477,18 @@ public class Payment_DataFiles_Page extends TestBase
 	 }
 	
 	
-	public Payment_DataFiles_Page eprafiletype() throws Exception
+	public PaymentDataFilesCSR eprafiletype() throws Exception
 	{
-		downloaddatabundle();
+		downloadDataBundle();
 		String FileType = BundleFileType.getText().trim();
 		Helper.compareEquals(testConfig, "File Type Selected: EPRA", "File Types selected for this bundle: EPRAs", FileType);
 		 
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifyDatabunldeDb()
+	public PaymentDataFilesCSR verifyDatabunldeDb()
 	{
-		String TIN = testConfig.getRunTimeProperty("Prov_tin_nbr");
+		testConfig.putRunTimeProperty("Prov_tin_nbr",System.getProperty("tin"));
 		int sqlRow=234;
 		Map Indicator=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		testConfig.putRunTimeProperty("DataBundleID", Indicator.get("DATA_BUNDLE_ID").toString());
@@ -625,7 +499,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifyEPRAInd()
+	public PaymentDataFilesCSR verifyEPRAInd()
 	{
 		verifyDatabunldeDb();
 		String value835 = testConfig.getRunTimeProperty("835Ind").trim();
@@ -641,7 +515,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verifySubmitPRAsDataBundle() throws Exception
+	public PaymentDataFilesCSR verifySubmitPRAsDataBundle() throws Exception
 	{
 		Element.click(prachkbox, "Click on PPRA Check Box");
 		Browser.wait(testConfig, 1);
@@ -656,7 +530,7 @@ public class Payment_DataFiles_Page extends TestBase
 	}
 	
 	
-	public Payment_DataFiles_Page verifySubmit835DataBundle() throws Exception
+	public PaymentDataFilesCSR verifySubmit835DataBundle() throws Exception
 	{
 		Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		Browser.wait(testConfig, 1);
@@ -669,25 +543,25 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
-	 public Payment_DataFiles_Page eight35filetype() throws Exception
+	 public PaymentDataFilesCSR eight35filetype() throws Exception
 	 {
-		 downloaddatabundle();
+		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s", "File Types selected for this bundle: 835s", FileType);
 		 
 		 return this;
 	 }
 	
-	public Payment_DataFiles_Page pprafiletype() throws Exception
+	public PaymentDataFilesCSR pprafiletype() throws Exception
 	{
-		downloaddatabundle();
+		downloadDataBundle();
 		String FileType = BundleFileType.getText().trim();
 		Helper.compareEquals(testConfig, "File Type Selected: PPRA", "File Types selected for this bundle: Payer PRAs", FileType);
 		
 		return this;
 	}
 	
-	public Payment_DataFiles_Page verify835Ind()
+	public PaymentDataFilesCSR verify835Ind()
 	{
 		 verifyDatabunldeDb();
 		 String value835 = testConfig.getRunTimeProperty("835Ind").trim();
@@ -705,7 +579,7 @@ public class Payment_DataFiles_Page extends TestBase
 	 }
 	
 	
-	public Payment_DataFiles_Page verifyPPRAInd()
+	public PaymentDataFilesCSR verifyPPRAInd()
 	{
 		verifyDatabunldeDb();
 		String value835 = testConfig.getRunTimeProperty("835Ind").trim();
@@ -721,7 +595,7 @@ public class Payment_DataFiles_Page extends TestBase
 		return this;
 	}
 	
-	public Payment_DataFiles_Page VerifyEPRAandPPRA() throws Exception
+	public PaymentDataFilesCSR VerifyEPRAandPPRA() throws Exception
 	 {
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
@@ -736,7 +610,7 @@ public class Payment_DataFiles_Page extends TestBase
 		 return this;
 	 }
 
-	 public Payment_DataFiles_Page VerifyEPRAand835() throws Exception
+	 public PaymentDataFilesCSR VerifyEPRAand835() throws Exception
 	 {
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
 		 //Element.click(prachkbox, "Click on PPRA Check Box");
@@ -751,7 +625,7 @@ public class Payment_DataFiles_Page extends TestBase
 		 return this;
 	 }
 
-	 public Payment_DataFiles_Page VerifyPPRAand835() throws Exception
+	 public PaymentDataFilesCSR VerifyPPRAand835() throws Exception
 	 {
 		 //Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
@@ -765,7 +639,7 @@ public class Payment_DataFiles_Page extends TestBase
 		 return this;
 	 }
 	 
-	 public Payment_DataFiles_Page VerifyEPRAandPPRAand835() throws Exception
+	 public PaymentDataFilesCSR VerifyEPRAandPPRAand835() throws Exception
 	 {
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
@@ -779,134 +653,126 @@ public class Payment_DataFiles_Page extends TestBase
 		 return this;
 	 }
 
-	 public Payment_DataFiles_Page epranpprafiletype() throws Exception
+	 public PaymentDataFilesCSR EPRAnPPRAFileType() throws Exception
 	 {
-		 downloaddatabundle();
+		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer PRAs, EPRAs", "File Types selected for this bundle: Payer PRAs, EPRAs", FileType);
 		  
 		 return this;
 	 }
 	 
-	 public Payment_DataFiles_Page epran835filetype() throws Exception
+	 public PaymentDataFilesCSR EPRAn835FileType() throws Exception
 	 {
-		 downloaddatabundle();
+		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer 835, EPRAs", "File Types selected for this bundle: 835s, EPRAs", FileType);
 		
 		 return this;
 	 }
 	 
-	 public Payment_DataFiles_Page ppran835filetype() throws Exception
+	 public PaymentDataFilesCSR PPRAn835FileType() throws Exception
 	 {
-		 downloaddatabundle();
+		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s, Payer PRAs", "File Types selected for this bundle: 835s, Payer PRAs", FileType);
 		
 		 return this;
 	 }
 	 
-	 public Payment_DataFiles_Page epran835npprafiletype() throws Exception
+	 public PaymentDataFilesCSR EPRAn835nPPRAFileType() throws Exception
 	 {
-		 downloaddatabundle();
+		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
 		 Helper.compareEquals(testConfig, "File Type Selected: All", "File Types selected for this bundle: 835s, Payer PRAs, EPRAs", FileType);
 		  
 		 return this;
 	 }
 	
-	 public Payment_DataFiles_Page verifyEPRAnPPRAInd()
-		{
-				verifyDatabunldeDb();
-				String value835 = testConfig.getRunTimeProperty("835Ind").trim();
-				String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
-				String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
-				String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
-				if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("N") )
-				{
-					Log.Pass("Data Bundle Request with ID "+DataBundleID+"have been Submitted Successfully with EPRA indicator as: "+valueEPRA + " and PPRA indicator as: "+valuePPRA);	
-				}
-				else {Log.Fail("Error in Data Bundle Request");
-				}
-				return this;
+	 public PaymentDataFilesCSR verifyEPRAnPPRAInd()
+	 {
+		 verifyDatabunldeDb();
+		 String value835 = testConfig.getRunTimeProperty("835Ind").trim();
+		 String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
+		 String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
+		 String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
+		 if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("N") )		
+			Log.Pass("Data Bundle Request with ID "+DataBundleID+"have been Submitted Successfully with EPRA indicator as: "+valueEPRA + " and PPRA indicator as: "+valuePPRA);			
+		else 
+			Log.Fail("Error in Data Bundle Request");
+				
+		return this;
 		}
 			
-		public Payment_DataFiles_Page verifyEPRAn835Ind()
+		public PaymentDataFilesCSR verifyEPRAn835Ind()
 		{
-				verifyDatabunldeDb();
-				String value835 = testConfig.getRunTimeProperty("835Ind").trim();
-				String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
-				String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
-				String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
-				if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("N") && value835.equalsIgnoreCase("Y") )
-				{
-					Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with EPRA indicator as: "+valueEPRA + " and 835 indicator as: "+value835);	
-				}
-				else {Log.Fail("Error in Data Bundle Request");
-				}
-				return this;
+			verifyDatabunldeDb();
+			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
+			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
+			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
+			String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
+			if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("N") && value835.equalsIgnoreCase("Y") )			
+				Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with EPRA indicator as: "+valueEPRA + " and 835 indicator as: "+value835);	
+			
+			else 
+				Log.Fail("Error in Data Bundle Request");
+			
+			return this;
 		}
 			
-		public Payment_DataFiles_Page verifyPPRAn835Ind()
+		public PaymentDataFilesCSR verifyPPRAn835Ind()
 		{
-				verifyDatabunldeDb();
-				String value835 = testConfig.getRunTimeProperty("835Ind").trim();
-				String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
-				String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
-				String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
-				if(valueEPRA.equalsIgnoreCase("N") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("Y") )
-				{
-					Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with PPRA indicator as: "+valuePPRA + " and 835 indicator as: "+value835);	
-				}
-				else {Log.Fail("Error in Data Bundle Request");
-				}
-				return this;
+			verifyDatabunldeDb();
+			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
+			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
+			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
+			String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
+			if(valueEPRA.equalsIgnoreCase("N") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("Y") )				
+				Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with PPRA indicator as: "+valuePPRA + " and 835 indicator as: "+value835);					
+			else 
+				Log.Fail("Error in Data Bundle Request");
+				
+			return this;
 		}
 			
-		public Payment_DataFiles_Page verifyEPRAn835nPPRAInd()
+		public PaymentDataFilesCSR verifyEPRAn835nPPRAInd()
 		{
-				verifyDatabunldeDb();
-				String value835 = testConfig.getRunTimeProperty("835Ind").trim();
-				String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
-				String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
-				String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
-				if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("Y") )
-				{
-					Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with EPRA, PPRA and 835 indicator as Y");	
-				}
-				else {Log.Fail("Error in Data Bundle Request");
-				}
-				return this;
+			verifyDatabunldeDb();
+			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
+			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
+			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
+			String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
+			if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("Y") )				
+				Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with EPRA, PPRA and 835 indicator as Y");					
+			else 
+				Log.Fail("Error in Data Bundle Request");
+				
+			return this;
 		}
 	 	
-		public Payment_DataFiles_Page getCompletedIN() throws Exception 
+		public PaymentDataFilesCSR getCompletedIN() throws Exception 
 		{
 			int sqlRow=235;
 			Map<String,String> TINAndFileName= new HashMap<String, String>();
 			Map displayNo=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 			
-			if (displayNo != null)
-			{
-			TINAndFileName.put("TINNbr", displayNo.get("PROV_TIN_NBR").toString());
-			TINAndFileName.put("FileName", displayNo.get("FILE_NM").toString());
+			if (displayNo != null) {			
+				TINAndFileName.put("TINNbr", displayNo.get("PROV_TIN_NBR").toString());
+				TINAndFileName.put("FileName", displayNo.get("FILE_NM").toString());
 			
-			testConfig.putRunTimeProperty("TINNbr", displayNo.get("PROV_TIN_NBR").toString()); 
-			testConfig.putRunTimeProperty("FileName", displayNo.get("FILE_NM").toString());
+				testConfig.putRunTimeProperty("TINNbr", displayNo.get("PROV_TIN_NBR").toString()); 
+				testConfig.putRunTimeProperty("FileName", displayNo.get("FILE_NM").toString());
 			
-			Element.enterData(EnterTIN, displayNo.get("PROV_TIN_NBR").toString(), "Enter Tin to proceed for Data Bundle" +displayNo.get("PROV_TIN_NBR").toString(), "EnterTIN");
-			Element.click(SearchBtn, "Search Button");
-			
-			
+				Element.enterData(EnterTIN, displayNo.get("PROV_TIN_NBR").toString(), "Enter Tin to proceed for Data Bundle" +displayNo.get("PROV_TIN_NBR").toString(), "EnterTIN");
+				Element.click(SearchBtn, "Search Button");			
 		    }
 			else
-			{
 				Log.Comment("No FileName retrieved to be Validated");
-				enterTIN();
-			}
+			
 			return this;
 		}	
 
-		public Payment_DataFiles_Page DownloadDataBundlePage() throws Exception
+		public PaymentDataFilesCSR DownloadDataBundlePage() throws Exception
 		{
 			Element.click(DownloadDataBundle, "Click on Download Data Bundle Tab");
 			Browser.wait(testConfig, 3);
@@ -920,7 +786,7 @@ public class Payment_DataFiles_Page extends TestBase
 		 
 		}
 
-		public Payment_DataFiles_Page verifyZipFileName() 
+		public PaymentDataFilesCSR verifyZipFileName() 
 		{
 			String FileName1 = testConfig.getRunTimeProperty("FileName");
 			if (FileName1 != null)
@@ -940,23 +806,23 @@ public class Payment_DataFiles_Page extends TestBase
 			 return this;
 		}
 		
-		public Payment_DataFiles_Page verifyPatientPatientOnTopOfTheList() {
-		Element.verifyTextPresent(payerName.findElements(By.tagName("option")).get(0), "Patient Payment");
+		public PaymentDataFilesCSR verifyPatientPaymentOnTopOfTheList() {
+		Element.verifyTextPresent(payerName.findElements(By.tagName("option")).get(0), "UHC Member Payment");
 		return this;
 		}
 		
-		public Payment_DataFiles_Page verifypayerPRANote() {
-			Element.verifyTextPresent(payerPRANote, "Note: Payer PRAs and EPRAs are not available for Patient Payments");
+		public PaymentDataFilesCSR verifypayerPRANote() {
+			Element.verifyTextPresent(payerPRANote, "Note: Payer PRAs and EPRAs may not be available for all Payers.");
 			return this;
 		}
 		
-		public Payment_DataFiles_Page verifyAbsenseOfPatientPaymentsNote() {
+		public PaymentDataFilesCSR verifyAbsenseOfPatientPaymentsNote() {
 			Element.verifyElementNotPresent(patientPaymentsNote, "Data Bundle requests for Patient Payments will be available soon");
 			return this;
 
 		}
 		
-		public Payment_DataFiles_Page verify835isClickable() {
+		public PaymentDataFilesCSR verify835isClickable() {
 			Element.click(Eight35ChkBox, "835's Check Box");
 			Element.verifyElementIsChecked(Eight35ChkBox, "835's Check Box");
 			return this;
