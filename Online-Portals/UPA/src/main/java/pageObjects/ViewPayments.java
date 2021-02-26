@@ -78,12 +78,6 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(id="archiveFilterType")
 	WebElement drpDwnArchiveFilter;
 	
-
-//	@FindBy(xpath="//select[@id='archiveFilterType']/ ../preceding-sibling::td")
-	@FindBy(xpath="//div[@id=\"view-payments\"]//div[2]//div[4]/p")
-	WebElement BsLblPaymentStatus;
-	
-
 	@FindBy(xpath="//div[@id='view-payments']//tr[2]/td//tr[2]//div[2]//div[4]/p")
 	WebElement lblPaymentStatus;
 	
@@ -164,10 +158,8 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	
 	@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	
-	//@FindBy(id="savePaymentArchive")
-	//WebElement btnSave;
-	
-	@FindBy(xpath = "//input[@id='savePaymentArchive']") WebElement btnSave;
+	@FindBy(id="savePaymentArchive")
+	WebElement btnSave;
 	
 	@FindBy(name="B3")
 	WebElement btnPrntPaymntSummary;
@@ -1222,7 +1214,7 @@ public void verifyFailedPaymentPopUp()
 		   }
 	   }else{
 		   headerRow=Element.findElement(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[1]");
-		 
+		   
 		   if(headerRow!=null)
 			   size=headerRow.findElements(By.tagName("th")).size();
 	   }
@@ -3155,16 +3147,8 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-
-	public ViewPayments verifyPaymentStatusFilter(String userType, String portalAccess){
-		String label = null;
-		if(userType.equalsIgnoreCase("PROV")) {
-			label=lblPaymentStatus.getText().trim(); 
-		}
-		else if(userType.equalsIgnoreCase("BS")) {
-			 label=BsLblPaymentStatus.getText().trim();
-		}
-
+	public ViewPayments verifyPaymentStatusFilter(String portalAccess){
+		String label=lblPaymentStatus.getText().trim();
 		if(!label.equals("Active/Archived Payments"))
 			Log.Pass("Passed : Active/Archived Payments is relabeled");
 		else
@@ -3232,7 +3216,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 				//verify if claim count is 0, hyperlink is not present and if its not 0 then click
 				for(;i<searchResultRows.size();i++)
 			    {
-					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n", "");
+					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 			    		   System.out.println("expected payment num : "+expectedPaymntNo);
 			    		   found=true;
@@ -3250,8 +3234,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 						    	  Element.verifyElementPresent(link, "Claim count link is present");
 						    	  Element.click(link, "Claim count hyperlink");
 						    	  Browser.wait(testConfig, 3);
-						    	  //Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//div[@id='onlyplb']/table/tbody/tr[1]/td/table/tbody/tr[1]/td").getText(), "Remittance Detail");
-						    	  Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//h4[contains(text(),'Remittance Detail')]").getText(), "Remittance Detail");
+						    	  Helper.compareEquals(testConfig, "Text Compare",Element.findElement(testConfig, "xpath", "//div[@id='onlyplb']/table/tbody/tr[1]/td/table/tbody/tr[1]/td").getText(), "Remittance Detail");
 						    	  if (SearchCriteria.equals("Search Remittance"))
 						    		  Element.click(Element.findElement(testConfig, "xpath", "//input[@value='Return to Search Results']"), "Return to search results");
 						    	  break;
@@ -3328,8 +3311,8 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	public ViewPayments verifySavArchbtnNotPresent(){
 		String label=btnSave.getAttribute("value").trim();
 		Helper.compareEquals(testConfig, "Save button relabeled", "Save", label);
-		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archive')]")== null)
-			Log.Pass("Save Archive button is not present");
+		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archieve')]")== null)
+			Log.Pass("Save Archieve button is not present");
 		return this;
 		
 	}
@@ -3340,8 +3323,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 		
 	}
-
-
+	
 	public ViewPayments verifyColumnValuesNA(){
 		ArrayList<String> tblHeader=new ArrayList<String>();
 		tblHeader=getHeadersFromResultTable();
@@ -3368,7 +3350,6 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 			Helper.compareEquals(testConfig, "Payment Status  dropdown disablity", null, searchResultRows.get(1).findElements(By.tagName("td")).get(tblHeader.indexOf("Payment Status")).getAttribute("disabled"));
 	    return this;
 		}
-
 	
 	public ViewPayments selectTinNverfyPagRfrsh(){
 		
@@ -3395,7 +3376,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		}
 		
 		verifyQuickSrchFilterOptions("Standard");
-		verifyPaymentStatusFilter("PROV", "Standard");
+		verifyPaymentStatusFilter("Standard");
 		return this;
 	}
 
@@ -3640,10 +3621,6 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 			Log.Fail("Payment number not found on page");
 		return this;
 	}
-
-
-
-
 
 	
 	public ViewPayments verifyMessages(String credentials, String trialStatus, String paidOption){
@@ -4235,13 +4212,6 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 
 
 	}
-        
-
-
-
-
-
-
-
+  
 
 

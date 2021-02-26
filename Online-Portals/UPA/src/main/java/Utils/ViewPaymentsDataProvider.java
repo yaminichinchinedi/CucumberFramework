@@ -459,7 +459,6 @@ public ArrayList getEnrollmentContent(String content) {
 		String env = "";
 		String id = "";
 		
-
 		ViewPayments  paySum=new ViewPayments (testConfig,"filter");
 		testConfig.putRunTimeProperty("tinType", tinType);
 		testConfig.putRunTimeProperty("portalAccess", portalAccess);	
@@ -1132,7 +1131,12 @@ public ArrayList getEnrollmentContent(String content) {
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
- 		 
+
+			case "PremiumOrStandardTIN":	
+				sqlRowNo=1605;
+				break;
+ 		
+
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		

@@ -7,7 +7,7 @@ Feature: UPA View Payments Functionality for Standard TIN
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
     Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
-    Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
+    Then Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
     Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
     Then Validate Save button is not displayed for "<portalAccess>".
    	Then Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and 835field as enabled.
@@ -17,8 +17,6 @@ Feature: UPA View Payments Functionality for Standard TIN
              |       credentials       |		portalAccess    	|   userType    |    searchCriteria | tinType		|
              |       PROV_Admin        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
              |      	 PROV_Gen        | 			 Standard  			|			PROV			|Last 30 days		|  	AO			|
-
-
 #Author: AMIT
 @UPA_US3069347_1 @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
 Scenario Outline: View Payments Pop up for Standard TIN        
@@ -78,24 +76,6 @@ Scenario Outline: View Payments Pop up for Standard TIN
     Then User click on cross to close the pop up.
    
     Examples:     
-             |       credentials     |		portalAccess    	|   usertype    |    searchRemitorPymntTIN    | tinType		|
-             |    	   BS_Gen        | 			 Standard  			|			BS  			|TinWthatlstOnePayNum					|  	AO			|
-
-#Sunanda  
-@UPAViewPaymentsStandardBS  
-  Scenario Outline: BS user View Payments functionality for Standard TIN        
-    Given User navigates to UPA portal and enters "<credentials>" and login
-    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-    When Click on View Payments Link for UPA 
-    Then User Enters tin and click on search button for "<userType>".
-   	#And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-    Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
-    Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
-    Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
-    Then Validate Save button is not displayed for "<portalAccess>".
-   	Then Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and 835field as enabled.
-   	And User logs out the session		
-Examples:		
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			|
 	     
@@ -127,5 +107,22 @@ Examples:
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
              |    	   BS_Admin        | 			 Standard  		|			BS  		  |			Last 30 days		|  	AO			| 
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			| 
-      
+
+#Sunanda  
+@UPAViewPaymentsStandardBS  
+  Scenario Outline: BS user View Payments functionality for Standard TIN        
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    When Click on View Payments Link for UPA 
+    Then User Enters tin and click on search button for "<userType>".
+   	#And  User Enters tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    Then Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for "<portalAccess>".
+    Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status,default value as New and greyed out for "<portalAccess>".
+    Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
+    Then Validate Save button is not displayed for "<portalAccess>".
+   	Then Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and 835field as enabled.
+   	And User logs out the session		
+Examples:		
+             |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
+             |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			|
 

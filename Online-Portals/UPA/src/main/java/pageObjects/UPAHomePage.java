@@ -105,6 +105,7 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkFAQAlertText;
 
 	@FindBy(xpath = "//a[contains(text(),'Resources')]")
+	//@FindBy(xpath="//*[@id=\"withoutHomeId\"]/a[1]")
 	WebElement  resourcesDropDown;
 	
 	@FindBy(linkText="FAQs")
@@ -148,6 +149,10 @@ public class UPAHomePage extends HomePage {
 
 	@FindBy(linkText="Download Terms and Conditions")
 	WebElement tncPdf;
+
+	@FindBy(linkText="Capitation Reports")
+	WebElement  lnkResourcesCapitationReport;
+
 	
 
 	@FindBy(xpath="//p[contains(text(),'Bring more power to your practice')]")
@@ -448,6 +453,7 @@ public class UPAHomePage extends HomePage {
 		Browser.closeBrowser(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
+
 	
 	public void verifyStandardTinAssociation(String userType) {
 		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
@@ -498,5 +504,15 @@ public class UPAHomePage extends HomePage {
 		Element.clickByJS(testConfig, lnkLogout, "Logout");
 		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 	
+	}
+	public void verifyCapitationReportLinkUnderResources() {
+		   String parentwindowhandle=testConfig.driver.getWindowHandle();
+		   Element.click(lnkResourcesCapitationReport, "capitation report");
+		   Browser.switchToNewWindow(testConfig);
+		   String expectePrivacydURL = "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html";
+		   Browser.verifyURL(testConfig, expectePrivacydURL);
+		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
+		
+
 	}
 }

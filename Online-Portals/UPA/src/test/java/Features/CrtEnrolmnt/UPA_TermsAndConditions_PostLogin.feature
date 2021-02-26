@@ -16,4 +16,3 @@ Feature: Terms and Conditions-Post Login
 	      |      BS_Gen         |   BS     	  |
 	      |      PAY_Admin     	|   PAY       | 
 	      |      PAY_Gen       	|   PAY       |
-	    

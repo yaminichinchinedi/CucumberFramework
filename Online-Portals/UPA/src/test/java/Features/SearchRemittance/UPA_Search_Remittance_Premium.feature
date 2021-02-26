@@ -183,4 +183,21 @@ Scenario Outline: - verify search results for search remittance
 		#|byDOSAndNpi         |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndNpi           |  AO   |
 
 
+#Author khalid_mohammad@optum.com
+@UPA_SR_US2955421
+Scenario Outline: To test page text messaging on Serach Remittance for Provider User
 
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+Then User clicks on Search Remittance link for UPA
+And User verifies page text message "<PageTextMsg>"
+
+
+
+ Examples:
+ |credentials      |    userType     |   searchCriteria     | tinType	|		portalAccess	| PageTestMsg  |
+ |    PROV_Admin   |      PROV       |PremiumOrStandardTIN  |	AO	    |		Premium     	|PremiumPrvAdm |
+ |    PROV_Admin   |        PROV     |PremiumOrStandardTIN  |	AO	    |		Standard     	|StandardPrvAdm|
+ |    PROV_Gen     |        PROV     |PremiumOrStandardTIN  |	AO	    |		Premium     	|PremiumPrvGen |
+ |    PROV_Gen     |        PROV     |PremiumOrStandardTIN  |	AO	    |		Standard     	|StandardPrvAdm|
+ 

@@ -1,3 +1,4 @@
+
 package main.java.stepDefinitions.ViewPayments;
 
 import cucumber.api.java.en.Then;
@@ -12,5 +13,6 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_Enters_tin_and_click_on_search_button_for(String userType) throws Throwable {
 		viewPaymentsTIN.enterTinAndSrch(userType);
 	}
-
 }
+
+

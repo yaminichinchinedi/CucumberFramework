@@ -202,13 +202,12 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
     	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
     }
-
-    @Then("^Validate Active/Archived Payments filter for \"([^\"]*)\" is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType, String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
-    	//viewPayment.verifyPaymentStatusFilter(portalAccess);
-
+    
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
+    	viewPayment.verifyPaymentStatusFilter(portalAccess);
     }
+
 
     @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
     public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
@@ -253,23 +252,18 @@ public class ViewPaymentsSteps extends TestBase {
     }
     @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
-
     	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
     }
 
-    @Then("^Validate Active/Archived Payments filter for \"([^\"]*)\" is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String userType, String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(userType,portalAccess);
-
-    	//viewPayment.verifyPaymentStatusFilter(portalAccess);
-
+    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
+    	viewPayment.verifyPaymentStatusFilter(portalAccess);
     }
 
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
     	viewPayment.verifySavArchbtnNotPresent();
     }
-    
 
 	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
 	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
@@ -362,7 +356,6 @@ public class ViewPaymentsSteps extends TestBase {
 	public void user_verifies_different_messages_based_on_and(String credentials, String trialStatus, String paidOption) throws Throwable {
     	viewPayment.verifyMessages(credentials,trialStatus,paidOption);
 	}
-
     @Then("^User clicks on pPRA link$")
     public void user_clicks_on_pPRA_link()  {
     	viewPayment.clickpPRAlink();
@@ -372,6 +365,8 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_verifies_record_is_inserted_in_PPRA_STATUS_Table_with_Tin_No_Consolidated_No_and_Settlement_date()  {
     	viewPayment.verifyPPRA_Status();
     }
-
+	
 
 }
+
+

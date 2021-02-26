@@ -1,3 +1,4 @@
+
 #Author: amit_kushwah@optum.com
 @UPAManageUsers_Standard  @cloudUPAManageUsers
 Feature: UPA Manage User Functionality for Standard TIN
@@ -47,15 +48,16 @@ Feature: UPA Manage User Functionality for Standard TIN
       |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Standard			|		AO			|  LEGACY |  
 
 #Author: Sunanda          
-  @UPAPageTextStandard         
+  @UPAPageTextStandard        
   Scenario Outline: Access Payments - Manage users Page Text Standard During and Post Trial
-	Given User navigates to UPA portal and enters "<credentials>" and login
+	Given User navigates to UPA portal and enters "<userType>" and login
 	When  User Selects a tin on HomePage for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<trialStatus>" and "<statusOfStandardRecd>" for "<SelectedOrDefault>" Portal Experience.
 	When  Click on Manage User Link  
 	Then  User verifies page text and footer for "<trialStatus>"
 	And   User verifies hover over the Add User button for "<trialStatus>"
 	Examples:
-	 |    credentials     |   userType   | 			searchCriteria				|		portalAccess	    | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
+	 |    userType     |   accessType   | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
 	 |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Standard			  |		AO			|     A     |					P					 |				PD			 |
    |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Standard			  |		AO			|     I     |					A					 |				PD			 |
+
 	 
