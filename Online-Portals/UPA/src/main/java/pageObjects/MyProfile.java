@@ -276,13 +276,10 @@ public class MyProfile {
 		
 		
 		//Enter existing email address in both email and verify email
-		int sql=125;
-		testConfig.putRunTimeProperty("email", existingEmailAdr);
-		Map emailData = DataBase.executeSelectQuery(testConfig, sql, 1);
-		String existingRandomEmail= emailData.get("EMAIL_ADR_TXT").toString();
+
 		Log.Comment("Scenario :Enter existing email address in both email and verify email");
-		Element.enterData(txtBoxEmail,existingRandomEmail, "Enter existing email address as : " + existingRandomEmail,"email");
-		Element.enterData(txtBoxVerifyEmail, existingRandomEmail,"Enter verify existing email address as : " + existingRandomEmail,"Verify Email");
+		Element.enterData(txtBoxEmail,existingEmailAdr, "Enter existing email address as : " + existingEmailAdr,"email");
+		Element.enterData(txtBoxVerifyEmail, existingEmailAdr,"Enter verify existing email address as : " + existingEmailAdr,"Verify Email");
 		Element.click(btnSave, "Save button");
 		Element.waitTillTextAppears(errorEmail, "Email Address already exists in our database", testConfig);
 		
