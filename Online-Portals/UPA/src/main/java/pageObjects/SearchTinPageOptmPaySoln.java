@@ -52,8 +52,7 @@ public class SearchTinPageOptmPaySoln {
 	}
 	
 	public  OptumPaySolution changeToOptumPaySolutionPage() {
-		String Title = testConfig.driver.getTitle().trim();
-		System.out.println("Title is : " +Title);
+		testConfig.driver.getTitle().trim();
 		return new OptumPaySolution(testConfig);
 	}
 	

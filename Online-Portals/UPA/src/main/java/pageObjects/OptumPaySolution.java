@@ -463,11 +463,11 @@ public class OptumPaySolution {
 	 	   String currDateDB = Helper.getCurrentDate("YYYY-MM-dd");
 	 	   String getCurrentMonthDB = currDateDB.substring(5, 7);
 	 	   String getCurrentYearDB = currDateDB.substring(0,4);
-	 	   String futureDateInSameMonthDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"20";
+	 	   String futureDateInSameMonthDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"20"; //20 or it can be any future date in same month
 	 	   String pastDateDB = Helper.getDateBeforeOrAfterDays(-31, "YYYY-MM-dd");
 	 	   String tomorrowsDateDB = Helper.getDateBeforeOrAfterDays(1, "YYYY-MM-dd");
-	 	   String currMonthsFirstDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"01";
-	 	   String currMonthsSecondDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"02";
+	 	   String currMonthsFirstDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"01";  
+	 	   String currMonthsSecondDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"02"; 
 	 	   
 	 	   //For UI
 	 	   String currDate = Helper.getCurrentDate("MM/dd");
@@ -522,31 +522,33 @@ public class OptumPaySolution {
 	 	   validatingCustomFeeInUI();
 	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
 		              
-	 	   DataBase.executeDeleteQuery(testConfig, 2007);
+	 	   DataBase.executeDeleteQuery(testConfig, 2007); //Deleting the entry which we created for our tin in Debit_Fee_Rate table
 	 	   Log.Comment("Entry was deleted from Rate Fee table");
 	 }
 		    
-	 public void validate_standardPerPaymentFeeText() {
+	 public void validateStandardPerPaymentFeeText() {
 		 Element.verifyTextPresent(standardPerPaymentFee,"Standard Per Payment fee:");
 	 }
 		      
-	 public void validate_customPerPaymentFeeText() {
+	 public void validateCustomPerPaymentFeeText() {
 		 Element.verifyTextPresent(customPerPaymentFee,"Custom Per Payment fee:");
 	 }
 		         
-	 public void validatingGlobalFeeInUI() {  
+	 public void validatingGlobalFeeInUI() {   
 		          
 		 String globalFeeFromDB = null;
-		 String globalFeeFromUI = null;
+		 String globalFeeFromUI = null;  
 		 
-		 if(globalFeeFromDB == null & globalFeeFromUI==null) {
+		 if(globalFeeFromDB == null && globalFeeFromUI==null) {
 			 Map<String, String> globalFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2001, 1);
 			 globalFeeFromDB = globalFeeFromDatabase.get("RATE_PCT");
 		              
+			 //If last two digits is 0 in database, then we format the value upto two decimal point only and show it in UI 
 			 if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0' && globalFeeFromDB.charAt(globalFeeFromDB.length()-2)=='0') {
 				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.0");
 				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
 			 }
+			//If last digit is 0 in database, then we format the value upto one decimal point only and show it in UI 
 			 else if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0'){
 				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
 				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
@@ -557,43 +559,42 @@ public class OptumPaySolution {
 			 }             
 		 }
 		          
-		 String stdFee1 = globalFee.getText().trim();
-		 String split[] = stdFee1.split(": ");
+		 String split[] = globalFee.getText().trim().split(": ");
 		 String stdFee = split[split.length-1].trim();
 		          
 		 Helper.compareContains(testConfig,"Validating whether the Global Fee is displayed properly in the Rate Tile UI", stdFee, globalFeeFromUI+"%"); 
-		 validate_standardPerPaymentFeeText();
+		 validateStandardPerPaymentFeeText();
 	 }
 		      
 	 	public void validatingCustomFeeInUI() {
 	 		String customFeeFromDB = null;
 	 		String customFeeFromUI = null;
-		          
-	 		if(customFeeFromDB == null & customFeeFromUI==null) {
+		    
+	 		//Fetch the fee from database and format it to 3 digits after decimal points and display in UI
+	 		
+	 		if(customFeeFromDB == null && customFeeFromUI==null) {
 	 			Map<String, String> customFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2006, 1);
 	 			customFeeFromDB = customFeeFromDatabase.get("RATE_PCT");
 	 			
 	 			DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
 	 			customFeeFromUI = decimalFormat.format(Float.parseFloat(customFeeFromDB)*100);
 	 		} 
-	 		String custFee1 = customFee.getText().trim();
-	 		String split[] = custFee1.split(": ");
+
+	 		String split[] = customFee.getText().trim().split(": ");
 	 		String custFee = split[split.length-1].trim();
 	 		
 	 		Helper.compareContains(testConfig,"Validating whether the custom Fee is displayed properly in the Rate Tile UI", custFee, customFeeFromUI+"%");    
-	 		validate_customPerPaymentFeeText();
+	 		validateCustomPerPaymentFeeText();
 	 	}
 		      
 	 	public String validatingCustomFeeDate() {
-	 		String custFeeDate = customFeeDate.getText().trim();
-	 		return custFeeDate; 
+	 		return customFeeDate.getText().trim(); 
 	 	} 
 		      
 	 	public void updatingStartDateOfGlobalLevelFee() {
 	 		Map<String, String> rateKeyIdGlobalFee = DataBase.executeSelectQuery(testConfig, 2001, 1);
 	 		String rateKeyId = rateKeyIdGlobalFee.get("RATE_KEY_ID");
-	 		System.out.println("The rateKeyId is : " +rateKeyId);
-	 		testConfig.putRunTimeProperty("rateKeyId", rateKeyId);
+	 		testConfig.putRunTimeProperty("select RATE_KEY_ID from ole.debit_fee_rate where Rate_Level = 'G' and END_DT is NULL", rateKeyId); //Update query having a select statement in its subquery
 	 		DataBase.executeUpdateQuery(testConfig, 2008);
 		          
 	 	}		
