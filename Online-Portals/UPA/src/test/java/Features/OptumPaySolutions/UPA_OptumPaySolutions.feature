@@ -12,8 +12,8 @@ Feature: - Optum Pay Solutions
      |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid   	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and NotPaid 	|	  AO			|
+       |       PROV_Admin        | 			 PROV			    	|			Standard		  	|  PostTrial and NotPaid 	|	  AO			|
+       |       PROV_Admin        | 			 PROV			    	|			Standard		  	|  WithinTrial and NotPaid 	|	  AO			|
   
 		#Author:Sayonee 
 	 @UPAUS3060820 @UPAUS3060825

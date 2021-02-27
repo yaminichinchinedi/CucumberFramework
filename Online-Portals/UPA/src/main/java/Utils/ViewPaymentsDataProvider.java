@@ -462,6 +462,7 @@ public ArrayList getEnrollmentContent(String content) {
 		ViewPayments  paySum=new ViewPayments (testConfig,"filter");
 		testConfig.putRunTimeProperty("tinType", tinType);
 		testConfig.putRunTimeProperty("portalAccess", portalAccess);	
+		testConfig.putRunTimeProperty("prdctSelected", portalAccess);
 			switch(searchCriteria) {
 			case "failedPayment": 
 	 			sqlRowNo=29;

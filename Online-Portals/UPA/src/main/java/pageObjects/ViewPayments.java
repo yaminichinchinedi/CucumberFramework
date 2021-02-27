@@ -79,7 +79,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	WebElement drpDwnArchiveFilter;
 	
 	@FindBy(xpath="//div[@id='view-payments']//tr[2]/td//tr[2]//div[2]//div[4]/p")
-	WebElement lblPaymentStatus;
+	WebElement lblPaymentStatusProv;
 	
 	@FindBy(css="#paymentsummaryform>table>tbody>tr>td>table>tbody")
 	WebElement divSearchResults;
@@ -3147,8 +3147,19 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public ViewPayments verifyPaymentStatusFilter(String portalAccess){
-		String label=lblPaymentStatus.getText().trim();
+	public ViewPayments verifyPaymentStatusFilter(String userType, String portalAccess){	
+		int i;
+		String label="";
+		if(userType.equalsIgnoreCase("PROV"))
+			label=lblPaymentStatusProv.getText().trim();
+		else if(userType.equalsIgnoreCase("BS")) {
+			if(portalAccess.contains("Standard"))
+				 i=13;			
+			else
+				i=14;
+			WebElement lblPaymentStatusBs= Element.findElement(testConfig, "xpath","//div[@id='view-payments']//tr//th["+i+"]");
+			label=lblPaymentStatusBs.getText().trim();
+		}
 		if(!label.equals("Active/Archived Payments"))
 			Log.Pass("Passed : Active/Archived Payments is relabeled");
 		else
@@ -3376,7 +3387,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		}
 		
 		verifyQuickSrchFilterOptions("Standard");
-		verifyPaymentStatusFilter("Standard");
+		verifyPaymentStatusFilter("PROV","Standard");
 		return this;
 	}
 
