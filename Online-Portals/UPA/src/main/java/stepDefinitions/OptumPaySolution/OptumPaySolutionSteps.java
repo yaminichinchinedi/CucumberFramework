@@ -94,5 +94,10 @@ public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_giv
 		}
 		
 	}
+
+@Then("^User validates contents of Past due fee of Fee tiles for this page$")
+public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
+	optumPaySol.validatePastdueFee();
+}
 }
 

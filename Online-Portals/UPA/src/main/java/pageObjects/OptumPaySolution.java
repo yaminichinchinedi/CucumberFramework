@@ -664,5 +664,13 @@ public class OptumPaySolution {
 	 	public void updatingStartDateOfGlobalLevelFee() {
 	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
 	 	}		
-	   
+	 	public OptumPaySolution validatePastdueFee()
+		{
+			int sqlRowNo=1630;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		    String feeTitle=null;
+			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
+			Helper.compareContains(testConfig, "Past due fee value", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
+			return this;
+		}
 	}
