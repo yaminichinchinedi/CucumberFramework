@@ -508,30 +508,40 @@ public class OptumPaySolution {
 	 	   else {
 	 		   validatingGlobalFeeInUI();                 
 	 		   validatingCustomFeeInUI();
+	 		   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
 	 	   } 
-	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
-	 	   
+	 	    	   
 	 	   //Update Tin Level date from (2nd of current month - 20th of current month)
 	 	   //Scenario 4 - Displaying both custom and global fee	 	   
 	 	   DataBase.executeUpdateQuery(testConfig, 2004);
 	 	   Browser.browserRefresh(testConfig);
-	 	   validatingGlobalFeeInUI();                   
-	 	   validatingCustomFeeInUI();
-	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
+	 	   if(currDay.equals("01")) {                   
+	 		   validatingGlobalFeeInUI();
+	 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();
+	 		   validatingCustomFeeInUI();
+	 		   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
+	 	   }
 	 	   
 	 	   //Update Tin Level date from (2nd of current month - NULL)
 	 	   //Scenario 5 - Displaying both custom and global fee
 	 	   DataBase.executeUpdateQuery(testConfig, 2005);
 	 	   Browser.browserRefresh(testConfig);
-	 	   validatingGlobalFeeInUI();  
-	 	   validatingCustomFeeInUI();
-	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
-		   
+	 	   if(currDay.equals("01")) {                   
+		 		 validatingGlobalFeeInUI();
+		 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();  
+		 	   validatingCustomFeeInUI();
+		 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
+	 	   }
+	 	   		   
 	 	   //Deleting the entry which we created for our tin in Debit_Fee_Rate table
 	 	   DataBase.executeDeleteQuery(testConfig, 2007); 
 	 	   Log.Comment("Entry was deleted from Rate Fee table");
 	 }
-		    
+	 		    
 	 public void validateStandardPerPaymentFeeText() {
 		 Element.verifyTextPresent(standardPerPaymentFee,"Standard Per Payment fee:");
 	 }
