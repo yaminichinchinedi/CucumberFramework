@@ -69,7 +69,7 @@ public abstract class CreateConnection {
 				return  (response.substring(39,71));
 	}
 
-	public final Object postRequestGetResponse(Object pojoRequest)throws IOException, SAXException, ParserConfigurationException,JAXBException {
+	public final Object postRequestGetResponse(Object pojoRequest)throws  IOException, SAXException, ParserConfigurationException,JAXBException {
 		String response = "";
 		String line;
 		
@@ -104,6 +104,7 @@ public abstract class CreateConnection {
 				        response = response + responseLine.trim();
 				    }
 				}
+		
 		httpUrlConn.disconnect();
 		return convertResponseJSONToPojo(response);
 	}
