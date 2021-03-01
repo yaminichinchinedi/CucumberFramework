@@ -233,7 +233,16 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//td[contains(text(),'No payments')]") WebElement errormsg;
 	@FindBy(xpath = "//td[@class='errors']") WebElement errormsgcsr;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
-		
+	
+	
+	
+	//Added by Mohammad: WebElement Fee AMount Info Icon Message
+	@FindBy(xpath="//span[@class='wrapperTooltip']")
+	WebElement iHoverMessageFeeAmount_UPA;
+	
+	@FindBy(xpath="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr")
+	WebElement tableViewPayments;
+	
 	
 	Map dataRequiredForSearch;
 	public SearchRemittance searchRemittance;
@@ -3178,6 +3187,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		tblHeader=getHeadersFromResultTable();
 		if(tblHeader.contains(columnName))
 			Log.Pass("Passed : "+columnName+" is present on Page in table Headers.");
+			
 		else
 			Log.Fail("Failed : "+columnName+" is not present on Page in table Headers.");
 		return this;
@@ -3607,7 +3617,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 					if(results==null)
 						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "-", feeAmountUI);
 					else
-						Helper.compareEquals(testConfig, "Fee Amount on View Payments", results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "$"+results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
 		    	   }
 		    	   if(found==true)break;
 		        }
@@ -4206,6 +4216,51 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 			Boolean firstPaymentNbr = firstPaymentNumber.isDisplayed();
 			Helper.compareEquals(testConfig, "First payment Number", true, firstPaymentNbr);
 		    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
+			
+		}
+		
+		
+		//Added by Mohammad
+		public void verifyFeeAmountInfoHoverMessage()
+		{
+			String iHoverMessageFeeAmount = "If you are an administrator, you have access to the Optum Pay Solutions tab to view total accrued fees for the month. The fees do not include taxes. If your organization is tax exempt, please send your certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
+			Helper.compareEquals(testConfig, "Fee Amount Info Icon Hover Message", iHoverMessageFeeAmount, iHoverMessageFeeAmount_UPA.getAttribute("title"));
+		}
+		
+		public void verifyColumnValuesForEachPayment(String columnName)
+		{
+			int columnNumber = 0;
+			
+			ArrayList<String> tblHeader=new ArrayList<String>();
+			tblHeader=getHeadersFromResultTable();
+			
+			for (int i=0; i<tblHeader.size(); i++)
+			{
+				Log.Comment("Col Name: " + tblHeader.get(i));
+				if(tblHeader.get(i).equalsIgnoreCase(columnName))
+				{
+					columnNumber=i+1;
+				}
+			}
+			
+			List<WebElement> rowsForEachPayment = Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
+			
+			for (int j=0; j<rowsForEachPayment.size()-2; j++)
+			{
+				
+				String xpathPayerName="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr["+ (j+2) +"]/td[1]";
+				WebElement payerName = Element.findElement(testConfig, "xpath", xpathPayerName);
+				
+				String payerNameforEachPayment = payerName.getText();
+				
+				String xpathColumnNameRequired="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr["+ (j+2) +"]/td["+columnNumber+"]";
+				WebElement xpathColumnName = Element.findElement(testConfig, "xpath", xpathColumnNameRequired);
+				
+				String xpathColumnNameRequiredforEachPayment = xpathColumnName.getText();
+				
+				Log.Comment("For Payer Name: " + payerNameforEachPayment + ", " + columnName + " column value for each payment is: " + xpathColumnNameRequiredforEachPayment);
+				
+			}
 			
 		}
 

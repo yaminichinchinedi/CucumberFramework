@@ -365,6 +365,25 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_verifies_record_is_inserted_in_PPRA_STATUS_Table_with_Tin_No_Consolidated_No_and_Settlement_date()  {
     	viewPayment.verifyPPRA_Status();
     }
+    
+    //Added by Mohammad Khalid
+    @Then("^Validate \"([^\"]*)\" column is displayed\\.$")
+    public void validate_column_is_displayed(String columnName) throws Throwable 
+    {
+    	viewPayment.verifyColumnPresent(columnName);
+    }
+    
+    @Then("^validate Fee Amount info icon message$")
+    public void validate_Fee_Amount_info_icon_message() throws Throwable 
+    {
+        viewPayment.verifyFeeAmountInfoHoverMessage();
+    }
+    
+    @Then("^validate \"([^\"]*)\" column values for each payment$")
+    public void validate_column_values_for_each_payment(String columnName) throws Throwable
+    {
+        viewPayment.verifyColumnValuesForEachPayment(columnName);
+    }
 	
 
 }
