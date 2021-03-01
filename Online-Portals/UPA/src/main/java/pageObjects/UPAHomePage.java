@@ -92,7 +92,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(id="taxIndNbrId") 
 	WebElement tinDrpDwn;
 	
-	@FindBy(xpath = "//a[@id='tabBillingService']") 
+	@FindBy(linkText = "Billing Service Information") 
 	WebElement lnkBsInfo;
 	
 	@FindBy(xpath = "//a[@id='tabOptumPay']") 
