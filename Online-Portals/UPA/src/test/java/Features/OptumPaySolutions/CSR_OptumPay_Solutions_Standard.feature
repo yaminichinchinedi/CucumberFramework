@@ -6,7 +6,7 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
   @CSROptumPaySolutionsInvalidTINError @US2948675OPScsr
   Scenario Outline: CSR Optum Pay Solutions check error msg display during invalid Tins
       Given User navigates to CSR portal and enters "<credentials>" and login
-  		Then User clicks on Optum Pay Soultions link on CSR HomePage
+  		Then User clicks on Optum Pay Solutions link on CSR HomePage
   		And User Validates Error Message upon Entering "<InvalidTIN>" on Optum Pay Solution
   		
  Examples:

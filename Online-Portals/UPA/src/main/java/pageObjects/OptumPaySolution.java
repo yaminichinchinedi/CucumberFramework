@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 public class OptumPaySolution {
 	                 
@@ -130,6 +132,20 @@ public class OptumPaySolution {
 	WebElement hoverFees;
 	@FindBy(xpath="//*[@id='ui-id-6']/div")
 	WebElement hoverManageMyPlan;
+	
+	@FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]")
+    private WebElement standardPerPaymentFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]")
+    private WebElement customPerPaymentFee;       
+    @FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]/../..")
+    private WebElement globalFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../..")
+    private WebElement customFee;   
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../../../p[2]")
+    private WebElement customFeeDate;   
+    @FindBy(xpath="//span[contains(text(),'Rate')]/../..//div[contains(text(),'N/A')]")
+    private WebElement validateNA;
+
 
 	
 		private TestBase testConfig;
@@ -242,19 +258,20 @@ public class OptumPaySolution {
 			}
 			
 		}
-
-	    
-        
-		public void validate_ManageMyPlanText() {
+       
+	    public  OptumPaySolution validateManageMyPlanText() {
             Element.verifyTextPresent(manageMyPlanText,"Manage My Plan");
-            }
+            return this;
+         }
 		
-		public void validate_CancelMyPlanTextLink() {
+		public void validateCancelMyPlanTextLink() {
 			Element.verifyTextPresent(lnkCancelSubscription,"Cancel My Plan");
 		}
+		
+		public void validateFreeTrialTextNotPresent(String text) {  
+            Element.verifyTextNotPresent(text);
+        }
     
-
-
 	    public void verifyOPSTilesForVO() {
 					ArrayList<String> expectedContent=new ArrayList<String>(); 
 					expectedContent.add("Plan Type");
@@ -433,4 +450,159 @@ public class OptumPaySolution {
 						"cycle.",hoverManageMyPlan.getText().trim());
 			
 			}
+
+			
+	 public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
+		          
+	 	   if(tinType.equals("VO") || portalAccess.equals("Standard")) {  
+	 		   String naMessage1 = validateNA.getText().trim();
+	 		   String naMessage = naMessage1.substring(0, 3);
+	 		   Helper.compareContains(testConfig, "Validating N/A is present for VO or Standard Tins","N/A",naMessage);
+	 		   return;
+	 	   }
+	 	   //For Database
+	 	   String currDateDB = Helper.getCurrentDate("YYYY-MM-dd");
+	 	   String getCurrentMonthDB = currDateDB.substring(5, 7);
+	 	   String getCurrentYearDB = currDateDB.substring(0,4);
+	 	   String futureDateInSameMonthDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"20"; //20 or it can be any future date in same month
+	 	   String pastDateDB = Helper.getDateBeforeOrAfterDays(-31, "YYYY-MM-dd");
+	 	   String tomorrowsDateDB = Helper.getDateBeforeOrAfterDays(1, "YYYY-MM-dd");
+	 	   String currMonthsFirstDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"01";  
+	 	   String currMonthsSecondDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"02"; 
+	 	   
+	 	   //For UI
+	 	   String currDate = Helper.getCurrentDate("MM/dd");
+	 	   String getCurrentMonth = currDate.substring(0, 2);
+	 	   String currDay = currDate.substring(currDate.length()-2);
+	 	   String futureDateInSameMonth = getCurrentMonth+"/20";
+	 	   String currMonthsFirstDate = getCurrentMonth+"/01";
+	 	   String currMonthsSecondDate = getCurrentMonth+"/02";
+	 	   String lastDateOfCurrentMonth = Helper.getLastDateOfMonth("MM/dd");
+		              
+	 	   testConfig.putRunTimeProperty("currDateDB", currDateDB);
+	 	   testConfig.putRunTimeProperty("pastDateDB", pastDateDB);
+	 	   testConfig.putRunTimeProperty("tomorrowsDateDB", tomorrowsDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsSecondDateDB", currMonthsSecondDateDB);
+	 	   testConfig.putRunTimeProperty("futureDateInSameMonthDB", futureDateInSameMonthDB);
+		             
+	 	   //Pre-requisite - Updating the Global Fee start date as 1st Jan 2021 and the end date should be NULL
+	 	   updatingStartDateOfGlobalLevelFee();
+		   
+	 	   //Scenario 1 - Asserting only Global Fee
+	 	   validatingGlobalFeeInUI(); 
+		              
+	 	   //Inserting a Custom Per Payment Fee with dates from (Previous month date - tomorrow's date)
+	       //Scenario 2 - Asserting only Custom Fee	 	   
+	 	   DataBase.executeInsertQuery(testConfig, 2002); 
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingCustomFeeInUI();  
+		              
+	 	   //Updating Tin level date from (Previous month date - 1st of current month)
+	 	   //Scenario 3 - Displaying both Custom and Global Fee	 	   
+	 	   DataBase.executeUpdateQuery(testConfig, 2003); 
+	 	   Browser.browserRefresh(testConfig);  
+	 	   if(currDay.equals("01")) {                   
+	 		   validatingCustomFeeInUI();
+	 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();                 
+	 		   validatingCustomFeeInUI();
+	 	   } 
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
+	 	   
+	 	   //Update Tin Level date from (2nd of current month - 20th of current month)
+	 	   //Scenario 4 - Displaying both custom and global fee	 	   
+	 	   DataBase.executeUpdateQuery(testConfig, 2004);
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingGlobalFeeInUI();                   
+	 	   validatingCustomFeeInUI();
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
+	 	   
+	 	   //Update Tin Level date from (2nd of current month - NULL)
+	 	   //Scenario 5 - Displaying both custom and global fee
+	 	   DataBase.executeUpdateQuery(testConfig, 2005);
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingGlobalFeeInUI();  
+	 	   validatingCustomFeeInUI();
+	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
+		   
+	 	   //Deleting the entry which we created for our tin in Debit_Fee_Rate table
+	 	   DataBase.executeDeleteQuery(testConfig, 2007); 
+	 	   Log.Comment("Entry was deleted from Rate Fee table");
+	 }
+		    
+	 public void validateStandardPerPaymentFeeText() {
+		 Element.verifyTextPresent(standardPerPaymentFee,"Standard Per Payment fee:");
+	 }
+		      
+	 public void validateCustomPerPaymentFeeText() {
+		 Element.verifyTextPresent(customPerPaymentFee,"Custom Per Payment fee:");
+	 }
+		         
+	 public void validatingGlobalFeeInUI() {   
+		          
+		 String globalFeeFromDB = null;
+		 String globalFeeFromUI = null;  
+		 
+		 if(globalFeeFromDB == null && globalFeeFromUI==null) {
+			 Map<String, String> globalFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2001, 1);
+			 globalFeeFromDB = globalFeeFromDatabase.get("RATE_PCT");
+		              
+			 //If last two digits for global fee is 0 in database, then we display only one digit after decimal point in UI 
+			 if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0' && globalFeeFromDB.charAt(globalFeeFromDB.length()-2)=='0') {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.0");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 
+			 //If last one digit for global fee is 0 in database, then we display only two digits after decimal point in UI  
+			 else if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0'){
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 
+			 //If last digit for global fee is non zero in database, then we display three digits after decimal point in UI
+			 else {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }             
+		 }
+		          
+		 String split[] = globalFee.getText().trim().split(": ");
+		 String stdFee = split[split.length-1].trim();
+		          
+		 Helper.compareContains(testConfig,"Validating whether the Global Fee is displayed properly in the Rate Tile UI", stdFee, globalFeeFromUI+"%"); 
+		 validateStandardPerPaymentFeeText();
+	 }
+		      
+	 	public void validatingCustomFeeInUI() {
+	 		String customFeeFromDB = null;
+	 		String customFeeFromUI = null;
+		    
+	 		//Fetch the Custom Fee from database, and display three digits after decimal point in UI
+	 		if(customFeeFromDB == null && customFeeFromUI==null) {
+	 			Map<String, String> customFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2006, 1);
+	 			customFeeFromDB = customFeeFromDatabase.get("RATE_PCT");
+	 			
+	 			DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+	 			customFeeFromUI = decimalFormat.format(Float.parseFloat(customFeeFromDB)*100);
+	 		} 
+
+	 		String split[] = customFee.getText().trim().split(": ");
+	 		String custFee = split[split.length-1].trim();
+	 		
+	 		Helper.compareContains(testConfig,"Validating whether the custom Fee is displayed properly in the Rate Tile UI", custFee, customFeeFromUI+"%");    
+	 		validateCustomPerPaymentFeeText();
+	 	}
+		      
+	 	public String validatingCustomFeeDate() {
+	 		return customFeeDate.getText().trim(); 
+	 	} 
+		      
+	 	public void updatingStartDateOfGlobalLevelFee() {
+	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
+	 	}		
+	   
 	}
+
