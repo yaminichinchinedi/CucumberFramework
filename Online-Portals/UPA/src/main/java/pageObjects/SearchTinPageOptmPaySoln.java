@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -50,5 +51,10 @@ public class SearchTinPageOptmPaySoln {
 		
 	}
 	
+	public  OptumPaySolution changeToOptumPaySolutionPage() {
+		testConfig.driver.getTitle().trim();
+		return new OptumPaySolution(testConfig);
+	}
 	
 }
+
