@@ -104,7 +104,7 @@
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-		Then User clicks on Optum Pay Soultions link on CSR HomePage
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
 		Then User Enters tin for OPS and click on search button for "<userType>".
 		Then User then validates the Change Rate scenarios based on "<credentials>","<changeRateValue>","<changeRateReason>"
      Examples:
