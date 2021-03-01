@@ -76,7 +76,7 @@
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid| 
      
    #Author: Aravind Lakshminarasimhan   
-    @CSRUS3290593
+    @CSRUS3290593 @CSRRegression
     Scenario Outline: Optum Pay Solutions Rate Tile CSR
     Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<selectedOrDefault>" for Portal Experience.

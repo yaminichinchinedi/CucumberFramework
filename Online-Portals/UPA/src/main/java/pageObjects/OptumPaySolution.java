@@ -486,43 +486,49 @@ public class OptumPaySolution {
 	 	   testConfig.putRunTimeProperty("currMonthsSecondDateDB", currMonthsSecondDateDB);
 	 	   testConfig.putRunTimeProperty("futureDateInSameMonthDB", futureDateInSameMonthDB);
 		             
-	 	   //Pre-requisite Updating the Global Fee start date to the start of previous month
+	 	   //Pre-requisite - Updating the Global Fee start date as 1st Jan 2021 and the end date should be NULL
 	 	   updatingStartDateOfGlobalLevelFee();
+		   
+	 	   //Scenario 1 - Asserting only Global Fee
+	 	   validatingGlobalFeeInUI(); 
 		              
-	 	   validatingGlobalFeeInUI(); //Scenario 1 - Asserting Global Fee
-		              
-	 	   //Insert Tin Level fee into database 
-	 	   DataBase.executeInsertQuery(testConfig, 2002);
+	 	   //Inserting a Custom Per Payment Fee with dates from (Previous month date - tomorrow's date)
+	       //Scenario 2 - Asserting only Custom Fee	 	   
+	 	   DataBase.executeInsertQuery(testConfig, 2002); 
 	 	   Browser.browserRefresh(testConfig);
-	 	   validatingCustomFeeInUI();  //Scenario 2
-		               
-	 	   //Update Tin Level Fee for case 3
-	 	   DataBase.executeUpdateQuery(testConfig, 2003);
+	 	   validatingCustomFeeInUI();  
+		              
+	 	   //Updating Tin level date from (Previous month date - 1st of current month)
+	 	   //Scenario 3 - Displaying both Custom and Global Fee	 	   
+	 	   DataBase.executeUpdateQuery(testConfig, 2003); 
 	 	   Browser.browserRefresh(testConfig);  
-	 	   if(currDay.equals("01")) {            //Scenario 3        
+	 	   if(currDay.equals("01")) {                   
 	 		   validatingCustomFeeInUI();
 	 	   }
 	 	   else {
-	 		   validatingGlobalFeeInUI();  
+	 		   validatingGlobalFeeInUI();                 
 	 		   validatingCustomFeeInUI();
 	 	   } 
 	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
 	 	   
-	 	   //Update Tin Level Fee for case 4
+	 	   //Update Tin Level date from (2nd of current month - 20th of current month)
+	 	   //Scenario 4 - Displaying both custom and global fee	 	   
 	 	   DataBase.executeUpdateQuery(testConfig, 2004);
 	 	   Browser.browserRefresh(testConfig);
-	 	   validatingGlobalFeeInUI();  //Scenario 4
+	 	   validatingGlobalFeeInUI();                   
 	 	   validatingCustomFeeInUI();
 	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
 	 	   
-	 	   //Update Tin Level Fee for case 5
+	 	   //Update Tin Level date from (2nd of current month - NULL)
+	 	   //Scenario 5 - Displaying both custom and global fee
 	 	   DataBase.executeUpdateQuery(testConfig, 2005);
 	 	   Browser.browserRefresh(testConfig);
-	 	   validatingGlobalFeeInUI();  //Scenario 5
+	 	   validatingGlobalFeeInUI();  
 	 	   validatingCustomFeeInUI();
 	 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
-		              
-	 	   DataBase.executeDeleteQuery(testConfig, 2007); //Deleting the entry which we created for our tin in Debit_Fee_Rate table
+		   
+	 	   //Deleting the entry which we created for our tin in Debit_Fee_Rate table
+	 	   DataBase.executeDeleteQuery(testConfig, 2007); 
 	 	   Log.Comment("Entry was deleted from Rate Fee table");
 	 }
 		    
@@ -543,16 +549,19 @@ public class OptumPaySolution {
 			 Map<String, String> globalFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2001, 1);
 			 globalFeeFromDB = globalFeeFromDatabase.get("RATE_PCT");
 		              
-			 //If last two digits is 0 in database, then we format the value upto two decimal point only and show it in UI 
+			 //If last two digits for global fee is 0 in database, then we display only one digit after decimal point in UI 
 			 if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0' && globalFeeFromDB.charAt(globalFeeFromDB.length()-2)=='0') {
 				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.0");
 				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
 			 }
-			//If last digit is 0 in database, then we format the value upto one decimal point only and show it in UI 
+			 
+			 //If last one digit for global fee is 0 in database, then we display only two digits after decimal point in UI  
 			 else if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0'){
 				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
 				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
 			 }
+			 
+			 //If last digit for global fee is non zero in database, then we display three digits after decimal point in UI
 			 else {
 				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
 				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
@@ -570,8 +579,7 @@ public class OptumPaySolution {
 	 		String customFeeFromDB = null;
 	 		String customFeeFromUI = null;
 		    
-	 		//Fetch the fee from database and format it to 3 digits after decimal points and display in UI
-	 		
+	 		//Fetch the Custom Fee from database, and display three digits after decimal point in UI
 	 		if(customFeeFromDB == null && customFeeFromUI==null) {
 	 			Map<String, String> customFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2006, 1);
 	 			customFeeFromDB = customFeeFromDatabase.get("RATE_PCT");
@@ -592,11 +600,7 @@ public class OptumPaySolution {
 	 	} 
 		      
 	 	public void updatingStartDateOfGlobalLevelFee() {
-	 		Map<String, String> rateKeyIdGlobalFee = DataBase.executeSelectQuery(testConfig, 2001, 1);
-	 		String rateKeyId = rateKeyIdGlobalFee.get("RATE_KEY_ID");
-	 		testConfig.putRunTimeProperty("select RATE_KEY_ID from ole.debit_fee_rate where Rate_Level = 'G' and END_DT is NULL", rateKeyId); //Update query having a select statement in its subquery
-	 		DataBase.executeUpdateQuery(testConfig, 2008);
-		          
+	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
 	 	}		
 	   
 	}
