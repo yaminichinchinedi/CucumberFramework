@@ -112,8 +112,11 @@ public class CSRHomePage {
 	@FindBy(linkText="Run Reports")
     WebElement linkRunReports;
 	
-	@FindBy(xpath="//a[@id='logOutId']")
+	@FindBy(id="logOutId")
     WebElement linkLogout;
+	
+	@FindBy(xpath = "//a[contains(text(),'Payment Data Files')]") 
+	WebElement linkPaymentDataFiles;
 	
 	CSRHomePage(TestBase testConfig) 
 	{
@@ -183,8 +186,6 @@ public class CSRHomePage {
 
 	}
 
-
-
 	public CSRHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria);	
@@ -204,8 +205,14 @@ public class CSRHomePage {
     	Element.clickByJS(testConfig,linkRunReports,"CLick the RunReport link");
     	Browser.wait(testConfig, 1);
 	}
-	public void clickOnLogout() {
+	public void clickLogoutCSR() {
 		Element.clickByJS(testConfig,linkLogout,"Logout");
     	Browser.wait(testConfig, 1);
+	}
+	public void clickPaymentDataFilesTab()
+    {
+		Element.expectedWait(linkPaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");
+		Element.clickByJS(testConfig,linkPaymentDataFiles, "Payment Data Files Link");
+		
 	}
 }

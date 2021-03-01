@@ -21,8 +21,6 @@ import main.java.reporting.Log;
 
 public class PaymentDataFilesCSR extends TestBase
 {
-	@FindBy(xpath = "//a[contains(text(),'Payment Data Files')]") 
-	WebElement PaymentDataFiles;
 	@FindBy(xpath = "//input[@name='taxIndNbr']") 
     WebElement EnterTIN;
 	@FindBy(xpath = "//input[@name='btnSubmit']")
@@ -123,31 +121,25 @@ public class PaymentDataFilesCSR extends TestBase
 		PageFactory.initElements(testConfig.driver, this);
 }
 	
-	public PaymentDataFilesCSR verifyPaymentDataFilesTab()
-    {
-		Element.expectedWait(PaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");
-		Element.clickByJS(testConfig,PaymentDataFiles, "Payment Data Files Link");
-		return this;
-	}
 	
 	public PaymentDataFilesCSR verifyInvalidTIN() throws Exception {
 		String invalidTIN=Helper.generateRandomAlphaNumericString(9);
 		Element.expectedWait(EnterTIN, testConfig, "TIN field","TIN Field");
 		Element.enterData(EnterTIN, invalidTIN, "TIN entered as : "+invalidTIN, "EnterTIN");
 		Element.clickByJS(testConfig,SearchBtn, "Search Button");
-		Browser.wait(testConfig, 4);
+		Browser.wait(testConfig, 2);
 		testConfig.softAssert.assertEquals(InValidTINmsg.getText(), "Please enter valid Tax Identification Number", "InValid TIN Functionality");
 		return this;
 	}
 	
 	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
 		String DataBundlePage = CreateDataBundle.getText();
-		Browser.wait(testConfig, 3);
+		Browser.wait(testConfig, 2);
 		testConfig.softAssert.assertEquals(DataBundlePage, "Create Data Bundle", "Navigation to Create Data Bundle Page");
 		return this;
 	}
 
-	public PaymentDataFilesCSR verifyAllValuesinCreateBundlePage() throws Exception{
+	public PaymentDataFilesCSR verifyAllValuesInCreateBundlePage() throws Exception{
 		String subheader = SubHeaderCreate.getText().trim();
 		testConfig.softAssert.assertEquals(subheader, "Payment Data Files", "Subheader message: "+subheader);
 		String PageTextContext  = PageText.getText().trim();
@@ -281,7 +273,7 @@ public class PaymentDataFilesCSR extends TestBase
 		return this;
 	}
 
-	public PaymentDataFilesCSR verifyErrorWithoutSubmiitingAnyField() throws Exception
+	public PaymentDataFilesCSR verifyErrorWithoutSubmittingAnyField() throws Exception
 	{
 		Browser.wait(testConfig, 2);
 		Element.click(btnSubmit, "Click on Submit Button");
@@ -477,7 +469,7 @@ public class PaymentDataFilesCSR extends TestBase
 	 }
 	
 	
-	public PaymentDataFilesCSR eprafiletype() throws Exception
+	public PaymentDataFilesCSR EPRAFileType() throws Exception
 	{
 		downloadDataBundle();
 		String FileType = BundleFileType.getText().trim();
@@ -486,7 +478,7 @@ public class PaymentDataFilesCSR extends TestBase
 		return this;
 	}
 	
-	public PaymentDataFilesCSR verifyDatabunldeDb()
+	public PaymentDataFilesCSR verifyDataBunldeDb()
 	{
 		testConfig.putRunTimeProperty("Prov_tin_nbr",System.getProperty("tin"));
 		int sqlRow=234;
@@ -501,7 +493,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyEPRAInd()
 	{
-		verifyDatabunldeDb();
+		verifyDataBunldeDb();
 		String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 		String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 		String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -543,7 +535,7 @@ public class PaymentDataFilesCSR extends TestBase
 		return this;
 	}
 	
-	 public PaymentDataFilesCSR eight35filetype() throws Exception
+	 public PaymentDataFilesCSR eight35FileType() throws Exception
 	 {
 		 downloadDataBundle();
 		 String FileType = BundleFileType.getText().trim();
@@ -552,7 +544,7 @@ public class PaymentDataFilesCSR extends TestBase
 		 return this;
 	 }
 	
-	public PaymentDataFilesCSR pprafiletype() throws Exception
+	public PaymentDataFilesCSR PPRAFileType() throws Exception
 	{
 		downloadDataBundle();
 		String FileType = BundleFileType.getText().trim();
@@ -563,7 +555,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verify835Ind()
 	{
-		 verifyDatabunldeDb();
+		verifyDataBunldeDb();
 		 String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 		 String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 		 String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -581,7 +573,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyPPRAInd()
 	{
-		verifyDatabunldeDb();
+		verifyDataBunldeDb();
 		String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 		String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 		String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -599,43 +591,40 @@ public class PaymentDataFilesCSR extends TestBase
 	 {
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
-		 //Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 3);
+		 Browser.wait(testConfig, 1);
 		 		   
 		 String BundleSubmitMsg = BundleSubmission.getText();
 		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and PPRA File Type", " Your bundle has been successfully submitted.", BundleSubmitMsg);
 		 
-		 Browser.wait(testConfig, 7);
+		 Browser.wait(testConfig, 2);
 		 return this;
 	 }
 
 	 public PaymentDataFilesCSR VerifyEPRAand835() throws Exception
 	 {
 		 Element.click(eprachkbox, "Click on EPRA Check Box");
-		 //Element.click(prachkbox, "Click on PPRA Check Box");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 3);
+		 Browser.wait(testConfig, 1);
 		 		   
 		 String BundleSubmitMsg = BundleSubmission.getText();
 		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and 835 File Type", " Your bundle has been successfully submitted.", BundleSubmitMsg);
 		 
-		 Browser.wait(testConfig, 7);
+		 Browser.wait(testConfig, 2);
 		 return this;
 	 }
 
 	 public PaymentDataFilesCSR VerifyPPRAand835() throws Exception
 	 {
-		 //Element.click(eprachkbox, "Click on EPRA Check Box");
 		 Element.click(prachkbox, "Click on PPRA Check Box");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 3);
+		 Browser.wait(testConfig, 1);
 		 		   
 		 String BundleSubmitMsg = BundleSubmission.getText();
 		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA and 835 File Type", " Your bundle has been successfully submitted.", BundleSubmitMsg);
-		 Browser.wait(testConfig, 7);
+		 Browser.wait(testConfig, 2);
 		 return this;
 	 }
 	 
@@ -645,11 +634,11 @@ public class PaymentDataFilesCSR extends TestBase
 		 Element.click(prachkbox, "Click on PPRA Check Box");
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 3);
+		 Browser.wait(testConfig, 1);
 		 		   
 		 String BundleSubmitMsg = BundleSubmission.getText();
 		 Helper.compareEquals(testConfig, "Data Bundle Message for All File Type", " Your bundle has been successfully submitted.", BundleSubmitMsg);
-		 Browser.wait(testConfig, 7);
+		 Browser.wait(testConfig, 2);
 		 return this;
 	 }
 
@@ -691,14 +680,14 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	 public PaymentDataFilesCSR verifyEPRAnPPRAInd()
 	 {
-		 verifyDatabunldeDb();
+		 verifyDataBunldeDb();
 		 String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 		 String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 		 String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
 		 String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
 		 if(valueEPRA.equalsIgnoreCase("Y") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("N") )		
 			Log.Pass("Data Bundle Request with ID "+DataBundleID+"have been Submitted Successfully with EPRA indicator as: "+valueEPRA + " and PPRA indicator as: "+valuePPRA);			
-		else 
+		 else 
 			Log.Fail("Error in Data Bundle Request");
 				
 		return this;
@@ -706,7 +695,7 @@ public class PaymentDataFilesCSR extends TestBase
 			
 		public PaymentDataFilesCSR verifyEPRAn835Ind()
 		{
-			verifyDatabunldeDb();
+			verifyDataBunldeDb();
 			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -722,7 +711,7 @@ public class PaymentDataFilesCSR extends TestBase
 			
 		public PaymentDataFilesCSR verifyPPRAn835Ind()
 		{
-			verifyDatabunldeDb();
+			verifyDataBunldeDb();
 			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -737,7 +726,7 @@ public class PaymentDataFilesCSR extends TestBase
 			
 		public PaymentDataFilesCSR verifyEPRAn835nPPRAInd()
 		{
-			verifyDatabunldeDb();
+			verifyDataBunldeDb();
 			String value835 = testConfig.getRunTimeProperty("835Ind").trim();
 			String valuePPRA = testConfig.getRunTimeProperty("PPRAInd").trim();
 			String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
@@ -811,7 +800,7 @@ public class PaymentDataFilesCSR extends TestBase
 		return this;
 		}
 		
-		public PaymentDataFilesCSR verifypayerPRANote() {
+		public PaymentDataFilesCSR verifyPayerPRANote() {
 			Element.verifyTextPresent(payerPRANote, "Note: Payer PRAs and EPRAs may not be available for all Payers.");
 			return this;
 		}

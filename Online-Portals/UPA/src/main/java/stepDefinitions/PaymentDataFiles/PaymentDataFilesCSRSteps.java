@@ -15,10 +15,7 @@ public class PaymentDataFilesCSRSteps extends TestBase {
 	TestBase testConfig = TestBase.getInstance();
 	PaymentDataFilesCSR clickDataBundle = new PaymentDataFilesCSR(testConfig);
 
-@When("^User clicks on Payment Data Files Link$")
-public void user_clicks_on_Payment_Data_Files_Link() throws Throwable {
-	clickDataBundle.verifyPaymentDataFilesTab();  
-}
+
 
 @When("^User Validates Error Message upon Entering invalid TIN$")
 public void User_Validates_Error_Message_upon_Entering_invalid_TIN() throws Throwable {
@@ -32,7 +29,7 @@ public void verify_User_navigates_to_Create_Data_Bundle_Page() throws Throwable 
 
 @Then("^Verify all values in Create Data Bundle Page$")
 public void verify_all_values_in_Create_Data_Bundle_Page() throws Throwable {
-	clickDataBundle.verifyAllValuesinCreateBundlePage();
+	clickDataBundle.verifyAllValuesInCreateBundlePage();
   }
 
 @When("^User Verify Payer Name List in Payer Selection$")
@@ -73,7 +70,7 @@ public void verify_Reset_Functionality() throws Throwable {
 
 @Then("^Verify Submit Error without selecting any Fields$")
 public void verify_Submit_Error_without_selecting_any_Fields() throws Throwable {
-	clickDataBundle.verifyErrorWithoutSubmiitingAnyField();
+	clickDataBundle.verifyErrorWithoutSubmittingAnyField();
 	}
 
 @Then("^Verify Settlement Date Error Upon selecting Payer and File Types$")
@@ -119,7 +116,7 @@ public void submit_EPRA_File_Data_Bundle() throws Throwable {
 
 @Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type on CSR$")
 public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_EPRA_File_Type_on_CSR() throws Throwable {
-	clickDataBundle.eprafiletype();
+	clickDataBundle.EPRAFileType();
 }
 
 
@@ -135,7 +132,7 @@ public void submit_PPRA_File_Data_Bundle() throws Throwable {
 
 @Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type on CSR$")
 public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_PPRA_File_Type_on_CSR() throws Throwable {
-	clickDataBundle.pprafiletype();
+	clickDataBundle.PPRAFileType();
 }
 
 @Then("^User verifies the PPRA indicator in Database entry on CSR$")
@@ -196,7 +193,7 @@ public void submit_EPRA_and_PPRA_and_File_Data_Bundle_on_CSR(int arg1) throws Th
 
 @Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for (\\d+) File Type on CSR$")
 public void user_Verifies_Data_Bundle_Request_entry_in_Download_Data_Bundle_Page_for_File_Type_on_CSR(int arg1) throws Throwable {
-	clickDataBundle.eight35filetype();
+	clickDataBundle.eight35FileType();
 	
 }
 
@@ -244,7 +241,7 @@ public void user_Verify_Patient_Payment_Payer_appear_on_top_of_the_list() throws
 
 @Then("^User Verify for Note appears that Payer PRAs and EPRAs are not available for Patient Payments$")
 public void user_Verify_for_Note_appears_that_Payer_PRAs_and_EPRAs_are_not_available_for_Patient_Payments() throws Throwable {
-	clickDataBundle.verifypayerPRANote();
+	clickDataBundle.verifyPayerPRANote();
 }
 
 @Then("^User  Verify for Note that Data Bundle requests for Patient Payments will be available soon, no longer appears above Payer Selection\\.$")

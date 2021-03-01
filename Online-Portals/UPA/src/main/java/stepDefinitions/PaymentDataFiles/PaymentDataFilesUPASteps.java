@@ -15,10 +15,6 @@ public class PaymentDataFilesUPASteps {
 	TestBase testConfig = TestBase.getInstance();
 	PaymentDataFilesUPA paymentDataFilesUPA = new PaymentDataFilesUPA(testConfig);
 
-	@When("^User clicks on Payment Data Files Tab$")
-	public void user_clicks_on_Payment_Data_Files_Tab() throws Throwable {
-		paymentDataFilesUPA.clickPaymentDataFilesTab();	    
-	}
 
 	@When("^Verify User navigates to Create Data Bundle Page on UI$")
 	public void verify_User_navigates_to_Create_Data_Bundle_Page_on_UI() throws Throwable {	    
@@ -66,7 +62,7 @@ public class PaymentDataFilesUPASteps {
 
 	@Then("^User selects File Type Option as (\\d+) and Submit Payment Data Bundle Request$")
 	public void user_selects_File_Type_Option_as_and_Submit_Payment_Data_Bundle_Request(int arg1) throws Throwable {
-		paymentDataFilesUPA.verifySubmiteight35DataBundle();
+		paymentDataFilesUPA.verifySubmit835DataBundle();
 	}
 
 	@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for (\\d+) File Type$")

@@ -244,12 +244,14 @@ public class UPAHomePageSteps extends TestBase{
 		public void user_clicks_on_Capitation_Report() throws Throwable {
 			homePage.verifyCapitationReportLinkUnderResources();
 		}
-
-
-		
-		@Then("^User logs out the session$")
-		public void user_logs_out_the_session() throws Throwable {
-			homePage.logoutSession();
+	
+		@Then("^User clicks on UPA logout$")
+		public void user_clicks_on_UPA_logout() throws Throwable {
+			homePage.clickLogoutUPA();
+		}
+		@When("^User clicks on Payment Data Files Tab$")
+		public void user_clicks_on_Payment_Data_Files_Tab() throws Throwable {
+			homePage.clickPaymentDataFilesTab();	    
 		}
 }
 

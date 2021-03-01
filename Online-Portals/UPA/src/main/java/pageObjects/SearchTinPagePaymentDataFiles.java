@@ -15,20 +15,14 @@ public class SearchTinPagePaymentDataFiles {
 	
 	@FindBy(name="btnSubmit")
 	public WebElement btnSubmit;
-	
-	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
-	WebElement prvdrTIN;
-	
-	@FindBy(xpath = "//input[@name='taxIdNbr']")
-	WebElement tinDrpDwn;
-	
-	@FindBy(xpath = "//input[@name='paProvTinNbr']")
+		
+	@FindBy(name = "paProvTinNbr")
 	WebElement bstinDrpDwn;
 	
-	@FindBy(xpath = "//input[@name='paProvTinNbr']") 
+	@FindBy(name = "paProvTinNbr")
 	WebElement payertinDrpDwn;
 	
-	@FindBy(xpath = "//input[@name='continueBtn']")
+	@FindBy(name = "continueBtn")
 	WebElement submitBtn;
 	
 	@FindBy(xpath = "//input[@value='Search']")
@@ -49,7 +43,6 @@ public class SearchTinPagePaymentDataFiles {
     }
 	
 	public SearchTinPagePaymentDataFiles enterTinAndSrch(String userType){
-		String App=testConfig.getRunTimeProperty("App");
 		switch (userType)
 		{	
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow

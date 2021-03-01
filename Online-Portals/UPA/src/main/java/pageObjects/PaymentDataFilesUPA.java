@@ -128,14 +128,6 @@ public class PaymentDataFilesUPA extends TestBase{
 		PageFactory.initElements(testConfig.driver, this);
 	}
 	
-	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
-	{
-		Element.expectedWait(paymentDataFilesTab, testConfig, "Payment Data Files tab","Payment Data Files tab");
-		Browser.wait(testConfig, 3);
-		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		return this;
-
-	}
 	
 	public PaymentDataFilesUPA verifyCreateDataBundlePage() throws Exception
 	{
@@ -388,7 +380,7 @@ public class PaymentDataFilesUPA extends TestBase{
 		 return this;
 	}
 
-	public PaymentDataFilesUPA verifySubmiteight35DataBundle() throws Exception
+	public PaymentDataFilesUPA verifySubmit835DataBundle() throws Exception
 	{
 		 Element.click(Eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
@@ -808,11 +800,11 @@ public class PaymentDataFilesUPA extends TestBase{
 	 {
 		 Browser.wait(testConfig, 3);
 		 List<WebElement> list1= Element.findElements(testConfig, "xpath", "//*[@name='availablePayerTinNbrs']/option");
-		 Element.click(AddAllBtn, "Add All Button");
+		 Element.clickByJS(testConfig,AddAllBtn, "Add All Button");
 		 List<WebElement> list2= Element.findElements(testConfig, "xpath", "//*[@name='selectedPayerTinNbrs']/option");
 		 if(list1.size() == list2.size())
 		 {
-			 Element.click(ResetBtn, "Reset Button");
+			 Element.clickByJS(testConfig,ResetBtn, "Reset Button");
 			 List<WebElement> list3=Element.findElements(testConfig, "xpath", "//*[@name='availablePayerTinNbrs']/option");
 			 testConfig.softAssert.assertEquals(list1.size(), list3.size(), "Reset Functionality");
 		 }

@@ -8,8 +8,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".
-		
+		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".		
 		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
 		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace

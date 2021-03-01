@@ -499,7 +499,7 @@ public class UPAHomePage extends HomePage {
 	public void verifyHomePage() {
 		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
 	}
-	public void logoutSession() {
+	public void clickLogoutUPA() {
 		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig, lnkLogout, "Logout");
 		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
@@ -513,6 +513,13 @@ public class UPAHomePage extends HomePage {
 		   Browser.verifyURL(testConfig, expectePrivacydURL);
 		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
 		
+
+	}
+	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
+	{
+		Browser.wait(testConfig, 3);
+		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
+		return new PaymentDataFilesUPA(testConfig);
 
 	}
 }

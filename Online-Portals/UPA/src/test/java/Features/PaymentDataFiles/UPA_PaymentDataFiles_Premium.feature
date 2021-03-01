@@ -1,7 +1,7 @@
 #Author: Sahil D Sharma
 
  @UPADataBundleNEW  @UPARegression    @BothCSRUPAScenarios @fish
- Feature: UPA_Billing_Service_Data Bundle_Regression
+ Feature: UPA Billing Service Functionality
 
 	@TC001 			
 	Scenario Outline: UI Validations for Data Bundle
@@ -11,7 +11,7 @@
 	Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
 	And   Verify User navigates to Create Data Bundle Page on UI
 	Then  Verify the values in Create Data Bundle Page for "<userType>"
-	And   User logs out the session
+	And   User clicks on UPA logout
 	 Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -20,7 +20,7 @@
 
 
 
-@TC002 			
+@TC002 			@coco
 	Scenario Outline: Verify Payer and PageButton Validations
 	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -34,12 +34,11 @@
 	And   Verify User is able to access Remove Button Functionality
 	Then  Verify User is able to access Add All Button Functioanlity
  	And   Verify User is able to access Remove All Button Functionality
- 	And   User logs out the session
+ 	And   User clicks on UPA logout
 Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
    |  PROV_Admin    |    PROV      |    Last 9-13 months   |		 Premium		|		AO		|	
-   |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	 
 
 
 @TC003	
@@ -55,7 +54,7 @@ Examples:
 	And   Verify Error Message when Settlement Date range is selected for more than 30 Days Between From and To Date for "<userType>"
 	Then  Verify Error Message when Settlement Date selected To/From Dates prior to or same as Current date for "<userType>"
 	And   Verify Error Message when No Payer is Selected for "<userType>"
-	And User logs out the session
+	And User clicks on UPA logout
  Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -77,7 +76,7 @@ Examples:
 	Then  User selects File Type Option as EPRA and Submit Payment Data Bundle Request
 	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type
 	And   User verifies the EPRA indicator in Database entry
-	And   User logs out the session
+	And   User clicks on UPA logout
  Examples:
    | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -99,7 +98,7 @@ Examples:
 	Then User selects File Type Option as PPRA and Submit Payment Data Bundle Request
 	And  User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type
 	And  User verifies the PPRA indicator in Database entry
-	And  User logs out the session
+	And  User clicks on UPA logout
  	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -120,7 +119,7 @@ Examples:
 	Then  User selects File Type Option as 835 and Submit Payment Data Bundle Request
 	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for 835 File Type
 	And   User verifies the 835 indicator in Database entry
-	And   User logs out the session
+	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -142,7 +141,7 @@ Examples:
  Then   User selects File Type Option as EPRA and PPRA and Submit Payment Data Bundle Request
   And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and PPRA File Type
   And   User verifies the EPRA and PPRA indicator in Database entry
-	And   User logs out the session
+	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -164,7 +163,7 @@ Examples:
 	Then  User selects File Type Option as EPRA and 835 and Submit Payment Data Bundle Request
 	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and 835 File Type
 	And   User verifies the EPRA and 835 indicator in Database entry
-	And   User logs out the session
+	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -185,7 +184,7 @@ Examples:
 	Then  User selects File Type Option as PPRA and 835 and Submit Payment Data Bundle Request
 	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and 835 File Type
 	And   User verifies the PPRA and 835 indicator in Database entry
-	And   User logs out the session
+	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -207,7 +206,7 @@ Examples:
  	Then  User selects File Type Option as EPRA PPRA and 835 and Submit Payment Data Bundle Request
  	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA PPRA and 835 File Type
  	And   User verifies the EPRA, PPRA and 835 indicator in Database entry
- 	And   User logs out the session
+ 	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
@@ -225,7 +224,7 @@ Examples:
 	And   User verifies the Data Bundle Request Completed in Last 7 Days
 	And   User Click on Download Data Bundle Tab on UI
 	Then  User validates the completed File Name in the Grid
-	And   User logs out the session
+	And   User clicks on UPA logout
 	Examples:
 	 | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
