@@ -1649,8 +1649,16 @@ public void verifyFailedPaymentPopUp()
 	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		Object request = null;
+		String[] pay_835_id;
+		if("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
+			 pay_835_id = new String[] {"87726"};
+		}
+		else {
+			 pay_835_id = new String[] {};
+		}
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 		DOP epn = new DOP();
+		epn.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
 		epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 		epn.setUserRole("PROVIDER");
 		SearchCriteria searchCriteria = epn.getSearchCriteria();
@@ -4212,5 +4220,10 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 
 
 	}
-  
+        
+
+
+
+
+
 

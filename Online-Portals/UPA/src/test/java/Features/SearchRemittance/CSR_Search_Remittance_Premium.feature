@@ -6,10 +6,11 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 	
 	Given User navigates to CSR portal and enters "<credentials>" and login
+	And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link
+		Then User Enters tin and click on search button for "<userType>".
 	#Then User enters tin for CSR Search Remittance Tin Page for "<priority>" and "<portalAccess>" through "<usertype>" click on continue button
-	Then User enters tin for Search Remittance page for "<searchRemitorPymntTIN>","<tinType>","<portalAccess>" and "<usertype>" click on continue button
-	  Then User enters "<Search Criteria>" and click on search button.
+	Then User enters "<Search Criteria>" and click on search button.
   Then Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace
   Then Validate Claim Count column is present which appears as Hyperlink for nonzero claim count and on click redirects to Remittance Detail page
   Then Validate ePRA,pPRA and 835 fields are enabled 
@@ -29,8 +30,9 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Scenario Outline: - verify search results for search remittance
 	
 	Given User navigates to CSR portal and enters "<credentials>" and login
+	And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link
-	Then User enters tin for Search Remittance page for "<searchRemitorPymntTIN>","<tinType>","<portalAccess>" and "<usertype>" click on continue button
+	Then User Enters tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"
 	
@@ -54,8 +56,9 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Scenario Outline: - verify Print page for search remittance
 	
 	Given User navigates to CSR portal and enters "<credentials>" and login
+	And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link
-	Then User enters tin for Search Remittance page for "<searchRemitorPymntTIN>","<tinType>","<portalAccess>" and "<usertype>" click on continue button
+	Then User Enters tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"
 	Then User clicks on Print Search Result button.
