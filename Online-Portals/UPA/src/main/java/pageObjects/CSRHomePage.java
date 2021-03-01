@@ -112,6 +112,9 @@ public class CSRHomePage {
 	@FindBy(linkText="Run Reports")
     WebElement linkRunReports;
 	
+	@FindBy(xpath="//a[@id='logOutId']")
+    WebElement linkLogout;
+	
 	CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -199,6 +202,10 @@ public class CSRHomePage {
 	
 	public void clickRunReportLink() {
     	Element.clickByJS(testConfig,linkRunReports,"CLick the RunReport link");
+    	Browser.wait(testConfig, 1);
+	}
+	public void clickOnLogout() {
+		Element.clickByJS(testConfig,linkLogout,"Logout");
     	Browser.wait(testConfig, 1);
 	}
 }

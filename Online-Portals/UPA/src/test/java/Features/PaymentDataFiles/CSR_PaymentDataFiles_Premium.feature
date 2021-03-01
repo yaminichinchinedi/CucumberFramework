@@ -11,6 +11,7 @@ Feature: CSR_Data Bundle_Regression
   And   User Validates Error Message upon Entering invalid TIN
   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
   And   Verify User navigates to Create Data Bundle Page
+  And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
@@ -25,6 +26,7 @@ Feature: CSR_Data Bundle_Regression
    Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
    And   Verify User navigates to Create Data Bundle Page
    Then  Verify all values in Create Data Bundle Page
+   And   User logs out
 	Examples:
        | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
        |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
@@ -45,6 +47,7 @@ Feature: CSR_Data Bundle_Regression
    And   Verify Remove Button Functionality
    Then  Verify Add All Button Functioanlity
    And   Verify Remove All Button Functionality
+   And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
@@ -64,6 +67,7 @@ Feature: CSR_Data Bundle_Regression
   	And 	Verify Settlemnet Date Error for Selecting Date range of more than 30 Days Between From and To Date
   	And 	Verify Settlement Date Error for To/From Dates must be prior to or same as Current date
   	And 	Verify Payer Selection Error
+  	And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
@@ -82,6 +86,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as EPRA and Submit File Data Bundle
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA File Type on CSR
     And   User verifies the EPRA indicator in Database entry on CSR
+    And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -100,6 +105,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as PPRA and Submit File Data Bundle
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA File Type on CSR
     And   User verifies the PPRA indicator in Database entry on CSR
+    And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -118,6 +124,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as 835 and Submit File Data Bundle
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for 835 File Type on CSR
     And   User verifies the 835 indicator in Database entry on CSR
+    And   User logs out
 	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
       |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -136,6 +143,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as EPRA and PPRA and Submit File Data Bundle on CSR
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and PPRA File Type on CSR
     And   User verifies the EPRA and PPRA indicator in Database entry on CSR
+    And   User logs out
 	Examples:
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -154,6 +162,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as EPRA and 835 and Submit File Data Bundle on CSR
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and 835 File Type on CSR
     And   User verifies the EPRA and 835 indicator in Database entry on CSR
+    And   User logs out
 	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
       |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -172,6 +181,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as PPRA and 835 and Submit File Data Bundle on CSR
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and 835 File Type on CSR
     And   User verifies the PPRA and 835 indicator in Database entry on CSR
+    And   User logs out
 	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
       |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -190,6 +200,7 @@ Feature: CSR_Data Bundle_Regression
   	Then  User selects File Type as EPRA PPRA and 835 and Submit File Data Bundle on CSR
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA PPRA and 835 File Type on CSR
     And   User verifies the EPRA, PPRA and 835 indicator in Database entry on CSR
+    And   User logs out
 	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
       |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -205,6 +216,7 @@ Feature: CSR_Data Bundle_Regression
     And   Verify User navigates to Create Data Bundle Page
     And   User Click on Download Data Bundle Tab
     Then  User validates the completed File Name in the Grid on CSR
+    And   User logs out
 	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
       |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
@@ -222,7 +234,8 @@ Feature: CSR_Data Bundle_Regression
   Then  User Verify Patient Payment Payer appear on top of the list 
   Then  User Verify for Note appears that Payer PRAs and EPRAs are not available for Patient Payments
   Then  User  Verify for Note that Data Bundle requests for Patient Payments will be available soon, no longer appears above Payer Selection.
-  Then  User  Verifies able to select 835s 
+  Then  User  Verifies able to select 835s
+  And   User logs out 
   
   	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	

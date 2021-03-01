@@ -140,5 +140,10 @@ public class CSRHomePageSteps extends TestBase{
 	public void user_clicks_on_Run_Reports_link() throws Throwable {
 		homePage.clickRunReportLink();
 	 }
+	
+	@Then("^User logs out$")
+	public void user_logs_out() throws Throwable {
+		homePage.clickOnLogout();
+	}
 }
 
