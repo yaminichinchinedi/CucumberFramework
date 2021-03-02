@@ -160,7 +160,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Then Validate Archive column relabeled to Payment Status
 		Then Validate Archive/Save changes button is relabeled to Save
 		Then Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.
-		And User logs out the session
+		And User clicks on UPA logout
 	
 	Examples:		
       | credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|

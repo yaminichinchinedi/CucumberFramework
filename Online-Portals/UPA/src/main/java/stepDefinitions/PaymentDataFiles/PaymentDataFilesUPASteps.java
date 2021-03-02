@@ -124,7 +124,7 @@ public class PaymentDataFilesUPASteps {
 	@Then("^User selects File Type Option as EPRA and (\\d+) and Submit Payment Data Bundle Request$")
 	public void user_selects_File_Type_Option_as_EPRA_and_and_Submit_Payment_Data_Bundle_Request(int arg1) throws Throwable {
 	    
-		paymentDataFilesUPA.verifySubmitepra835DataBundle();
+		paymentDataFilesUPA.verifySubmitEPRAn835DataBundle();
 	}
 
 	@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and (\\d+) File Type$")
@@ -139,7 +139,7 @@ public class PaymentDataFilesUPASteps {
 	
 	@Then("^User selects File Type Option as PPRA and (\\d+) and Submit Payment Data Bundle Request$")
 	public void user_selects_File_Type_Option_as_PPRA_and_and_Submit_Payment_Data_Bundle_Request(int arg1) throws Throwable {
-		paymentDataFilesUPA.verifySubmitppra835DataBundle();
+		paymentDataFilesUPA.verifySubmitPPRA835DataBundle();
 	}
 
 	@Then("^User Verifies Data Bundle Request entry in Download Data Bundle Page for PPRA and (\\d+) File Type$")
