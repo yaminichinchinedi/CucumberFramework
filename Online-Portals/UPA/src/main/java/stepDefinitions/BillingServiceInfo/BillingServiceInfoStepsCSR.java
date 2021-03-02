@@ -7,15 +7,10 @@ import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Browser;
 import main.java.pageObjects.BillingServiceInfo;
 
-
 public class BillingServiceInfoStepsCSR extends TestBase {
 	
     BillingServiceInfo bsInfoPage = new BillingServiceInfo(testConfig);
     
-    @Then("^Select \"([^\"]*)\" and TIN for \"([^\"]*)\"$")
-    public void select_and_TIN_for(String searchBy,String usertype) throws Throwable {
-    	bsInfoPage.verifyUserType(searchBy, usertype);
-    }
     @Then("^valdiate BS Info Page functionality$")
     public void valdiate_BS_Info_Page_functionality() throws Throwable {
     	bsInfoPage.verifyBSInfoFunctionality();
@@ -24,9 +19,5 @@ public class BillingServiceInfoStepsCSR extends TestBase {
     public void validate_Provider_Tin_Approval_and_functionality_check() throws Throwable {
     	bsInfoPage.verifyApproveProvTin(); 
     }
-    
-   
-
-
 	
 }

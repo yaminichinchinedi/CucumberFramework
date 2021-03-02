@@ -83,5 +83,17 @@ public class RunReportsStep extends TestBase {
 	    	
 	    }
 	
-	
+	 @When("^User clicks on Customised TIN Rate radio button$")
+		public void user_clicks_on_Customised_TIN_Rate_radio_button() throws Throwable {
+			runReports.clickCstmTINRtRprt();
+		}
+		@When("^Validate if the New Report button is present$")
+		public void validate_if_the_New_Report_button_is_present() throws Throwable {
+			runReports.validatebtnNewReport();
+		}
+		
+		@When("^Validates that each column is sortable$")
+		public void validates_that_each_column_is_sortable() throws Throwable {
+			runReports.validateSortColumn();
+		}
 }

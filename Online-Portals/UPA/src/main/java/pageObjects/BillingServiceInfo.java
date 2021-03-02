@@ -1,3 +1,4 @@
+
 package main.java.pageObjects;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
-
+import main.java.pageObjects.SearchTinPageBillingServiceInfo;
 public class BillingServiceInfo {
 	@FindBy(xpath = "//select[@id='userTypeSelection']") WebElement userTypeDrpDwn;
 	@FindBy(name="identifierNbr") WebElement txtboxTinNo;
@@ -82,10 +83,11 @@ public class BillingServiceInfo {
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[1]") WebElement provTinOnAddProvTinPage;
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[2]") WebElement provNameOnAddProvTinPage;
 	@FindBy(xpath = "//table[1]//div//tr[2]//td[3]") WebElement enrlStatusOnAddProvTinPage;	
-	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//h2") WebElement pageText1;
-	@FindBy(xpath = "//div[@id=\"billing-service-information-tabs\"]//p[2]") WebElement pageText2;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//h2") WebElement pageText1;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//p[2]") WebElement pageText2;
 	@FindBy(linkText="Billing Service Information") WebElement lnkBsInfo;
 	@FindBy(linkText="Home") WebElement lnkHome;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//p") WebElement pageTextProviderParagraph;
 
 	private TestBase testConfig;
 	public BillingServiceInfo(TestBase testConfig){
@@ -93,57 +95,16 @@ public class BillingServiceInfo {
 		PageFactory.initElements(testConfig.driver, this);
 	}
 
-	public String getBSTinCSR(){
-		 int sqlRowNo = 16;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			testConfig.putRunTimeProperty("bsTIN", data.get("IDENTIFIER_NBR").toString());
-			testConfig.putRunTimeProperty("bsname", data.get("BS_NM").toString());
-		return data.get("IDENTIFIER_NBR").toString();
-	}
-	
-	public void verifyUserType(String paymentType, String usertype){
-		if(usertype.equalsIgnoreCase("Prov")){
-		String tin=getProvTinCSR();
-	    System.setProperty("tin", tin); 
-		}
-		else if(usertype.equalsIgnoreCase("BS")){
-			String bsTIN=getBSTinCSR();
-		    System.setProperty("bsTIN", bsTIN); 
-		} 
-		switch(usertype){
-	        case "BS":
-	        {   
-			   String bsTIN = System.getProperty("bsTIN");
-			   Element.selectByVisibleText(userTypeDrpDwn, "Billing Service", "Billing Service dropdown");
-			   Element.click(txtboxTinNo, "Enter TIN");
-			   Element.enterData(txtboxTinNo, bsTIN, "Enter TIN for BS", "Enter BS TIN in CSR");
-			   Browser.wait(testConfig, 5);
-			   Element.click(btnSearch, "Click Search Button");
-			   Browser.waitForPageLoad(testConfig);
-	  	       break;
-	        }  
-	       case "PROV":
-	       {
-			   String provTIN = System.getProperty("provTIN");
-			   Element.selectByVisibleText(userTypeDrpDwn, "Provider", "Provider dropdown");
-			   Element.click(txtboxTinNo, "Enter TIN");
-			   Element.enterData(txtboxTinNo, provTIN, "Enter TIN for PROV", "Enter PROV TIN in CSR");
-			   Element.click(btnSearch, "Click Search Button");
-	  	       break;
-	        }
-		 }
-	}
-	
-public String getProvTinCSR(){
-	 int sqlRowNo = 1340;
-		testConfig.getRunTimeProperty("bsTIN");
-		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1); 
-	return data.get("PROV_TIN_NBR").toString();  
-}
-	
 	public void verifyBSInfoFunctionality(){
-		String provTIN=getProvTinCSR();
+		/** Gets an active provider TIN which is not already associated with the billing service **/
+		 
+		int sqlRowNo = 1340;
+		testConfig.getRunTimeProperty("tin");
+		Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1); 
+		String provTIN=data.get("PROV_TIN_NBR").toString();
 	    System.setProperty("provTIN", provTIN); 
+	    
+	    
 		Element.click(lnkAddTin, "Add Single Provider TIN");
 		Element.click(txtboxEnterProvTin, "Enter Provider Tin");
 		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "EnterProvider Tin");
@@ -167,10 +128,11 @@ public String getProvTinCSR(){
 			Log.Comment("No Billing Service associations exist");
 		else 
 			verifyProvFirstRow();
+		
 		verifyProvSecondRow();
 		verifyProvThirdRow();
 		verifyAssocProv();
-	  //verifyErrorsForInvaidDateFormat();
+	    //verifyErrorsForInvaidDateFormat();
 		verifyDeleteAssoc();
 	}
 	
@@ -179,7 +141,7 @@ public String getProvTinCSR(){
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
 		Browser.waitForPageLoad(testConfig);
 		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
-			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id=\"billingServiceViewInfoForm\"]//tr[16]//table//tr[1]/th["+i+"]").getText().trim();															
+			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", "").trim();															
 			tinsAssocHeaderUI.add(allOptions);
 		}		
 		Helper.compareEquals(testConfig, "Provider BS Info Tab First Row Headers", tinsAssocHeader, tinsAssocHeaderUI);
@@ -206,11 +168,11 @@ public void verifyProvSecondRow() throws ParseException{
 		List<String> pendingReqHeadersUI = new ArrayList<String>();
 		
 		for(int i=1; i<=pendingReqHeaders.size(); i++){																	
-			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
 			pendingReqHeadersUI.add(allOptions);
 		}
 		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendingReqHeaders, pendingReqHeadersUI);
-		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//tr");
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr[13]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
@@ -233,7 +195,7 @@ public void verifyProvSecondRow() throws ParseException{
 		ArrayList<String> historyheaders = new ArrayList<String>(Arrays.asList("Date","Provider TIN", "Name of Billing Service","Effective Date","End Date","Action Type","Name / Username"));
 		List<String> historyheadersui = new ArrayList<String>();
 		for(int i=1; i<=historyheaders.size(); i++){																
-			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[1]//th["+i+"]")).getText().trim();
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']//table//tr[19]//tr[1]//th["+i+"]")).getText().trim();
 			historyheadersui.add(allOptions);
 		}
 	    Helper.compareEquals(testConfig, "Provider BS Info Tab Third Row Headers", historyheaders, historyheadersui);
@@ -299,7 +261,7 @@ public void pendingRequestsFunction(){
 			break;
 		}
 	}
-		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
+		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id='billingServiceViewInfoForm']/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
 		Element.isValidFormat("mm/dd/yyyy",reqDate,Locale.ENGLISH);
 		Log.Comment("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", reqDate,Locale.ENGLISH));
 }
@@ -323,36 +285,25 @@ public void verifyAddProvConfirmPage(){
 	Element.click(btnSave, "Save Button");
 }
 
-public void verifyTrialEndDateAndUpdateIfOver() throws Exception {
-		String currentDate = Helper.getCurrentDate("yyyy/MM/dd");
-		if(testConfig.driver.findElements(By.xpath("//*[@id=\"billing-service-information-tabs\"]/div[1]/h2")).size()==0) {	
-			currentDate = Helper.getCurrentDate("yyyy/MM/dd").replace("/", "-");
-			testConfig.putRunTimeProperty("currentDate", currentDate);
-			testConfig.getRunTimeProperty("currentDate");
-			int sqlRowNo = 1342;
-			int dataBase=DataBase.executeUpdateQuery(testConfig,sqlRowNo);
-			Element.click(testConfig, lnkHome, "Home Tab", 3);
-			Browser.waitForPageLoad(testConfig);
-			Element.click(testConfig, lnkBsInfo, "Billing Service Information Tab", 3);
-			Browser.waitForPageLoad(testConfig);
-		}
-		else
-			Log.Comment("Trial is not over yet");
-}
-
-public void verifyPageText() {
-Helper.compareContains(testConfig, "Page Text in bold", "Do you need full access to provider claim payment data?", pageText1.getText().trim());
-Helper.compareContains(testConfig, "Page Text", "If you need access to historical claim data and search tools, talk to your provider administrator about activating the full functionality of Optum Pay.", pageText2.getText().trim());
-}
-
 	public void verifyBillingServiceHeaderText() {
 
 		String expected = "As a billing service, you will need your provider client to activate Optum Pay so that you have full access to their claims and remittance data and historical files. If not having this information is impacting your work, contact the provider and talk to them about activating Optum Pay.";
-
 		String actual = Element.findElement(testConfig, "xpath", "//*[@id=\"billing-service-information-tabs\"]/div[1]/p[2]").getText().trim();
 
-		Assert.assertTrue(expected.equals(actual), "Text validation failed");
+		Assert.assertTrue(expected.equals(actual), "Page Text validation failed");
 		Log.Comment("Text Validation successful : \n"+actual);
+	}
+	public void verifyProviderPageText(String tinType, String portalAccess) {
+		if("VO".equalsIgnoreCase(tinType))
+			Helper.compareEquals(testConfig, "pagetText", "As part of your virtual card payment option, you have access to the full functionality of Optum Pay. This allows your billing service provider to access all of your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText());
+		if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Premium".equalsIgnoreCase(portalAccess))
+			Helper.compareEquals(testConfig, "pagetText", "With the full functionality of Optum Pay, your billing service provider is able to access all your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText().trim());
+		if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Standard".equalsIgnoreCase(portalAccess))
+			{Helper.compareEquals(testConfig, "pagetText", "Activating the full functionality of Optum Pay will help the billing service more efficiently manage your claim and remittance data. Learn More.", pageTextProviderParagraph.getText().trim());
+			 Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
+			}
 	}
 }
 	
+
+

@@ -233,14 +233,22 @@ public class SearchRemittance extends ViewPayments {
 	public Object getFISLResponse(String requestType) throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		Object request = null;
+		String[] pay_835_id;
+		if("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
+			 pay_835_id = new String[] {"87726"};
+		}
+		else {
+			 pay_835_id = new String[] {};
+		}
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(requestType);
 		if (requestType.contains("DOP")|| requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo")) {
 			DOP dop = new DOP();
-	        dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dop.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 	        dop.setUserRole("PROVIDER");
 	        PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
 	        paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
-	        paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+	       paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
 			String[] identifier = new String[] {};
 			dop.setEpsNationalProviderIdentifiers(identifier);
 			if (requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo") ) {
@@ -270,6 +278,7 @@ public class SearchRemittance extends ViewPayments {
 		}
 		if (requestType.equals("byDOS") || requestType.equals("byDOSAndAcntNo") || requestType.equals("byDOSAndSubscriberId") || requestType.equals("byDOSAndClmNo") || (requestType.equals("byDOSAndPtntNm")) || (requestType.equals("byDOSAndNpi"))) {
 			DOS dos = new DOS();
+			dos.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
 			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dos.setUserRole("PROVIDER");
 			SearchCriteria searchCriteria = dos.getSearchCriteria();
@@ -306,6 +315,7 @@ public class SearchRemittance extends ViewPayments {
 
 		if (requestType.equals("byDOPAndAccountNo") || requestType.equals("byDOP&SubscriberID") || requestType.equals("byDOPAndClaimNo") || (requestType.equals("byDOPAndPatientNm"))) {
 			DOP dopAccountNumber = new DOP();
+			dopAccountNumber.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
 			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 			dopAccountNumber.setUserRole("PROVIDER");
 
@@ -335,7 +345,9 @@ public class SearchRemittance extends ViewPayments {
 		}
 
 
-			EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
+			EpsPaymentsSummarySearchResponse searchResponse;
+			searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(request);
+
 	return searchResponse;
 	}
 	
@@ -373,7 +385,9 @@ public class SearchRemittance extends ViewPayments {
 	    setPayerID(epsSearchRemittanceSearchRequest);
 
 	    /**Posting the modified request and getting response*/
-	    EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
+	    EpsPaymentsSummarySearchResponse searchResponse;
+			searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper.postRequestGetResponse(epsSearchRemittanceSearchRequest);
+	
 	   return searchResponse;
 	}
 	
@@ -1927,3 +1941,4 @@ public class SearchRemittance extends ViewPayments {
 	}
 	
 }
+

@@ -1,3 +1,4 @@
+
 #Author: Rahul Krishna
     
 Feature: Optum Pay Solutions Scenarios for Standard Tins
@@ -6,7 +7,7 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
   @CSROptumPaySolutionsInvalidTINError @US2948675OPScsr
   Scenario Outline: CSR Optum Pay Solutions check error msg display during invalid Tins
       Given User navigates to CSR portal and enters "<credentials>" and login
-  		Then User clicks on Optum Pay Soultions link on CSR HomePage
+  		Then User clicks on Optum Pay Solutions link on CSR HomePage
   		And User Validates Error Message upon Entering "<InvalidTIN>" on Optum Pay Solution
   		
  Examples:
@@ -27,17 +28,18 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 	  |   RW     	       | %$)abc$%^		|					  	
 	  |   RW         	   | 							|		
 	  
-	    
-      @CSRUS3138933
-    Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
+	@CSRUS3138933
+    Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Optum Pay Soultions link on CSR HomePage
-		Then User enters "<tinTyp>" TIN with "<portalAccess>" and click on Search button
+		Then User Enters tin for OPS and click on search button for "<userType>".
 		Then User then validates the Change Rate popup based "<credentials>"
      Examples:
 
-         |   credentials     |  tinTyp  |portalAccess|
-         |    Super          |	AO			|  Standard	 |
-         |    RW   		       |	AO			|  Premium	 |
-         |    RO	           |	AO			|  Premium	 |
-         
+         |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
+         |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
+         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+         |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|     
+   
+

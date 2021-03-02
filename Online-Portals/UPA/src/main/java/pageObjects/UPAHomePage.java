@@ -92,7 +92,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(id="taxIndNbrId") 
 	WebElement tinDrpDwn;
 	
-	@FindBy(xpath = "//a[@id='tabBillingService']") 
+	@FindBy(linkText = "Billing Service Information") 
 	WebElement lnkBsInfo;
 	
 	@FindBy(xpath = "//a[@id='tabOptumPay']") 
@@ -154,9 +154,26 @@ public class UPAHomePage extends HomePage {
 	WebElement  lnkResourcesCapitationReport;
 
 	
+
+	@FindBy(xpath="//p[contains(text(),'Bring more power to your practice')]")
+	WebElement bringMorePowerPopUp;
+	
+	@FindBy(xpath="//span[contains(text(),'No, Thanks')]")
+	WebElement btnNoThanks;
+	
+	@FindBy(xpath="//div[@id='tabPrmryMenu']/ul")
+	WebElement tabMenu ;
+	
+	@FindBy(xpath="//span[contains(text(),'I Accept, Activate Premium Services')]")
+	WebElement btnIAccept;
+	
+	
+
 	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
 	WebElement prvdrTIN;
 	
+	@FindBy(linkText="Logout") 
+	WebElement lnkLogout;
 	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -195,6 +212,7 @@ public class UPAHomePage extends HomePage {
         Element.clickByJS(testConfig,lnkSearchRemittance, "Search Remittance");
 	}
 	
+
 	public void clickManageUsersLink()
 	{
 		Element.clickByJS(testConfig,lnkManageUsers, "Manage Users");
@@ -435,6 +453,55 @@ public class UPAHomePage extends HomePage {
 		Browser.closeBrowser(testConfig);
 		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 	}
+
+	
+	public void verifyStandardTinAssociation(String userType) {
+		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
+		testConfig.putRunTimeProperty("id",id);
+		int sql=1348;
+		Map standardTin = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String rows=standardTin.get("ROWS").toString();
+		testConfig.putRunTimeProperty("rows",rows);
+		int count = Integer.parseInt(rows);
+		
+		if (count==0)			
+			Log.Fail("Insert any Standard TIN from backend");		
+		else	
+			Log.Pass(count+" "+"standard TIN(s) associated with the user, proceeding to check visibility of Bring More Power pop-up");
+		
+	}
+	public void verifyBringMorePowerPage() {
+		Element.expectedWait(bringMorePowerPopUp, testConfig, "Bring more power to your practice pop-up", "Bring more power to your practice pop-up");	
+	}
+	public void clickNoThanksOnBringMorePowerPage() {
+		verifyBringMorePowerPage();
+		Element.click(btnNoThanks, "No, Thanks button");
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void clickAcceptOnBringMorePowerPage() {
+		verifyBringMorePowerPage();
+		Element.click(btnIAccept, "I Accept, Let's get started button");
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void verifyDbOnAcceptingPremium() {
+		int sql=1349;
+		Map AllTins = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String nbrOfTinsAssociated=AllTins.get("ALL_ASSOCIATED_TINS").toString();
+		
+		sql=1350;
+		Map premiumTins = DataBase.executeSelectQuery(testConfig,sql, 1);
+		String nbrOfPaidTins=premiumTins.get("PAID_TINS_ROW_COUNT").toString();
+		
+		Helper.compareEquals(testConfig, "All associated Standard TINS should become Paid", nbrOfTinsAssociated, nbrOfPaidTins);
+	}
+	public void verifyHomePage() {
+		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
+	}
+	public void clickLogoutUPA() {
+		Element.clickByJS(testConfig, lnkLogout, "Logout");
+		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
+	
+	}
 	public void verifyCapitationReportLinkUnderResources() {
 		   String parentwindowhandle=testConfig.driver.getWindowHandle();
 		   Element.click(lnkResourcesCapitationReport, "capitation report");
@@ -443,6 +510,13 @@ public class UPAHomePage extends HomePage {
 		   Browser.verifyURL(testConfig, expectePrivacydURL);
 		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
 		
+
+	}
+	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
+	{
+		Browser.wait(testConfig, 3);
+		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
+		return new PaymentDataFilesUPA(testConfig);
+
 	}
 }
-

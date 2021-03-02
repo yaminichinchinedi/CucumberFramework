@@ -32,7 +32,7 @@ Feature: CSR View Payments for Standard TIN
     And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link
 		Then User Enters tin and click on search button for "<userType>".
-    Then Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+    Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
     Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
     Then Validate Archive column relabeled to Payment Status
    	Then Validate user is able to change the value of Payment Status column
@@ -60,4 +60,3 @@ Feature: CSR View Payments for Standard TIN
 			|   credentials     |	userType   |  tinType	|	portalAccess	|	searchCriteria 	|
     	|      Super        |	  PROV     |		AO		|	  Standard		|		Last 30 days	|
     	|      Super        |	  PROV     |		VO		|	  Premium			|		Last 30 days	|
-  

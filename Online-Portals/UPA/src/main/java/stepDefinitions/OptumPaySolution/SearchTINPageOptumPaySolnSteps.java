@@ -1,5 +1,6 @@
 package main.java.stepDefinitions.OptumPaySolution;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchTinPageOptmPaySoln;
@@ -23,4 +24,10 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 	public void user_Enters_tin_for_OPS_and_click_on_search_button_for(String userType) throws Throwable {
 		srchTinOPSPage.enterTinAndSrch(userType);
 	}
+	
+	@And("^Change control to Optum Pay Solutions page$")
+	public void change_control_to_Optum_Pay_Solutions_page() throws Throwable {
+		srchTinOPSPage.changeToOptumPaySolutionPage();
+	}
+	
 }

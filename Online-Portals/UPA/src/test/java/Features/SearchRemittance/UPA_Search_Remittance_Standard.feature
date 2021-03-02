@@ -3,7 +3,7 @@ Feature: UPA Search Remittance for Standard portal access
 		@US2990582
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to UPA portal and enters "<credentials>" and login
-	When  User Selects a tin on HomePage for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link for UPA
 	Then Validate search button is enabled or disabled for "<portalAccess>"
 	Examples:

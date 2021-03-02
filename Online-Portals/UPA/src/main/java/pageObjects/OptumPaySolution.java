@@ -1,23 +1,28 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.reporting.Log;
 
 public class OptumPaySolution {
 	                 
@@ -131,6 +136,33 @@ public class OptumPaySolution {
 	@FindBy(xpath="//*[@id='ui-id-6']/div")
 	WebElement hoverManageMyPlan;
 
+	@FindBy(id="rate")
+	WebElement rateTxtBox;
+	
+	@FindBy(id="change_rate_reason_selector")
+	WebElement rsnRtChngdrpdwn;
+
+	@FindBy(id="otherReasonForChange")
+	WebElement otrRsnTxtAra;
+
+	
+	@FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]")
+    private WebElement standardPerPaymentFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]")
+    private WebElement customPerPaymentFee;       
+    @FindBy(xpath="//b[contains(text(),'Standard Per Payment fee:')]/../..")
+    private WebElement globalFee;  
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../..")
+    private WebElement customFee;   
+    @FindBy(xpath="//b[contains(text(),'Custom Per Payment fee:')]/../../../p[2]")
+    private WebElement customFeeDate;   
+    @FindBy(xpath="//span[contains(text(),'Rate')]/../..//div[contains(text(),'N/A')]")
+    private WebElement validateNA;
+
+    @FindBy(xpath=" //*[@id='optum-pay-options']/div[1]/div[3]/div[2]")
+    private WebElement feeTile;
+ 
+
 	
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
@@ -242,19 +274,20 @@ public class OptumPaySolution {
 			}
 			
 		}
-
-	    
-        
-		public void validate_ManageMyPlanText() {
+       
+	    public  OptumPaySolution validateManageMyPlanText() {
             Element.verifyTextPresent(manageMyPlanText,"Manage My Plan");
-            }
+            return this;
+         }
 		
-		public void validate_CancelMyPlanTextLink() {
+		public void validateCancelMyPlanTextLink() {
 			Element.verifyTextPresent(lnkCancelSubscription,"Cancel My Plan");
 		}
+		
+		public void validateFreeTrialTextNotPresent(String text) {  
+            Element.verifyTextNotPresent(text);
+        }
     
-
-
 	    public void verifyOPSTilesForVO() {
 					ArrayList<String> expectedContent=new ArrayList<String>(); 
 					expectedContent.add("Plan Type");
@@ -301,18 +334,18 @@ public class OptumPaySolution {
 			return this;
 		}
 		
+
 		public OptumPaySolution validateFeeTitle()
 		{
 			int sqlRowNo=1616;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    String feeTitle=null;
-			if (data.get("ACCRDFEE").toString().substring(data.get("ACCRDFEE").toString().length()-1).equals("0"))
-			 feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length()-1);
-			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-			Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-
+		    String feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length());
+  			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
+			//Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
+            //covered in another US
 			return this;
 		}
+
 		
 
 		public OptumPaySolution verifyInvalidTINonOptumPaySolution(String invalidTIN) throws Exception 
@@ -382,7 +415,73 @@ public class OptumPaySolution {
 			
 			Element.clickByJS(testConfig,lnkLogOut , "logging Out of the portal");
 		}
+		
+			public void validateChangeRatePrcnt(String credentials, String changeRateValue, String changeRateReason)
+			{
+				
+				String rateValue="";
+				int sqlRowNo=1627;
+				Map rate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				
+				BigDecimal globalVal=BigDecimal.valueOf(Double.parseDouble(rate.get("RATE_PCT").toString().trim())).multiply(new BigDecimal(100));
+				if (changeRateValue.equals("Invalid value"))
+				{
+					rateValue=globalVal.add(new BigDecimal("0.001")).toString();
+					validateChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+					rateValue="-"+Helper.generateRandomDecimalValue(0, 1, 3);
+					validateChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+				}
+				if (changeRateValue.equals("valid value"))
+				{
+					rateValue=globalVal.add(new BigDecimal("-0.001")).toString();
+					validateChangeRateEvents(credentials,rateValue,changeRateValue,changeRateReason);
+					Browser.wait(testConfig, 1);
+					validateChangeRateEvents(credentials,rateValue,changeRateValue,"Other with Blank");
+				}
+			}
 			
+			public void validateChangeRateEvents(String credentials,String rateValue,String changeRateValue, String changeRateReason) {
+			
+			if(credentials.equalsIgnoreCase("Super") &&
+			  testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium") &&
+			  testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") || testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AV") )
+			{
+			if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
+			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");	
+			Element.enterData(rateTxtBox, rateValue, "change rate", "rate change textbox");
+			
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Element.selectByVisibleText(rsnRtChngdrpdwn, "Other", "reason for change dropdown");
+			else
+			Element.selectByVisibleText(rsnRtChngdrpdwn, changeRateReason, "reason for change dropdown");
+			
+			if (changeRateReason.equalsIgnoreCase("Other"))
+			Element.enterData(otrRsnTxtAra, "Testing", "Other Change rate", "Other Change TextArea");
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Element.enterData(otrRsnTxtAra, "", "Other Change rate", "Other Change TextArea");
+			
+			Browser.wait(testConfig,1);
+			Element.clickByJS(testConfig,btnSaveChangeRate,"Save Rate Change");
+			
+			Helper.compareContains(testConfig, "PopUp text", "Are you sure?" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			
+	        Element.clickByJS(testConfig, btnChangeRatePopupChange, "Change btn click");
+			
+	        if (changeRateValue.equals("Invalid value")|| changeRateReason.equalsIgnoreCase("Other with Blank") )
+	        {
+	        String actual= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-tabs']/div[1]").getText();
+	        if (changeRateValue.equals("Invalid value"))
+	        Helper.compareContains(testConfig, "Error Validation", "The rate must be greater than or equal to 0 and less than the system global rate", actual);
+			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
+			Helper.compareContains(testConfig, "Error Validation", "Enter a reason for the rate change", actual);
+	        }
+			}
+			else
+				Element.verifyElementNotPresent(lnkChangeRate, "Change Rate link");
+			
+		}
 			public void validateInfoIconHover() {
 				for(WebElement title: titles)
 				  Element.mouseHoverByJS(testConfig, title, "title");
@@ -433,5 +532,177 @@ public class OptumPaySolution {
 						"cycle.",hoverManageMyPlan.getText().trim());
 			
 			}
+
+			
+	 public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
+		          
+	 	   if(tinType.equals("VO") || portalAccess.equals("Standard")) {  
+	 		   String naMessage1 = validateNA.getText().trim();
+	 		   String naMessage = naMessage1.substring(0, 3);
+	 		   Helper.compareContains(testConfig, "Validating N/A is present for VO or Standard Tins","N/A",naMessage);
+	 		   return;
+	 	   }
+	 	   //For Database
+	 	   String currDateDB = Helper.getCurrentDate("YYYY-MM-dd");
+	 	   String getCurrentMonthDB = currDateDB.substring(5, 7);
+	 	   String getCurrentYearDB = currDateDB.substring(0,4);
+	 	   String futureDateInSameMonthDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"20"; //20 or it can be any future date in same month
+	 	   String pastDateDB = Helper.getDateBeforeOrAfterDays(-31, "YYYY-MM-dd");
+	 	   String tomorrowsDateDB = Helper.getDateBeforeOrAfterDays(1, "YYYY-MM-dd");
+	 	   String currMonthsFirstDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"01";  
+	 	   String currMonthsSecondDateDB = getCurrentYearDB+"-"+getCurrentMonthDB+"-"+"02"; 
+	 	   
+	 	   //For UI
+	 	   String currDate = Helper.getCurrentDate("MM/dd");
+	 	   String getCurrentMonth = currDate.substring(0, 2);
+	 	   String currDay = currDate.substring(currDate.length()-2);
+	 	   String futureDateInSameMonth = getCurrentMonth+"/20";
+	 	   String currMonthsFirstDate = getCurrentMonth+"/01";
+	 	   String currMonthsSecondDate = getCurrentMonth+"/02";
+	 	   String lastDateOfCurrentMonth = Helper.getLastDateOfMonth("MM/dd");
+		              
+	 	   testConfig.putRunTimeProperty("currDateDB", currDateDB);
+	 	   testConfig.putRunTimeProperty("pastDateDB", pastDateDB);
+	 	   testConfig.putRunTimeProperty("tomorrowsDateDB", tomorrowsDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsFirstDateDB", currMonthsFirstDateDB);
+	 	   testConfig.putRunTimeProperty("currMonthsSecondDateDB", currMonthsSecondDateDB);
+	 	   testConfig.putRunTimeProperty("futureDateInSameMonthDB", futureDateInSameMonthDB);
+		             
+	 	   //Pre-requisite - Updating the Global Fee start date as 1st Jan 2021 and the end date should be NULL
+	 	   updatingStartDateOfGlobalLevelFee();
+		   
+	 	   //Scenario 1 - Asserting only Global Fee
+	 	   validatingGlobalFeeInUI(); 
+		              
+	 	   //Inserting a Custom Per Payment Fee with dates from (Previous month date - tomorrow's date)
+	       //Scenario 2 - Asserting only Custom Fee	 	   
+	 	   DataBase.executeInsertQuery(testConfig, 2002); 
+	 	   Browser.browserRefresh(testConfig);
+	 	   validatingCustomFeeInUI();  
+		              
+	 	   //Updating Tin level date from (Previous month date - 1st of current month)
+	 	   //Scenario 3 - Displaying both Custom and Global Fee	 	   
+	 	   DataBase.executeUpdateQuery(testConfig, 2003); 
+	 	   Browser.browserRefresh(testConfig);  
+	 	   if(currDay.equals("01")) {                   
+	 		   validatingCustomFeeInUI();
+	 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();                 
+	 		   validatingCustomFeeInUI();
+	 		   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsFirstDate+" - "+currMonthsFirstDate);
+	 	   } 
+	 	    	   
+	 	   //Update Tin Level date from (2nd of current month - 20th of current month)
+	 	   //Scenario 4 - Displaying both custom and global fee	 	   
+	 	   DataBase.executeUpdateQuery(testConfig, 2004);
+	 	   Browser.browserRefresh(testConfig);
+	 	   if(currDay.equals("01")) {                   
+	 		   validatingGlobalFeeInUI();
+	 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();
+	 		   validatingCustomFeeInUI();
+	 		   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+futureDateInSameMonth);
+	 	   }
+	 	   
+	 	   //Update Tin Level date from (2nd of current month - NULL)
+	 	   //Scenario 5 - Displaying both custom and global fee
+	 	   DataBase.executeUpdateQuery(testConfig, 2005);
+	 	   Browser.browserRefresh(testConfig);
+	 	   if(currDay.equals("01")) {                   
+		 		 validatingGlobalFeeInUI();
+		 	   }
+	 	   else {
+	 		   validatingGlobalFeeInUI();  
+		 	   validatingCustomFeeInUI();
+		 	   Helper.compareContains(testConfig, "Validating whether the custom Fee is displayed properly in the Rate Tile UI", validatingCustomFeeDate(), currMonthsSecondDate+" - "+lastDateOfCurrentMonth);
+	 	   }
+	 	   		   
+	 	   //Deleting the entry which we created for our tin in Debit_Fee_Rate table
+	 	   DataBase.executeDeleteQuery(testConfig, 2007); 
+	 	   Log.Comment("Entry was deleted from Rate Fee table");
+	 }
+	 		    
+	 public void validateStandardPerPaymentFeeText() {
+		 Element.verifyTextPresent(standardPerPaymentFee,"Standard Per Payment fee:");
+	 }
+		      
+	 public void validateCustomPerPaymentFeeText() {
+		 Element.verifyTextPresent(customPerPaymentFee,"Custom Per Payment fee:");
+	 }
+		         
+	 public void validatingGlobalFeeInUI() {   
+		          
+		 String globalFeeFromDB = null;
+		 String globalFeeFromUI = null;  
+		 
+		 if(globalFeeFromDB == null && globalFeeFromUI==null) {
+			 Map<String, String> globalFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2001, 1);
+			 globalFeeFromDB = globalFeeFromDatabase.get("RATE_PCT");
+		              
+			 //If last two digits for global fee is 0 in database, then we display only one digit after decimal point in UI 
+			 if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0' && globalFeeFromDB.charAt(globalFeeFromDB.length()-2)=='0') {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.0");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 
+			 //If last one digit for global fee is 0 in database, then we display only two digits after decimal point in UI  
+			 else if(globalFeeFromDB.charAt(globalFeeFromDB.length()-1)=='0'){
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }
+			 
+			 //If last digit for global fee is non zero in database, then we display three digits after decimal point in UI
+			 else {
+				 DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+				 globalFeeFromUI = decimalFormat.format(Float.parseFloat(globalFeeFromDB)*100);
+			 }             
+		 }
+		          
+		 String split[] = globalFee.getText().trim().split(": ");
+		 String stdFee = split[split.length-1].trim();
+		          
+		 Helper.compareContains(testConfig,"Validating whether the Global Fee is displayed properly in the Rate Tile UI", stdFee, globalFeeFromUI+"%"); 
+		 validateStandardPerPaymentFeeText();
+	 }
+		      
+	 	public void validatingCustomFeeInUI() {
+	 		String customFeeFromDB = null;
+	 		String customFeeFromUI = null;
+		    
+	 		//Fetch the Custom Fee from database, and display three digits after decimal point in UI
+	 		if(customFeeFromDB == null && customFeeFromUI==null) {
+	 			Map<String, String> customFeeFromDatabase = DataBase.executeSelectQuery(testConfig, 2006, 1);
+	 			customFeeFromDB = customFeeFromDatabase.get("RATE_PCT");
+	 			
+	 			DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.000");
+	 			customFeeFromUI = decimalFormat.format(Float.parseFloat(customFeeFromDB)*100);
+	 		} 
+
+	 		String split[] = customFee.getText().trim().split(": ");
+	 		String custFee = split[split.length-1].trim();
+	 		
+	 		Helper.compareContains(testConfig,"Validating whether the custom Fee is displayed properly in the Rate Tile UI", custFee, customFeeFromUI+"%");    
+	 		validateCustomPerPaymentFeeText();
+	 	}
+		      
+	 	public String validatingCustomFeeDate() {
+	 		return customFeeDate.getText().trim(); 
+	 	} 
+		      
+	 	public void updatingStartDateOfGlobalLevelFee() {
+	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
+	 	}		
+	 	public OptumPaySolution validatePastdueFee()
+		{
+			int sqlRowNo=1630;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		    String feeTitle=null;
+			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
+			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			return this;
+		}
 	}
 

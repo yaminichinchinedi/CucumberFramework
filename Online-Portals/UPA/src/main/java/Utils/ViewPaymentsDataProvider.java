@@ -464,7 +464,7 @@ public ArrayList getEnrollmentContent(String content) {
 		testConfig.putRunTimeProperty("portalAccess", portalAccess);
 		testConfig.putRunTimeProperty("prdctSelected",portalAccess);
 		ViewPayments paySum=new ViewPayments(testConfig,"filter");
- 		switch(searchCriteria+"_"+tinType+"_"+portalAccess) 
+ 		switch(searchCriteria)
  		 {
  		    case "failedPayment": 
  			sqlRowNo=29;
@@ -511,7 +511,7 @@ public ArrayList getEnrollmentContent(String content) {
  		     
  		 case "byCheckNo":
  		 case "byElectronicPaymentNo":
- 			 sqlRowNo=50;
+ 			 sqlRowNo=431;
  			 break;
  		case "byElectronicPaymentNoRemit":
 			 sqlRowNo=1901;
@@ -524,7 +524,7 @@ public ArrayList getEnrollmentContent(String content) {
  		 case "byDOPAndNpi":
  		 case "byDOPAndClaimNo":
  		 case "byDOPAndPatientNm":	 
-			 sqlRowNo=41;
+			 sqlRowNo=430;
 			 break;
 			 
  		 case "byDOPAndZeroPaymentClaims":
@@ -537,22 +537,22 @@ public ArrayList getEnrollmentContent(String content) {
  			break;
  			
  		 case "byDOSAndSubscriberId":
- 			 sqlRowNo=156;
+ 			 sqlRowNo=432;
  			 break;
  			 
  		 case "byDOS":
  		 case "byDOSAndAcntNo":
- 			 sqlRowNo=252;
+ 			 sqlRowNo=429;
  			 break;
  			 
  		 case "byDOSAndNpi":
- 			 sqlRowNo=245;
+ 			 sqlRowNo=434;
  			 //sqlRowNo=253;
  			 break;
 
  		 case "byDOSAndClmNo":
  		 case "byDOSAndPtntNm":
- 			 sqlRowNo=60;
+ 			 sqlRowNo=433;
  			 break;
  			 
  		 case "byDOSAndMarketType":
@@ -732,7 +732,7 @@ public ArrayList getEnrollmentContent(String content) {
 		}
 			 
 			
-		case "generalPayment60Days_AO_Premium":
+		case "generalPayment60Days":
 		{
 			 paySum.getQuickSearchDates("Last 60 days");
 			 sqlRowNo=1611; 
@@ -746,28 +746,6 @@ public ArrayList getEnrollmentContent(String content) {
  	 		break;
 		}
  	 		  
-		case "Last 4-6 months":
-		{     
-			  paySum.getQuickSearchDates("Last 4-6 months");
-			  sqlRowNo=127; 
-	 		  break;
-		}
-		
-		case "Last 9-13 months":
-		{
-			  paySum.getQuickSearchDates("Last 9-13 months");
-			  sqlRowNo=127; 
-		 	  break;
-			
-		}
-		
-		case "Last 6-9 months":
-		{
-			  paySum.getQuickSearchDates("Last 6-9 months");
-			  sqlRowNo=127; 
-		 	  break;
-			
-		}
 		
 		case "generalPaymentForTIN_30days":
 		{
@@ -785,7 +763,7 @@ public ArrayList getEnrollmentContent(String content) {
 			
 		}
 		
-		case "generalPaymentForTIN_90days_AO_Premium":
+		case "generalPaymentForTIN_90days":
 		{
 			  paySum.getQuickSearchDates("Last 90 days");
 			  sqlRowNo=1611; 
@@ -1115,63 +1093,33 @@ public ArrayList getEnrollmentContent(String content) {
 				sqlRowNo=226;
 				break;
 				
-			case "Last 30 days_AO_Premium":
-			case "Last 30 days_VO_Premium":
-			case "Last 30 days_AV_Premium":
-			case "Last 30 days_AO_Standard":
+			case "Last 30 days":
 //				sqlRowNo=1617;
 //				break;
-			case "Last 30 days_VO_Standard":
-			case "Last 30 days_AV_Standard":
 				paySum.getQuickSearchDates("Last 30 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 60 days_AO_Premium":
-			case "Last 60 days_VO_Premium":
-			case "Last 60 days_AV_Premium":
-			case "Last 60 days_AO_Standard":
-			case "Last 60 days_VO_Standard":
-			case "Last 60 days_AV_Standard":
+			case "Last 60 days":
 				paySum.getQuickSearchDates("Last 60 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 90 days_AO_Premium":
-			case "Last 90 days_VO_Premium":
-			case "Last 90 days_AV_Premium":
-			case "Last 90 days_AO_Standard":
-			case "Last 90 days_VO_Standard":
-			case "Last 90 days_AV_Standard":
+			case "Last 90 days":
 				paySum.getQuickSearchDates("Last 90 days");
 				sqlRowNo=1611;
 				break;
-			case "Last 4-6 months_AO_Premium":
-			case "Last 4-6 months_VO_Premium":
-			case "Last 4-6 months_AV_Premium":
-			case "Last 4-6 months_AO_Standard":
-			case "Last 4-6 months_VO_Standard":
-			case "Last 4-6 months_AV_Standard":
+			case "Last 4-6 months":
 				paySum.getQuickSearchDates("Last 4-6 months");
 				sqlRowNo=1611;
 				break;
-			case "Last 6-9 months_AO_Premium":
-			case "Last 6-9 months_VO_Premium":
-			case "Last 6-9 months_AV_Premium":
-			case "Last 6-9 months_AO_Standard":
-			case "Last 6-9 months_VO_Standard":
-			case "Last 6-9 months_AV_Standard":
+			case "Last 6-9 months":
 				paySum.getQuickSearchDates("Last 6-9 months");
 				sqlRowNo=1611;
 				break;
-			case "Last 9-13 months_AO_Premium":
-			case "Last 9-13 months_VO_Premium":
-			case "Last 9-13 months_AV_Premium":
-			case "Last 9-13 months_AO_Standard":
-			case "Last 9-13 months_VO_Standard":
-			case "Last 9-13 months_AV_Standard":
+			case "Last 9-13 months":
 				paySum.getQuickSearchDates("Last 9-13 months");
 				sqlRowNo=1611;
 				break;
-				
+			case "LegacyOrPremiOrStandard_AO_Standard":	
 			case "LegacyOrPremiOrStandard":
 				sqlRowNo=1605;
 				break;	
@@ -1186,10 +1134,20 @@ public ArrayList getEnrollmentContent(String content) {
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
+			case "PremiumOrStandardTIN_AO_Premium":	
+				sqlRowNo=1605;
+				break;
  		
+			case "ActiveBSTin":
+			    sqlRowNo=16;
+			    break;
+
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
+ 		}
+ 		if(searchCriteria.equals("TinWithNoCustomFeeRate")) {
+ 			sqlRowNo=2000;
  		}
  		if(searchCriteria.contains("PPRARecord"))
  			sqlRowNo=1624;	
@@ -1228,7 +1186,24 @@ public ArrayList getEnrollmentContent(String content) {
 			}
  				
  		}
- 			
+
+ 		if (searchCriteria.contains("PastdueFee"))
+		{
+ 			if(searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", "=0");
+ 				else if(searchCriteria.equalsIgnoreCase("positivePastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", ">0");
+			sqlRowNo=1629;
+		}
+       if (searchCriteria.contains("AccuredFee"))
+			{
+	 			if(searchCriteria.equalsIgnoreCase("withAccuredFee"))
+	 				testConfig.putRunTimeProperty("nullStatus", "is not null");
+	 				else if(searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
+	 				testConfig.putRunTimeProperty("nullStatus", "is null");
+				sqlRowNo=1615;
+			}
+
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);
@@ -1242,7 +1217,7 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				if(sqlRowNo==1617)
                    {
