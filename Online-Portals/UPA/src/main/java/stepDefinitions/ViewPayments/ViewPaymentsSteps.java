@@ -203,10 +203,10 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
     }
     
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(portalAccess);
-    }
+//    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+//    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType,String portalAccess) throws Throwable {
+//    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
+//    }
 
 
     @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
@@ -255,11 +255,10 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
     }
 
-    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status,default value as New and greyed out for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_default_value_as_New_and_greyed_out_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(portalAccess);
+    @Then("^Validate Active/Archived Payments filter for \"([^\"]*)\" is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType, String portalAccess) throws Throwable {
+    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
     }
-
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
     	viewPayment.verifySavArchbtnNotPresent();
@@ -368,4 +367,5 @@ public class ViewPaymentsSteps extends TestBase {
 	
 
 }
+
 

@@ -532,6 +532,7 @@ public class OptumPaySolution {
 						"cycle.",hoverManageMyPlan.getText().trim());
 			
 			}
+
 			
 	 public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
 		          
@@ -704,3 +705,4 @@ public class OptumPaySolution {
 			return this;
 		}
 	}
+

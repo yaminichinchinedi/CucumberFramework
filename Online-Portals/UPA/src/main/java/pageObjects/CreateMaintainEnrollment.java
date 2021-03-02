@@ -82,7 +82,7 @@ public class CreateMaintainEnrollment {
 		   {
 			   sqlRowNo=16;
 			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
+			   tin=Searchedtin.get("PROV_TAX_ID_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
 			   break;
@@ -163,3 +163,4 @@ public class CreateMaintainEnrollment {
 	}
 
 }
+
