@@ -141,15 +141,13 @@ public class PaymentDataFilesCSR extends TestBase
 
 	public PaymentDataFilesCSR verifyAllValuesInCreateBundlePage() throws Exception{
 		testConfig.softAssert.assertEquals( SubHeaderCreate.getText().trim(), "Payment Data Files", "Subheader message: "+ SubHeaderCreate.getText().trim());
+		
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";
 		testConfig.softAssert.assertEquals(PageText.getText().trim(), PageTextActual, "Page Text Context Displays: "+PageText.getText().trim());
-		
 		testConfig.softAssert.assertEquals(DetailedInstrctns.getText().trim(), "Detailed Instructions For Bundle Creation", "Detailed Instructions Link Displays: "+DetailedInstrctns.getText().trim());
 		
-		String ProviderName = Provider.getText().trim();
 		int sqlRow=236;
-		String Prov_tin_nbr=System.getProperty("tin");
-		testConfig.putRunTimeProperty("Prov_tin_nbr", Prov_tin_nbr);
+		testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String ProvName = "Provider: "+ orgNameDB.get("ORG_NM").toString().trim();
 		testConfig.softAssert.assertEquals(Provider.getText().trim(), ProvName, "Provider Name Displaying:- " + orgNameDB.get("ORG_NM").toString().trim());

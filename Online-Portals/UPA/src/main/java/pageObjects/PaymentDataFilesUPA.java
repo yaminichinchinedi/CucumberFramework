@@ -154,7 +154,6 @@ public class PaymentDataFilesUPA extends TestBase{
 			 ProviderName = ProviderPROV.getText().trim();
 		
 		int sqlRow=236;
-		//String Prov_tin_nbr=System.getProperty("tin");
 		testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		Map orgNameDB=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		String orgName = orgNameDB.get("ORG_NM").toString().trim();
