@@ -33,6 +33,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
@@ -261,58 +262,6 @@ public void verifyProvSecondRow() throws ParseException{
 		String bsNameCheckUI = Element.findElement(testConfig, "xpath","//table//tr[16]//tr//tr["+count+"]/td[2]").getText().trim();
 		Helper.compareEquals(testConfig, "Billing Service name for the provider TIN added", bsNameCheckUI, testConfig.getRunTimeProperty("bsname").trim());
 	}
-/*	
-	public void verifyErrorsForInvaidDateFormat()
-	{
-		final String splsymbols = "$&@?<>~!%#";
-		String alphacheck = RandomStringUtils.randomAlphabetic(3); 
-		int count = Element.findElements(testConfig, "xpath", "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr").size();
-		WebElement termdatecol = Element.findElement(testConfig, "xpath", "//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr["+count+"]/td[8]");	
-		Element.click(chkRemove, "Remove checkbox");
-		//Element.clickByJS(testConfig, termdatecol, "Termination Date textbox");
-		//Element.enterData(termdatecol, alphacheck, "Checking alpha entry for error check", "Termination Date is not valid");
-		//Element.clearData(termdatecol, "Clearing Termination Date");
-		Browser.wait(testConfig, 3);
-		Log.Comment(alphacheck);
-		//Element.enterDataByJS(testConfig, termdatecol, alphacheck, "Checking Alpha Error");
-		testConfig.driver.findElement(By.xpath("//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr["+count+"]/td[8]")).click();
-		testConfig.driver.findElement(By.xpath("//table/tbody/tr[16]/td/table/tbody/tr/td/div/table/tbody/tr["+count+"]/td[8]")).sendKeys(alphacheck);
-//		WebDriver driver= testConfig.getDriver();
-//		JavascriptExecutor jst= (JavascriptExecutor) driver;
-//		jst.executeScript("arguments[1].value = arguments[0]; ", alphacheck, termdatecol);
-		Browser.wait(testConfig, 3);
-		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhabetic Characters", true, txtInvalidDateError.isDisplayed());
-		Element.clearData(termdatecol, "Termination Date");
-		
-		Browser.wait(testConfig, 3);
-		String alphanumcheck = RandomStringUtils.randomAlphanumeric(10);
-		Element.click(termdatecol, "Termination Date");
-		//Element.enterData(termdatecol, alphanumcheck, "Checking alpha numeric entry for error check", "Termination Date is not valid");
-		Element.clearData(termdatecol, "Clearing Termination Date");
-		Element.enterDataByJS(testConfig, termdatecol, alphanumcheck, "Checking alpha numeric entry for error check");
-		Element.click(chkRemove, "Remove checkbox");
-		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Aplhanumeric", true, txtInvalidDateError.isDisplayed());
-		Element.clearData(termdatecol, "Termination Date");
-		
-		Browser.wait(testConfig, 3);
-		Element.click(termdatecol, "Termination Date");
-		//Element.enterData(termdatecol, splsymbols, "Checking Special Characters for error check", "Termination Date is not valid");
-		Element.clearData(termdatecol, "Clearing Termination Date");
-		Element.enterDataByJS(testConfig, termdatecol, splsymbols, "Checking Special Characters for error check");
-		Element.click(chkRemove, "Remove checkbox");
-		Element.click(btnSaveOnProvPage, "Save Button");
-		Helper.compareEquals(testConfig, "Termination Date Format Error Msg Check for Special Characters", true, txtInvalidDateError.isDisplayed());
-		Element.clearData(termdatecol, "Termination Date");
-	
-		String effcdtui = System.getProperty("effcdt");
-		Element.click(termdatecol, "Termination Date");
-		Element.enterData(termdatecol, "Enter Valid Date Format", effcdtui, "Entering Date");
-		Element.click(chkRemove, "Remove checkbox");
-		Element.click(btnSave, "Save Button");	
-}
-*/	
 	
 public void verifyDeleteAssoc(){
 	String tin = System.getProperty("provTIN");
@@ -395,5 +344,15 @@ public void verifyPageText() {
 Helper.compareContains(testConfig, "Page Text in bold", "Do you need full access to provider claim payment data?", pageText1.getText().trim());
 Helper.compareContains(testConfig, "Page Text", "If you need access to historical claim data and search tools, talk to your provider administrator about activating the full functionality of Optum Pay.", pageText2.getText().trim());
 }
+
+	public void verifyBillingServiceHeaderText() {
+
+		String expected = "As a billing service, you will need your provider client to activate Optum Pay so that you have full access to their claims and remittance data and historical files. If not having this information is impacting your work, contact the provider and talk to them about activating Optum Pay.";
+
+		String actual = Element.findElement(testConfig, "xpath", "//*[@id=\"billing-service-information-tabs\"]/div[1]/p[2]").getText().trim();
+
+		Assert.assertTrue(expected.equals(actual), "Text validation failed");
+		Log.Comment("Text Validation successful : \n"+actual);
+	}
 }
 	

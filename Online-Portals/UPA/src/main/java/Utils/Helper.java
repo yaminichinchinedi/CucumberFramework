@@ -34,11 +34,11 @@ import java.util.regex.Pattern;
 import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.ViewPayments;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-
 import org.openqa.selenium.WebElement;
 
 
@@ -912,19 +912,6 @@ return previousDate.getTime();
 		return dateFormat.format(date.getTime());
 	}
 	
-	
-//	public static String getCurrentMonth(int dd, int mm, int yyyy, String format)
-//	{
-//		Calendar cal = Calendar.getInstance();
-//		cal.g
-//		date.add(Calendar.DAY_OF_YEAR, -1);
-//		DateFormat dateFormat = new SimpleDateFormat(format);
-//		return dateFormat.format(date.getTime());
-//	}
-//
-
-	
-	
 	public static String getFourWeekStartingDate(String format)
 	{
 		Calendar cal = Calendar.getInstance();
@@ -1061,69 +1048,6 @@ return previousDate.getTime();
 		return dateFormat.format(cal.getTime());
 	}
 
-	/**
-	 * Function to login into Gmail Account and take out a Message from the
-	 * email
-	 * 
-	 * @param testConfig
-	 * @param emailLoginDetailsRowNum
-	 *            - Login details of Gmail account (create sheet of name
-	 *            'EmailLoginDetails' if not present)
-	 * @param getOtpFor
-	 * @return
-	 */
-//	public static String loginToGmailAndGetOTPMessage(Config testConfig, int emailLoginDetailsRowNum, String getOtpFor)
-//	{
-//		// Open Gmail Login page
-//		GmailLogin gmailLogin = new GmailLogin(testConfig);
-//
-//		// Get Login details from excel sheet and Login
-//		TestDataReader loginDetails = testConfig.getCachedTestDataReaderObject("EmailLoginDetails");
-//		String gmailUserName = loginDetails.GetData(emailLoginDetailsRowNum, "Username");
-//		String gmailPassword = loginDetails.GetData(emailLoginDetailsRowNum, "Password");
-//		GmailVerification gmailVerification = gmailLogin.Login(gmailUserName, gmailPassword);
-//
-//		// Wait for 30 seconds so that message can arrive on email
-//		//Browser.wait(testConfig, 30);
-//
-//		String emailText = null;
-//		String requiredMessage = null;
-//
-//		switch (getOtpFor)
-//		{
-//		case "LOYALTY":
-//			// Search email according to the Subject of email and open it
-//			gmailVerification.searchMail(" You have a new SMS (Auto SMStoEmail)");
-//			gmailVerification.SelectEmail();
-//			//Browser.wait(testConfig, 5);
-//
-//			// Verify main content of email and then get the whole data
-//			emailText = gmailVerification.verifyAndGetEmailContent("Your One Time Password [OTP] for a transaction at Quality First Ventures");
-//
-//			// Split out the Exact Message from the whole email content
-//			String[] temp11 = emailText.split("Quality First Ventures is ", 0);
-//			String[] temp12 = temp11[1].split(". This will be valid only for 30 min", 0);
-//			requiredMessage = temp12[0];
-//			break;
-//		case "ZIPCASH":
-//			// Search email according to the Subject of email and open it
-//			gmailVerification.searchMail(" You have a new SMS (Auto SMStoEmail)");
-//			gmailVerification.SelectEmail();
-//			//Browser.wait(testConfig, 5);
-//
-//			// Verify main content of email and then get the whole data
-//			emailText = gmailVerification.verifyAndGetEmailContent(null);
-//
-//			// Split out the Exact Message from the whole email content
-//			String[] temp21 = emailText.split("Quality First Ventures is ", 0);
-//			String[] temp22 = temp21[1].split(". This will be valid only for 30 min", 0);
-//			requiredMessage = temp22[0];
-//			break;
-//		}
-//		return requiredMessage;
-//	}
-//
-	
 	/**
 	 * Replaces the arguments like {$someArg} present in input string with its
 	 * value from RuntimeProperties
@@ -1264,53 +1188,6 @@ return previousDate.getTime();
 		 
 	}
 	/**
-	 * Returns a JSON key from JSON object
-	 */
-//	public static String getJSONKeyValue(Config testConfig, JSONObject jObject, String key)
-//	{
-//		String value = null;
-//		if (jObject != null)
-//		{
-//			try
-//			{
-//				if (key != null)
-//					value = jObject.get(key).toString();
-//			}
-//			catch (JsonException e)
-//			{
-//				testConfig.logException(e);
-//			}
-//		}
-//		return value;
-	//}
-
-	/**
-	 * This Method is used to create a file with given format
-	 * 
-	 * @param extension
-	 * @return -- File Path
-	 */
-//	public static String createFileWithGivenFormat(Config testConfig, String extension)
-//	{
-//		String datetime = Helper.getCurrentDateTime("yyyy-MM-dd HH:mm:ss.SSS");
-//		testConfig.logComment("datetime=" + datetime);
-//		datetime = CharMatcher.is(':').removeFrom(datetime);
-//		String newFilePath = testConfig.downloadPath;
-//		File file = new File(newFilePath, datetime + extension);
-//		try
-//		{
-//			file.createNewFile();
-//			newFilePath = newFilePath + datetime + extension;
-//		}
-//		catch (IOException e)
-//		{
-//			newFilePath = null;
-//			e.printStackTrace();
-//		}
-//		return newFilePath;
-//	}
-
-	/**
 	 * Get comma separated string from array
 	 * @param testConfig
 	 * @param actualArray
@@ -1360,73 +1237,6 @@ return previousDate.getTime();
 		}
 		return result;
 	}
-
-	/**
-	 * Delete keys from redis
-	 * @param testConfig
-	 * @param merchantID : Id of merchant to delete keys for
-	 */
-//	public static void deleteKeyFromRedis(Config testConfig, String merchantID) {
-//		//Connecting to Redis server on localhost
-//		Jedis jedis = new Jedis(testConfig.getRunTimeProperty("redisServerIP"),Integer.parseInt(testConfig.getRunTimeProperty("redisServerPort")));
-//		jedis.auth(testConfig.getRunTimeProperty("redisServerPassword"));
-//		jedis.del("MerchantParams::"+merchantID);
-//		testConfig.logComment("Key is deleted from Redis server for merchant id "+merchantID);
-//		jedis.close();
-//		}
-//	
-	
-	
-	/**
-	 * Generic method to delete a key from redis
-	 * @param testConfig
-	 * @param key : key to be deleted
-	 */
-//	public static void deleteRedisKey(Config testConfig, String key) {
-//		
-//		//Connecting to Redis server on localhost
-//		Jedis jedis = new Jedis(testConfig.getRunTimeProperty("redisServerIP"),Integer.parseInt(testConfig.getRunTimeProperty("redisServerPort")));
-//		jedis.auth(testConfig.getRunTimeProperty("redisServerPassword"));
-//		jedis.del(key);	
-//		testConfig.logComment("Key " + key +" is deleted from Redis server");
-//		jedis.close();
-//	}
-	
-	/**
-	 * Set value of a Key in redis
-	 * @param testConfig
-	 * @param key
-	 * @param value
-	 */
-//	public static void setKeyInRedis(Config testConfig, String key, String value) {
-//		
-//		Jedis jedis = new Jedis(testConfig.getRunTimeProperty("redisServerIP"),Integer.parseInt(testConfig.getRunTimeProperty("redisServerPort")));
-//		jedis.auth(testConfig.getRunTimeProperty("redisServerPassword"));
-//		jedis.set(key, value);
-//		testConfig.logComment("Key is set in Redis server for key - "+ key + " : " + value);
-//		jedis.close();
-//	}
-
-	/**
-	 * Function to find keys in redis whose name matches pattern
-	 *
-	 * @param testConfig Config object
-	 * @param keyPattern Key name substring that we wish to find
-	 * @return Key set matching pattern
-	 */
-//	public static Set<String> findKeyInRedis(Config testConfig, String keyPattern) {
-//
-//		Jedis jedis = new Jedis(testConfig.getRunTimeProperty("redisServerIP"), Integer.parseInt(testConfig.getRunTimeProperty("redisServerPort")));
-//		jedis.auth(testConfig.getRunTimeProperty("redisServerPassword"));
-//		Set<String> keySet = jedis.keys(keyPattern);
-//		jedis.close();
-//		if (keySet == null || keySet.size() == 0) {
-//			testConfig.logComment("No keys found having name matching " + keyPattern);
-//		} else {
-//			testConfig.logComment(keySet.size() + " keys found having name matching " + keyPattern);
-//		}
-//		return keySet;
-//	}
 
 	/**
 	 * This function is used to update in an existing text file. (If file is not present then will create new file also)
@@ -1512,134 +1322,6 @@ return previousDate.getTime();
 	hashValue = Helper.getSHA512(hashString);
 	return hashValue;
 	}
-    
-    /** This Method is used to compare two String for different Value
-     * @param What is to be tested
-     * @param Expected String to be tested
-     * @param Actual String to be tested
-     */
-//    public static void compareDifferent(Config testConfig, String what, String firstStr, String secondStr)
-//	{
-//    	if(firstStr != null && secondStr != null)
-//    	{
-//			if (!firstStr.equalsIgnoreCase(secondStr))
-//			{
-//				Log.Pass(what+" values are different", testConfig);
-//			}
-//			else
-//			{
-//				Log.Fail(what+" values are same", testConfig);
-//			}
-//    	}
-//    	else
-//    	{
-//    		// Adding logs to check which value is null
-//    		testConfig.logComment("String 1 Value: " + firstStr);
-//    		testConfig.logComment("String 2 Value: " + secondStr);
-//    		Log.Fail(what+" values are null", testConfig);
-//    	}
-//	}
-    /**
-     * Get all attribute values from JSON object
-     * @param json
-     * @param out
-     * @return Map<String, String>
-     * @throws JSONException
-     */
-//    public static Map<String,String> getValuesFromJson(JSONObject json, Map<String,String> out) throws JSONException
-//	{
-//	    @SuppressWarnings("unchecked")
-//		Iterator<String> keys = json.keys();
-//	    while(keys.hasNext())
-//	    {
-//	        String key = keys.next();
-//	        String val = null;
-//	        try
-//	        {
-//	             JSONObject value = json.getJSONObject(key);
-//	             getValuesFromJson(value,out);
-//	        }
-//	        catch(Exception e)
-//	        {
-//	            val = json.getString(key);
-//	            if(val.indexOf("[") == 0 && val.indexOf("]") == val.length()-1)
-//	            {
-//	            	val = val.substring(1);
-//	            	val = val.substring(0, val.length()-1);
-//	            	try
-//	    	        {
-//	            		JSONObject value = new JSONObject(val);
-//		            	getValuesFromJson(value,out);
-//	    	        }
-//	            	catch(Exception ex)
-//	    	        {}
-//	            }
-//	        }
-//
-//	        if(val != null && !out.containsKey(key))
-//	            out.put(key,val);
-//	    }
-//	    return out;
-//	}
-    
-    /**
-     * Get specific attribute value from JSON object
-     * @param testConfig
-     * @param json
-     * @param attributeName
-     * @return attributeValue
-     */
-//    public static String getAttributeValueFromJson(Config testConfig, JSONObject json, String attributeName)
-//    {
-//    	Map<String, String> out = new HashMap<String, String>();
-//    	try
-//    	{
-//    		getValuesFromJson(json, out);
-//    	}
-//    	catch(Exception e)
-//    	{
-//    		testConfig.logFail(e.getMessage());
-//    	}
-//    	
-//    	return out.get(attributeName);
-//    }
-//    
-//    /**
-//     * Verify network file size
-//     * @param testConfig
-//     * @param fileURL
-//     * @return size of file
-//     */
-//    public static long getNetworkFileSize(Config testConfig, String fileURL) 
-//    {
-//    	long fileSize = 0;
-//    	try
-//    	{
-//    		URL url = new URL(fileURL);  
-//    		URLConnection conn = url.openConnection();
-//    		fileSize = conn.getContentLengthLong();
-//    	}
-//    	catch(MalformedURLException mue)
-//    	{
-//    		testConfig.logFail("URL is not correct - " + mue.getMessage());
-//    	}
-//    	catch(IOException ioe)
-//    	{
-//    		testConfig.logFail("IO Exception - " + ioe.getMessage());
-//    	}
-//    	return fileSize;
-//    }
-//    
-//    /** compares values in first map with values in second map
-//     * @param testConfig
-//     * @param expected
-//     * @param actual
-//     */
-//    public static void compareEquals(Config testConfig, Map<String, String> expected, Map<String, String> actual){
-//    	for (Map.Entry<String, String> entry : expected.entrySet()){		    
-//			Helper.compareEquals(testConfig, entry.getKey(), entry.getValue(), actual.get(entry.getKey()));			
-//		}
-//	}
     
     /**
      * Update given dateTime string
@@ -2182,7 +1864,34 @@ public static String addDays(String date, int days) throws ParseException {
 
 		return newDate;
 	   }
+		
+	public static void getDatesForSearchCriteria(TestBase testConfig,String searchCriteria) 
+	{
+	    String split[]=searchCriteria.split(" "); 
+		if(split[split.length-1].contains("days"))
+		{
+			int LastNoOfdays=Integer.parseInt(split[split.length-2]);
+			testConfig.putRunTimeProperty("fromDate",Helper.getDateBeforeOrAfterDays(-LastNoOfdays,"yyyy-MM-dd"));
+			testConfig.putRunTimeProperty("toDate",Helper.getCurrentDate("yyyy-MM-dd"));
+		}
+		else 
+		{
+			String monthRange=(split[split.length-2]);
+			Map<String, String> startAndEndDates = Helper.getStartAndEndPeriod(monthRange);
+			testConfig.putRunTimeProperty("fromDate",startAndEndDates.get("fromDate").toString());
+			testConfig.putRunTimeProperty("toDate",startAndEndDates.get("toDate").toString());
 	
+		}	
+	}	
+	
+	public static void getPayerSchema(TestBase testConfig,String searchCriteria)
+	{
+		Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
+		int sqlRowNo=1507;
+	     Map schema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
+	     testConfig.putRunTimeProperty("PAYR_DSPL_NM", schema.get("PAYR_DSPL_NM").toString().trim());
+	}
 	
 
 	}

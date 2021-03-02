@@ -104,7 +104,7 @@ public class SearchTinPageSearchRemittance {
           }  
       case "BS":
          {
-        	 Element.enterData(bstinDrpDwn, tin, "Enter TIN", "Enter TIN into Provider Column");
+        	 Element.enterData(bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "Enter TIN", "Enter TIN into Provider Column");
         	 Element.click(submitBtn, "Click Search Button");
         	 break;
           }
@@ -187,7 +187,7 @@ public class SearchTinPageSearchRemittance {
 		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
 		
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
         
 		dataProvider.associateTinWithUser("PROV",tin);
 		
@@ -218,7 +218,7 @@ public class SearchTinPageSearchRemittance {
 		//WebElement drpDwnTin=Element.findElement(testConfig, "id", "taxIndNbrId");
 		
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		String tin=dataProvider.getTinForPaymentType(paymentType);
+		String tin="";//dataProvider.getTinForPaymentType(paymentType);
         
 		//dataProvider.associateTinWithUser("PROV",tin);
 		//dataProvider.associateTinWithUser("BS",tin);
@@ -272,7 +272,7 @@ public class SearchTinPageSearchRemittance {
 	public String getTinCSR(String paymentType)
 	{
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return dataProvider.getTinForPaymentType(paymentType);
+		return "";//dataProvider.getTinForPaymentType(paymentType);
 	}
 	
 	public SearchTinPageSearchRemittance enterHCTin(String Tin)
@@ -286,7 +286,7 @@ public class SearchTinPageSearchRemittance {
 		System.out.println("*****enterTinUPA 1");
 		int sqlRowNo=0;
 		String payType="";
-		paymentSummary paySum=new paymentSummary(testConfig,"filter");
+		ViewPayments paySum=new ViewPayments(testConfig,"filter");
 
 		switch(paymentType) 
 		{

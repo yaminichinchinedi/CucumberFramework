@@ -37,6 +37,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
+import org.testng.Assert;
 
 public class ManageUsers extends AddUserDetails
 {
@@ -192,7 +193,7 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//span[contains(text(),'Terms and Conditions Acceptance Date:')]")
 	WebElement termsAndCondDate;
 	
-	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully.')]")
+	@FindBy(xpath = "//td[contains(text(),'Your user changes were updated successfully')]")
 	WebElement yourChangesWereUpdatedSuccessfully;
 
 	@FindBy(id="provTinAssociateId")
@@ -662,8 +663,7 @@ public class ManageUsers extends AddUserDetails
 				break;
 			}
 		}
-		// Browser.waitTillSpecificPageIsLoaded(testConfig, "Manage User");
-		return new ManageUsers(testConfig);
+		return this;
 	}
 
 	/**
@@ -1415,7 +1415,7 @@ public class ManageUsers extends AddUserDetails
 	
 	public ManageUsers editLastName(String newName)
 	{
-		Element.enterData(lastName,newName,"Enter new first name as : " + newName,"first name");
+		Element.enterDataByJS(testConfig,lastName,newName,"Enter new first name as : " + newName);
 		clickSave();
 		return this;
 	}
@@ -2840,8 +2840,97 @@ public void deleteaddedtin()
 	Browser.waitForPageLoad(testConfig);
 	btnSave.click();
 }
+public ManageUsers verifyModTypeCd(String userType, String value) {
+	
+	String modTypCdDB="";
+	Map SearchedData=null;
+	int flag=1;
+	if(userType.equalsIgnoreCase("PROV"))
+	{
+	int sqlRowNo=1114;
+	 testConfig.getRunTimeProperty("tin");
+	 testConfig.getRunTimeProperty("email");
+	 SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+	
+	}
+	else if(userType.equalsIgnoreCase("BS"))
+	{
+	   int sqlRowNo=1117;
+	   testConfig.getRunTimeProperty("billing_service_id");
+	   SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   modTypCdDB=SearchedData.get("MOD_TYP_CD").toString().trim();
+			
+	}
+	if(value.equalsIgnoreCase("null"))
+		{
+			if(modTypCdDB.length()==0)
+				flag=0;
+		}
+	if(value.equalsIgnoreCase(modTypCdDB)|| flag==0)
+		Log.Comment("mod type cd is correct" + modTypCdDB);
+	else
+		Log.Fail("mod type cd is incorrect "+modTypCdDB);
+	return this;
+}
+
+	public void verifyManageUsersHeaderAndFooterTextValidation() {
 
 
+		String[] expectedTexts = {
+				"An unlimited number of administrative and general users is available with Optum Pay.",
+				"Enrollment & Account Security Reminder",
+				"A business issued email is required when adding a new user. Personal emails will not be accepted. New users that fail to complete the registration process will be removed from Optum Pay. In addition, existing users with no login activity after six months will be purged. Please review your user list periodically to ensure that all contact information is accurate. If at any time you need to remove a user, please contact our Provider Support Center at 1-877-620-6194."
+		};
+
+		String headerActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[1]/p[2]").getText().trim();
+
+		String footerHeaderTextActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/h2").getText().trim();
+
+		String footerptagText = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/p[2]").getText().trim();
+
+
+		String[] actualTexts = {
+				headerActual,
+				footerHeaderTextActual,
+				footerptagText
+		};
+
+
+		for(int i=0; i<expectedTexts.length; i++){
+			Assert.assertTrue(expectedTexts[i].equals(actualTexts[i]), "Text Validation Failed");
+			Log.Comment("Text Validation successful : \n"+actualTexts[i]);
+		}
+
+	}
+
+
+public void clickHome() {
+	WebElement linkHome=testConfig.driver.findElement(By.linkText("Home"));
+	Element.clickByJS(testConfig, linkHome, "home link clicked");
+}
+
+
+
+public ManageUsers clickSpecificUserNametoedit(String userType) {
+	int sqlRowNo;
+	
+	if(userType.equalsIgnoreCase("PROV"))
+	 sqlRowNo=1116;
+	
+	else
+		sqlRowNo=1118;
+	
+	Map portalBSData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	String username= portalBSData.get("LST_NM").toString() + ", " +portalBSData.get("FST_NM").toString();
+	testConfig.putRunTimeProperty("username", username);	
+	
+	if(userType.equalsIgnoreCase("PROV"))
+		testConfig.putRunTimeProperty("email", portalBSData.get("EMAIL_ADR_TXT").toString());
+	
+	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
+	   return this;
+}
 		
 }
 

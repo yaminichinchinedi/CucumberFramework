@@ -78,7 +78,7 @@ public class SearchTinPage {
 			   }
 			   
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
-			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   Element.enterDataByJS(testConfig, txtboxTinNo.get(0), tin, "txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 			   break;
 		   }
@@ -97,7 +97,8 @@ public class SearchTinPage {
 				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   }
 			   tin=Searchedtin.get("IDENTIFIER_NBR").toString().trim();
-			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
+			   testConfig.putRunTimeProperty("billing_service_id", Searchedtin.get("BILLING_SERVICE_ID").toString().trim());
+			   Element.enterDataByJS(testConfig,txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin);
 			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
 			   break;
 		   }
@@ -224,7 +225,8 @@ public class SearchTinPage {
 		if(typeOfTin.contentEquals("tinwithTermAndConditionBS"))
 			Element.enterData(txtboxTinNo.get(1),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
 		else
-			Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+			//Element.enterData(txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0) , "txtboxTinNo");
+		     Element.enterDataByJS(testConfig,txtboxTinNo.get(0),userAndTinDetails.get(0),"Enter tin number as : " + userAndTinDetails.get(0));
 		testConfig.putRunTimeProperty("username", userAndTinDetails.get(1));
 		return userAndTinDetails.get(0);
 	}
@@ -303,6 +305,25 @@ public class SearchTinPage {
 		else if(userType.equals("BS"))
 			Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
 		return new ManageUsers(testConfig);
+	}
+
+	public SearchTinPage searchToDelete(String userType) {
+		
+		if(userType.equalsIgnoreCase("PROV"))
+			Element.enterDataByJS(testConfig,txtboxTinNo.get(0), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"));
+		else if(userType.equalsIgnoreCase("BS"))
+			Element.enterDataByJS(testConfig,txtboxTinNo.get(1), testConfig.getRunTimeProperty("tin"),"Enter tin number as :" + " " + testConfig.getRunTimeProperty("tin"));	
+		return this;
+	}
+
+	public SearchTinPage searchToEditBS() {
+		int sqlRow=1119;
+		Map tinDetails=DataBase.executeSelectQuery(testConfig,sqlRow, 1);
+		testConfig.putRunTimeProperty("tin", tinDetails.get("IDENTIFIER_NBR").toString());
+		Element.enterDataByJS(testConfig,txtboxTinNo.get(1),tinDetails.get("IDENTIFIER_NBR").toString(),"Enter tin number as :" + " " + tinDetails.get("IDENTIFIER_NBR").toString());
+		String x=tinDetails.get("BILLING_SERVICE_ID").toString();
+				testConfig.putRunTimeProperty("billing_service_id", tinDetails.get("BILLING_SERVICE_ID").toString());
+		return this;
 	}
 	
 	

@@ -55,7 +55,6 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
-
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 
@@ -74,6 +73,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import main.java.nativeFunctions.TestBase;
+
 import main.java.reporting.Log;
 import main.java.nativeFunctions.Element;
 import main.java.Utils.DataBase;
@@ -115,9 +115,6 @@ WebElement radioPaymentSummaryReport;
 @FindBy(xpath="//input[@value='transactionSummaryReport']")
 WebElement radioTransactionSummaryReport;	
 	
-@FindBy(xpath="//*[@id='conslEngStatusForm']//table//tbody//tr[2]//td//table//tbody//tr[1]//td//table//tbody//tr//td[2]//span//a//img")
-WebElement txtprocessDate;
-
 @FindBy(name="fromDate")
 WebElement txtFromDate;
 
@@ -126,6 +123,18 @@ WebElement txtToDate;
 
 @FindBy(xpath="//*[@id='reorigNacha']//table//tbody//tr[2]//td[1]//input[2]")
 WebElement radioDateRangePaymentRemitOnlySummary;
+
+@FindBy(xpath="//input[@value='vcpReport']")
+WebElement radioVcpPayements;
+
+@FindBy(xpath="//input[@value='asReport']")
+WebElement radioAccountingSummary;
+
+@FindBy(xpath="//input[@value='billingServiceEnrollmentReport']")
+WebElement radioBillingServiceEnrollment;
+
+@FindBy(xpath="//input[@value='reorignNachaReport']")
+WebElement radioReorgNacha;
 
 @FindBy(xpath="//input[@value='orgAdrChgReport']")
 WebElement radioOrgAddressChangeReport;
@@ -159,9 +168,8 @@ WebElement linkChangeDescription;
 
 @FindBy(id="logOutId")
 WebElement lnkLogOut;
-
-@FindBy(xpath="//input[@value='DebitFee']")
-WebElement radioCstmTINRtReport;
+@FindBy(linkText="Home")
+WebElement linkHome;
 
 private TestBase testConfig;
 private RunReports runReports;
@@ -171,6 +179,7 @@ public RunReports(TestBase testConfig)
 {
 	this.testConfig=testConfig;
 	PageFactory.initElements(testConfig.driver, this);
+	Element.verifyElementPresent(radioOrgAddressChangeReport, "Organization History radio");
 }
 
 
@@ -184,7 +193,7 @@ public RunReports clickHipaaErrorSummaryReport() {
 public RunReports clickPaymentRemitOnlyPaymentSummaryReport() {
 	 
     Element.clickByJS(testConfig,radioPaymentRemitOnlySummaryReport,"CLick the PaymentRemitOnlySummaryReportt");
-    Browser.wait(testConfig, 1);
+    Element.expectedWait(radioDateRangePaymentRemitOnlySummary, testConfig, "CLick the Date Range PaymentRemitOnlySummaryReport", "radioDateRangePaymentRemitOnlySummary");
     Element.clickByJS(testConfig,radioDateRangePaymentRemitOnlySummary,"CLick the Date Range PaymentRemitOnlySummaryReport");
 	return this;
 	
@@ -207,24 +216,24 @@ public void clickOrgAddressHistoryReport() {
 	
 }
 public RunReports clickOrgUserHistory() {
-       Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
+	Element.clickByJS(testConfig,radioUserHistory,"CLick the OrgUser History");
         return this;
 	
 }
 
 public RunReports clickBSUserHistory() {
-	Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
+      Element.clickByJS(testConfig,radioBSHistory,"CLick the BS User History");
+	
 	 return this;
 }
-
-public RunReports clickCstmTINRtRprt() {
-	 
-    Element.clickByJS(testConfig,radioCstmTINRtReport,"Click the TransactionSummaryReport");
-    Browser.wait(testConfig, 2);
-    Element.click( btnViewReport,"Click the view Report btn");
-    return this;
-	
+public void clickViewReportButton() {
+	Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
 }
+public void clickHome() {
+	Element.clickByJS(testConfig,linkHome, "home link clicked");
+}
+
+
 public void verifyHoverFunctionality() {
 	 
 	 String portal=System.getProperty("Application");
@@ -277,108 +286,99 @@ public void validatSaveAsExcelBtn() {
 	Element.verifyElementPresent( btnSaveAsExcel," Save as Excel");
 }
 
-public void validatebtnNewReport() {
-	Element.verifyElementPresent( btnNewReport," the New Report btn");
-
-}
-public void enterTinAndDateRange(String userType) {
-	if(userType.equalsIgnoreCase("PROV")) {
-		  sqlRowNo=1112;
-		   Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		   String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
-		   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
-		   Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
-		   Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-		   Element.enterData(txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin " ,"tin_fin");
-	       Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
-		   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-		   if(null == table)
-			 Log.Fail("No active data available in Database for " +"Please execute the test case manually");
-		  else
-			Log.Comment("Data Available");
-	}
-	else
-	{
-		 sqlRowNo=1113;
-		 Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		 String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
-		 dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
-		 Element.enterData(txtFromDate , dateTemp , "Enter From date" ,"fromDate");
-		 Element.enterData(txtToDate , dateTemp , "Enter To date  " ,"toDate");
-		 Element.enterData(txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS " ,"tin bs");  
-		 Element.clickByJS(testConfig,btnViewReport,"CLick the view Report btn");
-		 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
-		 if(null == table)
+public void verifyOrgUserHistory() {
+	  sqlRowNo=1115; 
+	 String d=Helper.getCurrentDate("MM-dd-yyyy");
+	d=d.replace('-', '/');
+	Element.enterDataByJS(testConfig,txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date");
+	 Element.enterDataByJS(testConfig,txtToDate ,d , "Enter To date  ");
+	 Element.enterDataByJS(testConfig,txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin ");
+	 clickViewReportButton();
+	 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+	 if(table == null)
 			Log.Fail("No active data available in Database for " +"Please execute the test case manually");
-		 else
-		    Log.Comment("Data Available");
-	}
- }
- 
- 	public RunReports validateSortColumn() throws IOException{
+	 else
+	         Log.Comment("Data Available");
+	 Element.findElement(testConfig, "xpath", "//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table/tbody/tr[1]/td[1]/a");
+	 Element.clickByJS(testConfig,testConfig.driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
+	 Browser.wait(testConfig, 1);
+	 testConfig.getRunTimeProperty("tin");
+	  Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	 List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
+
+	 Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(4).getText());
+	Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(5).getText());
+	Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(),reportTable.get(1).findElements(By.tagName("td")).get(7).getText()); 
+	Helper.compareEquals(testConfig, "mod typ desc", SearchedData.get("MOD_TYP_DESC").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(10).getText());
 			
+		 
+}
 
-			List <String> sortedDBColumn=new ArrayList<String>();
-			List <String> storedUIColumn=new ArrayList<String>();
-			int sqlNo=1628;
-			for (int j=0;j<6;j++)
-			{
-				
-				List<WebElement> uIList=Element.findElements(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr");
-				WebElement header=Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a");
-				Element.waitForElementTobeClickAble(testConfig, header, 60);
-				Element.clickByJS(testConfig, header, "Header link");
-					Browser.wait(testConfig, 2);
-				
-				for (int i=1;i<uIList.size();i++)
-				{
-					WebElement uiColumn=Element.findElement(testConfig,"xpath","//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td["+(j+1)+"]");
-					storedUIColumn.add(uiColumn.getText());
 
-				}
-				if (j==1||j==3||j==5)
-				{
-					if (j==1)
-					{	
-					testConfig.putRunTimeProperty("bysortColumn", "RATE_SUB_LEVEL");
-					testConfig.putRunTimeProperty("byslctColumn", "RATE_SUB_LEVEL");}
-					if (j==3)	
-					{
-					testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_DTTM");
-					testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_DTTM");}
 
-					if (j==5){	
-					testConfig.putRunTimeProperty("bysortColumn", "REASON");
-					testConfig.putRunTimeProperty("byslctColumn", "PAY_PROC_ACPT_CD_VAL_DESC ASC,REAS_DESC");}
+public void verifyBSUserHistory() {
 
-					
-				testConfig.putRunTimeProperty("ascdesc", "ASC");
-				}
-				else
-				{
-					if (j==0){
-					testConfig.putRunTimeProperty("bysortColumn", "ORG_NM");
-					testConfig.putRunTimeProperty("byslctColumn", "ORG_NM");}
+  sqlRowNo=1117;
+   String d=Helper.getCurrentDate("MM-dd-yyyy");
+   d=d.replace('-', '/');
+   Element.enterDataByJS(testConfig,txtFromDate ,Helper.getDateBeforeOrAfterDays(-1,"MM/dd/yyyy"), "Enter From date");
+   Element.enterDataByJS(testConfig,txtToDate ,d , "Enter To date  ");
+   Element.enterDataByJS(testConfig,txtTin,testConfig.getRunTimeProperty("tin"), "Enter Tin ");
+   clickViewReportButton();
+   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
+   if(table == null)
+		Log.Fail("No active data available in Database for " +"Please execute the test case manually");
+   else
+        Log.Comment("Data Available");
+    Element.clickByJS(testConfig, testConfig.driver.findElement(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr[1]/td[1]/a")),"CLick the desc format link?");
+     Browser.wait(testConfig, 2);
+    List< WebElement> reportTable=driver.findElements(By.xpath("//*[@id='reportForm']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr"));
+    testConfig.getRunTimeProperty("tin");
+           Map SearchedData=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+           Helper.compareEquals(testConfig, "First name", SearchedData.get("FST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(3).getText());
+		   Helper.compareEquals(testConfig, "Last name", SearchedData.get("LST_NM").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(4).getText());
+		   Helper.compareEquals(testConfig, "Email address", SearchedData.get("EMAIL_ADR_TXT").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(5).getText()); 
+		
+}
 
-					if (j==2){	
-					testConfig.putRunTimeProperty("bysortColumn", "RATE_PCT");
-					testConfig.putRunTimeProperty("byslctColumn", "RATE_PCT");}
 
-					if (j==4){	
-					testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_ID");
-					testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_ID");}
 
-				testConfig.putRunTimeProperty("ascdesc", "DESC");
-				}
-				HashMap<Integer, HashMap<String, String>> ColumnName = DataBase.executeSelectQueryALL(testConfig,sqlNo);
-				for(Integer tmp : ColumnName.keySet()){
-					sortedDBColumn.add(ColumnName.get(tmp).get(testConfig.getRunTimeProperty("bysortColumn")).toString().trim());
-				}
-				Helper.compareEquals(testConfig, "Sorted Column", sortedDBColumn, storedUIColumn);
-				sortedDBColumn.clear();
-				storedUIColumn.clear();
-			}
-			return this;
-		}
- 
+
+public void enterTinAndDateRangeForOrgUserHistory() {
+	   sqlRowNo=1112;
+	   Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	   String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
+	   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
+	   testConfig.putRunTimeProperty("tin",SearchedDate.get("PROV_TIN_NBR").toString().trim());
+	   Element.enterDataByJS(testConfig, txtFromDate, dateTemp, "Enter From date");
+	   Element.enterDataByJS(testConfig,txtToDate , dateTemp , "Enter To date");
+	   Element.enterDataByJS(testConfig ,txtTin,SearchedDate.get("PROV_TIN_NBR").toString().trim(), "Enter Tin ");
+       clickViewReportButton();
+	   WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
+	   if(table == null)
+		 Log.Fail("No active data available in Database for " +"Please execute the test case manually");
+	  else
+		Log.Comment("Data Available");
+	
+}
+
+
+
+public void enterTinAndDateRangeForBSUserHistory() {
+	sqlRowNo=1113;
+	 Map SearchedDate=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	 String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
+	 dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
+	 testConfig.putRunTimeProperty("identifier_number",SearchedDate.get("IDENTIFIER_NBR").toString().trim());
+	 Element.enterDataByJS(testConfig,txtFromDate , dateTemp , "Enter From date");
+	 Element.enterDataByJS(testConfig,txtToDate , dateTemp , "Enter To date  ");
+	 Element.enterDataByJS(testConfig,txtTin,SearchedDate.get("IDENTIFIER_NBR").toString().trim() , "Enter Tin FOR BS ");  
+	 clickViewReportButton();
+	 WebElement table=driver.findElement(By.xpath("//*[@id='reportForm']//table//tbody//tr[8]//td//table//tbody//tr//td//table//tbody//tr"));
+	 if(table == null)
+		Log.Fail("No active data available in Database for " +"Please execute the test case manually");
+	 else
+	    Log.Comment("Data Available");
+	
+}
 }
