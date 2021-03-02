@@ -124,5 +124,5 @@
     		Examples:
 
          |   credentials     |  searchCriteria	      |tinType|portalAccess|userType|
-         |    Super          |		ZeroPastdueFee	    |  AO 	|	Premium		 |	PROV	|  
-         |    Super          |		PositivePastdueFee	| AO 	  |	Premium		 |	PROV	|
+         |    Super          |		zeroPastdueFee	    |  AO 	|	Premium		 |	PROV	|  
+         |    Super          |		positivePastdueFee	| AO 	  |	Premium		 |	PROV	|

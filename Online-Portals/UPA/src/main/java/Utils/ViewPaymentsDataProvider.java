@@ -1184,9 +1184,9 @@ public ArrayList getEnrollmentContent(String content) {
  		}
  		if (searchCriteria.contains("PastdueFee"))
 		{
- 			if(searchCriteria.equalsIgnoreCase("ZeroPastdueFee"))
+ 			if(searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
  				testConfig.putRunTimeProperty("invcAmt", "=0");
- 				else if(searchCriteria.equalsIgnoreCase("PositivePastdueFee"))
+ 				else if(searchCriteria.equalsIgnoreCase("positivePastdueFee"))
  				testConfig.putRunTimeProperty("invcAmt", ">0");
 			sqlRowNo=1629;
 		}		

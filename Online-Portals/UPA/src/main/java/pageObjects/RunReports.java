@@ -402,6 +402,7 @@ public RunReports validateSortColumn() throws IOException{
 	List <String> sortedDBColumn=new ArrayList<String>();
 	List <String> storedUIColumn=new ArrayList<String>();
 	int sqlNo=1628;
+	//j=6 represents six columns for ORG_NM,RATE_PCT,RATE_SUB_LEVEL,LST_CHG_BY_DTTM,LST_CHG_BY_ID,REASON
 	for (int j=0;j<6;j++)
 	{
 		
