@@ -16,4 +16,9 @@ public class BillingServiceInfoStepsUPA extends TestBase {
     public void verifyBillingServiceHeaderText() {
         bsInfoPage.verifyBillingServiceHeaderText();
     }
+    @Then("^User verifies the page text for provider based on the \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void user_verifies_the_page_text_for_provider_based_on_the_and(String tinType, String portalAccess) throws Throwable {
+    	bsInfoPage.verifyProviderPageText(tinType,portalAccess);
+    }
 }
+
