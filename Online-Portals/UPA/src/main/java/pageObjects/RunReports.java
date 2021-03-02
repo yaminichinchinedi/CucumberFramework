@@ -171,6 +171,9 @@ WebElement lnkLogOut;
 @FindBy(linkText="Home")
 WebElement linkHome;
 
+@FindBy(xpath="//input[@value='DebitFee']")
+WebElement radioCstmTINRtReport;
+
 private TestBase testConfig;
 private RunReports runReports;
 int sqlRowNo;
@@ -232,8 +235,18 @@ public void clickViewReportButton() {
 public void clickHome() {
 	Element.clickByJS(testConfig,linkHome, "home link clicked");
 }
+public void validatebtnNewReport() {
+	Element.verifyElementPresent( btnNewReport," the New Report btn");
 
-
+}
+public RunReports clickCstmTINRtRprt() {
+	 
+    Element.clickByJS(testConfig,radioCstmTINRtReport,"Click the TransactionSummaryReport");
+    Browser.wait(testConfig, 2);
+    Element.click( btnViewReport,"Click the view Report btn");
+    return this;
+	
+}
 public void verifyHoverFunctionality() {
 	 
 	 String portal=System.getProperty("Application");
@@ -381,4 +394,74 @@ public void enterTinAndDateRangeForBSUserHistory() {
 	    Log.Comment("Data Available");
 	
 }
+
+
+public RunReports validateSortColumn() throws IOException{
+	
+
+	List <String> sortedDBColumn=new ArrayList<String>();
+	List <String> storedUIColumn=new ArrayList<String>();
+	int sqlNo=1628;
+	//j=6 represents six columns for ORG_NM,RATE_PCT,RATE_SUB_LEVEL,LST_CHG_BY_DTTM,LST_CHG_BY_ID,REASON
+	for (int j=0;j<6;j++)
+	{
+		
+		List<WebElement> uIList=Element.findElements(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr");
+		WebElement header=Element.findElement(testConfig, "xpath", "//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr[1]/td["+(j+1)+"]/a");
+		Element.waitForElementTobeClickAble(testConfig, header, 60);
+		Element.clickByJS(testConfig, header, "Header link");
+			Browser.wait(testConfig, 2);
+		
+		for (int i=1;i<uIList.size();i++)
+		{
+			WebElement uiColumn=Element.findElement(testConfig,"xpath","//form[@id='reportForm']/table/tbody/tr[6]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td["+(j+1)+"]");
+			storedUIColumn.add(uiColumn.getText());
+
+		}
+		if (j==1||j==3||j==5)
+		{
+			if (j==1)
+			{	
+			testConfig.putRunTimeProperty("bysortColumn", "RATE_SUB_LEVEL");
+			testConfig.putRunTimeProperty("byslctColumn", "RATE_SUB_LEVEL");}
+			if (j==3)	
+			{
+			testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_DTTM");
+			testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_DTTM");}
+
+			if (j==5){	
+			testConfig.putRunTimeProperty("bysortColumn", "REASON");
+			testConfig.putRunTimeProperty("byslctColumn", "PAY_PROC_ACPT_CD_VAL_DESC ASC,REAS_DESC");}
+
+			
+		testConfig.putRunTimeProperty("ascdesc", "ASC");
+		}
+		else
+		{
+			if (j==0){
+			testConfig.putRunTimeProperty("bysortColumn", "ORG_NM");
+			testConfig.putRunTimeProperty("byslctColumn", "ORG_NM");}
+
+			if (j==2){	
+			testConfig.putRunTimeProperty("bysortColumn", "RATE_PCT");
+			testConfig.putRunTimeProperty("byslctColumn", "RATE_PCT");}
+
+			if (j==4){	
+			testConfig.putRunTimeProperty("bysortColumn", "LST_CHG_BY_ID");
+			testConfig.putRunTimeProperty("byslctColumn", "LST_CHG_BY_ID");}
+
+		testConfig.putRunTimeProperty("ascdesc", "DESC");
+		}
+		HashMap<Integer, HashMap<String, String>> ColumnName = DataBase.executeSelectQueryALL(testConfig,sqlNo);
+		for(Integer tmp : ColumnName.keySet()){
+			sortedDBColumn.add(ColumnName.get(tmp).get(testConfig.getRunTimeProperty("bysortColumn")).toString().trim());
+		}
+		Helper.compareEquals(testConfig, "Sorted Column", sortedDBColumn, storedUIColumn);
+		sortedDBColumn.clear();
+		storedUIColumn.clear();
+	}
+	return this;
+}
+
+
 }
