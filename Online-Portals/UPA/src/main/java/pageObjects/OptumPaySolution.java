@@ -161,7 +161,10 @@ public class OptumPaySolution {
 
     @FindBy(xpath=" //*[@id='optum-pay-options']/div[1]/div[3]/div[2]")
     private WebElement feeTile;
- 
+    
+    @FindBy(xpath="//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
+    private WebElement feeTileUPA;
+  
 
 	
 		private TestBase testConfig;
@@ -701,7 +704,10 @@ public class OptumPaySolution {
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			 if(System.getProperty("Application").contains("UPA"))
+			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
+			 else
+			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
 			return this;
 		}
 	}
