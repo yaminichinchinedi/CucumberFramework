@@ -471,9 +471,7 @@ public class UPAHomePage extends HomePage {
 		
 	}
 	public void verifyBringMorePowerPage() {
-		Browser.wait(testConfig, 3);
-		Element.verifyElementPresent(bringMorePowerPopUp, "Bring more power to your practice pop-up");
-		
+		Element.expectedWait(bringMorePowerPopUp, testConfig, "Bring more power to your practice pop-up", "Bring more power to your practice pop-up");	
 	}
 	public void clickNoThanksOnBringMorePowerPage() {
 		verifyBringMorePowerPage();
@@ -500,7 +498,6 @@ public class UPAHomePage extends HomePage {
 		Element.verifyElementPresent(tabMenu, "Home Page Tab Menu");
 	}
 	public void clickLogoutUPA() {
-		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig, lnkLogout, "Logout");
 		Element.waitTillURlLoads(testConfig, "https://www.optumbank.com/");
 	
