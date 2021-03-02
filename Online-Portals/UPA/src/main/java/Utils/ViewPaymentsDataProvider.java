@@ -1186,7 +1186,14 @@ public ArrayList getEnrollmentContent(String content) {
 			}
  				
  		}
- 			
+ 		if (searchCriteria.contains("PastdueFee"))
+		{
+ 			if(searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", "=0");
+ 				else if(searchCriteria.equalsIgnoreCase("positivePastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", ">0");
+			sqlRowNo=1629;
+		}		
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);

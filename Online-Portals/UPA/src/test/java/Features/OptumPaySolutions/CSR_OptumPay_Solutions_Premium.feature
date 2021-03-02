@@ -1,3 +1,4 @@
+
 #Author: Rahul Krishna
 @CSROptumPaySolutions    
     Feature: Optum Pay Solutions Scenarios for Premium Tins
@@ -48,7 +49,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|      
          
-    @CSRUS3138920
+    @CSRUS3138920 @CSRUS3138933
     Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -99,5 +100,29 @@
    #Scenario 4 - Premium Tin in trial period, VO Tin
    #Scenario 5 - Standard AO Tin           
          
-         
+    @CSRUS3138933
+    Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User then validates the Change Rate scenarios based on "<credentials>","<changeRateValue>","<changeRateReason>"
+     Examples:
+
+         |   credentials     |  tinType  |portalAccess| userType |searchCriteria    |		changeRateValue	   |changeRateReason|
+         |    Super          |	AO			|  Premium	 |	PROV    |PostTrial and Paid|	 	valid value	       |			Other			|
+         |    Super          |	AO			|  Premium	 |	PROV    |PostTrial and Paid| 	 	Invalid value      |	UHC requested	|
+     
                       
+ @CSRUS3232897
+    Scenario Outline: Optum Pay Soution Accured Fees scenario 
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+			Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User validates contents of Past due fee of Fee tiles for this page
+    		Examples:
+
+         |   credentials     |  searchCriteria	      |tinType|portalAccess|userType|
+         |    Super          |		zeroPastdueFee	    |  AO 	|	Premium		 |	PROV	|  
+         |    Super          |		positivePastdueFee	| AO 	  |	Premium		 |	PROV	|
