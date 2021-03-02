@@ -34,52 +34,52 @@ public class CSRHomePageSteps extends TestBase{
 		homePage=loginPage.doLogin(userType);
 	}
 
-	   
-	   @When("^Click on View Payments Link$")
-	   public void click_on_View_Payments_Link() throws Throwable {
-		   homePage.clickViewPaymentsLink();
-	   }
-	   
-	   
-	   @When("^Validate Search Remit Page as Prerequisties$")
-	    public void validate_Search_Remit_Page_as_Prerequisties() throws Throwable {
-	        
-		   homePage.clickSearchRemittanceLink();
-	    }
-	
-	   @Then("^User clicks on Search Remittance link$")
-		public void user_clicks_on_Search_Remittance_link() throws Throwable {
-			homePage.clickSearchRemittanceLink();
-		}
-	   
-	   @Then("^User clicks on Common Reports link$")
-		public void user_clicks_on_Common_Reports_link() throws Throwable {
-			homePage.clickCommonReportsLink(); 
-		}
-	   
-	   @When("^User clicks on Manage Users link$")
-		public void user_clicks_on_Manage_Users_link() throws Throwable {
-		   searchTinPage=homePage.clickManageUsersLink();
-		}
-	   
-	   
-	   @When("^Search for \"([^\"]*)\" with \"([^\"]*)\"$")
-	   public void search_for_with(String userType, String searchCriteria) throws Throwable {
-		   manageUsers=searchTinPage.doSearch(userType, searchCriteria);
-		}
-	   
-	  @Then("^Verify Purged user option state is \"([^\"]*)\"$")
-	   public void verify_Purged_user_option_state_is(String expectedState) throws Throwable {
-		  manageUsers.verifyPurgedUserOptionState(expectedState);
-		}
-	 
+   
+   @When("^Click on View Payments Link$")
+   public void click_on_View_Payments_Link() throws Throwable {
+	   homePage.clickViewPaymentsLink();
+   }
+   
+   
+   @When("^Validate Search Remit Page as Prerequisties$")
+    public void validate_Search_Remit_Page_as_Prerequisties() throws Throwable {
+        
+	   homePage.clickSearchRemittanceLink();
+    }
+
+   @Then("^User clicks on Search Remittance link$")
+	public void user_clicks_on_Search_Remittance_link() throws Throwable {
+		homePage.clickSearchRemittanceLink();
+	}
+   
+   @Then("^User clicks on Common Reports link$")
+	public void user_clicks_on_Common_Reports_link() throws Throwable {
+		homePage.clickCommonReportsLink(); 
+	}
+   
+   @When("^User clicks on Manage Users link$")
+	public void user_clicks_on_Manage_Users_link() throws Throwable {
+	   searchTinPage=homePage.clickManageUsersLink();
+	}
+   
+   
+   @When("^Search for \"([^\"]*)\" with \"([^\"]*)\"$")
+   public void search_for_with(String userType, String searchCriteria) throws Throwable {
+	   manageUsers=searchTinPage.doSearch(userType, searchCriteria);
+	}
+   
+  @Then("^Verify Purged user option state is \"([^\"]*)\"$")
+   public void verify_Purged_user_option_state_is(String expectedState) throws Throwable {
+	  manageUsers.verifyPurgedUserOptionState(expectedState);
+	}
+ 
 
 
-	   @Then("^User clicks on Create/Maintain Enrollment link$")
-	   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
-		   homePage.clickCreateMaintainEnrollmentLink();
-	   }
-	   
+   @Then("^User clicks on Create/Maintain Enrollment link$")
+   public void user_clicks_on_Create_Maintain_Enrollment_link() throws Throwable {
+	   homePage.clickCreateMaintainEnrollmentLink();
+   }
+   
 
 
 //	   @Then("^User enters \"([^\"]*)\" and active TIN in Create/Maintain Enrollment page and navigate to edit enrollment page\\.$")
@@ -91,38 +91,37 @@ public class CSRHomePageSteps extends TestBase{
 //		}
 
 
-	   @When("^Click on CSRManage User Link$")
-		public void click_on_CSRManage_User_Link() throws Throwable {
-			homePage.clickManageUsersLink();
-		}
-	   
-	   
-	   @Then("^User clicks on Create/Maintain Enrollment link on CSR HomePage$")
-	   public void user_clicks_on_Create_Maintain_Enrollment_link_on_CSR_HomePage() throws Throwable {
-		   homePage.clickCrtEnrlmnt();
-	   }
+   @When("^Click on CSRManage User Link$")
+	public void click_on_CSRManage_User_Link() throws Throwable {
+		homePage.clickManageUsersLink();
+	}
+   
+   
+   @Then("^User clicks on Create/Maintain Enrollment link on CSR HomePage$")
+   public void user_clicks_on_Create_Maintain_Enrollment_link_on_CSR_HomePage() throws Throwable {
+	   homePage.clickCrtEnrlmnt();
+   }
 
 
-		@Given("^User is on CSR Home Page$")
+	@Given("^User is on CSR Home Page$")
 		public void user_is_on_CSR_Home_Page() throws Throwable {
 			homePage.VerifyCSRLogin();
 			
 }
 		
-		@When("^Click on Billing Service Info Link CSR$")
-		   public void click_on_Billing_Service_Info_Link_CSR() throws Throwable {
-		       
-			   homePage.clickBillingServiceInfoLink();
+	@When("^Click on Billing Service Info Link CSR$")
+		public void click_on_Billing_Service_Info_Link_CSR() throws Throwable {
+		    homePage.clickBillingServiceInfoLink();
 		   }
-		@Then("^User clicks on Optum Pay Solutions link on CSR HomePage$")
-		public void user_clicks_on_Optum_Pay_Solutions_link_on_CSR_HomePage() throws Throwable {
-			homePage.clickOptmPaySolnLink();
-		}
+	@Then("^User clicks on Optum Pay Solutions link on CSR HomePage$")
+	public void user_clicks_on_Optum_Pay_Solutions_link_on_CSR_HomePage() throws Throwable {
+		homePage.clickOptmPaySolnLink();
+	}
 		
-		@Then("^User clicks on Manage Internal Users link$")
-		public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
-			homePage.clickManageInternalUserlink();
-		}
+	@Then("^User clicks on Manage Internal Users link$")
+	public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
+		homePage.clickManageInternalUserlink();
+	}
 
 	
 	@Given("^User fetch tin on CSR for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
@@ -140,5 +139,15 @@ public class CSRHomePageSteps extends TestBase{
 	public void user_clicks_on_Run_Reports_link() throws Throwable {
 		homePage.clickRunReportLink();
 	 }
+	
+	@Then("^User clicks on CSR logout$")
+	public void user_clicks_on_CSR_logout() throws Throwable {
+		homePage.clickLogoutCSR();
+	}
+	
+	@When("^User clicks on Payment Data Files Link$")
+	public void user_clicks_on_Payment_Data_Files_Link() throws Throwable {
+		homePage.clickPaymentDataFilesTab();  
+	}
 }
 

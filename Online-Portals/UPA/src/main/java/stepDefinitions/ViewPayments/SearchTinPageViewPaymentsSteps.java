@@ -1,3 +1,4 @@
+
 package main.java.stepDefinitions.ViewPayments;
 
 import cucumber.api.java.en.Then;
@@ -13,4 +14,5 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 		viewPaymentsTIN.enterTinAndSrch(userType);
 	}
 }
+
 

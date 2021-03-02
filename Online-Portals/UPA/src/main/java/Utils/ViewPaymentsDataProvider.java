@@ -1138,6 +1138,10 @@ public ArrayList getEnrollmentContent(String content) {
 				sqlRowNo=1605;
 				break;
  		
+			case "ActiveBSTin":
+			    sqlRowNo=16;
+			    break;
+
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
@@ -1197,6 +1201,7 @@ public ArrayList getEnrollmentContent(String content) {
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				if(sqlRowNo==1617)
                    {
