@@ -243,6 +243,7 @@ public class PaymentDataFilesCSR extends TestBase
 		List<WebElement> list2= Element.findElements(testConfig, "xpath", "//*[@name='selectedPayers']/option");		 
 		if(list1.size() == list2.size())
 		 {
+			Browser.wait(testConfig, 1);
 			 Element.clickByJS(testConfig,ResetBtn, "Reset Button");
 			 List<WebElement> list3=Element.findElements(testConfig, "xpath", "//*[@name='availablePayers']/option");
 			 testConfig.softAssert.assertEquals(list1.size(), list3.size(), "Reset Functionality");

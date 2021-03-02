@@ -1207,7 +1207,6 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
 				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				if(sqlRowNo==1617)
