@@ -64,4 +64,38 @@ public void user_then_validates_the_Change_Rate_popup_based(String credentials) 
 public void user_validates_the_hover_on_info_icon_on_the_tiles() throws Throwable {
 	optumPaySol.validateInfoIconHover();
 }
+
+//Added by Mohammad Khalid
+@Then("^User verifies page text \"([^\"]*)\" messaging in Optum Pay Solutions page$")
+public void user_verifies_page_text_messaging_in_Optum_Pay_Solutions_page(String pageText) throws Throwable 
+{
+	switch (pageText)
+	{
+	case "Premium_TopMsg":
+	{
+		optumPaySol.verifyPageText_Top_Premium();
+		break;
+	}
+	case "Premium_FooterMsg":
+	{
+		optumPaySol.verifyPageText_Footer_Premium();
+		break;
+	}
+	case "Standard_Msg_1":
+	{
+		optumPaySol.verifyPageText_Message1_Standard();
+		break;
+	}
+	
+	case "Standard_Msg_2":
+	{
+		optumPaySol.verifyPageText_Message2_Standard();
+		break;
+	}
+	
+	}
+	
+	
+}
+
 }

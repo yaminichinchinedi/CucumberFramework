@@ -130,6 +130,52 @@ public class OptumPaySolution {
 	WebElement hoverFees;
 	@FindBy(xpath="//*[@id='ui-id-6']/div")
 	WebElement hoverManageMyPlan;
+	
+	
+	
+
+	// Added by Mohammad Khalid
+
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/h2)[1]")
+	WebElement topHeader1_ImpRem_Premium;
+
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/h2)[2]")
+	WebElement topHeader2_IsYourProv_Premium;
+
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[2]")
+	WebElement topMsg1_YouWill_Premium;
+
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[3]")
+	WebElement topMsg2_SendTax_Premium;
+	
+	@FindBy(xpath = "(//div[@class='bottomMessageDiv']/p)[2]")
+	WebElement footer1_IfaProv_Premium;
+	
+	@FindBy(xpath = "(//div[@class='bottomMessageDiv']/p)[3]")
+	WebElement footer2_Cancellation_Premium;
+	
+	@FindBy(xpath = "//h1[contains(text(),'Optum Pay brings more power to your practice')]")
+	WebElement msg1_Standard;
+	
+	@FindBy(xpath = "//h1[contains(text(),'Optum Pay brings more power to your practice')]/../p")
+	WebElement msg2_Standard;
+	
+	
+	
+	
+	
+		//Added by Mohammad Khalid
+		String headerTop1_Premium ="Important reminder:";
+		String headerTop2_Premium ="Is your provider organization tax exempt?";
+		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. Please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
+		String pageTextTop2_Premium ="Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
+		
+		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay, their access will be limited to 2 users. However, if they were enrolled in Optum Pay prior to the upgrade (January 2021), then active portal users will retain access. Other features not available without a paid activation include search functionality, access to more than 30 days of historical data, multiple remittance options, and data bundling.";
+		String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
+		
+		String Message1_Standard = "Optum Pay brings more power to your practice";
+		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
+		
 
 	
 		private TestBase testConfig;
@@ -433,4 +479,38 @@ public class OptumPaySolution {
 						"cycle.",hoverManageMyPlan.getText().trim());
 			
 			}
+
+			
+			
+			
+			//Added by Mohammad Khalid
+			public void verifyPageText_Top_Premium()
+			{
+				Helper.compareEquals(testConfig, "Header-1 Premium", headerTop1_Premium, topHeader1_ImpRem_Premium.getText().trim());
+				Helper.compareEquals(testConfig, "Header-2 Premium", headerTop1_Premium, topHeader2_IsYourProv_Premium.getText().trim());
+				Helper.compareEquals(testConfig, "Top Page Text -1 Premium", pageTextTop1_Premium, topMsg1_YouWill_Premium.getText().trim());
+				Helper.compareEquals(testConfig, "Top Page Text -2 Premium", pageTextTop2_Premium, topMsg2_SendTax_Premium.getText().trim());
+			}
+			
+			
+			public void verifyPageText_Footer_Premium()
+			{
+				Helper.compareEquals(testConfig, "Footer-1 Premium", footer1_Premium, topHeader1_ImpRem_Premium.getText().trim());
+				Helper.compareEquals(testConfig, "Footer-2 Premium", footer2_Premium, topHeader2_IsYourProv_Premium.getText().trim());
+			}
+			
+			
+			public void verifyPageText_Message1_Standard()
+			{
+				Helper.compareEquals(testConfig, "Message 1 Standard", Message1_Standard, msg1_Standard.getText().trim());
+			}
+			
+
+			public void verifyPageText_Message2_Standard()
+			{
+				Helper.compareEquals(testConfig, "Message 2 Standard", Message2_Standard, msg2_Standard.getText().trim());
+			}
+			
+			
+			
 	}

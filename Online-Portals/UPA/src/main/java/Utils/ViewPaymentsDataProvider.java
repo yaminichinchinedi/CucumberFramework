@@ -1189,6 +1189,10 @@ public ArrayList getEnrollmentContent(String content) {
 			case "PremiumOrStandardTIN_AO_Premium":	
 				sqlRowNo=1605;
 				break;
+				
+			case "PremiumOrStandardTIN_AO_Standard":	
+				sqlRowNo=1605;
+				break;
  		
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");

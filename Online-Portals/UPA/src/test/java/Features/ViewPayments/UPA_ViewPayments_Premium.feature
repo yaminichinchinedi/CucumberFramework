@@ -150,12 +150,12 @@ Feature: UPA Manage User Functionality for Premium TIN
              
              
              
-             
+              
              
              
              
  	#Author: Mohammad Khalid
- 		@UPAViewPayments_US3080022
+ 		@UPAViewPayments_US3080022 @UPAViewPayments_US3080019
  		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
