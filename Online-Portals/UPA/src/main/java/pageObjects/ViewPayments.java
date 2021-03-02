@@ -235,14 +235,12 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
 	
 	
-	
-	//Added by Mohammad: WebElement Fee AMount Info Icon Message
+	//Added by Mohammad: WebElement Fee Amount Info Icon Message
 	@FindBy(xpath="//span[@class='wrapperTooltip']")
 	WebElement iHoverMessageFeeAmount_UPA;
 	
 	@FindBy(xpath="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr")
 	WebElement tableViewPayments;
-	
 	
 	Map dataRequiredForSearch;
 	public SearchRemittance searchRemittance;
@@ -1658,8 +1656,16 @@ public void verifyFailedPaymentPopUp()
 	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
 	{
 		Object request = null;
+		String[] pay_835_id;
+		if("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
+			 pay_835_id = new String[] {"87726"};
+		}
+		else {
+			 pay_835_id = new String[] {};
+		}
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 		DOP epn = new DOP();
+		epn.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
 		epn.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
 		epn.setUserRole("PROVIDER");
 		SearchCriteria searchCriteria = epn.getSearchCriteria();
@@ -3187,7 +3193,6 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		tblHeader=getHeadersFromResultTable();
 		if(tblHeader.contains(columnName))
 			Log.Pass("Passed : "+columnName+" is present on Page in table Headers.");
-			
 		else
 			Log.Fail("Failed : "+columnName+" is not present on Page in table Headers.");
 		return this;
@@ -3617,7 +3622,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 					if(results==null)
 						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "-", feeAmountUI);
 					else
-						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "$"+results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
 		    	   }
 		    	   if(found==true)break;
 		        }
@@ -4267,5 +4272,5 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 
 
 	}
-  
+        
 

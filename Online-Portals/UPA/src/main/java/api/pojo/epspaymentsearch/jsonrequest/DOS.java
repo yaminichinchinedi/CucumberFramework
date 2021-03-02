@@ -40,17 +40,22 @@ public class DOS extends Data {
 	@Override
     public String toString() {
     	StringJoiner sj = new StringJoiner(",", "[", "]");
+    	//StringJoiner stj = new StringJoiner("\",\"", "[\"", "\"]");
+    	StringJoiner stj = new StringJoiner(",", "[", "]");;
 
     	for (String epsNationalProviderIdentifiers : this.epsNationalProviderIdentifiers) {
     		sj.add(epsNationalProviderIdentifiers);
+    	}
+    	for (String epsSecondaryPayerReferenceIdentifiers : this.epsSecondaryPayerReferenceIdentifiers) {
+    		stj.add(epsSecondaryPayerReferenceIdentifiers);
     	}
         return "{\"data\": {" +
         		super.getSearchCriteria().toString() + "," +
         		"\"taxIdentifier\": \"" + super.getTaxIdentifier() + "\"," +
         		"\"userRole\": \"" + super.getUserRole() + "\"," +
         		"\"epsNationalProviderIdentifiers\": " + sj.toString() + "," +
-        		this.claimServiceDateRange.toString() + //"," +
-        		//"\"epsSecondaryPayerReferenceIdentifiers\": " + this.epsSecondaryPayerReferenceIdentifiers.toString() +
+        		this.claimServiceDateRange.toString() + "," +
+        		"\"epsSecondaryPayerReferenceIdentifiers\": " + stj.toString() +
         		"}}";
     }
 }
