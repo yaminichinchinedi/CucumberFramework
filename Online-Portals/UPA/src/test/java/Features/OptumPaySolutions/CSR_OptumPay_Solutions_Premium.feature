@@ -15,24 +15,23 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|   
          
-    #was not able to fix as not sure of the requirements
     @CSRUS3136627sss
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Optum Pay Solutions link on CSR HomePage
-		Then User enters TIN of "<accuredFeeStatus>" and click on Search button 
+		Then User Enters tin for OPS and click on search button for "<userType>".
 		Then User validates contents of Fee tiles of this page
     		Examples:
 
-         |   credentials     |  accuredFeeStatus    |
-         |    Super          |		withAccuredFee	  |     
-         |    RW	           |		withAccuredFee  	|    
-         |    RO   		       |		withAccuredFee  	|
-         |    Super          |		withoutAccuredFee	|
-         |    RW	           |		withoutAccuredFee	|
-         |    RO   		       |		withoutAccuredFee	|
-
-   
+         |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|
+         |    Super          |		withAccuredFee	  |  AO 	|	Premium		 |	PROV	|  
+         |    RW	           |		withAccuredFee  	|  AO 	|	Premium		 |	PROV	|   
+         |    RO   		       |		withAccuredFee  	| AO 	  |	Premium		 |	PROV	|
+         |    Super          |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+         |    RW	           |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+         |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+ 
    #Author: Sayonee
     @CSRUS3136567
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins

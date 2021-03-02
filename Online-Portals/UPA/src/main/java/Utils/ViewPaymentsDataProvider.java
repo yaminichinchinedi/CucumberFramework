@@ -1186,6 +1186,15 @@ public ArrayList getEnrollmentContent(String content) {
 			}
  				
  		}
+
+      if (searchCriteria.contains("AccuredFee"))
+		{
+ 			if(searchCriteria.equalsIgnoreCase("withAccuredFee"))
+ 				testConfig.putRunTimeProperty("nullStatus", "is not null");
+ 				else if(searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
+ 				testConfig.putRunTimeProperty("nullStatus", "is null");
+			sqlRowNo=1615;
+		}
  			
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 

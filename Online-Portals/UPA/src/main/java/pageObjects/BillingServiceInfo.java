@@ -87,6 +87,7 @@ public class BillingServiceInfo {
 	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//p[2]") WebElement pageText2;
 	@FindBy(linkText="Billing Service Information") WebElement lnkBsInfo;
 	@FindBy(linkText="Home") WebElement lnkHome;
+	@FindBy(xpath = "//div[@id='billing-service-information-tabs']//p") WebElement pageTextProviderParagraph;
 
 	private TestBase testConfig;
 	public BillingServiceInfo(TestBase testConfig){
@@ -291,6 +292,16 @@ public void verifyAddProvConfirmPage(){
 
 		Assert.assertTrue(expected.equals(actual), "Page Text validation failed");
 		Log.Comment("Text Validation successful : \n"+actual);
+	}
+	public void verifyProviderPageText(String tinType, String portalAccess) {
+		if(tinType.equalsIgnoreCase("VO"))
+			Helper.compareEquals(testConfig, "pagetText", "As part of your virtual card payment option, you have access to the full functionality of Optum Pay. This allows your billing service provider to access all of your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText());
+		if(tinType.equalsIgnoreCase("AO") && portalAccess.equalsIgnoreCase("Premium"))
+			Helper.compareEquals(testConfig, "pagetText", "With the full functionality of Optum Pay, your billing service provider is able to access all your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText().trim());
+		if(tinType.equalsIgnoreCase("AO") && portalAccess.equalsIgnoreCase("Standard"))
+			{Helper.compareEquals(testConfig, "pagetText", "Activating the full functionality of Optum Pay will help the billing service more efficiently manage your claim and remittance data. Learn More.", pageTextProviderParagraph.getText().trim());
+			 Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
+			}
 	}
 }
 	

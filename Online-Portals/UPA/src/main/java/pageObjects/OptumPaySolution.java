@@ -318,18 +318,18 @@ public class OptumPaySolution {
 			return this;
 		}
 		
+
 		public OptumPaySolution validateFeeTitle()
 		{
 			int sqlRowNo=1616;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    String feeTitle=null;
-			if (data.get("ACCRDFEE").toString().substring(data.get("ACCRDFEE").toString().length()-1).equals("0"))
-			 feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length()-1);
-			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-			Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-
+		    String feeTitle="Accrued fees month to date: $$" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length());
+  			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
+			//Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
+            //covered in another US
 			return this;
 		}
+
 		
 
 		public OptumPaySolution verifyInvalidTINonOptumPaySolution(String invalidTIN) throws Exception 
