@@ -399,7 +399,7 @@ public class OptumPaySolution {
 		}
 			public void validateChangeRatePopup(String credentials) {
 			
-			if(credentials.equalsIgnoreCase("Super"))
+			if(credentials.equalsIgnoreCase("Super") && testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium"))
 			{
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");
 			Element.clickByJS(testConfig,optionReasonForRateChange,"Rate Change Reason");
