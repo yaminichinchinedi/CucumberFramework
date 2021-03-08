@@ -1,3 +1,4 @@
+
 #Author: Rahul Krishna
     
 Feature: Optum Pay Solutions Scenarios for Standard Tins
@@ -27,5 +28,18 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 	  |   RW     	       | %$)abc$%^		|					  	
 	  |   RW         	   | 							|		
 	  
-	    
+	@CSRUS3138933
+    Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Soultions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User then validates the Change Rate popup based "<credentials>"
+     Examples:
+
+         |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
+         |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
+         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+         |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|     
    
+

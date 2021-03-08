@@ -744,6 +744,7 @@ public class PaymentDataFilesUPA extends TestBase{
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		Helper.compareEquals(testConfig, "Reset Functionality", 0, selectedPayerList.size());
 		return this;
+
 	 }
 
 
