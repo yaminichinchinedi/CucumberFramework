@@ -1,5 +1,5 @@
 #Author: amit_kushwah@optum.com
-@CsrViewPayments @CSRRegression
+@CSRRegression @CSR_ViewPayments_Premium
 Feature: View Payment Access Payment
 
 	#Author: AMIT

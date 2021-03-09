@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@UPAViewPayments_Standard
+@UPA_ViewPayments_Standard
 Feature: UPA View Payments Functionality for Standard TIN
       @UPAUS2800914 @OctRelease @UPA_ViewPaymentStable @UPA_ViewPaymentStandard
   Scenario Outline: View Payments Standard TIN selection and validation       
