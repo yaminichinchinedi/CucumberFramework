@@ -52,9 +52,9 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 		Then User verifies if Invoices tab is available for "<searchCriteria>" and "<portalAccess>" and "<tinType>" and "<prdctRecSts>".
  
     Examples: 
-      | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
-      | Super       | CSR      | TinWithInvoices    | Standard     | AO      | PD          |
-      | Super       | CSR      | TinWithoutInvoices | Standard     | AV      | PD          |
-      | Super       | CSR      | TinWithoutInvoices | Premium      | AV      | TR          |
+      | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
+      | Super       | PROV      | TinWithInvoices    | Standard     | AO      | PD          |
+      | Super       | PROV      | TinWithoutInvoices | Standard     | AV      | PD          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
 		
 		

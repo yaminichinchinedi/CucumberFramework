@@ -138,10 +138,10 @@
 
     Examples: 
       | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
-      | Super       | CSR      | TinWithInvoices    | Premium      | AO      | PS          |
-      | Super       | CSR      | TinWithoutInvoices | Premium      | AV      | PS          |
-      | Super       | CSR      | TinWithInvoices    | Premium      | VO      | PD          |
-      | Super       | CSR      | TinWithoutInvoices | Premium      | VO      | PD          |
+      | Super       | PROV      | TinWithInvoices    | Premium      | AO      | PS          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
+      | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
          
          
          
