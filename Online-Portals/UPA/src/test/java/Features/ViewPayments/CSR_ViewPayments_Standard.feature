@@ -1,5 +1,5 @@
 #Author: amit_kushwah@optum.com
-@CsrViewPayments @CSRRegression
+@CsrViewPayments @CSRRegression @CSR_ViewPayments_Standard
 Feature: CSR View Payments for Standard TIN
 
 #Author: AMIT
