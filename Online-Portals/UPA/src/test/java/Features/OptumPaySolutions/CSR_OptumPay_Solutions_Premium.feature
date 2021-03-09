@@ -125,3 +125,28 @@
          |   credentials     |  searchCriteria	      |tinType|portalAccess|userType|
          |    Super          |		zeroPastdueFee	    |  AO 	|	Premium		 |	PROV	|  
          |    Super          |		positivePastdueFee	| AO 	  |	Premium		 |	PROV	|
+  
+         
+#Author:Amit    
+@CSRUS3221650_P    
+    Scenario Outline: Optum Pay Soution Accured Fees scenario 
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies if Invoices tab is available for "<searchCriteria>" and "<portalAccess>" and "<tinType>" and "<prdctRecSts>".
+
+    Examples: 
+      | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
+      | Super       | CSR      | TinWithInvoices    | Premium      | AO      | PS          |
+      | Super       | CSR      | TinWithoutInvoices | Premium      | AV      | PS          |
+      | Super       | CSR      | TinWithInvoices    | Premium      | VO      | PD          |
+      | Super       | CSR      | TinWithoutInvoices | Premium      | VO      | PD          |
+         
+         
+         
+         
+         
+         
+         
+         
