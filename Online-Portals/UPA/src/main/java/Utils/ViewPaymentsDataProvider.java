@@ -1143,6 +1143,13 @@ public ArrayList getEnrollmentContent(String content) {
 			    sqlRowNo=16;
 			    break;
 
+			case "TinWithInvoices":
+                sqlRowNo=1513;
+                break;
+            case "TinWithoutInvoices":
+                sqlRowNo=1514;
+                break;
+                
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
@@ -1219,6 +1226,7 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
 				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				 if(sqlRowNo==435){

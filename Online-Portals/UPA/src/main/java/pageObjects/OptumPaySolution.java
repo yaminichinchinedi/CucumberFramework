@@ -143,7 +143,6 @@ public class OptumPaySolution {
 	@FindBy(id = "otherReasonForChange")
 	WebElement otrRsnTxtAra;
 
-
 	@FindBy(xpath = "//b[contains(text(),'Standard Per Payment fee:')]")
 	private WebElement standardPerPaymentFee;
 	@FindBy(xpath = "//b[contains(text(),'Custom Per Payment fee:')]")
@@ -178,6 +177,12 @@ public class OptumPaySolution {
 	@FindBy(xpath = "//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[1]/div[1]")
 	WebElement divShowRslts;
 
+    @FindBy(linkText="Invoices")
+    WebElement lnkInvoice;
+    
+    @FindBy(xpath="//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
+    WebElement divPageMsg;
+    
 	private TestBase testConfig;
 
 	public OptumPaySolution(TestBase testConfig) {
@@ -199,8 +204,8 @@ public class OptumPaySolution {
 		Element.click(testConfig, lnkLogout, "Logout", 3);
 	}
 
-	public void verifySolutionsTabForPremium(String trialStatus, String portalAccess) throws Exception {
-		if (trialStatus.equalsIgnoreCase("A")) {
+	public void verifySolutionsTabForPremium(String trialStatus,String portalAccess) throws Exception{
+		if(trialStatus.equalsIgnoreCase("A")) {
 			Browser.browserRefresh(testConfig);
 			Browser.waitForPageLoad(testConfig);
 			verifyHeaders();
@@ -210,7 +215,8 @@ public class OptumPaySolution {
 			Element.verifyElementPresent(pageText, "Page Text");
 			Element.click(testConfig, lnkHome, "Home", 3);
 			Element.click(testConfig, lnkLogout, "Logout", 3);
-		} else if (trialStatus.equalsIgnoreCase("I")) {
+		}
+		else if(trialStatus.equalsIgnoreCase("I")) {
 			verifyHeaders();
 			planTypeInfoForPremium();
 			Helper.compareEquals(testConfig, "Post Trial Cancel pop-up", "Call to cancel", postTrialCancelPopUpHeading.getText().trim());
@@ -895,4 +901,27 @@ public class OptumPaySolution {
 		}
 		return outerMap;
 	}
-}
+	
+	 	public OptumPaySolution verifyInvoicesTab(String searchCriteria,String tinType,String portalAccess,String prdctRecSts){
+            if("TinWithInvoices".equals(searchCriteria)){
+                Element.verifyElementPresent(lnkInvoice, "Invoices Link");
+                Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
+                Element.verifyElementPresent(divPageMsg, "Page message");
+            }
+            else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "PS".equals(prdctRecSts)){
+                Element.verifyElementPresent(lnkInvoice, "Invoices Link");
+                Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
+                Element.verifyElementPresent(divPageMsg, "Page message");
+            }
+            else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "TR".equals(prdctRecSts)){
+                Element.verifyElementNotPresent(lnkInvoice, "Invoices Link");
+            }
+            else if("TinWithoutInvoices".equals(searchCriteria) && "VO".equals(tinType)){
+                Element.verifyElementNotPresent(lnkInvoice, "Invoices Link");
+            }
+            else if("TinWithoutInvoices".equals(searchCriteria) && "Standard".equals(portalAccess)){
+                Element.verifyElementNotPresent(lnkInvoice, "Invoices Link");
+            }
+            return this;
+        }
+	}

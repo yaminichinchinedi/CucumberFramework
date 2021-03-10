@@ -99,5 +99,10 @@ public void user_clicks_on_fee_search_tab() throws Throwable {
 	public void verify_show_fees_i_can_refund(String credentials) throws Throwable {
 		optumPaySol.verifyShowFeesICanRefund(credentials);
 	}
+	
+@Then("^User verifies if Invoices tab is available for \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"\\.$")
+public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
+	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
+}
 }
 

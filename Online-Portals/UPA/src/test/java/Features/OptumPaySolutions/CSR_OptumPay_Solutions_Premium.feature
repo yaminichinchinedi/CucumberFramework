@@ -124,8 +124,26 @@
          |   credentials     |  searchCriteria	      |tinType|portalAccess|userType|
          |    Super          |		zeroPastdueFee	    |  AO 	|	Premium		 |	PROV	|  
          |    Super          |		positivePastdueFee	| AO 	  |	Premium		 |	PROV	|
+  
+         
+#Author:Amit    
+@CSRUS3221650_P    
+    Scenario Outline: Optum Pay Soution Accured Fees scenario 
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies if Invoices tab is available for "<searchCriteria>" and "<portalAccess>" and "<tinType>" and "<prdctRecSts>".
 
-@US3238498
+    Examples: 
+      | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
+      | Super       | PROV      | TinWithInvoices    | Premium      | AO      | PS          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
+      | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
+         
+         
+   @US3238498
       Scenario Outline: Optum Pay Soution  Display Fee Search
         Given User navigates to CSR portal and enters "<credentials>" and login
         And User fetch tin on CSR for "<userType>" for "<Fee Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -142,4 +160,9 @@
 
           |   credentials     |   Fee Search Criteria   |tinType|portalAccess    |userType|
           |    Super          |	feeSearchPaymentNumber	|  AO 	|	Premium		 |	PROV	|
-          |    Super          |	feeSearchInvoiceNumber	|  AO 	|	Premium		 |	PROV	|
+          |    Super          |	feeSearchInvoiceNumber	|  AO 	|	Premium		 |	PROV	|      
+         
+         
+         
+         
+       
