@@ -74,5 +74,30 @@ public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_giv
 public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
 	optumPaySol.validatePastdueFee();
 }
+
+@Then("^User clicks on Fee Searh Tab on Optum Pay Solutions Page$")
+public void user_clicks_on_fee_search_tab() throws Throwable {
+	optumPaySol.navigateToFeeSearchTab();
+}
+
+	@Then("^User enters \"([^\"]*)\" on Fee Search page and click on search button\\.$")
+	public void user_enters_and_click_on_search_button(String srchCriteria) throws Throwable {
+		optumPaySol.doSearch(srchCriteria);
+	}
+
+	@Then("^User verifies Fee Search results for \"([^\"]*)\"$")
+	public void verify_search_results_for(String criteriaType) throws Throwable {
+		optumPaySol.verifyFeeSearchResults(criteriaType);
+	}
+
+	@Then("^User verifies the headers on Fee Search page$")
+	public void verify_fee_search_results_headers() throws Throwable {
+		optumPaySol.verifyFeeSearchResultHeaders();
+	}
+
+	@Then("^User verifies show fees i can refund on Fee Search page for \"([^\"]*)\"$")
+	public void verify_show_fees_i_can_refund(String credentials) throws Throwable {
+		optumPaySol.verifyShowFeesICanRefund(credentials);
+	}
 }
 
