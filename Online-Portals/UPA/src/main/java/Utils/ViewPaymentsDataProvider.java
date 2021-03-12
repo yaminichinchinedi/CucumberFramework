@@ -552,7 +552,7 @@ public ArrayList getEnrollmentContent(String content) {
 
  		 case "byDOSAndClmNo":
  		 case "byDOSAndPtntNm":
- 			 sqlRowNo=433;
+ 			 sqlRowNo=429;
  			 break;
  			 
  		 case "byDOSAndMarketType":
@@ -1134,7 +1134,7 @@ public ArrayList getEnrollmentContent(String content) {
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
-			case "PremiumOrStandardTIN_AO_Premium":	
+			case "PremiumOrStandardTIN":	
 				sqlRowNo=1605;
 				break;
  		
