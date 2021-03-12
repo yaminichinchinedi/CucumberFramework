@@ -1,5 +1,5 @@
 #Author: amit_kushwah@optum.com
-@UPAViewPayments_Premium
+@UPA_ViewPayments_Premium
 Feature: UPA Manage User Functionality for Premium TIN
 
   	#Author: AMIT

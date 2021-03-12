@@ -74,5 +74,9 @@ public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_giv
 public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
 	optumPaySol.validatePastdueFee();
 }
+@Then("^User verifies if Invoices tab is available for \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"\\.$")
+public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
+	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
+}
 }
 
