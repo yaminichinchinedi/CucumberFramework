@@ -18,53 +18,53 @@ import main.java.api.pojo.debitFee.DebitFee;
 import java.io.IOException;
 
 public class deitfeeSrvSteps {
-    private TestBase testConfig=TestBase.getInstance();
-    private RequestSpecification requestSpecification;
-    private Response response;
+	private TestBase testConfig = TestBase.getInstance();
+	private RequestSpecification requestSpecification;
+	private Response response;
 
-    @Given("^I perform the action POST at debit fee API end point for Entity Type \"([^\"]*)\"$")
-    public Response i_perform_the_action_POST_at_debit_fee_API_end_point_for_Entity_Type(String arg1) throws Throwable {
+	@Given("^I perform the action POST at debit fee API end point for Entity Type \"([^\"]*)\"$")
+	public Response i_perform_the_action_POST_at_debit_fee_API_end_point_for_Entity_Type(String arg1) throws Throwable {
 
-    	String debitFee = testConfig.getRunTimeProperty(testConfig.getRunTimeProperty("Env")+"DebitFee");
+		String debitFee = testConfig.getRunTimeProperty(testConfig.getRunTimeProperty("Env") + "DebitFee");
 
-        RequestSpecification request = RestAssured.given();
-        request.header("content-Type","application/json");
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("entityData","133757370");
-        requestBody.put("entityType", "PR");
-        requestBody.put("processDate", "2021-02-05");
-        requestBody.put("payerSchema", "");
-        requestBody.put("primaryPayerId", "");
-        requestBody.put("secondaryPayerId", "");
-        Log.Comment(requestBody.toString());
-        request.body(requestBody.toString());
-        Response response = request.post(debitFee);
-        return response;
-    }
+		RequestSpecification request = RestAssured.given();
+		request.header("content-Type", "application/json");
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("entityData", "133757370");
+		requestBody.put("entityType", "PR");
+		requestBody.put("processDate", "2021-02-05");
+		requestBody.put("payerSchema", "");
+		requestBody.put("primaryPayerId", "");
+		requestBody.put("secondaryPayerId", "");
+		Log.Comment(requestBody.toString());
+		request.body(requestBody.toString());
+		response = request.post(debitFee);
+		return response;
+	}
 
-    @Then("^the web service should respond with a \"(\\d+)\" status code$")
-    public void theWebServiceShouldRespondWithAStatusCode(int status) {
-        int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, status);
-    }
+	@Then("^the web service should respond with a (\\d+) status code$")
+	public void the_web_service_should_respond_with_a_status_code(int status) throws Throwable {
 
-    @And("^verify debit fee API should return global level rate$")
-    public void verifyDebitFeeAPIShouldReturnGlobalLevelRate() {
-        DebitFee debitFee = getDebitFee();
-    }
+		int statusCode = response.getStatusCode();
+		Assert.assertEquals(statusCode, status);
+	}
 
-    private DebitFee getDebitFee(){
-        ObjectMapper mapper = new ObjectMapper();
-        DebitFee debitFee = null;
-        try {
-            debitFee = mapper.readValue(response.getBody().prettyPrint(), DebitFee.class);
-        }catch (IOException ex){
-            Log.Comment("Exception reading Mapper value for Debit Fee API " +ex.getMessage());
-        }
-        return debitFee;
+	@And("^verify debit fee API should return global level rate$")
+	public void verifyDebitFeeAPIShouldReturnGlobalLevelRate() {
+		DebitFee debitFee = getDebitFee();
+		Log.Comment(debitFee.getResponseDetail());
+		//Perform validations with the created POJO.
+	}
 
+	private DebitFee getDebitFee() {
+		ObjectMapper mapper = new ObjectMapper();
+		DebitFee debitFee = null;
+		try {
+			debitFee = mapper.readValue(response.getBody().prettyPrint(), DebitFee.class);
+		} catch (IOException ex) {
+			Log.Comment("Exception reading Mapper value for Debit Fee API " + ex.getMessage());
+		}
+		return debitFee;
 
-
-
-    }
+	}
 }

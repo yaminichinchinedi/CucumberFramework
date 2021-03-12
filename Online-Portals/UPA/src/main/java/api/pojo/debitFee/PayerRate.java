@@ -12,4 +12,51 @@ public class PayerRate {
     private String startDate;
     private String endDate;
 
+    public String getPrimaryPayerID() {
+        return primaryPayerID;
+    }
+
+    public void setPrimaryPayerID(String primaryPayerID) {
+        this.primaryPayerID = primaryPayerID;
+    }
+
+    public String getSecondaryPayerID() {
+        return secondaryPayerID;
+    }
+
+    public void setSecondaryPayerID(String secondaryPayerID) {
+        this.secondaryPayerID = secondaryPayerID;
+    }
+
+    public String getPayerRate() {
+        return payerRate;
+    }
+
+    public void setPayerRate(String payerRate) {
+        this.payerRate = payerRate;
+    }
+
+    public String getRateDesc() {
+        return rateDesc;
+    }
+
+    public void setRateDesc(String rateDesc) {
+        this.rateDesc = rateDesc;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 }
