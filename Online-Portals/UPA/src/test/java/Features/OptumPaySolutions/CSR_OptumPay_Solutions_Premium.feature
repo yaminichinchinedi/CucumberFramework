@@ -142,7 +142,7 @@
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
       | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
-         
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
          
          
          
