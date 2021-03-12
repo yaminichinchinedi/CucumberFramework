@@ -55,6 +55,6 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
       | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
       | Super       | PROV      | TinWithInvoices    | Standard     | AO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Standard     | AV      | PD          |
-      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
+      
 		
 		
