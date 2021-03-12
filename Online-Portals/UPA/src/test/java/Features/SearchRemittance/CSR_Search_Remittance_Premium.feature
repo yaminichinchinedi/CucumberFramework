@@ -30,14 +30,14 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Scenario Outline: - verify search results for search remittance
 	
 	Given User navigates to CSR portal and enters "<credentials>" and login
-	And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin on CSR for "<userType>" for "<Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link
 	Then User Enters tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"
 	
 	Examples:
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	Super	 |    PROV     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	Super	 |    PROV     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	Super	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
@@ -56,7 +56,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Scenario Outline: - verify Print page for search remittance
 	
 	Given User navigates to CSR portal and enters "<credentials>" and login
-	And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And User fetch tin on CSR for "<userType>" for "<Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	Then User clicks on Search Remittance link
 	Then User Enters tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
@@ -65,7 +65,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Then Validate the data of Print Search Remmit Page for "<Search Criteria>"
 	
 	Examples:
-		|	Search Criteria	|	credentials	 |   usertype  | portalAccess | searchRemitorPymntTIN  |tinType|
+		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
 		|		byDOP		|	Super	 |    PROV     |   Premium    |		 	byDOP	       |  AO   |
 		|  	byDOS   		|	Super	 |    PROV     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	Super	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
