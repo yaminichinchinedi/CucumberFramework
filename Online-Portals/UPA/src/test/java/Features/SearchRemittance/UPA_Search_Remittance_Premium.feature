@@ -168,7 +168,7 @@ Scenario Outline: - verify search results for search remittance
 	Then User clicks on Search Remittance link for UPA
 	Then User Enters Search Remittance tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Criteria Type>"	
+	Then verify search results for "<Search Criteria>"	
 	Examples:
 
 		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|

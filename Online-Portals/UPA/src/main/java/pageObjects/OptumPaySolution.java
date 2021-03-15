@@ -166,12 +166,16 @@ public class OptumPaySolution {
     @FindBy(xpath=" //*[@id='optum-pay-options']/div[1]/div[3]/div[2]")
     private WebElement feeTile;
     
+    @FindBy(xpath="//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
+    private WebElement feeTileUPA;
+  
+
     @FindBy(linkText="Invoices")
     WebElement lnkInvoice;
     
     @FindBy(xpath="//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
     WebElement divPageMsg;
-    
+
     @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[2]/p")
     WebElement divInvoicesAccrudFeesUI;
     @FindBy(xpath="//*[@id=\"optum-pay-invoices\"]/div/div[3]")
@@ -186,6 +190,7 @@ public class OptumPaySolution {
     List<WebElement> tableInvoiceAmountUI; 
     @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
     List<WebElement> tableInvoiceNumberUI;
+
 	
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
@@ -419,7 +424,7 @@ public class OptumPaySolution {
 		}
 			public void validateChangeRatePopup(String credentials) {
 			
-			if(credentials.equalsIgnoreCase("Super"))
+			if(credentials.equalsIgnoreCase("Super") && testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium"))
 			{
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");
 			Element.clickByJS(testConfig,optionReasonForRateChange,"Rate Change Reason");
@@ -724,7 +729,10 @@ public class OptumPaySolution {
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			 if(System.getProperty("Application").contains("UPA"))
+			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
+			 else
+			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
 			return this;
 		}
 	 	
