@@ -171,7 +171,21 @@ public class OptumPaySolution {
     
     @FindBy(xpath="//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
     WebElement divPageMsg;
-
+    
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[2]/p")
+    WebElement divInvoicesAccrudFeesUI;
+    @FindBy(xpath="//*[@id=\"optum-pay-invoices\"]/div/div[3]")
+    WebElement divInvoicesPastDueFeesUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/p")
+    WebElement msgNoInvoicesPresent;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/thead/tr/th")
+    List<WebElement> tableInvoiceDetailTableHeader;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr")
+    List<WebElement> tableInvoiceDetailUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+    List<WebElement> tableInvoiceAmountUI; 
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+    List<WebElement> tableInvoiceNumberUI;
 	
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
@@ -719,11 +733,21 @@ public class OptumPaySolution {
                 Element.verifyElementPresent(lnkInvoice, "Invoices Link");
                 Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
                 Element.verifyElementPresent(divPageMsg, "Page message");
+                verifyPastDuesInvoiceTab(searchCriteria);
+                verifyAccrudFeesInvoiceTab(searchCriteria);
+                try {
+					verifyInvoiceDetailsTableUI(searchCriteria);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
             else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "PS".equals(prdctRecSts)){
                 Element.verifyElementPresent(lnkInvoice, "Invoices Link");
                 Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
                 Element.verifyElementPresent(divPageMsg, "Page message");
+                verifyPastDuesInvoiceTab(searchCriteria);
+                verifyAccrudFeesInvoiceTab(searchCriteria);
+                Element.verifyElementPresent(msgNoInvoicesPresent, "no invoices present msg");
             }
             else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "TR".equals(prdctRecSts)){
                 Element.verifyElementNotPresent(lnkInvoice, "Invoices Link");
@@ -736,5 +760,57 @@ public class OptumPaySolution {
             }
             return this;
         }
-	}
+	 	
+		public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException {
+			int sqlTable=1121;
+            HashMap<Integer,HashMap<String,String>>  invoiceTableData = DataBase.executeSelectQueryALL(testConfig, sqlTable);
+			ArrayList<String> expectedHeader=new ArrayList<String>(); 
+			expectedHeader.add("Invoice Period");
+			expectedHeader.add("Total Invoice Amount");
+			expectedHeader.add("Download Invoice");
+					
+			if("TinWithInvoices".equals(searchCriteria))
+			{
+			  ArrayList<String> actualContentUI=new ArrayList<String>(); 
+			  for(WebElement header: tableInvoiceDetailTableHeader)
+			  	{
+				  actualContentUI.add(header.getText());
+			  	}
+			
+			  Helper.compareEquals(testConfig, "tableInvoiceDetailTableHeader", expectedHeader, actualContentUI);
+			  
+			  for(int i=0; i<tableInvoiceAmountUI.size() ;i++)
+				{ Helper.compareEquals(testConfig,"name", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
+				Helper.compareEquals(testConfig,"name", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
+	            }
+			}
+			
+		}
+		public void verifyAccrudFeesInvoiceTab(String searchCriteria) {
+			int sqlRowNo=1616;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		    String invoiceAccrudFee=null;
+		    if("TinWithInvoices".equals(searchCriteria)&& data.get("ACCRDFEE").toString().trim().length()>0)
+		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("ACCRDFEE").toString();
+		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("ACCRDFEE").toString().trim().length()==0)
+		    invoiceAccrudFee="Accrued fees month to date: $0.00" ;
+		    
+			Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());
+			
+		}
+		public void verifyPastDuesInvoiceTab(String searchCriteria) {
+			String invoicePastDueFee=null;
+			int sqlRowNo=1120;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			
+			if("TinWithoutInvoices".equals(searchCriteria)|| data.get("PASTDUE").toString().trim().length()==0)
+				invoicePastDueFee="Past due fees: $0.00";
+			else if("TinWithInvoices".equals(searchCriteria))
+				invoicePastDueFee="Past due fees: $" +data.get("PASTDUE").toString();
+			
+			Helper.compareContains(testConfig, "Past due fee value", invoicePastDueFee, divInvoicesPastDueFeesUI.getText());
+			
+		}
+		
+}
 

@@ -128,7 +128,7 @@
   
          
 #Author:Amit    
-@CSRUS3221650_P    
+@CSRUS3221650_P  @CSRUS3329695 
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
@@ -142,11 +142,8 @@
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
       | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
-         
-         
-         
-         
-         
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
+    
          
          
          
