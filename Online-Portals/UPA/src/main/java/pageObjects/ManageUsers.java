@@ -2760,42 +2760,7 @@ public void removetinadded()
 		        return newList; 
 		    } 
 
-		public void verifyPageTextAndFooterForPremium(){
-			Helper.compareEquals(testConfig, "Page Text header for during and post trial premium TIN", "Good to know", pageTextHeader.getText().trim());
-			Helper.compareEquals(testConfig, "Page Text for during and post trail premium TIN", "With Optum Pay, you can add an unlimited number of administrative and general users to your account.", pageText.getText().trim());
-			verifyFooterMessageOnManageUsers();
-		}
-		public void verifyPageTextAndFooterForStandard(String trialStatus){
-			Helper.compareEquals(testConfig, "Page Text header for DURING and POST trial premium TIN", "More users with Optum Pay", pageTextHeader.getText().trim());
-			if(trialStatus.equals("A")) {
-				String duringTrialStandardPagetext="During the free trial of Optum Pay, you have the ability to add unlimited users. Keep in mind that once the free trial is over, you are limited to only 2 users and anyone added during the trial period will be removed. If your practice requires more than 2 users, activate Optum Pay today. Learn more.";			
-				Helper.compareEquals(testConfig, "Page Text for DURING trail premium TIN", duringTrialStandardPagetext, pageText.getText().trim());
-				verifyFooterMessageOnManageUsers();
-			}
-			else if(trialStatus.equals("I")) {
-				String postTrialStandardPagetext="Without the full Optum Pay functionality, you are limited to only 2 users. If your practice requires more than 2 users, activate Optum Pay today. Learn More.";
-				Helper.compareEquals(testConfig, "Page Text for POST trail premium TIN", postTrialStandardPagetext.trim(), pageText.getText().trim());
-				verifyFooterMessageOnManageUsers();
-			}
-		}
-		public void verifyHoverOverAddUserButton(String trialStatus){
-			if(trialStatus.equals("A")) {	
-				WebElement btnAddUserHover=Element.findElement(testConfig, "xpath", "//b[contains (text(), 'Add User')]");
-				String hovertextExpected="Upgrade now\n" + 
-						"By activating Optum Pay you will have the ability to set up an unlimited number of users.";
-				Element.mouseHoverByJS(testConfig, btnAddUserHover, "Add User button During Trial");	
-				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id=\"ui-id-1\"]/div").getText();
-				Helper.compareEquals(testConfig, "Add User button hover, DURING trial", hovertextExpected.trim(), hovertextActual);	
-				Element.click(lnkHome, "Home"); 
-				Element.click(lnkLogout, "Logout"); 
-			}
-			else if(trialStatus.equals("I")){
-				WebElement disabledAddUser= Element.findElement(testConfig, "xpath", "//div[@id=\"manage-users\"]/table//tr/th[2]/span");
-				Element.mouseHoverByJS(testConfig, disabledAddUser, "Add User button Post Trial");
-				String hovertextActual=Element.findElement(testConfig, "xpath", "//div[@id=\"ui-id-1\"]/div").getText();
-				Helper.compareEquals(testConfig, "Add User button hover, DURING trial", "To add a new user, you will need to delete an existing user or activate Optum Pay.", hovertextActual);				
-			}
-		}
+
 		public void verifyFooterMessageOnManageUsers() {
 			String footerTextUI= "A business issued email is required when adding a new user. Personal emails will not be accepted. New users that fail to complete the registration process will be removed from Optum Pay. In addition, existing users with no login activity after six months will be purged. Please review your user list periodically to ensure that all contact information is accurate. If at any time you need to remove a user, please contact our Provider Support Center at 1-877-620-6194.";
 			Helper.compareEquals(testConfig, "Footer title for post trail premium TIN", "Enrollment & Account Security Reminder", footerTitle.getText().trim());
@@ -2933,3 +2898,4 @@ public ManageUsers clickSpecificUserNametoedit(String userType) {
 }
 		
 }
+

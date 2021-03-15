@@ -1,11 +1,8 @@
-package main.java.stepDefinitions.OptumPaySolution;
 
+package main.java.stepDefinitions.OptumPaySolution;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
-import main.java.Utils.DataBase;
-import main.java.nativeFunctions.Browser;
-import main.java.nativeFunctions.Element;
 import main.java.pageObjects.OptumPaySolution;
 
 
@@ -68,6 +65,10 @@ public void user_validates_the_hover_on_info_icon_on_the_tiles() throws Throwabl
 public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_given_and(String tinType, String portalAccess) throws Throwable {
 	optumPaySol.rateTileCSRFeeAndDateVerification(tinType,portalAccess);
 }
+@Then("^User then validates the Change Rate scenarios based on \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+	public void user_then_validates_the_Change_Rate_scenarios_based_on(String credentials, String changeRateValue, String changeRateReason) {
+	optumPaySol.validateChangeRatePrcnt(credentials,changeRateValue,changeRateReason);
+	}
 
 //Added by Mohammad Khalid
 @Then("^User verifies page text \"([^\"]*)\" messaging in Optum Pay Solutions page$")
@@ -143,4 +144,14 @@ public void user_validates(String paraName) throws Throwable
 }
 
 
+
+@Then("^User validates contents of Past due fee of Fee tiles for this page$")
+public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
+	optumPaySol.validatePastdueFee();
 }
+@Then("^User verifies if Invoices tab is available for \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"\\.$")
+public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
+	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
+}
+}
+

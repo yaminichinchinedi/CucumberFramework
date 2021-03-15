@@ -552,7 +552,7 @@ public ArrayList getEnrollmentContent(String content) {
 
  		 case "byDOSAndClmNo":
  		 case "byDOSAndPtntNm":
- 			 sqlRowNo=433;
+ 			 sqlRowNo=429;
  			 break;
  			 
  		 case "byDOSAndMarketType":
@@ -1143,6 +1143,17 @@ public ArrayList getEnrollmentContent(String content) {
 				break;
 			
  		
+			case "ActiveBSTin":
+			    sqlRowNo=16;
+			    break;
+
+			case "TinWithInvoices":
+                sqlRowNo=1513;
+                break;
+            case "TinWithoutInvoices":
+                sqlRowNo=1514;
+                break;
+                
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
  		
@@ -1187,7 +1198,24 @@ public ArrayList getEnrollmentContent(String content) {
 			}
  				
  		}
- 			
+
+ 		if (searchCriteria.contains("PastdueFee"))
+		{
+ 			if(searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", "=0");
+ 				else if(searchCriteria.equalsIgnoreCase("positivePastdueFee"))
+ 				testConfig.putRunTimeProperty("invcAmt", ">0");
+			sqlRowNo=1629;
+		}
+       if (searchCriteria.contains("AccuredFee"))
+			{
+	 			if(searchCriteria.equalsIgnoreCase("withAccuredFee"))
+	 				testConfig.putRunTimeProperty("nullStatus", "is not null");
+	 				else if(searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
+	 				testConfig.putRunTimeProperty("nullStatus", "is null");
+				sqlRowNo=1615;
+			}
+
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);
@@ -1201,7 +1229,8 @@ public ArrayList getEnrollmentContent(String content) {
 		       if(sqlRowNo==1611)
 		       {
 		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
-				   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
+				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				if(sqlRowNo==1617)
                    {

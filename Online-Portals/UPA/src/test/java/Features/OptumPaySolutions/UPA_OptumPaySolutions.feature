@@ -9,11 +9,11 @@ Feature: - Optum Pay Solutions
    And   User clicks on Optum Pay Solutions tab
    Then  User verifies Optum Pay Solution Tab for standard user with "<trialStatus>" and "<portalAccess>"
      Examples:
-     |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+     |    credentials            |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid   	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and NotPaid 	|	  AO			|
+       |       PROV_Admin        | 			 PROV			    	|			Standard		  |  PostTrial and NotPaid 	|	  AO			|
+       |       PROV_Admin        | 			 PROV			    	|			Standard		  |  WithinTrial and NotPaid|	  AO			|
   
 		#Author:Sayonee 
 	 @UPAUS3060820 @UPAUS3060825
@@ -120,3 +120,27 @@ And User validates "InvoicePeriodGrid"
  |      BS_Admin   |     BS      	|		PremiumOrStandardFeeInvoice		|		Standard     	  |		AO			|  
  |      BS_Admin   |     BS     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		VO			|  
  
+
+        @UPAUS3232882
+		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover)
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+		Then User validates contents of Past due fee of Fee tiles for this page
+
+     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   PROV_Admin    |     PROV     	|		 	zeroPastdueFee					|			Premium			|		AO			| 
+      |   PROV_Admin    |     PROV      |		 	positivePastdueFee			|			Premium			|		AO			|
+     
+      @UPAUS3232882_BS
+     Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+   Then User validates contents of Past due fee of Fee tiles for this page
+     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   BS_Admin    |     BS     	|		 	zeroPastdueFee		|			Premium			|		AO			| 
+      |   BS_Admin    |     BS     	|		 	positivePastdueFee		|			Premium			|		AO			| 

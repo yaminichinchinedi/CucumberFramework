@@ -40,6 +40,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -79,7 +80,9 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	WebElement drpDwnArchiveFilter;
 	
 	@FindBy(xpath="//div[@id='view-payments']//tr[2]/td//tr[2]//div[2]//div[4]/p")
-	WebElement lblPaymentStatus;
+
+	WebElement lblPaymentStatusProv;
+
 	
 	@FindBy(css="#paymentsummaryform>table>tbody>tr>td>table>tbody")
 	WebElement divSearchResults;
@@ -346,7 +349,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
            for(int i=1;i<searchResultRows.size();i++)
            {
            	     actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-                 actualPaymntNo=actualPaymntNo.replace("\n", "");
+           	     actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 
                  Log.Comment("Actual Payment No is:" + actualPaymntNo);
                  Log.Comment("Expected Payment No is:" + expectedPaymntNo);
@@ -477,7 +480,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 			 else
 			 {
 			 actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-             actualPaymntNo=actualPaymntNo.replace("\n", "");
+			 actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			 }
 			  if(actualPaymntNo.contains(expectedPaymntNo))
               {    
@@ -803,7 +806,7 @@ public void verifyFailedPaymentPopUp()
     			for(int i=1;i<searchResultRows.size();i++)
     			  {
     				actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText(); // fetching payment number from UI
-    				actualPaymntNo=actualPaymntNo.replace("\n", "");
+    				actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
     				   if(actualPaymntNo.equals(expectedPaymntNo)) {
     					Element.mouseHoverByJS(testConfig, searchResultRows.get(i).findElements(By.tagName("td")).get(3), "Remit Payment with payment number : " + actualPaymntNo);
     					 //add for text verification in pop up
@@ -1573,7 +1576,7 @@ public void verifyFailedPaymentPopUp()
 			  {    			
     			String paymentAmountUI = searchResultRows.get(i).findElements(By.tagName("td")).get(5).getText();
     			actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-    			actualPaymntNo=actualPaymntNo.replace("\n", "");
+    			actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
     			
 				  if(payments[i-1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo) && paymentAmountUI.equalsIgnoreCase(ZeroDollar))
 					 {
@@ -3083,7 +3086,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 					else
 					{	
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
+					actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 					}
 
 		    	   Log.Comment("The Actual Payment no is:" + actualPaymntNo);
@@ -3162,8 +3165,21 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public ViewPayments verifyPaymentStatusFilter(String portalAccess){
-		String label=lblPaymentStatus.getText().trim();
+
+	public ViewPayments verifyPaymentStatusFilter(String userType, String portalAccess){	
+		int i;
+		String label="";
+		if(userType.equalsIgnoreCase("PROV"))
+			label=lblPaymentStatusProv.getText().trim();
+		else if(userType.equalsIgnoreCase("BS")) {
+			if(portalAccess.contains("Standard"))
+				 i=13;			
+			else
+				i=14;
+			WebElement lblPaymentStatusBs= Element.findElement(testConfig, "xpath","//div[@id='view-payments']//tr//th["+i+"]");
+			label=lblPaymentStatusBs.getText().trim();
+		}
+
 		if(!label.equals("Active/Archived Payments"))
 			Log.Pass("Passed : Active/Archived Payments is relabeled");
 		else
@@ -3232,6 +3248,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 				for(;i<searchResultRows.size();i++)
 			    {
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+					actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 			    		   System.out.println("expected payment num : "+expectedPaymntNo);
 			    		   found=true;
@@ -3282,6 +3299,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		       for(int i=1;i<searchResultRows.size();i++)
 		        {
 		    	actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
 		    	   	epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
@@ -3391,7 +3409,8 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		}
 		
 		verifyQuickSrchFilterOptions("Standard");
-		verifyPaymentStatusFilter("Standard");
+		verifyPaymentStatusFilter("PROV","Standard");
+
 		return this;
 	}
 
@@ -3416,6 +3435,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		       for(int i=0;i<searchResultRows.size();i++)
 		        {
 		    	actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 		    	   if(actualPaymntNo.equals(expectedPaymntNo)){
 		    	   	epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
 					link = epraLink.findElement(By.tagName("a"));
@@ -3454,12 +3474,12 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		       for(int i=1;i<searchResultRows.size();i++)
 		        {
 		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	   actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
-					drpDwnPaymntStatusCol=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+4).findElement(By.tagName("select"));
-					
-
-					changeAndVerifyPaymentStatus(expectedPaymntNo,drpDwnPaymntStatusCol, columnIndex);
+		    		drpDwnPaymntStatusCol=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex+4).findElement(By.tagName("select"));
+                    Helper.compareEquals(testConfig, "Options comparison", paymntStatusOptions, Element.getAllOptionsInSelect(testConfig, drpDwnPaymntStatusCol));
+                    changeAndVerifyPaymentStatus(expectedPaymntNo,drpDwnPaymntStatusCol, columnIndex);
 		    	   }
 		    	   if(found==true)break;
 		        }
@@ -3479,21 +3499,21 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		String defaultVal="";
 		Element.selectByVisibleText(drpDwnPaymntStatusCol, "Closed", "Choose Closed from dropdown");
 		Element.click(btnSave, "Save button");
-		Browser.wait(testConfig, 5);
+		Browser.wait(testConfig, 2);
 		Element.selectByVisibleText(drpDwnArchiveFilter, "Closed", "Closed option from payment filter dropdown");
-		
-//		searchResultRows=Element.findElements(testConfig, "xpath", "//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr");
+		Browser.wait(testConfig, 2);
 		searchResultRows=Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
 		for(int j=1;j<searchResultRows.size();j++)
 		    {
 			   actualPaymntNo=searchResultRows.get(j).findElements(By.tagName("td")).get(3).getText();
+			   actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			   if(actualPaymntNo.contains(expectedPaymntNo)){
 				   drpDwnPaymntStatusCol=searchResultRows.get(j).findElements(By.tagName("td")).get(columnIndex+4).findElement(By.tagName("select"));
 				   defaultVal=Element.getFirstSelectedOption(testConfig, drpDwnPaymntStatusCol, "value");
 				   
 				   int sqlRowNo=1506; 
 				   Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-//				   Helper.compareEquals(testConfig, "Payment Status indicator", results.get("ARCHV_IND"), defaultVal);
+				   Helper.compareEquals(testConfig, "Payment Status indicator", results.get("ARCHV_IND"), defaultVal);
 				   break;
 			   }
 		    }
@@ -3613,7 +3633,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		       for(int i=1;i<searchResultRows.size();i++)
 		        {
 		    	   actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-		    	   
+		    	   actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
 					String feeAmountUI=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).getText().toString();
@@ -3744,7 +3764,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		        {
 		    	   
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
-		    	    actualPaymntNo=actualPaymntNo.replace("\n", "");
+					actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 					 Log.Comment("The Actual Payment no is:" + actualPaymntNo);
 		    	   Log.Comment("The expected Payment no is:" + expectedPaymntNo);
 		    	   WebElement lnkPaymntNo=null;
@@ -4273,4 +4293,5 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 
 	}
         
+
 
