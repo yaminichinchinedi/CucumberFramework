@@ -1,6 +1,8 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.DataBase.DatabaseType;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -149,16 +152,16 @@ public class OptumPaySolution {
     
 	// Added by Mohammad Khalid
 
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/h2)[1]")
+	@FindBy(xpath = "//div[@class='topMessaggeDiv']/p[2]/b")
 	WebElement topHeader1_ImpRem_Premium;
 
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/h2)[2]")
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[4]/b")
 	WebElement topHeader2_IsYourProv_Premium;
 
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[2]")
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[3]")
 	WebElement topMsg1_YouWill_Premium;
 
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[3]")
+	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[5]")
 	WebElement topMsg2_SendTax_Premium;
 	
 	@FindBy(xpath = "(//div[@class='bottomMessageDiv']/p)[2]")
@@ -173,17 +176,33 @@ public class OptumPaySolution {
 	@FindBy(xpath = "//h1[contains(text(),'Optum Pay brings more power to your practice')]/../p")
 	WebElement msg2_Standard;
 	
+	@FindBy(xpath="//a[contains(text(),'Invoices') and @class='ui-tabs-anchor cursor-pointer']")
+	WebElement invoicesTabOnOPS;
 	
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[1]/p/span")
+	WebElement providerNameInvoicesTab;
+	
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[1]/p")
+	WebElement providerNameValueInvoicesTab;
+	
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[2]/p")
+	WebElement accruedFeesInvoicesTab;
+	
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[3]/p")
+	WebElement pastDueFeesInvoicesTab;
+	
+	@FindBy(xpath="//table[@class='table']/thead/tr/th")
+	WebElement invoicePeriodTableGrid;
 	
 	
 	
 		//Added by Mohammad Khalid
 		String headerTop1_Premium ="Important reminder:";
 		String headerTop2_Premium ="Is your provider organization tax exempt?";
-		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. Please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
+		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
 		String pageTextTop2_Premium ="Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
 		
-		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay, their access will be limited to 2 users. However, if they were enrolled in Optum Pay prior to the upgrade (January 2021), then active portal users will retain access. Other features not available without a paid activation include search functionality, access to more than 30 days of historical data, multiple remittance options, and data bundling.";
+		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
 		String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
 		
 		String Message1_Standard = "Optum Pay brings more power to your practice";
@@ -662,15 +681,15 @@ public class OptumPaySolution {
 		public void verifyPageText_Top_Premium()
 		{
 			Helper.compareEquals(testConfig, "Header-1 Premium", headerTop1_Premium, topHeader1_ImpRem_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Header-2 Premium", headerTop1_Premium, topHeader2_IsYourProv_Premium.getText().trim());
+			Helper.compareEquals(testConfig, "Header-2 Premium", headerTop2_Premium, topHeader2_IsYourProv_Premium.getText().trim());
 			Helper.compareEquals(testConfig, "Top Page Text -1 Premium", pageTextTop1_Premium, topMsg1_YouWill_Premium.getText().trim());
 			Helper.compareEquals(testConfig, "Top Page Text -2 Premium", pageTextTop2_Premium, topMsg2_SendTax_Premium.getText().trim());
 		}
 		
 		public void verifyPageText_Footer_Premium()
 		{
-			Helper.compareEquals(testConfig, "Footer-1 Premium", footer1_Premium, topHeader1_ImpRem_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Footer-2 Premium", footer2_Premium, topHeader2_IsYourProv_Premium.getText().trim());
+			Helper.compareEquals(testConfig, "Footer-1 Premium", footer1_Premium, footer1_IfaProv_Premium.getText().trim());
+			Helper.compareEquals(testConfig, "Footer-2 Premium", footer2_Premium, footer2_Cancellation_Premium.getText().trim());
 		}
 		
 		
@@ -682,6 +701,87 @@ public class OptumPaySolution {
 		public void verifyPageText_Message2_Standard()
 		{
 			Helper.compareEquals(testConfig, "Message 2 Standard", Message2_Standard, msg2_Standard.getText().trim());
+		}
+		
+		
+		public void clickOnInvoicesTab()
+		{
+			Element.click(invoicesTabOnOPS, "Invoices tab on OPS page");
+		}
+		
+		public void verifyProviderName() throws IOException, SQLException
+		{
+			String expectedProviderName = null;
+			String sqlQuery = "SELECT ORG_NM FROM ole.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "'";
+			
+			ResultSet rsProviderName = DataBase.testExecuteSelectQuery(testConfig, sqlQuery, DatabaseType.Test2);
+			
+			while(rsProviderName.next())
+			{
+				expectedProviderName = rsProviderName.getString("ORG_NM");
+			}
+			
+			String actualProviderName = providerNameValueInvoicesTab.getText().substring(9, providerNameValueInvoicesTab.getText().length());
+			Helper.compareEquals(testConfig, "Provider Name", expectedProviderName, actualProviderName.trim());
+		}
+		
+		public void verifyAccruedFees()
+		{
+			String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(0, 27);
+			Log.Comment(actualAccruedFees);
+			Helper.compareEquals(testConfig, "Accrued Fees", "Accrued fees month to date:", actualAccruedFees.trim());
+		}
+		
+		public void verifyPastDueFees() throws IOException, SQLException
+		{
+			String expectedPastDueFees = null;
+			String sqlQuery = "SELECT SUM(INVC_TOT_AMT ) AS TOT_PAST_DUE FROM ole.DEBIT_FEE_INVCE WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "' AND INVC_STS='FP'";
+			
+			ResultSet rsPastDueFee = DataBase.testExecuteSelectQuery(testConfig, sqlQuery, DatabaseType.Test2);
+			
+			while(rsPastDueFee.next())
+			{
+				expectedPastDueFees = rsPastDueFee.getString("TOT_PAST_DUE");
+				
+				if (expectedPastDueFees==null)
+				{
+					expectedPastDueFees = "0.00";
+				}
+				
+			}
+			
+			String actualPastDueFees = pastDueFeesInvoicesTab.getText().substring(16, pastDueFeesInvoicesTab.getText().length());
+			Helper.compareEquals(testConfig, "Past Due Fees", expectedPastDueFees, actualPastDueFees.trim());
+			
+		}
+		
+		public void verifyInvoicePeriodGrid() throws IOException, SQLException
+		{
+			String exTotalGridRows = null;
+			
+			List<WebElement> tableHeads = Element.findElements(testConfig, "xpath", "//table[@class='table']/thead/tr/th");
+			List<String> expectedTableHeads = new ArrayList<>();
+			expectedTableHeads.add(0, "Invoice Period");
+			expectedTableHeads.add(1, "Total Invoice Amount");
+			expectedTableHeads.add(2, "Download Invoice");
+			
+			for (int i=0; i<tableHeads.size(); i++)
+			{
+				String actualTableHeads = tableHeads.get(i).getText().trim();
+				Helper.compareEquals(testConfig, "Invoice Period Grid Titles", expectedTableHeads.get(i), actualTableHeads);
+			}
+			
+			List<WebElement> tableValues = Element.findElements(testConfig, "xpath", "//table[@class='table']/tbody/tr");
+			String sqlString = "SELECT count(*) AS TOT_COUNT FROM ole.DEBIT_FEE_INVCE WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "' AND INVC_STS <> 'IC'";
+			ResultSet rsCount = DataBase.testExecuteSelectQuery(testConfig, sqlString, DatabaseType.Test2);
+			
+			while (rsCount.next())
+			{
+				exTotalGridRows = rsCount.getString("TOT_COUNT");
+			}
+			
+			Helper.compareEquals(testConfig, "Grid Count", exTotalGridRows, String.valueOf(tableValues.size()));
+			
 		}
 	   
 	}

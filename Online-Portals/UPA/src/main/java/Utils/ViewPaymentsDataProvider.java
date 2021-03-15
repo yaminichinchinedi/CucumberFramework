@@ -1134,13 +1134,14 @@ public ArrayList getEnrollmentContent(String content) {
 //			case "TINwithTimeperiod":
 //				sqlRowNo=1617;	
 				break;	
-			case "PremiumOrStandardTIN_AO_Premium":	
+			case "PremiumOrStandardTIN":	
 				sqlRowNo=1605;
 				break;
 				
-			case "PremiumOrStandardTIN_AO_Standard":	
-				sqlRowNo=1605;
+			case "PremiumOrStandardFeeInvoice":
+				sqlRowNo=2009;
 				break;
+			
  		
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
