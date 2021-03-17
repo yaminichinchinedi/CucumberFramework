@@ -1,7 +1,7 @@
 #Author: Sahil D Sharma
 
 @CSRDataBundle @CSRRegression   @BothCSRUPAScenarios  
-Feature: CSR Billing Service Functionality
+Feature: CSR Payment Data File Functionality
 
 	@TC001						@queue
 	Scenario Outline: UI Validations for Payment Data Files 

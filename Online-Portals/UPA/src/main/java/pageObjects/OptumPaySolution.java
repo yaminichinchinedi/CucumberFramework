@@ -190,6 +190,8 @@ public class OptumPaySolution {
     List<WebElement> tableInvoiceAmountUI; 
     @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
     List<WebElement> tableInvoiceNumberUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
+    List<WebElement> tableInvoiceDateUI;
 
 	
 		private TestBase testConfig;
@@ -736,12 +738,13 @@ public class OptumPaySolution {
 			return this;
 		}
 	 	
-	 	public OptumPaySolution verifyInvoicesTab(String searchCriteria,String tinType,String portalAccess,String prdctRecSts){
+	 	public OptumPaySolution verifyInvoicesTab(String searchCriteria,String tinType,String portalAccess,String prdctRecSts) throws ParseException{
             if("TinWithInvoices".equals(searchCriteria)){
                 Element.verifyElementPresent(lnkInvoice, "Invoices Link");
                 Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
                 Element.verifyElementPresent(divPageMsg, "Page message");
                 verifyPastDuesInvoiceTab(searchCriteria);
+                verifyProviderNameInvoices();
                 verifyAccrudFeesInvoiceTab(searchCriteria);
                 try {
 					verifyInvoiceDetailsTableUI(searchCriteria);
@@ -755,6 +758,7 @@ public class OptumPaySolution {
                 Element.verifyElementPresent(divPageMsg, "Page message");
                 verifyPastDuesInvoiceTab(searchCriteria);
                 verifyAccrudFeesInvoiceTab(searchCriteria);
+                verifyProviderNameInvoices();
                 Element.verifyElementPresent(msgNoInvoicesPresent, "no invoices present msg");
             }
             else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "TR".equals(prdctRecSts)){
@@ -769,8 +773,14 @@ public class OptumPaySolution {
             return this;
         }
 	 	
-		public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException {
-			int sqlTable=1121;
+		public void verifyProviderNameInvoices() {
+			int sqlRowNo=1;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Helper.compareContains(testConfig,"test", data.get("ORG_NM").toString().trim(), Element.findElement(testConfig, "xpath", "//*[@id=\"optum-pay-invoices\"]/div/div[1]/p").getText().trim());
+			
+		}
+		public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException, ParseException {
+			int sqlTable=1120;
             HashMap<Integer,HashMap<String,String>>  invoiceTableData = DataBase.executeSelectQueryALL(testConfig, sqlTable);
 			ArrayList<String> expectedHeader=new ArrayList<String>(); 
 			expectedHeader.add("Invoice Period");
@@ -788,8 +798,12 @@ public class OptumPaySolution {
 			  Helper.compareEquals(testConfig, "tableInvoiceDetailTableHeader", expectedHeader, actualContentUI);
 			  
 			  for(int i=0; i<tableInvoiceAmountUI.size() ;i++)
-				{ Helper.compareEquals(testConfig,"name", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
-				Helper.compareEquals(testConfig,"name", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
+				{ 
+				  String  startDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				 String  endDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				Helper.compareEquals(testConfig,"billing cycle",startDate+" - "+endDate,tableInvoiceDateUI.get(i).getText());
+				Helper.compareEquals(testConfig,"invoice amount", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
+				Helper.compareEquals(testConfig,"invoice number", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
 	            }
 			}
 			
@@ -808,7 +822,7 @@ public class OptumPaySolution {
 		}
 		public void verifyPastDuesInvoiceTab(String searchCriteria) {
 			String invoicePastDueFee=null;
-			int sqlRowNo=1120;
+			int sqlRowNo=1122;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
 			if("TinWithoutInvoices".equals(searchCriteria)|| data.get("PASTDUE").toString().trim().length()==0)
