@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.print.attribute.HashAttributeSet;
 
+import main.java.sql.QueryBuilder;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -1215,12 +1216,13 @@ public ArrayList getEnrollmentContent(String content) {
 	 				testConfig.putRunTimeProperty("nullStatus", "is null");
 				sqlRowNo=1615;
 			}
-
+		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")){
+			sqlRowNo=435;
+		}
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);
 		   Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		   
 		    try
 		     {
 		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
@@ -1232,6 +1234,10 @@ public ArrayList getEnrollmentContent(String content) {
 		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
 				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
+				 if(sqlRowNo==435){
+					 testConfig.putRunTimeProperty("paymentNumber",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+					 testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVC_NBR").toString());
+				 }
 				if(sqlRowNo==1617)
                    {
 		    	   testConfig.putRunTimeProperty("PAYR_SCHM_NM",tinNumbers.get("PAYR_SCHM_NM").toString().trim());

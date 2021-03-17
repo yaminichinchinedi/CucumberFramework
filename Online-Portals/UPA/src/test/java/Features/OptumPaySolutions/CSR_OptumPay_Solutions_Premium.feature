@@ -141,5 +141,28 @@
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
       | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
-      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
          
+         
+   @US3238498
+      Scenario Outline: Optum Pay Soution  Display Fee Search
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And User fetch tin on CSR for "<userType>" for "<Fee Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  		Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+        Then User clicks on Fee Searh Tab on Optum Pay Solutions Page
+        Then User enters "<Fee Search Criteria>" on Fee Search page and click on search button.
+        Then User verifies the headers on Fee Search page
+        Then User verifies show fees i can refund on Fee Search page for "<credentials>"
+        Then User verifies Fee Search results for "<Fee Search Criteria>"
+
+
+  Examples:
+
+          |   credentials     |   Fee Search Criteria   |tinType|portalAccess    |userType|
+          |    Super          |	feeSearchPaymentNumber	|  AO 	|	Premium		 |	PROV	|
+          |    Super          |	feeSearchInvoiceNumber	|  AO 	|	Premium		 |	PROV	|      
+         
+         
+         
+         
+       

@@ -1,15 +1,15 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -23,11 +23,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
-import main.java.Utils.DataBase.DatabaseType;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
+import main.java.sql.QueryBuilder;
 
 public class OptumPaySolution {
 	                 
@@ -167,82 +167,34 @@ public class OptumPaySolution {
     
     @FindBy(xpath="//span[contains(text(),'Rate')]/../..//div[contains(text(),'N/A')]")
     private WebElement validateNA;
-    
-    
-	// Added by Mohammad Khalid
-
-	@FindBy(xpath = "//div[@class='topMessaggeDiv']/p[2]/b")
-	WebElement topHeader1_ImpRem_Premium;
-
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[4]/b")
-	WebElement topHeader2_IsYourProv_Premium;
-
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[3]")
-	WebElement topMsg1_YouWill_Premium;
-
-	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[5]")
-	WebElement topMsg2_SendTax_Premium;
-	
-	@FindBy(xpath = "(//div[@class='bottomMessageDiv']/p)[2]")
-	WebElement footer1_IfaProv_Premium;
-	
-	@FindBy(xpath = "(//div[@class='bottomMessageDiv']/p)[3]")
-	WebElement footer2_Cancellation_Premium;
-	
-	@FindBy(xpath = "//h1[contains(text(),'Optum Pay brings more power to your practice')]")
-	WebElement msg1_Standard;
-	
-	@FindBy(xpath = "//h1[contains(text(),'Optum Pay brings more power to your practice')]/../p")
-	WebElement msg2_Standard;
-	
-	@FindBy(xpath="//a[contains(text(),'Invoices') and @class='ui-tabs-anchor cursor-pointer']")
-	WebElement invoicesTabOnOPS;
-	
-	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[1]/p/span")
-	WebElement providerNameInvoicesTab;
-	
-	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[1]/p")
-	WebElement providerNameValueInvoicesTab;
-	
-	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[2]/p")
-	WebElement accruedFeesInvoicesTab;
-	
-	@FindBy(xpath="//div[@id='optum-pay-invoices']/div[1]/div[3]/p")
-	WebElement pastDueFeesInvoicesTab;
-	
-	@FindBy(xpath="//table[@class='table']/thead/tr/th")
-	WebElement invoicePeriodTableGrid;
-	
-	
-	
-		//Added by Mohammad Khalid
-		String headerTop1_Premium ="Important reminder:";
-		String headerTop2_Premium ="Is your provider organization tax exempt?";
-		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
-		String pageTextTop2_Premium ="Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
-		
-		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
-		String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
-		
-		String Message1_Standard = "Optum Pay brings more power to your practice";
-		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
-		
 
     @FindBy(xpath=" //*[@id='optum-pay-options']/div[1]/div[3]/div[2]")
     private WebElement feeTile;
     
-    @FindBy(xpath="//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
-    private WebElement feeTileUPA;
-  
-
     @FindBy(linkText="Invoices")
     WebElement lnkInvoice;
     
     @FindBy(xpath="//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
     WebElement divPageMsg;
 
+	@FindBy(linkText = "Fee Search")
+	private WebElement feeSearchTab;
 
-	
+	@FindBy(id = "paymentNumber")
+	WebElement paymentNumber;
+
+	@FindBy(id = "invoiceNumber")
+	WebElement invoiceNumber;
+
+	@FindBy(xpath = "//button[contains(text(),'Search')]")
+	WebElement searchButton;
+
+	@FindBy(name = "showOnlyRefundables")
+	WebElement refundableCheckBox;
+
+	@FindBy(xpath = "//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[1]/div[1]")
+	WebElement divShowRslts;
+
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
 			this.testConfig=testConfig;
@@ -475,7 +427,7 @@ public class OptumPaySolution {
 		}
 			public void validateChangeRatePopup(String credentials) {
 			
-			if(credentials.equalsIgnoreCase("Super") && testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium"))
+			if(credentials.equalsIgnoreCase("Super"))
 			{
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");
 			Element.clickByJS(testConfig,optionReasonForRateChange,"Rate Change Reason");
@@ -773,187 +725,14 @@ public class OptumPaySolution {
 		      
 	 	public void updatingStartDateOfGlobalLevelFee() {
 	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
-	 	}	
-	 	
-	 	
-		//Added by Mohammad Khalid
-		public void verifyPageText_Top_Premium()
-		{
-			Helper.compareEquals(testConfig, "Header-1 Premium", headerTop1_Premium, topHeader1_ImpRem_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Header-2 Premium", headerTop2_Premium, topHeader2_IsYourProv_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Top Page Text -1 Premium", pageTextTop1_Premium, topMsg1_YouWill_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Top Page Text -2 Premium", pageTextTop2_Premium, topMsg2_SendTax_Premium.getText().trim());
-		}
-		
-		public void verifyPageText_Footer_Premium()
-		{
-			Helper.compareEquals(testConfig, "Footer-1 Premium", footer1_Premium, footer1_IfaProv_Premium.getText().trim());
-			Helper.compareEquals(testConfig, "Footer-2 Premium", footer2_Premium, footer2_Cancellation_Premium.getText().trim());
-		}
-		
-		
-		public void verifyPageText_Message1_Standard()
-		{
-			Helper.compareEquals(testConfig, "Message 1 Standard", Message1_Standard, msg1_Standard.getText().trim());
-		}
-		
-		public void verifyPageText_Message2_Standard()
-		{
-			Helper.compareEquals(testConfig, "Message 2 Standard", Message2_Standard, msg2_Standard.getText().trim());
-		}
-		
-		
-		public void clickOnInvoicesTab()
-		{
-			Element.click(invoicesTabOnOPS, "Invoices tab on OPS page");
-		}
-		
-		public void verifyProviderName() throws IOException, SQLException
-		{
-			String expectedProviderName = null;
-			testConfig.putRunTimeProperty("Prov_tin_nbr", testConfig.getRunTimeProperty("tin"));
-			Map<String, String> results = DataBase.executeSelectQuery(testConfig,236, 1);
-			expectedProviderName = (String) results.get("ORG_NM");
-			String actualProviderName = providerNameValueInvoicesTab.getText().substring(9, providerNameValueInvoicesTab.getText().length());
-			Helper.compareEquals(testConfig, "Provider Name", expectedProviderName, actualProviderName.trim());
-		}
-		
-		public void verifyAccruedFees()
-		{
-			String actualAccruedFeesTitle = accruedFeesInvoicesTab.getText().substring(0, 27);
-			String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(29, accruedFeesInvoicesTab.getText().length());
-			String expectedAccruedFees = null;
-			testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
-			Map<String, String> data = DataBase.executeSelectQuery(testConfig,1616, 1);
-			if (data.get("ACCRDFEE").toString().isEmpty())
-				expectedAccruedFees = "0.00";
-			else
-				expectedAccruedFees = data.get("ACCRDFEE").toString();
-			
-			Helper.compareEquals(testConfig, "Accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
-			Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim());
-		}
-		
-		public void verifyPastDueFees() throws IOException, SQLException
-		{
-			String expectedPastDueFees = null;
-			testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
-			Map<String, String> data = DataBase.executeSelectQuery(testConfig,1630, 1);
-			
-			if(data.get("PASTDUEFEE").toString().isEmpty())
-				expectedPastDueFees = "0.00";
-			else
-				expectedPastDueFees = data.get("PASTDUEFEE").toString();
-			
-			String actualPastDueFees = pastDueFeesInvoicesTab.getText().substring(16, pastDueFeesInvoicesTab.getText().length());
-			Helper.compareEquals(testConfig, "Past Due Fees", expectedPastDueFees, actualPastDueFees.trim());
-		}
-		
-		public void verifyInvoicePeriodGrid() throws IOException, SQLException, ParseException
-		{
-			List<WebElement> tableHeads = Element.findElements(testConfig, "xpath", "//table[@class='table']/thead/tr/th");
-			List<String> expectedTableHeads = new ArrayList<>();
-			expectedTableHeads.add(0, "Invoice Period");
-			expectedTableHeads.add(1, "Total Invoice Amount");
-			expectedTableHeads.add(2, "Download Invoice");
-			
-			String downloadInvoiceNumber = null;
-			List<String> billingStartDate = new ArrayList<>();
-			
-			for (int i=0; i<tableHeads.size(); i++)
-			{
-				String actualTableHeads = tableHeads.get(i).getText().trim();
-				Helper.compareEquals(testConfig, "Invoice Period Grid Titles", expectedTableHeads.get(i), actualTableHeads);
-			}
-			
-			List<WebElement> tableValues = Element.findElements(testConfig, "xpath", "//table[@class='table']/tbody/tr");
-			for (int i=0; i<tableValues.size(); i++)
-			{
-				String xpathInvcNumber = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[3]/a";
-				WebElement invcNumber = Element.findElement(testConfig, "xpath", xpathInvcNumber);
-				downloadInvoiceNumber = invcNumber.getText();
-				
-				String xpathtTotalInvoiceAmount = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[2]";
-				WebElement totInvcAmount = Element.findElement(testConfig, "xpath", xpathtTotalInvoiceAmount);
-				String exTotalInvoiceAmount = totInvcAmount.getText().substring(1);
-				
-				String xpathtBillingPeriod = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[1]";
-				WebElement billingPeriod = Element.findElement(testConfig, "xpath", xpathtBillingPeriod);
-				String invcBillingPeriod = billingPeriod.getText();
-				
-				billingStartDate.add(0, invcBillingPeriod.substring(0,10));
-				
-				String exBilMonthStart= invcBillingPeriod.substring(0,2);
-				String exBilDayStart= invcBillingPeriod.substring(3,5);
-				String exBilYearStart= invcBillingPeriod.substring(6,10);
-				
-				
-				String exBilMonthEnd= invcBillingPeriod.substring(13,15);
-				String exBilDayEnd= invcBillingPeriod.substring(16,18);
-				String exBilYearEnd= invcBillingPeriod.substring(19,23);
-				
-				
-				testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
-				testConfig.putRunTimeProperty("downloadInvoiceNumber", downloadInvoiceNumber);
-				Map<String, String> data = DataBase.executeSelectQuery(testConfig,2010, 1);
-				
-				String actualInvcAmount = data.get("INVC_TOT_AMT").toString();
-				
-				String acBilYearStart= data.get("BILL_CYC_STRT_DT").toString().substring(0,4);
-				String acBilMonthStart= data.get("BILL_CYC_STRT_DT").toString().substring(5,7);
-				String acBilDayStart= data.get("BILL_CYC_STRT_DT").toString().substring(8,10);
-				
-				
-				String acBilYearEnd= data.get("BILL_CYC_END_DT").toString().substring(0,4);
-				String acBilMonthEnd= data.get("BILL_CYC_END_DT").toString().substring(5,7);
-				String acBilDayEnd= data.get("BILL_CYC_END_DT").toString().substring(8,10);
-				
-				
-				Helper.compareEquals(testConfig, "Total Invoice Amount for each Invoice", exTotalInvoiceAmount, actualInvcAmount);
-				
-				Helper.compareEquals(testConfig, "Billing Period Month-Start", exBilMonthStart, acBilMonthStart);
-				Helper.compareEquals(testConfig, "Billing Period Day-Start", exBilDayStart, acBilDayStart);
-				Helper.compareEquals(testConfig, "Billing Period Year-Start", exBilYearStart, acBilYearStart);
-				
-				Helper.compareEquals(testConfig, "Billing Period Month-End", exBilMonthEnd, acBilMonthEnd);
-				Helper.compareEquals(testConfig, "Billing Period Day-End", exBilDayEnd, acBilDayEnd);
-				Helper.compareEquals(testConfig, "Billing Period Year-End", exBilYearEnd, acBilYearEnd);
-				
-			}
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-			for (int i=0; i<billingStartDate.size()-1; i++)
-			{
-				for (int k=i+1; k<billingStartDate.size(); k++)
-				{
-					Date date1 = sdf.parse(billingStartDate.get(i));
-			        Date date2 = sdf.parse(billingStartDate.get(k));
-			        
-			        if (date1.compareTo(date2)>=0)
-			        {
-			        	Log.Comment("The Billig Period is in decending order");
-			        }
-			        
-			        else
-			        {
-			        	Log.Fail("The Billig Period is NOT in decending order");
-			        }
-				}
-			}
-			
-		}
-	   
-	 			
+	 	}		
 	 	public OptumPaySolution validatePastdueFee()
 		{
 			int sqlRowNo=1630;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
-			 if(System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
-			 else
-			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
 			return this;
 		}
 	 	
@@ -979,5 +758,186 @@ public class OptumPaySolution {
             }
             return this;
         }
-	}
+		public void navigateToFeeSearchTab() {
+			Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+		}
 
+		public OptumPaySolution doSearch(String criteriaType) throws ParseException {
+
+			switch (criteriaType) {
+
+				case "feeSearchPaymentNumber": {
+					Browser.wait(testConfig, 5);
+					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
+					Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr, "payment number");
+					break;
+				}
+				case "feeSearchInvoiceNumber": {
+					Browser.wait(testConfig, 5);
+					String invoice_nbr = testConfig.getRunTimeProperty("invoiceNumber");
+					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
+					break;
+				}
+
+			}
+
+			return clickSearchBtn();
+		}
+
+		public OptumPaySolution clickSearchBtn() {
+			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
+			return new OptumPaySolution(testConfig);
+		}
+
+		/**
+		 * Get Headers List till Market Type
+		 * to store them as key in map
+		 *
+		 * @return HeaderList
+		 */
+		public ArrayList<String> getHeadersFromFeeSearchTable() {
+			List<String> headerList = new ArrayList<String>();
+			int size = 0;
+			WebElement headerRow = null;
+			headerRow = Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[2]/div/table/thead/tr[1]");
+
+			if (headerRow != null) {
+				size = headerRow.findElements(By.tagName("th")).size();
+			}
+			for (int i = 0; i < size; i++) {
+				String header = "";
+				header = headerRow.findElements(By.tagName("th")).get(i).getText();
+				if (header.equals("Original Payment Date"))
+					header = "Payment Date";
+				headerList.add(header);
+			}
+			return (ArrayList<String>) headerList;
+
+		}
+
+		public void verifyFeeSearchResults(String requestType) throws SQLException, IOException {
+			QueryBuilder queryBuilder = new QueryBuilder();
+
+			String query = queryBuilder.getFeeSearchQuery(requestType);
+
+			System.out.println(query);
+
+			ResultSet resultset = DataBase.testExecuteSelectQuery(testConfig, query, DataBase.getDatabaseType());
+			Helper.compareEquals(testConfig, "Record Count from DB and UI :", getRowCount(resultset), getRecordCountFromUI());
+			resultset.beforeFirst();
+			Helper.compareMaps(testConfig, "Payments Details Comparison", getFeeSearchDetailsFromDB(resultset), getFeeSearchDetailsFromUI());
+
+		}
+
+		private String getRowCount(ResultSet resultSet) throws SQLException {
+			int count = 0;
+			while (resultSet.next()) {
+				++count;
+			}
+			return String.valueOf(count);
+		}
+
+		public String getRecordCountFromUI() {
+			String resultCount = divShowRslts.getText().toString();
+			resultCount = resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
+			return resultCount.trim();
+		}
+
+		public void verifyFeeSearchResultHeaders() {
+			List<String> expectedHeaders = new ArrayList<>(Arrays.asList("Payment Date", "Payer Name", "Payment Number", "Payment Amount", "Fee Amount", "Invoice Number", "Invoice Date", "Fee Type", "Fee Status"));
+			List<String> actualHeaders = getHeadersFromFeeSearchTable();
+			Helper.compareEquals(testConfig, "headers", expectedHeaders, actualHeaders);
+		}
+
+		public void verifyShowFeesICanRefund(String credentials) {
+			if (credentials.contains("Super")) {
+				Element.verifyElementPresent(refundableCheckBox, "Show Fees I Can Refund CheckBox");
+			} else {
+				Element.verifyElementNotPresent(refundableCheckBox, "Show Fees I Can Refund CheckBox");
+			}
+		}
+
+		/**
+		 * This function creates an outer map with Key as payment number, payment Amount,Payment Date and Fee Amount and Value as
+		 * another hash map i.e. inner map that contains all the details for key like
+		 * payer name, amount etc
+		 *
+		 * @return Outer map
+		 */
+		public Map<String, LinkedHashMap<String, String>> getFeeSearchDetailsFromUI() {
+			/** Gets headers List which will be key for following map */
+
+			LinkedHashMap<String, String> innerMap;
+
+			Map<String, LinkedHashMap<String, String>> outerMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
+			ArrayList<String> headers = getHeadersFromFeeSearchTable();
+
+			int totalNoOfPages = 1;
+
+			for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
+				List<WebElement> searchResultRows = Element.findElements(testConfig, "xpath",
+						"//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[2]/div/table/tbody/tr");
+
+				for (int i = 0; i < searchResultRows.size(); i++) {
+					innerMap = new LinkedHashMap<String, String>();
+
+					for (int j = 0; j < headers.size(); j++) {
+						String details = "";
+						details = searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
+						if (headers.get(j).equals("Payment Amount") || headers.get(j).equals("Fee Amount")) {
+							if (!details.isEmpty()) {
+								details = details.substring(1);
+							}
+						}
+						innerMap.put(headers.get(j), details);
+					}
+					if (!innerMap.get("Fee Status").equalsIgnoreCase("Refund Pending")) {
+						outerMap.put(innerMap.get("Payment Date")+'_'+innerMap.get("Payment Number")+'_'+innerMap.get("Payment Amount")+'_'+innerMap.get("Fee Amount"), innerMap);
+					}
+				}
+
+			}
+			Log.Comment("Details from UI is: " + outerMap.toString());
+			return outerMap;
+
+		}
+
+		public Map<String, LinkedHashMap<String, String>> getFeeSearchDetailsFromDB(ResultSet resultSet) throws SQLException {
+			Map<String, LinkedHashMap<String, String>> outerMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
+			int outerMapCounter = 0;
+			int rowCount = 0;
+			int max_row_count = 30;
+			
+			while (resultSet.next()) {
+				if (!resultSet.getString("ROW_TYPE").equals("RFD")) {
+					LinkedHashMap<String, String> innerMap = new LinkedHashMap<String, String>();
+					
+					String name = resultSet.getString("SUBPAYER_NAME");
+					if (name == null) {
+						name = resultSet.getString("PAYER_NAME");
+					}
+					String feeStatus = resultSet.getString("FEE_STATUS");
+					if (feeStatus.equals("FS")) {
+						feeStatus = "Accured";
+					}
+					innerMap.put("Payment Date", resultSet.getString("PAYMENT_DATE"));
+					innerMap.put("Payer Name", name);
+					innerMap.put("Payment Number", resultSet.getString("CONSL_PAY_NBR"));
+					innerMap.put("Payment Amount", resultSet.getString("CONSL_AMT"));
+					innerMap.put("Fee Amount", resultSet.getString("DBT_FEE_ACCRD_AMT"));
+					innerMap.put("Invoice Number", resultSet.getString("INVC_NBR"));
+					innerMap.put("Invoice Date", resultSet.getString("INVC_SETL_DT"));
+					innerMap.put("Fee Type", "Per Payment Fee");
+					innerMap.put("Fee Status", feeStatus);
+					outerMap.put(resultSet.getString("PAYMENT_DATE")+'_'+resultSet.getString("CONSL_PAY_NBR")+'_'+resultSet.getString("CONSL_AMT")+'_'+resultSet.getString("DBT_FEE_ACCRD_AMT") ,innerMap);
+					outerMapCounter++;
+				}
+				++rowCount;
+				if (rowCount == max_row_count) {
+					resultSet.afterLast();
+				}
+			}
+			return outerMap;
+		}
+	
+		}
