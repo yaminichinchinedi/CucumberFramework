@@ -160,7 +160,7 @@ public  class Log extends ExtentTestManager {
 					try 
 					{
 					  String dest=captureScreenshot(testConfig);
-//					  ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
+                      ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
 					} 
 					catch (IOException e) 
 					{

@@ -405,16 +405,17 @@ public class TestBase extends ReporterClass {
 	     new Log(testConfig);
 	}
 
-/*	@AfterMethod()
+@AfterMethod()
 	public void endTest(ITestResult iTestResult) {
-		Log.endTest(iTestResult);
-	}*/
-
-	
-	public void endTest(Scenario scn) {
-		logReportSteps(scn.getStatus());
+	     logReportSteps(iTestResult);
 		 endReporting();
 	}
+
+	
+	/*public void endTest(Scenario scn) {
+		logReportSteps(scn.getStatus());
+		 endReporting();
+	}*/
 		
 	@AfterTest
 	public void tearDown() {
