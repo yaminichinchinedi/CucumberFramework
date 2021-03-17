@@ -60,8 +60,10 @@ Feature: View Payment Access Payment
 		Then Validate amount is displayed for payments present in debit fee rate table.
 
   	 Examples: 
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
-      |   		Super	 	  | 		PROV		|		Last 30 days	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |
+       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+     # |   		Super	 	  | 		PROV		|		Last 30 days	 |		 Premium		|		AO		|	Show All				|		Last 30 days		| 			New		  |
+       |   		Super	 	  | 		PROV		| Last 6-9 months  |		 Premium		|		AO		|	Show All				|	Last 6-9 months		| 			New		  |
+		
     
     
      @CSRUS3015574
