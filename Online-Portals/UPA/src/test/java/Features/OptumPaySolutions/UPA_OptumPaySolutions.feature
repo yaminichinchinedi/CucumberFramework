@@ -50,9 +50,65 @@ Feature: - Optum Pay Solutions
      Examples:
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   BS_Admin    |     BS     	|		 	PostTrial and Paid		|			Premium			|		VO			|
+
+
+
+#Author: Mohammad Khalid
+@UPA_OPS_US2949033
+Scenario Outline: To test page text messaging on OPS for Prov Admin
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And   User clicks on Optum Pay Solutions tab
+
+Then User verifies page text "<PageMessageText_Top>" messaging in Optum Pay Solutions page
+And User verifies page text "<PageMessageText_Footer>" messaging in Optum Pay Solutions page
+
+
+ Examples:
+ |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|   PageMessageText_Top    |PageMessageText_Footer |
+ |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Standard	  |		AO			|      Standard_Msg_1      |  Standard_Msg_2       |
+ |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium		  |		AO			|      Premium_TopMsg      |   Premium_FooterMsg   |
       
       
       
+
+
+#Author: Mohammad Khalid
+@UPA_OPS_US3222937_ProvAdmin
+Scenario Outline: To validate Invoices tab for Provider admin users
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And User clicks on Optum Pay Solutions tab
+Then User clicks on "Invoices" tab
+And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
+
+ Examples:
+ |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
+ |      PROV_Admin |   PROV     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		AO			|  
+ |      PROV_Admin |   PROV     	|		PremiumOrStandardFeeInvoice		|		Standard     	  |		AO			|  
+ |      PROV_Admin |   PROV     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		VO			|  
+
+ 
+ #Author: Mohammad Khalid
+@UPA_OPS_US3222937_BSAdmin
+Scenario Outline: To validate Invoices tab for BS admin users
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And User clicks on Optum Pay Solutions tab
+ Then User Enters tin for OPS and click on search button for "<userType>".
+Then User clicks on "Invoices" tab
+And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
+
+ Examples:
+ |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
+ |      BS_Admin   |     BS     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		AO			|  
+ |      BS_Admin   |     BS      	|		PremiumOrStandardFeeInvoice		|		Standard     	  |		AO			|  
+ |      BS_Admin   |     BS     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		VO			|  
+ 
+
         @UPAUS3232882
 		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover)
     Given User navigates to UPA portal and enters "<credential>" and login

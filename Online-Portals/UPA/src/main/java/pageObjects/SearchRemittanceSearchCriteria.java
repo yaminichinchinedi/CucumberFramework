@@ -187,8 +187,8 @@ public class SearchRemittanceSearchCriteria {
 		}
 		
 //		WebElement check=Element.findElement(testConfig, "name", "taxIdNbr");
-		if(txtboxTinNo==null)
-			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
+//		if(txtboxTinNo==null)
+//			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
 	}
 	
 	public void verifyFieldName()

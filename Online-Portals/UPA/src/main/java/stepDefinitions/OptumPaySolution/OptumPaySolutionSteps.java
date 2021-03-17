@@ -70,6 +70,90 @@ public void user_validates_the_Text_Dates_Rates_on_the_Rate_Tile_section_for_giv
 	optumPaySol.validateChangeRatePrcnt(credentials,changeRateValue,changeRateReason);
 	}
 
+//Added by Mohammad Khalid
+@Then("^User verifies page text \"([^\"]*)\" messaging in Optum Pay Solutions page$")
+public void user_verifies_page_text_messaging_in_Optum_Pay_Solutions_page(String pageText) throws Throwable 
+{
+	switch (pageText)
+	{
+	case "Premium_TopMsg":
+	{
+		optumPaySol.verifyPageText_Top_Premium();
+		break;
+	}
+	case "Premium_FooterMsg":
+	{
+		optumPaySol.verifyPageText_Footer_Premium();
+		break;
+	}
+	case "Standard_Msg_1":
+	{
+		optumPaySol.verifyPageText_Message1_Standard();
+		break;
+	}
+	
+	case "Standard_Msg_2":
+	{
+		optumPaySol.verifyPageText_Message2_Standard();
+		break;
+	}
+	
+	}
+
+}
+
+
+//Added by Mohammad to click on Invoices tab on OPS tab
+
+@Then("^User clicks on \"([^\"]*)\" tab$")
+public void user_clicks_on_tab(String tabName) throws Throwable
+{
+    optumPaySol.clickOnInvoicesTab();
+}
+
+@Then("^User validates \"([^\"]*)\"$")
+public void user_validates(String paraName) throws Throwable
+{
+	switch(paraName)
+	{
+	case "ProviderName" :
+	{
+		optumPaySol.verifyProviderName();
+		break;
+	}
+	
+	case "AccruedFees" :
+	{
+		optumPaySol.verifyAccruedFees();
+		break;
+	}
+	
+	case "PastDueFees" :
+	{
+		optumPaySol.verifyPastDueFees();
+		break;
+	}
+	
+	case "InvoicePeriodGrid" :
+	{
+		optumPaySol.verifyInvoicePeriodGrid();
+		break;
+	}
+	}
+    
+}
+
+@Then("^User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid$")
+public void user_validates_Provider_Name_Accrued_Fees_Past_Due_Fees_and_Invoice_Period_Grid() throws Throwable
+{
+	optumPaySol.verifyProviderName();
+	optumPaySol.verifyAccruedFees();
+	optumPaySol.verifyPastDueFees();
+	optumPaySol.verifyInvoicePeriodGrid();
+}
+
+
+
 @Then("^User validates contents of Past due fee of Fee tiles for this page$")
 public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
 	optumPaySol.validatePastdueFee();

@@ -168,3 +168,18 @@ Feature: UPA Manage User Functionality for Premium TIN
       |   BS_Gen	   | 		BS		  |		Last 60 days 	 |		 Premium		|		AO		|	Show All				|	 	Last 60 days		| 		New		          |
 
 	
+	
+		#Author: Mohammad Khalid
+ 		@UPAViewPayments_US3080022 @UPAViewPayments_US3080019
+ 		Scenario Outline: Access Payments - View Payments - Provider Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate "Fee Amount" column is displayed.
+		Then validate Fee Amount info icon message
+		Then Validate amount is displayed for payments present in debit fee rate table.
+		
+		Examples:
+
+	  |    credentials  |  userType 	|	searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+      |   PROV_Admin	| 		PROV	|	Last 30 days   |     Premium		|		AO	|	Show All		|		Last 30 days	| 	New 	    |
