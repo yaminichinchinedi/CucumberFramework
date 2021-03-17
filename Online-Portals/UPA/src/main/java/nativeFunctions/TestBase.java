@@ -245,8 +245,8 @@ public class TestBase extends ReporterClass {
 				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
 				driver = initChromeDriver();
 			}
-			driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
 		
 		else 

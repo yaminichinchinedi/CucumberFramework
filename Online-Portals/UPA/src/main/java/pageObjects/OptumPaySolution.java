@@ -263,7 +263,7 @@ public class OptumPaySolution {
 		public void verifySolutionsTabForPremium(String trialStatus,String portalAccess) throws Exception{
 			if(trialStatus.equalsIgnoreCase("A")) {
 				Browser.browserRefresh(testConfig);
-				Browser.waitForPageLoad(testConfig);
+				Browser.waitForPageLoad(testConfig.driver);
 				verifyHeaders();
 				planTypeInfoForPremium();
 				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUpHeading.getText().trim());
