@@ -1,7 +1,7 @@
 #Author: Sahil D Sharma
 
  @UPADataBundleNEW  @UPARegression    @BothCSRUPAScenarios @fish
- Feature: UPA Billing Service Functionality
+ Feature: UPA Payment Data Files Functionality
 
 	@TC001 			
 	Scenario Outline: UI Validations for Data Bundle
