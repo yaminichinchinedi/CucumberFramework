@@ -1137,6 +1137,11 @@ public ArrayList getEnrollmentContent(String content) {
 			case "PremiumOrStandardTIN":	
 				sqlRowNo=1605;
 				break;
+				
+			case "PremiumOrStandardFeeInvoice":
+				sqlRowNo=2009;
+				break;
+			
  		
 			case "ActiveBSTin":
 			    sqlRowNo=16;

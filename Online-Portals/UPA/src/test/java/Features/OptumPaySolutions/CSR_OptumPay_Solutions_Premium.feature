@@ -1,4 +1,3 @@
-
 #Author: Rahul Krishna
 @CSROptumPaySolutions    
     Feature: Optum Pay Solutions Scenarios for Premium Tins
@@ -144,6 +143,4 @@
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
 
-         
-         
          

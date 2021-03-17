@@ -1,6 +1,5 @@
-
 #Author: Rahul Krishna
-    
+
 Feature: Optum Pay Solutions Scenarios for Standard Tins
    
   #Author: Marsha
@@ -61,5 +60,3 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
       | Super       | PROV      | TinWithInvoices    | Standard     | AO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Standard     | AV      | PD          |
       
-		
-		
