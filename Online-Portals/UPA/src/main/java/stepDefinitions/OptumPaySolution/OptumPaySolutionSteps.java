@@ -106,7 +106,7 @@ public void user_verifies_page_text_messaging_in_Optum_Pay_Solutions_page(String
 //Added by Mohammad to click on Invoices tab on OPS tab
 
 @Then("^User clicks on \"([^\"]*)\" tab$")
-public void user_clicks_on_tab(String arg1) throws Throwable
+public void user_clicks_on_tab(String tabName) throws Throwable
 {
     optumPaySol.clickOnInvoicesTab();
 }
@@ -141,6 +141,15 @@ public void user_validates(String paraName) throws Throwable
 	}
 	}
     
+}
+
+@Then("^User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid$")
+public void user_validates_Provider_Name_Accrued_Fees_Past_Due_Fees_and_Invoice_Period_Grid() throws Throwable
+{
+	optumPaySol.verifyProviderName();
+	optumPaySol.verifyAccruedFees();
+	optumPaySol.verifyPastDueFees();
+	optumPaySol.verifyInvoicePeriodGrid();
 }
 
 

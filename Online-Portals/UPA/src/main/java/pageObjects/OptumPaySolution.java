@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -809,58 +811,54 @@ public class OptumPaySolution {
 		public void verifyProviderName() throws IOException, SQLException
 		{
 			String expectedProviderName = null;
-			String sqlQuery = "SELECT ORG_NM FROM ole.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "'";
-			
-			ResultSet rsProviderName = DataBase.testExecuteSelectQuery(testConfig, sqlQuery, DatabaseType.Test2);
-			
-			while(rsProviderName.next())
-			{
-				expectedProviderName = rsProviderName.getString("ORG_NM");
-			}
-			
+			testConfig.putRunTimeProperty("Prov_tin_nbr", testConfig.getRunTimeProperty("tin"));
+			Map<String, String> results = DataBase.executeSelectQuery(testConfig,236, 1);
+			expectedProviderName = (String) results.get("ORG_NM");
 			String actualProviderName = providerNameValueInvoicesTab.getText().substring(9, providerNameValueInvoicesTab.getText().length());
 			Helper.compareEquals(testConfig, "Provider Name", expectedProviderName, actualProviderName.trim());
 		}
 		
 		public void verifyAccruedFees()
 		{
-			String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(0, 27);
-			Log.Comment(actualAccruedFees);
-			Helper.compareEquals(testConfig, "Accrued Fees", "Accrued fees month to date:", actualAccruedFees.trim());
+			String actualAccruedFeesTitle = accruedFeesInvoicesTab.getText().substring(0, 27);
+			String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(29, accruedFeesInvoicesTab.getText().length());
+			String expectedAccruedFees = null;
+			testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
+			Map<String, String> data = DataBase.executeSelectQuery(testConfig,1616, 1);
+			if (data.get("ACCRDFEE").toString().isEmpty())
+				expectedAccruedFees = "0.00";
+			else
+				expectedAccruedFees = data.get("ACCRDFEE").toString();
+			
+			Helper.compareEquals(testConfig, "Accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
+			Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim());
 		}
 		
 		public void verifyPastDueFees() throws IOException, SQLException
 		{
 			String expectedPastDueFees = null;
-			String sqlQuery = "SELECT SUM(INVC_TOT_AMT ) AS TOT_PAST_DUE FROM ole.DEBIT_FEE_INVCE WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "' AND INVC_STS='FP'";
+			testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
+			Map<String, String> data = DataBase.executeSelectQuery(testConfig,1630, 1);
 			
-			ResultSet rsPastDueFee = DataBase.testExecuteSelectQuery(testConfig, sqlQuery, DatabaseType.Test2);
-			
-			while(rsPastDueFee.next())
-			{
-				expectedPastDueFees = rsPastDueFee.getString("TOT_PAST_DUE");
-				
-				if (expectedPastDueFees==null)
-				{
-					expectedPastDueFees = "0.00";
-				}
-				
-			}
+			if(data.get("PASTDUEFEE").toString().isEmpty())
+				expectedPastDueFees = "0.00";
+			else
+				expectedPastDueFees = data.get("PASTDUEFEE").toString();
 			
 			String actualPastDueFees = pastDueFeesInvoicesTab.getText().substring(16, pastDueFeesInvoicesTab.getText().length());
 			Helper.compareEquals(testConfig, "Past Due Fees", expectedPastDueFees, actualPastDueFees.trim());
-			
 		}
 		
-		public void verifyInvoicePeriodGrid() throws IOException, SQLException
+		public void verifyInvoicePeriodGrid() throws IOException, SQLException, ParseException
 		{
-			String exTotalGridRows = null;
-			
 			List<WebElement> tableHeads = Element.findElements(testConfig, "xpath", "//table[@class='table']/thead/tr/th");
 			List<String> expectedTableHeads = new ArrayList<>();
 			expectedTableHeads.add(0, "Invoice Period");
 			expectedTableHeads.add(1, "Total Invoice Amount");
 			expectedTableHeads.add(2, "Download Invoice");
+			
+			String downloadInvoiceNumber = null;
+			List<String> billingStartDate = new ArrayList<>();
 			
 			for (int i=0; i<tableHeads.size(); i++)
 			{
@@ -869,15 +867,79 @@ public class OptumPaySolution {
 			}
 			
 			List<WebElement> tableValues = Element.findElements(testConfig, "xpath", "//table[@class='table']/tbody/tr");
-			String sqlString = "SELECT count(*) AS TOT_COUNT FROM ole.DEBIT_FEE_INVCE WHERE PROV_TIN_NBR ='" + testConfig.getRunTimeProperty("tin") + "' AND INVC_STS <> 'IC'";
-			ResultSet rsCount = DataBase.testExecuteSelectQuery(testConfig, sqlString, DatabaseType.Test2);
-			
-			while (rsCount.next())
+			for (int i=0; i<tableValues.size(); i++)
 			{
-				exTotalGridRows = rsCount.getString("TOT_COUNT");
+				String xpathInvcNumber = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[3]/a";
+				WebElement invcNumber = Element.findElement(testConfig, "xpath", xpathInvcNumber);
+				downloadInvoiceNumber = invcNumber.getText();
+				
+				String xpathtTotalInvoiceAmount = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[2]";
+				WebElement totInvcAmount = Element.findElement(testConfig, "xpath", xpathtTotalInvoiceAmount);
+				String exTotalInvoiceAmount = totInvcAmount.getText().substring(1);
+				
+				String xpathtBillingPeriod = "//table[@class='table']/tbody/tr["+ (i+1) +"]/td[1]";
+				WebElement billingPeriod = Element.findElement(testConfig, "xpath", xpathtBillingPeriod);
+				String invcBillingPeriod = billingPeriod.getText();
+				
+				billingStartDate.add(0, invcBillingPeriod.substring(0,10));
+				
+				String exBilMonthStart= invcBillingPeriod.substring(0,2);
+				String exBilDayStart= invcBillingPeriod.substring(3,5);
+				String exBilYearStart= invcBillingPeriod.substring(6,10);
+				
+				
+				String exBilMonthEnd= invcBillingPeriod.substring(13,15);
+				String exBilDayEnd= invcBillingPeriod.substring(16,18);
+				String exBilYearEnd= invcBillingPeriod.substring(19,23);
+				
+				
+				testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
+				testConfig.putRunTimeProperty("downloadInvoiceNumber", downloadInvoiceNumber);
+				Map<String, String> data = DataBase.executeSelectQuery(testConfig,2010, 1);
+				
+				String actualInvcAmount = data.get("INVC_TOT_AMT").toString();
+				
+				String acBilYearStart= data.get("BILL_CYC_STRT_DT").toString().substring(0,4);
+				String acBilMonthStart= data.get("BILL_CYC_STRT_DT").toString().substring(5,7);
+				String acBilDayStart= data.get("BILL_CYC_STRT_DT").toString().substring(8,10);
+				
+				
+				String acBilYearEnd= data.get("BILL_CYC_END_DT").toString().substring(0,4);
+				String acBilMonthEnd= data.get("BILL_CYC_END_DT").toString().substring(5,7);
+				String acBilDayEnd= data.get("BILL_CYC_END_DT").toString().substring(8,10);
+				
+				
+				Helper.compareEquals(testConfig, "Total Invoice Amount for each Invoice", exTotalInvoiceAmount, actualInvcAmount);
+				
+				Helper.compareEquals(testConfig, "Billing Period Month-Start", exBilMonthStart, acBilMonthStart);
+				Helper.compareEquals(testConfig, "Billing Period Day-Start", exBilDayStart, acBilDayStart);
+				Helper.compareEquals(testConfig, "Billing Period Year-Start", exBilYearStart, acBilYearStart);
+				
+				Helper.compareEquals(testConfig, "Billing Period Month-End", exBilMonthEnd, acBilMonthEnd);
+				Helper.compareEquals(testConfig, "Billing Period Day-End", exBilDayEnd, acBilDayEnd);
+				Helper.compareEquals(testConfig, "Billing Period Year-End", exBilYearEnd, acBilYearEnd);
+				
 			}
 			
-			Helper.compareEquals(testConfig, "Grid Count", exTotalGridRows, String.valueOf(tableValues.size()));
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			for (int i=0; i<billingStartDate.size()-1; i++)
+			{
+				for (int k=i+1; k<billingStartDate.size(); k++)
+				{
+					Date date1 = sdf.parse(billingStartDate.get(i));
+			        Date date2 = sdf.parse(billingStartDate.get(k));
+			        
+			        if (date1.compareTo(date2)>=0)
+			        {
+			        	Log.Comment("The Billig Period is in decending order");
+			        }
+			        
+			        else
+			        {
+			        	Log.Fail("The Billig Period is NOT in decending order");
+			        }
+				}
+			}
 			
 		}
 	   

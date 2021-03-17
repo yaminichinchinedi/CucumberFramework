@@ -81,14 +81,8 @@ Scenario Outline: To validate Invoices tab for Provider admin users
 Given User navigates to UPA portal and enters "<credentials>" and login
 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And User clicks on Optum Pay Solutions tab
-
 Then User clicks on "Invoices" tab
-And User validates "ProviderName" 
-And User validates "AccruedFees" 
-And User validates "PastDueFees" 
-And User validates "InvoicePeriodGrid" 
-
-
+And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
@@ -99,20 +93,14 @@ And User validates "InvoicePeriodGrid"
  
  #Author: Mohammad Khalid
 @UPA_OPS_US3222937_BSAdmin
-Scenario Outline: To validate Invoices tab for Provider admin users
+Scenario Outline: To validate Invoices tab for BS admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And User clicks on Optum Pay Solutions tab
  Then User Enters tin for OPS and click on search button for "<userType>".
- 
 Then User clicks on "Invoices" tab
-And User validates "ProviderName" 
-And User validates "AccruedFees" 
-And User validates "PastDueFees" 
-And User validates "InvoicePeriodGrid" 
-
-
+And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  

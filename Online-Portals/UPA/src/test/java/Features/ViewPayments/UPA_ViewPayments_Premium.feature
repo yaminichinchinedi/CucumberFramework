@@ -177,7 +177,6 @@ Feature: UPA Manage User Functionality for Premium TIN
 		When Click on View Payments Link for UPA
 		Then Validate "Fee Amount" column is displayed.
 		Then validate Fee Amount info icon message
-		Then validate "Fee Amount" column values for each payment 
 		Then Validate amount is displayed for payments present in debit fee rate table.
 		
 		Examples:
