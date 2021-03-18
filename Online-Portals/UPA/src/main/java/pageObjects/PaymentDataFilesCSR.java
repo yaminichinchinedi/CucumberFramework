@@ -274,7 +274,7 @@ public class PaymentDataFilesCSR extends TestBase
 
 	public PaymentDataFilesCSR verifyErrorForMore30days() throws Exception
 	{
-		Element.clickByJS(testConfig,firstPayer, "First Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.clickByJS(testConfig,addBtn, "Add Button");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
 		
@@ -291,7 +291,7 @@ public class PaymentDataFilesCSR extends TestBase
  
 	public PaymentDataFilesCSR verifyErrorForPriorDates() throws Exception
 	{
-		Element.clickByJS(testConfig,firstPayer, "First Payer");
+		Element.click(firstPayer, "First Payer");
 		Element.clickByJS(testConfig,addBtn, "Add Button");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
 		
