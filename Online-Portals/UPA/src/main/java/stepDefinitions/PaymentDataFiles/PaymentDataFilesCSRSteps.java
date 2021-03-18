@@ -58,7 +58,7 @@ public void verify_Remove_All_Button_Functionality() throws Throwable {
 
 @Then("^Verify Reset Functionality$")
 public void verify_Reset_Functionality() throws Throwable {
-	paymentDataFilePage.verifyResetButton();
+	paymentDataFilePage.verifyAvailablePayerListAfterReset();
 }
 
 @Then("^Verify Submit Error without selecting any Fields$")

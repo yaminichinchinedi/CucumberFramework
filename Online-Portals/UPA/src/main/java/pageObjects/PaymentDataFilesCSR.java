@@ -185,15 +185,16 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyAddButton() throws Exception
 	{
+		String txtFirstPayer=firstPayer.getText();
 		Element.click(firstPayer, "First Payer");
-		Element.click(addBtn, "Add Button");
-		Helper.compareEquals(testConfig, "Add Button Functionality", "UHC Member Payment", selectedFirstPayer.getText().trim());
+		Element.clickByJS(testConfig,addBtn, "Add Button");
+		Helper.compareEquals(testConfig, "Add Button Functionality", txtFirstPayer, selectedFirstPayer.getText().trim());
 		return this;	
 	}
 		   
 	public PaymentDataFilesCSR verifyRemoveButton() throws Exception
 	{
-		Element.clickByJS(testConfig,selectedFirstPayer, "Selected First Payer");
+		Element.click(selectedFirstPayer, "Selected First Payer");
 		Element.clickByJS(testConfig,removeBtn, "Remove Button");
 		Helper.compareEquals(testConfig, "Remove Button Functionality", 0, selectedPayerList.size());
 		return this; 
@@ -202,7 +203,7 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyAddAllButton() throws Exception
 	{
 		
-		Element.click(addAllBtn, "Add All Button");
+		Element.clickByJS(testConfig,addAllBtn, "Add All Button");
 		 Helper.compareEquals(testConfig, "Add All Functionality", 48, selectedPayerList.size());
 		return this;
 	}
@@ -214,10 +215,11 @@ public class PaymentDataFilesCSR extends TestBase
 		return this;
 	}
 		   
-	public PaymentDataFilesCSR verifyResetButton() throws Exception
+	public PaymentDataFilesCSR verifyAvailablePayerListAfterReset() throws Exception
 	{
 		Element.clickByJS(testConfig,addAllBtn, "Add All Button");	 
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
+        Browser.waitForLoad(testConfig.driver);
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		 
 		return this;

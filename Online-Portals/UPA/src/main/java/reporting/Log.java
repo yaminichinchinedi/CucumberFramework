@@ -87,8 +87,15 @@ public  class Log extends ExtentTestManager {
 	
 	public synchronized static void Fail(ITestResult result) 
 	{
-		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
-		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
+		try
+		{
+			if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
+				PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
+		}
+		catch (Exception e) {
+			PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
+		}
+		
 
 	}
 	
