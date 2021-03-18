@@ -46,10 +46,10 @@ public class SearchTinPagePaymentDataFiles {
 		switch (userType)
 		{	
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
-				if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR")) {
-					Browser.wait(testConfig, 2);
+				if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR"))
+				{
 					Element.enterDataByJS(testConfig,txtboxTinNo, testConfig.getRunTimeProperty("tin"), "tin textbox");
-					Element.click(srchBtn, "Search Button");
+					Element.clickByJS(testConfig,srchBtn, "Search Button");
 				}
 				break;
 				
