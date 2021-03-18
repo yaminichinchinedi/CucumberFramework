@@ -362,7 +362,7 @@ public class PaymentDataFilesCSR extends TestBase
 		
 		 
 		//Click on the View Bundle Detail Link for the Latest entry
-		Element.click(viewDetailLink, "View Detail Link");
+		Element.clickByJS(testConfig,viewDetailLink, "View Detail Link");
 		Element.fluentWait(testConfig, subHeader, 100,1, "Header text for download data bundle");
 		 
 		//verifies user navigated to Download Data Bundle - Bundle Details
