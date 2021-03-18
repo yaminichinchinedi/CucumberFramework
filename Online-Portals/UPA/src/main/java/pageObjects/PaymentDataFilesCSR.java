@@ -360,7 +360,7 @@ public class PaymentDataFilesCSR extends TestBase
 		 else 
 			 Helper.compareEquals(testConfig, "Incorrect Navigation to Download Data Bundle Page", expectedNote, downloadDataBundlePage.getText());
 		
-		 
+		Element.fluentWait(testConfig, viewDetailLink, 100,1, "View Data bunde link");
 		//Click on the View Bundle Detail Link for the Latest entry
 		Element.clickByJS(testConfig,viewDetailLink, "View Detail Link");
 		Element.fluentWait(testConfig, subHeader, 100,1, "Header text for download data bundle");
