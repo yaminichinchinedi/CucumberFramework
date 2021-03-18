@@ -122,9 +122,8 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, "validateTINPayData.do");
-		
-}
+		Element.fluentWait(testConfig, addBtn, 100, 1, "Add button");
+	}
 	
 	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
 		Helper.compareEquals(testConfig, "Navigation to Create Data Bundle Page", "Create Data Bundle", createDataBundle.getText());
@@ -342,8 +341,8 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR enterPaymentDate() throws InterruptedException, Exception 
 	{
 		String DateEntered= Helper.changeDateFormat(testConfig.getRunTimeProperty("setl_dt"), "yyyy-mm-dd", "mm/dd/yyyy");
-		Element.enterData(fromDate, DateEntered, "From Date Entered: "+DateEntered, "fromDate");
-		Element.enterData(toDate, DateEntered, "To Date Entered: "+DateEntered, "toDate");
+		Element.enterDataByJS(testConfig,fromDate, DateEntered, "From Date Entered: "+DateEntered);
+		Element.enterDataByJS(testConfig,toDate, DateEntered, "To Date Entered: "+DateEntered);
 		return this;
 	}
 	

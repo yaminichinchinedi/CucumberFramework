@@ -38,7 +38,8 @@ public class SearchTinPagePaymentDataFiles {
     {
       this.testConfig=testConfig;
 	  PageFactory.initElements(TestBase.driver, this);
-	  Browser.verifyURL(testConfig, "viewsearchtinpaydata.do");
+	  if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR"))
+	  Element.fluentWait(testConfig, srchBtn, 100, 1, "Search button");
     }
 	
 	public ViewPayments clickSearchBtn()
