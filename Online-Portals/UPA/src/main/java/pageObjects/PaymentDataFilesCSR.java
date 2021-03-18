@@ -245,7 +245,6 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyErrorWithoutSettlementDates() throws Exception
 	{
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 2);
 		Element.click(firstPayer, "First Payer");
 		Element.click(addBtn, "Add Button");
 		Element.click(eight35ChkBox, "Click on 835 Check Box");
@@ -261,51 +260,46 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyErrorWithoutFileType() throws Exception
 	{
 		Element.click(firstPayer, "First Payer");
-		Element.click(addBtn, "Add Button");
+		Element.clickByJS(testConfig,addBtn, "Add Button");
 		String date1=testConfig.getRunTimeProperty("setl_dt");
 		date1= Helper.changeDateFormat(date1, "yyyy-mm-dd", "mm/dd/yyyy");
-		Element.enterData(fromDate, date1, "From Date: "+date1, "fromDate");
-		Element.enterData(toDate, date1, "To Date: "+date1, "toDate");
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
-		 
+		Element.enterDataByJS(testConfig,fromDate, date1, "From Date: "+date1);
+		Element.enterDataByJS(testConfig,toDate, date1, "To Date: "+date1);
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", fileError.getText());
-		Element.click(resetBtn, "Reset Button");
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		
 		return this;
 	}	
 
 	public PaymentDataFilesCSR verifyErrorForMore30days() throws Exception
 	{
-		Element.click(firstPayer, "First Payer");
-		Element.click(addBtn, "Add Button");
-		Element.click(eight35ChkBox, "Click on 835 Check Box");
+		Element.clickByJS(testConfig,firstPayer, "First Payer");
+		Element.clickByJS(testConfig,addBtn, "Add Button");
+		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
 		
 		String date1 = Helper.getDateBeforeOrAfterDays(-366,"MM/dd/yyyy");
 		String date2= Helper.getCurrentTime("MM/dd/yyyy");
-		Element.enterData(fromDate, date1, "From Date: "+date1, "fromDate");
-		Element.enterData(toDate, date2, "To Date: "+date2, "toDate");
-		Element.click(btnSubmit, "Click on Submit Button");	
-		Browser.wait(testConfig, 2);
-		
+		Element.enterDataByJS(testConfig,fromDate, date1, "From Date: "+date1);
+		Element.enterDataByJS(testConfig,toDate, date2, "To Date: "+date2);
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");	
 		Helper.compareEquals(testConfig, "Error for More Than 30 Days Displays: ", "Settlement Date Range : From Date must not be greater than 30 Days prior to To date.", settlErrorMore30Days.getText());
-		
-		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
+	
 		return this;
 	}
  
 	public PaymentDataFilesCSR verifyErrorForPriorDates() throws Exception
 	{
-		Element.click(firstPayer, "First Payer");
-		Element.click(addBtn, "Add Button");
-		Element.click(eight35ChkBox, "Click on 835 Check Box");
+		Element.clickByJS(testConfig,firstPayer, "First Payer");
+		Element.clickByJS(testConfig,addBtn, "Add Button");
+		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
 		
 		String date1=Helper.getCurrentDate("MM/dd/yyyy");
 		String date2 = Helper.getDateBeforeOrAfterDays(366,"MM/dd/yyyy");
-		Element.enterData(fromDate, date1, "From Date: "+date1, "fromDate");
-		Element.enterData(toDate, date2, "To Date: "+date2, "toDate");
-		Element.click(btnSubmit, "Click on Submit Button");
+		Element.enterDataByJS(testConfig,fromDate, date1, "From Date: "+date1);
+		Element.enterDataByJS(testConfig,toDate, date2, "To Date: "+date2);
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 2);
 		 
 		Helper.compareEquals(testConfig, "Error for Prior Days Displays: ", "Settlement Date Range : To and From Dates must be prior to or same as current date.", settlmntDatePriorError.getText());
@@ -321,9 +315,9 @@ public class PaymentDataFilesCSR extends TestBase
 		String date1=Helper.getCurrentDate("MM/dd/yyyy");
 		Element.enterDataByJS(testConfig, fromDate, date1, "From Date: "+date1+ "fromDate");
 		Element.enterDataByJS(testConfig, toDate, date1, "From Date: "+date1+ "toDate");
-		Element.click(eight35ChkBox, "Click on 835 Check Box");
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);	   
+		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
+		   
 		
 		//Verify Payer Selection Error Message
 		Helper.compareEquals(testConfig, "Payer Selection Error Displays", "Payer Selection : Missing Data", payerError.getText());
@@ -419,24 +413,17 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifySubmitPRAsDataBundle() throws Exception
 	{
-		Element.click(praChkbox, "Click on PPRA Check Box");
-		Browser.wait(testConfig, 1);
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
-			   
-
+		Element.clickByJS(testConfig,praChkbox, "Click on PPRA Check Box");
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		Helper.compareEquals(testConfig, "Data Bundle Message for PPRA File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
-		  
 		return this;
 	}
 	
 	
 	public PaymentDataFilesCSR verifySubmit835DataBundle() throws Exception
 	{
-		Element.click(eight35ChkBox, "Click on 835 Check Box");
-		Browser.wait(testConfig, 1);
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		Helper.compareEquals(testConfig, "Data Bundle Message for 835 File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		return this;
 	}
@@ -445,7 +432,6 @@ public class PaymentDataFilesCSR extends TestBase
 	 {
 		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s", "File Types selected for this bundle: 835s", bundleFileType.getText().trim());
-		 
 		 return this;
 	 }
 	
@@ -465,11 +451,10 @@ public class PaymentDataFilesCSR extends TestBase
 		 String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
 		 String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
 		 if(valueEPRA.equalsIgnoreCase("N") && valuePPRA.equalsIgnoreCase("N") && value835.equalsIgnoreCase("Y") ) 
-		 {
 			 Log.Pass("Data Bundle Request with ID "+DataBundleID+" have been Submitted Successfully with 835 indicator as: "+value835);	
-		 }
-		 else {Log.Fail("Error in Data Bundle Request");
-		 }
+		 else 
+		 Log.Fail("Error in Data Bundle Request");
+
 		 return this;
 		
 	 }
@@ -483,57 +468,46 @@ public class PaymentDataFilesCSR extends TestBase
 		String valueEPRA = testConfig.getRunTimeProperty("EPRAInd").trim();
 		String DataBundleID = testConfig.getRunTimeProperty("DataBundleID").trim();
 		if(valueEPRA.equalsIgnoreCase("N") && valuePPRA.equalsIgnoreCase("Y") && value835.equalsIgnoreCase("N"))
-		{
 			Log.Pass("Data Bundle Request with ID "+DataBundleID+"have been Submitted Successfully with PPRA indicator as: "+valuePPRA);	
-			}
-		else {Log.Fail("Error in Data Bundle Request");
-		}
+		else 
+		Log.Fail("Error in Data Bundle Request");
+		
 		return this;
 	}
 	
 	public PaymentDataFilesCSR VerifyEPRAandPPRA() throws Exception
 	 {
-		 Element.click(epraChkbox, "Click on EPRA Check Box");
-		 Element.click(praChkbox, "Click on PPRA Check Box");
-		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 1);
-		 		   
+		 Element.clickByJS(testConfig,epraChkbox, "Click on EPRA Check Box");
+		 Element.clickByJS(testConfig,praChkbox, "Click on PPRA Check Box");
+		 Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and PPRA File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 return this;
 	 }
 
 	 public PaymentDataFilesCSR VerifyEPRAand835() throws Exception
 	 {
-		 Element.click(epraChkbox, "Click on EPRA Check Box");
-		 Element.click(eight35ChkBox, "Click on 835 Check Box");
-		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 1);
-		 		   
+		 Element.clickByJS(testConfig,epraChkbox, "Click on EPRA Check Box");
+		 Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		 Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and 835 File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
-		 
-		 Browser.wait(testConfig, 2);
 		 return this;
 	 }
 
 	 public PaymentDataFilesCSR VerifyPPRAand835() throws Exception
 	 {
-		 Element.click(praChkbox, "Click on PPRA Check Box");
-		 Element.click(eight35ChkBox, "Click on 835 Check Box");
-		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 1);
-		 		   
+		 Element.clickByJS(testConfig,praChkbox, "Click on PPRA Check Box");
+		 Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		 Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA and 835 File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 return this;
 	 }
 	 
 	 public PaymentDataFilesCSR VerifyEPRAandPPRAand835() throws Exception
 	 {
-		 Element.click(epraChkbox, "Click on EPRA Check Box");
-		 Element.click(praChkbox, "Click on PPRA Check Box");
-		 Element.click(eight35ChkBox, "Click on 835 Check Box");
-		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 1);
-		 		   
+		 Element.clickByJS(testConfig,epraChkbox, "Click on EPRA Check Box");
+		 Element.clickByJS(testConfig,praChkbox, "Click on PPRA Check Box");
+		 Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		 Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		 Helper.compareEquals(testConfig, "Data Bundle Message for All File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 return this;
 	 }
@@ -655,8 +629,7 @@ public class PaymentDataFilesCSR extends TestBase
 
 		public PaymentDataFilesCSR DownloadDataBundlePage() throws Exception
 		{
-			Element.click(downloadDataBundle, "Click on Download Data Bundle Tab");
-			Browser.wait(testConfig, 2);
+			Element.clickByJS(testConfig,downloadDataBundle, "Click on Download Data Bundle Tab");
 			
 			 //verify that we are on the page
 			 String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download";
@@ -703,7 +676,7 @@ public class PaymentDataFilesCSR extends TestBase
 		}
 		
 		public PaymentDataFilesCSR verify835isClickable() {
-			Element.click(eight35ChkBox, "835's Check Box");
+			Element.clickByJS(testConfig,eight35ChkBox, "835's Check Box");
 			Element.verifyElementIsChecked(eight35ChkBox, "835's Check Box");
 			return this;
 
