@@ -2802,7 +2802,7 @@ public void deleteaddedtin()
 	String tin = testConfig.getRunTimeProperty("tinNo");
 	WebElement delete = testConfig.driver.findElement(By.xpath("//div[@id='manage-users']//table[@class='manageUsers__tinGrid datatables']//td[contains(text(),'"+tin+"')]/following-sibling::td/div[contains(@class,'delete')]"));
 	delete.click();
-	Browser.waitForPageLoad(testConfig);
+	Browser.waitForPageLoad(testConfig.driver);
 	btnSave.click();
 }
 public ManageUsers verifyModTypeCd(String userType, String value) {

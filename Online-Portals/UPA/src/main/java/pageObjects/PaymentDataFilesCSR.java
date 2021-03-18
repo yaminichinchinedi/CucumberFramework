@@ -208,8 +208,9 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyRemoveButton() throws Exception
 	{
 		Browser.wait(testConfig, 2);
-		Element.click(selectedFirstPayer, "Selected First Payer");
-		Element.click(removeBtn, "Remove Button");
+		Element.clickByJS(testConfig,selectedFirstPayer, "Selected First Payer");
+		Element.clickByJS(testConfig,removeBtn, "Remove Button");
+		Browser.wait(testConfig, 1);
 		Helper.compareEquals(testConfig, "Remove Button Functionality", 0, selectedPayerList.size());
 		return this; 
 	}
@@ -225,7 +226,8 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyRemoveAllButton() throws Exception
 	{
 		Browser.wait(testConfig, 1);		
-		Element.click(removeAllBtn, "Remove All Button");		
+		Element.clickByJS(testConfig,removeAllBtn, "Remove All Button");
+		Browser.wait(testConfig, 1);
 		 Helper.compareEquals(testConfig, "Remove All Functionality", 0, selectedPayerList.size());
 		return this;
 	}

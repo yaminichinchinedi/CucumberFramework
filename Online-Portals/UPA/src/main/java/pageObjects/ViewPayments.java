@@ -236,8 +236,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//td[contains(text(),'No payments')]") WebElement errormsg;
 	@FindBy(xpath = "//td[@class='errors']") WebElement errormsgcsr;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
-	
-	
+		
 	//Added by Mohammad: WebElement Fee Amount Info Icon Message
 	@FindBy(xpath="//span[@class='wrapperTooltip']")
 	WebElement iHoverMessageFeeAmount_UPA;
@@ -3621,6 +3620,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	public ViewPayments verifyFeeAmountDash(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		String conslpayno=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
 		boolean found=false;
 		int totalNoOfPages=getNumberOfPages();	
 		ArrayList<String> tblHeader=new ArrayList<String>();
@@ -3637,12 +3637,12 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
 					String feeAmountUI=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).getText().toString();
-					int sqlRowNo=1510;
+					int sqlRowNo=1121;//1510;
 					Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 					if(results==null)
 						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "-", feeAmountUI);
 					else
-						Helper.compareEquals(testConfig, "Fee Amount on View Payments", results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "$"+results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
 		    	   }
 		    	   if(found==true)break;
 		        }
@@ -4289,9 +4289,4 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 			
 		}
 
-
-
-	}
-        
-
-
+}
