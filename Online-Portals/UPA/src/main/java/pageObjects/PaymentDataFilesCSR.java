@@ -355,11 +355,13 @@ public class PaymentDataFilesCSR extends TestBase
 		
 		//verify that we are on the page
 		String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download for 7 days with the expiration date listed for each bundle.";
+		
+		downloadDataBundlePage=Element.findElement(testConfig, "xpath", "//tr[@class='subheadernormal'])[2]");
 		if(downloadDataBundlePage.getText().contains(expectedNote))
 			 Log.Pass("User has been navigated to Download Data Bundle Page. Text Displayed: "+downloadDataBundlePage.getText());
 		 else 
 			 Helper.compareEquals(testConfig, "Incorrect Navigation to Download Data Bundle Page", expectedNote, downloadDataBundlePage.getText());
-		
+		viewDetailLink=Element.findElement(testConfig, "xpath", "//a[contains(text(),'View Bundle Detail')])[1]");
 		Element.fluentWait(testConfig, viewDetailLink, 100,1, "View Data bunde link");
 		//Click on the View Bundle Detail Link for the Latest entry
 		Element.clickByJS(testConfig,viewDetailLink, "View Detail Link");
