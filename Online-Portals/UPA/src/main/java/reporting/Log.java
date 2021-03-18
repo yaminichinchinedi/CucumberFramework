@@ -87,13 +87,10 @@ public  class Log extends ExtentTestManager {
 	
 	public synchronized static void Fail(ITestResult result) 
 	{
-		
 			if(testConfig.getRunTimeProperty("AlreadyFailed")!=null)
-				System.out.println("Test case already failed");
+			{}
 			else
 			PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
-		
-
 	}
 	
 	public synchronized static void skipped(ITestResult result) 
