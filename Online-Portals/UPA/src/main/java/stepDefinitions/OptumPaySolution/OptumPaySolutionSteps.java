@@ -104,5 +104,11 @@ public void user_clicks_on_fee_search_tab() throws Throwable {
 public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
 	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
 }
+
+
+@Then("^verify that max (\\d+) records are on single page and pagination links enabled/disabled accordingly$")
+public void verify_that_max_records_are_on_single_page_and_pagination_links_enabled_disabled_accordingly(int arg1) throws Throwable {
+    optumPaySol.verifyPagination();
+}
 }
 

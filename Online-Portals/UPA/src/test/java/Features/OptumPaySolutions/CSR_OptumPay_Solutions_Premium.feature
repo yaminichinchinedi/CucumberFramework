@@ -143,7 +143,7 @@
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
          
          
-   @US3238498
+   @CSRUS3238498
       Scenario Outline: Optum Pay Soution  Display Fee Search
         Given User navigates to CSR portal and enters "<credentials>" and login
         And User fetch tin on CSR for "<userType>" for "<Fee Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -163,6 +163,23 @@
           |    Super          |	feeSearchInvoiceNumber	|  AO 	|	Premium		 |	PROV	|      
          
          
-         
+     @CSRUS3238500
+      Scenario Outline: Optum Pay Soution  Display Fee Search
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And User fetch tin on CSR for "<userType>" for "<Fee Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  		Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+        Then User clicks on Fee Searh Tab on Optum Pay Solutions Page
+        Then User enters "<Fee Search Criteria>" on Fee Search page and click on search button.
+        Then verify that max 30 records are on single page and pagination links enabled/disabled accordingly 
+        
+        
+
+
+  Examples:
+
+          |   credentials     |   Fee Search Criteria   |tinType|portalAccess    |userType|
+          |    Super          |	detailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
+                   
          
        

@@ -194,7 +194,25 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[1]/div[1]")
 	WebElement divShowRslts;
-
+	
+	@FindBy(id="feeTypeOption_selector")
+	WebElement feeTyp;
+	
+	@FindBy(id="feeStatusOption_selector")
+	WebElement feeStatus;
+	
+	@FindBy(id="feeRangeMin")
+	WebElement feeRngMin;
+	
+	@FindBy(id="feeRangeMax")
+	WebElement feeRngMax;
+	
+	@FindBy(className="btn btn-primary switch__button details_button")
+	WebElement detailsTab;
+	
+	@FindBy(xpath="//div[@id='feeSearchTable']/div[2]/div/table/tbody/tr")
+	List <WebElement> noOfRows;
+	
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
 			this.testConfig=testConfig;
@@ -778,7 +796,16 @@ public class OptumPaySolution {
 					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
 					break;
 				}
-
+				case "detailsTabwthAllVal": {
+					Browser.wait(testConfig, 2);
+					clickDetailsTab();
+					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
+					Element.selectByVisibleText(feeStatus, "All", "All Value in Fee Type");
+					//Element.enterData(feeRngMin, "0", "fee min Range", "feeRangeMin");
+					//Element.enterData(feeRngMax, "10000000000", "fee max Range", "feeRngMax");;
+					break;
+				}
+				
 			}
 
 			return clickSearchBtn();
@@ -788,7 +815,91 @@ public class OptumPaySolution {
 			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
 			return new OptumPaySolution(testConfig);
 		}
-
+		public OptumPaySolution clickDetailsTab() {
+			Element.clickByJS(testConfig, detailsTab, "details Tab");
+			return new OptumPaySolution(testConfig);
+		}
+		public OptumPaySolution verifyPagination(){
+			int totalNoOfPages=new ViewPayments(testConfig).getNumberOfPages();
+			if (totalNoOfPages == 0)
+			{
+				String actualtxt=Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-fee-search']/div[2]/div/div/p").getText();
+				Helper.compareEquals(testConfig, "message comparision", "No fees available for this Organization.", actualtxt);
+				
+			}
+			else{
+			int pageNo=0;
+			
+			
+			for( pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		    {
+			//verify pagination links >>,<<
+				if (Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]")!=null &&
+					Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[3]/div[2]/span")!=null 	
+						)
+				Log.Pass("Uppar and lower pagination links are on the page ");
+				else
+				Log.Fail("Uppar and lower pagination links are not on the page");	
+			//verify 30 rows
+				if (noOfRows.size()<=30)
+				Log.Pass("Maximum 30 rows in a page");
+				else
+				Log.Fail("More than 30 rows in a page");	
+				//click on >,>>,<,<< and disability
+				if(
+				Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[1]").getTagName()!="a"&& 
+				Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[2]").getTagName()!="a" )
+				Log.Pass("< and << are disabled");
+				else
+					Log.Fail("< and << are enabled");	
+					
+		    } 
+			if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			    {  
+			       int pageToBeClicked=pageNo+1;
+			       String first="<<";
+			       String back="<";
+			       String next=">";
+			       String last=">>";
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text()," + pageToBeClicked + ")]").click();
+			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),back)]").click();
+			       Log.Comment("Clicked back Page");
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),next)]").click();
+			       Log.Comment("Clicked next Page");
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),first)]").click();
+			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       
+			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),last)]").click();
+			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       
+					if(
+							Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[2]").getTagName()!="a"&& 
+							Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[3]").getTagName()!="a" )
+							Log.Pass("> and >> are disabled");
+							else
+								Log.Fail("> and >> are enabled");	
+			       Browser.waitForLoad(testConfig.driver);
+			     }
+			     
+//			    else if(pageNo%10==0 && totalNoOfPages!=2 && pageNo<totalNoOfPages)
+//			    {
+//			       Log.Comment("Page Number is " + pageNo + " which is multiple of 10..so clicking Next");
+//			       Element.click(lnkNextPage,"Next Link");
+//			       Browser.waitForLoad(testConfig.driver);
+//			       Browser.wait(testConfig,3);
+//			     }
+			}
+			    
+		return this;	
+		}
+		
 		/**
 		 * Get Headers List till Market Type
 		 * to store them as key in map
