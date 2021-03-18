@@ -25,8 +25,7 @@ public class PaymentDataFilesCSR extends TestBase
     WebElement enterTin;
 	@FindBy(xpath = "//input[@name='btnSubmit']")
 	WebElement searchBtn;
-	@FindBy(xpath = "//td[contains(text(),'Please enter valid Tax Identification Number')]") 
-	WebElement invalidTinMsg;
+
 	@FindBy(xpath = "//li[contains(text(),'Create Data Bundle')]") 
 	WebElement createDataBundle;
 	@FindBy(xpath = "//td[@class='subheader']")
@@ -123,18 +122,9 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(btnSubmit, testConfig, "Submit button", "PaymentDataFiles Page loaded successfully");
+		Browser.verifyURL(testConfig, "validateTINPayData.do");
+		
 }
-	
-	
-	public PaymentDataFilesCSR verifyInvalidTIN() throws Exception {
-		String invalidTIN=Helper.generateRandomAlphaNumericString(9);
-		Element.expectedWait(enterTin, testConfig, "TIN field","TIN Field");
-		Element.enterData(enterTin, invalidTIN, "TIN entered as : "+invalidTIN, "enterTin");
-		Element.clickByJS(testConfig,searchBtn, "Search Button");
-		Helper.compareEquals(testConfig, "InValid TIN Functionality", "Please enter valid Tax Identification Number", invalidTinMsg.getText());
-		return this;
-	}
 	
 	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
 		Helper.compareEquals(testConfig, "Navigation to Create Data Bundle Page", "Create Data Bundle", createDataBundle.getText());
@@ -226,7 +216,7 @@ public class PaymentDataFilesCSR extends TestBase
 		   
 	public PaymentDataFilesCSR verifyResetButton() throws Exception
 	{
-		Element.click(addAllBtn, "Add All Button");	 
+		Element.clickByJS(testConfig,addAllBtn, "Add All Button");	 
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		 
@@ -235,8 +225,9 @@ public class PaymentDataFilesCSR extends TestBase
 
 	public PaymentDataFilesCSR verifyErrorWithoutSubmittingAnyField() throws Exception
 	{
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
+		Element.fluentWait(testConfig, settlError, 100, 1, "Settlement Error");
+		
 		  
 		
 		// To verify Settlement Date Range Error
@@ -330,20 +321,18 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.enterDataByJS(testConfig, fromDate, date1, "From Date: "+date1+ "fromDate");
 		Element.enterDataByJS(testConfig, toDate, date1, "From Date: "+date1+ "toDate");
 		Element.click(eight35ChkBox, "Click on 835 Check Box");
-		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 2);	   
 		
 		//Verify Payer Selection Error Message
 		Helper.compareEquals(testConfig, "Payer Selection Error Displays", "Payer Selection : Missing Data", payerError.getText());
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 1);
 		return this;	   
 	}	
 
 	public PaymentDataFilesCSR verifyPayerSelection() throws Exception
 	{
-		Element.click(addAllBtn, "Add All Button");
+		Element.clickByJS(testConfig,addAllBtn, "Add All Button");
 		return this;
 
 	}
@@ -358,20 +347,19 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifySubmitEPRAsDataBundle() throws Exception
 	{
-		Element.click(epraChkbox, "Click on EPRA Check Box");
-		Element.click(btnSubmit, "Click on Submit Button");
+		Element.clickByJS(testConfig,epraChkbox, "Click on EPRA Check Box");
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
 		Element.expectedWait(bundleSubmission, testConfig, "Bundle submitted msg", "Bundle submitted msg");
 		Helper.compareEquals(testConfig, "Data Bundle Message for EPRA File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		return this;
 	}	
 
-	public PaymentDataFilesCSR downloadDataBundle() throws Exception
+	public PaymentDataFilesCSR verifyDownloadDataBundle() throws Exception
 	{
-		Element.click(downloadDataBundle, "Click on Download Data Bundle Tab");
-		Browser.wait(testConfig, 2);
+		Element.clickByJS(testConfig,downloadDataBundle, "Click on Download Data Bundle Tab");
 		
 		//verify that we are on the page
-		String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download";
+		String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download for 7 days with the expiration date listed for each bundle.";
 		if(downloadDataBundlePage.getText().contains(expectedNote))
 			 Log.Pass("User has been navigated to Download Data Bundle Page. Text Displayed: "+downloadDataBundlePage.getText());
 		 else 
@@ -380,7 +368,7 @@ public class PaymentDataFilesCSR extends TestBase
 		 
 		//Click on the View Bundle Detail Link for the Latest entry
 		Element.click(viewDetailLink, "View Detail Link");
-		Browser.wait(testConfig, 2);
+		Element.fluentWait(testConfig, subHeader, 100,1, "Header text for download data bundle");
 		 
 		//verifies user navigated to Download Data Bundle - Bundle Details
 		Helper.compareEquals(testConfig, "Navigation to Download Data Bundle Page", "Download Data Bundle - Bundle Details", subHeader.getText());
@@ -392,11 +380,10 @@ public class PaymentDataFilesCSR extends TestBase
 	 }
 	
 	
-	public PaymentDataFilesCSR EPRAFileType() throws Exception
+	public PaymentDataFilesCSR verifyRequestEntryInDownloadDataBundle() throws Exception
 	{
-		downloadDataBundle();
+		verifyDownloadDataBundle();
 		Helper.compareEquals(testConfig, "File Type Selected: EPRA", "File Types selected for this bundle: EPRAs", bundleFileType.getText().trim());
-		 
 		return this;
 	}
 	
@@ -455,7 +442,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	 public PaymentDataFilesCSR eight35FileType() throws Exception
 	 {
-		 downloadDataBundle();
+		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s", "File Types selected for this bundle: 835s", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -463,7 +450,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR PPRAFileType() throws Exception
 	{
-		downloadDataBundle();
+		verifyDownloadDataBundle();
 		Helper.compareEquals(testConfig, "File Type Selected: PPRA", "File Types selected for this bundle: Payer PRAs", bundleFileType.getText().trim());
 		
 		return this;
@@ -552,7 +539,7 @@ public class PaymentDataFilesCSR extends TestBase
 
 	 public PaymentDataFilesCSR EPRAnPPRAFileType() throws Exception
 	 {
-		 downloadDataBundle();
+		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer PRAs, EPRAs", "File Types selected for this bundle: Payer PRAs, EPRAs", bundleFileType.getText().trim());
 		  
 		 return this;
@@ -560,7 +547,7 @@ public class PaymentDataFilesCSR extends TestBase
 	 
 	 public PaymentDataFilesCSR EPRAn835FileType() throws Exception
 	 {
-		 downloadDataBundle();
+		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer 835, EPRAs", "File Types selected for this bundle: 835s, EPRAs", bundleFileType.getText().trim());
 		
 		 return this;
@@ -568,7 +555,7 @@ public class PaymentDataFilesCSR extends TestBase
 	 
 	 public PaymentDataFilesCSR PPRAn835FileType() throws Exception
 	 {
-		 downloadDataBundle();
+		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s, Payer PRAs", "File Types selected for this bundle: 835s, Payer PRAs", bundleFileType.getText().trim());
 		
 		 return this;
@@ -576,7 +563,7 @@ public class PaymentDataFilesCSR extends TestBase
 	 
 	 public PaymentDataFilesCSR EPRAn835nPPRAFileType() throws Exception
 	 {
-		 downloadDataBundle();
+		 verifyDownloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: All", "File Types selected for this bundle: 835s, Payer PRAs, EPRAs", bundleFileType.getText().trim());
 		  
 		 return this;

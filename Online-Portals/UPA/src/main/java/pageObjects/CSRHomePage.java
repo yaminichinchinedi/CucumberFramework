@@ -207,12 +207,13 @@ public class CSRHomePage {
 	}
 	public void clickLogoutCSR() {
 		Element.clickByJS(testConfig,linkLogout,"Logout");
-    	Browser.wait(testConfig, 1);
 	}
-	public void clickPaymentDataFilesTab()
+	
+	public SearchTinPagePaymentDataFiles clickPaymentDataFilesTab()
     {
 		Element.expectedWait(linkPaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");
 		Element.clickByJS(testConfig,linkPaymentDataFiles, "Payment Data Files Link");
+		return new SearchTinPagePaymentDataFiles(testConfig);
 		
 	}
 }

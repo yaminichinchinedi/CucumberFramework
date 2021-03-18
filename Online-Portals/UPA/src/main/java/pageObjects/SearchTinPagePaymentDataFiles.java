@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -28,12 +29,16 @@ public class SearchTinPagePaymentDataFiles {
 	@FindBy(xpath = "//input[@value='Search']")
 	WebElement srchBtn;
 	
+	@FindBy(xpath = "//td[contains(text(),'Please enter valid Tax Identification Number')]") 
+	WebElement invalidTinMsg;
+	
 	private TestBase testConfig;
 	
 	public SearchTinPagePaymentDataFiles(TestBase testConfig)
     {
       this.testConfig=testConfig;
 	  PageFactory.initElements(TestBase.driver, this);
+	  Browser.verifyURL(testConfig, "viewsearchtinpaydata.do");
     }
 	
 	public ViewPayments clickSearchBtn()
@@ -42,7 +47,9 @@ public class SearchTinPagePaymentDataFiles {
       return new ViewPayments(testConfig);
     }
 	
-	public SearchTinPagePaymentDataFiles enterTinAndSrch(String userType){
+	
+	
+	public PaymentDataFilesCSR enterTinAndSrch(String userType){
 		switch (userType)
 		{	
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
@@ -64,7 +71,16 @@ public class SearchTinPagePaymentDataFiles {
 				Element.clickByJS(testConfig,submitBtn, "Search Button");
 				break;		
 		}
-		return this;
+		return new PaymentDataFilesCSR(testConfig);
 	}
 
+	
+	public SearchTinPagePaymentDataFiles verifyErrorMsgForInvalidTIN() throws Exception {
+		String invalidTIN=Helper.generateRandomAlphaNumericString(9);
+		Element.expectedWait(txtboxTinNo, testConfig, "TIN field","TIN Field");
+		Element.enterData(txtboxTinNo, invalidTIN, "TIN entered as : "+invalidTIN, "enterTin");
+		Element.clickByJS(testConfig,srchBtn, "Search Button");
+		Helper.compareEquals(testConfig, "InValid TIN Functionality", "Please enter valid Tax Identification Number", invalidTinMsg.getText());
+		return this;
+	}
 }

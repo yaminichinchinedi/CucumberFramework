@@ -417,8 +417,8 @@ public class Browser
 		try
 		{
 			int retries = 30;
-			Browser.wait(testConfig,3);
-			//Browser.waitForLoad(testConfig.driver);
+			Browser.waitForLoad(testConfig.driver);
+			
 			String actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 			expectedURL = expectedURL.toLowerCase();
 			
