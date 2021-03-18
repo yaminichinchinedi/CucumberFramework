@@ -123,6 +123,7 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		Element.expectedWait(btnSubmit, testConfig, "Submit button", "PaymentDataFiles Page loaded successfully");
 }
 	
 	
@@ -131,13 +132,11 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.expectedWait(enterTin, testConfig, "TIN field","TIN Field");
 		Element.enterData(enterTin, invalidTIN, "TIN entered as : "+invalidTIN, "enterTin");
 		Element.clickByJS(testConfig,searchBtn, "Search Button");
-		Browser.wait(testConfig, 2);
 		Helper.compareEquals(testConfig, "InValid TIN Functionality", "Please enter valid Tax Identification Number", invalidTinMsg.getText());
 		return this;
 	}
 	
 	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
-		Browser.wait(testConfig, 2);
 		Helper.compareEquals(testConfig, "Navigation to Create Data Bundle Page", "Create Data Bundle", createDataBundle.getText());
 		return this;
 	}
@@ -161,7 +160,7 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyPayerList() throws InterruptedException, Exception
 	{				
-		Browser.wait(testConfig, 1);
+
 		List<String> PayerListUI=new ArrayList<>();
 		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayers']//option");
 				for(int i=1; i<= payer.size(); i++)
@@ -186,8 +185,6 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyButtonsList() throws Exception
 	{
-	   Browser.wait(testConfig, 1);
-	   
 		 Helper.compareEquals(testConfig, "Add Button Present in Create Data Bundle Page", true, addBtn.isDisplayed());
 		 Helper.compareEquals(testConfig, "Add All Button Present in Create Data Bundle Page", true, addAllBtn.isDisplayed());
 		 Helper.compareEquals(testConfig, "Remove Button Present in Create Data Bundle Page", true, removeBtn.isDisplayed());
@@ -198,7 +195,6 @@ public class PaymentDataFilesCSR extends TestBase
 	
 	public PaymentDataFilesCSR verifyAddButton() throws Exception
 	{
-		Browser.wait(testConfig, 2);
 		Element.click(firstPayer, "First Payer");
 		Element.click(addBtn, "Add Button");
 		Helper.compareEquals(testConfig, "Add Button Functionality", "UHC Member Payment", selectedFirstPayer.getText().trim());
@@ -207,17 +203,15 @@ public class PaymentDataFilesCSR extends TestBase
 		   
 	public PaymentDataFilesCSR verifyRemoveButton() throws Exception
 	{
-		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig,selectedFirstPayer, "Selected First Payer");
 		Element.clickByJS(testConfig,removeBtn, "Remove Button");
-		Browser.wait(testConfig, 1);
 		Helper.compareEquals(testConfig, "Remove Button Functionality", 0, selectedPayerList.size());
 		return this; 
 	}
 		   
 	public PaymentDataFilesCSR verifyAddAllButton() throws Exception
 	{
-		Browser.wait(testConfig, 1);
+		
 		Element.click(addAllBtn, "Add All Button");
 		 Helper.compareEquals(testConfig, "Add All Functionality", 48, selectedPayerList.size());
 		return this;
@@ -225,28 +219,22 @@ public class PaymentDataFilesCSR extends TestBase
 		   
 	public PaymentDataFilesCSR verifyRemoveAllButton() throws Exception
 	{
-		Browser.wait(testConfig, 1);		
 		Element.clickByJS(testConfig,removeAllBtn, "Remove All Button");
-		Browser.wait(testConfig, 1);
 		 Helper.compareEquals(testConfig, "Remove All Functionality", 0, selectedPayerList.size());
 		return this;
 	}
 		   
 	public PaymentDataFilesCSR verifyResetButton() throws Exception
 	{
-		Browser.wait(testConfig, 2);
 		Element.click(addAllBtn, "Add All Button");	 
-
-			Browser.wait(testConfig, 1);
-			 Element.clickByJS(testConfig,resetBtn, "Reset Button");
-			 Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
+        Element.clickByJS(testConfig,resetBtn, "Reset Button");
+		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		 
 		return this;
 	}
 
 	public PaymentDataFilesCSR verifyErrorWithoutSubmittingAnyField() throws Exception
 	{
-		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 2);
 		  
@@ -257,9 +245,8 @@ public class PaymentDataFilesCSR extends TestBase
 		Helper.compareEquals(testConfig, "Payer Error Displays", "Payer Selection : Missing Data", payerError.getText());
 		//to Verify File Types Error
 		Helper.compareEquals(testConfig, "File Type Error Displays", "File Types : Missing Data", fileError.getText());
-		Log.Pass("All the Three error messages are displaying correctly. Error Messages are Displayed as: "+errorHeader.getText());
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 2);
+		
 		return this;
 	}
 
@@ -272,10 +259,10 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.click(eight35ChkBox, "Click on 835 Check Box");
 		Element.click(btnSubmit, "Click on Submit Button");
 		Browser.wait(testConfig, 2);
-		
+		Element.expectedWait(settlError, testConfig, "Error msg",  "Error msg");
 		Helper.compareEquals(testConfig, "Settlement Error Displays", "Settlement Date Range : From and To Dates are required.", settlError.getText());
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 2);
+		
 		return this;
 	}
 			  
@@ -291,9 +278,8 @@ public class PaymentDataFilesCSR extends TestBase
 		Browser.wait(testConfig, 2);
 		 
 		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", fileError.getText());
-		
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 3);
+		
 		return this;
 	}	
 
@@ -358,7 +344,6 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyPayerSelection() throws Exception
 	{
 		Element.click(addAllBtn, "Add All Button");
-		Browser.wait(testConfig, 1);
 		return this;
 
 	}
@@ -368,7 +353,6 @@ public class PaymentDataFilesCSR extends TestBase
 		String DateEntered= Helper.changeDateFormat(testConfig.getRunTimeProperty("setl_dt"), "yyyy-mm-dd", "mm/dd/yyyy");
 		Element.enterData(fromDate, DateEntered, "From Date Entered: "+DateEntered, "fromDate");
 		Element.enterData(toDate, DateEntered, "To Date Entered: "+DateEntered, "toDate");
-		Browser.wait(testConfig, 3);
 		return this;
 	}
 	
@@ -376,8 +360,7 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		Element.click(epraChkbox, "Click on EPRA Check Box");
 		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
-		 		   
+		Element.expectedWait(bundleSubmission, testConfig, "Bundle submitted msg", "Bundle submitted msg");
 		Helper.compareEquals(testConfig, "Data Bundle Message for EPRA File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		return this;
 	}	
@@ -389,9 +372,8 @@ public class PaymentDataFilesCSR extends TestBase
 		
 		//verify that we are on the page
 		String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download";
-		if(downloadDataBundlePage.getText().contains(expectedNote)) {
+		if(downloadDataBundlePage.getText().contains(expectedNote))
 			 Log.Pass("User has been navigated to Download Data Bundle Page. Text Displayed: "+downloadDataBundlePage.getText());
-		 }
 		 else 
 			 Helper.compareEquals(testConfig, "Incorrect Navigation to Download Data Bundle Page", expectedNote, downloadDataBundlePage.getText());
 		
