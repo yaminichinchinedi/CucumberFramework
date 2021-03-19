@@ -48,24 +48,6 @@ Scenario Outline: UI Validations for Payment Data Files
   
 
  
-  Scenario Outline: Validations to check errors 
-    Given User navigates to CSR portal and enters "<credentials>" and login
-    And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-    When  User clicks on Payment Data Files Link
-    Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
-  	And   Verify User navigates to Create Data Bundle Page
-  	Then 	Verify Submit Error without selecting any Fields
-  	And   Verify Settlement Date Error Upon selecting Payer and File Types
-  	And 	Verify File Types Error Upon selecting Payer and Settlement Date 
-  	And 	Verify Settlemnet Date Error for Selecting Date range of more than 30 Days Between From and To Date
-  	And 	Verify Settlement Date Error for To/From Dates must be prior to or same as Current date
-  	And 	Verify Payer Selection Error
-  	And   User clicks on CSR logout
-	Examples:
-     | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-     |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
-    
-    
    
    Scenario Outline: Data Bundle Submission : EPRAs
    	Given User navigates to CSR portal and enters "<credentials>" and login
