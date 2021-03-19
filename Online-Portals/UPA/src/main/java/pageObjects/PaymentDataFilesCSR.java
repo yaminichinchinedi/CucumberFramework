@@ -251,6 +251,7 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyErrorWithoutSettlementDates() throws Exception
 	{
 		Element.clickByJS(testConfig,resetBtn, "Reset Button");
+		firstPayer=Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']//option[1]");
 		Element.click(firstPayer, "First Payer");
 		Element.click(addBtn, "Add Button");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
