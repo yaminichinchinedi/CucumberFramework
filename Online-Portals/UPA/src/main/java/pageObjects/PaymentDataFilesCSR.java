@@ -94,6 +94,7 @@ public class PaymentDataFilesCSR extends TestBase
 	WebElement bundleSubmission;
 	@FindBy(xpath = "//li[contains(text(),'Download Data Bundle')]")
 	WebElement downloadDataBundle;
+	
 	@FindBy(xpath = "(//tr[@class='subheadernormal'])[2]")
 	WebElement downloadDataBundlePage;
 	@FindBy(xpath = "(//a[contains(text(),'View Bundle Detail')])[1]")
@@ -122,7 +123,7 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.fluentWait(testConfig, addBtn, 100, 1, "Add button");
+		Element.fluentWait(testConfig, addAllBtn, 100, 1, "Add All button");
 	}
 	
 	public PaymentDataFilesCSR verifyCreateDataBundlePage() throws Exception{	
@@ -202,7 +203,7 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyAddAllButton() throws Exception
 	{
 		
-		Element.clickByJS(testConfig,addAllBtn, "Add All Button");
+		Element.click(addAllBtn, "Add All Button");
 		 Helper.compareEquals(testConfig, "Add All Functionality", 48, selectedPayerList.size());
 		return this;
 	}
@@ -216,7 +217,7 @@ public class PaymentDataFilesCSR extends TestBase
 		   
 	public PaymentDataFilesCSR verifyAvailablePayerListAfterReset() throws Exception
 	{
-		Element.clickByJS(testConfig,addAllBtn, "Add All Button");	 
+		Element.click(addAllBtn, "Add All Button");	 
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
         Browser.waitForLoad(testConfig.driver);
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
@@ -326,8 +327,11 @@ public class PaymentDataFilesCSR extends TestBase
 	}	
 
 	public PaymentDataFilesCSR verifyPayerSelection() throws Exception
-	{
-		Element.clickByJS(testConfig,addAllBtn, "Add All Button");
+	{	
+		Element.click(addAllBtn, "Add All Button");
+		if(selectedPayerList.size()!=48)
+			Element.clickByJS(testConfig,addAllBtn, "Add All Button");
+			
 		return this;
 
 	}
@@ -344,7 +348,7 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		Element.clickByJS(testConfig,epraChkbox, "Click on EPRA Check Box");
 		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
-		Element.expectedWait(bundleSubmission, testConfig, "Bundle submitted msg", "Bundle submitted msg");
+		Element.fluentWait(testConfig, bundleSubmission, 100,1, "Bundle submitted msg");
 		Helper.compareEquals(testConfig, "Data Bundle Message for EPRA File Type", " Your bundle has been successfully submitted.", bundleSubmission.getText());
 		return this;
 	}	
@@ -361,11 +365,8 @@ public class PaymentDataFilesCSR extends TestBase
 			 Helper.compareEquals(testConfig, "Incorrect Navigation to Download Data Bundle Page", expectedNote, downloadDataBundlePage.getText());
 			 */
 		
-		viewDetailLink=Element.findElement(testConfig, "xpath", "//a[contains(text(),'View Bundle Detail')])[1]");
-		Element.fluentWait(testConfig, viewDetailLink, 100,1, "View Data bunde link");
 		//Click on the View Bundle Detail Link for the Latest entry
 		Element.clickByJS(testConfig,viewDetailLink, "View Detail Link");
-		Element.fluentWait(testConfig, subHeader, 100,1, "Header text for download data bundle");
 		 
 		//verifies user navigated to Download Data Bundle - Bundle Details
 		Helper.compareEquals(testConfig, "Navigation to Download Data Bundle Page", "Download Data Bundle - Bundle Details", subHeader.getText());
@@ -632,7 +633,7 @@ public class PaymentDataFilesCSR extends TestBase
 		public PaymentDataFilesCSR DownloadDataBundlePage() throws Exception
 		{
 			Element.clickByJS(testConfig,downloadDataBundle, "Click on Download Data Bundle Tab");
-			
+			Browser.wait(testConfig, 2);
 			 //verify that we are on the page
 			 String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download";
 			 Helper.compareContains(testConfig, "Navigation to Download Data Bundle Page", expectedNote, downloadDataBundlePage.getText());
