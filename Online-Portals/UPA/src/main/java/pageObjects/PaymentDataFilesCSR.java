@@ -218,8 +218,10 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyAvailablePayerListAfterReset() throws Exception
 	{
 		Element.click(addAllBtn, "Add All Button");	 
+		if(availablePayerList.size()!=48)
+			Element.clickByJS(testConfig,addAllBtn, "Add All Button");
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
-        Browser.waitForLoad(testConfig.driver);
+        Browser.wait(testConfig, 2);
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		 
 		return this;
