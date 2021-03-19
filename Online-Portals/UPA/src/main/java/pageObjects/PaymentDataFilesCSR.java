@@ -204,13 +204,17 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		
 		Element.click(addAllBtn, "Add All Button");
+		if(selectedPayerList.size()!=48)
+			Element.clickByJS(testConfig,addAllBtn, "Add All Button");
 		 Helper.compareEquals(testConfig, "Add All Functionality", 48, selectedPayerList.size());
 		return this;
 	}
 		   
 	public PaymentDataFilesCSR verifyRemoveAllButton() throws Exception
 	{
-		Element.clickByJS(testConfig,removeAllBtn, "Remove All Button");
+		Element.click(removeAllBtn, "Remove All Button");
+		if(selectedPayerList.size()!=0)
+			Element.clickByJS(testConfig,removeAllBtn, "Add All Button");
 		 Helper.compareEquals(testConfig, "Remove All Functionality", 0, selectedPayerList.size());
 		return this;
 	}
@@ -218,7 +222,7 @@ public class PaymentDataFilesCSR extends TestBase
 	public PaymentDataFilesCSR verifyAvailablePayerListAfterReset() throws Exception
 	{
 		Element.click(addAllBtn, "Add All Button");	 
-		if(availablePayerList.size()!=48)
+		if(selectedPayerList.size()!=48)
 			Element.clickByJS(testConfig,addAllBtn, "Add All Button");
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
         Browser.wait(testConfig, 2);
