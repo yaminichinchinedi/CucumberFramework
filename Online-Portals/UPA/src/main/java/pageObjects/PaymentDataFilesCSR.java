@@ -250,21 +250,20 @@ public class PaymentDataFilesCSR extends TestBase
 
 	public PaymentDataFilesCSR verifyErrorWithoutSettlementDates() throws Exception
 	{
-		Element.click(resetBtn, "Reset Button");
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		Element.click(firstPayer, "First Payer");
 		Element.click(addBtn, "Add Button");
-		Element.click(eight35ChkBox, "Click on 835 Check Box");
-		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
-		Element.expectedWait(settlError, testConfig, "Error msg",  "Error msg");
+		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
+		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
+		Element.fluentWait(testConfig, settlError, 100, 1, "Error msg");
 		Helper.compareEquals(testConfig, "Settlement Error Displays", "Settlement Date Range : From and To Dates are required.", settlError.getText());
-		Element.click(resetBtn, "Reset Button");
-		
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		return this;
 	}
 			  
 	public PaymentDataFilesCSR verifyErrorWithoutFileType() throws Exception
 	{
+		firstPayer=Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']//option[1]");
 		Element.click(firstPayer, "First Payer");
 		Element.clickByJS(testConfig,addBtn, "Add Button");
 		String date1=testConfig.getRunTimeProperty("setl_dt");
@@ -272,6 +271,8 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.enterDataByJS(testConfig,fromDate, date1, "From Date: "+date1);
 		Element.enterDataByJS(testConfig,toDate, date1, "To Date: "+date1);
 		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
+		
+		fileError=Element.findElement(testConfig, "xpath", "//font[contains(text(),'File Types : Missing Data')]");
 		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", fileError.getText());
 		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		
@@ -280,6 +281,7 @@ public class PaymentDataFilesCSR extends TestBase
 
 	public PaymentDataFilesCSR verifyErrorForMore30days() throws Exception
 	{
+		firstPayer=Element.findElement(testConfig, "xpath","//select[@name='availablePayers']//option[1]");
 		Element.click(firstPayer, "First Payer");
 		Element.clickByJS(testConfig,addBtn, "Add Button");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
@@ -297,6 +299,7 @@ public class PaymentDataFilesCSR extends TestBase
  
 	public PaymentDataFilesCSR verifyErrorForPriorDates() throws Exception
 	{
+		firstPayer=Element.findElement(testConfig, "xpath", "//select[@name='availablePayers']//option[1]");
 		Element.click(firstPayer, "First Payer");
 		Element.clickByJS(testConfig,addBtn, "Add Button");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
@@ -318,7 +321,8 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.enterDataByJS(testConfig, toDate, date1, "From Date: "+date1+ "toDate");
 		Element.clickByJS(testConfig,eight35ChkBox, "Click on 835 Check Box");
 		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
-		   
+		  
+		Element.fluentWait(testConfig, payerError, 100, 1, "Error Msg");
 		
 		//Verify Payer Selection Error Message
 		Helper.compareEquals(testConfig, "Payer Selection Error Displays", "Payer Selection : Missing Data", payerError.getText());
