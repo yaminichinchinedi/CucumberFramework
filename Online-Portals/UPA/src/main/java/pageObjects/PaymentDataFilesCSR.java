@@ -222,8 +222,7 @@ public class PaymentDataFilesCSR extends TestBase
 			Element.clickByJS(testConfig,addAllBtn, "Add All Button");
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
         Browser.wait(testConfig, 2);
-		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
-		 
+		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());	
 		return this;
 	}
 
@@ -303,18 +302,13 @@ public class PaymentDataFilesCSR extends TestBase
 		Element.enterDataByJS(testConfig,fromDate, date1, "From Date: "+date1);
 		Element.enterDataByJS(testConfig,toDate, date2, "To Date: "+date2);
 		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
-		 
 		Helper.compareEquals(testConfig, "Error for Prior Days Displays: ", "Settlement Date Range : To and From Dates must be prior to or same as current date.", settlmntDatePriorError.getText());
-		
-		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 3);
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		return this;
 	}	
 
 	public PaymentDataFilesCSR verifyErrorForPayerSelection() throws Exception
 	{
-		Browser.wait(testConfig, 3);
 		String date1=Helper.getCurrentDate("MM/dd/yyyy");
 		Element.enterDataByJS(testConfig, fromDate, date1, "From Date: "+date1+ "fromDate");
 		Element.enterDataByJS(testConfig, toDate, date1, "From Date: "+date1+ "toDate");
@@ -324,7 +318,7 @@ public class PaymentDataFilesCSR extends TestBase
 		
 		//Verify Payer Selection Error Message
 		Helper.compareEquals(testConfig, "Payer Selection Error Displays", "Payer Selection : Missing Data", payerError.getText());
-		Element.click(resetBtn, "Reset Button");
+		Element.clickByJS(testConfig,resetBtn, "Reset Button");
 		return this;	   
 	}	
 
