@@ -289,7 +289,6 @@ import main.java.reporting.Log;
 		
 		catch(Exception e)
 		{
-			Log.Comment("Unable to click " + namOfElement);
 			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
 
 		}

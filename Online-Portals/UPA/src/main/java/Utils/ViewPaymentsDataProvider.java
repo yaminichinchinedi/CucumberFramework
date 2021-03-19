@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.print.attribute.HashAttributeSet;
 
-import main.java.sql.QueryBuilder;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -1216,9 +1215,12 @@ public ArrayList getEnrollmentContent(String content) {
 	 				testConfig.putRunTimeProperty("nullStatus", "is null");
 				sqlRowNo=1615;
 			}
-		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")||searchCriteria.contains("detailsTabwthAllVal")){
+		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")||searchCriteria.contains("feeSrchTINdetailsTabwthAllVal"))
 			sqlRowNo=435;
-		}
+		
+		if (searchCriteria.contains("NofeeSearchTIN"))
+			sqlRowNo=1631;
+		
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);

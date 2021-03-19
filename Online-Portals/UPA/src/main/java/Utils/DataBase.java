@@ -254,7 +254,7 @@ public class DataBase
 		ResultSet resultSet = null;
 		try
 		{
-			stmt = getConnection(testConfig, dbType).createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			stmt = getConnection(testConfig, dbType).createStatement();
 			resultSet = stmt.executeQuery(selectQuery);
 		}
 		catch (SQLException e)
