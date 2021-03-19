@@ -212,5 +212,26 @@ Scenario Outline: UI Validations for Payment Data Files
   
   	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-      |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
+      |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|
+      
+      
+      Scenario Outline: Verify Payer Selection Validations:Pranav
+   Given User navigates to CSR portal and enters "<credentials>" and login
+   And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   When  User clicks on Payment Data Files Link
+   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
+   And   Verify User navigates to Create Data Bundle Page
+   And   User Verify Payer Name List in Payer Selection
+   And   User Verify Buttons Available viz: Add, Add All, Remove, Remove All
+   And   Verify Reset Functionality
+   And   Verify Add Button Functionality
+   And   Verify Remove Button Functionality
+   Then  Verify Add All Button Functioanlity
+   And   Verify Remove All Button Functionality
+   And   User clicks on CSR logout
+    Examples:
+     | credentials    |  userType      |        searchCriteria     |    portalAccess    | tinType    |   
+     |   Super          |         PROV         |      Last 4-6 months    |         Premium        |        AO        |  
+      
+      	   
     
