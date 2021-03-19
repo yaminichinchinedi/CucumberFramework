@@ -219,7 +219,7 @@ public class PaymentDataFilesCSR extends TestBase
 	{
 		Element.click(addAllBtn, "Add All Button");	 
         Element.clickByJS(testConfig,resetBtn, "Reset Button");
-        Browser.waitForLoad(testConfig.driver);
+        Browser.wait(testConfig, 2);
 		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
 		 
 		return this;

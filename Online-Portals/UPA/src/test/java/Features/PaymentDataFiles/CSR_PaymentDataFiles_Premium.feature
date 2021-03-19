@@ -29,7 +29,7 @@ Scenario Outline: UI Validations for Payment Data Files
       
   
 
-  Scenario Outline: Verify Payer Selection Validations
+  Scenario Outline: Verify Payer Selection Validations ..
    Given User navigates to CSR portal and enters "<credentials>" and login
    And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
    When  User clicks on Payment Data Files Link
