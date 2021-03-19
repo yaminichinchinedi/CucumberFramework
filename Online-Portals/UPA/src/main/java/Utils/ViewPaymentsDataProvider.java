@@ -1216,7 +1216,7 @@ public ArrayList getEnrollmentContent(String content) {
 	 				testConfig.putRunTimeProperty("nullStatus", "is null");
 				sqlRowNo=1615;
 			}
-		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")){
+		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")||searchCriteria.contains("detailsTabwthAllVal")){
 			sqlRowNo=435;
 		}
  		if(!payType.equalsIgnoreCase("medicalPayment"))

@@ -207,7 +207,8 @@ public class OptumPaySolution {
 	@FindBy(id="feeRangeMax")
 	WebElement feeRngMax;
 	
-	@FindBy(className="btn btn-primary switch__button details_button")
+	@FindBy(xpath="//button[contains(text(),'Details')]")
+	//@FindBy(css="button.btn btn-primary switch__button details_button")
 	WebElement detailsTab;
 	
 	@FindBy(xpath="//div[@id='feeSearchTable']/div[2]/div/table/tbody/tr")
@@ -233,7 +234,7 @@ public class OptumPaySolution {
 		public void verifySolutionsTabForPremium(String trialStatus,String portalAccess) throws Exception{
 			if(trialStatus.equalsIgnoreCase("A")) {
 				Browser.browserRefresh(testConfig);
-				Browser.waitForPageLoad(testConfig);
+				Browser.waitForPageLoad(testConfig.driver);
 				verifyHeaders();
 				planTypeInfoForPremium();
 				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUpHeading.getText().trim());
@@ -816,23 +817,38 @@ public class OptumPaySolution {
 			return new OptumPaySolution(testConfig);
 		}
 		public OptumPaySolution clickDetailsTab() {
-			Element.clickByJS(testConfig, detailsTab, "details Tab");
+			Element.clickByJS(testConfig, detailsTab, "Fee Search Button");
 			return new OptumPaySolution(testConfig);
 		}
+		public int getNumberOfPages()
+		 {
+			int noOfPages=0;
+			int recordsCount=Integer.parseInt(getRecordCountFromUI());
+			if(recordsCount>30)
+			 {
+				noOfPages=recordsCount/30;
+				if(recordsCount%30>0)
+				noOfPages=noOfPages+1;
+			 }
+			else
+			noOfPages=1;
+	    	return noOfPages;
+		 } 
 		public OptumPaySolution verifyPagination(){
-			int totalNoOfPages=new ViewPayments(testConfig).getNumberOfPages();
-			if (totalNoOfPages == 0)
-			{
+			
+			
+				
+				if (Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-fee-search']/div[2]/div/div/p")!=null)	
+				{
 				String actualtxt=Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-fee-search']/div[2]/div/div/p").getText();
 				Helper.compareEquals(testConfig, "message comparision", "No fees available for this Organization.", actualtxt);
 				
 			}
 			else{
-			int pageNo=0;
+				int totalNoOfPages=getNumberOfPages();
+			    int pageNo=1;
 			
 			
-			for( pageNo=1;pageNo<=totalNoOfPages;pageNo++)
-		    {
 			//verify pagination links >>,<<
 				if (Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]")!=null &&
 					Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[3]/div[2]/span")!=null 	
@@ -853,7 +869,7 @@ public class OptumPaySolution {
 				else
 					Log.Fail("< and << are enabled");	
 					
-		    } 
+		    
 			if(pageNo%10!=0 && pageNo<totalNoOfPages)
 			    {  
 			       int pageToBeClicked=pageNo+1;
@@ -865,19 +881,19 @@ public class OptumPaySolution {
 			       Log.Comment("Clicked Page number : " + pageToBeClicked);
 			       
 			       Browser.wait(testConfig, 2);
-			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),back)]").click();
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'<')]").click();
 			       Log.Comment("Clicked back Page");
 			       
 			       Browser.wait(testConfig, 2);
-			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),next)]").click();
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'>')]").click();
 			       Log.Comment("Clicked next Page");
 			       
 			       Browser.wait(testConfig, 2);
-			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),first)]").click();
-			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'<<')]").click();
+			       Log.Comment("Clicked first Page");
 			       
-			       Element.findElement(testConfig,"xpath","/div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),last)]").click();
-			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'>>')]").click();
+			       Log.Comment("Clicked last Page");
 			       
 					if(
 							Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[2]").getTagName()!="a"&& 
