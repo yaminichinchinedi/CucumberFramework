@@ -109,7 +109,7 @@ public class BillingServiceInfo {
 		Element.click(txtboxEnterProvTin, "Enter Provider Tin");
 		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "EnterProvider Tin");
 		Element.click(btnSubmit, "Submit Button");
-		Browser.waitForPageLoad(testConfig);
+	//	Browser.waitForPageLoad(testConfig);
 		Element.click(chkboxConfirm, "Confirm Check Box");
 		verifyAddProvConfirmPage();
 		pendingRequestsFunction();
@@ -139,7 +139,7 @@ public class BillingServiceInfo {
 	public void verifyProvFirstRow(){
 		ArrayList<String> tinsAssocHeader = new ArrayList<String>(Arrays.asList("Provider TIN", "Name of Billing Service","Status","Effective Date","Anniversary","Remove","Renew for Additional Year","Termination Date"));
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
-		Browser.waitForPageLoad(testConfig);
+		Browser.waitForPageLoad(testConfig.driver);
 		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
 			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", "").trim();															
 			tinsAssocHeaderUI.add(allOptions);

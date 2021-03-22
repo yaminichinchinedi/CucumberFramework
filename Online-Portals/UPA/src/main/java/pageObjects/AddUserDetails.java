@@ -160,7 +160,7 @@ public class AddUserDetails {
 
 	public AddUserDetails fillNewUserInfo()
 	{
-		Browser.waitForPageLoad(testConfig);
+		Browser.waitForPageLoad(testConfig.driver);
 		Browser.wait(testConfig, 2);
 		testConfig.putRunTimeProperty("email", userEmailAdr);		
 		Browser.wait(testConfig, 2);
@@ -267,7 +267,7 @@ public class AddUserDetails {
 	{
 		int sqlRowNo=0;
 		Map portalUser=null;
-		Browser.waitForPageLoad(testConfig);
+		Browser.waitForPageLoad(testConfig.driver);
 		for(WebElement userName:userNames)
 		{ 
 			if(userName.getText().toString().contains(firstNameTxt))

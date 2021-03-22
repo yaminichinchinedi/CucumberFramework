@@ -87,9 +87,10 @@ public  class Log extends ExtentTestManager {
 	
 	public synchronized static void Fail(ITestResult result) 
 	{
-		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
-		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
-
+			if(testConfig.getRunTimeProperty("AlreadyFailed")!=null)
+			{}
+			else
+			PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
 	}
 	
 	public synchronized static void skipped(ITestResult result) 
@@ -160,7 +161,7 @@ public  class Log extends ExtentTestManager {
 					try 
 					{
 					  String dest=captureScreenshot(testConfig);
-//					  ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
+                      ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
 					} 
 					catch (IOException e) 
 					{

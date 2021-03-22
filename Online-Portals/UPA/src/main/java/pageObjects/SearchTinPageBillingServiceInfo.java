@@ -35,7 +35,7 @@ public class SearchTinPageBillingServiceInfo {
 			   Element.enterDataByJS(testConfig, txtboxTinNo, System.getProperty("tin"), "Enter TIN for BS");
 			   Browser.wait(testConfig, 2);
 			   Element.clickByJS(testConfig,btnSearch, "Click Search Button");
-			   Browser.waitForPageLoad(testConfig);
+			   Browser.waitForPageLoad(testConfig.driver);
 	  	       break;
 	        }  
 	       case "PROV":

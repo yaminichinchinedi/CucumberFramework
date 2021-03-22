@@ -122,8 +122,8 @@ public class CSRHomePage {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.expectedWait(txtloggedIn, testConfig, "User is successfully logged in", "Logged in text");
-		Browser.wait(testConfig, 7);
+		Element.fluentWait(testConfig, linkRunReports, 100, 1,"User is successfully logged in");
+		
 	}
 
 	public SearchTinPage clickManageUsersLink()
@@ -207,12 +207,13 @@ public class CSRHomePage {
 	}
 	public void clickLogoutCSR() {
 		Element.clickByJS(testConfig,linkLogout,"Logout");
-    	Browser.wait(testConfig, 1);
 	}
-	public void clickPaymentDataFilesTab()
+	
+	public SearchTinPagePaymentDataFiles clickPaymentDataFilesTab()
     {
 		Element.expectedWait(linkPaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");
 		Element.clickByJS(testConfig,linkPaymentDataFiles, "Payment Data Files Link");
+		return new SearchTinPagePaymentDataFiles(testConfig);
 		
 	}
 }

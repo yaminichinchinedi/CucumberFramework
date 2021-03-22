@@ -151,7 +151,7 @@ public class MyProfile {
 		String associatedTin="";
 		if(userType.equals("PROV"))
 		{
-			sqlNo=159;//8;
+			sqlNo=159;
 			associatedTin="PROV_TIN_NBR";
 		}
 		else if (userType.equals("BS"))

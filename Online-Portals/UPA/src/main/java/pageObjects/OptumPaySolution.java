@@ -1,9 +1,8 @@
 package main.java.pageObjects;
 
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.print.DocFlavor.STRING;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -25,7 +22,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
-import main.java.Utils.DataBase.DatabaseType;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -170,10 +166,7 @@ public class OptumPaySolution {
     @FindBy(xpath="//span[contains(text(),'Rate')]/../..//div[contains(text(),'N/A')]")
     private WebElement validateNA;
     
-    
-	// Added by Mohammad Khalid
-
-	@FindBy(xpath = "//div[@class='topMessaggeDiv']/p[2]/b")
+    @FindBy(xpath = "//div[@class='topMessaggeDiv']/p[2]/b")
 	WebElement topHeader1_ImpRem_Premium;
 
 	@FindBy(xpath = "(//div[@class='topMessaggeDiv']/p)[4]/b")
@@ -215,38 +208,11 @@ public class OptumPaySolution {
 	@FindBy(xpath="//table[@class='table']/thead/tr/th")
 	WebElement invoicePeriodTableGrid;
 	
-	@FindBy(xpath="(//span[@class='wrapperTooltip'])[1]")
-	WebElement planTypeTileInfoIconMsg;
-	
-	@FindBy(xpath="(//span[@class='wrapperTooltip'])[2]")
-	WebElement rateTileInfoIconMsg;
-	
-	@FindBy(xpath="(//span[@class='wrapperTooltip'])[3]")
-	WebElement feesTileInfoIconMsg;
-	
-	@FindBy(xpath="(//span[@class='wrapperTooltip'])[4]")
-	WebElement manageMyPlanTileInfoIconMsg;
-	
-	
-	
-		//Added by Mohammad Khalid
-		String headerTop1_Premium ="Important reminder:";
-		String headerTop2_Premium ="Is your provider organization tax exempt?";
-		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
-		String pageTextTop2_Premium ="Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
-		
-		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
-		String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
-		
-		String Message1_Standard = "Optum Pay brings more power to your practice";
-		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
-		
-
     @FindBy(xpath=" //*[@id='optum-pay-options']/div[1]/div[3]/div[2]")
-    private WebElement feeTile;
+     WebElement feeTile;
     
     @FindBy(xpath="//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
-    private WebElement feeTileUPA;
+    WebElement feeTileUPA;
   
 
     @FindBy(linkText="Invoices")
@@ -255,8 +221,48 @@ public class OptumPaySolution {
     @FindBy(xpath="//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
     WebElement divPageMsg;
 
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[2]/p")
+    WebElement divInvoicesAccrudFeesUI;
+    @FindBy(xpath="//*[@id=\"optum-pay-invoices\"]/div/div[3]")
+    WebElement divInvoicesPastDueFeesUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/p")
+    WebElement msgNoInvoicesPresent;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/thead/tr/th")
+    List<WebElement> tableInvoiceDetailTableHeader;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr")
+    List<WebElement> tableInvoiceDetailUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+    List<WebElement> tableInvoiceAmountUI; 
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+    List<WebElement> tableInvoiceNumberUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
+    List<WebElement> tableInvoiceDateUI;
 
+  //Added by Mohammad Khalid
+  		String headerTop1_Premium ="Important reminder:";
+  		String headerTop2_Premium ="Is your provider organization tax exempt?";
+  		String pageTextTop1_Premium ="You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
+  		String pageTextTop2_Premium ="Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
+  		
+  		String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
+  		String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
+  		
+  		String Message1_Standard = "Optum Pay brings more power to your practice";
+  		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 	
+  		@FindBy(xpath="(//span[@class='wrapperTooltip'])[1]")
+  		WebElement planTypeTileInfoIconMsg;
+  		
+  		@FindBy(xpath="(//span[@class='wrapperTooltip'])[2]")
+  		WebElement rateTileInfoIconMsg;
+  		
+  		@FindBy(xpath="(//span[@class='wrapperTooltip'])[3]")
+  		WebElement feesTileInfoIconMsg;
+  		
+  		@FindBy(xpath="(//span[@class='wrapperTooltip'])[4]")
+  		WebElement manageMyPlanTileInfoIconMsg;
+  		
+  		
 		private TestBase testConfig;
 		public OptumPaySolution(TestBase testConfig) {
 			this.testConfig=testConfig;
@@ -277,7 +283,7 @@ public class OptumPaySolution {
 		public void verifySolutionsTabForPremium(String trialStatus,String portalAccess) throws Exception{
 			if(trialStatus.equalsIgnoreCase("A")) {
 				Browser.browserRefresh(testConfig);
-				Browser.waitForPageLoad(testConfig);
+				Browser.waitForPageLoad(testConfig.driver);
 				verifyHeaders();
 				planTypeInfoForPremium();
 				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUpHeading.getText().trim());
@@ -787,9 +793,7 @@ public class OptumPaySolution {
 		      
 	 	public void updatingStartDateOfGlobalLevelFee() {
 	 		DataBase.executeUpdateQuery(testConfig, 2008);		          
-	 	}	
-	 	
-	 	
+	 	}
 		//Added by Mohammad Khalid
 		public void verifyPageText_Top_Premium()
 		{
@@ -956,8 +960,6 @@ public class OptumPaySolution {
 			}
 			
 		}
-	   
-	 			
 	 	public OptumPaySolution validatePastdueFee()
 		{
 			int sqlRowNo=1630;
@@ -971,16 +973,28 @@ public class OptumPaySolution {
 			return this;
 		}
 	 	
-	 	public OptumPaySolution verifyInvoicesTab(String searchCriteria,String tinType,String portalAccess,String prdctRecSts){
+	 	public OptumPaySolution verifyInvoicesTab(String searchCriteria,String tinType,String portalAccess,String prdctRecSts) throws ParseException{
             if("TinWithInvoices".equals(searchCriteria)){
                 Element.verifyElementPresent(lnkInvoice, "Invoices Link");
                 Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
                 Element.verifyElementPresent(divPageMsg, "Page message");
+                verifyPastDuesInvoiceTab(searchCriteria);
+                verifyProviderNameInvoices();
+                verifyAccrudFeesInvoiceTab(searchCriteria);
+                try {
+					verifyInvoiceDetailsTableUI(searchCriteria);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
             }
             else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "PS".equals(prdctRecSts)){
                 Element.verifyElementPresent(lnkInvoice, "Invoices Link");
                 Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
                 Element.verifyElementPresent(divPageMsg, "Page message");
+                verifyPastDuesInvoiceTab(searchCriteria);
+                verifyAccrudFeesInvoiceTab(searchCriteria);
+                verifyProviderNameInvoices();
+                Element.verifyElementPresent(msgNoInvoicesPresent, "no invoices present msg");
             }
             else if("TinWithoutInvoices".equals(searchCriteria) && ("AV".equals(tinType) || "AO".equals(tinType)) && "Premium".equals(portalAccess) && "TR".equals(prdctRecSts)){
                 Element.verifyElementNotPresent(lnkInvoice, "Invoices Link");
@@ -994,8 +1008,69 @@ public class OptumPaySolution {
             return this;
         }
 	 	
-	 	
-	 	public void verifyInfoIconMessagesforAllTiles()
+		public void verifyProviderNameInvoices() {
+			int sqlRowNo=1;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Helper.compareContains(testConfig,"test", data.get("ORG_NM").toString().trim(), Element.findElement(testConfig, "xpath", "//*[@id=\"optum-pay-invoices\"]/div/div[1]/p").getText().trim());
+			
+		}
+		public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException, ParseException {
+			int sqlTable=1120;
+            HashMap<Integer,HashMap<String,String>>  invoiceTableData = DataBase.executeSelectQueryALL(testConfig, sqlTable);
+			ArrayList<String> expectedHeader=new ArrayList<String>(); 
+			expectedHeader.add("Invoice Period");
+			expectedHeader.add("Total Invoice Amount");
+			expectedHeader.add("Download Invoice");
+					
+			if("TinWithInvoices".equals(searchCriteria))
+			{
+			  ArrayList<String> actualContentUI=new ArrayList<String>(); 
+			  for(WebElement header: tableInvoiceDetailTableHeader)
+			  	{
+				  actualContentUI.add(header.getText());
+			  	}
+			
+			  Helper.compareEquals(testConfig, "tableInvoiceDetailTableHeader", expectedHeader, actualContentUI);
+			  
+			  for(int i=0; i<tableInvoiceAmountUI.size() ;i++)
+				{ 
+				  String  startDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				 String  endDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				Helper.compareEquals(testConfig,"billing cycle",startDate+" - "+endDate,tableInvoiceDateUI.get(i).getText());
+				Helper.compareEquals(testConfig,"invoice amount", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
+				Helper.compareEquals(testConfig,"invoice number", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
+	            }
+			}
+			
+		}
+		public void verifyAccrudFeesInvoiceTab(String searchCriteria) {
+			int sqlRowNo=1616;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		    String invoiceAccrudFee=null;
+		    if("TinWithInvoices".equals(searchCriteria)&& data.get("ACCRDFEE").toString().trim().length()>0)
+		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("ACCRDFEE").toString();
+		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("ACCRDFEE").toString().trim().length()==0)
+		    invoiceAccrudFee="Accrued fees month to date: $0.00" ;
+		    
+			Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());
+			
+		}
+		public void verifyPastDuesInvoiceTab(String searchCriteria) {
+			String invoicePastDueFee=null;
+			int sqlRowNo=1122;
+			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			
+			if("TinWithoutInvoices".equals(searchCriteria)|| data.get("PASTDUE").toString().trim().length()==0)
+				invoicePastDueFee="Past due fees: $0.00";
+			else if("TinWithInvoices".equals(searchCriteria))
+				invoicePastDueFee="Past due fees: $" +data.get("PASTDUE").toString();
+			
+			Helper.compareContains(testConfig, "Past due fee value", invoicePastDueFee, divInvoicesPastDueFeesUI.getText());
+			
+		}
+		
+		
+		public void verifyInfoIconMessagesforAllTiles()
 	 	{
 	 		String planTypeInfoIconMsg="Your provider organization will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced within the first 5 business days of July. You will receive an email in advance of the debit to your TIN-level bank account and you can review the fees on the Invoices subtab.";
 	 		String rateInfoIconMsg="Per payment fees are calculated based on the total payment amount.";
@@ -1008,7 +1083,8 @@ public class OptumPaySolution {
 	 		Helper.compareEquals(testConfig, "Fees Info Icon Message", feesInfoIconMsg, feesTileInfoIconMsg.getAttribute("title").trim());
 	 		Helper.compareContains(testConfig, "Manage My Plan Info Icon Message", manageMyPlanInfoIconMsg, manageMyPlanTileInfoIconMsg.getAttribute("title").replace("<br>", "").replaceAll("[\\n]", "").trim());
 	 	}
-	 	
-	 	
-	}
+		
+}
+
+
 

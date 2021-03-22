@@ -1,4 +1,3 @@
-
 package main.java.stepDefinitions.OptumPaySolution;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -167,7 +166,6 @@ public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String se
 public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {
     optumPaySol.verifyInfoIconMessagesforAllTiles();
 }
-
-
 }
+
 

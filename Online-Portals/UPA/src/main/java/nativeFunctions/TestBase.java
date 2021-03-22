@@ -49,9 +49,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import cucumber.api.Scenario;
-import test.java.TestDetails;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
@@ -245,8 +243,8 @@ public class TestBase extends ReporterClass {
 				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
 				driver = initChromeDriver();
 			}
-			driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
 		
 		else 
@@ -405,16 +403,17 @@ public class TestBase extends ReporterClass {
 	     new Log(testConfig);
 	}
 
-/*	@AfterMethod()
+@AfterMethod()
 	public void endTest(ITestResult iTestResult) {
-		Log.endTest(iTestResult);
-	}*/
-
-	
-	public void endTest(Scenario scn) {
-		logReportSteps(scn.getStatus());
+	     logReportSteps(iTestResult);
 		 endReporting();
 	}
+
+	
+	/*public void endTest(Scenario scn) {
+		logReportSteps(scn.getStatus());
+		 endReporting();
+	}*/
 		
 	@AfterTest
 	public void tearDown() {

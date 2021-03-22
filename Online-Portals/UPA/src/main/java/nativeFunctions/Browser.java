@@ -71,27 +71,17 @@ public class Browser
 		}
 	}
 	
-	public static void waitForPageLoad(TestBase testConfig) 
+	public static void waitForPageLoad(WebDriver driver) 
 	{
 		try{
-			
-			ExpectedCondition<Boolean> pageLoadCondition = new ExpectedCondition<Boolean>() 
-				{
-			      public Boolean apply(WebDriver driver) 
-			      {
-			    	  driver=testConfig.driver;
-				  return ((JavascriptExecutor)testConfig.driver).executeScript(
-						"return document.readyState").equals("complete");
-			}
-		};
-		
-		WebDriverWait wait = new WebDriverWait(testConfig.driver,120,600);
-		wait.until(pageLoadCondition);
+		    new WebDriverWait(driver, 30).until((ExpectedCondition<Boolean>) wd ->
+		            ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
 		}
-		catch(Exception e)
+		catch (Exception e) 
 		{
-			Browser.wait(testConfig, 5);
+			
 		}
+		
 	}
   
 	
@@ -427,8 +417,8 @@ public class Browser
 		try
 		{
 			int retries = 30;
-			Browser.wait(testConfig,3);
-			//Browser.waitForLoad(testConfig.driver);
+			Browser.waitForLoad(testConfig.driver);
+			
 			String actualURL = testConfig.driver.getCurrentUrl().toLowerCase();
 			expectedURL = expectedURL.toLowerCase();
 			

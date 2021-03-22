@@ -1,61 +1,8 @@
 #Author: Sahil D Sharma
+@CSRDataBundle @CSRRegression  @BothCSRUPAScenarios  @CSRPaymentDataFiles
+Feature: CSR Payment Data File Functionality
 
-@CSRDataBundle @CSRRegression   @BothCSRUPAScenarios  
-Feature: CSR Billing Service Functionality
-
-	@TC001						@queue
-	Scenario Outline: UI Validations for Payment Data Files 
-  Given User navigates to CSR portal and enters "<credentials>" and login
-  And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	When  User clicks on Payment Data Files Link
-  And   User Validates Error Message upon Entering invalid TIN
-  Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
-  And   Verify User navigates to Create Data Bundle Page
-  And   User clicks on CSR logout
-	Examples:
-     | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-     |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
-    
-    
-      
-  @TC002		
-	Scenario Outline: UI Validations to check all labels on Payment Data Bundle Page
-	 Given User navigates to CSR portal and enters "<credentials>" and login
-   And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-   When  User clicks on Payment Data Files Link
-   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
-   And   Verify User navigates to Create Data Bundle Page
-   Then  Verify all values in Create Data Bundle Page
-   And   User clicks on CSR logout
-	Examples:
-       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-       |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
-      
-  
-  
-  @TC003		
-  Scenario Outline: Verify Payer Selection Validations
-   Given User navigates to CSR portal and enters "<credentials>" and login
-   And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-   When  User clicks on Payment Data Files Link
-   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
-   And   Verify User navigates to Create Data Bundle Page
-   And   User Verify Payer Name List in Payer Selection
-   And   User Verify Buttons Available viz: Add, Add All, Remove, Remove All
-   And   Verify Reset Functionality
-   And   Verify Add Button Functionality
-   And   Verify Remove Button Functionality
-   Then  Verify Add All Button Functioanlity
-   And   Verify Remove All Button Functionality
-   And   User clicks on CSR logout
-	Examples:
-     | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-     |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
-      
-    
-      
-  @TC004 
-  Scenario Outline: Validations to check errors 
+Scenario Outline: Validations to check errors 
     Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When  User clicks on Payment Data Files Link
@@ -72,9 +19,36 @@ Feature: CSR Billing Service Functionality
      | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
     
+     
+Scenario Outline: UI Validations for Payment Data Files 
+  Given User navigates to CSR portal and enters "<credentials>" and login
+  And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  When  User clicks on Payment Data Files Link
+  And   User Validates Error Message upon Entering invalid TIN
+  Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
+  And   Verify User navigates to Create Data Bundle Page
+  And   User clicks on CSR logout
+	Examples:
+     | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
+     |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
     
+ 
+	Scenario Outline: UI Validations to check all labels on Payment Data Bundle Page
+   Given User navigates to CSR portal and enters "<credentials>" and login
+   And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   When  User clicks on Payment Data Files Link
+   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
+   And   Verify User navigates to Create Data Bundle Page
+   Then  Verify all values in Create Data Bundle Page
+   And   User clicks on CSR logout
+	Examples:
+       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
+       |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	    
       
- 	 @TC005  @CSRDataBundeSanity  @CSRSanity 
+  
+
+ 
+   
    Scenario Outline: Data Bundle Submission : EPRAs
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -92,9 +66,8 @@ Feature: CSR Billing Service Functionality
      |   Super	      | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
    
    
-      
- 	@TC006 
-   Scenario Outline: Data Bundle Submission : PPRAs
+     
+   Scenario Outline: Data Bundle Submission : PPRAs @AddAlls
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When  User clicks on Payment Data Files Link
@@ -112,7 +85,7 @@ Feature: CSR Billing Service Functionality
   
   
       
-@TC007  
+@TC007  @AddAlls
    Scenario Outline: Data Bundle Submission : 835s
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -131,7 +104,7 @@ Feature: CSR Billing Service Functionality
   
   
       
-@TC008  
+@TC008   @AddAlls
    Scenario Outline: Validate the Data Bundle Submission of EPRA and PPRA
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -150,7 +123,7 @@ Feature: CSR Billing Service Functionality
   
   
       
-@TC009  
+@TC009 @AddAlls
    Scenario Outline: Validate the Data Bundle Submission of EPRA and 835
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -158,7 +131,7 @@ Feature: CSR Billing Service Functionality
     Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
   	And   Verify User navigates to Create Data Bundle Page
   	And   User selects all the Payer from the Payer List
-  	And   User Enter Settlement Date Range  
+  	And   User Enter Settlement Date Range
   	Then  User selects File Type as EPRA and 835 and Submit File Data Bundle on CSR
   	And   User Verifies Data Bundle Request entry in Download Data Bundle Page for EPRA and 835 File Type on CSR
     And   User verifies the EPRA and 835 indicator in Database entry on CSR
@@ -169,7 +142,7 @@ Feature: CSR Billing Service Functionality
       
  
       
-@TC010  
+@TC010  @AddAlls
    Scenario Outline: Validate the Data Bundle Submission of PPRA and 835
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -188,7 +161,7 @@ Feature: CSR Billing Service Functionality
       
  
       
-@TC011  
+@TC011 @AddAlls
    Scenario Outline: Validate the Data Bundle Submission of EPRA, PPRA and 835s
    	Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -239,5 +212,26 @@ Feature: CSR Billing Service Functionality
   
   	Examples:
       | credentials    |  userType 	 |		searchCriteria     |	portalAccess	| tinType	|	
-      |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|	   
+      |   Super	       | 		PROV		 |	  Last 4-6 months    |		 Premium		|		AO		|
+      
+      
+      Scenario Outline: Verify Payer Selection Validations:Pranav
+   Given User navigates to CSR portal and enters "<credentials>" and login
+   And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   When  User clicks on Payment Data Files Link
+   Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
+   And   Verify User navigates to Create Data Bundle Page
+   And   User Verify Payer Name List in Payer Selection
+   And   User Verify Buttons Available viz: Add, Add All, Remove, Remove All
+   And   Verify Reset Functionality
+   And   Verify Add Button Functionality
+   And   Verify Remove Button Functionality
+   Then  Verify Add All Button Functioanlity
+   And   Verify Remove All Button Functionality
+   And   User clicks on CSR logout
+    Examples:
+     | credentials    |  userType      |        searchCriteria     |    portalAccess    | tinType    |   
+     |   Super          |         PROV         |      Last 4-6 months    |         Premium        |        AO        |  
+      
+      	   
     
