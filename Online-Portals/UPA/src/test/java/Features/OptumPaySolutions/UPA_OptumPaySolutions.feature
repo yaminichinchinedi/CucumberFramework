@@ -132,3 +132,23 @@ And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   BS_Admin    |     BS     	|		 	zeroPastdueFee		|			Premium			|		AO			| 
       |   BS_Admin    |     BS     	|		 	positivePastdueFee		|			Premium			|		AO			| 
+
+      
+      
+#Author: Mohammad Khalid
+@UPA_OPS_US3106783
+Scenario Outline: To test page text messaging on OPS for Prov Admin
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And User clicks on Optum Pay Solutions tab
+
+Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
+
+
+
+
+ Examples:
+ |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
+ |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		AO			|  
+       

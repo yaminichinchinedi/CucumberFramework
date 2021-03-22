@@ -162,5 +162,12 @@ public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page()
 public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
 	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
 }
+
+@Then("^User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile$")
+public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {
+    optumPaySol.verifyInfoIconMessagesforAllTiles();
+}
+
+
 }
 
