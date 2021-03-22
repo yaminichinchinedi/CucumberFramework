@@ -239,6 +239,44 @@ public class OptumPaySolution {
     @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
     List<WebElement> tableInvoiceDateUI;
 
+	
+	@FindBy(linkText = "Fee Search")
+	private WebElement feeSearchTab;
+
+	@FindBy(id = "paymentNumber")
+	WebElement paymentNumber;
+
+	@FindBy(id = "invoiceNumber")
+	WebElement invoiceNumber;
+
+	@FindBy(xpath = "//button[contains(text(),'Search')]")
+	WebElement searchButton;
+
+	@FindBy(name = "showOnlyRefundables")
+	WebElement refundableCheckBox;
+
+	//@FindBy(xpath = "//*[@id='optum-pay-fee-search']/div[2]/div[2]/div/div/div[1]/div[1]")
+	@FindBy(xpath="//*[contains(text(),'Showing')]")
+	WebElement divShowRslts;
+	
+	@FindBy(id="feeTypeOption_selector")
+	WebElement feeTyp;
+	
+	@FindBy(id="feeStatusOption_selector")
+	WebElement feeStatus;
+	
+	@FindBy(id="feeRangeMin")
+	WebElement feeRngMin;
+	
+	@FindBy(id="feeRangeMax")
+	WebElement feeRngMax;
+	
+	@FindBy(xpath="//button[contains(text(),'Details')]")
+	WebElement detailsTab;
+	
+	@FindBy(xpath="//div[@id='feeSearchTable']/div[2]/div/table/tbody/tr")
+	List <WebElement> noOfRows;
+	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -1056,6 +1094,144 @@ public class OptumPaySolution {
 			Helper.compareContains(testConfig, "Past due fee value", invoicePastDueFee, divInvoicesPastDueFeesUI.getText());
 			
 		}
+		
+		public void navigateToFeeSearchTab() {
+			Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+		}
+
+		public OptumPaySolution doSearch(String criteriaType) throws ParseException {
+
+			switch (criteriaType) {
+
+				case "feeSearchPaymentNumber": {
+					Browser.wait(testConfig, 5);
+					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
+					Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr, "payment number");
+					break;
+				}
+				case "feeSearchInvoiceNumber": {
+					Browser.wait(testConfig, 5);
+					String invoice_nbr = testConfig.getRunTimeProperty("invoiceNumber");
+					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
+					break;
+				}
+				case "feeSrchTINdetailsTabwthAllVal": {
+					Browser.wait(testConfig, 2);
+					clickDetailsTab();
+					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
+					Element.selectByVisibleText(feeStatus, "All", "All Value in Fee Status");
+					break;
+				}
+				case "NofeeSearchTIN": {
+					Browser.wait(testConfig, 2);
+					clickDetailsTab();
+					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
+					break;
+				}
+				
+			}
+
+			return clickSearchBtn();
+		}
+
+		public OptumPaySolution clickSearchBtn() {
+			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
+			return new OptumPaySolution(testConfig);
+		}
+		public OptumPaySolution clickDetailsTab() {
+			Element.clickByJS(testConfig, detailsTab, "details Tab");
+			return new OptumPaySolution(testConfig);
+		}
+		public String getRecordCountFromUI() {
+			String resultCount = divShowRslts.getText().toString();
+			resultCount = resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
+			return resultCount.trim();
+		}
+		public int getNumberOfPages()
+		 {
+			int noOfPages=0;
+			int recordsCount=Integer.parseInt(getRecordCountFromUI());
+			if(recordsCount>30)
+			 {
+				noOfPages=recordsCount/30;
+				if(recordsCount%30>0)
+				noOfPages=noOfPages+1;
+			 }
+			else
+			noOfPages=1;
+	    	return noOfPages;
+		 } 
+		public OptumPaySolution verifyPagination(){
+			
+			if (Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-fee-search']/div[2]/div/div/p")!=null)	
+				{
+				String actualtxt=Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-fee-search']/div[2]/div/div/p").getText();
+				Helper.compareEquals(testConfig, "message comparision", "No fees available for this Organization.", actualtxt);
+				
+			}
+			else{
+				int totalNoOfPages=getNumberOfPages();
+			    int pageNo=1;
+			
+			
+			//verify pagination links >>,<<
+				if (Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]")!=null &&
+					Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[3]/div[2]/span")!=null 	
+						)
+				Log.Pass("Uppar and lower pagination links are on the page ");
+				else
+				Log.Fail("Uppar and lower pagination links are not on the page");	
+			//verify 30 rows
+				if (noOfRows.size()<=30)
+				Log.Pass("Maximum 30 rows in a page");
+				else
+				Log.Fail("More than 30 rows in a page");	
+				//click on >,>>,<,<< and disability
+				if(
+				Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[1]").getTagName()!="a"&& 
+				Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[2]").getTagName()!="a" )
+				Log.Pass("< and << are disabled");
+				else
+					Log.Fail("< and << are enabled");	
+					
+		    
+			if(pageNo%10!=0 && pageNo<totalNoOfPages)
+			    {  
+			       int pageToBeClicked=pageNo+1;
+			      
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text()," + pageToBeClicked + ")]").click();
+			       Log.Comment("Clicked Page number : " + pageToBeClicked);
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'<')]").click();
+			       Log.Comment("Clicked back Page");
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'>')]").click();
+			       Log.Comment("Clicked next Page");
+			       
+			       Browser.wait(testConfig, 2);
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'<<')]").click();
+			       Log.Comment("Clicked first Page");
+			       
+			       Element.findElement(testConfig,"xpath","//div[@id='feeSearchTable']/div[1]/div[2]/span/a[contains(text(),'>>')]").click();
+			       Log.Comment("Clicked last Page");
+			       
+					if(
+							Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[2]").getTagName()!="a"&& 
+							Element.findElement(testConfig, "xpath", "//div[@id='feeSearchTable']/div[1]/div[2]/span/span[3]").getTagName()!="a" )
+							Log.Pass("> and >> are disabled");
+							else
+								Log.Fail("> and >> are enabled");	
+			       Browser.waitForLoad(testConfig.driver);
+			     }
+			     
+			}
+			Element.clickByJS(testConfig,lnkLogOut , "logging Out of the portal");	    
+		return this;
+		
+		}
+		
 		
 }
 

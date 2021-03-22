@@ -208,7 +208,6 @@ public class CSRHomePage {
 	public void clickLogoutCSR() {
 		Element.clickByJS(testConfig,linkLogout,"Logout");
 	}
-	
 	public SearchTinPagePaymentDataFiles clickPaymentDataFilesTab()
     {
 		Element.expectedWait(linkPaymentDataFiles, testConfig, "Payment Data Files Link","Payment Data Files Link");

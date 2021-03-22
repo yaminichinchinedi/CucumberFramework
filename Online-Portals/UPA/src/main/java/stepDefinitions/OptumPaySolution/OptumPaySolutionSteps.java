@@ -162,5 +162,19 @@ public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page()
 public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
 	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
 }
+
+@Then("^User clicks on Fee Searh Tab on Optum Pay Solutions Page$")
+public void user_clicks_on_fee_search_tab() throws Throwable {
+	optumPaySol.navigateToFeeSearchTab();
+}
+
+	@Then("^User enters \"([^\"]*)\" on Fee Search page and click on search button\\.$")
+	public void user_enters_and_click_on_search_button(String srchCriteria) throws Throwable {
+		optumPaySol.doSearch(srchCriteria);
+	}
+	@Then("^verify that max (\\d+) records are on single page and pagination links enabled/disabled accordingly$")
+public void verify_that_max_records_are_on_single_page_and_pagination_links_enabled_disabled_accordingly(int arg1) throws Throwable {
+    optumPaySol.verifyPagination();
+}
 }
 
