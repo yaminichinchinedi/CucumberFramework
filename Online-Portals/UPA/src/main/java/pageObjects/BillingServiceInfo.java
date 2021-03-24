@@ -303,7 +303,36 @@ public void verifyAddProvConfirmPage(){
 			 Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
 			}
 	}
+
+
+	/**
+	 * Author : Vinay Raghumanda
+	 * Validates Page Text for Billing Service Information Page for different Types of users.
+	 * @param accessType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String accessType, String portalAccess) {
+
+		String actualParagraph, expectedParagraph;
+		WebElement paragraphTag = null;
+
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.billingServiceInformation.paragraph");
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+				actualParagraph = paragraphTag.getText().trim();
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
+				break;
+			case "BS_Admin_Premium_AO":
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				actualParagraph = paragraphTag.getText().trim();
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.billingServiceInformation.paragraph");
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
+				break;
+			default:
+				break;
+		}
+	}
 }
-	
-
-

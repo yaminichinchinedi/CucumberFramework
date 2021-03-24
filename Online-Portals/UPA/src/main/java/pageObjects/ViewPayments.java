@@ -4289,4 +4289,106 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 			
 		}
 
+	/**
+	 *Author : Vinay Raghumanda
+	 * Validates page text in View Payments screen for different types of users.
+	 * @param credentials
+	 * @param portalAccess
+	 */
+	public void verifyPageTextFor(String accessType, String portalAccess) {
+
+		String actualParagraph, expectedHeader, expectedPara, expectedPara2;
+		WebElement header, paragraphTag;
+
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Admin_Standard_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.standard.ao.viewPayments.topMessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.standard.ao.viewPayments.topMessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Gen_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.premium.ao.viewPayments.topMessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.general.premium.ao.viewPayments.topMessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Gen_Standard_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.standard.ao.viewPayments.topmessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.general.standard.ao.viewPayments.topmessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Admin_Premium_VO":
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				actualParagraph = paragraphTag.getText().trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.vo.viewPayments.topmessageDiv.paragraph");
+				Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+				break;
+			case "BS_Admin_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.premium.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.premium.ao.viewPayments.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "BS_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph1");
+				expectedPara2 = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph2");
+				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				break;
+			case "BS_Gen_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.premium.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.premium.ao.viewPayments.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "BS_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph1");
+				expectedPara2 = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph2");
+				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	private void validatePageText2(String expectedHeader, String expectedPara, String expectedPara2) {
+		WebElement header, paragraphTag, paragraphTag2;
+		String actualHeader, actualParagraph, actualParagraph2;
+		header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+		paragraphTag2 = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+		actualHeader = header.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		actualParagraph2 = paragraphTag2.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara2, actualParagraph2);
+	}
+
+	private void validateForPageText(String expectedHeader, String expectedPara, WebElement header, WebElement paragraphTag) {
+		String actualHeader, actualParagraph;
+		actualHeader = header.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+	}
+
 }
