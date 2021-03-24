@@ -181,5 +181,5 @@ Then User validates info icon hover message for Plan Type, Rate, Fees and Manage
  Examples:		
       | credentials  |  userType 	|	 searchCriteria    |	portalAccess1	|  portalAccess2  | tinType	|		
       |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Premium		|	Standard     |AO		|	
- #     |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Standard		|	Premium      |AO		|	
+      |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Standard		|	Premium      |AO		|	
        
