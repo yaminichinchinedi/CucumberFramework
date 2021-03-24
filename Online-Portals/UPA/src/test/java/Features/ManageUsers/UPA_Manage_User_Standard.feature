@@ -45,5 +45,5 @@ Feature: UPA Manage User Functionality for Standard TIN
      Examples:
    	  |    userType     | accessLevelOfNewUser	| 		portalGroupName       	|		portalAccess	  | tinType		|System Mode|
       |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Standard			|		AO			|  FEEBASED |
-      |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Standard			|		AO			|  LEGACY |  
+      #|      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Standard			|		AO			|  LEGACY |  
 
