@@ -200,10 +200,11 @@ public class UPAHomePage extends HomePage {
            return new SearchTinPageSearchRemittance(testConfig);
     }
 
-	public void clickViewPaymentsLinkUPA() 
+	public ViewPayments clickViewPaymentsLinkUPA() 
 	{
 		Browser.wait(testConfig, 3);
         Element.clickByJS(testConfig,lnkViewPayments, "View Payments");
+        return new ViewPayments(testConfig);
 	}
 	
 	public void clickSearchRemitUPA() 
