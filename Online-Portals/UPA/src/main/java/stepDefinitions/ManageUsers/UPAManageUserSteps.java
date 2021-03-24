@@ -298,11 +298,11 @@ public class UPAManageUserSteps extends TestBase {
 		testConfig.putRunTimeProperty("sysMode", systemMode);
     	manageUser.verifyAddUsrBtnVsblBySystem_ModeUPA(portalAccess, systemMode, userType);
 	}
-	
 
-	@Then("Verify Manage Users Header and Footer Text Validation")
-	public void verifyManageUsersHeaderAndFooterTextValidation() {
-		manageUser.verifyManageUsersHeaderAndFooterTextValidation();
+
+	@Then("^Validate Manage User Page Text for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void verifyManageUsersHeaderAndFooterTextValidation(String credentials, String userType, String portalAccess) {
+		manageUser.validatePageText(credentials, userType, portalAccess);
 	}
 
 

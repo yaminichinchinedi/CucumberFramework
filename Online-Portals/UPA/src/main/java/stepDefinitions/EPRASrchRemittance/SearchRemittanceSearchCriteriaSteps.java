@@ -106,4 +106,9 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
     public void validate_search_button_is_enabled_or_disabled_for(String portalAccess) throws Throwable {
     	srchCriteriaPage.verifySearchBtnEnabledOrDisabled(portalAccess);
     }
+
+	@Then("^Validate Search Remittance Page Text for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void validatePageTextOnSearchRemittanceForForForFor(String credentials, String userType, String portalAccess) {
+		srchCriteriaPage.validatePageText(credentials, userType, portalAccess);
+	}
 }

@@ -2839,34 +2839,63 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	return this;
 }
 
-	public void verifyManageUsersHeaderAndFooterTextValidation() {
+	/**
+	 * Author - Vinay Raghumanda
+	 * Validates Page Text for Manage Users for Different types of users.
+	 * @param credentials
+	 * @param userType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String credentials, String userType, String portalAccess) {
 
+		String expectedParagraph, expectedFooterHeaderText, expectedFooterParaText;
+		WebElement footerPara = null;
 
-		String[] expectedTexts = {
-				"An unlimited number of administrative and general users is available with Optum Pay.",
-				"Enrollment & Account Security Reminder",
-				"A business issued email is required when adding a new user. Personal emails will not be accepted. New users that fail to complete the registration process will be removed from Optum Pay. In addition, existing users with no login activity after six months will be purged. Please review your user list periodically to ensure that all contact information is accurate. If at any time you need to remove a user, please contact our Provider Support Center at 1-877-620-6194."
-		};
-
-		String headerActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[1]/p[2]").getText().trim();
-
-		String footerHeaderTextActual = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/h2").getText().trim();
-
-		String footerptagText = Element.findElement(testConfig, "xpath", "//*[@id=\"manage-users-tabs\"]/div[3]/p[2]").getText().trim();
-
-
-		String[] actualTexts = {
-				headerActual,
-				footerHeaderTextActual,
-				footerptagText
-		};
-
-
-		for(int i=0; i<expectedTexts.length; i++){
-			Assert.assertTrue(expectedTexts[i].equals(actualTexts[i]), "Text Validation Failed");
-			Log.Comment("Text Validation successful : \n"+actualTexts[i]);
+		switch (credentials + portalAccess + testConfig.getRunTimeProperty("tinType") + userType){
+			case "PROV_AdminPremiumAOPROV":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.paragraph");
+				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.footer.header");
+				expectedFooterParaText = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.footer.para");
+				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				break;
+			case "PROV_AdminStandardAOPROV":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.paragraph");
+				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.footer.header");
+				expectedFooterParaText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.footer.para");
+				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				break;
+			case "BS_AdminPremiumAOBS":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.paragraph");
+				expectedFooterHeaderText = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.footer.header");
+				expectedFooterParaText = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.footer.para");
+				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p[2]");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				break;
+			default:
+				break;
 		}
+	}
 
+	private void manageUserPageValidation(String expectedParagraph, String expectedFooterHeaderText, String expectedFooterParaText, WebElement footerPara) {
+		WebElement ptag;
+		WebElement footerHeader;
+		String actualParagraph;
+		String actualFooterHeaderText;
+		String actualFooterParaText;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+		footerHeader = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/h2");
+		actualParagraph = ptag.getText().trim();
+		actualFooterHeaderText = footerHeader.getText().trim();
+		actualFooterParaText = footerPara.getText().trim();
+		Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph +
+				"\nActual Footer Header Text : " + actualFooterHeaderText + "\n Expected Footer Header Text : " + expectedFooterHeaderText +
+				"\nActual Footer Para Text : " + actualFooterParaText + "\n Expected Footer Para Text : " + expectedFooterParaText);
+		Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
+		Assert.assertTrue(actualFooterHeaderText.equalsIgnoreCase(expectedFooterHeaderText), "Content Message Validation Failed");
+		Assert.assertTrue(actualFooterParaText.equalsIgnoreCase(expectedFooterParaText), "Content Message Validation Failed");
 	}
 
 

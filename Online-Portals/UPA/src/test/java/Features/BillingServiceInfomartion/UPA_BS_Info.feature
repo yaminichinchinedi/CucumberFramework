@@ -1,15 +1,18 @@
-#Author: Vinay R
+#Author: Vinay Raghumanda
 @UPABSInfo  
-Feature: UPA Billing Service Information Functionality 
+Feature: UPA Billing Service Information Functionality
 
-  @PageTextUS3179215 
-  Scenario Outline: UPA Billing Service Information Header Validation
+  @US3179215
+  Scenario Outline: Billing Service Information Page Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then User clicks on Billing Service Information tab
-    Then Verify Billing Service Header Text
+    Then Validate Billing Service Information Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
     Examples:
-      | credentials | userType |
-      | BS_Admin    | BS       |
+      | credentials | userType | portalAccess | tinType | searchCriteria       |
+      | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+      | BS_Admin    | BS       | Premium      | AO      | Last 60 days         |
+
 #Author:Sayonee
       @UPAUS2820687
    Scenario Outline: UPA Porvider Billing Service Information Page Text Verification

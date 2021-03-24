@@ -74,11 +74,15 @@ Feature: UPA Manage User Functionality for Premium TIN
       |     PAY_Admin   |  		LEGACY		|     
 
 
+  #Author : Vinay Raghumanda
   @US3179215
-  Scenario Outline: UPA Billing Service Manage Users Header and Footer Validation
-    Given User navigates to UPA portal and enters "<userType>" and login
+  Scenario Outline: Manage Users Page Text Validation
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     When Click on Manage User Link
-    Then Verify Manage Users Header and Footer Text Validation
+    Then Validate Manage User Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
     Examples:
-      | userType | accessType |
-      | BS_Admin | BS         |
+      | credentials | userType | portalAccess | tinType | searchCriteria       |
+      | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+      | PROV_Admin  | PROV     | Standard     | AO      | PremiumOrStandardTIN |
+      | BS_Admin    | BS       | Premium      | AO      | Last 60 days   |

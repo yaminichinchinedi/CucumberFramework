@@ -303,7 +303,40 @@ public void verifyAddProvConfirmPage(){
 			 Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
 			}
 	}
+
+
+	/**
+	 * Author : Vinay Raghumanda
+	 * Validates Page Text for Billing Service Information Page for different Types of users.
+	 *
+	 * @param credentials
+	 * @param userType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String credentials, String userType, String portalAccess) {
+
+		String actualParagraph, expectedParagraph;
+		WebElement ptag = null;
+
+		switch (credentials + portalAccess + testConfig.getRunTimeProperty("tinType") + userType) {
+			case "PROV_AdminPremiumAOPROV":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.billingServiceInformation.paragraph");
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+				ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+				actualParagraph = ptag.getText().trim();
+				Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph + "\n");
+				Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
+				break;
+			case "BS_AdminPremiumAOBS":
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+				ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				actualParagraph = ptag.getText().trim();
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.billingServiceInformation.paragraph");
+				Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph + "\n");
+				Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
+				break;
+			default:
+				break;
+		}
+	}
 }
-	
-
-
