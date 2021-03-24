@@ -45,10 +45,6 @@ Feature: UPA Manage User Functionality for Premium TIN
    	  |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Premium			|		VO			|  FEEBASED |
       |      PROV_Admin | 	    Admin			      |  		LegacyOrPremiOrStandard	|			Premium			|		AO			|  FEEBASED |
       
- #     |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Premium			|		AO			|  LEGACY |
- #     |      PROV_Admin |  	    Admin 			    | 	 	LegacyOrPremiOrStandard |			Premium			|		VO			|  LEGACY |
-     
-      
       
       @UPAUS2879930 @OctRelease
     Scenario Outline: Access Payments - Manage users Provider for Premium Experience
@@ -59,7 +55,6 @@ Feature: UPA Manage User Functionality for Premium TIN
              	  Examples:
 		      |    userType     | System Mode|  
 		      |      BS_Admin   | FEEBASED   |
-		      |      BS_Admin  | LEGACY  |
  
  
 
@@ -71,7 +66,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 	Examples:
       |    userType     |		System Mode	|
       |     PAY_Admin   |  		FEEBASED	|
-      |     PAY_Admin   |  		LEGACY		|     
+      #|     PAY_Admin   |  		LEGACY		|     
 
 
   @US3179215
