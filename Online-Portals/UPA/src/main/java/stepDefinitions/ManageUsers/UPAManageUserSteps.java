@@ -300,9 +300,9 @@ public class UPAManageUserSteps extends TestBase {
 	}
 
 
-	@Then("^Validate Manage User Page Text for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
-	public void verifyManageUsersHeaderAndFooterTextValidation(String credentials, String userType, String portalAccess) {
-		manageUser.validatePageText(credentials, userType, portalAccess);
+	@Then("^Validate Manage User Page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void verifyManageUsersHeaderAndFooterTextValidation(String credentials, String portalAccess) {
+		manageUser.validatePageText(credentials, portalAccess);
 	}
 
 

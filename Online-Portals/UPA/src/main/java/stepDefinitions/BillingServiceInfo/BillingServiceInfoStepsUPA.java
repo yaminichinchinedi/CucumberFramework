@@ -21,9 +21,9 @@ public class BillingServiceInfoStepsUPA extends TestBase {
     	bsInfoPage.verifyProviderPageText(tinType,portalAccess);
     }
 
-    @Then("^Validate Billing Service Information Page Text for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
-    public void validateBillingServiceInfomationPageTextForForFor(String credentials, String userType, String portalAccess) {
-        bsInfoPage.validatePageText(credentials, userType, portalAccess);
+    @Then("^Validate Billing Service Information Page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void validateBillingServiceInfomationPageTextForForFor(String credentials, String portalAccess) {
+        bsInfoPage.validatePageText(credentials, portalAccess);
     }
 }
 

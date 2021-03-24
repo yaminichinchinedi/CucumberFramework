@@ -7,7 +7,7 @@ Feature: UPA Billing Service Information Functionality
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then User clicks on Billing Service Information tab
-    Then Validate Billing Service Information Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+    Then Validate Billing Service Information Page Text for "<credentials>" for "<portalAccess>"
     Examples:
       | credentials | userType | portalAccess | tinType | searchCriteria       |
       | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |

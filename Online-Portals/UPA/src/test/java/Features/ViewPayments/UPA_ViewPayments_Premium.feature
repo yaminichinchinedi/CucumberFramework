@@ -373,7 +373,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
-		Then Validate View Payments page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+		Then Validate View Payments page Text for "<credentials>" for "<portalAccess>"
 		Examples:
 			| credentials | userType | portalAccess | tinType | searchCriteria       |
 			| PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
@@ -388,7 +388,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then User Enters tin and click on search button for "<userType>".
-		Then Validate View Payments page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+		Then Validate View Payments page Text for "<credentials>" for "<portalAccess>"
 		Examples:
 			| credentials | userType | portalAccess | tinType | searchCriteria |
 			| BS_Admin    | BS       | Premium      | AO      | Last 60 days   |

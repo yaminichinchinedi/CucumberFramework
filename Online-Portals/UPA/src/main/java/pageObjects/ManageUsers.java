@@ -2840,38 +2840,37 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 }
 
 	/**
-	 * Author - Vinay Raghumanda
+	 * Author : Vinay Raghumanda
 	 * Validates Page Text for Manage Users for Different types of users.
 	 * @param credentials
-	 * @param userType
 	 * @param portalAccess
 	 */
-	public void validatePageText(String credentials, String userType, String portalAccess) {
+	public void validatePageText(String accessType, String portalAccess) {
 
 		String expectedParagraph, expectedFooterHeaderText, expectedFooterParaText;
-		WebElement footerPara = null;
+		WebElement footerParagraphTag = null;
 
-		switch (credentials + portalAccess + testConfig.getRunTimeProperty("tinType") + userType){
-			case "PROV_AdminPremiumAOPROV":
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")){
+			case "PROV_Admin_Premium_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.paragraph");
 				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.footer.header");
 				expectedFooterParaText = TestBase.contentMessages.getProperty("prov.admin.premium.ao.manageUsers.footer.para");
-				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
-				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				footerParagraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerParagraphTag);
 				break;
-			case "PROV_AdminStandardAOPROV":
+			case "PROV_Admin_Standard_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.paragraph");
 				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.footer.header");
 				expectedFooterParaText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.footer.para");
-				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
-				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				footerParagraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerParagraphTag);
 				break;
-			case "BS_AdminPremiumAOBS":
+			case "BS_Admin_Premium_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.paragraph");
 				expectedFooterHeaderText = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.footer.header");
 				expectedFooterParaText = TestBase.contentMessages.getProperty("bs.admin.premium.ao.manageUsers.footer.para");
-				footerPara = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p[2]");
-				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerPara);
+				footerParagraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p[2]");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerParagraphTag);
 				break;
 			default:
 				break;
@@ -2879,23 +2878,20 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	}
 
 	private void manageUserPageValidation(String expectedParagraph, String expectedFooterHeaderText, String expectedFooterParaText, WebElement footerPara) {
-		WebElement ptag;
+		WebElement paragraphTag;
 		WebElement footerHeader;
 		String actualParagraph;
 		String actualFooterHeaderText;
 		String actualFooterParaText;
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
-		ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
 		footerHeader = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/h2");
-		actualParagraph = ptag.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
 		actualFooterHeaderText = footerHeader.getText().trim();
 		actualFooterParaText = footerPara.getText().trim();
-		Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph +
-				"\nActual Footer Header Text : " + actualFooterHeaderText + "\n Expected Footer Header Text : " + expectedFooterHeaderText +
-				"\nActual Footer Para Text : " + actualFooterParaText + "\n Expected Footer Para Text : " + expectedFooterParaText);
-		Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
-		Assert.assertTrue(actualFooterHeaderText.equalsIgnoreCase(expectedFooterHeaderText), "Content Message Validation Failed");
-		Assert.assertTrue(actualFooterParaText.equalsIgnoreCase(expectedFooterParaText), "Content Message Validation Failed");
+		Helper.compareEquals(testConfig, "Page Text", actualParagraph, expectedParagraph);
+		Helper.compareEquals(testConfig, "Page Text", actualFooterHeaderText, expectedFooterHeaderText);
+		Helper.compareEquals(testConfig, "Page Text", actualFooterParaText, expectedFooterParaText);
 	}
 
 

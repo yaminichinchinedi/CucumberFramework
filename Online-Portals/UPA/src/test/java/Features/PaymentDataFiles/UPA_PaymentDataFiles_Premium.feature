@@ -237,7 +237,7 @@ Examples:
 		 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		 When  User clicks on Payment Data Files Tab
 		 Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
-		 Then Validate Payment Data File Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+		 Then Validate Payment Data File Page Text for "<credentials>" for "<portalAccess>"
 		 Examples:
 			 | credentials | userType | portalAccess | tinType | searchCriteria       |
 			 | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |

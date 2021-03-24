@@ -539,16 +539,14 @@ public class UPAHomePage extends HomePage {
 			Element.waitTillTextAppears(imageTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
 			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
 					imageTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Log.Comment("Actual Text: \n" + actualText + "\nExpected Text: \n" + expectedTexts[j] + "\n");
-			Assert.assertTrue(actualText.equals(expectedTexts[j]), "Text Validation failed");
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
 			j++;
 		}
 		for (int i = 0; i < videoTiles.size(); i++) {
 			Element.waitTillTextAppears(videoTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
 			String actualText = videoTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
 					videoTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Log.Comment("Actual Text: \n" + actualText + "\nExpected Text: \n" + expectedTexts[j] + "\n");
-			Assert.assertTrue(actualText.equals(expectedTexts[j]), "Text Validation failed");
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
 		}
 	}
 	

@@ -308,32 +308,28 @@ public void verifyAddProvConfirmPage(){
 	/**
 	 * Author : Vinay Raghumanda
 	 * Validates Page Text for Billing Service Information Page for different Types of users.
-	 *
-	 * @param credentials
-	 * @param userType
+	 * @param accessType
 	 * @param portalAccess
 	 */
-	public void validatePageText(String credentials, String userType, String portalAccess) {
+	public void validatePageText(String accessType, String portalAccess) {
 
 		String actualParagraph, expectedParagraph;
-		WebElement ptag = null;
+		WebElement paragraphTag = null;
 
-		switch (credentials + portalAccess + testConfig.getRunTimeProperty("tinType") + userType) {
-			case "PROV_AdminPremiumAOPROV":
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.billingServiceInformation.paragraph");
 				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
-				ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
-				actualParagraph = ptag.getText().trim();
-				Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph + "\n");
-				Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+				actualParagraph = paragraphTag.getText().trim();
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
 				break;
-			case "BS_AdminPremiumAOBS":
+			case "BS_Admin_Premium_AO":
 				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
-				ptag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
-				actualParagraph = ptag.getText().trim();
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				actualParagraph = paragraphTag.getText().trim();
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.billingServiceInformation.paragraph");
-				Log.Comment("Actual paragraph : " + actualParagraph + "\nExpected paragraph : " + expectedParagraph + "\n");
-				Assert.assertTrue(actualParagraph.equalsIgnoreCase(expectedParagraph), "Content Message Validation Failed");
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
 				break;
 			default:
 				break;

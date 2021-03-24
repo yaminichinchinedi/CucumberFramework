@@ -212,7 +212,7 @@ And User verifies page text message "<PageTextMsg>"
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Search Remittance link for UPA
-		Then Validate Search Remittance Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+		Then Validate Search Remittance Page Text for "<credentials>" for "<portalAccess>"
 		Examples:
 			| credentials | userType | searchCriteria       | tinType | portalAccess |
 			| PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
@@ -226,7 +226,7 @@ And User verifies page text message "<PageTextMsg>"
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		Then User clicks on Search Remittance link for UPA
 		Then User Enters Search Remittance tin and click on search button for "<userType>".
-		Then Validate Search Remittance Page Text for "<credentials>" for "<userType>" for "<portalAccess>"
+		Then Validate Search Remittance Page Text for "<credentials>" for "<portalAccess>"
 		Examples:
 			| credentials | userType | searchCriteria | tinType | portalAccess |
 			| BS_Admin    | BS       | Last 60 days   | AO      | Premium      |

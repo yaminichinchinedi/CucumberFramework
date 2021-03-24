@@ -107,8 +107,8 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
     	srchCriteriaPage.verifySearchBtnEnabledOrDisabled(portalAccess);
     }
 
-	@Then("^Validate Search Remittance Page Text for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
-	public void validatePageTextOnSearchRemittanceForForForFor(String credentials, String userType, String portalAccess) {
-		srchCriteriaPage.validatePageText(credentials, userType, portalAccess);
+	@Then("^Validate Search Remittance Page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void validatePageTextOnSearchRemittanceForForForFor(String credentials, String portalAccess) {
+		srchCriteriaPage.validatePageText(credentials, portalAccess);
 	}
 }
