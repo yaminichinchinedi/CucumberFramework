@@ -36,6 +36,7 @@ import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.ViewPayments;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -1888,10 +1889,10 @@ public static String addDays(String date, int days) throws ParseException {
 	public static void getPayerSchema(TestBase testConfig,String searchCriteria)
 	{
 		Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
-		int sqlRowNo=1507;
-	     Map schema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	     Map schema = DataBase.executeSelectQuery(testConfig,QUERY.GET_SCHEMA, 1);
 	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
 	     testConfig.putRunTimeProperty("PAYR_DSPL_NM", schema.get("PAYR_DSPL_NM").toString().trim());
+	     testConfig.putRunTimeProperty("PAYR_835_ID", schema.get("PAYR_835_ID").toString().trim());
 	}
 	
 

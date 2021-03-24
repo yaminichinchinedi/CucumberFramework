@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.print.attribute.HashAttributeSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,6 +19,7 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.HomePage;
 import main.java.pageObjects.ViewPayments;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 public class ViewPaymentsDataProvider {
@@ -456,7 +458,7 @@ public ArrayList getEnrollmentContent(String content) {
 	{
 		int sqlRowNo=0;
 		String payType="";
-		
+		String query="";
 		String env = "";
 		String id = "";
 		
@@ -1094,30 +1096,28 @@ public ArrayList getEnrollmentContent(String content) {
 				break;
 				
 			case "Last 30 days":
-//				sqlRowNo=1617;
-//				break;
 				paySum.getQuickSearchDates("Last 30 days");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "Last 60 days":
 				paySum.getQuickSearchDates("Last 60 days");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "Last 90 days":
 				paySum.getQuickSearchDates("Last 90 days");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "Last 4-6 months":
 				paySum.getQuickSearchDates("Last 4-6 months");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "Last 6-9 months":
 				paySum.getQuickSearchDates("Last 6-9 months");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "Last 9-13 months":
 				paySum.getQuickSearchDates("Last 9-13 months");
-				sqlRowNo=1611;
+				query=QUERY.PAYMENT_TIN;
 				break;
 			case "LegacyOrPremiOrStandard_AO_Standard":	
 			case "LegacyOrPremiOrStandard":
@@ -1224,7 +1224,11 @@ public ArrayList getEnrollmentContent(String content) {
  		if(!payType.equalsIgnoreCase("medicalPayment"))
 		 { 
 		   Log.Comment("Getting tin for  " + searchCriteria);
-		   Map tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		   Map tinNumbers=null;
+		   if(StringUtils.equals(query, ""))
+			   tinNumbers = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		   else
+			   tinNumbers = DataBase.executeSelectQuery(testConfig,query, 1);
 		    try
 		     {
 		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
