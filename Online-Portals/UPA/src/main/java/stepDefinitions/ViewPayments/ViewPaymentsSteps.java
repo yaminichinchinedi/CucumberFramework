@@ -383,6 +383,11 @@ public class ViewPaymentsSteps extends TestBase {
     {
         viewPayment.verifyColumnValuesForEachPayment(columnName);
     }
+
+    @Then("^Validate View Payments page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void verifyViewPaymentsPageTextForForFor(String credentials, String portalAccess) {
+        viewPayment.verifyPageTextFor(credentials, portalAccess);
+    }
 	
 
 }

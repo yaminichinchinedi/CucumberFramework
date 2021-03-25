@@ -22,6 +22,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
@@ -1740,5 +1741,85 @@ public class SearchRemittanceSearchCriteria {
     		Helper.compareEquals(testConfig, "Button Enabled", null, btnSearchRemittance.getAttribute("disabled"));
     	return this;
     }
+
+	/**
+	 * Author : Vinay Raghumanda
+	 * Validates page text on Search Remittance screen for different types of users and roles.
+	 * @param accessType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String accessType, String portalAccess) {
+
+		String expectedParagraph, expectedHeader, actualButtonText, expectedButtonText;
+		WebElement button = null;
+
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				button = Element.findElement(testConfig, "xpath", "//*[@type=\"button\"]/span[text()='Get Started']");
+				actualButtonText = button.getText().trim();
+				expectedButtonText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.buttonText");
+				Helper.compareEquals(testConfig, "Page Text", expectedButtonText, actualButtonText);
+				break;
+			case "PROV_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			case "BS_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			case "BS_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void validateStandardUsers(String expectedParagraph, String expectedHeader) {
+		WebElement headerTag;
+		WebElement paragraphTag;
+		String actualHeader;
+		String actualParagraph;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id=\"seachRemittancePremium\"]/h2"), 30);
+		headerTag = Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/h2");
+		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/p[2]");
+		actualHeader = headerTag.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "PageText", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "PageText", expectedParagraph, actualParagraph);
+	}
+
+	private void validatePremiumUsers(String expectedParagraph) {
+		WebElement paragraphTag;
+		String actualParagraph;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedParagraph, actualParagraph);
+	}
 }
 
