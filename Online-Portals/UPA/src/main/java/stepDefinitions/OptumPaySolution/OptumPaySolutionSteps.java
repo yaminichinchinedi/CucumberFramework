@@ -1,5 +1,6 @@
 
 package main.java.stepDefinitions.OptumPaySolution;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
@@ -176,5 +177,11 @@ public void user_clicks_on_fee_search_tab() throws Throwable {
 public void verify_that_max_records_are_on_single_page_and_pagination_links_enabled_disabled_accordingly(int arg1) throws Throwable {
     optumPaySol.verifyPagination();
 }
+	
+	@And("^User validates selectAll, Cancel, RefundFee buttons and select column functionality$")
+	public void user_validates_selectAll_Cancel_RefundFee_buttons_and_select_column_functionality() throws Throwable {
+		optumPaySol.validateFeeRefundButtonsAndFunctionality();
+	}
+	
 }
 

@@ -120,7 +120,11 @@ public class CSRHomePageSteps extends TestBase{
 	public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
 		homePage.clickManageInternalUserlink();
 	}
-
+	
+	@When("^User creates data for Fee refunds UI$")
+	public void user_creates_data_for_Fee_refunds_UI() throws Throwable {
+       homePage.dataPrepForFeeRefund();
+	}
 	
 	@Given("^User fetch tin on CSR for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_fetch_tin_on_CSR_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {

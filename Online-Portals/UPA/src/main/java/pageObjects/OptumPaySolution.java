@@ -18,8 +18,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.server.handler.interactions.touch.Scroll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -277,6 +281,24 @@ public class OptumPaySolution {
 	@FindBy(xpath="//div[@id='feeSearchTable']/div[2]/div/table/tbody/tr")
 	List <WebElement> noOfRows;
 	
+    @FindBy(xpath="//button[contains(text(),'Clear')]")
+    private WebElement clearButton;
+	
+    @FindBy(xpath="//input[@name='showOnlyRefundables']")
+    private WebElement refundFeeCheckbox;
+    
+    @FindBy(xpath="//input[@id='refundFeeButton']")
+    private WebElement refundFeeButton;
+    
+    @FindBy(xpath="//input[@id='refundFeeCancelButton']")  
+    private WebElement refundFeeCancelButton;
+    
+    @FindBy(xpath="//input[@value='Select All']")  
+    private WebElement selectAll;
+    
+    @FindBy(xpath="//input[@name='refundFee'][1]")  
+    private WebElement refundSingleRow;
+    
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -1100,9 +1122,8 @@ public class OptumPaySolution {
 		}
 
 		public OptumPaySolution doSearch(String criteriaType) throws ParseException {
-
+			
 			switch (criteriaType) {
-
 				case "feeSearchPaymentNumber": {
 					Browser.wait(testConfig, 5);
 					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
@@ -1136,6 +1157,7 @@ public class OptumPaySolution {
 
 		public OptumPaySolution clickSearchBtn() {
 			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
+			Browser.wait(testConfig, 2);
 			return new OptumPaySolution(testConfig);
 		}
 		public OptumPaySolution clickDetailsTab() {
@@ -1232,7 +1254,36 @@ public class OptumPaySolution {
 		
 		}
 		
+		public void showFeesForRefund() {
+			Browser.wait(testConfig, 2);
+			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
+		}
 		
+		public void validateFeeRefundButtonsAndFunctionality() {
+			showFeesForRefund();
+		
+			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+            
+			Element.clickByJS(testConfig, refundSingleRow, "first entry in the refund fee");
+		    refundFeeCancelButton.click();
+		    Log.Comment("Cancel button clicked");
+			selectAll.click();
+			Log.Comment("Select All button clicked");
+		    
+			Assert.assertTrue(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+			Assert.assertTrue(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+			
+			showFeesForRefund();			
+			Browser.wait(testConfig, 2);
+			clearButton.click();
+			Log.Comment("Fee search criteria's cleared");
+
+		}		
 }
 
 

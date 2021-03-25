@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
 
@@ -214,5 +215,17 @@ public class CSRHomePage {
 		Element.clickByJS(testConfig,linkPaymentDataFiles, "Payment Data Files Link");
 		return new SearchTinPagePaymentDataFiles(testConfig);
 		
+	}
+	
+	public void dataPrepForFeeRefund() {
+		//Prerequisites for getting tin for refund
+		String pastDateForFeeRefund = Helper.getDateBeforeOrAfterDays(-59, "YYYY-MM-dd"); //This date should be lesser than or equal to 60 days in the past
+		String feeRefundStartDate = Helper.getDateBeforeOrAfterDays(-60, "YYYY-MM-dd"); //Time frame for considering entries for refund
+		testConfig.putRunTimeProperty("pastDateForFeeRefund", pastDateForFeeRefund);
+	 	testConfig.putRunTimeProperty("feeRefundStartDate", feeRefundStartDate);
+    	DataBase.executeUpdateQuery(testConfig, 2012); 
+    	DataBase.executeUpdateQuery(testConfig, 2013);
+    	Log.Comment("Dataset up for Refund successfully completed");
+
 	}
 }

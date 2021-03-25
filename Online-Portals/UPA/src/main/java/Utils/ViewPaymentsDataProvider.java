@@ -1153,6 +1153,10 @@ public ArrayList getEnrollmentContent(String content) {
             case "TinWithoutInvoices":
                 sqlRowNo=1514;
                 break;
+            case "TinForFeeSearchRefund":
+            	sqlRowNo=2014;
+            	break;
+
                 
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found");
@@ -1233,6 +1237,11 @@ public ArrayList getEnrollmentContent(String content) {
 		     {
 		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
+		       
+		       if(sqlRowNo==2014) {
+		    	   testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVOICE_NBR").toString());
+		    	   testConfig.putRunTimeProperty("paymentNumber",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		       }
 		       
 		       if(sqlRowNo==1611)
 		       {
@@ -1381,8 +1390,7 @@ public ArrayList getEnrollmentContent(String content) {
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			  System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 		  }
-		  
-		    
+		  		    
 		  }
 		    
 		  catch(Exception e)
