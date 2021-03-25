@@ -200,5 +200,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_verifies_the_error_message_for_tin(String tinType) throws Throwable {
 	    optumPaySol.verifyTINerroMsgforBSUsers(tinType);
 	}
+	
+		@Then("^User clicks on Invoice Number that opens pdf in new tab$")
+	public void user_clicks_on_Invoice_Number_that_opens_pdf_in_new_tab() throws Throwable {
+		optumPaySol.clickInvoiceNumberAndOpenPdf();
+	}
 }
 

@@ -167,5 +167,20 @@
           |    RW             |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
           |    RO          |	feeSrchTINdetailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
           |    RO          |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
+          
+          
+          
+          
+      @US3307485
+  	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  		  Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+   	    Then User clicks on "Invoices" tab
+   	    Then User clicks on Invoice Number that opens pdf in new tab
+   	Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		|
+      |       Super        | 			 PROV			    |			Premium		  	|  PremiumOrStandardFeeInvoice 	|	  AO			|
                    
        

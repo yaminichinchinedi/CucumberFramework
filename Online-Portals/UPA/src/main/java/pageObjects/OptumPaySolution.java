@@ -291,6 +291,12 @@ public class OptumPaySolution {
 	@FindBy(xpath="//p[@class='errors mr-5 error__message']")
 	WebElement errorMsgInvalid_NotAssociatedTIN_BS;
 	
+	@FindBy(xpath = "//td[@class='text-center']/a") 
+	List<WebElement> invoiceNumberList;
+	
+	@FindBy(className="text-red")
+	WebElement redTextError;
+	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -1301,7 +1307,42 @@ public class OptumPaySolution {
 			
 		}
 		
-		
+public OptumPaySolution clickInvoiceNumberAndOpenPdf()
+	 	{
+			String parentwindowhandle=testConfig.driver.getWindowHandle();
+	 		String invoiceNum;
+	 		String oldWindow="";
+	 		int invoiceSql=1120;
+	 		Map invoiceTable=DataBase.executeSelectQuery(testConfig, invoiceSql, 1);
+	 		invoiceNum = invoiceTable.get("INVC_NBR").toString();
+	 		for(WebElement invoice :invoiceNumberList)
+	 		{
+
+	 			if(invoiceNum.equals(invoice.getText()))
+		 		{
+		 			for (int i=0; i<2; i++)
+		 			{
+		 				Element.clickByJS(testConfig, invoice, "invoice");
+		 				oldWindow=Browser.switchToNewWindow(testConfig);
+		 				
+		 				Browser.waitForLoad(testConfig.driver);
+		 				if(redTextError.isDisplayed())
+		 				{
+		 					Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
+		 				}
+		 				else 
+		 				{
+		 					Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber"+invoiceNum);
+		 				}
+		 				Browser.closeBrowser(testConfig);
+		 				Browser.switchToParentWindow(testConfig, oldWindow);
+		 				break;
+		 			}
+	 			}
+	 			
+	 		}	 		
+	 		return this;
+	 	}		
 		
 }
 

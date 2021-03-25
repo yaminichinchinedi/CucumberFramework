@@ -192,3 +192,17 @@ And User clicks on UPA logout
       |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Premium		|	Standard     |AO		|	
       |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Standard		|	Premium      |AO		|	
        
+       
+       
+       
+    @US3329105
+  	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
+   	Given User navigates to UPA portal and enters "<credentials>" and login
+   	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   	And User clicks on Optum Pay Solutions tab
+   	Then User clicks on "Invoices" tab
+   	Then User clicks on Invoice Number that opens pdf in new tab
+   	Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		|
+      |       PROV_Admin        | 			 PROV			    |			Premium		  	|  PremiumOrStandardFeeInvoice 	|	  AO			|
+       
