@@ -11,12 +11,3 @@ Feature: UPA HomePage Alert
    	  |    userType     |   accessType  | 			searchCriteria				|		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Standard			|		AO			|     A     |					P					 |				PD			 |
       |      PROV_Admin |   PROV     		|		 	TinDuringOrPostTrial		|			Premium			  |		AO			|     A     |					P					 |				PS			 |
-
-  @US3179215
-  Scenario Outline: UPA Billing Service Home Page Carousel Text Validation
-    Given User navigates to UPA portal and enters "<userType>" and login
-    Then Verify Home Page Carousel Text for "<userType>"
-    Examples:
-      | userType | accessType |
-      | BS_Admin | BS         |
-      | PAY_Admin | PAY       |

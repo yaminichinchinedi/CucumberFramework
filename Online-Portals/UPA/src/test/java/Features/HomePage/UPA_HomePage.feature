@@ -24,8 +24,28 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
       |        userType        |   accessType   |		portalAccess	  | tinType		|trialStatus|statusOfStandardRecd|SelectedOrDefault|
       | PROV_Admin_HomePage_AO |   PROV     		|		Standard			  |		AO			|     A     |					P					 |				PD			 |
       
-      
-      
+       #Author : Vinay Raghumanda
+  @US3179215
+  Scenario Outline: BS and Payer admins Home Page Carousel Text Validation
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    Examples:
+      | credentials | userType  |
+      | BS_Admin    | BS_Admin  |
+      | PAY_Admin   | PAY_Admin |
+
+  @US3179215
+  Scenario Outline: Provider Home page Carousel Text Validation
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    Examples:
+      | credentials | userType | searchCriteria       | tinType | portalAccess |
+      | PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
+      | PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Standard     |
+      | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
+      | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
+      | PROV_Admin  | PROV     | PostTrial and Paid   | VO      | Premium      |
       
       
       

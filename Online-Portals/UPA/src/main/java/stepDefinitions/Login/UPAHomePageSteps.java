@@ -230,9 +230,10 @@ public class UPAHomePageSteps extends TestBase{
 		public void user_verifies_if_homepage_is_presented_when_TC_ACCPT_IND_is_Y() throws Throwable {
 			homePage.verifyHomePage();
 		}
-		@Then("Verify Home Page Carousel Text for \"([^\"]*)\"")
-		public void verifyHomePageCarouselText(String userType){
-			homePage.verifyHomePageCarouselText(userType);
+
+		@Then("^Verify Home Page Carousel Text for \"([^\"]*)\" with \"([^\"]*)\"$")
+		public void verifyHomePageCarouselText(String userType, String credentials) {
+			homePage.verifyHomePageCarouselText(userType, credentials);
 		}
   
 		@Then("^User clicks on Document Vault and verifies the page$")
