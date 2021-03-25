@@ -1,19 +1,21 @@
 #Author: Sunanda
 @UPAOptumPaySolutions
 Feature: - Optum Pay Solutions
+  
    #OBSOLETE FOR NOW
-   @US2948672  
-  	Scenario Outline: - Optum Pay Solutions - AO Provider Options Page 
-   Given User navigates to UPA portal and enters "<userType>" and login
-   And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-   And   User clicks on Optum Pay Solutions tab
-   Then  User verifies Optum Pay Solution Tab for standard user with "<trialStatus>" and "<portalAccess>"
-     Examples:
-     |    credentials            |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid   	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Standard		  |  PostTrial and NotPaid 	|	  AO			|
-       |       PROV_Admin        | 			 PROV			    	|			Standard		  |  WithinTrial and NotPaid|	  AO			|
+ #  @US2948672  
+  #	Scenario Outline: - Optum Pay Solutions - AO Provider Options Page 
+   #Given User navigates to UPA portal and enters "<userType>" and login
+   #And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   #And   User clicks on Optum Pay Solutions tab
+   
+   #Then  User verifies Optum Pay Solution Tab for standard user with "<trialStatus>" and "<portalAccess>"
+  #   Examples:
+   #  |    credentials            |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+    #   |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
+     #  |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid   	|	  AO			|
+      # |       PROV_Admin        | 			 PROV			    	|			Standard		  |  PostTrial and NotPaid 	|	  AO			|
+       #|       PROV_Admin        | 			 PROV			    	|			Standard		  |  WithinTrial and NotPaid|	  AO			|
   
 		#Author:Sayonee 
 	 @UPAUS3060820 @UPAUS3060825
@@ -23,6 +25,8 @@ Feature: - Optum Pay Solutions
    And   User clicks on Optum Pay Solutions tab
    Then  Validate the texts in Manage My Plan Tile
    Then Verify the Cancellation Popup based on "<searchCriteria>"
+   And User clicks on UPA logout
+   
      Examples:
        |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
        |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
@@ -36,6 +40,7 @@ Feature: - Optum Pay Solutions
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User clicks on Optum Pay Solutions tab
    Then  User verifies the Optum Pay Solutions tiles For VO
+   And User clicks on UPA logout
      Examples:
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   PROV_Admin    |     PROV     	|		 	PostTrial and Paid		|			Premium			|		VO			|
@@ -47,6 +52,7 @@ Feature: - Optum Pay Solutions
     And   User clicks on Optum Pay Solutions tab
     Then User Enters tin for OPS and click on search button for "<userType>".
     Then  User verifies the Optum Pay Solutions tiles For VO
+    And User clicks on UPA logout
      Examples:
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   BS_Admin    |     BS     	|		 	PostTrial and Paid		|			Premium			|		VO			|
@@ -63,6 +69,7 @@ And   User clicks on Optum Pay Solutions tab
 
 Then User verifies page text "<PageMessageText_Top>" messaging in Optum Pay Solutions page
 And User verifies page text "<PageMessageText_Footer>" messaging in Optum Pay Solutions page
+And User clicks on UPA logout
 
 
  Examples:
@@ -83,6 +90,7 @@ And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "
 And User clicks on Optum Pay Solutions tab
 Then User clicks on "Invoices" tab
 And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
+And User clicks on UPA logout
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
@@ -101,6 +109,7 @@ And User clicks on Optum Pay Solutions tab
  Then User Enters tin for OPS and click on search button for "<userType>".
 Then User clicks on "Invoices" tab
 And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid
+And User clicks on UPA logout
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
@@ -115,6 +124,7 @@ And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User clicks on Optum Pay Solutions tab
 		Then User validates contents of Past due fee of Fee tiles for this page
+		And User clicks on UPA logout
 
      Examples:
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
@@ -128,6 +138,7 @@ And User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period
     And   User clicks on Optum Pay Solutions tab
     Then User Enters tin for OPS and click on search button for "<userType>".
    Then User validates contents of Past due fee of Fee tiles for this page
+   And User clicks on UPA logout
      Examples:
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   BS_Admin    |     BS     	|		 	zeroPastdueFee		|			Premium			|		AO			| 
