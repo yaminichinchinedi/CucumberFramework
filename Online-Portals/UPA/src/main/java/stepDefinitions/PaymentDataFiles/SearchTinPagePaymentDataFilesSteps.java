@@ -21,4 +21,9 @@ public void User_Validates_Error_Message_upon_Entering_invalid_TIN() throws Thro
 	srchTinPagePaymentDataFiles.verifyErrorMsgForInvalidTIN();
 }
 
+	@Then("^Validate Payment Data File Page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void validatePageTextForForFor(String credentials, String portalAccess) {
+		srchTinPagePaymentDataFiles.validatePageText(credentials, portalAccess);
+	}
+
 }

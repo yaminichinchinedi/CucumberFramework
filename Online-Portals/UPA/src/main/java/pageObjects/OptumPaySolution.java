@@ -1,4 +1,3 @@
-
 package main.java.pageObjects;
 
 import java.io.IOException;
@@ -276,6 +275,21 @@ public class OptumPaySolution {
 	
 	@FindBy(xpath="//div[@id='feeSearchTable']/div[2]/div/table/tbody/tr")
 	List <WebElement> noOfRows;
+	
+	@FindBy(xpath="(//span[@class='wrapperTooltip'])[1]")
+	WebElement planTypeTileInfoIconMsg;
+		
+	@FindBy(xpath="(//span[@class='wrapperTooltip'])[2]")
+	WebElement rateTileInfoIconMsg;
+		
+	@FindBy(xpath="(//span[@class='wrapperTooltip'])[3]")
+	WebElement feesTileInfoIconMsg;
+		
+	@FindBy(xpath="(//span[@class='wrapperTooltip'])[4]")
+	WebElement manageMyPlanTileInfoIconMsg;
+		
+	@FindBy(xpath="//p[@class='errors mr-5 error__message']")
+	WebElement errorMsgInvalid_NotAssociatedTIN_BS;
 	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
@@ -1231,6 +1245,62 @@ public class OptumPaySolution {
 		return this;
 		
 		}
+		
+		
+		public void verifyInfoIconMessagesforAllTiles()
+	 	{
+	 		String planTypeInfoIconMsg="Your provider organization will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced within the first 5 business days of July. You will receive an email in advance of the debit to your TIN-level bank account and you can review the fees on the Invoices subtab.";
+	 		String rateInfoIconMsg="Per payment fees are calculated based on the total payment amount.";
+	 		String feesInfoIconMsg="To view individual per-payment fees, please visit the View Payments page.  Fees will be billed monthly.";
+	 		String manageMyPlanInfoIconMsg="To cancel the full functionality of Optum Pay, the Provider administrator must complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com." + 
+	 				"Note:  Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.  Any fees incurred prior to cancellation will be billed at the end of the current billing cycle.";
+	 		
+			
+	 		Helper.compareEquals(testConfig, "Plan Type Info Icon Message", planTypeInfoIconMsg, planTypeTileInfoIconMsg.getAttribute("title").trim());
+	 		Helper.compareEquals(testConfig, "Rate Info Icon Message", rateInfoIconMsg, rateTileInfoIconMsg.getAttribute("title").trim());
+	 		Helper.compareEquals(testConfig, "Fees Info Icon Message", feesInfoIconMsg, feesTileInfoIconMsg.getAttribute("title").trim());
+	 		Helper.compareContains(testConfig, "Manage My Plan Info Icon Message", manageMyPlanInfoIconMsg, manageMyPlanTileInfoIconMsg.getAttribute("title").replace("<br>", "").replaceAll("[\\n]", "").trim());
+	 	}
+		
+		//Added by Mohammad
+		public boolean verifyTilesArePresentOnOPS()
+		{
+			boolean flag = false;
+			
+			for(WebElement tiles: tilesHeaderUI)
+			{
+				if(tiles.isDisplayed())
+				{
+					flag=true;
+				}
+			}
+			
+			
+			return flag;
+		}
+		
+		public void verifyTINerroMsgforBSUsers(String tinType)
+		{
+			String ex_Error_MsgInvalidTIN_BS = "TIN must be 9 digits";
+			String ex_Error_MsgNotAssociatedTIN_BS = "TIN is not enrolled and/or not associated with your Billing Service";
+			
+			switch (tinType)
+			{
+			case "Invalid":
+			{
+				Helper.compareEquals(testConfig, "Invalid TIN error message for BS", ex_Error_MsgInvalidTIN_BS, errorMsgInvalid_NotAssociatedTIN_BS.getText().trim());
+				break;
+			}
+			
+			case "NotAssociated":
+			{
+				Helper.compareEquals(testConfig, "Not Associated TIN error message for BS", ex_Error_MsgNotAssociatedTIN_BS, errorMsgInvalid_NotAssociatedTIN_BS.getText().trim());
+				break;
+			}
+			}
+			
+		}
+		
 		
 		
 }

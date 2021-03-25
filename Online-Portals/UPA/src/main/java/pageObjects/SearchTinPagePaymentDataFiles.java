@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -9,6 +10,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
+import org.testng.Assert;
 
 public class SearchTinPagePaymentDataFiles {
 	@FindBy(name="taxIndNbr")
@@ -88,5 +90,85 @@ public class SearchTinPagePaymentDataFiles {
 		Element.clickByJS(testConfig,srchBtn, "Search Button");
 		Helper.compareEquals(testConfig, "InValid TIN Functionality", "Please enter valid Tax Identification Number", invalidTinMsg.getText());
 		return this;
+	}
+
+	/**
+	 * Author : Vinay Raghumanda
+	 * Validates Page Text for Payment data Files for different types of users.
+	 * @param accessType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String accessType, String portalAccess) {
+
+		String expectedParagraph, expectedHeader, actualButtonText, expectedButtonText;
+		WebElement button = null;
+
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")){
+			case "PROV_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.pageDataFiles.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.standard.ao.pageDataFiles.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.pageDataFiles.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				button = Element.findElement(testConfig, "xpath", "//*[@type=\"button\"]/span[text()='Get Started']");
+				actualButtonText = button.getText().trim();
+				expectedButtonText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.pageDataFiles.buttonText");
+				Helper.compareEquals(testConfig, "Page Text", expectedButtonText, actualButtonText);
+				break;
+			case "PROV_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.premium.ao.pageDataFiles.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.standard.ao.pageDataFiles.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.standard.ao.pageDataFiles.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			case "BS_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.pageDataFiles.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.pageDataFiles.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.pageDataFiles.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			case "BS_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.premium.ao.pageDataFiles.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.pageDataFiles.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.pageDataFiles.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void validateStandardUsers(String expectedParagraph, String expectedHeader) {
+		WebElement headerTag;
+		WebElement paragraphTag;
+		String actualHeader;
+		String actualParagraph;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id=\"paymentDataFilesPremium\"]/h2"), 30);
+		headerTag = Element.findElement(testConfig, "xpath", "//*[@id=\"paymentDataFilesPremium\"]/h2");
+		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id=\"paymentDataFilesPremium\"]/p[2]");
+		actualHeader = headerTag.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedParagraph, actualParagraph);
+	}
+
+	private void validatePremiumUsers(String expectedParagraph) {
+		WebElement paragraphTag;
+		String actualParagraph;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedParagraph, actualParagraph);
 	}
 }

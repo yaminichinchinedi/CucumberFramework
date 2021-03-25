@@ -1,9 +1,6 @@
 package main.java.nativeFunctions;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
@@ -66,7 +63,7 @@ import java.net.URL;
 public class TestBase extends ReporterClass {
 
 
-
+	public static Properties contentMessages = null;
 	public static HashMap<String, TestDataReader> testDataReaderHashMap = new HashMap<String, TestDataReader>();
 	public static HashMap<Integer, HashMap<String, String>> genericErrors = new HashMap<Integer, HashMap<String, String>>();
 	
@@ -99,6 +96,17 @@ public class TestBase extends ReporterClass {
 		
 		try {
 			runtimeProperties.load(fileInput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Load content messages properties file
+		FileReader reader = null;
+		contentMessages = null;
+		try {
+			reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
+			contentMessages = new Properties();
+			contentMessages.load(reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

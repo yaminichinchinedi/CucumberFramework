@@ -163,6 +163,41 @@ public class DataBase
       else
 	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
+	
+	public static Map<String, String> executeSelectQuery(TestBase testConfig, String selectQuery, int rowNumber)
+	{
+		// Read the Query column of SQL sheet of Test data excel
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		selectQuery = Helper.replaceArgumentsWithRunTimeProperties(testConfig, selectQuery);
+		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
+		
+		
+		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
+          return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage);
+	
+		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
+      
+         else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+         
+         else if (System.getProperty("Database").equalsIgnoreCase("Test1"))
+	     return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test1);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
+    	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test2);
+           
+       
+      else
+	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
+}
 
 	/**
 	 * Executes insert query in DB
