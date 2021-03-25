@@ -1301,12 +1301,12 @@ public class OptumPaySolution {
 			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
 			
             if(feeSearchCriteria.equalsIgnoreCase("feeSearchInvoiceNumber")) {
-            	Map<String,String> totalCount = DataBase.executeSelectQuery(testConfig,QUERY.ExpectedCountForFeeRefundInvoiceNumber, 1);
+            	Map<String,String> totalCount = DataBase.executeSelectQuery(testConfig,QUERY.EXPECTED_COUNT_FOR_FEE_REFUND_INVOICE_NUMBER, 1);
             	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount.get("COUNT"), getRecordCountFromUI());
             }
             
             if(feeSearchCriteria.equalsIgnoreCase("feeSearchPaymentNumber")) {
-            	Map<String,String> totalCount2 = DataBase.executeSelectQuery(testConfig,QUERY.ExpectedCountForFeeRefundPaymentNumber, 1);
+            	Map<String,String> totalCount2 = DataBase.executeSelectQuery(testConfig,QUERY.EXPECTED_COUNT_FOR_FEE_REFUND_PAYMENT_NUMBER, 1);
             	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount2.get("COUNT"), getRecordCountFromUI());
             }	
 			

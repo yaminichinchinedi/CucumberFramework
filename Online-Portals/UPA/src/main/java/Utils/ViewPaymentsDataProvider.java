@@ -1160,9 +1160,9 @@ public ArrayList getEnrollmentContent(String content) {
         		String feeRefundStartDate = Helper.getDateBeforeOrAfterDays(-60, "YYYY-MM-dd"); //Time frame for considering entries for refund       		
         		testConfig.putRunTimeProperty("pastDateForFeeRefund", pastDateForFeeRefund);
         	 	testConfig.putRunTimeProperty("feeRefundStartDate", feeRefundStartDate);       	 	
-            	DataBase.executeUpdateQuery(testConfig,QUERY.updateQueryForFeeRefund1, DataBase.getDatabaseType());
-            	DataBase.executeUpdateQuery(testConfig,QUERY.updateQueryForFeeRefund2, DataBase.getDatabaseType());
-            	query = QUERY.ENTRIESFORFEEREFUND;
+            	DataBase.executeUpdateQuery(testConfig,QUERY.UPDATE_QUERY_FOR_FEE_REFUND1, DataBase.getDatabaseType());
+            	DataBase.executeUpdateQuery(testConfig,QUERY.UPDATE_QUERY_FOR_FEE_REFUND2, DataBase.getDatabaseType());
+            	query = QUERY.ENTRIES_FOR_FEE_REFUND;
             	break;
                 
  		   default:

@@ -21,29 +21,29 @@ public class QUERY {
 			
 		public final static String ZERODOLLAR= QUERY.PAYMENT_TIN + "and cp.PAY_AMNT='0' "+QUERY.ENDQUERY;
 		
-		public final static String updateQueryForFeeRefund1= "Update OLE.DEBIT_FEE_ACCRD dfa set dfa.DBT_FEE_ACCRD_STS = 'FC', dfa.DSPL_CONSL_PAY_NBR = '911928068', dfa.CREAT_DTTM = (SELECT CURRENT_TIMESTAMP result FROM sysibm.sysdummy1) where dfa.PROV_TIN_NBR in (Select dfa.PROV_TIN_NBR FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
+		public final static String UPDATE_QUERY_FOR_FEE_REFUND1= "Update OLE.DEBIT_FEE_ACCRD dfa set dfa.DBT_FEE_ACCRD_STS = 'FC', dfa.DSPL_CONSL_PAY_NBR = '911928068', dfa.CREAT_DTTM = (SELECT CURRENT_TIMESTAMP result FROM sysibm.sysdummy1) where dfa.PROV_TIN_NBR in (Select dfa.PROV_TIN_NBR FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
 				"JOIN OLE.DEBIT_FEE_INVCE_DTL dfid ON dfa.DBT_FEE_INVC_DTL_KEY_ID = dfid.DBT_FEE_INVC_DTL_KEY_ID\r\n" + 
 				"JOIN ole.DEBIT_FEE_INVCE dfi ON dfi.DBT_FEE_INVC_KEY_ID = dfid.DBT_FEE_INVC_KEY_ID\r\n" + 
 				"and not exists (select * from Ole.Debit_Fee_Refund dfr where dfr.Dbt_Fee_Key_ID=dfa.Dbt_Fee_Key_ID))\r\n" + 
 				"LIMIT 10";
 		
-		public final static String updateQueryForFeeRefund2= "Update ole.DEBIT_FEE_INVCE set INVC_SETL_DT = '{$pastDateForFeeRefund}' where PROV_TIN_NBR in (select dfa.PROV_TIN_NBR from ole.DEBIT_FEE_ACCRD dfa where dfa.DBT_FEE_ACCRD_STS = 'FC' and LST_CHG_BY_DTTM is not null \r\n" + 
+		public final static String UPDATE_QUERY_FOR_FEE_REFUND2= "Update ole.DEBIT_FEE_INVCE set INVC_SETL_DT = '{$pastDateForFeeRefund}' where PROV_TIN_NBR in (select dfa.PROV_TIN_NBR from ole.DEBIT_FEE_ACCRD dfa where dfa.DBT_FEE_ACCRD_STS = 'FC' and LST_CHG_BY_DTTM is not null \r\n" + 
 				"order by LST_CHG_BY_DTTM desc)\r\n" + 
 				"LIMIT 10";
 		
-		public final static String ENTRIESFORFEEREFUND= "Select dfa.PROV_TIN_NBR as PROV_TAX_ID_NBR, INVC_NBR as invoice_nbr, dfa.DSPL_CONSL_PAY_NBR as dspl_consl_pay_nbr, dfa.DBT_FEE_ACCRD_STS FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
+		public final static String ENTRIES_FOR_FEE_REFUND= "Select dfa.PROV_TIN_NBR as PROV_TAX_ID_NBR, INVC_NBR as invoice_nbr, dfa.DSPL_CONSL_PAY_NBR as dspl_consl_pay_nbr, dfa.DBT_FEE_ACCRD_STS FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
 				"JOIN OLE.DEBIT_FEE_INVCE_DTL dfid ON dfa.DBT_FEE_INVC_DTL_KEY_ID = dfid.DBT_FEE_INVC_DTL_KEY_ID\r\n" + 
 				"JOIN ole.DEBIT_FEE_INVCE dfi ON dfi.DBT_FEE_INVC_KEY_ID = dfid.DBT_FEE_INVC_KEY_ID\r\n" + 
 				"where dfa.DBT_FEE_ACCRD_STS = 'FC' and dfi.INVC_SETL_DT >= '{$feeRefundStartDate}'\r\n" + 
 				"and not exists (select * from Ole.Debit_Fee_Refund dfr where dfr.Dbt_Fee_Key_ID=dfa.Dbt_Fee_Key_ID)\r\n" + 
 				"LIMIT 1 ";
 		
-		public final static String ExpectedCountForFeeRefundInvoiceNumber= "Select count(*) as count FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
+		public final static String EXPECTED_COUNT_FOR_FEE_REFUND_INVOICE_NUMBER= "Select count(*) as count FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
 				"JOIN OLE.DEBIT_FEE_INVCE_DTL dfid ON dfa.DBT_FEE_INVC_DTL_KEY_ID = dfid.DBT_FEE_INVC_DTL_KEY_ID\r\n" + 
 				"JOIN ole.DEBIT_FEE_INVCE dfi ON dfi.DBT_FEE_INVC_KEY_ID = dfid.DBT_FEE_INVC_KEY_ID\r\n" + 
 				"WHERE dfa.DBT_FEE_ACCRD_STS = 'FC' and dfa.PROV_TIN_NBR = '{$PROV_TAX_ID_NBR}' and dfi.INVC_NBR = '{$INVOICE_NBR}'\r\n" + 
 				"and dfi.INVC_SETL_DT >= '{$feeRefundStartDate}' \r\n" + 
 				"and not exists (select * from Ole.Debit_Fee_Refund dfr where dfr.Dbt_Fee_Key_ID=dfa.Dbt_Fee_Key_ID)";
 
-		public final static String ExpectedCountForFeeRefundPaymentNumber = ExpectedCountForFeeRefundInvoiceNumber.replace("dfi.INVC_NBR = '{$INVOICE_NBR}'","dfa.DSPL_CONSL_PAY_NBR = '{$DSPL_CONSL_PAY_NBR}'");
+		public final static String EXPECTED_COUNT_FOR_FEE_REFUND_PAYMENT_NUMBER = EXPECTED_COUNT_FOR_FEE_REFUND_INVOICE_NUMBER.replace("dfi.INVC_NBR = '{$INVOICE_NBR}'","dfa.DSPL_CONSL_PAY_NBR = '{$DSPL_CONSL_PAY_NBR}'");
 }
