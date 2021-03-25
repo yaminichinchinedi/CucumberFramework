@@ -44,13 +44,6 @@ public class QUERY {
 				"WHERE dfa.DBT_FEE_ACCRD_STS = 'FC' and dfa.PROV_TIN_NBR = '{$PROV_TAX_ID_NBR}' and dfi.INVC_NBR = '{$INVOICE_NBR}'\r\n" + 
 				"and dfi.INVC_SETL_DT >= '{$feeRefundStartDate}' \r\n" + 
 				"and not exists (select * from Ole.Debit_Fee_Refund dfr where dfr.Dbt_Fee_Key_ID=dfa.Dbt_Fee_Key_ID)";
-		
-		public final static String ExpectedCountForFeeRefundPaymentNumber= "Select count(*) as count FROM OLE.DEBIT_FEE_ACCRD dfa\r\n" + 
-				"JOIN OLE.DEBIT_FEE_INVCE_DTL dfid ON dfa.DBT_FEE_INVC_DTL_KEY_ID = dfid.DBT_FEE_INVC_DTL_KEY_ID\r\n" + 
-				"JOIN ole.DEBIT_FEE_INVCE dfi ON dfi.DBT_FEE_INVC_KEY_ID = dfid.DBT_FEE_INVC_KEY_ID\r\n" + 
-				"WHERE dfa.DBT_FEE_ACCRD_STS = 'FC' and dfa.PROV_TIN_NBR = '{PROV_TAX_ID_NBR}' and dfa.DSPL_CONSL_PAY_NBR = '{$DSPL_CONSL_PAY_NBR}'\r\n" + 
-				"and dfi.INVC_SETL_DT >= '{$feeRefundStartDate}' \r\n" + 
-				"and not exists (select * from Ole.Debit_Fee_Refund dfr where dfr.Dbt_Fee_Key_ID=dfa.Dbt_Fee_Key_ID)";
-		
 
+		public final static String ExpectedCountForFeeRefundPaymentNumber = ExpectedCountForFeeRefundInvoiceNumber.replace("dfi.INVC_NBR = '{$INVOICE_NBR}'","dfa.DSPL_CONSL_PAY_NBR = '{$DSPL_CONSL_PAY_NBR}'");
 }
