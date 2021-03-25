@@ -216,16 +216,5 @@ public class CSRHomePage {
 		return new SearchTinPagePaymentDataFiles(testConfig);
 		
 	}
-	
-	public void dataPrepForFeeRefund() {
-		//Prerequisites for getting tin for refund
-		String pastDateForFeeRefund = Helper.getDateBeforeOrAfterDays(-59, "YYYY-MM-dd"); //This date should be lesser than or equal to 60 days in the past
-		String feeRefundStartDate = Helper.getDateBeforeOrAfterDays(-60, "YYYY-MM-dd"); //Time frame for considering entries for refund
-		testConfig.putRunTimeProperty("pastDateForFeeRefund", pastDateForFeeRefund);
-	 	testConfig.putRunTimeProperty("feeRefundStartDate", feeRefundStartDate);
-    	DataBase.executeUpdateQuery(testConfig, 2012); 
-    	DataBase.executeUpdateQuery(testConfig, 2013);
-    	Log.Comment("Dataset up for Refund successfully completed");
 
-	}
 }

@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 
+import main.java.Utils.DataBase.DatabaseType;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -1153,15 +1154,21 @@ public ArrayList getEnrollmentContent(String content) {
             case "TinWithoutInvoices":
                 sqlRowNo=1514;
                 break;
-            case "TinForFeeSearchRefund":
-            	sqlRowNo=2014;
+                
+            case "TinForFeeSearchRefund":  
+        		String pastDateForFeeRefund = Helper.getDateBeforeOrAfterDays(-59, "YYYY-MM-dd"); //This date should be lesser than or equal to 60 days in the past
+        		String feeRefundStartDate = Helper.getDateBeforeOrAfterDays(-60, "YYYY-MM-dd"); //Time frame for considering entries for refund       		
+        		testConfig.putRunTimeProperty("pastDateForFeeRefund", pastDateForFeeRefund);
+        	 	testConfig.putRunTimeProperty("feeRefundStartDate", feeRefundStartDate);       	 	
+            	DataBase.executeUpdateQuery(testConfig,QUERY.updateQueryForFeeRefund1, DataBase.getDatabaseType());
+            	DataBase.executeUpdateQuery(testConfig,QUERY.updateQueryForFeeRefund2, DataBase.getDatabaseType());
+            	query = QUERY.ENTRIESFORFEEREFUND;
             	break;
-
                 
  		   default:
- 			   Log.Comment("Payment Type " + searchCriteria + " not found");
- 		
+ 			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		
  		}
+ 		
  		if(searchCriteria.equals("TinWithNoCustomFeeRate")) {
  			sqlRowNo=2000;
  		}
@@ -1238,7 +1245,7 @@ public ArrayList getEnrollmentContent(String content) {
 		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       
-		       if(sqlRowNo==2014) {
+		       if(searchCriteria.equalsIgnoreCase("TinForFeeSearchRefund")) {
 		    	   testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVOICE_NBR").toString());
 		    	   testConfig.putRunTimeProperty("paymentNumber",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 		       }

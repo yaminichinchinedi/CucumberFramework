@@ -29,6 +29,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 public class OptumPaySolution {
@@ -1274,13 +1275,14 @@ public class OptumPaySolution {
 		
 		}
 		
-		public void showFeesForRefund() {
+		public OptumPaySolution clickFeesForRefund() {
 			Browser.wait(testConfig, 2);
 			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
+			return this;
 		}
 		
-		public void validateFeeRefundButtonsAndFunctionality() {
-			showFeesForRefund();
+		public OptumPaySolution validateFeeRefundButtonsAndFunctionality(String feeSearchCriteria) {
+			clickFeesForRefund();
 		
 			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
 			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
@@ -1298,12 +1300,24 @@ public class OptumPaySolution {
 			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
 			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
 			
-			showFeesForRefund();			
+            if(feeSearchCriteria.equalsIgnoreCase("feeSearchInvoiceNumber")) {
+            	Map<String,String> totalCount = DataBase.executeSelectQuery(testConfig,QUERY.ExpectedCountForFeeRefundInvoiceNumber, 1);
+            	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount.get("COUNT"), getRecordCountFromUI());
+            }
+            
+            if(feeSearchCriteria.equalsIgnoreCase("feeSearchPaymentNumber")) {
+            	Map<String,String> totalCount2 = DataBase.executeSelectQuery(testConfig,QUERY.ExpectedCountForFeeRefundPaymentNumber, 1);
+            	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount2.get("COUNT"), getRecordCountFromUI());
+            }	
+			
+            clickFeesForRefund();			
 			Browser.wait(testConfig, 2);
 			clearButton.click();
-			Log.Comment("Fee search criteria's cleared");
-
+			Log.Comment("Fee search criteria's cleared");			
+			return this;
 		}		
+		
+
 		
 	public void verifyInfoIconMessagesforAllTiles()
 	 	{

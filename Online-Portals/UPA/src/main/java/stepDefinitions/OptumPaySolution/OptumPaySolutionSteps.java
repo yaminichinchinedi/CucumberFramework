@@ -178,11 +178,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
     optumPaySol.verifyPagination();
 }
 	
-	@And("^User validates selectAll, Cancel, RefundFee buttons and select column functionality$")
-	public void user_validates_selectAll_Cancel_RefundFee_buttons_and_select_column_functionality() throws Throwable {
-		optumPaySol.validateFeeRefundButtonsAndFunctionality();
+	@Then("^User enters \"([^\"]*)\" validates selectAll, Cancel, RefundFee buttons and select column functionality$")
+	public void user_enters_validates_selectAll_Cancel_RefundFee_buttons_and_select_column_functionality(String feeSearchCriteria) throws Throwable {
+		optumPaySol.validateFeeRefundButtonsAndFunctionality(feeSearchCriteria);
 	}
-	
 		
 	@Then("^User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile$")
 	public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {

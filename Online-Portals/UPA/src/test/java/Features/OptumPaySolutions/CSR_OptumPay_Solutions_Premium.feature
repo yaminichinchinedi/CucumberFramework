@@ -184,18 +184,17 @@
    @CSRUS3374873 @CSRRegression
    Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
        Given User navigates to CSR portal and enters "<credentials>" and login
-       When  User creates data for Fee refunds UI
        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
   		 Then  User clicks on Optum Pay Solutions link on CSR HomePage
        Then  User Enters tin for OPS and click on search button for "<userType>".
        And   Change control to Optum Pay Solutions page
        Then  User clicks on Fee Searh Tab on Optum Pay Solutions Page
        And  User enters "<Fee Search Criteria 1>" on Fee Search page and click on search button.
-       Then  User validates selectAll, Cancel, RefundFee buttons and select column functionality
+       Then  User enters "<Fee Search Criteria 1>" validates selectAll, Cancel, RefundFee buttons and select column functionality
        And  User enters "<Fee Search Criteria 2>" on Fee Search page and click on search button.
-       Then  User validates selectAll, Cancel, RefundFee buttons and select column functionality
+       Then  User enters "<Fee Search Criteria 2>" validates selectAll, Cancel, RefundFee buttons and select column functionality
        And  User enters "<Fee Search Criteria 3>" on Fee Search page and click on search button.
-       Then  User validates selectAll, Cancel, RefundFee buttons and select column functionality
+       Then  User enters "<Fee Search Criteria 3>" validates selectAll, Cancel, RefundFee buttons and select column functionality
            
       Examples: 
           |   credentials  |   searchCriteria         |tinType | portalAccess  |userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
