@@ -154,6 +154,7 @@ Given User navigates to UPA portal and enters "<credentials>" and login
 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And User clicks on Optum Pay Solutions tab
 Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
+And User clicks on UPA logout
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
