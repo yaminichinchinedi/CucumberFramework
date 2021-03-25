@@ -61,7 +61,7 @@ public class SearchTinPageOptmPaySoln {
 		Map<String, String> results = DataBase.executeSelectQuery(testConfig,1602, 1);
 		
 		if (tinType.equalsIgnoreCase("Invalid"))
-			tin = "00000000";
+			tin = String.valueOf( Helper.generateRandomNumber(8));
 		else if (tinType.equalsIgnoreCase("NotAssociated"))
 			
 			tin = results.get("PROV_TIN_NBR");

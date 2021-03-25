@@ -142,12 +142,7 @@ Scenario Outline: To test page text messaging on OPS for Prov Admin
 Given User navigates to UPA portal and enters "<credentials>" and login
 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And User clicks on Optum Pay Solutions tab
-
-
 Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
-
-
-
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
@@ -177,6 +172,8 @@ Then User validates info icon hover message for Plan Type, Rate, Fees and Manage
    		   		
    		Then User Enters an "NotAssociated" tin for OPS and click on search button for "<userType>".
   		And User verifies the error message for "NotAssociated" tin
+  		
+  		And User clicks on UPA logout
    		
  Examples:		
       | credentials  |  userType 	|	 searchCriteria    |	portalAccess1	|  portalAccess2  | tinType	|		
