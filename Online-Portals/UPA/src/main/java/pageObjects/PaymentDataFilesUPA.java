@@ -116,18 +116,15 @@ public class PaymentDataFilesUPA extends TestBase{
 	int sqlRowNo;
 	
 	public PaymentDataFilesUPA(TestBase testConfig) {
+		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		PageFactory.initElements(testConfig.driver, this);
+		Element.fluentWait(testConfig, epraChkbox, 100, 1, "EPRA checkbox");
 	}
 	
 	
-	public PaymentDataFilesUPA verifyCreateDataBundlePage() throws Exception
+	public PaymentDataFilesUPA verifyNavigationToCreateDataBundlePage() throws Exception
 	{
-		String DataBundlePage = createDataBundle.getText();
-		Browser.wait(testConfig, 3);
-		Helper.compareEquals(testConfig, "Navigating to Create Data Bundle Page", "Create Data Bundle", DataBundlePage);
-	
-		Browser.wait(testConfig, 3);
+		Helper.compareEquals(testConfig, "Navigating to Create Data Bundle Page", "Create Data Bundle", createDataBundle.getText());
 		return  new PaymentDataFilesUPA(testConfig);
 	}
 	

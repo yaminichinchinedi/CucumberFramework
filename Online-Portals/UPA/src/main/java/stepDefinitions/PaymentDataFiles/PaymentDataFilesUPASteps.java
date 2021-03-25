@@ -18,7 +18,7 @@ public class PaymentDataFilesUPASteps {
 
 	@When("^Verify User navigates to Create Data Bundle Page on UI$")
 	public void verify_User_navigates_to_Create_Data_Bundle_Page_on_UI() throws Throwable {	    
-		paymentDataFilesUPA.verifyCreateDataBundlePage();
+		paymentDataFilesUPA.verifyNavigationToCreateDataBundlePage();
 	}
 
 	@Then("^Verify the values in Create Data Bundle Page for \"([^\"]*)\"$")

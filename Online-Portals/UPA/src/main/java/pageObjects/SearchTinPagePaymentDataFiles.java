@@ -50,7 +50,7 @@ public class SearchTinPagePaymentDataFiles {
 	
 	
 	
-	public PaymentDataFilesCSR enterTinAndSrch(String userType){
+	public PaymentDataFilesCSR enterTinAndSrchCSR(String userType){
 		switch (userType)
 		{	
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
@@ -60,7 +60,12 @@ public class SearchTinPagePaymentDataFiles {
 					Element.clickByJS(testConfig,srchBtn, "Search Button");
 				}
 				break;
-				
+		}
+		return new PaymentDataFilesCSR(testConfig);
+	}		
+	public PaymentDataFilesUPA enterTinAndSrchUPA(String userType) {	
+		switch (userType)
+		{	
 			case "BS": 
 				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "tin textbox");
@@ -72,8 +77,8 @@ public class SearchTinPagePaymentDataFiles {
 				Element.clickByJS(testConfig,submitBtn, "Search Button");
 				break;		
 		}
-		return new PaymentDataFilesCSR(testConfig);
-	}
+		return new PaymentDataFilesUPA(testConfig);
+	}	
 
 	
 	public SearchTinPagePaymentDataFiles verifyErrorMsgForInvalidTIN() throws Exception {

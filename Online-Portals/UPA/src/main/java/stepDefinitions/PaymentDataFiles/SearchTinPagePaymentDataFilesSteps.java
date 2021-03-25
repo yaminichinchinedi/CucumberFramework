@@ -10,8 +10,10 @@ public class SearchTinPagePaymentDataFilesSteps extends TestBase{
 
 @Then("^User Enters tin and click on search button for \"([^\"]*)\" on Payment Data Files page$")
 public void user_Enters_tin_and_click_on_search_button_for_on_Payment_Data_Files_page(String userType) throws Throwable {
-	srchTinPagePaymentDataFiles.enterTinAndSrch(userType);
-
+	if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR"))
+		srchTinPagePaymentDataFiles.enterTinAndSrchCSR(userType);
+	else if (testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
+		srchTinPagePaymentDataFiles.enterTinAndSrchUPA(userType);
 }
 
 @When("^User Validates Error Message upon Entering invalid TIN$")

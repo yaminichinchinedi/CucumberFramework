@@ -512,11 +512,10 @@ public class UPAHomePage extends HomePage {
 		
 
 	}
-	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
+	public void clickPaymentDataFilesTab() 
 	{
 		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		return new PaymentDataFilesUPA(testConfig);
 
 	}
 }
