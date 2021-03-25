@@ -1,9 +1,9 @@
-
 package main.java.stepDefinitions.OptumPaySolution;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.OptumPaySolution;
+import main.java.reporting.Log;
 
 
 public class OptumPaySolutionSteps extends TestBase {
@@ -176,5 +176,29 @@ public void user_clicks_on_fee_search_tab() throws Throwable {
 public void verify_that_max_records_are_on_single_page_and_pagination_links_enabled_disabled_accordingly(int arg1) throws Throwable {
     optumPaySol.verifyPagination();
 }
+	
+	@Then("^User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile$")
+	public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {
+	    optumPaySol.verifyInfoIconMessagesforAllTiles();
+	}
+
+	@Then("^User verifies if tiles are present for \"([^\"]*)\" TIN$")
+	public void user_verifies_if_tiles_are_present_for_TIN(String tinType) throws Throwable 
+	{
+	    boolean isPresent = optumPaySol.verifyTilesArePresentOnOPS();
+	    
+	    if (tinType.equalsIgnoreCase("Premium")&&isPresent==true)
+	    	Log.Pass("The Premium OPS page is present");
+	    else if(tinType.equalsIgnoreCase("Standard")&&isPresent==false)
+	    	Log.Pass("The Standard OPS page is present");
+	    else
+	    	Log.Fail("The OPS page is not correctly displayed for: " + tinType);
+	    	
+	}
+
+	@Then("^User verifies the error message for \"([^\"]*)\" tin$")
+	public void user_verifies_the_error_message_for_tin(String tinType) throws Throwable {
+	    optumPaySol.verifyTINerroMsgforBSUsers(tinType);
+	}
 }
 

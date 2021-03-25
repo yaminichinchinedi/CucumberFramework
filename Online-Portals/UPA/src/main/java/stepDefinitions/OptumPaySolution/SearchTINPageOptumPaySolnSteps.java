@@ -4,6 +4,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.SearchTinPageOptmPaySoln;
+import main.java.reporting.Log;
 
 public class SearchTINPageOptumPaySolnSteps extends TestBase {
 
@@ -29,5 +30,12 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 	public void change_control_to_Optum_Pay_Solutions_page() throws Throwable {
 		srchTinOPSPage.changeToOptumPaySolutionPage();
 	}
+	
+	@Then("^User Enters an \"([^\"]*)\" tin for OPS and click on search button for \"([^\"]*)\"\\.$")
+	public void user_Enters_an_tin_for_OPS_and_click_on_search_button_for(String tinType, String userType) throws Throwable {
+		srchTinOPSPage.enterInvalidOrNotAssociatedTinAndSrch(tinType, userType);
+	}
+
+	
 	
 }

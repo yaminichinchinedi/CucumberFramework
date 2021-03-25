@@ -143,3 +143,52 @@ And User clicks on UPA logout
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   BS_Admin    |     BS     	|		 	zeroPastdueFee		|			Premium			|		AO			| 
       |   BS_Admin    |     BS     	|		 	positivePastdueFee		|			Premium			|		AO			| 
+
+      
+      
+#Author: Mohammad Khalid
+@UPA_OPS_US3106783
+Scenario Outline: To test page text messaging on OPS for Prov Admin
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And User clicks on Optum Pay Solutions tab
+Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
+And User clicks on UPA logout
+
+ Examples:
+ |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
+ |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		AO			|  
+ 
+ 
+ #Author: Mohammad Khaid
+ @UPA_OPS_US3259226
+ Scenario Outline: Access Payments - OPS tab vaidation for BS Users
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And  User clicks on Optum Pay Solutions tab
+		Then User verifies if tiles are present for "Standard" TIN
+		
+		And  User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess1>" for Portal Experience.
+		And  Click on View Payments Link in UPA
+		Then User Enters tin and click on search button for "<userType>".
+		And  User clicks on Optum Pay Solutions tab
+   		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies if tiles are present for "<portalAccess1>" TIN
+		
+   		And  User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess2>" for Portal Experience.
+   		Then User Enters tin for OPS and click on search button for "<userType>".
+   		Then User verifies if tiles are present for "<portalAccess2>" TIN
+   		   		
+   		Then User Enters an "Invalid" tin for OPS and click on search button for "<userType>".
+   		And User verifies the error message for "Invalid" tin
+   		   		
+   		Then User Enters an "NotAssociated" tin for OPS and click on search button for "<userType>".
+  		And User verifies the error message for "NotAssociated" tin
+  		
+  		And User clicks on UPA logout
+   		
+ Examples:		
+      | credentials  |  userType 	|	 searchCriteria    |	portalAccess1	|  portalAccess2  | tinType	|		
+      |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Premium		|	Standard     |AO		|	
+      |   BS_Admin	 | 		BS		| PremiumOrStandardTIN |	 Standard		|	Premium      |AO		|	
+       
