@@ -40,7 +40,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	public void user_Deletes_paymentdetail_record_from_ole_ppra_status_dtl_and_ole_ppra_status_table(String PaymentNumber) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("PaymentNumber",PaymentNumber);
-		Browser.wait(testConfig, 10); 
+		Browser.wait(testConfig, 5); 
 		//
 		int sqlRowNo1=227;
         testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);

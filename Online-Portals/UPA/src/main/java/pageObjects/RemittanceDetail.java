@@ -8192,12 +8192,10 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
 		{			
 			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");			
-		}			
-//		 String oldWindow=Browser.switchToNewWindow(testConfig,"PPRADisplayWindow");
-//	       //WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
-//		 Browser.wait(testConfig, 5);      
-//	      Browser.switchToParentWindow(testConfig,oldWindow);
-		//Element.click(pPRALink, "PDF Print Link");
+		}
+		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
+		 Browser.wait(testConfig, 5);      
+	      Browser.switchToParentWindow(testConfig,oldWindow);
 		return this;		
 	}
 	

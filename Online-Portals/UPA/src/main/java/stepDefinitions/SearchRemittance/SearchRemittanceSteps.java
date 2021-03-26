@@ -157,7 +157,7 @@ public class SearchRemittanceSteps extends TestBase{
 		// Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", Consol_Pay_Number);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",Consol_Pay_Number);
-		Browser.wait(testConfig, 15);
+		Browser.wait(testConfig, 5);
 		//srchRemittance.verifyppraStatus(Status);
 		if(Status.equalsIgnoreCase("C"))
 		{
