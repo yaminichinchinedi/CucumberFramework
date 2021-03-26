@@ -213,6 +213,6 @@
 		
     Examples: 
       | credentials | userType | searchCriteria     						| portalAccess | tinType | prdctRecSts |reasonCode|
-      #| Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
+      | Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
       | Super       | PROV     |New Enroll WithinTrial and Paid | Premium      | AO      | PS          |	R7			|
             
