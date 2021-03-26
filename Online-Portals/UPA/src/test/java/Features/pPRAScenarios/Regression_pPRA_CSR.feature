@@ -52,15 +52,15 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
      	  | Priority | User   | Tin       | Type               | Disp_Consol_Pay_Nmbr | Consol_Pay_Nmbr | Status |
       | P1       | Super  | 320474882 | byHCPayment_Number | 1TR60939125          |      1542689829 | E      |
       | P1       | Super  | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | Super  | 850275777 | byHCPayment_Number | 9515425553           |      9515425553 | E      |
+      | P2       | Super  | 850275777 | byHCPayment_Number | 1TR52205475          |      1507331187 | E      |
     # | P2       | Super  | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
       | P1       | RW     | 320474882 | byHCPayment_Number | 1TR60939125          |      1542689829 | E      |
       | P1       | RW     | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | RW     | 850275777 | byHCPayment_Number | 9515425553           |      9515425553 | E      |
+      | P2       | RW     | 850275777 | byHCPayment_Number | 1TR52205475          |      1507331187 | E      |
     # | P2       | RW     | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
       | P1       | ROPPRA | 320474882 | byHCPayment_Number | 1TR60939125          |      1542689829 | E      |
       | P1       | ROPPRA | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | ROPPRA | 850275777 | byHCPayment_Number | 9515425553           |      9515425553 | E      |
+      | P2       | ROPPRA | 850275777 | byHCPayment_Number | 1TR52205475          |      1507331187 | E      |
     # | P2       | ROPPRA | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
        ##commenting P3 scenarios as it is aleady covered in P2 scenarios with same data
     #  | P3       | Super  | 391678306 | byHCPayment_Number | 1TR10401483          |      1440564451 | E      |
