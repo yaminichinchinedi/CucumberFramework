@@ -16,10 +16,12 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -118,7 +120,10 @@ public class PaymentDataFilesUPA extends TestBase{
 	public PaymentDataFilesUPA(TestBase testConfig) {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.fluentWait(testConfig, epraChkbox, 100, 1, "EPRA checkbox");
+		if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium"))
+			Element.fluentWait(testConfig, epraChkbox, 100, 1, "EPRA checkbox");
+		else if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard"))
+			Element.fluentWait(testConfig, standardPopUp, 100, 1, "Standard pop-up ");
 	}
 	
 	
@@ -128,12 +133,13 @@ public class PaymentDataFilesUPA extends TestBase{
 		return  new PaymentDataFilesUPA(testConfig);
 	}
 	
-	public PaymentDataFilesUPA verifyAllValuesinCreateBundlePage(String userType) throws Exception
+	public PaymentDataFilesUPA verifyAllFieldsinCreateBundlePage(String userType) throws Exception
 	{
 		String PageTextActual = "The Payment Data File feature enables faster and easier access to large amounts of payment data. Using this tool you can create data bundles by day, by file type and by payer.";		
 		Helper.compareEquals(testConfig, "Page Text Context Displays: ", PageTextActual, pageText.getText().trim());		 				
 		Helper.compareEquals(testConfig, "Detailed Instructions Link Displays", "Detailed Instructions For Bundle Creation", detailedInstrctns.getText().trim());
 		String providerNameUI="";
+		
 		if(userType.equalsIgnoreCase("BS") || userType.equalsIgnoreCase("Payer")) 
 			 providerNameUI = providerBS.getText().trim();
 		else if(userType.equalsIgnoreCase("PROV"))
@@ -160,27 +166,22 @@ public class PaymentDataFilesUPA extends TestBase{
 	
 	public PaymentDataFilesUPA verifyErrorWithoutSubmiitingAnyField(String userType) throws Exception
 	{
-		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig,btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 1);
 		 // To verify Settlement Date Range Error
 		Helper.compareEquals(testConfig, "Settlement Error Displays: ", "Settlement Date Range: From and To Dates are required", settlerror.getText());
 		 //to Verify Payer Selection Error
 		if(!userType.equalsIgnoreCase("Payer")) {
-		 Browser.wait(testConfig, 2);
 		 Helper.compareEquals(testConfig, "Payer Error Displays: ", "Payer Selection : Missing Data", payerError.getText());
 		}
 		 //to Verify File Types Error
-		Browser.wait(testConfig, 2);
 		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", fileError.getText()); 
-	 	 Browser.wait(testConfig, 2);
 	 	
 	 	 if(!userType.equalsIgnoreCase("Payer")) {
 	 		Element.click(resetBtn, "Reset Button");
 	 	}
 	 	else
 	 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		 Browser.wait(testConfig, 2);
 		
 		 return this;
 	 }
@@ -189,13 +190,13 @@ public class PaymentDataFilesUPA extends TestBase{
 	{
 		if(!userType.equalsIgnoreCase("Payer")) {
 			Element.click(resetBtn, "Reset Button");
-			Browser.wait(testConfig, 2);		 
+			Browser.wait(testConfig, 1);		 
 			Element.click(firstPayer, "First Payer");
 		    Element.click(addBtn, "Add Button");
 			Element.click(eight35ChkBox, "Click on 835 Check Box");
 		}
 		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 1);
 		
 		Helper.compareEquals(testConfig, "Settlement Error Displays: ", "Settlement Date Range: From and To Dates are required", settlerror.getText());
 		if(!userType.equalsIgnoreCase("Payer")) {
@@ -203,7 +204,6 @@ public class PaymentDataFilesUPA extends TestBase{
 	 	}
 	 	else
 	 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		 Browser.wait(testConfig, 2);
 		
 		return this;
 	}
@@ -220,7 +220,7 @@ public class PaymentDataFilesUPA extends TestBase{
 		Element.enterData(toDate, date1, "To Date: "+date1, "todate");
 		
 		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 1);
 		
 		Helper.compareEquals(testConfig, "File Type Error Displays: ", "File Types : Missing Data", fileError.getText()); 
 		if(!userType.equalsIgnoreCase("Payer")) {
@@ -228,7 +228,6 @@ public class PaymentDataFilesUPA extends TestBase{
 	 	}
 	 	else
 	 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		 Browser.wait(testConfig, 2);
 		
 		return this;
 	}
@@ -237,7 +236,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	{
 		if(!userType.equalsIgnoreCase("Payer")) {
 			Element.click(resetBtn, "Reset Button");
-			Browser.wait(testConfig, 2);		
+			Browser.wait(testConfig, 1);		
 			Element.click(firstPayer, "First Payers");
 			Element.click(addBtn, "Add Button");
 		}
@@ -247,17 +246,15 @@ public class PaymentDataFilesUPA extends TestBase{
 		String date2= Helper.getCurrentTime("MM/dd/yyyy");
 		Element.enterData(fromDate, date1, "From Date: "+date1, "fromdate");
 		Element.enterData(toDate, date2, "To Date: "+date2, "todate");
-		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");	
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 1);
 		Helper.compareEquals(testConfig, "Error for More Than 30 Days Displays: ", "Settlement Date Range : From Date must not be greater than 30 Days prior to To date", settlErrorMore30Days.getText());
 		if(!userType.equalsIgnoreCase("Payer")) {
 	 		Element.click(resetBtn, "Reset Button");
 	 	}
 	 	else
 	 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		
-		Browser.wait(testConfig, 2);		
+				
 		return this;
 	}
   
@@ -273,9 +270,8 @@ public class PaymentDataFilesUPA extends TestBase{
 		String date2 = Helper.getDateBeforeOrAfterDays(366,"MM/dd/yyyy");
 		Element.enterDataByJS(testConfig, fromDate, date1,  " fromdate");
 		Element.enterDataByJS(testConfig, toDate, date2, " todate");
-		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);
+		Browser.wait(testConfig, 1);
 		 
 		Helper.compareEquals(testConfig, "Error for Prior Days Displays: ", "Settlement Date Range : To and From Dates must be prior to or same as current date.", settlmntDatePriorError.getText());
 		if(!userType.equalsIgnoreCase("Payer")) {
@@ -283,25 +279,21 @@ public class PaymentDataFilesUPA extends TestBase{
 	 	}
 	 	else
 	 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		 Browser.wait(testConfig, 2);
 		return this;
 	}
 
 	public PaymentDataFilesUPA verifyErrorForPayerSelection() throws Exception
 	{
-		Browser.wait(testConfig, 2);
 		String date1=Helper.getCurrentDate("MM/dd/yyyy");
 		Element.enterDataByJS(testConfig, fromDate, date1, "From Date: "+date1+ "fromdate");
 		Element.enterDataByJS(testConfig, toDate, date1, "From Date: "+date1+ "todate");
 		Element.click(eight35ChkBox, "Click on 835 Check Box");
-		Browser.wait(testConfig, 1);
 		Element.click(btnSubmit, "Click on Submit Button");
-		Browser.wait(testConfig, 2);	   
+		Browser.wait(testConfig, 1);	   
 		
 		//Verify Payer Selection Error Message
 		Helper.compareEquals(testConfig, "Payer Selection Error Displays", "Payer Selection : Missing Data", payerError.getText());
 		Element.click(resetBtn, "Reset Button");
-		Browser.wait(testConfig, 2);
 		return this;	   
 	}
 	
@@ -311,7 +303,6 @@ public class PaymentDataFilesUPA extends TestBase{
 		 String dateEntered= Helper.changeDateFormat(testConfig.getRunTimeProperty("setl_dt"), "yyyy-mm-dd", "mm/dd/yyyy");
 		 Element.enterData(fromDate, dateEntered, "From Date Entered: "+dateEntered, "fromdate");
 		 Element.enterData(toDate, dateEntered, "To Date Entered: "+dateEntered, "todate");
-		 Browser.wait(testConfig, 3);
 		 return this;
 	}
 		   
@@ -327,10 +318,9 @@ public class PaymentDataFilesUPA extends TestBase{
 	{
 		 Element.click(epraChkbox, "Click on EPRA Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
+		 Browser.wait(testConfig, 1);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 		
 		 return this;
 	}
@@ -339,10 +329,8 @@ public class PaymentDataFilesUPA extends TestBase{
 	{
 		 Element.click(praChkbox, "Click on PPRA Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 
 		 return this;
 	}
@@ -351,10 +339,8 @@ public class PaymentDataFilesUPA extends TestBase{
 	{
 		 Element.click(eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
-		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for 835 File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 		 		   
+		 Helper.compareEquals(testConfig, "Data Bundle Message for 835 File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 
 		 return this;
 	}
@@ -364,10 +350,8 @@ public class PaymentDataFilesUPA extends TestBase{
 		 Element.click(epraChkbox, "Click on EPRA Check Box");
 		 Element.click(praChkbox, "Click on PPRA Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and PPRA File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and PPRA File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 	
 		 return this;
 	}
@@ -377,10 +361,9 @@ public class PaymentDataFilesUPA extends TestBase{
 		 Element.click(epraChkbox, "Click on EPRA Check Box");
 		 Element.click(eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
+		 Browser.wait(testConfig, 1);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and 835 File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for EPRA and 835 File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 return this;
 	}
 
@@ -389,10 +372,9 @@ public class PaymentDataFilesUPA extends TestBase{
 		 Element.click(praChkbox, "Click on PPRA Check Box");
 		 Element.click(eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
+		 Browser.wait(testConfig, 1);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA and 835 File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for PPRA and 835 File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 		 
 		 return this;
 	}
@@ -403,10 +385,9 @@ public class PaymentDataFilesUPA extends TestBase{
 		 Element.click(praChkbox, "Click on PPRA Check Box");
 		 Element.click(eight35ChkBox, "Click on 835 Check Box");
 		 Element.click(btnSubmit, "Click on Submit Button");
-		 Browser.wait(testConfig, 2);
+		 Browser.wait(testConfig, 1);
 		 		   
-		 String BundleSubmitMsg = bundleSubmission.getText();
-		 Helper.compareEquals(testConfig, "Data Bundle Message for All File Type", "Your bundle has been successfully submitted.", BundleSubmitMsg);
+		 Helper.compareEquals(testConfig, "Data Bundle Message for All File Type", "Your bundle has been successfully submitted.", bundleSubmission.getText());
 
 		 return this;
 	}
@@ -438,7 +419,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	public PaymentDataFilesUPA EPRAFileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: EPRA", "File Types selected for this bundle: EPRAs", bundleFileType.getText().trim());
 		  
 		 return this;
@@ -446,7 +427,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	
 	public PaymentDataFilesUPA PPRAFileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: PPRA", "File Types selected for this bundle: Payer PRAs", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -454,7 +435,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	
 	public PaymentDataFilesUPA eight35FileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s", "File Types selected for this bundle: 835s", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -462,7 +443,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	public PaymentDataFilesUPA EPRAnPPRAFileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer PRAs, EPRAs", "File Types selected for this bundle: Payer PRAs, EPRAs", bundleFileType.getText().trim()); 
 		 
 		 return this;
@@ -470,7 +451,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	public PaymentDataFilesUPA EPRAn835FileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: Payer 835, EPRAs", "File Types selected for this bundle: 835s, EPRAs", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -478,7 +459,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	public PaymentDataFilesUPA PPRAn835FileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: 835s, Payer PRAs", "File Types selected for this bundle: 835s, Payer PRAs", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -486,7 +467,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	public PaymentDataFilesUPA EPRAn835nPPRAFileType() throws Exception
 	{
-		downloadDataBundle();
+		 downloadDataBundle();
 		 Helper.compareEquals(testConfig, "File Type Selected: All", "File Types selected for this bundle: 835s, Payer PRAs, EPRAs", bundleFileType.getText().trim());
 		 
 		 return this;
@@ -495,7 +476,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	public PaymentDataFilesUPA downloadBundlePage() throws Exception
 	{
 		 Element.click(downloadDataBundle, "Click on Download Data Bundle Tab");
-		 Browser.wait(testConfig, 3);
+		 Browser.wait(testConfig, 1);
 		
 		 //verify that we are on the page
 		 String expectedNote = "Each Payment Data File will be listed below in order of when the data bundle was created, along with the selected data elements. Payment Data Files will be available for download";
@@ -663,7 +644,6 @@ public class PaymentDataFilesUPA extends TestBase{
 		   
 	public PaymentDataFilesUPA verifyPayerList(String userType) throws InterruptedException, IOException
 	{				
-		Browser.wait(testConfig, 5);
 		List<String> PayerListUI=new ArrayList<>();
 		List<WebElement> payer =Element.findElements(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']//option");
 				for(int i=1; i<= payer.size(); i++)
@@ -671,11 +651,11 @@ public class PaymentDataFilesUPA extends TestBase{
 			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
 		}   
-		   Browser.wait(testConfig, 3);
-		   sqlRowNo = 1347;
+		   String query=QUERY.PAYER_LIST;
 		   testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
-		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
+		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, query);
+		   testConfig.putRunTimeProperty("totalPayers", PayerListDB2.get(1).get("TOTALROWS"));;
 		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
 			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
            }		   
@@ -688,8 +668,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	}
 	
 	 public PaymentDataFilesUPA verifyButtonsList() throws Exception
-	 {
-		 Browser.wait(testConfig, 1);		 		 
+	 {		 		 
 		 Helper.compareEquals(testConfig, "Add Button Present in Create Data Bundle Page", true, addBtn.isDisplayed());
 		 Helper.compareEquals(testConfig, "Add All Button Present in Create Data Bundle Page", true, addAllBtn.isDisplayed());
 		 Helper.compareEquals(testConfig, "Remove Button Present in Create Data Bundle Page", true, removeBtn.isDisplayed());
@@ -699,7 +678,6 @@ public class PaymentDataFilesUPA extends TestBase{
 	   
 	 public PaymentDataFilesUPA verifyAddButton() throws Exception
 	 {	
-			Browser.wait(testConfig, 2);
 			Element.click(firstPayer, "First Payer");
 			Element.click(addBtn, "Add Button");
 			Helper.compareEquals(testConfig, "Add Button Functionality", "UHC Member Payment", selectedFirstPayer.getText().trim());
@@ -708,7 +686,6 @@ public class PaymentDataFilesUPA extends TestBase{
 		   
 	 public PaymentDataFilesUPA verifyRemoveButton() throws Exception
 	 {
-		Browser.wait(testConfig, 2);
 		Element.click(selectedFirstPayer, "Selected First Payer");
 		Element.click(removeBtn, "Remove Button");
 		Helper.compareEquals(testConfig, "Remove Button Functionality", 0, selectedPayerList.size());
@@ -717,15 +694,13 @@ public class PaymentDataFilesUPA extends TestBase{
 	 }
 	 public PaymentDataFilesUPA verifyAddAllButton() throws Exception
 	 {
-		Browser.wait(testConfig, 1);
 		Element.click(addAllBtn, "Add All Button");
-		Helper.compareEquals(testConfig, "Add All Functionality", 48, selectedPayerList.size());
+		Helper.compareEquals(testConfig, "Add All Functionality", Integer.parseInt(testConfig.getRunTimeProperty("totalPayers").trim()), selectedPayerList.size());
 		 return this;	
 	 }
 		   
 	 public PaymentDataFilesUPA verifyRemoveAllButton() throws Exception
-	 {
-		 Browser.wait(testConfig, 1);		
+	 {	
 		 Element.click(removeAllBtn, "Remove All Button");		
 		 Helper.compareEquals(testConfig, "Remove All Functionality", 0, selectedPayerList.size());
 		 
@@ -734,11 +709,10 @@ public class PaymentDataFilesUPA extends TestBase{
 	 
 	 public PaymentDataFilesUPA verifyResetButton() throws Exception
 	 {
-		Browser.wait(testConfig, 2);
-		Element.click(addAllBtn, "Add All Button");	 
+		Element.click(addAllBtn, "Add All Button");	
 		Browser.wait(testConfig, 1);
 		Element.clickByJS(testConfig,resetBtn, "Reset Button");
-		Helper.compareEquals(testConfig, "Reset Functionality", 48, availablePayerList.size());
+		Helper.compareEquals(testConfig, "Reset Functionality", Integer.parseInt(testConfig.getRunTimeProperty("totalPayers").trim()), availablePayerList.size());
 		Helper.compareEquals(testConfig, "Reset Functionality", 0, selectedPayerList.size());
 		return this;
 
@@ -749,7 +723,6 @@ public class PaymentDataFilesUPA extends TestBase{
 	 {
 		 if(!userType.equalsIgnoreCase("Payer"))
 		 Element.click(addAllBtn, "Add All Button");
-		 Browser.wait(testConfig, 3);
 		 return this;
 	 }
 	 

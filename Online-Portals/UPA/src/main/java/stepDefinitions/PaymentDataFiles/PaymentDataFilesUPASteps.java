@@ -23,7 +23,7 @@ public class PaymentDataFilesUPASteps {
 
 	@Then("^Verify the values in Create Data Bundle Page for \"([^\"]*)\"$")
 	public void verify_the_values_in_Create_Data_Bundle_Page_for(String userType) throws Throwable {
-		paymentDataFilesUPA.verifyAllValuesinCreateBundlePage(userType);
+		paymentDataFilesUPA.verifyAllFieldsinCreateBundlePage(userType);
 	}
 
 	@Then("^Verify Error Message upon clicking Submit Button without selecting any Fields for \"([^\"]*)\"$")
@@ -116,14 +116,12 @@ public class PaymentDataFilesUPASteps {
 	}
 
 	@Then("^User verifies the EPRA and PPRA indicator in Database entry$")
-	public void user_verifies_the_EPRA_and_PPRA_indicator_in_Database_entry() throws Throwable {
-	    
+	public void user_verifies_the_EPRA_and_PPRA_indicator_in_Database_entry() throws Throwable {	    
 		paymentDataFilesUPA.verifyEPRAnPPRAInd();
 	}
 
 	@Then("^User selects File Type Option as EPRA and (\\d+) and Submit Payment Data Bundle Request$")
-	public void user_selects_File_Type_Option_as_EPRA_and_and_Submit_Payment_Data_Bundle_Request(int arg1) throws Throwable {
-	    
+	public void user_selects_File_Type_Option_as_EPRA_and_and_Submit_Payment_Data_Bundle_Request(int arg1) throws Throwable {	    
 		paymentDataFilesUPA.verifySubmitEPRAn835DataBundle();
 	}
 

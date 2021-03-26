@@ -333,6 +333,7 @@ public class UPAHomePage extends HomePage {
 			Helper.getPayerSchema(testConfig,searchCriteria);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
+		testConfig.putRunTimeProperty("portalAccess",portalAccess);
 		switch (userType)
 			{
 			   case "PROV": 
