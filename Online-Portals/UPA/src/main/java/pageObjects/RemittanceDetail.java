@@ -35,6 +35,7 @@ import com.mysql.jdbc.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 
+
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -216,7 +217,7 @@ public class RemittanceDetail {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
+		//Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
 	}
 
 	public void verifyHoverTexts()
@@ -8192,7 +8193,10 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		{			
 			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");			
 		}			
-		
+//		 String oldWindow=Browser.switchToNewWindow(testConfig,"PPRADisplayWindow");
+//	       //WebElement msg=Element.findElement(testConfig, "xpath", "//div[@id='message1']/b");
+//		 Browser.wait(testConfig, 5);      
+//	      Browser.switchToParentWindow(testConfig,oldWindow);
 		//Element.click(pPRALink, "PDF Print Link");
 		return this;		
 	}
