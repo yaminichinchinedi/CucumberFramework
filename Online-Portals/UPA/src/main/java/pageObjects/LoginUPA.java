@@ -116,7 +116,8 @@ public class LoginUPA {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
 		Element.expectedWait(btnLogin, testConfig, "Login button", "Login button");
-		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		//Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.enterDataByJS(testConfig, txtboxUserName, id, "Username");
 		Browser.wait(testConfig, 2);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
