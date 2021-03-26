@@ -550,7 +550,7 @@ public class OptumPaySolution {
 		public OptumPaySolution verifyInvalidTINonOptumPaySolution(String invalidTIN) throws Exception 
 		{
 			Element.expectedWait(enterTIN, testConfig, "TIN field","TIN Field");
-			Element.enterData(enterTIN, invalidTIN, "TIN entered as : "+invalidTIN, "EnterTIN");
+			Element.enterDataByJS(testConfig,enterTIN, invalidTIN, "TIN entered as : "+invalidTIN);
 			Element.clickByJS(testConfig,searchBtn, "Search Button");
 			Browser.wait(testConfig, 4);
 			boolean isInteger;
