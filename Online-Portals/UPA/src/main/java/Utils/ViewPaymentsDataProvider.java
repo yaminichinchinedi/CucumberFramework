@@ -1098,27 +1098,27 @@ public ArrayList getEnrollmentContent(String content) {
 				
 			case "Last 30 days":
 				paySum.getQuickSearchDates("Last 30 days");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 60 days":
 				paySum.getQuickSearchDates("Last 60 days");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 90 days":
 				paySum.getQuickSearchDates("Last 90 days");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 4-6 months":
 				paySum.getQuickSearchDates("Last 4-6 months");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 6-9 months":
 				paySum.getQuickSearchDates("Last 6-9 months");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 9-13 months":
 				paySum.getQuickSearchDates("Last 9-13 months");
-				query=QUERY.PAYMENT_TIN;
+				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "LegacyOrPremiOrStandard_AO_Standard":	
 			case "LegacyOrPremiOrStandard":
@@ -1164,7 +1164,9 @@ public ArrayList getEnrollmentContent(String content) {
             	DataBase.executeUpdateQuery(testConfig,QUERY.UPDATE_QUERY_FOR_FEE_REFUND2, DataBase.getDatabaseType());
             	query = QUERY.ENTRIES_FOR_FEE_REFUND;
             	break;
-                
+            case "New Enroll WithinTrial and Paid":   
+            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID;
+            	break;   
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		
  		}
