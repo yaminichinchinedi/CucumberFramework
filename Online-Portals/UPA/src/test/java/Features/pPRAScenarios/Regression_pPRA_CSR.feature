@@ -19,15 +19,15 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | Priority | User   | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status | Disp_Consol_Pay_Nmbr |
       | P1       | Super  | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
       | P1       | Super  | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          |
-      | P2       | Super  | 850275777 | byHCDOPAndNpi |      9515425553 | 1164491072 | 03/12/2020 | 03/12/2020 | E      | 9515425553           |
+      | P2       | Super  | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR52205475          |
     # | P2       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
       | P1       | RW     | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
       | P1       | RW     | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          | 
-      | P2       | RW     | 850275777 | byHCDOPAndNpi |      9515425553 | 1164491072 | 03/12/2020 | 03/12/2020 | E      | 9515425553           |
+      | P2       | RW     | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR52205475          |
     # | P2       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
       | P1       | ROPPRA | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
    	  | P1       | ROPPRA | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          | 
-      | P2       | ROPPRA | 850275777 | byHCDOPAndNpi |      9515425553 | 1164491072 | 03/12/2020 | 03/12/2020 | E      | 9515425553           |
+      | P2       | ROPPRA | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR52205475          |
     # | P2       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
      
      ##commenting P3 scenarios as it is aleady covered in P2 scenarios with same data 
