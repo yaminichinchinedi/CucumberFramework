@@ -1,4 +1,5 @@
 package main.java.stepDefinitions.OptumPaySolution;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
@@ -177,6 +178,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
     optumPaySol.verifyPagination();
 }
 	
+	@Then("^User enters \"([^\"]*)\" validates selectAll, Cancel, RefundFee buttons and select column functionality$")
+	public void user_enters_validates_selectAll_Cancel_RefundFee_buttons_and_select_column_functionality(String feeSearchCriteria) throws Throwable {
+		optumPaySol.validateFeeRefundButtonsAndFunctionality(feeSearchCriteria);
+	}
+		
 	@Then("^User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile$")
 	public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {
 	    optumPaySol.verifyInfoIconMessagesforAllTiles();
@@ -200,5 +206,26 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_verifies_the_error_message_for_tin(String tinType) throws Throwable {
 	    optumPaySol.verifyTINerroMsgforBSUsers(tinType);
 	}
+	
+		@Then("^User clicks on Invoice Number that opens pdf in new tab$")
+	public void user_clicks_on_Invoice_Number_that_opens_pdf_in_new_tab() throws Throwable {
+		optumPaySol.clickInvoiceNumberAndOpenPdf();
+	}
+	
+		@Then("^User verifies the Optum Pay Solution page for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+		public void user_verifies_the_Optum_Pay_Solution_page_for_for_for(String userType, String portalAccess, String tinType) throws Throwable {
+			optumPaySol.validateOptumPaySolutionPage(userType, portalAccess, tinType);
+		}
+
+		@Then("^Fill Cancel Details with Reason as \"([^\"]*)\" and Submit for \"([^\"]*)\"$")
+		public void fill_Cancel_Details_with_Reason_as_and_Submit_for_UPA(String reasonCode, String portal) throws Throwable {
+			optumPaySol.cancelPremiumAndSubmit(reasonCode, portal);
+		}
+
+		@Then("^Verify that the Premium is cancelled for \"([^\"]*)\" on \"([^\"]*)\"$")
+		public void verify_that_the_Premium_is_cancelled_for_on(String trialStatus, String portal) throws Throwable {
+			optumPaySol.updatedToStandardAfterCancel(trialStatus).verifyCancelTableUpdated().verifyPremiumCancelledOnUIAndChangeTinToPremium(trialStatus, portal);		
+		}
+
 }
 

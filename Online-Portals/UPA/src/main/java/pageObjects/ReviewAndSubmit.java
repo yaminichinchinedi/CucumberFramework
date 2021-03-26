@@ -306,7 +306,7 @@ public class ReviewAndSubmit {
 		  if(enrollmentInfoPageObj.getEnrollType().equals("BS")) 
 			  Browser.switchToNewWindow(testConfig, "f_optum%20pay%20billing%20agent_terms%20and%20conditions.pdf");  
 	      else
-		  Browser.switchToNewWindow(testConfig, "Optum_EPS_Terms_Conditions.pdf");
+		  Browser.switchToNewWindow(testConfig, "Optum%20Pay%20Provider%20Terms%20and%20Conditions%20Agreement.pdf");
 		  return this;
 		  
 	  }
