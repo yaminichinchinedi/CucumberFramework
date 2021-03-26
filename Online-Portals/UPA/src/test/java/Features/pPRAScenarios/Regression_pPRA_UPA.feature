@@ -2,7 +2,7 @@
 @UPApPRARegression @UPARegression @BothCSRUPAScenarios
 Feature: UPA PPRA Scenarios
 
-  @UPA_Provider_ErrorScenario
+  @UPA_Provider_ErrorScenario_12
   Scenario Outline: Provider Login to CSR Application to validate error scenario for NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
@@ -15,8 +15,8 @@ Feature: UPA PPRA Scenarios
     Examples: 
       | Priority | User     | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
      # | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E     |--not sure this data needed
-      | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/24/2019 | byHCDOPAndNpi | E      |
-      | P2       | PROVPPRA | 850275777 |      9515425553 | 9515425553        | 1164491072 | 03/12/2020 | byHCDOPAndNpi | E      |
+      | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+      | P2       | PROVPPRA | 850275777 |      1507331184 | 1TR52205475        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
      # | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E    |--not sure this data needed
       #| P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E    |
       #| P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E    |
@@ -34,14 +34,14 @@ Feature: UPA PPRA Scenarios
     Examples: 
       | Priority | User      | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
     #  | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |--not sure this data needed
-      |  P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/24/2019 | byHCDOPAndNpi | E      |
-	    |  P2        | PayerPPRA |850275777 |      9515425553 | 9515425553        | 1164491072 | 03/12/2020 | byHCDOPAndNpi | E      |
+      |  P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+	    |  P2        | PayerPPRA |850275777 |      1507331184 | 1TR52205475        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
       #| P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E     |--not sure this data needed
       #| P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
      # | P1       | BSPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |--not sure this data needed
-      | P1       | BSPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/24/2019 | byHCDOPAndNpi | E      |
-      | P2       | BSPPRA | 850275777 |      9515425553 | 9515425553         | 1164491072 | 03/12/2020 | byHCDOPAndNpi | E      |
+      | P1       | BSPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+      | P2       | BSPPRA | 850275777 |      1507331184 | 1TR52205475        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
       #| P2       | BSPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E     |--not sure this data needed
       #| P3       | BSPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
      # | P3       | BSPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
@@ -58,10 +58,10 @@ Feature: UPA PPRA Scenarios
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
 
     Examples: 
-      | Priority | User     | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
+       | Priority | User     | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
     #  | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
-      | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
-      | P2       | PROVPPRA | 850275777 |      9515425553 | 9515425553        | 1164491072 | 03/12/2020 | byHCPayment_Number | E      |
+       | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
+       | P2       | PROVPPRA | 850275777 |      1507331184 | 1TR52205475          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
     #  | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
       #| P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
       #| P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
@@ -77,16 +77,16 @@ Feature: UPA PPRA Scenarios
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
 
     Examples: 
-      | Priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
+      | Priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr  | NPI        | Dates      | Type               | Status |
      # | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
-      | P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
-      | P2       | PayerPPRA | 850275777 |      9515425553 | 9515425553        | 1164491072 | 03/12/2020 | byHCPayment_Number | E      |
+       | P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
+       | P2       | PayerPPRA | 850275777 |      1507331184 | 1TR52205475          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
      # | P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
      # | P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
      # | P1       | BSPPRA    | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
-      | P1       | BSPPRA    | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
-      | P2       | BSPPRA    | 850275777 |      9515425553 | 9515425553        | 1164491072 | 03/12/2020 | byHCPayment_Number | E      |
+       | P1       | BSPPRA    | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
+       | P2       | BSPPRA    | 850275777 |      1507331184 | 1TR52205475          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
      # | P2       | BSPPRA    | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
      # | P3       | BSPPRA    | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
      # | P3       | BSPPRA    | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
