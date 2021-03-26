@@ -347,7 +347,7 @@ public class OptumPaySolution {
 	WebElement phoneNumber2;
 	@FindBy(name="phoneNumber3")
 	WebElement phoneNumber3;
-	@FindBy(xpath="//*[@id='optum-pay-options']/div[5]/div[4]/input[2]")
+	@FindBy(xpath="//div[@id='optum-pay-options']/div[5]/div[4]/input[2]")
 	WebElement btnSave;
 	@FindBy(xpath="//button[contains(text(),'Change']")
 	WebElement btnChange;
