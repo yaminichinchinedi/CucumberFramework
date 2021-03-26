@@ -324,7 +324,7 @@ public class OptumPaySolution {
 	WebElement getStartedHeaderBtn;
 	@FindBy(xpath="//input[@value='Get Started']") 
 	WebElement getStartedBtn;
-	@FindBy(xpath = "//*[@id='showOptumPayForm']//h2") 
+	@FindBy(xpath = "//form[@id='showOptumPayForm']//h2") 
 	List<WebElement> headerBsUser;
 
 	@FindBy(linkText="Cancel My Plan")
