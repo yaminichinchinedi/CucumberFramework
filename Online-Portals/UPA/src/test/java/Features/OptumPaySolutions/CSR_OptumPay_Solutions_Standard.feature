@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-
+@OptumPayCSRStandard
 Feature: Optum Pay Solutions Scenarios for Standard Tins
    
   #Author: Marsha
