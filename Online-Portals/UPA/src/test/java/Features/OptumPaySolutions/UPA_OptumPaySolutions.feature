@@ -206,3 +206,35 @@ And User clicks on UPA logout
     	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		|
       |       PROV_Admin        | 			 PROV			    |			Premium		  	|  PremiumOrStandardFeeInvoice 	|	  AO			|
        
+
+    #Author: Marsha 
+ 		@UPAOptumPaySolBSUserStdAndErrorMessages @US3123337
+   	Scenario Outline: Optum Pay Solutions - Standard experience for BS and error messages 
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    And User verifies the Optum Pay Solution page for "<userType>" for "<portalAccess>" for "<tinType>"
+
+     Examples:
+    	 |    credentials          |	 	  userType    		| 	portalAccess    	|				searchCriteria   	| tinType		|
+       |       BS_Admin        	 | 			 BS			    		|			Standard		  	|  PostTrial and NotPaid 	|	  AO			|
+       |       BS_Admin        	 | 			 BS			    		|			Standard		  	|  WithinTrial and NotPaid|	  AO			|
+
+
+    #Author: Marsha 
+    @UPACancelPremiumDb @US3375699 @US3372495
+   	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		And User clicks on Optum Pay Solutions tab
+	  Then Fill Cancel Details with Reason as "<reasonCode>" and Submit for "UPA" 
+  	Then Verify that the Premium is cancelled for "<searchCriteria>" on "UPA"
+	  Then User clicks on UPA logout
+	    
+		 Examples:
+			 |		credentials  |    userType    | 			searchCriteria							|		portalAccess	  | tinType		| reasonCode |
+			 |     PROV_Admin  |     PROV     	|		PostTrial and Paid							|		Premium     	  |		AO			|  R7				|
+			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and Paid	|		Premium     	  |		AO			|  R7				|
+		            
+       

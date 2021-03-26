@@ -395,3 +395,36 @@ Feature: UPA Manage User Functionality for Premium TIN
 			| BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
 			| BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
 			| BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
+			
+			
+		#Author: Marsha
+		@UPAViewPaymentsFeeAmtCol_Prov_premium    @US3106945
+		Scenario Outline: View Payments - Fee Amount Column for Premium TIN Provider
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate Fee Amount column is displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is displayed.
+
+			Examples:
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	
+      |   PROV_Admin	  | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
+      |   PROV_Gen	    | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
+
+		#Author: Marsha
+		@UPAViewPaymentsFeeAmtCol_BS_premium   @US3106945
+ 		Scenario Outline: View Payments - Fee Amount Column for Premium TIN BS
+    Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate Fee Amount column is displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is displayed.
+     Examples:
+    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria   | tinType		|
+             |       BS_Admin        | 			 BS			    	  |			Premium		  	|  Last 30 days    |   AO	 			|
+             |       BS_Gen          | 			 BS		    			|			Premium		  	|  Last 30 days    | 	 AO	  	  |
+      
+			

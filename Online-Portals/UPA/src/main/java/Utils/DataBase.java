@@ -549,6 +549,20 @@ public class DataBase
 		return executeUpdateQuery(testConfig, updateQuery, dbType);
 	}
 	
+	public static int executeUpdateQuery(TestBase testConfig, String updateQuery)
+	{		
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DatabaseType dbType=getDatabaseType();
+
+		return executeUpdateQuery(testConfig, updateQuery, dbType);
+	}
 	/**
 	 * 
 	 * @param testConfig
@@ -770,6 +784,21 @@ public class DataBase
 		return executeUpdateQuery(testConfig, deleteQuery, dbType);
 	}
 	
+	public static int executeDeleteQuery(TestBase testConfig, String deleteQuery)
+	{		
+		DatabaseType dbType=null;
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dbType=getDatabaseType();
+		return executeUpdateQuery(testConfig, deleteQuery, dbType);
+	}
+
 	
 	/**
 	 * This method converts resultset to list

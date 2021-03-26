@@ -212,5 +212,20 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		optumPaySol.clickInvoiceNumberAndOpenPdf();
 	}
 	
+		@Then("^User verifies the Optum Pay Solution page for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
+		public void user_verifies_the_Optum_Pay_Solution_page_for_for_for(String userType, String portalAccess, String tinType) throws Throwable {
+			optumPaySol.validateOptumPaySolutionPage(userType, portalAccess, tinType);
+		}
+
+		@Then("^Fill Cancel Details with Reason as \"([^\"]*)\" and Submit for \"([^\"]*)\"$")
+		public void fill_Cancel_Details_with_Reason_as_and_Submit_for_UPA(String reasonCode, String portal) throws Throwable {
+			optumPaySol.cancelPremiumAndSubmit(reasonCode, portal);
+		}
+
+		@Then("^Verify that the Premium is cancelled for \"([^\"]*)\" on \"([^\"]*)\"$")
+		public void verify_that_the_Premium_is_cancelled_for_on(String trialStatus, String portal) throws Throwable {
+			optumPaySol.updatedToStandardAfterCancel(trialStatus).verifyCancelTableUpdated().verifyPremiumCancelledOnUIAndChangeTinToPremium(trialStatus, portal);		
+		}
+
 }
 

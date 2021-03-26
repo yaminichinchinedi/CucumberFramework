@@ -200,4 +200,19 @@
           |   credentials  |   searchCriteria         |tinType | portalAccess  |userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
           |    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
                          
-       
+ 
+  #Author: Marsha   
+  @CSRCancelPremiumDb @US2948675   
+  Scenario Outline: CSR Optum Pay Solutions cancel subscription and check DB
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+	  Then User Enters tin for OPS and click on search button for "<userType>".
+	  Then Fill Cancel Details with Reason as "<reasonCode>" and Submit for "CSR" 
+  	Then Verify that the Premium is cancelled for "<searchCriteria>" on "CSR"
+		
+    Examples: 
+      | credentials | userType | searchCriteria     						| portalAccess | tinType | prdctRecSts |reasonCode|
+      #| Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
+      | Super       | PROV     |New Enroll WithinTrial and Paid | Premium      | AO      | PS          |	R7			|
+            
