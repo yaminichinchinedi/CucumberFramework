@@ -17,7 +17,7 @@ public class QUERY {
 
 		public final static String PAYMENT_TIN_QUERY=QUERY.PAYMENT_TIN+QUERY.ENDQUERY;
 
-		public final static String ENDQUERY="group by p.prov_tax_id_nbr,cp.DSPL_CONSL_PAY_NBR, cp.setl_dt\r\n"+
+		public final static String ENDQUERY="group by p.prov_tax_id_nbr,cp.DSPL_CONSL_PAY_NBR,cp.CONSL_PAY_NBR, cp.setl_dt\r\n"+
 
 			"having count(*) between 1 and 30\r\n"+
 			"order by count(*) desc\r\n"+
