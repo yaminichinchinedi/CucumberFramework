@@ -39,12 +39,9 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 
          |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
          |    Super          |	AO			|  Standard	 | PROV   |PostTrial and NotPaid|
-         |    RW   		       |	AO			|  Standard	 |PROV    |PostTrial and NotPaid|
+        |    RW   		       |	AO			|  Standard	 |PROV    |PostTrial and NotPaid|
          |    RO	           |	AO			|  Standard	 |PROV    |PostTrial and NotPaid|     
-		 |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
-         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
-         |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|     
-
+		 
    
 #Author: Amit
 @CSRUS3221650_S
