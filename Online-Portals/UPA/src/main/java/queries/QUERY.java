@@ -86,4 +86,20 @@ public class QUERY {
 				"ps.PROV_TIN_NBR in (select PROV_TIN_NBR from OLE.PRODUCT_SELECTION where PRTL_PRDCT_SELECTED_GRP_NM='Premium' and PRTL_PRDCT_SELECTED_STS_CD='A' \r\n" + 
 				"and PRTL_PRDCT_REC_STS_CD='TR' and PRTL_PRDCT_SELECT_USER_TYP='ENROLLER') " + QUERY.ENDQUERY_ORDER_BY_DATE + QUERY.ENDQUERY_FETCH_FIRST_ROW ;
 
+		public static final String GET_CHECK_NUMBER = "select\n" +
+				"       ucp.UCONSL_PAY_NBR\n" +
+				"from\n" +
+				"       PP001.PROVIDER               p\n" +
+				"     , PP001.UNCONSOLIDATED_PAYMENT ucp\n" +
+				"     , PP001.CONSOLIDATED_PAYMENT   cp\n" +
+				"     , OLE.PROC_CTL                 pc\n" +
+				"where\n" +
+				"       cp.CONSL_PAY_NBR     = ucp.CONSL_PAY_NBR\n" +
+				"       and p.PROV_KEY_ID    =ucp.PROV_KEY_ID\n" +
+				"       and cp.PROC_CTL_ID   =pc.PROC_CTL_ID\n" +
+				"       and p.PROV_TAX_ID_NBR='{$tin}'\n" +
+				"       and pc.EXTRACT_STS_CD='C'\n" +
+				"       and cp.setl_dt between current date - 6 MONTHS and current date\n" +
+				"fetch first row only with ur";
+
 }

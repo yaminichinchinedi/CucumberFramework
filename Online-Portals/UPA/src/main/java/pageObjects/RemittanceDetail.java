@@ -18,6 +18,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 
+import main.java.queries.QUERY;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -118,12 +119,12 @@ public class RemittanceDetail {
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
 	//@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
 	@FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]") WebElement payerUI;
-	@FindBy(xpath ="//form[@id='paymentsummaryform']/table/tbody/tr/td/table/tbody/tr/td/table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]")  WebElement payernameUI;
+	@FindBy(xpath ="//*[@class=\"ellipsis wrapperTooltip\"]")  WebElement payernameUI;
 	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
 	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
 	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
 	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
-	@FindBy(xpath = "//td[contains(text(),'Payment Number:')]") WebElement paymentNo;
+	@FindBy(xpath = "//*[contains(text(),'Payment Number:')]") WebElement paymentNo;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@class='form']") WebElement printBtn;
 	@FindBy(xpath = "//input[@value='Print Page']") WebElement printBtnPayer;
@@ -216,7 +217,6 @@ public class RemittanceDetail {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
 	}
 
 	public void verifyHoverTexts()
@@ -3911,10 +3911,7 @@ public void enterTINMultiplePLBAdj() throws Exception
 	
 	
 	int sqlRowNo = 1901;
-	Map prov_TAX_ID_NBRDB3 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-	String prov_TAX_ID_NBRDB1 = prov_TAX_ID_NBRDB3.toString();
-	String prov_TAX_ID_NBRDB2 = prov_TAX_ID_NBRDB1.substring(prov_TAX_ID_NBRDB1.lastIndexOf("=")+1);
-    String prov_TAX_ID_NBR = prov_TAX_ID_NBRDB2.substring(0, prov_TAX_ID_NBRDB2.length()-1);
+	String prov_TAX_ID_NBR = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1).get("PROV_TAX_ID_NBR");
     Log.Comment("The TIN for Multiple PLB Adj is:" + prov_TAX_ID_NBR);
     System.setProperty("tin", prov_TAX_ID_NBR);
     Element.click(enterTIN, "Enter TIN");
@@ -4403,10 +4400,10 @@ public void enterElectronicNumForPLBOnlyCriteria() throws Exception
 
 	public void enterCheckNumber() throws Exception
 	{
-	    int sqlRowNo = 407;
+		String query= QUERY.GET_CHECK_NUMBER;
+	    // int sqlRowNo = 407;
 	    System.getProperty("tin");
-		Map UCONSL_PAY_NBR = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		String checkNumber = UCONSL_PAY_NBR.get("UCONSL_PAY_NBR").toString();
+		String checkNumber = DataBase.executeSelectQuery(testConfig,query, 1).get("UCONSL_PAY_NBR");
 		Log.Comment("The Electronic Payment Number is :" + checkNumber);
 	    Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown", "Electronic Payment Dropdown");
 		Element.selectVisibleText(payNumdrpdwn,"Check Number","Payment Dropdown");
@@ -5292,13 +5289,13 @@ if(null == payerSchema)
 	Log.Comment("The Final String is :" + finalidentifier);
 	
 	
-	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
-            "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
-            "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
-            "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
-            "</ns17:EpsClaimsRequest>";
-	
-	
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
+		"<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+		"<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+		"<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" +
+		"</ns17:EpsClaimsRequest>";
+
+
 	String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	
 	String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
@@ -5949,7 +5946,7 @@ if(null == payerSchema)
 	Log.Comment("The Final String is :" + finalidentifier);
 	
 	
-	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
            "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
            "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
            "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
@@ -6034,7 +6031,7 @@ if(null == payerSchema)
     	amountChargedUI = Double.toString(amountChargedUI4);
     }
 
-    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);
        String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
        Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
        if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -6098,7 +6095,7 @@ if(null == payerSchema)
         	amountChargedUI = Double.toString(amountChargedUI4);
         }
         
-        Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+        Log.Comment("The Amount Charged from UI is :" + amountChargedUI);
     	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
     	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -6248,10 +6245,7 @@ else
 
 sqlRowNo = 185;
 testConfig.putRunTimeProperty("paymentNum",paymentNum);
-Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-String paymentNumDB2 = paymentNumDB1.toString();
-String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);
-String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+String paymentNumDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1).get("UCP_CONSL_PAY_NBR");
 Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
 
 sqlRowNo = 186;
