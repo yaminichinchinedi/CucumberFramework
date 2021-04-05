@@ -281,7 +281,7 @@ public void verifyAddProvConfirmPage(){
     if(enrlStatusOnAddProvTinPage.getText().trim().equalsIgnoreCase("Active")) 
 	   Helper.compareEquals(testConfig, "Provider Enroll Status UI and DB", "A",orgname.get("ENRL_STS_CD").toString().trim());
 
-	Element.click(btnSave, "Save Button");
+	Element.clickByJS(testConfig,btnSave, "Save Button");
 }
 
 	public void verifyBillingServiceHeaderText() {
