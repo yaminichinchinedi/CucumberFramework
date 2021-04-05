@@ -178,7 +178,7 @@ public void verifyProvSecondRow() throws ParseException{
 			 j=17;		
 		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr["+j+"]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
-		for (int i = 1; i <= tinGridRows.size(); i++) {
+		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
 			if (tinNo.equals(tin) ) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
