@@ -582,7 +582,8 @@ public class OptumPaySolution {
 			Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
 			if(portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().length()>0)
-			{String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
+			{//String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
+			String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().trim().substring(0, 10).trim();
 			 activationDate=Helper.changeDateFormat(activationDate, "yyyy-mm-dd", "mm/dd/yyyy");
 				Helper.compareContains(testConfig, "Plan Type Tile text- Activation Date", activationDate, tilePlanType.getText().trim());
 			}
