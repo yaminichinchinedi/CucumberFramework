@@ -175,20 +175,22 @@ public void verifyProvSecondRow() throws ParseException{
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
-			String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
-			if (tinNo.equals(tin) && bsNamePendReq.equals(testConfig.getRunTimeProperty("bsname"))) {
+			if (tinNo.equals(tin) ) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
-//				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
+				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
 				Log.Pass("Billing Service name displayed in Pending request Prov Tab");
-				//Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
+				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
+				break;
+			}
+			if(tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname"))) {
 				int sqlRowNo = 1910;
 				String pendingRequestDate = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
 				Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-				Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendingRequestDate.trim());
-				
+				Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendingRequestDate.trim());			
 				break;
 			}
 		}
+		
 		//int sqlRowNo = 1910;
 		//Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		//Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdate.getText().trim());
