@@ -135,13 +135,13 @@ public class OptumPaySolution {
    WebElement tilePlanType;
    @FindBy(id="logOutId")
    WebElement lnkLogOut;
-   @FindBy(xpath="//*[@id='ui-id-3']//div")
+   @FindBy(xpath="//*[@id='ui-id-1']//div")
 	WebElement hoverPlanType;
-	@FindBy(xpath="//*[@id='ui-id-4']//div	")
+	@FindBy(xpath="//*[@id='ui-id-2']//div")
 	WebElement hoverRate;
-	@FindBy(xpath="//*[@id='ui-id-5']/div")
+	@FindBy(xpath="//*[@id='ui-id-3']//div")
 	WebElement hoverFees;
-	@FindBy(xpath="//*[@id='ui-id-6']/div")
+	@FindBy(xpath="//*[@id='ui-id-4']//div")
 	WebElement hoverManageMyPlan;
 
 	@FindBy(id="rate")
@@ -433,18 +433,19 @@ public class OptumPaySolution {
 			int sqlRowNo=1111,i=1,j=0;
 			HashMap<Integer, HashMap<String, String>> cancelReasonDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
-			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Unlimited number of users");add("The ability to search claims");add("Years of claims and remittance history maintained for easy access");add("Multiple remittance options (835, EPRA or PPRA)");}};
+			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Workflow management tools and claim count information");add("The ability to search claims");add("36 months of claims and remittance history maintained for easy access");}};
 			
 			if(trialStatus.equalsIgnoreCase("PostTrial and Paid"))
 			{ 
 				Element.click(lnkCancelPlanPostTrial, "Cancel My Subscription Link");
 				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
 				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
-				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
+     			Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
 			}
 			else if(trialStatus.equalsIgnoreCase("WithinTrial and Paid"))
 			{  
 				Element.click(lnkCancelPlanDuringTrial, "Cancel My Subscription Link");
+			
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","By cancelling your Optum Pay access, you will be losing features that many providers consider vital to their practice, including:",duringTrialCancelPopUpBody1.getText().toString());
 				for( WebElement cancelPopUptext : duringTrialCancelPopUpBody2)
@@ -683,9 +684,9 @@ public class OptumPaySolution {
 		}
 			public void validateInfoIconHover() {
 				for(WebElement title: titles)
-				  Element.mouseHoverByJS(testConfig, title, "title");
-		 
-				Helper.compareEquals(testConfig, "Plan Type","Providers will be billed monthly\n" + 
+				Element.mouseHoverByJS(testConfig, title, "title");
+
+				Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly\n" + 
 						"for any fees incurred the previous\n" + 
 						"month. For example, fees accrued\n" + 
 						"during the month of June will be\n" + 
@@ -1178,19 +1179,19 @@ public class OptumPaySolution {
 			switch (criteriaType) {
 
 				case "feeSearchPaymentNumber": {
-					Browser.wait(testConfig, 5);
+					Element.fluentWait(testConfig, paymentNumber, 5, 1, "Consolidated payment Number");
 					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
-					Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr, "payment number");
+					Element.enterDataByJS(testConfig,paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr);
 					break;
 				}
 				case "feeSearchInvoiceNumber": {
-					Browser.wait(testConfig, 5);
+					Element.fluentWait(testConfig, invoiceNumber, 5, 1, "Invoice Number");
 					String invoice_nbr = testConfig.getRunTimeProperty("invoiceNumber");
 					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
 					break;
 				}
 				case "feeSrchTINdetailsTabwthAllVal": {
-					Browser.wait(testConfig, 2);
+					Element.waitForElementTobeClickAble(testConfig, detailsTab, 5);
 					clickDetailsTab();
 					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
 					Element.selectByVisibleText(feeStatus, "All", "All Value in Fee Status");
@@ -1308,7 +1309,8 @@ public class OptumPaySolution {
 		}
 		
 		public OptumPaySolution clickFeesForRefund() {
-			Browser.wait(testConfig, 2);
+			//Element.waitForElementTobeClickAble(testConfig, refundFeeCheckbox, 8);
+			Element.fluentWait(testConfig, refundFeeCheckbox, 100, 1, "refundFeeCheckbox");
 			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
 			return this;
 		}
@@ -1343,8 +1345,9 @@ public class OptumPaySolution {
             }	
 			
             clickFeesForRefund();			
-			Browser.wait(testConfig, 2);
-			clearButton.click();
+            Element.waitForElementTobeClickAble(testConfig, clearButton, 5);
+            Browser.wait(testConfig, 5); //Without this line IE is not working properly
+            Element.clickByJS(testConfig, clearButton, "Clear Button");
 			Log.Comment("Fee search criteria's cleared");			
 			return this;
 		}		
@@ -1355,7 +1358,7 @@ public class OptumPaySolution {
 	 	{
 	 		String planTypeInfoIconMsg="Your provider organization will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced within the first 5 business days of July. You will receive an email in advance of the debit to your TIN-level bank account and you can review the fees on the Invoices subtab.";
 	 		String rateInfoIconMsg="Per payment fees are calculated based on the total payment amount.";
-	 		String feesInfoIconMsg="To view individual per-payment fees, please visit the View Payments page.  Fees will be billed monthly.";
+	 		String feesInfoIconMsg="To view individual per- payment fees, please visit the View Payments page.  Fees will be billed monthly.";
 	 		String manageMyPlanInfoIconMsg="To cancel the full functionality of Optum Pay, the Provider administrator must complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com." + 
 	 				"Note:  Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.  Any fees incurred prior to cancellation will be billed at the end of the current billing cycle.";
 	 		
