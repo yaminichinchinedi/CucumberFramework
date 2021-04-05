@@ -18,7 +18,7 @@ Feature: - Optum Pay Solutions
        #|       PROV_Admin        | 			 PROV			    	|			Standard		  |  WithinTrial and NotPaid|	  AO			|
   
 		#Author:Sayonee 
-	 @UPAUS3060820 @UPAUS3060825 @Stable
+	 @UPAUS3060820 @UPAUS3060825 @UPAStable
 	 Scenario Outline: - Optum Pay Solutions - Verify Post Trial PopUp
    Given User navigates to UPA portal and enters "<credentials>" and login
    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -34,7 +34,7 @@ Feature: - Optum Pay Solutions
      
   
       
-      @UPAUS3121676 @Stable
+      @UPAUS3121676 @UPAStable
 		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover)
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -45,7 +45,7 @@ Feature: - Optum Pay Solutions
    	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
       |   PROV_Admin    |     PROV     	|		 	PostTrial and Paid		|			Premium			|		VO			|
       
-      @UPAUS3121676 @Stable
+      @UPAUS3121676 @UPAStable
 		Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -60,7 +60,7 @@ Feature: - Optum Pay Solutions
 
 
 #Author: Mohammad Khalid
-@UPA_OPS_US2949033 @Stable
+@UPA_OPS_US2949033 @UPAStable
 Scenario Outline: To test page text messaging on OPS for Prov Admin
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -81,7 +81,7 @@ And User clicks on UPA logout
       
 
 
-#Author: Mohammad Khalid
+#Author: Mohammad Khalid-invoices tab not available
 @UPA_OPS_US3222937_ProvAdmin
 Scenario Outline: To validate Invoices tab for Provider admin users
 
@@ -99,8 +99,8 @@ And User clicks on UPA logout
  |      PROV_Admin |   PROV     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		VO			|  
 
  
- #Author: Mohammad Khalid
-@UPA_OPS_US3222937_BSAdmin 
+ #Author: Mohammad Khalid-invoices tab not available
+@UPA_OPS_US3222937_BSAdmin
 Scenario Outline: To validate Invoices tab for BS admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -118,7 +118,7 @@ And User clicks on UPA logout
  |      BS_Admin   |     BS     	|		PremiumOrStandardFeeInvoice		|		Premium     	  |		VO			|  
  
 
-        @UPAUS3232882 @nodata
+        @UPAUS3232882 @UPAStable
 		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover) +add data on debit_fee_invc
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -131,7 +131,7 @@ And User clicks on UPA logout
       |   PROV_Admin    |     PROV     	|		 	zeroPastdueFee					|			Premium			|		AO			| 
       |   PROV_Admin    |     PROV      |		 	positivePastdueFee			|			Premium			|		AO			|
      
-      @UPAUS3232882_BS
+      @UPAUS3232882_BS @UPAStable
      Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -147,7 +147,7 @@ And User clicks on UPA logout
       
       
 #Author: Mohammad Khalid
-@UPA_OPS_US3106783 @Stable
+@UPA_OPS_US3106783 @UPAStable
 Scenario Outline: To test page text messaging on OPS for Prov Admin
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -162,7 +162,7 @@ And User clicks on UPA logout
  
  
  #Author: Mohammad Khaid
- @UPA_OPS_US3259226
+ @UPA_OPS_US3259226 @UPAStable
  Scenario Outline: Access Payments - OPS tab vaidation for BS Users
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And  User clicks on Optum Pay Solutions tab
@@ -195,7 +195,7 @@ And User clicks on UPA logout
        
        
        
-    @US3329105 @naruto
+    @US3329105
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -209,7 +209,7 @@ And User clicks on UPA logout
        
 
     #Author: Marsha 
- 		@UPAOptumPaySolBSUserStdAndErrorMessages @US3123337 @Stable
+ 		@UPAOptumPaySolBSUserStdAndErrorMessages @US3123337 @UPAStable
    	Scenario Outline: Optum Pay Solutions - Standard experience for BS and error messages 
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -225,7 +225,7 @@ And User clicks on UPA logout
 
 
     #Author: Marsha 
-    @UPACancelPremiumDb @US3375699 @US3372495 @Stable
+    @UPACancelPremiumDb @US3375699 @US3372495 @UPAStable
    	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
