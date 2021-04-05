@@ -237,7 +237,7 @@ public void verifyProvSecondRow() throws ParseException{
 			Element.clickByJS(testConfig,approvePendingReq, "Checkbox Aprrove Pending Request");	
 		}
 		Element.clickByJS(testConfig,btnProvSave, "Save Button");
-		Element.clickByJS(testConfig,btnProvSave, "Save Button");
+
 }
 	
 	public void verifyAssocProv(){
