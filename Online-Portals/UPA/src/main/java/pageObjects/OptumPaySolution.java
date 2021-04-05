@@ -351,6 +351,8 @@ public class OptumPaySolution {
 	WebElement btnSave;
 	@FindBy(xpath="//button[contains(text(),'Change']")
 	WebElement btnChange;
+	@FindBy(xpath="/html/body/div[2]/div[3]/div/button[2]/span")
+	WebElement acceptPremiumBtn;
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -1581,7 +1583,34 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 			DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_CANCELLED_TO_STANDARD_ROWS);
 			return this;
 		}
+		
+		public OptumPaySolution convertToPremiumFromUpa()
+		{
+			Element.clickByJS(testConfig, getStartedBtn, "Get Started Btn");
+			Element.clickByJS(testConfig, acceptPremiumBtn, "I Accept, activate Premium");
+			return this;
+		}
 
+		public OptumPaySolution verifyEffectiveDateOfTrialPendingRecord(String portalAccess, String tinType) throws ParseException
+		{
+			String trialDate;
+
+			testConfig.putRunTimeProperty("prdSelection", portalAccess);
+			testConfig.putRunTimeProperty("stsOfStdRecd", "P");
+
+			if(portalAccess.equals("Premium") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PS");
+			else if(portalAccess.equals("Standard") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PD");
+			else Log.Fail("Invalid");
+
+			trialDate = DataBase.executeSelectQuery(testConfig, QUERY.PREMIUM_TRIAL_FOR_TIN, 1).get("PRTL_PRDCT_SELECT_EFF_DTTM").toString();
+
+			Map selectionTable = DataBase.executeSelectQuery(testConfig, QUERY.PRODUCT_SELECTION_TIN_QUERY, 1);
+
+			Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(trialDate, 30).toString(), selectionTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
+			return this;
+		}
 
 }
 
