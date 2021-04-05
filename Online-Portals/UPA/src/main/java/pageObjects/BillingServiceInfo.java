@@ -56,8 +56,8 @@ public class BillingServiceInfo {
 	@FindBy(name="provderTin") WebElement txtboxEnterProvTin;
 	@FindBy(xpath = "//tr[@id='singletin']/td/input[2]") WebElement btnSubmit;
 	@FindBy(xpath = "//th[contains(text(),'Provider TIN')]") WebElement provTinHeader;
-	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//th[1]") WebElement provTinHeaderPendingRequests;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table//tr[11]//th[2]") WebElement providerNameHeader;
+	@FindBy(xpath = "//form[@id='billingServiceViewInfoForm']//table//tr[13]//tr[2]//th[1]") WebElement provTinHeaderPendingRequests;
+	@FindBy(xpath = "//*[@id='billingServiceViewInfoForm']/table//tr[11]//th[2]") WebElement providerNameHeader;
 	@FindBy(xpath = "//a[contains(text(),'Request Date')]") WebElement reqDateHeader;
 	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[13]//tr[2]//th[4]") WebElement statusHeader;
 	@FindBy(name="confirmCheckBox") WebElement chkboxConfirm;
@@ -175,16 +175,23 @@ public void verifyProvSecondRow() throws ParseException{
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
-			if (tinNo.equals(tin)) {
+			String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
+			if (tinNo.equals(tin) && bsNamePendReq.equals(testConfig.getRunTimeProperty("bsname"))) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
-				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
-				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
+//				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
+				Log.Pass("Billing Service name displayed in Pending request Prov Tab");
+				//Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
+				int sqlRowNo = 1910;
+				String pendingRequestDate = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
+				Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+				Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendingRequestDate.trim());
+				
 				break;
 			}
 		}
-		int sqlRowNo = 1910;
-		Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdate.getText().trim());
+		//int sqlRowNo = 1910;
+		//Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		//Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdate.getText().trim());
 		Element.isValidFormat("mm/dd/yyyy",pendreqdate.getText().trim(),Locale.ENGLISH);
   	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendreqdate.getText().trim(),Locale.ENGLISH));
 }
@@ -240,7 +247,8 @@ public void verifyUiFunction(){
 }
 	
 public void pendingRequestsFunction(){
-	Browser.wait(testConfig, 1);
+	Element.fluentWait(testConfig, provTinHeaderPendingRequests, 100, 2, "Provider Tin- Header");
+	//Browser.wait(testConfig, 1);
 	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provTinHeaderPendingRequests.isDisplayed());
 	Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, providerNameHeader.isDisplayed());
 	Helper.compareEquals(testConfig, "Request Date Header in Pending Requests", true, reqDateHeader.isDisplayed());
