@@ -1304,7 +1304,9 @@ public ArrayList getEnrollmentContent(String content) {
 		    		testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
 			    	testConfig.putRunTimeProperty("value", tinNumbers.get("SBSCR_ID").toString());
 		    	 }
-		    	
+		    	if(searchCriteria.equalsIgnoreCase("ActiveBSTin")) {
+		    		testConfig.putRunTimeProperty("bsname", tinNumbers.get("BS_NM").toString());
+		    	}
 		    	//claim and dos
 		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndClmNo"))
 		    	{

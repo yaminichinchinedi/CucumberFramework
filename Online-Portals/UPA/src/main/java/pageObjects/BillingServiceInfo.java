@@ -171,29 +171,35 @@ public void verifyProvSecondRow() throws ParseException{
 			pendingReqHeadersUI.add(allOptions);
 		}
 		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendingReqHeaders, pendingReqHeadersUI);
-		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr[13]//tr[2]//tr");
+		int j;
+		if(Element.findElements(testConfig, "xpath", "//td[contains (text(), 'No Billing Service associations exist')]").size()==0)
+			 j=18;
+		else 
+			 j=17;		
+		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr["+j+"]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
-		for (int i = 1; i < tinGridRows.size(); i++) {
-			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
+		for (int i = 2; i <= tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i-1).findElements(By.tagName("td")).get(0).getText();
 			if (tinNo.equals(tin) ) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
-				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
-				Log.Pass("Billing Service name displayed in Pending request Prov Tab");
-				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", testConfig.getRunTimeProperty("bsname").trim(), bsNamePendReq.trim());
-				break;
-			}
-			if(tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname"))) {
+				String bsNamePendReq = tinGridRows.get(i-1).findElements(By.tagName("td")).get(1).getText();
+				
+				int sql=16;
+				Map data = DataBase.executeSelectQuery(testConfig,sql, 1); 
+				testConfig.putRunTimeProperty("bsname",data.get("BS_NM").toString());
+				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", data.get("BS_NM").toString().trim(), bsNamePendReq.trim());
+				
+			if(tinGridRows.get(i-1).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname").trim())) {
 				int sqlRowNo = 1910;
-				String pendingRequestDate = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
+				String pendingRequestDate = tinGridRows.get(i-1).findElements(By.tagName("td")).get(2).getText();
 				Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 				Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendingRequestDate.trim());			
-				break;
+			break;
+				}
 			}
+
 		}
 		
-		//int sqlRowNo = 1910;
-		//Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		//Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendreqdate.getText().trim());
 		Element.isValidFormat("mm/dd/yyyy",pendreqdate.getText().trim(),Locale.ENGLISH);
   	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendreqdate.getText().trim(),Locale.ENGLISH));
 }
@@ -227,10 +233,11 @@ public void verifyProvSecondRow() throws ParseException{
 	
 	public void verifyAssocProv(){
 		Browser.wait(testConfig, 3);
-		lnkAnniversaryHeader.click();
+		Element.clickByJS(testConfig, lnkAnniversaryHeader, "Anniversary link header");
 	    int count = Element.findElements(testConfig, "xpath", "//table/tbody/tr[16]//tr//tr").size();
 		String bsNameCheckUI = Element.findElement(testConfig, "xpath","//table//tr[16]//tr//tr["+count+"]/td[2]").getText().trim();
-		Helper.compareEquals(testConfig, "Billing Service name for the provider TIN added", bsNameCheckUI, testConfig.getRunTimeProperty("bsname").trim());
+		String bsname=testConfig.getRunTimeProperty("bsname");
+		Helper.compareEquals(testConfig, "Billing Service name for the provider TIN added", bsNameCheckUI, bsname.trim());
 	}
 	
 public void verifyDeleteAssoc(){
@@ -247,17 +254,24 @@ public void verifyUiFunction(){
 	Helper.compareEquals(testConfig, "Upload Multiple Provider TINs Header", true, lnkMulProvTin.isDisplayed());
 	Helper.compareEquals(testConfig, "Cancel Button Header", true, btnCancel.isDisplayed());
 }
-	
+
 public void pendingRequestsFunction(){
-	Element.fluentWait(testConfig, provTinHeaderPendingRequests, 100, 2, "Provider Tin- Header");
-	//Browser.wait(testConfig, 1);
-	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provTinHeaderPendingRequests.isDisplayed());
-	Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, providerNameHeader.isDisplayed());
-	Helper.compareEquals(testConfig, "Request Date Header in Pending Requests", true, reqDateHeader.isDisplayed());
-	Helper.compareEquals(testConfig, "Status Header in Pending Requests", true, statusHeader.isDisplayed());
+	int j;
+	if(Element.findElements(testConfig, "xpath", "//td[contains (text(), 'No Provider association(s) exist')]").size()==0)
+		 j=13;
+	else 
+		 j=12;
+	//Element.fluentWait(testConfig, provTinHeaderPendingRequests, 100, 2, "Provider Tin- Header");	
+	ArrayList<String> pendingReqHeaders = new ArrayList<String>(Arrays.asList("Provider TIN", "Provider Name", "Request Date","Status"));
+	List<String> pendingReqHeadersUI = new ArrayList<String>();
+	
+	for(int i=1; i<=pendingReqHeaders.size(); i++){				
+		String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']/table//tr["+j+"]/td//tr[2]//th["+i+"]")).getText().trim();		
+		pendingReqHeadersUI.add(allOptions);
+	}	
 	Browser.wait(testConfig, 3);							 
     String tin = System.getProperty("provTIN");
-    List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//tbody/tr[13]/td[1]/table[1]/tbody/tr[2]/td/div/table/tbody/tr");
+    List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//tbody/tr["+j+"]/td[1]/table[1]/tbody/tr[2]/td/div/table/tbody/tr");
 	for (int i = 1; i < tinGridRows.size(); i++) {
 		String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
 		if (tinNo.equals(tin)) {
@@ -269,8 +283,9 @@ public void pendingRequestsFunction(){
 			Helper.compareEquals(testConfig, "Provider Name UI and DB", orgname.get("ORG_NM").toString().trim(),providerName.trim());
 			break;
 		}
-	}
-		String reqDate = Element.findElement(testConfig, "xpath", "//*[@id='billingServiceViewInfoForm']/table/tbody/tr[13]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]").getText().trim();
+	}	
+
+		String reqDate = Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']/table//tr["+j+"]/td//tr[2]//tr[2]/td[3]").getText().trim();
 		Element.isValidFormat("mm/dd/yyyy",reqDate,Locale.ENGLISH);
 		Log.Comment("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", reqDate,Locale.ENGLISH));
 }
