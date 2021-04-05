@@ -233,7 +233,10 @@ public void verifyProvSecondRow() throws ParseException{
 			  Log.Pass("No data present in the row to check Effective Date format in Third row");
 		
 		Element.clickByJS(testConfig,approvePendingReq, "Checkbox Aprrove Pending Request");
-		Browser.wait(testConfig, 1);
+		if(!approvePendingReq.isSelected()) {
+			Element.clickByJS(testConfig,approvePendingReq, "Checkbox Aprrove Pending Request");	
+		}
+		Element.clickByJS(testConfig,btnProvSave, "Save Button");
 		Element.clickByJS(testConfig,btnProvSave, "Save Button");
 }
 	
