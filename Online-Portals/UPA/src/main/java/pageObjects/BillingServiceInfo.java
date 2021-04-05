@@ -178,20 +178,20 @@ public void verifyProvSecondRow() throws ParseException{
 			 j=17;		
 		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr["+j+"]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
-		for (int i = 2; i <= tinGridRows.size(); i++) {
-			String tinNo = tinGridRows.get(i-1).findElements(By.tagName("td")).get(0).getText();
+		for (int i = 1; i <= tinGridRows.size(); i++) {
+			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
 			if (tinNo.equals(tin) ) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
-				String bsNamePendReq = tinGridRows.get(i-1).findElements(By.tagName("td")).get(1).getText();
+				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
 				
 				int sql=16;
 				Map data = DataBase.executeSelectQuery(testConfig,sql, 1); 
 				testConfig.putRunTimeProperty("bsname",data.get("BS_NM").toString());
 				Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", data.get("BS_NM").toString().trim(), bsNamePendReq.trim());
 				
-			if(tinGridRows.get(i-1).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname").trim())) {
+			if(tinNo.equals(tin)&&tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname").trim())) {
 				int sqlRowNo = 1910;
-				String pendingRequestDate = tinGridRows.get(i-1).findElements(By.tagName("td")).get(2).getText();
+				String pendingRequestDate = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
 				Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 				Helper.compareEquals(testConfig, "Provider TIN requested from BS vs displayed in Pending request Prov Tab", Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), "yyyy-mm-dd", "mm/dd/yyyy"),pendingRequestDate.trim());			
 			break;
