@@ -219,8 +219,8 @@ public void verifyProvSecondRow() throws ParseException{
 		  else
 			  Log.Pass("No data present in the row to check Effective Date format in Third row");
 		
-		Element.click(approvePendingReq, "Checkbox Aprrove Pending Request");
-		Element.click(btnProvSave, "Save Button");
+		Element.clickByJS(testConfig,approvePendingReq, "Checkbox Aprrove Pending Request");
+		Element.clickByJS(testConfig,btnProvSave, "Save Button");
 }
 	
 	public void verifyAssocProv(){
