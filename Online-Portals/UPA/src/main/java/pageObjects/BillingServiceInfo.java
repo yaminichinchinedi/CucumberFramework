@@ -109,7 +109,7 @@ public class BillingServiceInfo {
 		Element.enterDataByJS(testConfig,txtboxEnterProvTin, provTIN, "Enter Provider Tin");
 		Element.clickByJS(testConfig,btnSubmit, "Submit Button");
 	//	Browser.waitForPageLoad(testConfig);
-		Element.click(chkboxConfirm, "Confirm Check Box");
+		Element.clickByJS(testConfig,chkboxConfirm, "Confirm Check Box");
 		verifyAddProvConfirmPage();
 		pendingRequestsFunction();
 		verifyUiFunction();
@@ -240,7 +240,7 @@ public void verifyUiFunction(){
 }
 	
 public void pendingRequestsFunction(){
-	Browser.wait(testConfig, 7);
+	Browser.wait(testConfig, 1);
 	Helper.compareEquals(testConfig, "Provider TIN Header in Pending Requests", true, provTinHeaderPendingRequests.isDisplayed());
 	Helper.compareEquals(testConfig, "Provider Name Header in Pending Requests", true, providerNameHeader.isDisplayed());
 	Helper.compareEquals(testConfig, "Request Date Header in Pending Requests", true, reqDateHeader.isDisplayed());
