@@ -107,7 +107,7 @@ public class BillingServiceInfo {
 		Element.clickByJS(testConfig,lnkAddTin, "Add Single Provider TIN");
 		Element.clickByJS(testConfig,txtboxEnterProvTin, "Enter Provider Tin");
 		Element.enterDataByJS(testConfig,txtboxEnterProvTin, provTIN, "Enter Provider Tin");
-		Element.click(btnSubmit, "Submit Button");
+		Element.clickByJS(testConfig,btnSubmit, "Submit Button");
 	//	Browser.waitForPageLoad(testConfig);
 		Element.click(chkboxConfirm, "Confirm Check Box");
 		verifyAddProvConfirmPage();
@@ -116,13 +116,13 @@ public class BillingServiceInfo {
 	}
 	 	
 	public void verifyApproveProvTin() throws ParseException{
-	    Element.click(btnHome, "Home Button");
-	    Element.click(lnkBillingService, "Billing Service Infomation Link on Home Page");
+	    Element.clickByJS(testConfig,btnHome, "Home Button");
+	    Element.clickByJS(testConfig,lnkBillingService, "Billing Service Infomation Link on Home Page");
 	    String provTIN = System.getProperty("provTIN");
 		Element.selectByVisibleText(userTypeDrpDwn, "Provider", "Provider dropdown");
-	    Element.click(txtboxTinNo, "Enter TIN");
-    	Element.enterData(txtboxTinNo, provTIN, "Enter TIN for PROV", "Enter PROV TIN in CSR");
-		Element.click(btnSearch, "Click Search Button");
+	    Element.clickByJS(testConfig,txtboxTinNo, "Enter TIN");
+    	Element.enterDataByJS(testConfig,txtboxTinNo, provTIN, "Enter TIN for PROV");
+		Element.clickByJS(testConfig,btnSearch, "Click Search Button");
 		if(testConfig.driver.findElements(By.xpath("//td[contains(text(),'No Billing Service associations exist')]")).size() != 0) 
 			Log.Comment("No Billing Service associations exist");
 		else 
