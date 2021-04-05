@@ -106,7 +106,7 @@ public class BillingServiceInfo {
 	    
 		Element.clickByJS(testConfig,lnkAddTin, "Add Single Provider TIN");
 		Element.clickByJS(testConfig,txtboxEnterProvTin, "Enter Provider Tin");
-		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "Provider Tin textbox");
+		Element.enterDataByJS(testConfig,txtboxEnterProvTin, provTIN, "Enter Provider Tin");
 		Element.click(btnSubmit, "Submit Button");
 	//	Browser.waitForPageLoad(testConfig);
 		Element.click(chkboxConfirm, "Confirm Check Box");
