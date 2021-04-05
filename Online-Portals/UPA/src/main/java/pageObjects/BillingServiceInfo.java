@@ -104,9 +104,9 @@ public class BillingServiceInfo {
 	    System.setProperty("provTIN", provTIN); 
 	    
 	    
-		Element.click(lnkAddTin, "Add Single Provider TIN");
-		Element.click(txtboxEnterProvTin, "Enter Provider Tin");
-		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "EnterProvider Tin");
+		Element.clickByJS(testConfig,lnkAddTin, "Add Single Provider TIN");
+		Element.clickByJS(testConfig,txtboxEnterProvTin, "Enter Provider Tin");
+		Element.enterData(txtboxEnterProvTin, provTIN, "Enter Provider Tin", "Provider Tin textbox");
 		Element.click(btnSubmit, "Submit Button");
 	//	Browser.waitForPageLoad(testConfig);
 		Element.click(chkboxConfirm, "Confirm Check Box");
