@@ -371,7 +371,7 @@ public class OptumPaySolution {
 		{
 			this.testConfig=testConfig;
 			PageFactory.initElements(testConfig.driver, this);
-			//Element.fluentWait(testConfig, tilePlanType, 60, 1, "Plan Type");
+			Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());
