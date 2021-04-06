@@ -99,8 +99,9 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
       |      PAY_Admin     	| 
       |      PAY_Gen     	  | 
       
-	 @UPAUS2948688_1 #OBSOLETE
-	 Scenario Outline: - UPA HomePage Alert 
+   #OBSOLETE   
+	 @UPAUS2948688_1 
+	 Scenario Outline: UPA HomePage Alert 
    Given User navigates to UPA portal and enters "<credentials>" and login
    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
    And User verifies HomePage Alert depending upon "<portalAccess>" and "<tinType>"
@@ -110,7 +111,8 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
 			 |     PROV_Admin  |     PROV     	|		WithinTrial and NotPaid	|		Standard     	  |		AO			|
 			 |     PROV_Admin  |     PROV     	|		WithinTrial and Paid	  |		Premium     	  |		AO			|
 	
-	  @UPAPopularFAQ_1 #OBSOLETE
+		#OBSOLETE
+	  @UPAPopularFAQ_1 
   	Scenario: Popular FAQs section
 		Given User navigates to UPA Sys Test application
     When User scrolls to popular FAQ section
