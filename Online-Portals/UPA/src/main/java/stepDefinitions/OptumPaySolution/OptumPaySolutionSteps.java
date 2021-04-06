@@ -227,5 +227,14 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.updatedToStandardAfterCancel(trialStatus).verifyCancelTableUpdated().verifyPremiumCancelledOnUIAndChangeTinToPremium(trialStatus, portal);		
 		}
 
+		@Then("^Verify the effective date for \"([^\"]*)\" record for \"([^\"]*)\"$")
+		public void verify_the_effective_date_for_record_for(String portalAccess, String tinType) throws Throwable {
+			optumPaySol.verifyEffectiveDateOfTrialPendingRecord(portalAccess, tinType);
+		}
+
+		@Then("^User clicks on Get Started to select Premium$")
+		public void user_clicks_on_Get_Started_to_select_Premium() throws Throwable {
+			optumPaySol.convertToPremiumFromUpa();
+		}
 }
 

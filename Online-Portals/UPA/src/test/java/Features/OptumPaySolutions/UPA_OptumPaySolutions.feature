@@ -254,4 +254,5 @@ And User clicks on UPA logout
 			 |		credentials  |    userType    | 			searchCriteria									|		portalAccess	  | tinType		|
 			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and NotPaid	|		Standard     	  |		AO			|
 		            
-       
+
+		               
