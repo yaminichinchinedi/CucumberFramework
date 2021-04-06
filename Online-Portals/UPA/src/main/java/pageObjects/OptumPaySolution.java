@@ -351,6 +351,8 @@ public class OptumPaySolution {
 	WebElement btnSave;
 	@FindBy(xpath="//button[contains(text(),'Change']")
 	WebElement btnChange;
+	@FindBy(className="ui-button-text")
+	List<WebElement> acceptPremiumBtn;
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -369,7 +371,7 @@ public class OptumPaySolution {
 		{
 			this.testConfig=testConfig;
 			PageFactory.initElements(testConfig.driver, this);
-			Element.fluentWait(testConfig, tilePlanType, 60, 1, "Plan Type");
+			Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());
@@ -1588,7 +1590,34 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 			DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_CANCELLED_TO_STANDARD_ROWS);
 			return this;
 		}
+		
+		public OptumPaySolution convertToPremiumFromUpa()
+		{
+			Element.clickByJS(testConfig, getStartedBtn, "Get Started Btn");
+			Element.clickByJS(testConfig, acceptPremiumBtn.get(2), "I Accept, activate Premium");
+			return this;
+		}
 
+		public OptumPaySolution verifyEffectiveDateOfTrialPendingRecord(String portalAccess, String tinType) throws ParseException
+		{
+			String trialDate;
+
+			testConfig.putRunTimeProperty("prdSelection", portalAccess);
+			testConfig.putRunTimeProperty("stsOfStdRecd", "P");
+
+			if(portalAccess.equals("Premium") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PS");
+			else if(portalAccess.equals("Standard") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PD");
+			else Log.Fail("Invalid");
+
+			trialDate = DataBase.executeSelectQuery(testConfig, QUERY.PREMIUM_TRIAL_FOR_TIN, 1).get("PRTL_PRDCT_SELECT_EFF_DTTM").toString();
+
+			Map selectionTable = DataBase.executeSelectQuery(testConfig, QUERY.PRODUCT_SELECTION_TIN_QUERY, 1);
+
+			Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(trialDate, 30).toString(), selectionTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
+			return this;
+		}
 
 }
 
