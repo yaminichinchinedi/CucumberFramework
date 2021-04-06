@@ -36,6 +36,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 
 
+
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -8186,15 +8187,29 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
 		Browser.wait(testConfig, 10);
-		
+		WebElement	lnkppraPdf=null;
+		String expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
 	//	Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
+		List<WebElement> ppRAElts=Element.findElements(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		
-		Element.waitForElementTobeClickAble(testConfig, PPRAPDFHyperlink, 60);	
-		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
-		{			
-			//((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[6].click()");
-			Element.clickByJS(testConfig, PPRAPDFHyperlink, "PPRA link");
+		for(int i=1;i<ppRAElts.size();i++)
+		{
+			String actualPaymntNo=ppRAElts.get(i).findElements(By.tagName("td")).get(3).getText();
+			 if(actualPaymntNo.contains(expectedPaymntNo))
+			 {
+				 lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[9]/table/tbody/tr/td/span/a");		 
+			 break;
+			 }
+			
 		}
+		 Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);	
+		 Element.clickByJS(testConfig, lnkppraPdf, "PPRA link");
+//		Element.waitForElementTobeClickAble(testConfig, PPRAPDFHyperlink, 60);	
+//		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
+//		{			
+//			//((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[6].click()");
+//			Element.clickByJS(testConfig, PPRAPDFHyperlink, "PPRA link");
+//		}
 		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
 		 Browser.wait(testConfig, 5);      
 	      Browser.switchToParentWindow(testConfig,oldWindow);
