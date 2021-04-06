@@ -351,8 +351,8 @@ public class OptumPaySolution {
 	WebElement btnSave;
 	@FindBy(xpath="//button[contains(text(),'Change']")
 	WebElement btnChange;
-	@FindBy(xpath="/html/body/div[2]/div[3]/div/button[2]/span")
-	WebElement acceptPremiumBtn;
+	@FindBy(className="ui-button-text")
+	List<WebElement> acceptPremiumBtn;
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -371,7 +371,7 @@ public class OptumPaySolution {
 		{
 			this.testConfig=testConfig;
 			PageFactory.initElements(testConfig.driver, this);
-			Element.fluentWait(testConfig, tilePlanType, 60, 1, "Plan Type");
+			//Element.fluentWait(testConfig, tilePlanType, 60, 1, "Plan Type");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());
@@ -1594,7 +1594,7 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 		public OptumPaySolution convertToPremiumFromUpa()
 		{
 			Element.clickByJS(testConfig, getStartedBtn, "Get Started Btn");
-			Element.clickByJS(testConfig, acceptPremiumBtn, "I Accept, activate Premium");
+			Element.clickByJS(testConfig, acceptPremiumBtn.get(2), "I Accept, activate Premium");
 			return this;
 		}
 
