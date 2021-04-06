@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
 
@@ -172,14 +173,15 @@ public class CSRHomePage {
 		}
     
     public void clickBillingServiceInfoLink()
-    {      Browser.wait(testConfig, 7);
+    {     
            Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
-           
     }
-    public void clickOptmPaySolnLink()
-    {      Browser.wait(testConfig, 2);
-           Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
-           
+    
+    public OptumPaySolution clickOptmPaySolnLink()
+    {
+        Element.fluentWait(testConfig, lnkOptPaySoln, 60, 1, "Optum Pay Solutions");   
+    	Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
+		return new OptumPaySolution(testConfig);
     }
     public void clickManageInternalUserlink() {
 		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
@@ -215,4 +217,5 @@ public class CSRHomePage {
 		return new SearchTinPagePaymentDataFiles(testConfig);
 		
 	}
+
 }
