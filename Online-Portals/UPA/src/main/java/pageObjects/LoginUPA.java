@@ -115,12 +115,12 @@ public class LoginUPA {
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
-		Element.expectedWait(btnLogin, testConfig, "Login button", "Login button");
+		
+		if(!(txtboxUserName.isDisplayed() && txtboxPwd.isDisplayed()))
+			Element.fluentWait(testConfig, txtboxUserName, 100, 1, "Username field");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
-		Browser.wait(testConfig, 2);
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
-	//	Browser.wait(testConfig, 3);
 		Browser.waitForPageLoad(testConfig.driver);
 		
 

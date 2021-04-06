@@ -644,7 +644,7 @@ public class FinancialInstitutionInfoPageNPI{
 		  List<String>ValidAddr=data.GetAllColumnsData("FinancialInfo","ValidAddr");
 		  ValidAddr.add(3, "");
 		  Helper.compareEquals(testConfig, "UI and Actual Compasision", ValidAddr, UIBankDetails);
-		  Element.verifyElementVisiblity(btnContinueSavChng, "Continue Button");
+		  Element.verifyElementIsEnabled(btnContinueSavChng, "Continue Button");
 		 String zip=ValidAddr.get(2).toString().substring(ValidAddr.get(2).toString().length()-10);
 		 if (zip.length()==5 || ( zip.length()==10 || ( zip.substring(5,6).equals("-"))))
 		 {}
