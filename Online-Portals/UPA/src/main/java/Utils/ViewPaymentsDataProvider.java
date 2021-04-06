@@ -1189,25 +1189,29 @@ public ArrayList getEnrollmentContent(String content) {
  				{
  				testConfig.putRunTimeProperty("portalAcs", "Standard");
  				testConfig.putRunTimeProperty("portalStat", "PD");
- 				sqlRowNo=1620;
+ 				//sqlRowNo=1620;
+ 				query=QUERY.WITHIN_TRIAL_AND_PAID_NOTPAID_QUERY;
  				}
  			if (searchCriteria.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
 				{
 			testConfig.putRunTimeProperty("portalAcs", "Premium");
 			testConfig.putRunTimeProperty("portalStat", "PS");
-			sqlRowNo=1620;
+			//sqlRowNo=1620;
+			   query=QUERY.WITHIN_TRIAL_AND_PAID_NOTPAID_QUERY;
 				}
  			if (searchCriteria.contains("PostTrial and NotPaid") && !tinType.equals("VO"))
 				{
 				testConfig.putRunTimeProperty("portalAcs", "Standard");
 				testConfig.putRunTimeProperty("portalStat", "PD");
-				sqlRowNo=1622;
+				//sqlRowNo=1622;
+				query=QUERY.POST_TRIAL_AND_PAID_NOTPAID_QUERY;
 				}
 			if (searchCriteria.contains("PostTrial and Paid") || tinType.equals("VO"))
 			{
 				testConfig.putRunTimeProperty("portalAcs", "Premium");
 				testConfig.putRunTimeProperty("portalStat", "PS");
-				sqlRowNo=1622;
+				//sqlRowNo=1622;
+				query=QUERY.POST_TRIAL_AND_PAID_NOTPAID_QUERY;
 			}
  				
  		}

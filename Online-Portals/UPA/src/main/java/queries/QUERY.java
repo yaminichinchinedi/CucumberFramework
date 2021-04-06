@@ -70,14 +70,14 @@ public class QUERY {
 
 		public final static String ENDQUERY_FETCH_FIRST_ROW=" FETCH FIRST 1 ROW ONLY ";
 
-		public final static String WITHIN_TRIAL_AND_PAID="select ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps join ole.enrolled_provider ep\r\n" + 
+		public final static String WITHIN_TRIAL_AND_PAID_NOTPAID="select ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps join ole.enrolled_provider ep\r\n" + 
 			"on ps.PROV_TIN_NBR=ep.PROV_TIN_NBR \r\n" + 
-			" where ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAcs}' and ps.PRTL_PRDCT_REC_STS_CD='{$portalStat}' \r\n" + 
+			" where ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAcs}' and ps.PRTL_PRDCT_REC_STS_CD='{$portalStat}' and ps.PRTL_PRDCT_SELECTED_STS_CD='P' \r\n" + 
 			" and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A' and\r\n" + 
 			"ps.PROV_TIN_NBR in (select PROV_TIN_NBR from OLE.PRODUCT_SELECTION where PRTL_PRDCT_SELECTED_GRP_NM='Premium' and PRTL_PRDCT_SELECTED_STS_CD='A' \r\n" + 
 			"and PRTL_PRDCT_REC_STS_CD='TR' ) ";
 
-		public final static String WITHIN_TRIAL_AND_PAID_QUERY=QUERY.WITHIN_TRIAL_AND_PAID+QUERY.ENDQUERY_ORDER_BY_DATE+QUERY.ENDQUERY_FETCH_FIRST_ROW;
+		public final static String WITHIN_TRIAL_AND_PAID_NOTPAID_QUERY=QUERY.WITHIN_TRIAL_AND_PAID_NOTPAID+QUERY.ENDQUERY_ORDER_BY_DATE+QUERY.ENDQUERY_FETCH_FIRST_ROW;
 
 		public final static String NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID  = "select ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps join ole.enrolled_provider ep \r\n" + 
 				"on ps.PROV_TIN_NBR=ep.PROV_TIN_NBR \r\n" + 
@@ -87,5 +87,10 @@ public class QUERY {
 				"and PRTL_PRDCT_REC_STS_CD='TR' and PRTL_PRDCT_SELECT_USER_TYP='ENROLLER') " + QUERY.ENDQUERY_ORDER_BY_DATE + QUERY.ENDQUERY_FETCH_FIRST_ROW ;
 		
 		public final static String PRODUCT_SELECTION_TIN_QUERY ="SELECT * FROM ole.PRODUCT_SELECTION WHERE PRTL_PRDCT_SELECTED_GRP_NM = '{$prdSelection}' AND PRTL_PRDCT_SELECTED_STS_CD='{$stsOfStdRecd}' AND PRTL_PRDCT_REC_STS_CD='{$SelectedOrDefault}' AND PROV_TIN_NBR='{$tin}'";
+		public final static String POST_TRIAL_AND_PAID_NOTPAID="select ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps \r\n" + 
+				"inner join ole.enrolled_provider ep on ps.PROV_TIN_NBR=ep.PROV_TIN_NBR \r\n" + 
+				"inner join OLE.SRCH_CONSOL_TBL sc on ps.PROV_TIN_NBR=sc.PROV_TAX_ID_NBR \r\n" + 
+				"where ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAcs}' and ps.PRTL_PRDCT_REC_STS_CD='{$portalStat}' and ps.PRTL_PRDCT_SELECTED_STS_CD='A' and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A'";
 
+	    public final static String POST_TRIAL_AND_PAID_NOTPAID_QUERY=QUERY.POST_TRIAL_AND_PAID_NOTPAID+QUERY.ENDQUERY_ORDER_BY_DATE+QUERY.ENDQUERY_FETCH_FIRST_ROW;
 }

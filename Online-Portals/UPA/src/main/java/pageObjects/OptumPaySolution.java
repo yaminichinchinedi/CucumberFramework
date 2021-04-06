@@ -371,7 +371,9 @@ public class OptumPaySolution {
 		{
 			this.testConfig=testConfig;
 			PageFactory.initElements(testConfig.driver, this);
-			Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
+			//Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
+			   if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
+				   Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());

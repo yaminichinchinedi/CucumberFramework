@@ -185,7 +185,8 @@
           |    RO          |	feeSrchTINdetailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
           |    RO          |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
  
-    @US3307485 @ogusdefect
+ #invoices not working
+    @US3307485
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
         Given User navigates to CSR portal and enters "<credentials>" and login
         And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
