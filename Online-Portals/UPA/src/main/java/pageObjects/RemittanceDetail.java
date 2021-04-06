@@ -8187,11 +8187,13 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	{
 		Browser.wait(testConfig, 10);
 		
-		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
-			
+	//	Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
+		
+		Element.waitForElementTobeClickAble(testConfig, PPRAPDFHyperlink, 60);	
 		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
 		{			
-			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");			
+			//((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[6].click()");
+			Element.clickByJS(testConfig, PPRAPDFHyperlink, "PPRA link");
 		}
 		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
 		 Browser.wait(testConfig, 5);      
