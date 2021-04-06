@@ -82,7 +82,7 @@ And User clicks on UPA logout
 
 
 #Author: Mohammad Khalid-invoices tab not available
-@UPA_OPS_US3222937_ProvAdmin
+@UPA_OPS_US3222937_ProvAdmin @UPAStable
 Scenario Outline: To validate Invoices tab for Provider admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -100,7 +100,7 @@ And User clicks on UPA logout
 
  
  #Author: Mohammad Khalid-invoices tab not available
-@UPA_OPS_US3222937_BSAdmin
+@UPA_OPS_US3222937_BSAdmin @UPAStable
 Scenario Outline: To validate Invoices tab for BS admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -195,7 +195,7 @@ And User clicks on UPA logout
        
        
        
-    @US3329105
+    @US3329105 @UPAStable
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

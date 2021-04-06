@@ -647,7 +647,8 @@ public class OptumPaySolution {
 			  testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium") &&
 			  testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") || testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AV") )
 			{
-			if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
+			//if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
+		    if( (changeRateValue.equals("valid value") && changeRateReason.contains("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");	
 			Element.enterData(rateTxtBox, rateValue, "change rate", "rate change textbox");
 			
@@ -1172,7 +1173,8 @@ public class OptumPaySolution {
 		}
 		
 		public void navigateToFeeSearchTab() {
-			Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+			//Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+			Element.clickByJS(testConfig, feeSearchTab, "Fee Search Tab");
 		}
 
 		public OptumPaySolution doSearch(String criteriaType) throws ParseException {

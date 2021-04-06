@@ -15,7 +15,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|   
          
-    @CSRUS3136627sss @data-issue @maybecheckthequeryforwithoutaccrudfeecriteria
+    @CSRUS3136627sss @CSRStable
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -98,7 +98,7 @@
    #Scenario 4 - Premium Tin in trial period, VO Tin
    #Scenario 5 - Standard AO Tin           
          
-    @CSRUS3138933 @dataissue
+    @CSRUS3138933
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

@@ -1225,7 +1225,7 @@ public ArrayList getEnrollmentContent(String content) {
 	 			if(searchCriteria.equalsIgnoreCase("withAccuredFee"))
 	 				testConfig.putRunTimeProperty("nullStatus", "is not null");
 	 				else if(searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
-	 				testConfig.putRunTimeProperty("nullStatus", "is null");
+	 				testConfig.putRunTimeProperty("nullStatus", "=0");
 				sqlRowNo=1615;
 			}
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")||searchCriteria.contains("feeSrchTINdetailsTabwthAllVal"))
