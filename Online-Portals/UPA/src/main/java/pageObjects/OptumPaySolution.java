@@ -364,9 +364,12 @@ public class OptumPaySolution {
   		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 	
 		private TestBase testConfig;
-		public OptumPaySolution(TestBase testConfig) {
+		
+		public OptumPaySolution(TestBase testConfig) 
+		{
 			this.testConfig=testConfig;
 			PageFactory.initElements(testConfig.driver, this);
+			Element.fluentWait(testConfig, tilePlanType, 60, 1, "Plan Type");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());
@@ -1170,7 +1173,7 @@ public class OptumPaySolution {
 		}
 		
 		public void navigateToFeeSearchTab() {
-			Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+			Element.clickByJS(testConfig,feeSearchTab, "Fee Search Tab");
 		}
 
 		public OptumPaySolution doSearch(String criteriaType) throws ParseException {
@@ -1178,19 +1181,18 @@ public class OptumPaySolution {
 			switch (criteriaType) {
 
 				case "feeSearchPaymentNumber": {
-					Browser.wait(testConfig, 5);
+//					Browser.wait(testConfig, 5);
 					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
-					Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr, "payment number");
+					Element.enterDataByJS(testConfig, paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr);
 					break;
 				}
 				case "feeSearchInvoiceNumber": {
-					Browser.wait(testConfig, 5);
 					String invoice_nbr = testConfig.getRunTimeProperty("invoiceNumber");
-					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
+					Element.enterDataByJS(testConfig,invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber);
 					break;
 				}
-				case "feeSrchTINdetailsTabwthAllVal": {
-					Browser.wait(testConfig, 2);
+				case "feeSrchTINdetailsTabwthAllVal": 
+				{
 					clickDetailsTab();
 					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
 					Element.selectByVisibleText(feeStatus, "All", "All Value in Fee Status");
@@ -1210,12 +1212,12 @@ public class OptumPaySolution {
 
 		public OptumPaySolution clickSearchBtn() {
 			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
-			Browser.wait(testConfig, 2);
-			return new OptumPaySolution(testConfig);
+			return this;
 		}
+		
 		public OptumPaySolution clickDetailsTab() {
 			Element.clickByJS(testConfig, detailsTab, "details Tab");
-			return new OptumPaySolution(testConfig);
+			return this;
 		}
 		public String getRecordCountFromUI() {
 			String resultCount = divShowRslts.getText().toString();
@@ -1308,29 +1310,36 @@ public class OptumPaySolution {
 		}
 		
 		public OptumPaySolution clickFeesForRefund() {
-			Browser.wait(testConfig, 2);
+	        if(!refundFeeCheckbox.isDisplayed())
+	        	Element.fluentWait(testConfig, refundFeeCheckbox, 60, 1, "Show Fee for refund checkbox");
 			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
 			return this;
 		}
 		
 		public OptumPaySolution validateFeeRefundButtonsAndFunctionality(String feeSearchCriteria) {
+			
 			clickFeesForRefund();
 		
-			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
-			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
-			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
-			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+		    Element.verifyElementNotEnabled(refundFeeButton, "refund fee button is disabled");
+		    Element.verifyElementNotEnabled(refundFeeCancelButton, "refund fee cancel button");
+		    Element.verifyElementIsEnabled(selectAll, "Select all");
+			
+//			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+//			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+//			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+//			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
             
 			Element.clickByJS(testConfig, refundSingleRow, "first entry in the refund fee");
-		    refundFeeCancelButton.click();
-		    Log.Comment("Cancel button clicked");
-			selectAll.click();
-			Log.Comment("Select All button clicked");
-		    
-			Assert.assertTrue(refundFeeButton.isEnabled(), "refund fee button assertion failed");
-			Assert.assertTrue(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
-			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
-			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+			Element.clickByJS(testConfig, refundFeeCancelButton, "refund fee cancel button");
+			Element.clickByJS(testConfig, selectAll, "select All button");
+		   
+			Element.verifyElementIsEnabled(refundFeeButton, "Refund Button");
+			Element.verifyElementIsEnabled(refundFeeCancelButton, "refundFeeCancelButton");
+			Element.verifyElementIsEnabled(selectAll, "Select all");
+//			Assert.assertTrue(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+//			Assert.assertTrue(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+//			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+//			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
 			
             if(feeSearchCriteria.equalsIgnoreCase("feeSearchInvoiceNumber")) {
             	Map<String,String> totalCount = DataBase.executeSelectQuery(testConfig,QUERY.EXPECTED_COUNT_FOR_FEE_REFUND_INVOICE_NUMBER, 1);
@@ -1342,10 +1351,8 @@ public class OptumPaySolution {
             	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount2.get("COUNT"), getRecordCountFromUI());
             }	
 			
-            clickFeesForRefund();			
-			Browser.wait(testConfig, 2);
-			clearButton.click();
-			Log.Comment("Fee search criteria's cleared");			
+            clickFeesForRefund();		
+            Element.clickByJS(testConfig, clearButton, "Clear button");
 			return this;
 		}		
 		
