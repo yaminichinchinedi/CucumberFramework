@@ -20,8 +20,8 @@ public class SearchRemittanceSteps extends TestBase{
 		if (srchCriteria.equals("viewPayments"))
 		srchRemittance.clickEpraPDFLink(srchCriteria);
 		else
-		srchRemittance.clickEpraPDFLinkSrchRemit(srchCriteria);
-			
+		//srchRemittance.clickEpraPDFLinkSrchRemit(srchCriteria); //Old Code
+		srchRemittance.click_835PDF_EPRA_SR(srchCriteria);			
 	}
 	
 	@Then("^validate Claim_Count and Priority is set accordingly\\.$")
@@ -126,7 +126,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^User clicks on Payment Number when \"([^\"]*)\" and validate Remittance Detail page is opened\\.$")
 	public void user_clicks_on_Payment_Number_when_and_validate_Remittance_Detail_page_is_opened(String srchCriteria) throws Throwable {
 		
-		srchRemittance.clickPaymentNumber(srchCriteria);
+		srchRemittance.clickPaymentNumber_SR_Page(srchCriteria);
 	}
 	
 	@Then("^validate record is inserted in User_Event_Log for Remittance Detail$")

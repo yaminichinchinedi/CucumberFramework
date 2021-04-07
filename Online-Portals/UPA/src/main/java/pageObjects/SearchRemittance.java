@@ -1583,10 +1583,52 @@ public class SearchRemittance extends ViewPayments {
 //		Element.verifyElementPresent(imgEPRApdf, "EPRA PDF ICON");
 		Helper.purgeDirectory(fileDirectory);
 //		Element.click(imgEPRApdf, "Epra PDF icon");
-		clickEpraPDFlink(srchType);
+		Browser.browserRefresh(testConfig);
+		Browser.wait(testConfig, 2);
+		clickEPRAPDFlink_Enabled_SR(srchType);
 		Browser.wait(testConfig, 2);
 		Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));
 		return this;
+	}
+	
+	/**
+	 * Author: Mohammad Khalid
+	 * This method clicks on the EPRA PDF link to download the file
+	 **/
+	public RemittanceDetail clickEPRAPDFlink_Enabled_SR(String srchType)
+	{
+
+		int totalNoOfPages=getNumberOfPages();
+		
+		if (totalNoOfPages==1)
+		{
+			find_And_Click_835PDF_Icon_Enabled_SR();
+		}
+		else
+		{
+			for (int pageNum=1; pageNum<=totalNoOfPages; pageNum++)
+			{
+				if(pageNum%10==1)
+				{
+					find_And_Click_835PDF_Icon_Enabled_SR();
+				}
+				else if (pageNum%10==0)
+				{
+					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
+					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
+					find_And_Click_835PDF_Icon_Enabled_SR();
+					Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
+				}
+				else
+				{
+					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
+					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
+					find_And_Click_835PDF_Icon_Enabled_SR();
+				}
+			}
+		}
+		return new RemittanceDetail(testConfig);
+	
 	}
 	
 	public SearchRemittance clickEpraPDFlink(String srchType)

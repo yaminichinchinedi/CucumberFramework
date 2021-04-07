@@ -272,7 +272,8 @@ public class SearchTinPageSearchRemittance {
 	public String getTinCSR(String paymentType)
 	{
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return "";//dataProvider.getTinForPaymentType(paymentType);
+		String tin=dataProvider.getTinForSearchCriteria(paymentType,"","");
+		return tin;//dataProvider.getTinForPaymentType(paymentType);
 	}
 	
 	public SearchTinPageSearchRemittance enterHCTin(String Tin)

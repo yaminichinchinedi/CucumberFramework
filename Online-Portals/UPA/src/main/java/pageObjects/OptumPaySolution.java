@@ -21,6 +21,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.server.handler.interactions.touch.Scroll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -319,6 +320,22 @@ public class OptumPaySolution {
 	
 	@FindBy(className="text-red")
 	WebElement redTextError;
+	
+	@FindBy(xpath="//div[@class='modal-body']/p")
+	WebElement feeRefundPopUpText2;
+	
+	@FindBy(xpath="//div[@id='refundConfirmation']/p")
+	WebElement feeRefundPopUpText1;
+	
+	@FindBy(xpath="//span[contains(text(),'Cancel')]")
+	WebElement refundPopUpCancelButton;
+	
+	@FindBy(xpath="//span[contains(text(),'Refund') and @class='ui-button-text']")
+	WebElement refundPopUpRefundButton;
+	
+	@FindBy(xpath="//select[@name='selectedRefundReason']")
+	WebElement reasonDropDownrefundPopUp;
+	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -1408,7 +1425,61 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 	 			
 	 		}	 		
 	 		return this;
-	 	}		
+	 	}	
+
+
+
+		public void selectFeeAmountCheckBoxAndCalculateFeeAmount()
+		{
+			double feeAmount=0;
+			clickFeesForRefund();
+			
+			List<WebElement> ls = Element.findElements(testConfig, "xpath", "//table[@class='table fee_table']/tbody/tr");
+			int feeCount = ls.size();
+			Log.Comment("Total Fee Number" + feeCount);
+			testConfig.putRunTimeProperty("TotalNumberOfFees", String.valueOf(feeCount));
+			
+			for (int i=0; i<ls.size(); i++)
+			{
+				String xpathFeeAmount = "//table[@class='table fee_table']/tbody/tr["  + (i+1) + "]/td[5]";
+				WebElement FeeAmount = Element.findElement(testConfig, "xpath", xpathFeeAmount);
+				feeAmount = feeAmount + Double.valueOf(FeeAmount.getText().trim().substring(1, FeeAmount.getText().trim().length()));
+			}
+			
+			testConfig.putRunTimeProperty("TotFeeAmountRefund", String.valueOf(feeAmount));
+			
+			selectAll.click();
+			Log.Comment("Select All button clicked");
+			
+			refundFeeButton.click();
+			Log.Comment("Refund Button clicked");
+			
+		}
+		
+		
+		public void verifyTextOnRefundPopUI()
+		{
+			String ex_AreYouSure = "Are You Sure?";
+			String ex_RefundText = "You are about to refund "+ testConfig.getRunTimeProperty("TotalNumberOfFees") +" fees totaling $"+ testConfig.getRunTimeProperty("TotFeeAmountRefund") +". This amount will be reflected as a credit on the provider's next invoice. Please select the reason for the refund.";
+			
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_AreYouSure, feeRefundPopUpText1.getText().trim());
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_RefundText, feeRefundPopUpText2.getText().trim());
+			Element.clickByJS(testConfig, refundFeeCancelButton, "Refund Pop Up Cancel Button");
+		
+		}
+		
+		public void clickOnSelectAllandRefundButton()
+		{
+			Element.clickByJS(testConfig, selectAll, "Select All Button clicked");
+			Element.clickByJS(testConfig, refundFeeButton, "Refund Button");
+		}
+		
+		public void selectRefundReasonandClickOnRefundButton()
+		{
+			Element.selectByVisibleText(reasonDropDownrefundPopUp, "Fraud", "Selecting 'Fraud' Reason for Fee Refund");
+			//Element.clickByJS(testConfig, refundPopUpRefundButton, "Click Refund Button on Pop Up");
+		}
+		
 }
 
 

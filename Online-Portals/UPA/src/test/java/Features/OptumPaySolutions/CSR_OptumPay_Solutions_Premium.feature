@@ -199,5 +199,31 @@
       Examples: 
           |   credentials  |   searchCriteria         |tinType | portalAccess  |userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
           |    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
-                         
-       
+  
+  
+  
+  
+  
+  
+  
+#Author: Mohammad Khalid             
+@CSRUS3252558 
+Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR 
+	Given User navigates to CSR portal and enters "<credentials>" and login 
+	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+	Then  User clicks on Optum Pay Solutions link on CSR HomePage 
+	Then  User Enters tin for OPS and click on search button for "<userType>". 
+	And   Change control to Optum Pay Solutions page 
+	Then  User clicks on Fee Searh Tab on Optum Pay Solutions Page 
+	And  User enters "<Fee Search Criteria 1>" on Fee Search page and click on search button. 
+	
+	And User selects fees in the grid, calculate the total fee amount and clicks on Refund Fee button 
+	And User verifies Refund Pop Up UI is displayed, verifies text and clicks on Cancel button 
+	And User clicks on the Select All again and clicks on Refund Fee button 
+	Then User selects Refund reason and clicks on Refund button on Pop Up 
+	
+   
+       Examples: 
+		|   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
+		|    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
+      
