@@ -163,10 +163,7 @@ public class SearchRemittanceSteps extends TestBase{
 		{
 			srchRemittance.getPDFfileName();
 		}
-		else
-		{
-			Log.Fail("PPRA status is:"+Status+" Please check that 4012 batch is running or not");
-		}
+		
 }
 	@Then("^Validate PDF file placed over NAS Drive for date \"([^\"]*)\"$")
 	public void validate_PDF_file_placed_over_NAS_Drive_for_date(String Date) throws Throwable {

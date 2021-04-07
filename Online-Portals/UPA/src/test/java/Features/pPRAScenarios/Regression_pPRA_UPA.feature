@@ -13,10 +13,10 @@ Feature: UPA PPRA Scenarios
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
 
     Examples: 
-      | priority | User     | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
+      | priority | User     | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR  | NPI        | FromDate   | Type          | Status |
      # | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E     |--not sure this data needed
-      | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
-      | P2       | PROVPPRA | 850275777 |      1507331184 | 1TR54168136        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
+      | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158         | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+      | P2       | PROVPPRA | 201423500 |      1515944861 | 2020031111700378    | 1104947647 | 03/13/2020 | byHCDOPAndNpi | E      |
      # | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E    |--not sure this data needed
       #| P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E    |
       #| P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E    |
@@ -35,13 +35,13 @@ Feature: UPA PPRA Scenarios
       | priority | User      | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
     #  | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |--not sure this data needed
       |  P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
-	    |  P2        | PayerPPRA |850275777 |      1507331184 | 1TR54168136        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
+	    |  P2     | PayerPPRA |201423500 |      1515944861 | 2020031111700378    | 1104947647 | 03/13/2020 | byHCDOPAndNpi | E      |
       #| P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E     |--not sure this data needed
       #| P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
      # | P1       | BSPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |--not sure this data needed
-      | P1       | BSPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
-      | P2       | BSPPRA | 850275777 |      1507331184 | 1TR54168136        | 1164491072 | 02/12/2020 | byHCDOPAndNpi | E      |
+       | P1       | BSPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+       | P2       | BSPPRA | 201423500 |      1515944861 | 2020031111700378    | 1104947647 | 03/13/2020 | byHCDOPAndNpi | E      |
       #| P2       | BSPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E     |--not sure this data needed
       #| P3       | BSPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
      # | P3       | BSPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
@@ -61,7 +61,7 @@ Feature: UPA PPRA Scenarios
        | priority | User     | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
     #  | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
        | P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
-       | P2       | PROVPPRA | 850275777 |      1507331184 | 1TR54168136          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
+       | P2       | PROVPPRA | 201423500 |      1515944861 | 2020031111700378     | 1104947647 | 03/13/2020 | byHCPayment_Number | E      |
     #  | P2       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
       #| P3       | PROVPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
       #| P3       | PROVPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
@@ -80,13 +80,13 @@ Feature: UPA PPRA Scenarios
       | priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr  | NPI        | Dates      | Type               | Status |
      # | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
        | P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
-       | P2       | PayerPPRA | 850275777 |      1507331184 | 1TR54168136          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
+       | P2       | PayerPPRA | 201423500 |      1515944861 | 2020031111700378     | 1104947647 | 03/13/2020 | byHCPayment_Number | E      |
      # | P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
      # | P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
      # | P1       | BSPPRA    | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
        | P1       | BSPPRA    | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
-       | P2       | BSPPRA    | 850275777 |      1507331184 | 1TR54168136          | 1164491072 | 02/12/2020 | byHCPayment_Number | E      |
+       | P2       | BSPPRA    | 201423500 |      1515944861 | 2020031111700378     | 1104947647 | 03/13/2020 | byHCPayment_Number | E      |
      # | P2       | BSPPRA    | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
      # | P3       | BSPPRA    | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
      # | P3       | BSPPRA    | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
@@ -105,7 +105,7 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
-      | P1       | PayerPPRA | 221179701 |      1520721498 |           1520721498 | byHCPayment_Number | N/A        | 03/30/2020 | 03.30.2020 | Present    | C      |
+      | P1       | PayerPPRANew | 221179701 |      1520721498 |           1520721498 | byHCPayment_Number | N/A        | 03/30/2020 | 03.30.2020 | Present    | C      |
     ##below data commented as we do not have enough data for pPRA generation--Rahul on 06-Apr-2021
 	 #| P1       | PayerPPRA | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
      #| P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
@@ -124,7 +124,7 @@ Feature: UPA PPRA Scenarios
 
     Examples: 
       | priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
-      | P1       | PayerPPRA | 221179701 |      1520721498 |           1520721498 | byHCPayment_Number | N/A        | 03/30/2020 | 03.30.2020 | Present    | C      |
+      | P1       | PayerPPRANew | 221179701 |      1520721498 |           1520721498 | byHCPayment_Number | N/A        | 03/30/2020 | 03.30.2020 | Present    | C      |
     ##below data commented as we do not have enough data for pPRA generation--Rahul on 06-Apr-2021
 	#  | P1       | PayerPPRA | 571004971 |      1439046523 | 1SG05444672          | byHCPayment_Number | 1083787006 | 06/24/2019 | 06.24.2019 | Present    | C      |
     #  | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
