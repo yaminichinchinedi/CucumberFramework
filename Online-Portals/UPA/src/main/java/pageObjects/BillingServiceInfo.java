@@ -108,7 +108,6 @@ public class BillingServiceInfo {
 		Element.clickByJS(testConfig,txtboxEnterProvTin, "Enter Provider Tin");
 		Element.enterDataByJS(testConfig,txtboxEnterProvTin, provTIN, "Enter Provider Tin");
 		Element.clickByJS(testConfig,btnSubmit, "Submit Button");
-	//	Browser.waitForPageLoad(testConfig);
 		Element.clickByJS(testConfig,chkboxConfirm, "Confirm Check Box");
 		verifyAddProvConfirmPage();
 		pendingRequestsFunction();
@@ -131,7 +130,6 @@ public class BillingServiceInfo {
 		verifyProvSecondRow();
 		verifyProvThirdRow();
 		verifyAssocProv();
-	    //verifyErrorsForInvaidDateFormat();
 		verifyDeleteAssoc();
 	}
 	
@@ -183,18 +181,11 @@ public void verifyProvSecondRow() throws ParseException{
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
 			String tinNo = tinGridRows.get(i).findElements(By.tagName("td")).get(0).getText();
-			//if (tinNo.equals(tin) ) {
 			if(tinNo.equals(tin)&&tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname").trim())) {
 				Log.Pass("TIN added is displayed under Pending Requests Grid until approved");
 				Log.Pass("Billing Service name displayed in Pending request Prov Tab");
 				String bsNamePendReq = tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText();
 				
-//				int sql=16;
-//				Map data = DataBase.executeSelectQuery(testConfig,sql, 1); 
-//				testConfig.putRunTimeProperty("bsname",data.get("BS_NM").toString());
-				//Helper.compareEquals(testConfig, "Billing Service name displayed in Pending request Prov Tab", data.get("BS_NM").toString().trim(), bsNamePendReq.trim());
-				
-			//if(tinNo.equals(tin)&&tinGridRows.get(i).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(testConfig.getRunTimeProperty("bsname").trim())) {
 				int sqlRowNo = 1910;
 				String pendingRequestDate = tinGridRows.get(i).findElements(By.tagName("td")).get(2).getText();
 				Map currDateDB = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -270,7 +261,6 @@ public void pendingRequestsFunction(){
 		 j=13;
 	else 
 		 j=12;
-	//Element.fluentWait(testConfig, provTinHeaderPendingRequests, 100, 2, "Provider Tin- Header");	
 	ArrayList<String> pendingReqHeaders = new ArrayList<String>(Arrays.asList("Provider TIN", "Provider Name", "Request Date","Status"));
 	List<String> pendingReqHeadersUI = new ArrayList<String>();
 	

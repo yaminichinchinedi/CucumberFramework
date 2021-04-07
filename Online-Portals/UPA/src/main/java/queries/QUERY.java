@@ -91,11 +91,11 @@ public class QUERY {
 		public final static String PRODUCT_SELECTION_TIN_QUERY ="SELECT * FROM ole.PRODUCT_SELECTION WHERE PRTL_PRDCT_SELECTED_GRP_NM = '{$prdSelection}' AND PRTL_PRDCT_SELECTED_STS_CD='{$stsOfStdRecd}' AND PRTL_PRDCT_REC_STS_CD='{$SelectedOrDefault}' AND PROV_TIN_NBR='{$tin}'";
 
 		public final static String PAYER_LIST="WITH result AS ( select  PAYR_DSPL_NM, PAYR_TIN_NBR,SORT_ORDER from OLE.PAYER p\r\n" + 
-				" where PAYR_TIN_NBR in (select PAYR_TIN_NBR  from OLE.PAYER_ENROLLED_PROVIDER  where PROV_TIN_NBR= '383612247' ) \r\n" + 
+				" where PAYR_TIN_NBR in (select PAYR_TIN_NBR  from OLE.PAYER_ENROLLED_PROVIDER  where PROV_TIN_NBR= '{$Prov_tin_nbr}' ) \r\n" + 
 				" and {fn TIMESTAMPDIFF( SQL_TSI_MONTH, CURRENT TIMESTAMP,LST_CHG_BY_DTTM)} <= 13 and PAYR_ACTV_IND='N'\r\n" + 
 				" union \r\n" + 
 				" Select PAYR_DSPL_NM, PAYR_TIN_NBR,SORT_ORDER  from OLE.PAYER  where PAYR_TIN_NBR in  \r\n" + 
-				" (select PAYR_TIN_NBR from OLE.PAYER_ENROLLED_PROVIDER where PROV_TIN_NBR= '383612247' )  \r\n" + 
+				" (select PAYR_TIN_NBR from OLE.PAYER_ENROLLED_PROVIDER where PROV_TIN_NBR= '{$Prov_tin_nbr}' )  \r\n" + 
 				" AND NOT PAYR_DSPL_NM='US Dept of Health and Human Services' and PAYR_ACTV_IND='Y' ORDER BY SORT_ORDER ASC , PAYR_DSPL_NM)\r\n" + 
 				"SELECT\r\n" + 
 				"    *,\r\n" + 
