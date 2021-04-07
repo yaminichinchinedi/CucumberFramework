@@ -1164,9 +1164,9 @@ public ArrayList getEnrollmentContent(String content) {
             	DataBase.executeUpdateQuery(testConfig,QUERY.UPDATE_QUERY_FOR_FEE_REFUND2, DataBase.getDatabaseType());
             	query = QUERY.ENTRIES_FOR_FEE_REFUND;
             	break;
-            case "New Enroll WithinTrial and Paid":   
-            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
-            	break;   
+            //case "New Enroll WithinTrial and Paid":   
+            	//query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
+            	//break;   
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		
  		}
@@ -1212,6 +1212,10 @@ public ArrayList getEnrollmentContent(String content) {
 				testConfig.putRunTimeProperty("portalStat", "PS");
 				//sqlRowNo=1622;
 				query=QUERY.POST_TRIAL_AND_PAID_NOTPAID_QUERY;
+			}
+			if (searchCriteria.contains("New Enroll WithinTrial and Paid"))
+			{
+				query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
 			}
  				
  		}

@@ -98,7 +98,7 @@
    #Scenario 4 - Premium Tin in trial period, VO Tin
    #Scenario 5 - Standard AO Tin           
          
-    @CSRUS3138933
+    @CSRUS3138933 @naruto
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -219,7 +219,7 @@
           |    Super       |     TinForFeeSearchRefund  |  AO      |    Premium           |    PROV     | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
  
   #Author: Marsha   -defect in og US
-  @CSRCancelPremiumDb @US2948675
+  @CSRCancelPremiumDb @US2948675 @CSRStable
   Scenario Outline: CSR Optum Pay Solutions cancel subscription and check DB
     Given User navigates to CSR portal and enters "<credentials>" and login
     And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
@@ -230,6 +230,6 @@
 		
     Examples: 
       | credentials | userType | searchCriteria     						| portalAccess | tinType | prdctRecSts |reasonCode|
-      | Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
+     | Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
       | Super       | PROV     |New Enroll WithinTrial and Paid | Premium      | AO      | PS          |	R7			|
             

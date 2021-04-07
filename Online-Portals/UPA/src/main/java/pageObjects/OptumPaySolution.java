@@ -370,8 +370,7 @@ public class OptumPaySolution {
 		public OptumPaySolution(TestBase testConfig) 
 		{
 			this.testConfig=testConfig;
-			PageFactory.initElements(testConfig.driver, this);
-			//Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
+			PageFactory.initElements(testConfig.driver, this);		
 			   if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
 				   Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
 		}
@@ -1562,7 +1561,10 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 			else Log.Fail("Premium Not Cancelled sucessfully");
 
 			if(trialStatus.compareToIgnoreCase("New Enroll WithinTrial and Paid")==0) {
+			  if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
 				Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(effectiveDate, 30).toString(), portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
+			  else
+				Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(effectiveDate, 29).toString(), portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
 			}
 			else Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Post Trial TIN", Helper.getCurrentDate("MM/dd/yyyy").toString(), Helper.changeDateFormat(testConfig, portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10), "yyyy-mm-dd","mm/dd/yyyy").toString());
 

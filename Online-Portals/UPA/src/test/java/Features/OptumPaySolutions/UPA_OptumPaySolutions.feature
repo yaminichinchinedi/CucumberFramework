@@ -131,7 +131,7 @@ And User clicks on UPA logout
       |   PROV_Admin    |     PROV     	|		 	zeroPastdueFee					|			Premium			|		AO			| 
       |   PROV_Admin    |     PROV      |		 	positivePastdueFee			|			Premium			|		AO			|
      
-      @UPAUS3232882_BS @UPAStable @fueled
+      @UPAUS3232882_BS @UPAStable 
      Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -225,7 +225,7 @@ And User clicks on UPA logout
 
 
     #Author: Marsha 
-    @UPACancelPremiumDb @US3375699 @US3372495 @UPAStable
+    @UPACancelPremiumDb @US3375699 @US3372495
    	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
