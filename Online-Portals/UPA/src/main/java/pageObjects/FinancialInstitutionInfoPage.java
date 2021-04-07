@@ -467,7 +467,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  List<String>ValidAddr=data.GetAllColumnsData("FinancialInfo","ValidAddr");
 		  ValidAddr.add(3, "");
 		  Helper.compareEquals(testConfig, "UI and Actual Compasision", ValidAddr, UIBankDetails);
-		  Element.verifyElementVisiblity(btnContinue, "Continue Button");
+		  Element.verifyElementIsEnabled(btnContinue, "Continue Button");
 		 String zip=ValidAddr.get(2).toString().substring(ValidAddr.get(2).toString().length()-10);
 
 		 

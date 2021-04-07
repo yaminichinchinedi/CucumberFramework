@@ -391,6 +391,28 @@ public class DataBase
          else
 	     return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
 }
+//56	
+	public static HashMap<Integer, HashMap<String, String>> executeSelectQueryALL(TestBase testConfig, String selectQuery) throws IOException
+	{
+		
+		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
+          return executeSelectQuery(testConfig, DatabaseType.Stage,selectQuery);
+
+		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
+	     return executeSelectQuery(testConfig,DatabaseType.Stage2,selectQuery);
+
+         else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
+	     return executeSelectQuery(testConfig,DatabaseType.PROD,selectQuery);
+      
+         else if (System.getProperty("Database").equalsIgnoreCase("Test1"))
+         return executeSelectQuery(testConfig,DatabaseType.Test1,selectQuery);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
+         return executeSelectQuery(testConfig,DatabaseType.Test2,selectQuery);
+    
+         else
+	     return executeSelectQuery(testConfig,DatabaseType.IMPL,selectQuery); 
+}
 
 	/**
 	 * This Method is used to return all the rows return by a select query in a HashMap Structure
@@ -410,7 +432,13 @@ public class DataBase
 		ResultSet resultSet=executeSelectQuery(testConfig, sqlRow, type);
 		return executeQueryHelper(testConfig,resultSet);
 	}
+	public static HashMap<Integer, HashMap<String, String>> executeSelectQuery(TestBase testConfig,DatabaseType type,String selectQuery) throws IOException
+	{	
+		// Fetch Complete Result Set
 
+		ResultSet resultSet=executeSelectQuery(testConfig, selectQuery, type);
+		return executeQueryHelper(testConfig,resultSet);
+	}
 	/**
 	 * Executes the select db query, and saves the result in
 	 * Config.runtimeProperties as well as returns Map
@@ -549,6 +577,20 @@ public class DataBase
 		return executeUpdateQuery(testConfig, updateQuery, dbType);
 	}
 	
+	public static int executeUpdateQuery(TestBase testConfig, String updateQuery)
+	{		
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DatabaseType dbType=getDatabaseType();
+
+		return executeUpdateQuery(testConfig, updateQuery, dbType);
+	}
 	/**
 	 * 
 	 * @param testConfig
@@ -770,6 +812,21 @@ public class DataBase
 		return executeUpdateQuery(testConfig, deleteQuery, dbType);
 	}
 	
+	public static int executeDeleteQuery(TestBase testConfig, String deleteQuery)
+	{		
+		DatabaseType dbType=null;
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dbType=getDatabaseType();
+		return executeUpdateQuery(testConfig, deleteQuery, dbType);
+	}
+
 	
 	/**
 	 * This method converts resultset to list

@@ -126,3 +126,33 @@ Examples:
              |    	   BS_Admin      | 			 Standard  		  |			BS  		  |			Last 30 days		|  	AO			| 
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			|
 
+
+		#Author: Marsha
+		@UPAViewPaymentsFeeAmtCol_Prov_std   @US3106945
+		Scenario Outline: View Payments - Fee Amount Column for Standard TIN for Prov
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate Fee Amount column is not displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is not displayed.
+			Examples:
+	 					 |    credentials        |	 	 userType  			  	| 	portalAccess      |	searchCriteria   | tinType		|
+             |       PROV_Admin      | 			 PROV			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
+             |       PROV_Gen        | 			 PROV		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |
+             
+		#Author: Marsha		
+		@UPAViewPaymentsFeeAmtCol_BS_std   @US3106945
+ 		Scenario Outline: View Payments - Fee Amount Column for Standard TIN for BS
+    Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate Fee Amount column is not displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is not displayed.
+     Examples:
+    				 |    credentials        |	 	 userType  			  | 	portalAccess      |	searchCriteria   | tinType		|
+             |       BS_Admin        | 			 BS			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
+             |       BS_Gen          | 			 BS		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |
+             
