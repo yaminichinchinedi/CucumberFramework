@@ -216,9 +216,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
-		    	//String dspl_consl_pay_nbr = System.getProperty("dspl_consl_pay_nbr");
-		    	System.out.println(dspl_consl_pay_nbr);
-		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
+                Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
 		    	break;
 		    	
 		    }
@@ -336,9 +334,7 @@ public class SearchRemittanceSearchCriteria {
 		    case "EPRADOPAndAccountNo":
 		    {
 		    	String ptnt_acct_nbr = System.getProperty("ptnt_acct_nbr");
-		    	System.out.println(ptnt_acct_nbr);
 		    	Element.enterData(accountNo, ptnt_acct_nbr, "Enter patient account no as : "+ptnt_acct_nbr, "Account Number");
-		    	
 		    	String fromDate =  System.getProperty("fromDate");
 		    	String toDate =  System.getProperty("toDate");
 		    	
@@ -814,29 +810,7 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("paymentMethCode",srchData.get("PAY_METH_CD").toString());
 		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
 		    	break;
-		    
-		    /*case "byCheckNoOfConslPayDtl":
-		    	dataRequiredForSearch=dataProvider(criteriaType);
-		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
-		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
-		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHK_NBR").toString(), "payment number");
-		    	testConfig.putRunTimeProperty("key1", "CHK_NBR");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHK_NBR").toString());
-		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
-		    	break;
-		    	
-		    case "byCheckNoOfReoriginNacha":
-		    	dataRequiredForSearch=dataProvider(criteriaType);
-		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
-		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
-		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHECK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHECK_NBR").toString(), "payment number");
-		    	testConfig.putRunTimeProperty("key1", "CHECK_NBR");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHECK_NBR").toString());
-		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
-		    	break;*/
-		    	
+
 		    case "byCheckNoOfReoriginNacha":
 		    case "byCheckNoOfConslPayDtl":
 		    

@@ -580,11 +580,11 @@ public ArrayList getEnrollmentContent(String content) {
 	 			
 	 			
            case "EPRA":
-			 env=System.getProperty("env");
-		     Browser.wait(testConfig, 5);
-		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-		     testConfig.putRunTimeProperty("id", id);
-		     System.setProperty("id", id);
+//			 env=System.getProperty("env");
+//		     Browser.wait(testConfig, 5);
+//		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+//		     testConfig.putRunTimeProperty("id", id);
+//		     System.setProperty("id", id);
 		      sqlRowNo=204;
 	 			break;		
 

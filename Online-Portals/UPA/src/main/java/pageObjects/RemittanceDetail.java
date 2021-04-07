@@ -7579,7 +7579,7 @@ public RemittanceDetail clickPrintRequestButton()
 {
 	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Request' and @type = 'button']"), 60);
 	Element.verifyElementPresent(btnPrint, "Print Request Button");
-	Browser.wait(testConfig, 2);
+	//Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.waitForElementTobeClickAble(testConfig, btnPrint, 60);
 	Element.click(btnPrint, "Print Request Button");
@@ -7599,7 +7599,7 @@ public RemittanceDetail clickPrintButton()
 	String filedir=System.getProperty("user.dir")+"\\Downloads";
 	File fileDirectory=new File(filedir);
 	Helper.purgeDirectory(fileDirectory);
-	Browser.wait(testConfig, 3);
+	//Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Element.waitForElementTobeClickAble(testConfig, btnPrntavailable, 60);
 	Element.click(btnPrntavailable, "Print Available Button");
@@ -7612,7 +7612,7 @@ public RemittanceDetail verifyDownloadWindow()
 {
 	  String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
       Log.Comment("THe PDF Text Message is:" + msg.getText());
-      Browser.wait(testConfig, 2);
+      //Browser.wait(testConfig, 2);
      
      
      if(msg.getText().contains("Your PDF is now available"))

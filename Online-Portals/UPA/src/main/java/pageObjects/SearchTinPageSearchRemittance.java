@@ -153,7 +153,7 @@ public class SearchTinPageSearchRemittance {
 		 
     case "PROV":
        {   
-      	 //Element.selectVisibleText(txtboxTinNo,tin,"Enter TIN in CSR");
+      	 
       	 Element.enterData(txtboxTinNo, tin, "Enter TIN", "Enter TIN in CSR");
       	 Element.click(submitBtn, "Click Search Button");
       	 break;
