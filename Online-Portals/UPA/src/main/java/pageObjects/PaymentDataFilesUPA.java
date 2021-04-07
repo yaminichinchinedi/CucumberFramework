@@ -121,12 +121,12 @@ public class PaymentDataFilesUPA extends TestBase{
 	public PaymentDataFilesUPA(TestBase testConfig) {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") && (testConfig.getRunTimeProperty("userType").contains("BS") ||testConfig.getRunTimeProperty("userType").contains("Payer")))
+		
+		if((testConfig.getRunTimeProperty("userType").contains("BS") ||testConfig.getRunTimeProperty("userType").contains("Payer")))
 			Element.fluentWait(testConfig, bstinDrpDwn, 100, 1, "TIN textbox");
-		else if	(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") && (testConfig.getRunTimeProperty("userType").contains("PROV")))
+		
+		else if	((testConfig.getRunTimeProperty("userType").contains("PROV")))
 			Element.fluentWait(testConfig, epraChkbox, 100, 1, "EPRA checkbox");
-		else if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard"))
-			Element.fluentWait(testConfig, standardPopUp, 100, 1, "Standard pop-up ");
 	}
 	
 	
