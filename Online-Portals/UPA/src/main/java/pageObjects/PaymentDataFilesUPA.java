@@ -654,14 +654,13 @@ public class PaymentDataFilesUPA extends TestBase{
 			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
 		}   
-		   testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
+		   
 		   String query=QUERY.PAYER_LIST;
+		   testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
 		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, query);
-		   testConfig.putRunTimeProperty("totalPayers", PayerListDB2.get(1).get("TOTALROWS"));		   
-		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
-		   int sql=1347;
-		   PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, sql);
+		   testConfig.putRunTimeProperty("totalPayers", PayerListDB2.get(1).get("TOTALROWS"));	
 		   testConfig.putRunTimeProperty("firstPayer", PayerListDB2.get(1).get("PAYR_DSPL_NM"));
+		   ArrayList<String> PayerListDBAll = new ArrayList<String>();		   
 		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
 			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
            }		   
