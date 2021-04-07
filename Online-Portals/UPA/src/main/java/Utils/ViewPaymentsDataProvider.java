@@ -1167,7 +1167,7 @@ public ArrayList getEnrollmentContent(String content) {
             	query = QUERY.ENTRIES_FOR_FEE_REFUND;
             	break;
             case "New Enroll WithinTrial and Paid":   
-            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID;
+            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
             	break;   
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		

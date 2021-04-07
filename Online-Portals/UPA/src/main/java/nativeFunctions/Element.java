@@ -324,7 +324,7 @@ import main.java.reporting.Log;
 	
 
 	//Verifies element is present on the page 
-	public static void verifyElementVisiblity(WebElement button,String namOfButton)
+	public static void verifyElementIsEnabled(WebElement button,String namOfButton)
 	{
 		try
 		{

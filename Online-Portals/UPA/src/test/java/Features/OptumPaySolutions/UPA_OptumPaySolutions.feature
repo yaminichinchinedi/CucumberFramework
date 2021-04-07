@@ -237,4 +237,19 @@ And User clicks on UPA logout
 			 |     PROV_Admin  |     PROV     	|		PostTrial and Paid							|		Premium     	  |		AO			|  R7				|
 			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and Paid	|		Premium     	  |		AO			|  R7				|
 		            
-       
+    
+    #Author: Marsha 
+    @UPA_VerifyEffectiveDateOfNewAchTin @US3221318
+   	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		And User clicks on Optum Pay Solutions tab
+    And Verify the effective date for "Standard" record for "<tinType>"
+    Then User clicks on Get Started to select Premium
+    And Verify the effective date for "Premium" record for "<tinType>"
+	  Then User clicks on UPA logout
+	    
+		 Examples:
+			 |		credentials  |    userType    | 			searchCriteria									|		portalAccess	  | tinType		|
+			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and NotPaid	|		Standard     	  |		AO			|
+		               
