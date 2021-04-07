@@ -51,15 +51,15 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
 
     Examples: 
      	| Priority | User   | Tin       | Type               | Disp_Consol_Pay_Nmbr | Consol_Pay_Nmbr | Status |
-      | P1       | Super  | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
+      | P1       | Super  | 320474882 | byHCPayment_Number | 1TR57793209          |      1530202071 | E      |
       | P1       | Super  | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
       | P2       | Super  | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | Super  | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
-      | P1       | RW     | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
+      | P1       | RW     | 320474882 | byHCPayment_Number | 1TR57793209          |      1530202071 | E      |
       | P1       | RW     | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
       | P2       | RW     | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | RW     | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
-      | P1       | ROPPRA | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
+      | P1       | ROPPRA | 320474882 | byHCPayment_Number | 1TR57793209          |      1530202071 | E      |
       | P1       | ROPPRA | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
       | P2       | ROPPRA | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | ROPPRA | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
