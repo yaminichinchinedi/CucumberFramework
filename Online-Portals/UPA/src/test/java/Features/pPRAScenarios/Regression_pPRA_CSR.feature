@@ -20,15 +20,15 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
       | Priority | User   | Tin       | Type          | Consol_Pay_Nmbr | NPI        | FromDate   | ToDate     | Status | Disp_Consol_Pay_Nmbr |
       | P1       | Super  | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
       | P1       | Super  | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          |
-      | P2       | Super  | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR54168136          |
+      | P2       | Super  | 201423500 | byHCDOPAndNpi |      1515944861 | 1104947647 | 03/13/2020 | 03/13/2020 | E      | 2020031111700378     |
     # | P2       | Super  | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
       | P1       | RW     | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
       | P1       | RW     | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          | 
-      | P2       | RW     | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR54168136          |
+      | P2       | RW     | 201423500 | byHCDOPAndNpi |      1515944861 | 1104947647 | 03/13/2020 | 03/13/2020 | E      | 2020031111700378     |
     # | P2       | RW     | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
       | P1       | ROPPRA | 320474882 | byHCDOPAndNpi |      1530202071 | 1578933396 | 05/01/2020 | 05/07/2020 | E      | 1TR57793209          |
    	  | P1       | ROPPRA | 480905931 | byHCDOPAndNpi |      1443708873 | 1659356442 | 06/14/2019 | 06/14/2019 | E      | 1SG05438158          | 
-      | P2       | ROPPRA | 850275777 | byHCDOPAndNpi |      1507331187 | 1164491072 | 03/11/2020 | 03/11/2020 | E      | 1TR54168136          |
+      | P2       | ROPPRA | 201423500 | byHCDOPAndNpi |      1515944861 | 1104947647 | 03/13/2020 | 03/13/2020 | E      | 2020031111700378     |
     # | P2       | ROPPRA | 941156581 | byHCDOPAndNpi |      1438792076 | 1013950807 | 05/29/2019 | 05/29/2019 | E      | 1SG05325263          |
      
      ##commenting P3 scenarios as it is aleady covered in P2 scenarios with same data 
@@ -53,15 +53,15 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
      	| Priority | User   | Tin       | Type               | Disp_Consol_Pay_Nmbr | Consol_Pay_Nmbr | Status |
       | P1       | Super  | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
       | P1       | Super  | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | Super  | 850275777 | byHCPayment_Number | 1TR54168136          |      1507331187 | E      |
+      | P2       | Super  | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | Super  | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
       | P1       | RW     | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
       | P1       | RW     | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | RW     | 850275777 | byHCPayment_Number | 1TR54168136          |      1507331187 | E      |
+      | P2       | RW     | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | RW     | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
       | P1       | ROPPRA | 320474882 | byHCPayment_Number | 1TR57793209          |      1542689829 | E      |
       | P1       | ROPPRA | 480905931 | byHCPayment_Number | 1SG05438158          |      1443708873 | E      |
-      | P2       | ROPPRA | 850275777 | byHCPayment_Number | 1TR54168136          |      1507331187 | E      |
+      | P2       | ROPPRA | 201423500 | byHCPayment_Number | 2020031111700378     |      1515944861 | E      |
     # | P2       | ROPPRA | 941156581 | byHCPayment_Number | 1SG05325263          |      1438792076 | E      |
        ##commenting P3 scenarios as it is aleady covered in P2 scenarios with same data
     #  | P3       | Super  | 391678306 | byHCPayment_Number | 1TR10401483          |      1440564451 | E      |

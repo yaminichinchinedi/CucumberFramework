@@ -58,6 +58,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", PaymentNumber);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);
+		testConfig.putRunTimeProperty("srchCriteria",srchCriteria);
 		System.setProperty("NPI", NPI);
 		System.setProperty("DOPFromDate", DOPFromDate);
 		System.setProperty("DOPToDate", DOPToDate);
@@ -69,6 +70,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", PaymentNumber);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);
+		testConfig.putRunTimeProperty("srchCriteria",srchCriteria);
 		srchCriteriaPage.doSearch(srchCriteria); 
 	}
 	

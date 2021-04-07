@@ -8188,16 +8188,32 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	{
 		Browser.wait(testConfig, 10);
 		WebElement	lnkppraPdf=null;
+		List<WebElement> ppRAElts=null;
+		String xpath12=null;
+		String srchCriteria=testConfig.getRunTimeProperty("srchCriteria");
 		String expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
+		String xpath1="//div[@id='search-remmitance']/table/tbody/";
+		String xpath2="/td/table/tbody/tr/td/table/tbody/tr";
+		if ( expectedPaymntNo.length()>=15)
+            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
 	//	Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
-		List<WebElement> ppRAElts=Element.findElements(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		
+		if (srchCriteria.equals("byHCPayment_Number"))
+		{
+			 xpath12=xpath1+"tr[7]"+xpath2;
+			ppRAElts=Element.findElements(testConfig, "xpath",xpath12 );}
+		else if (srchCriteria.equals("byHCDOPAndNpi"))
+		{
+			 xpath12=xpath1+"tr[8]"+xpath2;
+			ppRAElts=Element.findElements(testConfig, "xpath", xpath12);}
+			//Element.findElements(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		for(int i=1;i<ppRAElts.size();i++)
 		{
 			String actualPaymntNo=ppRAElts.get(i).findElements(By.tagName("td")).get(3).getText();
 			 if(actualPaymntNo.contains(expectedPaymntNo))
 			 {
-				 lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[9]/table/tbody/tr/td/span/a");		 
+				// lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[9]/table/tbody/tr/td/span/a");
+				 lnkppraPdf=Element.findElement(testConfig, "xpath", xpath12+"["+(i+1)+"]"+"/td[9]/table/tbody/tr/td/span/a");
 			 break;
 			 }
 			
