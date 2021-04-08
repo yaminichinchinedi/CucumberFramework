@@ -94,6 +94,9 @@ public class LoginUPA {
 	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
+	@FindBy(xpath="//span[contains(text(),'There are errors on the form that must be corrected before you can continue.')]")
+	WebElement lblErrorMsg;
+	
 	private TestBase testConfig;
 	String id, password;
 	String env = System.getProperty("env");
@@ -111,6 +114,16 @@ public class LoginUPA {
 		Element.click(btnLogin, "click Login button");
 		Browser.waitForPageLoad(testConfig.driver);
 	}
+	public LoginUPA verifyIfUsernamePwdIsFilled() throws InterruptedException {      
+        if(testConfig.driver.getPageSource().contains("There are errors on the form"))
+        {
+          Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+          Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+          Element.click(btnLogin, "click Login button");
+        }
+    
+  return this;
+  }
 
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
@@ -119,8 +132,9 @@ public class LoginUPA {
 		if(!(txtboxUserName.isDisplayed() && txtboxPwd.isDisplayed()))
 			Element.fluentWait(testConfig, txtboxUserName, 100, 1, "Username field");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
-		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");		
 		Element.click(btnLogin, "click Login button");
+		verifyIfUsernamePwdIsFilled();
 		Browser.waitForPageLoad(testConfig.driver);
 		
 
