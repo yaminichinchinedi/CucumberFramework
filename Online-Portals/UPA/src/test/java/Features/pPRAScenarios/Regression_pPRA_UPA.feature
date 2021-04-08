@@ -34,8 +34,8 @@ Feature: UPA PPRA Scenarios
     Examples: 
       | priority | User      | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
     #  | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |--not sure this data needed
-      |  P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
-	    |  P2     | PayerPPRA |201423500 |      1515944861 | 2020031111700378    | 1104947647 | 03/13/2020 | byHCDOPAndNpi | E      |
+       |  P1      | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
+	   |  P2      | PayerPPRA |741603120 |      1500943213 | 1500943213    | 1740288505 | 01/17/2020 | byHCDOPAndNpi | E      |
       #| P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E     |--not sure this data needed
       #| P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483        | 1427271378 | 01/17/2020 | byHCDOPAndNpi | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263        | 1013950807 | 05/29/2019 | byHCDOPAndNpi | E      |
@@ -80,7 +80,7 @@ Feature: UPA PPRA Scenarios
       | priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr  | NPI        | Dates      | Type               | Status |
      # | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |--not sure this data needed
        | P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
-       | P2       | PayerPPRA | 201423500 |      1515944861 | 2020031111700378     | 1104947647 | 03/13/2020 | byHCPayment_Number | E      |
+       | P2       | PayerPPRA | 741603120 |      1500943213 | 1500943213  		   | 1740288505 | 01/17/2020 | byHCPayment_Number | E      |
      # | P2       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |--not sure this data needed
      # | P3       | PayerPPRA | 391678306 |      1440564451 | 1TR10401483          | 1427271378 | 01/17/2020 | byHCPayment_Number | E      |
      # | P3       | PayerPPRA | 941156581 |      1438792076 | 1SG05325263          | 1013950807 | 05/29/2019 | byHCPayment_Number | E      |
@@ -339,10 +339,10 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
 
    Examples: 
      | priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
-     | P1       | PayerPPRA | 270923713 |      1362310252 |           1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
+   #  | P1       | PayerPPRA | 270923713 |      1362310252 |           1362310252 | byHCDOPAndNpi | N/A        | 07/09/2018 | 07.09.2018 | Present    | C      |
      | P1       | PayerPPRANew | 330773587 |      1520724029 | 1520724029          | byHCDOPAndNpi | 1174735179 | 03/30/2020 | 03.30.2020 | Present    | C      |
-     | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
-     | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
+    # | P2       | PayerPPRA | 311369596 |      1413435888 |           1413435888 | byHCDOPAndNpi | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
+    # | P2       | PayerPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCDOPAndNpi | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
 
 	   ##commenting P3 scenarios as P2 is covering with same steps.P2 is not required here as discussed with Prashant
  #Scenario Outline: Payer P3-Validation of ppra scenario where PDf does not exist with Payment number search
