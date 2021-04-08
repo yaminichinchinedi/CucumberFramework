@@ -11,7 +11,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -38,7 +38,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -79,7 +79,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -107,7 +107,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -137,7 +137,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     When Validate PDF file placed over NAS Drive for date "<Date>"

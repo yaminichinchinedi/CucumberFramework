@@ -8196,7 +8196,6 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		String xpath2="/td/table/tbody/tr/td/table/tbody/tr";
 		if ( expectedPaymntNo.length()>=15)
             expectedPaymntNo= expectedPaymntNo.substring(0, 15);
-	//	Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
 		
 		if (srchCriteria.equals("byHCPayment_Number"))
 		{
@@ -8206,13 +8205,11 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		{
 			 xpath12=xpath1+"tr[8]"+xpath2;
 			ppRAElts=Element.findElements(testConfig, "xpath", xpath12);}
-			//Element.findElements(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr");
 		for(int i=1;i<ppRAElts.size();i++)
 		{
 			String actualPaymntNo=ppRAElts.get(i).findElements(By.tagName("td")).get(3).getText();
 			 if(actualPaymntNo.contains(expectedPaymntNo))
 			 {
-				// lnkppraPdf=Element.findElement(testConfig, "xpath", "//div[@id='search-remmitance']/table/tbody/tr[8]/td/table/tbody/tr/td/table/tbody/tr["+(i+1)+"]/td[9]/table/tbody/tr/td/span/a");
 				 lnkppraPdf=Element.findElement(testConfig, "xpath", xpath12+"["+(i+1)+"]"+"/td[9]/table/tbody/tr/td/span/a");
 			 break;
 			 }
@@ -8220,12 +8217,6 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		}
 		 Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);	
 		 Element.clickByJS(testConfig, lnkppraPdf, "PPRA link");
-//		Element.waitForElementTobeClickAble(testConfig, PPRAPDFHyperlink, 60);	
-//		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
-//		{			
-//			//((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[6].click()");
-//			Element.clickByJS(testConfig, PPRAPDFHyperlink, "PPRA link");
-//		}
 		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
 		 Browser.wait(testConfig, 5);      
 	      Browser.switchToParentWindow(testConfig,oldWindow);

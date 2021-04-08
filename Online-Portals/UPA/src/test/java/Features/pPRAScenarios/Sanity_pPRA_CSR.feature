@@ -11,7 +11,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -85,7 +85,7 @@ Feature: pPRA Validation for CSR Applicatin with different user groups
     Given User navigates to CSR portal and enters "<User>" and login
     Then User clicks on Search Remittance link
     Then Enter Tin "<Tin>" and select serach button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     When Validate PDF file placed over NAS Drive for date "<Date_NAS>"

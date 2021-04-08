@@ -7,7 +7,7 @@ Feature: UPA PPRA Scenarios
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -26,7 +26,7 @@ Feature: UPA PPRA Scenarios
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -313,7 +313,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
    Given User navigates to UPA portal and enters "<User>" and login
    Then User clicks on Search Remittance link for UPA
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User clicks on PDF Link
    #Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -330,7 +330,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
    Given User navigates to UPA portal and enters "<User>" and login
    Then User clicks on Search Remittance link for UPA
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
    When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -349,7 +349,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  Then User clicks on Search Remittance link for UPA
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User clicks on PDF Link
  #  #Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -366,7 +366,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  Then User clicks on Search Remittance link for UPA
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
  #  When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -382,7 +382,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
    Given User navigates to UPA portal and enters "<User>" and login
    Then User clicks on Search Remittance link for UPA
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User clicks on PDF Link
    #Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -399,7 +399,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
    Given User navigates to UPA portal and enters "<User>" and login
    Then User clicks on Search Remittance link for UPA
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
    When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -419,7 +419,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  Then User clicks on Search Remittance link for UPA
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User clicks on PDF Link
  #  #Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -434,7 +434,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  Then User clicks on Search Remittance link for UPA
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
  #  When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -445,12 +445,12 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #    | priority | User   | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | Type               | NPI        | Dates      | Date_NAS   | FileStatus | Status |
  #    | P3       | BSPPRA | 752536818 |      1439047278 | 1SG05444624          | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
  #    | P3       | BSPPRA | 043228346 |      1408098556 |           1408098556 | byHCPayment_Number | 1912987181 | 01/31/2019 | 01.31.2019 | Present    | C      |
-
+@111111
  Scenario Outline: P1 and P2 Provider-Validation of ppra scenario where PDf does not exist with Payment number search
    Given User navigates to UPA portal and enters "<User>" and login
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
    Then User clicks on Search Remittance link for UPA
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User clicks on PDF Link
    #Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -462,12 +462,12 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
      | P1       | PROVPPRA | 330773587 |      1520724029 | 1520724029          | byHCPayment_Number | 1174735179 | 03/30/2020 | 03.30.2020 | Present    | C      |
     # | P2       | PROVPPRA | 311369596 |      1413435888 |         1413435888 | byHCPayment_Number | 1740231448 | 02/22/2019 | 02.22.2019 | Present    | C      |
     # | P2       | PROVPPRA | 752536818 |      1439047278 | 1SG05444624        | byHCPayment_Number | 1760488936 | 06/24/2019 | 06.24.2019 | Present    | C      |
-
+@111111
  Scenario Outline: P1 and P2 Provider-Validation of ppra scenario where PDf already exist with Payment number search
    Given User navigates to UPA portal and enters "<User>" and login
    And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
    Then User clicks on Search Remittance link for UPA
-   Then User selects "<Type>" for Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+   Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
    Then User validates pPRA file is "<FileStatus>"
    Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
    When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -487,7 +487,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
  #  Then User clicks on Search Remittance link for UPA
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User clicks on PDF Link
  #  #Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -504,7 +504,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  #  Given User navigates to UPA portal and enters "<User>" and login
  #  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
  #  Then User clicks on Search Remittance link for UPA
- #  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ #  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  #  Then User validates pPRA file is "<FileStatus>"
  #  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
  #  When Validate PDF file placed over NAS Drive for date "<Date_NAS>"
@@ -525,7 +525,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  ##  Given User navigates to UPA portal and enters "<User>" and login
  ##  Then User clicks on Search Remittance link for UPA
  ##  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- ##  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ ##  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  ##  Then User clicks on PDF Link
  ##  #Then User validates pPRA file is "<FileStatus>"
  ##  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -550,7 +550,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  ##  Given User navigates to UPA portal and enters "<User>" and login
  ##  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
  ##  Then User clicks on Search Remittance link for UPA
- ##  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ ##  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  ##  Then User clicks on PDF Link
  ##  #Then User validates pPRA file is "<FileStatus>"
  ##  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -616,7 +616,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  ##  Given User navigates to UPA portal and enters "<User>" and login
  ##  Then User clicks on Search Remittance link for UPA
  ##  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
- ##  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ ##  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  ##  Then User validates pPRA file is "<FileStatus>"
  ##  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
  ##  When Validate PDF file placed over NAS Drive for date "<Date>"
@@ -642,7 +642,7 @@ Scenario Outline: Payer P1 and P2-Validation of ppra scenario where PDf does not
  ##  Given User navigates to UPA portal and enters "<User>" and login
  ##  And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
  ##  Then User clicks on Search Remittance link for UPA
- ##  Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+ ##  Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
  ##  Then User validates pPRA file is "<FileStatus>"
  ##  Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
  ##  When Validate PDF file placed over NAS Drive for date "<Date>"
