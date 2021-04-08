@@ -218,7 +218,6 @@ public class RemittanceDetail {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
 	}
 
 	public void verifyHoverTexts()
@@ -8194,9 +8193,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		String expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
 		String xpath1="//div[@id='search-remmitance']/table/tbody/";
 		String xpath2="/td/table/tbody/tr/td/table/tbody/tr";
-		if ( expectedPaymntNo.length()>=15)
-            expectedPaymntNo= expectedPaymntNo.substring(0, 15);
-		
+
 		if (srchCriteria.equals("byHCPayment_Number"))
 		{
 			 xpath12=xpath1+"tr[7]"+xpath2;
@@ -8208,6 +8205,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		for(int i=1;i<ppRAElts.size();i++)
 		{
 			String actualPaymntNo=ppRAElts.get(i).findElements(By.tagName("td")).get(3).getText();
+			actualPaymntNo=org.apache.commons.lang3.StringUtils.replace(actualPaymntNo, "\n", "");
 			 if(actualPaymntNo.contains(expectedPaymntNo))
 			 {
 				 lnkppraPdf=Element.findElement(testConfig, "xpath", xpath12+"["+(i+1)+"]"+"/td[9]/table/tbody/tr/td/span/a");
