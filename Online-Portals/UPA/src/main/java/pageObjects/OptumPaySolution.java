@@ -418,7 +418,7 @@ public class OptumPaySolution {
 			Helper.compareEquals(testConfig, "2nd Tile text- Activation Date", "Activation Date:", planTypeInfo.substring(37, 53).trim());	
 			sqlRowNo=1344;
 			testConfig.getRunTimeProperty("statusOfStandardRecd");
-			testConfig.getRunTimeProperty("$SelectedOrDefault");
+			testConfig.getRunTimeProperty("SelectedOrDefault");
 			data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			String activationDate= data.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
 			activationDate=Helper.changeDateFormat(activationDate, "yyyy-mm-dd", "mm/dd/yyyy");
@@ -656,7 +656,8 @@ public class OptumPaySolution {
 			//if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
 		    if( (changeRateValue.equals("valid value") && changeRateReason.contains("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");	
-			Element.enterData(rateTxtBox, rateValue, "change rate", "rate change textbox");
+		    Element.clearData(rateTxtBox, "change rate");
+			Element.enterDataByJS(testConfig,rateTxtBox, rateValue, "change rate");
 			
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
 			Element.selectByVisibleText(rsnRtChngdrpdwn, "Other", "reason for change dropdown");
@@ -664,22 +665,24 @@ public class OptumPaySolution {
 			Element.selectByVisibleText(rsnRtChngdrpdwn, changeRateReason, "reason for change dropdown");
 			
 			if (changeRateReason.equalsIgnoreCase("Other"))
-			Element.enterData(otrRsnTxtAra, "Testing", "Other Change rate", "Other Change TextArea");
+			Element.enterDataByJS(testConfig,otrRsnTxtAra, "Testing", "Other Change rate");
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
-			Element.enterData(otrRsnTxtAra, "", "Other Change rate", "Other Change TextArea");
+			Element.enterDataByJS(testConfig,otrRsnTxtAra, "", "Other Change rate");
 			
 			Browser.wait(testConfig,1);
 			Element.clickByJS(testConfig,btnSaveChangeRate,"Save Rate Change");
 			
 			Helper.compareContains(testConfig, "PopUp text", "Are you sure?" ,popUpChangeRate.getText().trim());
-			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this" ,popUpChangeRate.getText().trim());
-			Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this\n" + 
+					"TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			//Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
 			
 	        Element.clickByJS(testConfig, btnChangeRatePopupChange, "Change btn click");
 			
 	        if (changeRateValue.equals("Invalid value")|| changeRateReason.equalsIgnoreCase("Other with Blank") )
-	        {
-	        String actual= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-tabs']/div[1]").getText();
+	        {Browser.wait(testConfig, 2);
+	        String actual= Element.findElement(testConfig, "xpath", "//*[@id=\"optum-pay-tabs\"]/div[1]/ul/li").getText(); //rate_input--error_message
+	         //String actual= Element.findElement(testConfig, "class", "rate_input--error_message").getText();
 	        if (changeRateValue.equals("Invalid value"))
 	        Helper.compareContains(testConfig, "Error Validation", "The rate must be greater than or equal to 0 and less than the system global rate", actual);
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
@@ -1438,15 +1441,16 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 		 				Element.clickByJS(testConfig, invoice, "invoice");
 		 				oldWindow=Browser.switchToNewWindow(testConfig);
 		 				
-		 				Browser.waitForLoad(testConfig.driver);
-		 				if(redTextError.isDisplayed())
-		 				{
-		 					Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
-		 				}
-		 				else 
-		 				{
-		 					Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber"+invoiceNum);
-		 				}
+		 				//Browser.waitForLoad(testConfig.driver);
+		 				try {
+                            if(redTextError.isDisplayed())
+                                Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
+                            //Log.Fail("The Invoice not available");
+                        }
+                        catch(Exception e)
+                        {
+                            Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber="+invoiceNum);
+                        }
 		 				Browser.closeBrowser(testConfig);
 		 				Browser.switchToParentWindow(testConfig, oldWindow);
 		 				break;
@@ -1495,7 +1499,7 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 				date=Helper.getCurrentDate("MM/dd/yyyy");
 
 				Element.clickByJS(testConfig, cancelSubscriptionLinkCsr, "Cancel link-CSR");
-
+                Element.clearData(cancelRequestDateTxtBox,"Cancel Request Date");
 				Element.enterDataByJS(testConfig, cancelRequestDateTxtBox, date, "Cancel Request Date");
 				Element.enterDataByJS(testConfig, firstNameTxtBox, fname, "First Name");
 				Element.enterDataByJS(testConfig, lastNameTxtBox, lname, "Last Name");
