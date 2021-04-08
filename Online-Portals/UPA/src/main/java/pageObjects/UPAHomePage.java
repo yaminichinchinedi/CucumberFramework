@@ -120,7 +120,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Document Vault")
 	WebElement  resourcesDocVault;
 	
-	@FindBy(xpath = "//b[contains(text(),'Partner Links')]")
+	@FindBy(xpath = "//span[contains(text(),'Partner Links')]")
 	WebElement  resourcesPartnerLink;
 	
 	@FindBy(linkText="Cancel Form")
@@ -333,6 +333,8 @@ public class UPAHomePage extends HomePage {
 			Helper.getPayerSchema(testConfig,searchCriteria);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
+		testConfig.putRunTimeProperty("portalAccess",portalAccess);
+		testConfig.putRunTimeProperty("userType",userType);
 		switch (userType)
 			{
 			   case "PROV": 
@@ -343,9 +345,9 @@ public class UPAHomePage extends HomePage {
 				 if ((!tinList.contains(Enrolledtin))) 
 				 {
 					Element.click(homeTab, "home Tab");
-					Browser.waitForLoad(TestBase.driver);
+					Browser.waitForLoad(testConfig.driver);
 					Browser.wait(testConfig, 2);
-					Element.expectedWait(prvdrTIN, testConfig, "Tin dropdown", "Tin dropdown");
+					Element.fluentWait(testConfig, prvdrTIN, 60, 1, "Tin dropdown");
 				 }
 				Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
 				break;
@@ -623,14 +625,11 @@ public class UPAHomePage extends HomePage {
 		   String expectePrivacydURL = "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html";
 		   Browser.verifyURL(testConfig, expectePrivacydURL);
 		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
-		
-
 	}
 	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
 	{
-		Browser.wait(testConfig, 3);
+		Browser.wait(testConfig, 1);
 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		return new PaymentDataFilesUPA(testConfig);
-
+		return new PaymentDataFilesUPA (testConfig);
 	}
 }

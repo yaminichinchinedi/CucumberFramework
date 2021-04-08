@@ -11,4 +11,4 @@ Scenario Outline: UI Validations for Data Bundle
 
 Examples:
 	 | credentials  |  userType 	|		searchCriteria        |	portalAccess	| tinType	|	
-   |   BS_Admin	  | 		BS		  |	  Last 4-6 months       |		 Standard		|		AO		|	
+   |   BS_Admin	  | 		BS		  |	  Last 9-13 months       |		 Standard		|		AO		|	

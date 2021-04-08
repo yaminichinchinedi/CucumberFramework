@@ -3,7 +3,7 @@
  Feature: UPA Payment Data Files Functionality
 
 	@TC001 			
-	Scenario Outline: UI Validations for Data Bundle
+	Scenario Outline: Validating all fields on Payment Data Files
  	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When  User clicks on Payment Data Files Tab
@@ -19,8 +19,8 @@
 
 
 
-@TC002 			@coco
-	Scenario Outline: Verify Payer and PageButton Validations
+@TC002 		
+	Scenario Outline: Verify Payer List and PageButton functionality
 	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When  User clicks on Payment Data Files Tab
@@ -40,7 +40,7 @@ Examples:
    |  PROV_Admin    |    PROV      |    Last 9-13 months   |		 Premium		|		AO		|	
 
 
-@TC003	
+@TC003		
  	Scenario Outline: Validations to check errors 
  	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

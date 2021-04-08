@@ -1105,8 +1105,10 @@ public ArrayList getEnrollmentContent(String content) {
 				query=QUERY.PAYMENT_TIN_QUERY;
 				break;
 			case "Last 90 days":
+
 				paySum.getQuickSearchDates("Last 90 days");
 				query=QUERY.PAYMENT_TIN_QUERY;
+
 				break;
 			case "Last 4-6 months":
 				paySum.getQuickSearchDates("Last 4-6 months");
@@ -1165,7 +1167,7 @@ public ArrayList getEnrollmentContent(String content) {
             	query = QUERY.ENTRIES_FOR_FEE_REFUND;
             	break;
             case "New Enroll WithinTrial and Paid":   
-            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID;
+            	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
             	break;   
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		
@@ -1247,16 +1249,18 @@ public ArrayList getEnrollmentContent(String content) {
 		       Log.Comment("Tin retreived from query for " + searchCriteria + " is : " + tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       testConfig.putRunTimeProperty("tin",tinNumbers.get("PROV_TAX_ID_NBR").toString());
 		       
+
 		       if(searchCriteria.equalsIgnoreCase("TinForFeeSearchRefund")) {
 		    	   testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVOICE_NBR").toString());
 		    	   testConfig.putRunTimeProperty("paymentNumber",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 		       }
 		       
-		       if(sqlRowNo==1611)
+				if(sqlRowNo==1611 || query.contains(QUERY.PAYMENT_TIN_QUERY))
+
 		       {
-		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+		    	   testConfig.putRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());		    	   
 		    	   testConfig.putRunTimeProperty("CONSL_PAY_NBR",tinNumbers.get("CONSL_PAY_NBR").toString());
-				   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
+		    	   testConfig.putRunTimeProperty("setl_dt",tinNumbers.get("SETL_DT").toString());
 			   }
 				 if(sqlRowNo==435){
 					 testConfig.putRunTimeProperty("paymentNumber",tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
@@ -1300,7 +1304,9 @@ public ArrayList getEnrollmentContent(String content) {
 		    		testConfig.putRunTimeProperty("key", "SUBSCRIBER_IDENTIFIER");
 			    	testConfig.putRunTimeProperty("value", tinNumbers.get("SBSCR_ID").toString());
 		    	 }
-		    	
+		    	if(searchCriteria.equalsIgnoreCase("ActiveBSTin")) {
+		    		testConfig.putRunTimeProperty("bsname", tinNumbers.get("BS_NM").toString());
+		    	}
 		    	//claim and dos
 		    	else if (searchCriteria.equalsIgnoreCase("byDOSAndClmNo"))
 		    	{
