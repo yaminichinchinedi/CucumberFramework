@@ -892,7 +892,8 @@ public class SearchRemittanceSearchCriteria {
 				Element.clickByJS(testConfig,NPI, "NPItext box");
 				Element.enterData(NPI, System.getProperty("NPI"), "Filling NPI No: "+ System.getProperty("NPI"), "NPI");
 				Element.enterData(dopFromDate, System.getProperty("DOPFromDate"), "DoP From Date", "NPI");
-				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");   
+				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");
+
 				break;	    	
 			}		
 		    default:
