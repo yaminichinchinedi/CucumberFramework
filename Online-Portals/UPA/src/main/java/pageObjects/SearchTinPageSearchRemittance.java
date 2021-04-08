@@ -277,7 +277,8 @@ public class SearchTinPageSearchRemittance {
 	
 	public SearchTinPageSearchRemittance enterHCTin(String Tin)
     {
-	  Element.enterData(txtboxTinNo,Tin, "Enter Tin as : " +Tin, "Tin Textbox");
+		Element.waitForPresenceOfElementLocated(testConfig, By.name("providerTIN"), 20);
+		Element.enterData(txtboxTinNo,Tin, "Enter Tin as : " +Tin, "Tin Textbox");
       return this;
     }
 	

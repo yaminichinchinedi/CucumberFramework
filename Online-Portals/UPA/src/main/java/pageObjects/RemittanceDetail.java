@@ -37,6 +37,7 @@ import org.openqa.selenium.JavascriptExecutor;
 
 
 
+
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -8215,9 +8216,14 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		}
 		 Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);	
 		 Element.clickByJS(testConfig, lnkppraPdf, "PPRA link");
+		 if(System.getProperty("Application").contains("UPA"))
+		 {	 
 		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
 		 Browser.wait(testConfig, 5);      
 	      Browser.switchToParentWindow(testConfig,oldWindow);
+		 }
+		 else
+			 Browser.wait(testConfig, 8); 	 
 		return this;		
 	}
 	
