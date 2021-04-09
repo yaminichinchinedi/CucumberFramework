@@ -109,8 +109,9 @@ public class PaymentDataFilesUPA extends TestBase{
 	@FindBy(xpath = "//h2[contains(text(),'Organize data your way.')]")
 	WebElement standardPopUpText;
 	@FindBy(xpath="//select[@name='availablePayerTinNbrs']//option")
-	List<WebElement> availablePayerList;
-	
+	List<WebElement> availablePayerList;	
+	@FindBy(name = "paProvTinNbr")
+	WebElement bstinDrpDwn;
 	@FindBy(xpath="//select[@name='selectedPayerTinNbrs']//option")	
 	List<WebElement> selectedPayerList;
 	
@@ -120,10 +121,12 @@ public class PaymentDataFilesUPA extends TestBase{
 	public PaymentDataFilesUPA(TestBase testConfig) {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium"))
+		
+		if((testConfig.getRunTimeProperty("userType").contains("BS") ||testConfig.getRunTimeProperty("userType").contains("Payer")))
+			Element.fluentWait(testConfig, bstinDrpDwn, 100, 1, "TIN textbox");
+		
+		else if	((testConfig.getRunTimeProperty("userType").contains("PROV")))
 			Element.fluentWait(testConfig, epraChkbox, 100, 1, "EPRA checkbox");
-		else if(testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard"))
-			Element.fluentWait(testConfig, standardPopUp, 100, 1, "Standard pop-up ");
 	}
 	
 	
@@ -651,11 +654,13 @@ public class PaymentDataFilesUPA extends TestBase{
 			String  Payr = Element.findElement(testConfig, "xpath", "//select[@name='availablePayerTinNbrs']/option["+i+"]").getText().trim();
 			PayerListUI.add(Payr);
 		}   
+		   
 		   String query=QUERY.PAYER_LIST;
 		   testConfig.putRunTimeProperty("Prov_tin_nbr", System.getProperty("tin"));
-		   ArrayList<String> PayerListDBAll = new ArrayList<String>();
 		   HashMap<Integer, HashMap<String, String>> PayerListDB2 = DataBase.executeSelectQueryALL(testConfig, query);
-		   testConfig.putRunTimeProperty("totalPayers", PayerListDB2.get(1).get("TOTALROWS"));;
+		   testConfig.putRunTimeProperty("totalPayers", PayerListDB2.get(1).get("TOTALROWS"));	
+		   testConfig.putRunTimeProperty("firstPayer", PayerListDB2.get(1).get("PAYR_DSPL_NM"));
+		   ArrayList<String> PayerListDBAll = new ArrayList<String>();		   
 		   for (int i = 1; i <= PayerListDB2.size(); i++){ 
 			   PayerListDBAll.add(PayerListDB2.get(i).get("PAYR_DSPL_NM"));
            }		   
@@ -680,7 +685,7 @@ public class PaymentDataFilesUPA extends TestBase{
 	 {	
 			Element.click(firstPayer, "First Payer");
 			Element.click(addBtn, "Add Button");
-			Helper.compareEquals(testConfig, "Add Button Functionality", "UHC Member Payment", selectedFirstPayer.getText().trim());
+			Helper.compareEquals(testConfig, "Add Button Functionality", testConfig.getRunTimeProperty("firstPayer"), selectedFirstPayer.getText().trim());
 		 return this;	
 	 }
 		   

@@ -11,7 +11,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<ToDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
@@ -19,7 +19,6 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Examples: 
       | Priority | User     | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status | searchBy|
       | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      | default |
-
   @UPA_Provider_ErrorScenario
   Scenario Outline: Provider Login to CSR Application to validate error scenario for ConsolPayNumber search
     Given User navigates to UPA portal and enters "<User>" and login
@@ -32,22 +31,21 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
 
     Examples: 
       | Priority | User     | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
-      | P1       | PROVPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |
+			| P1       | PROVPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/24/2019 | byHCPayment_Number | E      |
 
   @UPA_Payer_BS_ErrorScenario
   Scenario Outline: Payer and Billing Service Login to CSR Application to validate error scenario for NPI search
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<FromDate>" and todate "<FromDate>" and click on search button.
     Then User clicks on PDF Link
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     Then User Deletes paymentdetail record "<Consol_Pay_Nmbr>" from ole.ppra_status_dtl and ole.ppra_status table
 
     Examples: 
       | Priority | User      | Tin       | Consol_Pay_Nmbr | DSPL_CONSL_PAY_NBR | NPI        | FromDate   | Type          | Status |
-      | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035        | 1457468464 | 10/31/2019 | byHCDOPAndNpi | E      |
-
+			| P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158        | 1659356442 | 06/14/2019 | byHCDOPAndNpi | E      |
   @UPA_Payer_BS_ErrorScenario
   Scenario Outline: Payer and Billing Service Login to CSR Application to validate error scenario for ConsolPayNumber search
     Given User navigates to UPA portal and enters "<User>" and login
@@ -60,7 +58,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
 
     Examples: 
       | Priority | User      | Tin       | Consol_Pay_Nmbr | Disp_Consol_Pay_Nmbr | NPI        | Dates      | Type               | Status |
-      | P1       | PayerPPRA | 020619423 |      1440517391 | 1TR10372035          | 1457468464 | 10/31/2019 | byHCPayment_Number | E      |
+			| P1       | PayerPPRA | 480905931 |      1443708873 | 1SG05438158          | 1659356442 | 06/14/2019 | byHCPayment_Number | E      |
 
   #######Payer and Billing Service PDF does not exist##########
   Scenario Outline: Payer and Billing Service-Validation of ppra scenario where PDf does not exist with Payment number search
@@ -81,7 +79,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -109,7 +107,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
     Then User clicks on Search Remittance link for UPA
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<DSPL_CONSL_PAY_NBR>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User clicks on PDF Link
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
@@ -139,7 +137,7 @@ Feature: pPRA Validation for UPA Applicatin with different user groups
     Given User navigates to UPA portal and enters "<User>" and login
     Then User clicks on Search Remittance link for UPA
     And User enters tin for UPA Search Remittance Tin Page for "<priority>" and "<Tin>" click on continue button
-    Then User selects "<Type>" for Consol_Pay_Nmbr "<Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
+    Then User selects "<Type>" for Dspl_Consol_Pay_Nmbr "<Disp_Consol_Pay_Nmbr>" with NPI value as "<NPI>" with fromdate "<Dates>" and todate "<Dates>" and click on search button.
     Then User validates pPRA file is "<FileStatus>"
     Then User Validates Ole.PPRA_STATUS status for Consol_Pay_Nbr "<Consol_Pay_Nmbr>" should be "<Status>"
     When Validate PDF file placed over NAS Drive for date "<Date>"

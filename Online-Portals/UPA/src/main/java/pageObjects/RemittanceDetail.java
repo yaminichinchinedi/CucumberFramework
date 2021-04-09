@@ -35,6 +35,9 @@ import com.mysql.jdbc.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 
+
+
+
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -216,7 +219,6 @@ public class RemittanceDetail {
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.verifyElementPresent(verifyPageLoad, "Account Number column is present on page");
 	}
 
 	public void verifyHoverTexts()
@@ -8173,15 +8175,43 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	public RemittanceDetail SelectPDFLink() throws InterruptedException
 	{
 		Browser.wait(testConfig, 10);
-		
-		Element.verifyElementPresent(PPRAPDFHyperlink,"PPRA PDF Hyperlink");
+		WebElement	lnkppraPdf=null;
+		List<WebElement> ppRAElts=null;
+		String xpath12=null;
+		String srchCriteria=testConfig.getRunTimeProperty("srchCriteria");
+		String expectedPaymntNo=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
+		String xpath1="//div[@id='search-remmitance']/table/tbody/";
+		String xpath2="/td/table/tbody/tr/td/table/tbody/tr";
+
+		if (srchCriteria.equals("byHCPayment_Number"))
+		{
+			 xpath12=xpath1+"tr[7]"+xpath2;
+			ppRAElts=Element.findElements(testConfig, "xpath",xpath12 );}
+		else if (srchCriteria.equals("byHCDOPAndNpi"))
+		{
+			 xpath12=xpath1+"tr[8]"+xpath2;
+			ppRAElts=Element.findElements(testConfig, "xpath", xpath12);}
+		for(int i=1;i<ppRAElts.size();i++)
+		{
+			String actualPaymntNo=ppRAElts.get(i).findElements(By.tagName("td")).get(3).getText();
+			actualPaymntNo=org.apache.commons.lang3.StringUtils.replace(actualPaymntNo, "\n", "");
+			 if(actualPaymntNo.contains(expectedPaymntNo))
+			 {
+				 lnkppraPdf=Element.findElement(testConfig, "xpath", xpath12+"["+(i+1)+"]"+"/td[9]/table/tbody/tr/td/span/a");
+			 break;
+			 }
 			
-		if(testConfig.driver.findElement(By.xpath("//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")).isDisplayed())
-		{			
-			((JavascriptExecutor)testConfig.driver).executeScript("$('a.hyperlinkstyle')[4].click()");			
-		}			
-		
-		//Element.click(pPRALink, "PDF Print Link");
+		}
+		 Element.waitForElementTobeClickAble(testConfig, lnkppraPdf, 60);	
+		 Element.clickByJS(testConfig, lnkppraPdf, "PPRA link");
+		 if(System.getProperty("Application").contains("UPA"))
+		 {	 
+		String oldWindow=Browser.switchToNewWindow(testConfig,"PRADisplayWindow");
+		 Browser.wait(testConfig, 5);      
+	      Browser.switchToParentWindow(testConfig,oldWindow);
+		 }
+		 else
+			 Browser.wait(testConfig, 8); 	 
 		return this;		
 	}
 	
