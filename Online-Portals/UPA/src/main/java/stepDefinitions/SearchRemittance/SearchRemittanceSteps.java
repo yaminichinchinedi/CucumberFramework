@@ -12,8 +12,8 @@ public class SearchRemittanceSteps extends TestBase{
 	
 	private TestBase testConfig=TestBase.getInstance();
 	SearchRemittance srchRemittance = new SearchRemittance(testConfig);
-	String NASLocation=System.getProperty("NASLocation_"+System.getProperty("env"));
-	
+	//String NASLocation=System.getProperty("NASLocation_"+System.getProperty("env"));
+	String NASLocation=testConfig.runtimeProperties.getProperty("NASLocation_"+System.getProperty("env"));
 	@Then("^User validates EPRA pdf link is present and clicks on EPRA when \"([^\"]*)\" and validate a new window is open with appropriate Text and Hover msg is displayed\\.$")
 	public void user_validates_EPRA_pdf_link_is_present_and_clicks_on_EPRA_when_and_validate_a_new_window_is_open_with_appropriate_Text_and_Hover_msg_is_displayed(String srchCriteria) throws Throwable {
 		
@@ -157,12 +157,13 @@ public class SearchRemittanceSteps extends TestBase{
 		// Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", Consol_Pay_Number);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",Consol_Pay_Number);
-		Browser.wait(testConfig, 15);
+		Browser.wait(testConfig, 5);
 		//srchRemittance.verifyppraStatus(Status);
 		if(Status.equalsIgnoreCase("C"))
 		{
 			srchRemittance.getPDFfileName();
 		}
+		
 }
 	@Then("^Validate PDF file placed over NAS Drive for date \"([^\"]*)\"$")
 	public void validate_PDF_file_placed_over_NAS_Drive_for_date(String Date) throws Throwable {

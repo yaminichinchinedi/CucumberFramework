@@ -882,6 +882,7 @@ public class SearchRemittanceSearchCriteria {
 			 case "byHCPayment_Number":
 				{
 					Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+					Element.waitForElementTobeClickAble(testConfig, paymentNumber, 10);
 					Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 					Element.enterData(paymentNumber, System.getProperty("CONSL_PAY_NBR"), "Enter Electronic payment number as: " +System.getProperty("CONSL_PAY_NBR"), "payment number");
 					break;
@@ -889,10 +890,14 @@ public class SearchRemittanceSearchCriteria {
 	 	
 		    case "byHCDOPAndNpi":
 			{
+				Element.waitForElementTobeClickAble(testConfig, NPI, 10);
 				Element.clickByJS(testConfig,NPI, "NPItext box");
 				Element.enterData(NPI, System.getProperty("NPI"), "Filling NPI No: "+ System.getProperty("NPI"), "NPI");
+				Element.waitForElementTobeClickAble(testConfig, dopFromDate, 10);
 				Element.enterData(dopFromDate, System.getProperty("DOPFromDate"), "DoP From Date", "NPI");
-				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");   
+				Element.waitForElementTobeClickAble(testConfig, dopToDate, 10);
+				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");
+
 				break;	    	
 			}		
 		    default:
