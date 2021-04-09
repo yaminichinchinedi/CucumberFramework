@@ -7579,12 +7579,10 @@ public RemittanceDetail clickPrintRequestButton()
 {
 	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Request' and @type = 'button']"), 60);
 	Element.verifyElementPresent(btnPrint, "Print Request Button");
-	//Browser.wait(testConfig, 2);
 	Helper.compareEquals(testConfig, "Button", "Print Request", btnPrint.getAttribute("value"));
 	Element.waitForElementTobeClickAble(testConfig, btnPrint, 60);
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
-	//Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
 	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Available']"), 60);
@@ -7599,7 +7597,6 @@ public RemittanceDetail clickPrintButton()
 	String filedir=System.getProperty("user.dir")+"\\Downloads";
 	File fileDirectory=new File(filedir);
 	Helper.purgeDirectory(fileDirectory);
-	//Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Element.waitForElementTobeClickAble(testConfig, btnPrntavailable, 60);
 	Element.click(btnPrntavailable, "Print Available Button");
@@ -7608,30 +7605,21 @@ public RemittanceDetail clickPrintButton()
 	return this;
 }
 
-public RemittanceDetail verifyDownloadWindow()
-{
-	  String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
-      Log.Comment("THe PDF Text Message is:" + msg.getText());
-      //Browser.wait(testConfig, 2);
-     
-     
-     if(msg.getText().contains("Your PDF is now available"))
-    		 {
-    		    Helper.compareContains(testConfig, "Epra PDF Text", "Your PDF is now available", msg.getText());
-    	     }
-    else if(msg.getText().contains("We're sorry,it looks like the requested PDF document"))
-    		 {
-    		      Helper.compareContains(testConfig, "Epra PDF Text", "We're sorry, it looks like the requested PDF document", msg.getText());
-    		 }
-    else if(msg.getText().contains("The PDF document that you"))
-	 {
-	      Helper.compareContains(testConfig, "Epra PDF Text", "The PDF document that you", msg.getText());
-	 }
+	public RemittanceDetail verifyDownloadWindow() {
+		String oldWindow = Browser.switchToNewWindow(testConfig, "EPRADisplayWindow");
 
-    
-    Browser.switchToParentWindow(testConfig,oldWindow);
-	return this;
-}
+		if (msg.getText().contains("Your PDF is now available")) {
+			Helper.compareContains(testConfig, "Epra PDF Text", "Your PDF is now available", msg.getText());
+		} else if (msg.getText().contains("We're sorry,it looks like the requested PDF document")) {
+			Helper.compareContains(testConfig, "Epra PDF Text", "We're sorry, it looks like the requested PDF document",
+					msg.getText());
+		} else if (msg.getText().contains("The PDF document that you")) {
+			Helper.compareContains(testConfig, "Epra PDF Text", "The PDF document that you", msg.getText());
+		}
+
+		Browser.switchToParentWindow(testConfig, oldWindow);
+		return this;
+	}
 
 
 

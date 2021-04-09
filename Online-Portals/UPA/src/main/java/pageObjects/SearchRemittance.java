@@ -586,18 +586,16 @@ public class SearchRemittance extends ViewPayments {
 			Collections.sort(listString);
 
 			/*
-			 * Collections.sort(listOfPatients,new
-			 * Comparator<ArrayList<String>>(){
+			 * Collections.sort(listOfPatients,new Comparator<ArrayList<String>>(){
 			 * 
-			 * @Override public int compare(ArrayList<String>
-			 * a1,ArrayList<String> a2) { int v1=a1.get(2).compareTo(a2.get(2));
-			 * int v2=a1.get(1).compareTo(a2.get(1)); int
-			 * v3=a1.get(3).compareTo(a2.get(3)); if(v1==0) return
-			 * (v2==0)?v3:v2; else return v1; }
+			 * @Override public int compare(ArrayList<String> a1,ArrayList<String> a2) { int
+			 * v1=a1.get(2).compareTo(a2.get(2)); int v2=a1.get(1).compareTo(a2.get(1)); int
+			 * v3=a1.get(3).compareTo(a2.get(3)); if(v1==0) return (v2==0)?v3:v2; else
+			 * return v1; }
 			 * 
 			 * }); if(listString.size()<30) for(int i=0;i<listString.size();i++)
-			 * newList.add(listOfPatients.get(0).get(0)); else for(int
-			 * i=0;i<30;i++) newList.add(listOfPatients.get(0).get(0));
+			 * newList.add(listOfPatients.get(0).get(0)); else for(int i=0;i<30;i++)
+			 * newList.add(listOfPatients.get(0).get(0));
 			 */
 
 			// Element.clickByJS(testConfig, lnkName, colName);
@@ -902,9 +900,9 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	/**
-	 * This function creates an outer map with Key as payment number and Value
-	 * as another hash map i.e. inner map that contains all the details for key
-	 * like payer name, amount etc
+	 * This function creates an outer map with Key as payment number and Value as
+	 * another hash map i.e. inner map that contains all the details for key like
+	 * payer name, amount etc
 	 * 
 	 * @return Outer map
 	 */
@@ -1567,14 +1565,14 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	/**
-	 * Author: Mohammad Khalid This method clicks on the EPRA PDF link to
-	 * download the file
+	 * Author: Mohammad Khalid This method clicks on the EPRA PDF link to download
+	 * the file
 	 **/
 	public RemittanceDetail clickEPRAPDFlink_Enabled_SR(String srchType) {
 
 		int totalNoOfPages = getNumberOfPages();
 		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
-			if (pageNum % 10 == 1 || totalNoOfPages == 1) {
+			if (pageNum % 10 == 1) {
 				find_And_Click_835PDF_Icon_Enabled_SR();
 			} else if (pageNum % 10 == 0) {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
@@ -1658,10 +1656,9 @@ public class SearchRemittance extends ViewPayments {
 						// Browser.browserRefresh(testConfig);
 						// Browser.wait(testConfig, 3);
 						if (srchType.equals("viewPayments"))
-							Element.waitForPresenceOfElementLocated(testConfig,
-									By.xpath(
-											"//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["
-													+ (i + 1) + "]/td[11]/table/tbody/tr/td[3]/span/span/a/img"),
+							Element.waitForPresenceOfElementLocated(testConfig, By.xpath(
+									"//form[@id='paymentsummaryform']/table[1]/tbody/tr[5]/td/table/tbody/tr[2]/td/table/tbody/tr/td/table/tbody/tr["
+											+ (i + 1) + "]/td[11]/table/tbody/tr/td[3]/span/span/a/img"),
 									60);
 						Element.verifyElementPresent(lnkEpraPdf, "EPRA pdf icon");
 						Browser.scrollTillAnElement(testConfig, lnkEpraPdf,
@@ -1959,173 +1956,148 @@ public class SearchRemittance extends ViewPayments {
 		Browser.switchToParentWindow(testConfig, parentWin);
 		return this;
 	}
-	
-	
-	/**Author: Mohammad Khalid
-	 * This method finds on the Payment Number on the Search Remittance page
-	 * **/
-	
-	public void find_And_Click_PaymentNumber_SR()
-	{
-		String expectedPaymntNo=null;
-		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath", "//tr[@class='search-remittance__table_header']/../tr");
+
+	/**
+	 * Author: Mohammad Khalid This method finds on the Payment Number on the Search
+	 * Remittance page
+	 **/
+
+	public void find_And_Click_PaymentNumber_SR() {
+		String expectedPaymntNo = null;
+		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
+				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-		for (int i=1; i<ls_SinglePage.size(); i++)
-		{
-			String xpath = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[4]/a";
+		for (int i = 1; i < ls_SinglePage.size(); i++) {
+			String xpath = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1) + "]/td[4]/a";
 			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath);
-			if(payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo))
-			{
+			if (payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo)) {
 				Element.clickByJS(testConfig, payNumber_SR, "Payment Number on SR page");
 				break;
 			}
 		}
 	}
-	
-	/**Author: Mohammad Khalid
-	 * Method to find on PDF Link on SR page*/
-	
-	public void find_And_Click_835PDF_Link_SR()
-	{
-		String expectedPaymntNo=null;
-		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath", "//tr[@class='search-remittance__table_header']/../tr");
+
+	/**
+	 * Author: Mohammad Khalid Method to find on PDF Link on SR page
+	 */
+
+	public void find_And_Click_835PDF_Link_SR() {
+		String expectedPaymntNo = null;
+		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
+				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-		for (int i=1; i<ls_SinglePage.size(); i++)
-		{
-			String xpath_PaymentNum = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[4]/a";
-			String xpath_835PDF = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[8]/table/tbody/tr/td[3]/span[1]/a";
-			String xpath_835PDF_AfterClick = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[8]/table/tbody/tr/td[3]/span[2]";
+		for (int i = 1; i < ls_SinglePage.size(); i++) {
+			String xpath_PaymentNum = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1) + "]/td[4]/a";
+			String xpath_835PDF = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1)
+					+ "]/td[8]/table/tbody/tr/td[3]/span[1]/a";
+			String xpath_835PDF_AfterClick = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1)
+					+ "]/td[8]/table/tbody/tr/td[3]/span[2]";
 			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath_PaymentNum);
 			WebElement f_835_PDF_SR = Element.findElement(testConfig, "xpath", xpath_835PDF);
 			WebElement f_835_PDF_SR_AfterClick = Element.findElement(testConfig, "xpath", xpath_835PDF_AfterClick);
-			if(payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo))
-			{
-				Element.clickByJS(testConfig, f_835_PDF_SR, "835 PDF link on SR page for Payment Number: " + payNumber_SR.getText().trim());
-				
-				String oldWindow=Browser.switchToNewWindow(testConfig,"EPRADisplayWindow");
-			    Browser.switchToParentWindow(testConfig,oldWindow);
-			    
-				Helper.compareEquals(testConfig, "ePRA PDF link Hover Message after the click", "ePRA in process, please wait for completion", f_835_PDF_SR_AfterClick.getAttribute("title").trim());
+			if (payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo)) {
+				Element.clickByJS(testConfig, f_835_PDF_SR,
+						"835 PDF link on SR page for Payment Number: " + payNumber_SR.getText().trim());
+
+				String oldWindow = Browser.switchToNewWindow(testConfig, "EPRADisplayWindow");
+				Browser.switchToParentWindow(testConfig, oldWindow);
+
+				Helper.compareEquals(testConfig, "ePRA PDF link Hover Message after the click",
+						"ePRA in process, please wait for completion",
+						f_835_PDF_SR_AfterClick.getAttribute("title").trim());
 				break;
 			}
 		}
 	}
-	
-	/**Author: Mohammad Khalid
-	 * Method to find on PDF icon enabled on SR page*/
-	
-	public void find_And_Click_835PDF_Icon_Enabled_SR()
-	{
-		String expectedPaymntNo=null;
-		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath", "//tr[@class='search-remittance__table_header']/../tr");
+
+	/**
+	 * Author: Mohammad Khalid Method to find on PDF icon enabled on SR page
+	 */
+
+	public void find_And_Click_835PDF_Icon_Enabled_SR() {
+		String expectedPaymntNo = null;
+		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
+				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-		for (int i=1; i<ls_SinglePage.size(); i++)
-		{
-			String xpath_PaymentNum = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[4]/a";
-			String xpath_835PDF = "//tr[@class='search-remittance__table_header']/../tr[" + (i+1) + "]/td[8]/table/tbody/tr/td[3]/span[3]/a";
+		for (int i = 1; i < ls_SinglePage.size(); i++) {
+			String xpath_PaymentNum = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1) + "]/td[4]/a";
+			String xpath_835PDF = "//tr[@class='search-remittance__table_header']/../tr[" + (i + 1)
+					+ "]/td[8]/table/tbody/tr/td[3]/span[3]/a";
 			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath_PaymentNum);
 			WebElement f_835_PDF_SR = Element.findElement(testConfig, "xpath", xpath_835PDF);
-			if(payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo))
-			{
+			if (payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo)) {
 				wait.until(ExpectedConditions.elementToBeClickable(f_835_PDF_SR));
-				Element.clickByJS(testConfig, f_835_PDF_SR, "835 PDF Icon on SR page for Payment Number: " + payNumber_SR.getText().trim());
+				Element.clickByJS(testConfig, f_835_PDF_SR,
+						"835 PDF Icon on SR page for Payment Number: " + payNumber_SR.getText().trim());
 				break;
 			}
 		}
 	}
-	
-	/**Author: Mohammad Khalid
-	 * Method to click on Payment Number on SR page*/
-	
-	public RemittanceDetail clickPaymentNumber_SR_Page(String srchType)
-	{
-		int totalNoOfPages=getNumberOfPages();
-		
-		if (totalNoOfPages==1)
-		{
-			find_And_Click_PaymentNumber_SR();
-		}
-		else
-		{
-			for (int pageNum=1; pageNum<=totalNoOfPages; pageNum++)
-			{
-				if(pageNum%10==1)
-				{
-					find_And_Click_PaymentNumber_SR();
-				}
-				else if (pageNum%10==0)
-				{
-					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
-					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
-					find_And_Click_PaymentNumber_SR();
-					Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
-				}
-				else
-				{
-					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
-					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
-					find_And_Click_PaymentNumber_SR();
-				}
+
+	/**
+	 * Author: Mohammad Khalid Method to click on Payment Number on SR page
+	 */
+
+	public RemittanceDetail clickPaymentNumber_SR_Page(String srchType) {
+		int totalNoOfPages = getNumberOfPages();
+
+		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
+			if (pageNum % 10 == 1) {
+				find_And_Click_PaymentNumber_SR();
+			} else if (pageNum % 10 == 0) {
+				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
+				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
+						"The Page Number clicked is: " + (pageNum), 5);
+				find_And_Click_PaymentNumber_SR();
+				Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
+			} else {
+				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
+				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
+						"The Page Number clicked is: " + (pageNum), 5);
+				find_And_Click_PaymentNumber_SR();
 			}
 		}
 		return new RemittanceDetail(testConfig);
 	}
-	
-	
-	/**Author: Mohammad Khalid
-	 * Method to click on PDF Link on SR page*/
-	
-	public RemittanceDetail click_835PDF_EPRA_SR(String srchType)
-	{
-		int totalNoOfPages=getNumberOfPages();
-		
-		if (totalNoOfPages==1)
-		{
-			find_And_Click_835PDF_Link_SR();
-		}
-		else
-		{
-			for (int pageNum=1; pageNum<=totalNoOfPages; pageNum++)
-			{
-				if(pageNum%10==1)
-				{
-					find_And_Click_835PDF_Link_SR();
-				}
-				else if (pageNum%10==0)
-				{
-					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
-					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
-					find_And_Click_835PDF_Link_SR();
-					Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
-				}
-				else
-				{
-					String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'"+ (pageNum) +"')])[1]";
-					Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)), "The Page Number clicked is: "+(pageNum), 5);
-					find_And_Click_835PDF_Link_SR();
-				}
+
+	/**
+	 * Author: Mohammad Khalid Method to click on PDF Link on SR page
+	 */
+
+	public RemittanceDetail click_835PDF_EPRA_SR(String srchType) {
+		int totalNoOfPages = getNumberOfPages();
+
+		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
+			if (pageNum % 10 == 1) {
+				find_And_Click_835PDF_Link_SR();
+			} else if (pageNum % 10 == 0) {
+				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
+				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
+						"The Page Number clicked is: " + (pageNum), 5);
+				find_And_Click_835PDF_Link_SR();
+				Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
+			} else {
+				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
+				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
+						"The Page Number clicked is: " + (pageNum), 5);
+				find_And_Click_835PDF_Link_SR();
 			}
 		}
+
 		return new RemittanceDetail(testConfig);
 	}
-	
-	
+
 	/**
 	 * Author: Mohammad Khalid
-	 * */
-	public int getNumberOfPages()
-	 {
-		int noOfPages=0;
-		if (getRecordCountFromUI()!=null)
-		{
-			noOfPages=Integer.parseInt(getRecordCountFromUI());
-		}
-		else
-			noOfPages=1;
-		
-		return noOfPages;
- 	}
-	
+	 */
+	public int getNumberOfPages() {
+		int noOfPages = 0;
+		if (getRecordCountFromUI() != null) {
+			noOfPages = Integer.parseInt(getRecordCountFromUI());
+		} else
+			noOfPages = 1;
 
+		return noOfPages;
+	}
 
 }
