@@ -19,7 +19,7 @@ Feature: - Optum Pay Solutions
   
 		#Author:Sayonee 
 	 @UPAUS3060820 @UPAUS3060825 @UPAStable
-	 Scenario Outline: - Optum Pay Solutions - Verify Post Trial PopUp
+	 Scenario Outline: - Verify Post Trial PopUp for "<credentials>"
    Given User navigates to UPA portal and enters "<credentials>" and login
    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
    And   User clicks on Optum Pay Solutions tab
@@ -35,7 +35,7 @@ Feature: - Optum Pay Solutions
   
       
       @UPAUS3121676 @UPAStable
-		Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover)
+		Scenario Outline: - Provider VO tin tiles(content+tiles+hover) for "<credential>"
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User clicks on Optum Pay Solutions tab
@@ -46,7 +46,7 @@ Feature: - Optum Pay Solutions
       |   PROV_Admin    |     PROV     	|		 	PostTrial and Paid		|			Premium			|		VO			|
       
       @UPAUS3121676 @UPAStable
-		Scenario Outline: - Optum Pay Solutions - BS VO tin tiles(content+tiles+hover)
+		Scenario Outline: - BS VO tin tiles(content+tiles+hover) for "<credential>"
     Given User navigates to UPA portal and enters "<credential>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And   User clicks on Optum Pay Solutions tab
@@ -224,7 +224,7 @@ And User clicks on UPA logout
        |       BS_Admin        	 | 			 BS			    		|			Standard		  	|  WithinTrial and NotPaid|	  AO			|
 
 
-    #Author: Marsha 
+    #Author: Marsha -not on stage
     @UPACancelPremiumDb @US3375699 @US3372495
    	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
@@ -239,7 +239,7 @@ And User clicks on UPA logout
 			 |     PROV_Admin  |     PROV     	|		PostTrial and Paid							|		Premium     	  |		AO			|  R7				|
 			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and Paid	|		Premium     	  |		AO			|  R7				|
 			 
-			  #Author: Marsha 
+			  #Author:Marsha -not on stage
     @UPA_VerifyEffectiveDateOfNewAchTin @US3221318
    	Scenario Outline: Optum Pay Solutions - Cancel UPA Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
