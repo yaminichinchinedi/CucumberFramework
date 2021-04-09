@@ -580,13 +580,14 @@ public ArrayList getEnrollmentContent(String content) {
 	 			
 	 			
            case "EPRA":
-//			 env=System.getProperty("env");
-//		     Browser.wait(testConfig, 5);
-//		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
-//		     testConfig.putRunTimeProperty("id", id);
-//		     System.setProperty("id", id);
-		      sqlRowNo=204;
-	 			break;		
+			 env=System.getProperty("env");
+		     Browser.wait(testConfig, 5);
+		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
+		     testConfig.putRunTimeProperty("id", id);
+		     System.setProperty("id", id);
+		     query=QUERY.EPRA_TIN_QUERY_Row_204;
+		      //sqlRowNo=204;
+	 		 break;		
 
 		 case "EPRAgenerated":
     	 env=System.getProperty("env");
@@ -594,7 +595,8 @@ public ArrayList getEnrollmentContent(String content) {
 		     id = testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+"PROV_Admin"+"_"+env);
 		     System.setProperty("id", id);
 		     testConfig.putRunTimeProperty("id", id);
-				sqlRowNo=205;
+		     query=QUERY.EPRAGenerated_TIN_QUERY_Row_205;
+				//sqlRowNo=205;
 				break;
 				
          case "EPRAPROVAdmin":

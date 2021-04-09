@@ -71,7 +71,6 @@ public class SearchRemittanceSteps extends TestBase{
 	public void validate_PDF_link_is_changed_to_PDF_icon_and_is_enabled_and_is_downloadable_for(String srchBy) throws Throwable {
 		
 		Browser.browserRefresh(testConfig);
-		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraPdfIcon(srchBy);
 	}
 
@@ -96,7 +95,6 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate PDF icon is enabled and is downloadable for \"([^\"]*)\"\\.$")
 	public void validate_PDF_icon_is_enabled_and_is_downloadable_for(String srchBy) throws Throwable {
 		
-		//Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraPdfIcon(srchBy);
 		//srchRemittance.verifyEpraDownloadStatus("Y");
 	}

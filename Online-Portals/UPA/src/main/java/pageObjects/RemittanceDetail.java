@@ -7584,7 +7584,7 @@ public RemittanceDetail clickPrintRequestButton()
 	Element.waitForElementTobeClickAble(testConfig, btnPrint, 60);
 	Element.click(btnPrint, "Print Request Button");
 	verifyDownloadWindow();
-	Browser.wait(testConfig, 3);
+	//Browser.wait(testConfig, 3);
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
 	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Available']"), 60);

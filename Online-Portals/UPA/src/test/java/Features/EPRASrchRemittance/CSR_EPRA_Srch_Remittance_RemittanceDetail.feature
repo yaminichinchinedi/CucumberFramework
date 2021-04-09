@@ -4,7 +4,7 @@
 @CSREPRASrchRemitDtl  @CSRRegression @CSRSrchRemittanceEPRA
 Feature: CSR_EPRA_Srch_Remittance_RemittanceDetail
 
-
+@Khalid12
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -104,7 +104,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 		    	|	EPRADOPAndAccountNo			    |						RO				|					1				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndAccountNo			    |						RO				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOP&SubscriberID		    |						RO				|					1				|			EPRAgenerated				|PROV       |		
-			    	|	EPRADOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				|PROV       |		
+		    	|	EPRADOP&SubscriberID		    |						RO				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	byDOPAndClaimNo				      |  					RO				|					1				|			EPRAgenerated				|PROV       |		
 			    	|	byDOPAndClaimNo				      |  					RO				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	byDOPAndPatientNm			      |						RO				|					1				|			EPRAgenerated				|PROV       |		
@@ -125,7 +125,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 			    	|	EPRADOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|PROV       |		
-		    
+	    
 
 
 																
