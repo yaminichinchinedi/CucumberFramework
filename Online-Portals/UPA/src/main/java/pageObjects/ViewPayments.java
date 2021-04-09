@@ -167,7 +167,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(name="B3")
 	WebElement btnPrntPaymntSummary;
 	
-	@FindBy(xpath = "//div[@id='view-payments']/table//tr[1]//div[2]/div[1]/span")
+	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
 	WebElement divShowRslts;
 	
 	@FindBy(id="viewPaymentsPremium")
@@ -243,6 +243,13 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	
 	@FindBy(xpath="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr")
 	WebElement tableViewPayments;
+	
+	@FindBy(xpath="//tr[@class='search-remittance__table_header']/../tr")
+	List<WebElement> payNumber_SR_P1;
+	
+	@FindBy(xpath="(//a[@class='pageNo' and contains(text(),'Next')])[1]")
+	WebElement nextLink_SR;
+	
 	
 	Map dataRequiredForSearch;
 	public SearchRemittance searchRemittance;
@@ -1012,10 +1019,41 @@ public void verifyFailedPaymentPopUp()
 		
 	}
 	
-	public String getRecordCountFromUI(){
+	/*public String getRecordCountFromUI(){
 		String resultCount=divShowRslts.getText().toString();
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
 		return resultCount.trim();
+	}*/
+	
+	/**
+	 * Authot: Mohammad Khalid
+	 * Method to fetch the total pages for Payment Numbers
+	 * 
+	 * */
+	
+	public String getRecordCountFromUI()
+	{
+		String resultCount = null;
+		try
+		{
+			if (divShowRslts.isDisplayed())
+			{
+				resultCount=divShowRslts.getText().toString().trim();
+				Log.Comment("Page umber: " + resultCount);
+				resultCount=resultCount.substring(11,resultCount.length()).trim();
+				Log.Comment("Page umber1: " + resultCount);
+			}
+			else
+			{
+				resultCount = "1";
+			}
+		} 
+		catch (NoSuchElementException e)
+		{
+			Log.Comment("The TIN has only one record", testConfig);
+		}
+		
+		return resultCount;
 	}
 	
 	
@@ -1469,6 +1507,8 @@ public void verifyFailedPaymentPopUp()
     	return noOfPages;
 	 } 
 	
+	
+		
 	public int getNumberOfPagesSR()
 	 {
 		int noOfPages=0;
@@ -2989,6 +3029,8 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
     	return this;
 	}
 	
+	
+		
 	
 	public RemittanceDetail clickPaymentNumber(String srchType)
 	{

@@ -101,4 +101,56 @@ public class QUERY {
 				"    *,\r\n" + 
 				"    (SELECT COUNT(*) FROM result) AS TotalRows\r\n" + 
 				"FROM result";
+		
+		public final static String EPRA_TIN_QUERY_Row_204 = "SELECT * FROM\r\n" + 
+				"(\r\n" + 
+				"-- For ranking the records\r\n" + 
+				"SELECT PROV_TIN_NBR as PROV_TAX_ID_NBR, USER_TYP, STS_CD,PROV_NPI_NBR,LST_NM,SBSCR_ID,PTNT_FST_NM,PTNT_LST_NM,PTNT_ACCT_NBR,CLM_NBR, DSPL_CONSL_PAY_NBR, CONSL_PAY_NBR, SETL_DT, PAYR_SCHM_NM, PAYR_835_ID, CLAIMCOUNT, PORTAL_USER_ID, USERNAME, 'Performance_2252017' AS EPSPWD, OPTUMID, 'Payables@125' AS OPTUMPWD,\r\n" + 
+				"ROW_NUMBER() OVER (PARTITION BY PROV_TIN_NBR, USER_TYP, STS_CD,PROV_NPI_NBR,LST_NM,SBSCR_ID,PTNT_FST_NM,PTNT_LST_NM,PTNT_ACCT_NBR,CLM_NBR,DSPL_CONSL_PAY_NBR, CONSL_PAY_NBR, SETL_DT, PAYR_SCHM_NM, PAYR_835_ID, CLAIMCOUNT ORDER BY PORTAL_USER_ID, USERNAME, OPTUMID) AS USER_RANK\r\n" + 
+				"\r\n" + 
+				"FROM (\r\n" + 
+				"-- Main SQL that extracts the data\r\n" + 
+				"SELECT PU.PORTAL_USER_ID, PU.USERNAME, TRIM(PU.SSO_ID) AS OPTUMID, PUT.PROV_TIN_NBR, PU.USER_TYP, PU.STS_CD,\r\n" + 
+				"SC.CP_DSPL_CONSL_PAY_NBR AS DSPL_CONSL_PAY_NBR, SC.UCP_CONSL_PAY_NBR AS CONSL_PAY_NBR, TO_CHAR(SC.CP_SETL_DT,'MM/DD/YYYY') as SETL_DT, SC.PAYR_SCHM_NM, SC.PYR_SEC_PAYR_ID AS PAYR_835_ID,\r\n" + 
+				"SC.PROV_NPI_NBR,SCL.RP_UPPER_LST_NM as LST_NM,SCL.SUB_SBSCR_ID as SBSCR_ID, SCL.CLM_PTNT_FST_NM as PTNT_FST_NM, SCL.CLM_PTNT_LST_NM as PTNT_LST_NM,\r\n" + 
+				"SCL.CLM_PTNT_ACCT_NBR as PTNT_ACCT_NBR, SCL.CLM_NBR as CLM_NBR,\r\n" + 
+				"COUNT(DISTINCT SCL.CLM_KEY_ID) as CLAIMCOUNT\r\n" + 
+				"FROM OLE.PORTAL_USER PU, OLE.PORTAL_USER_TIN PUT, OLE.EPRA_STATUS EP, OLE.SRCH_CONSOL_TBL SC, OLE.SRCH_CLAIM_TBL SCL\r\n" + 
+				"WHERE PU.PORTAL_USER_ID = PUT.PORTAL_USER_ID -- Join PU with PUT\r\n" + 
+				"AND PUT.PROV_TIN_NBR=SC.PROV_TAX_ID_NBR-- Join SC with PUT\r\n" + 
+				"AND SC.UCP_UCONSL_PAY_KEY_ID = SCL.CUP_UCONSL_PAY_KEY_ID-- Join SC with SCL\r\n" + 
+				"AND SC.PAYR_SCHM_NM=SCL.PAYR_SCHM_NM-- Join SC with SCL- Payer\r\n" + 
+				"AND SC.PAYR_SCHM_NM = 'PP008'-- <<Change Payer Schema Name here>>\r\n" + 
+				"AND SC.CP_SETL_DT BETWEEN '2020-03-01' AND '2020-05-15' -- <<Change Claim Settlement Date range here >>\r\n" + 
+				"AND PU.STS_CD='A'\r\n" + 
+				"AND PU.USER_TYP='P'\r\n" + 
+				"AND EP.PRIORITY = '{$priority}'\r\n" + 
+				"AND SCL.RP_UPPER_LST_NM != '' \r\n" + 
+				"AND SC.UCP_CONSL_PAY_NBR NOT IN \r\n" + 
+				"(SELECT DISTINCT EP.CONSL_PAY_NBR FROM OLE.EPRA_STATUS EP WHERE EP.CONSL_PAY_NBR=SC.UCP_CONSL_PAY_NBR)-- Payment ID shouldn't exist in EPRA_STATUS\r\n" + 
+				"AND PU.SSO_ID = '{$id}'\r\n" + 
+				"GROUP BY PU.PORTAL_USER_ID, PU.USERNAME, PU.SSO_ID, PUT.PROV_TIN_NBR, PU.USER_TYP, PU.STS_CD,\r\n" + 
+				"SC.CP_DSPL_CONSL_PAY_NBR, SC.UCP_CONSL_PAY_NBR, TO_CHAR(SC.CP_SETL_DT,'MM/DD/YYYY'), SC.PAYR_SCHM_NM, SC.PYR_SEC_PAYR_ID,\r\n" + 
+				"SC.PROV_NPI_NBR,SCL.RP_UPPER_LST_NM,SCL.SUB_SBSCR_ID , SCL.CLM_PTNT_FST_NM , SCL.CLM_PTNT_LST_NM ,\r\n" + 
+				"SCL.CLM_PTNT_ACCT_NBR , SCL.CLM_NBR \r\n" + 
+				"HAVING COUNT(DISTINCT SCL.CLM_KEY_ID) BETWEEN 1 AND 10  -- << Change the claim count range here >>\r\n" + 
+				"----FETCH FIRST  ROW ONLY\r\n" + 
+				")\r\n" + 
+				")DUPLUSR\r\n" + 
+				"WHERE DUPLUSR.USER_RANK=1 AND LST_NM != '' AND PROV_NPI_NBR IS NOT NULL\r\n" + 
+				"ORDER BY SETL_DT DESC\r\n" + 
+				"fetch first row only\r\n";
+		
+		public final static String EPRAGenerated_TIN_QUERY_Row_205 = "select sc.Payr_schm_nm, sc.CP_DSPL_CONSL_PAY_NBR as DSPL_CONSL_PAY_NBR, sc.CP_SETL_DT as SETL_DT, sc.UCP_CONSL_PAY_NBR as CONSL_PAY_NBR,\r\n" + 
+				"sc.PROV_NPI_NBR, sc.PROV_TAX_ID_NBR, es.claim_cnt, ct.clm_nbr, ct.CLM_PTNT_ACCT_NBR as PTNT_ACCT_NBR,ct.SUB_SBSCR_ID as SBSCR_ID, ct.CLM_PTNT_FST_NM as PTNT_FST_NM, ct.CLM_PTNT_LST_NM as PTNT_LST_NM,\r\n" + 
+				"ct.RP_UPPER_LST_NM as LST_NM\r\n" + 
+				"from ole.srch_consol_tbl sc, ole.epra_status es, ole.srch_claim_tbl ct\r\n" + 
+				"where es.REQ_STS = 'C' and es.PRIORITY =  '{$priority}'\r\n" + 
+				"and sc.ucp_consl_pay_nbr = es.consl_pay_nbr\r\n" + 
+				"and sc.UCP_UCONSL_PAY_KEY_ID = ct.CUP_UCONSL_PAY_KEY_ID\r\n" + 
+				"and sc.PAYR_SCHM_NM='PP008'\r\n" + 
+				"and sc.prov_tax_id_nbr in (select PROV_TIN_NBR from ole.PORTAL_USER_TIN where PORTAL_USER_ID in (select PORTAL_USER_ID from ole.PORTAL_USER where sso_id = '{$id}'))\r\n" + 
+				"and ct.RP_UPPER_LST_NM != '' AND es.claim_cnt IS NOT NULL AND sc.PROV_NPI_NBR IS NOT NULL\r\n" + 
+				"order by sc.CP_SETL_DT desc\r\n" + 
+				"fetch first 1 row only\r\n" ;
 }

@@ -211,6 +211,27 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_clicks_on_Invoice_Number_that_opens_pdf_in_new_tab() throws Throwable {
 		optumPaySol.clickInvoiceNumberAndOpenPdf();
 	}
+		
+		
+	@Then("^User selects fees in the grid, calculate the total fee amount and clicks on Refund Fee button$")
+	public void user_selects_fees_in_the_grid_calculate_the_total_fee_amount_and_clicks_on_Refund_Fee_button() throws Throwable {
+	    optumPaySol.selectFeeAmountCheckBoxAndCalculateFeeAmount();
+	}
+	
+	@Then("^User verifies Refund Pop Up UI is displayed, verifies text and clicks on Cancel button$")
+	public void user_verifies_Refund_Pop_Up_UI_is_displayed_verifies_text_and_clicks_on_Cancel_button() throws Throwable {
+		 optumPaySol.verifyTextOnRefundPopUI();
+	}
+	
+	@Then("^User clicks on the Select All again and clicks on Refund Fee button$")
+	public void user_clicks_on_the_Select_All_again_and_clicks_on_Refund_Fee_button() throws Throwable {
+	    optumPaySol.clickOnSelectAllandRefundButton();
+	}
+
+	@Then("^User selects Refund reason and clicks on Refund button on Pop Up$")
+	public void user_selects_Refund_reason_and_clicks_on_Refund_button_on_Pop_Up() throws Throwable {
+	   optumPaySol.selectRefundReasonandClickOnRefundButton();
+	}
 	
 		@Then("^User verifies the Optum Pay Solution page for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")
 		public void user_verifies_the_Optum_Pay_Solution_page_for_for_for(String userType, String portalAccess, String tinType) throws Throwable {
