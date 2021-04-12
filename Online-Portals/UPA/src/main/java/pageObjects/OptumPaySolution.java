@@ -1592,7 +1592,7 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 
 		public OptumPaySolution verifyPremiumCancelledOnUIAndChangeTinToPremium(String trialStatus, String portal) {
 			if(portal.equals("CSR"))
-				Helper.compareContains(testConfig, "Plan Change to Limited", "Limited", txtProvNameInfo.getText());
+				Helper.compareContains(testConfig, "Plan Change to Limited", "Limited",Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]//div[1]/div/div[2]").getText() );//txtProvNameInfo.getText());
 			else Element.verifyElementPresent(getStartedBtn, "getStartedBtn");
 
 			if(trialStatus.equals("New Enroll WithinTrial and Paid"))

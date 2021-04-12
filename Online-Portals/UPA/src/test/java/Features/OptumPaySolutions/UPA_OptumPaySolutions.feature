@@ -195,7 +195,7 @@ And User clicks on UPA logout
        
        
        
-    @US3329105 @UPAStable
+    @UPAUS3329105 @UPAStable
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

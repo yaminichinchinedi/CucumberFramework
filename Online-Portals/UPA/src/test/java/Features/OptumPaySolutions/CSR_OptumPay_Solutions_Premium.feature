@@ -186,7 +186,7 @@
           |    RO          |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
  
  #invoices not working
-    @US3307485
+    @CSRUS3307485
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
         Given User navigates to CSR portal and enters "<credentials>" and login
         And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
