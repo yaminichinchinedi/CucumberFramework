@@ -63,7 +63,7 @@ Feature:  UPA Home Page Functionality - Post Login
 	      |      PAY_Admin     	|   PAY       | 
 	      |      PAY_Gen       	|   PAY       |      
   
-  @UPAResourceTabDropDownUPA_1 @US2999285 @US3221194 @US3221199 @homePage_func
+  @UPAResourceTabDropDownUPA_1 @US2999285 @US3221194 @US3221199 @homePage_func @US3221207
   Scenario Outline: Resource Tab dropdown Post Login
 		Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
@@ -74,20 +74,6 @@ Feature:  UPA Home Page Functionality - Post Login
     Then User clicks on Partners link and verifies the page
     When User hovers on the Resources DropDown
     Then User clicks on Document Vault and verifies the page
-    
-    Examples:
-      |      userType       |   
-      |      PROV_Admin     |   
-      |      PROV_Gen       |   
-      |      BS_Admin       |  
-      |      BS_Gen         | 
-      |      PAY_Admin     	| 
-      |      PAY_Gen     	  |  
-
- 		#Author:Sayonee   
-    @UPAUS3221207_1 @US3221207 @homePage_func
-  	Scenario Outline: Add Capitation Reports Link in Resource Tab dropdown Post Login
-		Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
     Then User clicks on Capitation Report
     Examples:
@@ -97,7 +83,8 @@ Feature:  UPA Home Page Functionality - Post Login
       |      BS_Admin       |  
       |      BS_Gen         | 
       |      PAY_Admin     	| 
-      |      PAY_Gen     	  | 
+      |      PAY_Gen     	  |  
+
       
    #OBSOLETE   
 	 #@UPAUS2948688_1 
