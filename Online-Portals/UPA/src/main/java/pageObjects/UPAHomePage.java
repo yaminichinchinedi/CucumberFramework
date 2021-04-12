@@ -3,8 +3,12 @@ package main.java.pageObjects;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -560,19 +564,21 @@ public class UPAHomePage extends HomePage {
 	}
 
 	
-	public void verifyStandardTinAssociation(String userType) {
+	public void verifyStandardTinAssociation(String userType) throws IOException {
 		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
 		testConfig.putRunTimeProperty("id",id);
-		int sql=1348;
-		Map standardTin = DataBase.executeSelectQuery(testConfig,sql, 1);
-		String rows=standardTin.get("ROWS").toString();
-		testConfig.putRunTimeProperty("rows",rows);
-		int count = Integer.parseInt(rows);
-		
-		if (count==0)			
-			Log.Fail("Insert any Standard TIN from backend");		
-		else	
-			Log.Pass(count+" "+"standard TIN(s) associated with the user, proceeding to check visibility of Bring More Power pop-up");
+		int sqlTin=23;
+		ArrayList<String> tins = new ArrayList<>();
+		HashMap<Integer, HashMap<String, String>> tinsDb = DataBase.executeSelectQueryALL(testConfig, sqlTin); //DataBase.executeSelectQuery(testConfig, sqlTin, 1);
+	
+		DataBase.executeDeleteQuery(testConfig, QUERY.DELETE_ALL_TINS_FOR_USER);
+		for (Integer tmp : tinsDb.keySet()) {
+			tins.add(tinsDb.get(tmp).get("PROV_TIN_NBR"));
+			System.out.println(tmp-1);
+			System.out.println(tins.get(tmp-1));
+			testConfig.putRunTimeProperty("tin", tins.get(tmp-1).toString());
+			DataBase.executeInsertQuery(testConfig, QUERY.INSERT_ALL_STD_TRIAL_TINS_FOR_USER);
+		}
 		
 	}
 	public void verifyBringMorePowerPage() {
