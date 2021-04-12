@@ -68,7 +68,7 @@ public class OptumPaySolution {
 	WebElement txtActivationAdminName;
 	@FindBy(xpath = "//div[@id='cancelationModal']//h2") 
 	WebElement duringTrialCancelPopUpHeading;
-	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']//h2") 
+	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']//h2") ////*[@id="cancelationModal"]/h2
 	WebElement postTrialCancelPopUpHeading;
 	@FindBy(xpath = "//div[2]/div[1]/button[1]/span[1]") 
 	WebElement btnCancelOnPopUp;
@@ -100,9 +100,11 @@ public class OptumPaySolution {
 	List <WebElement> tileContentUI;
 	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
 	WebElement manageMyPlanText;
-	@FindBy(id="openCancelationPostTrialPopup")
+	//@FindBy(id="openCancelationPostTrialPopup")
+	@FindBy(linkText="Cancel My Plan")
 	WebElement lnkCancelPlanPostTrial;
-	@FindBy(id="openCancelationPopup")
+	//@FindBy(id="openCancelationPopup")
+	@FindBy(linkText="Cancel My Plan")
 	WebElement lnkCancelPlanDuringTrial;
 	
 	@FindBy(className="wrapperTooltip")
@@ -440,16 +442,7 @@ public class OptumPaySolution {
 			HashMap<Integer, HashMap<String, String>> cancelReasonDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
 			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Workflow management tools and claim count information");add("The ability to search claims");add("36 months of claims and remittance history maintained for easy access");}};
-			
-			if(trialStatus.equalsIgnoreCase("PostTrial and Paid"))
-			{ 
-				Element.click(lnkCancelPlanPostTrial, "Cancel My Subscription Link");
-				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
-				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
-     			Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
-			}
-			else if(trialStatus.equalsIgnoreCase("WithinTrial and Paid"))
-			{  
+ 
 				Element.click(lnkCancelPlanDuringTrial, "Cancel My Subscription Link");
 			
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
@@ -477,7 +470,7 @@ public class OptumPaySolution {
 				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
 				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
 				Helper.compareEquals(testConfig, "Error thrown when other reason is not given", "Please enter Other reason for termination.", errorCancelWithoutReason.getText().toString());
-			}
+				
 			
 		}
        

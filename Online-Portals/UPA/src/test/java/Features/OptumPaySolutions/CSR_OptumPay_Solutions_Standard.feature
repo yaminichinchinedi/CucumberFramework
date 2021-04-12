@@ -27,7 +27,7 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 	  |   RW     	       | %$)abc$%^		|					  	
 	  |   RW         	   | 							|		
 	  
-	@CSRUS3138933_12 @CSRStable @naruto
+	@CSRUS3138933_12 @CSRStable
     Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
