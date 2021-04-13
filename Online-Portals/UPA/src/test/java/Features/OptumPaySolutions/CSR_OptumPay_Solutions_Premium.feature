@@ -119,6 +119,7 @@
 			Then User clicks on Optum Pay Solutions link on CSR HomePage
 		Then User Enters tin for OPS and click on search button for "<userType>".
 		Then User validates contents of Past due fee of Fee tiles for this page
+		Then User validates contents of Accrued fee of Fee tiles for this page
     		Examples:
 
          |   credentials     |  searchCriteria	      |tinType|portalAccess|userType|

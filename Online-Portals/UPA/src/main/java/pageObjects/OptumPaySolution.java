@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -558,12 +559,8 @@ public class OptumPaySolution {
 
 		public OptumPaySolution validateFeeTitle()
 		{
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    String feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length());
-  			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
-			//Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-            //covered in another US
+			validatePastdueFee().validateAccruedFeesMonth();
+			
 			return this;
 		}
 
@@ -1087,11 +1084,25 @@ public class OptumPaySolution {
 			int sqlRowNo=1630;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
+		    if(StringUtils.equals(data.get("PASTDUEFEE").toString(),""))
+		    	feeTitle="Past due fees: $0.00";
+		    else
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
 			 if(System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
+			Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText().substring(feeTileUPA.getText().indexOf("Past"), feeTileUPA.getText().length()));
 			 else
-			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			 Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTile.getText().substring(feeTile.getText().indexOf("Past"), feeTile.getText().length()));
+			return this;
+		}
+	 	public OptumPaySolution validateAccruedFeesMonth()
+		{
+			String amount= DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		    String feeTitle=null;
+			feeTitle="Accrued fees month to date: $" +amount;
+			if(System.getProperty("Application").contains("UPA"))
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")));
+			 else
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
 			return this;
 		}
 	 	
@@ -1166,12 +1177,12 @@ public class OptumPaySolution {
 			
 		}
 		public void verifyAccrudFeesInvoiceTab(String searchCriteria) {
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Map data = DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1);
 		    String invoiceAccrudFee=null;
-		    if("TinWithInvoices".equals(searchCriteria)&& data.get("ACCRDFEE").toString().trim().length()>0)
-		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("ACCRDFEE").toString();
-		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("ACCRDFEE").toString().trim().length()==0)
+
+		    if("TinWithInvoices".equals(searchCriteria)&& data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()>0)
+		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("DBT_FEE_ACCRD_AMT").toString();
+		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()==0)
 		    invoiceAccrudFee="Accrued fees month to date: $0.00" ;
 		    
 			Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());

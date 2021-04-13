@@ -106,7 +106,7 @@ public class ClaimDetail {
 	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
 	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
 	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
-	@FindBy(xpath = "//td[contains(text(),'Payment Number:')]") WebElement paymentno;
+	@FindBy(xpath = "//p[contains(text(),'Payment Number :')]/a") WebElement paymentno;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@value='Print Request']") WebElement printBtn;
 	@FindBy(xpath = "//input[@value='Return to Payment Summary']") WebElement returnBtn;
@@ -1540,7 +1540,8 @@ public void verifyTricareMaskingClaimDtl() throws Exception
 
 
 		public ViewPayments clickPaymentNumber(){
-			Element.click(paymentno, "Payment Number");
+			paymentno=Element.findElement(testConfig, "xpath", "//p[contains(text(),'Payment Number :')]/a");
+			Element.clickByJS(testConfig, paymentno, "Payment Number");
 			return new ViewPayments(testConfig);
 		}
 	

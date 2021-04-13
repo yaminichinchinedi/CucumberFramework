@@ -12,3 +12,13 @@
 /target/
 /target/
 /target/
+/Online-Portals/UPA/test-output/
+Online-Portals/UPA/test-output/*
+/Online-Portals/UPA/test-output/**
+/test-output/
+test-output/
+test-output/*
+test-output/**
+/test-output/**
+*.html
+*.css

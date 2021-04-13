@@ -79,6 +79,21 @@ Scenario Outline: View Payments Pop up for Standard TIN
              |       credentials     |		portalAccess    	|   userType    |   searchCriteria    | tinType		|
              |    	   BS_Gen        | 			 Standard  			|			BS  			|			Last 30 days		|  	AO			|
 	     
+	     #Author: Amit
+		@UPAViewPayments_US2973009_S @NovRelease @UPA_ViewPaymentStable
+		Scenario Outline: Access Payments - View Payments - Provider Premium
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Click on Payment number and go to Remittance Detail screen.
+		Then Click on Claim number on Remittance Detail screen and go to Claim Detail screen.
+		Then Click on Payment number on Claim detail screen and go to single Payment View Payment screen.
+		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
+		Then Validate the data between Single Payment Summary page and poped up Print payment Summary page
+		 Examples:
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	
+      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AV		|	
+      |   	PROV_Gen	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AV		|
 	     
 	 @UPAUS2955416
    Scenario Outline: Access Payments - View Payments - Header Page Text

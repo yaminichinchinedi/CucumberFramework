@@ -3,6 +3,7 @@ package main.java.queries;
 public class QUERY {
 		public final static String GET_SCHEMA="select py.PAYR_SCHM_NM,py.PAYR_DSPL_NM,py.PAYR_835_ID from ole.proc_ctl pc join ole.ctl_grp cg on pc.PAYR_ALS_NM=cg.PAYR_ALS_ID join ole.CTL_GRP_PAYER cgp on cg.ctl_grp_id=cgp.ctl_grp_id join ole.PAYER py  on  cgp.PAYR_835_ID=py.PAYR_835_ID where EXTRACT_STS_CD='C'  and PROC_DT between  '{$fromDate}' and '{$toDate}'  and py.PAYR_SCHM_NM not in ('PP001') order by pc.PROC_DT desc fetch first row only";
 		
+		public final static String GET_SCHEMA_PAYER="select py.PAYR_SCHM_NM,py.PAYR_DSPL_NM,py.PAYR_835_ID from ole.proc_ctl pc join ole.ctl_grp cg on pc.PAYR_ALS_NM=cg.PAYR_ALS_ID join ole.CTL_GRP_PAYER cgp on cg.ctl_grp_id=cgp.ctl_grp_id join ole.PAYER py  on  cgp.PAYR_835_ID=py.PAYR_835_ID where EXTRACT_STS_CD='C'  and PROC_DT between  '{$fromDate}' and '{$toDate}'  and py.PAYR_SCHM_NM not in ('PP001') order by pc.PROC_DT desc fetch first row only";
 		public final static String PAYMENT_TIN="Select p.prov_tax_id_nbr,cp.DSPL_CONSL_PAY_NBR,cp.CONSL_PAY_NBR, cp.setl_dt from {$schema}.CONSOLIDATED_PAYMENT cp join\r\n"+
 			"{$schema}.PROVIDER p on cp.prov_key_id = p.prov_key_id join ole.product_selection ps on\r\n"+
 			"p.prov_tax_id_nbr=ps.prov_tin_nbr  join OLE.PROC_CTL PC on\r\n"+
@@ -14,13 +15,22 @@ public class QUERY {
 			"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A'\r\n"+
 			"AND PC.EXTRACT_STS_CD = 'C'\r\n";
 		
-
+public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_USER pu INNER JOIN OLE.PORTAL_USER_PAYER_TIN pt on pu.PORTAL_USER_ID = pt.PORTAL_USER_ID INNER JOIN OLE.PAYER py ON pt.PAYR_TIN_NBR = py.PAYR_TIN_NBR WHERE pu.SSO_ID='{$id}'";
+		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.PROC_DT> current date -day(current date) -1 days and dba.PROC_DT <= last_day(current date) and dba.SETL_DT <= current date";
+		public final static String TIN_WITH_DEBIT_ACCRD_FEE="select dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.DEBIT_FEE_ACCRD dfi,OLE.ENROLLED_PROVIDER ep,OLE.PRODUCT_SELECTION ps \r\n" +
+				"where  dfi.PROV_TIN_NBR=ep.PROV_TIN_NBR  and\r\n" +
+				"dfi.PROV_TIN_NBR=ps.PROV_TIN_NBR and ps.PRTL_PRDCT_SELECTED_GRP_NM='Premium' and ps.PRTL_PRDCT_SELECTED_STS_CD='A' and  ep.PAY_METH_TYP_CD='AO'\r\n" +
+				"and PRTL_PRDCT_REC_STS_CD='PS' \r\n" +
+				"and ep.ENRL_STS_CD='A' and DBT_FEE_ACCRD_AMT {$nullStatus}\r\n" +
+				"and dfi.SETL_DT>current date\r\n" +
+				"order by dfi.PROC_DT desc \r\n" +
+				"fetch first 1 rows only with ur";
 		public final static String PAYMENT_TIN_QUERY=QUERY.PAYMENT_TIN+QUERY.ENDQUERY;
 
 		public final static String ENDQUERY="group by p.prov_tax_id_nbr,cp.DSPL_CONSL_PAY_NBR,cp.CONSL_PAY_NBR, cp.setl_dt\r\n"+
 
 			"having count(*) between 1 and 30\r\n"+
-			"order by count(*) desc\r\n"+
+			"order by count(*) desc,cp.setl_dt desc\r\n"+
 			"fetch first row only";
 			
 		public final static String ZERODOLLAR= QUERY.PAYMENT_TIN + "and cp.PAY_AMNT='0' "+QUERY.ENDQUERY;
