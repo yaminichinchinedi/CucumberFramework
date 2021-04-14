@@ -222,7 +222,20 @@ public class DataBase
 		dbType=getDatabaseType();
 		return executeUpdateQuery(testConfig, insertQuery, dbType);
 	}
-	
+	public static int executeInsertQuery(TestBase testConfig, String query)
+	{
+		TestDataReader sqlData = null;
+		try {
+			sqlData = testConfig.cacheTestDataReaderObject("SQL");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DatabaseType dbType=null;
+		dbType=getDatabaseType();
+		return executeUpdateQuery(testConfig, query, dbType);
+	}
 	public static DatabaseType getDatabaseType()
 	{
 		DatabaseType dbType=null;
