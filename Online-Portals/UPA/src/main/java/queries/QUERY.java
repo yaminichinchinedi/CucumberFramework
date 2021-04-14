@@ -154,8 +154,8 @@ public class QUERY {
 				"order by sc.CP_SETL_DT desc\r\n" + 
 				"fetch first 1 row only\r\n" ;
 		
-		public final static String DELETE_ALL_TINS_FOR_USER ="DELETE FROM ole.product_selection\r\n" + 
-				"WHERE PROV_TIN_NBR IN (select PROV_TIN_NBR from ole.PORTAL_USER_TIN where access_lvl='A' AND portal_user_id in (select portal_user_id from ole.PORTAL_USER where SSO_ID = '{$id}')) ";
+		public final static String DELETE_ALL_TINS_FOR_USER ="DELETE FROM ole.PRODUCT_SELECTION ps \r\n" + 
+				"where  ps.PROV_TIN_NBR in (select put.PROV_TIN_NBR from ole.PORTAL_USER_TIN put INNER JOIN ole.PORTAL_USER pu ON pu.PORTAL_USER_ID = put.PORTAL_USER_ID WHERE ACCESS_LVL='A' AND SSO_ID = '{$id}')";
 		
 		public final static String INSERT_ALL_STD_TRIAL_TINS_FOR_USER="INSERT INTO ole.product_selection (PROV_TIN_NBR,PRTL_PRDCT_SELECTED_GRP_NM,PRTL_PRDCT_SELECTED_CD,PRTL_PRDCT_SELECTED_STS_CD,PRTL_PRDCT_SELECT_EFF_DTTM,PRTL_PRDCT_SELECT_USERID,PRTL_PRDCT_SELECT_USER_FULLNAME,PRTL_PRDCT_SELECT_USER_TYP,PRTL_PRDCT_SELECT_DTTM,CREAT_BY_ID,CREAT_DTTM,CREAT_BY_PRTL_ID,LST_CHG_BY_ID,LST_CHG_BY_DTTM,LST_CHG_BY_PRTL_ID,PRTL_PRDCT_REC_STS_CD)  \r\n" + 
 				"VALUES ('{$tin}', 'Premium', 'P', 'A', CURRENT date, 'SYSTEM', 'SYSTEM', 'SYSTEM', CURRENT date, 'SYSTEM', CURRENT date, 'AllPayerPortal', 'SYSTEM', CURRENT date, 'Automation', 'TR'), \r\n" + 

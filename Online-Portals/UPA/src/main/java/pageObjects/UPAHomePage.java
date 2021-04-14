@@ -574,8 +574,6 @@ public class UPAHomePage extends HomePage {
 		DataBase.executeDeleteQuery(testConfig, QUERY.DELETE_ALL_TINS_FOR_USER);
 		for (Integer tmp : tinsDb.keySet()) {
 			tins.add(tinsDb.get(tmp).get("PROV_TIN_NBR"));
-			System.out.println(tmp-1);
-			System.out.println(tins.get(tmp-1));
 			testConfig.putRunTimeProperty("tin", tins.get(tmp-1).toString());
 			DataBase.executeInsertQuery(testConfig, QUERY.INSERT_ALL_STD_TRIAL_TINS_FOR_USER);
 		}
