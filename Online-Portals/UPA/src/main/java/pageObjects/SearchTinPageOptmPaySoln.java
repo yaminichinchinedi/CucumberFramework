@@ -34,7 +34,6 @@ public class SearchTinPageOptmPaySoln {
     {
       this.testConfig=testConfig;
 	  PageFactory.initElements(testConfig.driver, this);
-	  Browser.verifyURL(testConfig, "optumPaySolutions.do");
     }
 
 	public SearchTinPageOptmPaySoln enterTinAndSrch(String userType) {

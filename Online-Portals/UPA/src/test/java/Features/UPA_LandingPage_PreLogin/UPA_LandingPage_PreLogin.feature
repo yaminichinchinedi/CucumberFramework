@@ -22,4 +22,3 @@ Feature: UPA Landing Page Pre-Login functionality
 	  Then user navigates to how to enroll tab
 	  Then User validates logo, Title, Enroll Now button,PDFs and Footer of this page
 	  And User also validates the How to Enroll page content
-	   

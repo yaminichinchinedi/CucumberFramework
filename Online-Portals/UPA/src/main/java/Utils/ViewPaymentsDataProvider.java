@@ -997,6 +997,7 @@ public class ViewPaymentsDataProvider {
 
 		case "EPRABSViewPay": {
 			sqlRowNo = 218;
+
 			break;
 		}
 
@@ -1104,33 +1105,45 @@ public class ViewPaymentsDataProvider {
 			sqlRowNo = 1624;
 
 		if ((searchCriteria.contains("WithinTrial and NotPaid")) || (searchCriteria.contains("WithinTrial and Paid"))
-				|| (searchCriteria.contains("PostTrial and NotPaid")) || (searchCriteria.contains("PostTrial and Paid"))
+				|| (searchCriteria.contains("PostTrial and NotPaid")) || (searchCriteria.contains("PostTrial and Paid")))
 
-		)
-
+				{
+			if (searchCriteria.contains("WithinTrial and NotPaid")&& !tinType.equals("VO"))
+				{
+				testConfig.putRunTimeProperty("portalAcs", "Standard");
+				testConfig.putRunTimeProperty("portalStat", "PD");
+				//sqlRowNo=1620;
+				query=QUERY.WITHIN_TRIAL_AND_PAID_NOTPAID_QUERY;
+				}
+			if (searchCriteria.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
+			{
+		testConfig.putRunTimeProperty("portalAcs", "Premium");
+		testConfig.putRunTimeProperty("portalStat", "PS");
+		//sqlRowNo=1620;
+		   query=QUERY.WITHIN_TRIAL_AND_PAID_NOTPAID_QUERY;
+			}
+			if (searchCriteria.contains("PostTrial and NotPaid") && !tinType.equals("VO"))
+			{
+			testConfig.putRunTimeProperty("portalAcs", "Standard");
+			testConfig.putRunTimeProperty("portalStat", "PD");
+			//sqlRowNo=1622;
+			query=QUERY.POST_TRIAL_AND_PAID_NOTPAID_QUERY;
+			}
+		if (searchCriteria.contains("PostTrial and Paid") || tinType.equals("VO"))
 		{
-			if (searchCriteria.contains("WithinTrial and NotPaid") && !tinType.equals("VO")) {
-				testConfig.putRunTimeProperty("portalAcs", "Standard");
-				testConfig.putRunTimeProperty("portalStat", "PD");
-				sqlRowNo = 1620;
-			}
-			if (searchCriteria.contains("WithinTrial and Paid") && !tinType.equals("VO")) {
-				testConfig.putRunTimeProperty("portalAcs", "Premium");
-				testConfig.putRunTimeProperty("portalStat", "PS");
-				sqlRowNo = 1620;
-			}
-			if (searchCriteria.contains("PostTrial and NotPaid") && !tinType.equals("VO")) {
-				testConfig.putRunTimeProperty("portalAcs", "Standard");
-				testConfig.putRunTimeProperty("portalStat", "PD");
-				sqlRowNo = 1622;
-			}
-			if (searchCriteria.contains("PostTrial and Paid") || tinType.equals("VO")) {
-				testConfig.putRunTimeProperty("portalAcs", "Premium");
-				testConfig.putRunTimeProperty("portalStat", "PS");
-				sqlRowNo = 1622;
+			testConfig.putRunTimeProperty("portalAcs", "Premium");
+			testConfig.putRunTimeProperty("portalStat", "PS");
+			//sqlRowNo=1622;
+			query=QUERY.POST_TRIAL_AND_PAID_NOTPAID_QUERY;
+		}
+		if (searchCriteria.contains("New Enroll WithinTrial and Paid"))
+		{
+			query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
+		}
+				
 			}
 
-		}
+		
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))

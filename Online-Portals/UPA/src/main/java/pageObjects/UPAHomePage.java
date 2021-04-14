@@ -99,7 +99,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText = "Billing Service Information") 
 	WebElement lnkBsInfo;
 	
-	@FindBy(xpath = "//a[@id='tabOptumPay']") 
+	@FindBy(linkText = "Optum Pay Solutions") 
 	WebElement lnkOptumPaySol;
 	
 	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")

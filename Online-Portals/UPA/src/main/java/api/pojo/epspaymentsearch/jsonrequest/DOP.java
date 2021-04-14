@@ -46,7 +46,7 @@ public class DOP extends Data {
     		sj.add(epsNationalProviderIdentifiers);
     	}
     	for (String epsSecondaryPayerReferenceIdentifiers : this.epsSecondaryPayerReferenceIdentifiers) {
-    		stj.add("\""+epsSecondaryPayerReferenceIdentifiers+"\"");
+    		stj.add(epsSecondaryPayerReferenceIdentifiers);
     	}
         return "{\"data\": {" +
         		super.getSearchCriteria().toString() + "," +
