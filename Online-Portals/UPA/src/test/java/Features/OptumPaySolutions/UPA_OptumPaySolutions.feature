@@ -184,7 +184,6 @@ And User clicks on UPA logout
    		   		
    		Then User Enters an "NotAssociated" tin for OPS and click on search button for "<userType>".
   		And User verifies the error message for "NotAssociated" tin
-  		
   		And User clicks on UPA logout
    		
  Examples:		

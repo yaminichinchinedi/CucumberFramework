@@ -133,6 +133,7 @@ public class LoginUPA {
 			Element.fluentWait(testConfig, txtboxUserName, 100, 1, "Username field");
 		Element.clickByJS(testConfig, txtboxUserName, "UserName clicked");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+		Element.clickByJS(testConfig, txtboxPwd, "Password clicked");
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");		
 		Element.click(btnLogin, "click Login button");
 		verifyIfUsernamePwdIsFilled();

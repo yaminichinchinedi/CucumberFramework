@@ -159,6 +159,10 @@ public void user_validates_Provider_Name_Accrued_Fees_Past_Due_Fees_and_Invoice_
 public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
 	optumPaySol.validatePastdueFee();
 }
+@Then("^User validates contents of Accrued fee of Fee tiles for this page$")
+public void user_validates_contents_of_Accrued_fee_of_Fee_tiles_for_this_page() throws Throwable {
+	optumPaySol.validateAccruedFeesMonth();
+}
 @Then("^User verifies if Invoices tab is available for \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"\\.$")
 public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
 	optumPaySol.verifyInvoicesTab(searchCriteria, tinType, portalAccess,prdctRecSts);
@@ -210,6 +214,27 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		@Then("^User clicks on Invoice Number that opens pdf in new tab$")
 	public void user_clicks_on_Invoice_Number_that_opens_pdf_in_new_tab() throws Throwable {
 		optumPaySol.clickInvoiceNumberAndOpenPdf();
+	}
+		
+		
+	@Then("^User selects fees in the grid, calculate the total fee amount and clicks on Refund Fee button$")
+	public void user_selects_fees_in_the_grid_calculate_the_total_fee_amount_and_clicks_on_Refund_Fee_button() throws Throwable {
+	    optumPaySol.selectFeeAmountCheckBoxAndCalculateFeeAmount();
+	}
+	
+	@Then("^User verifies Refund Pop Up UI is displayed, verifies text and clicks on Cancel button$")
+	public void user_verifies_Refund_Pop_Up_UI_is_displayed_verifies_text_and_clicks_on_Cancel_button() throws Throwable {
+		 optumPaySol.verifyTextOnRefundPopUI();
+	}
+	
+	@Then("^User clicks on the Select All again and clicks on Refund Fee button$")
+	public void user_clicks_on_the_Select_All_again_and_clicks_on_Refund_Fee_button() throws Throwable {
+	    optumPaySol.clickOnSelectAllandRefundButton();
+	}
+
+	@Then("^User selects Refund reason and clicks on Refund button on Pop Up$")
+	public void user_selects_Refund_reason_and_clicks_on_Refund_button_on_Pop_Up() throws Throwable {
+	   optumPaySol.selectRefundReasonandClickOnRefundButton();
 	}
 	
 		@Then("^User verifies the Optum Pay Solution page for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\"$")

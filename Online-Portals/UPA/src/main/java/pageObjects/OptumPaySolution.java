@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.server.handler.interactions.touch.Scroll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -322,6 +324,21 @@ public class OptumPaySolution {
 	@FindBy(className="text-red")
 	WebElement redTextError;
 	
+	@FindBy(xpath="//div[@class='modal-body']/p")
+	WebElement feeRefundPopUpText2;
+	
+	@FindBy(xpath="//div[@id='refundConfirmation']/p")
+	WebElement feeRefundPopUpText1;
+	
+	@FindBy(xpath="//span[contains(text(),'Cancel')]")
+	WebElement refundPopUpCancelButton;
+	
+	@FindBy(xpath="//span[contains(text(),'Refund') and @class='ui-button-text']")
+	WebElement refundPopUpRefundButton;
+	
+	@FindBy(xpath="//select[@name='selectedRefundReason']")
+	WebElement reasonDropDownrefundPopUp;
+	
 	@FindBy(xpath = "//button[contains(text(),'Get Started with Optum Pay Today')]") 
 	WebElement getStartedHeaderBtn;
 	@FindBy(xpath="//input[@value='Get Started']") 
@@ -355,6 +372,7 @@ public class OptumPaySolution {
 	WebElement btnChange;
 	@FindBy(className="ui-button-text")
 	List<WebElement> acceptPremiumBtn;
+	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -536,12 +554,8 @@ public class OptumPaySolution {
 
 		public OptumPaySolution validateFeeTitle()
 		{
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    String feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length());
-  			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
-			//Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-            //covered in another US
+			validatePastdueFee().validateAccruedFeesMonth();
+			
 			return this;
 		}
 
@@ -1070,11 +1084,25 @@ public class OptumPaySolution {
 			int sqlRowNo=1630;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
+		    if(StringUtils.equals(data.get("PASTDUEFEE").toString(),""))
+		    	feeTitle="Past due fees: $0.00";
+		    else
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
 			 if(System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
+			Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText().substring(feeTileUPA.getText().indexOf("Past"), feeTileUPA.getText().length()));
 			 else
-			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			 Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTile.getText().substring(feeTile.getText().indexOf("Past"), feeTile.getText().length()));
+			return this;
+		}
+	 	public OptumPaySolution validateAccruedFeesMonth()
+		{
+			String amount= DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		    String feeTitle=null;
+			feeTitle="Accrued fees month to date: $" +amount;
+			if(System.getProperty("Application").contains("UPA"))
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")));
+			 else
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
 			return this;
 		}
 	 	
@@ -1149,12 +1177,12 @@ public class OptumPaySolution {
 			
 		}
 		public void verifyAccrudFeesInvoiceTab(String searchCriteria) {
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Map data = DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1);
 		    String invoiceAccrudFee=null;
-		    if("TinWithInvoices".equals(searchCriteria)&& data.get("ACCRDFEE").toString().trim().length()>0)
-		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("ACCRDFEE").toString();
-		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("ACCRDFEE").toString().trim().length()==0)
+
+		    if("TinWithInvoices".equals(searchCriteria)&& data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()>0)
+		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("DBT_FEE_ACCRD_AMT").toString();
+		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()==0)
 		    invoiceAccrudFee="Accrued fees month to date: $0.00" ;
 		    
 			Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());
@@ -1453,6 +1481,58 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 	 		}	 		
 	 		return this;
 	 	}	
+
+
+		public void selectFeeAmountCheckBoxAndCalculateFeeAmount()
+		{
+			double feeAmount=0;
+			clickFeesForRefund();
+			
+			List<WebElement> ls = Element.findElements(testConfig, "xpath", "//table[@class='table fee_table']/tbody/tr");
+			int feeCount = ls.size();
+			Log.Comment("Total Fee Number" + feeCount);
+			testConfig.putRunTimeProperty("TotalNumberOfFees", String.valueOf(feeCount));
+			
+			for (int i=0; i<ls.size(); i++)
+			{
+				String xpathFeeAmount = "//table[@class='table fee_table']/tbody/tr["  + (i+1) + "]/td[5]";
+				WebElement FeeAmount = Element.findElement(testConfig, "xpath", xpathFeeAmount);
+				feeAmount = feeAmount + Double.valueOf(FeeAmount.getText().trim().substring(1, FeeAmount.getText().trim().length()));
+			}
+			
+			testConfig.putRunTimeProperty("TotFeeAmountRefund", String.valueOf(feeAmount));
+			
+			selectAll.click();
+			Log.Comment("Select All button clicked");
+			
+			refundFeeButton.click();
+			Log.Comment("Refund Button clicked");
+			
+		}
+		
+		
+		public void verifyTextOnRefundPopUI()
+		{
+			String ex_AreYouSure = "Are You Sure?";
+			String ex_RefundText = "You are about to refund "+ testConfig.getRunTimeProperty("TotalNumberOfFees") +" fees totaling $"+ testConfig.getRunTimeProperty("TotFeeAmountRefund") +". This amount will be reflected as a credit on the provider's next invoice. Please select the reason for the refund.";
+			
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_AreYouSure, feeRefundPopUpText1.getText().trim());
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_RefundText, feeRefundPopUpText2.getText().trim());
+			Element.clickByJS(testConfig, refundFeeCancelButton, "Refund Pop Up Cancel Button");
+		
+		}
+		
+		public void clickOnSelectAllandRefundButton()
+		{
+			Element.clickByJS(testConfig, selectAll, "Select All Button clicked");
+			Element.clickByJS(testConfig, refundFeeButton, "Refund Button");
+		}
+		
+		public void selectRefundReasonandClickOnRefundButton()
+		{
+			Element.selectByVisibleText(reasonDropDownrefundPopUp, "Fraud", "Selecting 'Fraud' Reason for Fee Refund");
+		}
+		
 
 		public void validateOptumPaySolutionPage(String userType, String portalAccess, String tinType) {
 

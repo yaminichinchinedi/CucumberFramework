@@ -190,7 +190,7 @@ public class CSRHomePage {
 
 	public CSRHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
-			Helper.getPayerSchema(testConfig,searchCriteria);	
+			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		return this;
