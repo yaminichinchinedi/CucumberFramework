@@ -950,7 +950,7 @@ public void verifyFailedPaymentPopUp()
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
-				
+		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
@@ -1775,7 +1775,7 @@ public void verifyFailedPaymentPopUp()
 		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
 		String[] identifiers = new String[] {};
 		epn.setEpsNationalProviderIdentifiers(identifiers);
- //		Log.Comment("Request: " + epn.toString());
+ 		Log.Comment("Request: " + epn.toString());
 		request = epn;
 
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(request);
