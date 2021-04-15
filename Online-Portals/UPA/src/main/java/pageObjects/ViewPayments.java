@@ -1283,10 +1283,12 @@ public void verifyFailedPaymentPopUp()
 }
 	public ArrayList<String> getUIValuesForSinglePaymentPage()
 	{
+		Browser.wait(testConfig, 2);
 		ArrayList<String> headers=getHeadersFromResultTable();
 		List <String> rowValues=new ArrayList<String>();
 		int size=0;
 		WebElement dataRow=null;
+		Browser.wait(testConfig, 2);
 		if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
 			searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
 			if (!searchResultRows.isEmpty()) {
@@ -1297,6 +1299,7 @@ public void verifyFailedPaymentPopUp()
 			if(dataRow!=null)
 				size=dataRow.findElements(By.tagName("td")).size();
 		}
+		Browser.wait(testConfig, 2);
 		for (int i=0;i<size;i++)
 		{
 			String colValue="";
