@@ -209,6 +209,16 @@ public class SearchRemittanceSearchCriteria {
 		switch(criteriaType)
 		 {
 		
+		 case "byElectronicPaymentNoRemit": {
+			 Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Browser.wait(testConfig, 5);
+		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+		    	String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("DSPL_CONSOL_PAY_NBR");
+		    	System.out.println(dspl_consl_pay_nbr);
+		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
+		    	break;
+		}
+			
 		 case "EPRAElectronicPaymentNo":  
 		    {
 

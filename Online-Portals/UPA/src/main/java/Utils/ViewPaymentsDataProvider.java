@@ -1166,7 +1166,10 @@ public ArrayList getEnrollmentContent(String content) {
             	break;
             case "New Enroll WithinTrial and Paid":   
             	query=QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID;
-            	break;   
+            	break;  
+            case "TIN_FOR_CLAIM_DETAILS":
+            	query=QUERY.TIN_FOR_CLAIM_DETAILS;
+            	break;
  		   default:
  			   Log.Comment("Payment Type " + searchCriteria + " not found"); 		
  		}
@@ -1394,8 +1397,10 @@ public ArrayList getEnrollmentContent(String content) {
 		  }
 		       
 		  else if (searchCriteria.equalsIgnoreCase("Multiple_PLB_ProvAdmin")||searchCriteria.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin")||searchCriteria.equalsIgnoreCase("byElectronicPaymentNoRemitBS")
-				  ||searchCriteria.equalsIgnoreCase("Multiple_PLB_BSAdmin")||searchCriteria.equalsIgnoreCase("PLB_Adj_Only_BSAdmin"))
+				  ||searchCriteria.equalsIgnoreCase("Multiple_PLB_BSAdmin")||searchCriteria.equalsIgnoreCase("PLB_Adj_Only_BSAdmin")||
+				  searchCriteria.equalsIgnoreCase("TIN_FOR_CLAIM_DETAILS"))
 		  {
+			  testConfig.putRunTimeProperty("DSPL_CONSOL_PAY_NBR", tinNumbers.get("DSPL_CONSOL_PAY_NBR").toString());
 			  testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 			  System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 		  }

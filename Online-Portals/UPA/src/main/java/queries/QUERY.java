@@ -101,5 +101,12 @@ public class QUERY {
 				"       and pc.EXTRACT_STS_CD='C'\n" +
 				"       and cp.setl_dt between current date - 6 MONTHS and current date\n" +
 				"fetch first row only with ur";
+		
+		public static final String TIN_FOR_CLAIM_DETAILS = "Select DISTINCT PROV_TAX_ID_NBR, UCP_CONSL_PAY_NBR as DSPL_CONSOL_PAY_NBR from OLE.SRCH_CONSOL_TBL where CP_DSPL_CONSL_PAY_NBR IN\r\n" + 
+				"            (Select DISTINCT CP_DSPL_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where UCP_CONSL_PAY_NBR in (SELECT CONSL_PAY_NBR\r\n" + 
+				"            FROM PP001.PROVIDER_PAYOR_ADJUSTMENT\r\n" + 
+				"            GROUP BY CONSL_PAY_NBR\r\n" + 
+				"            HAVING COUNT(*) = 4\r\n" + 
+				"            ORDER BY CONSL_PAY_NBR ASC LIMIT 1))";
 
 }

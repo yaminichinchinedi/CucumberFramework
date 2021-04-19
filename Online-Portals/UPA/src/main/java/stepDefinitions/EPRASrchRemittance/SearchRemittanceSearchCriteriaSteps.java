@@ -19,8 +19,8 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	}
 	
 	@Then("^User enters \"([^\"]*)\" and click on search button\\.$")
-	public void user_enters_and_click_on_search_button(String srchCriteria) throws Throwable {
-		srchCriteriaPage.doSearch(srchCriteria); 
+	public void user_enters_and_click_on_search_button(String searchBy) throws Throwable {
+		srchCriteriaPage.doSearch(searchBy); 
 	}
 	
 	@Then("^User enters \"([^\"]*)\" and click on search button for Payer$")

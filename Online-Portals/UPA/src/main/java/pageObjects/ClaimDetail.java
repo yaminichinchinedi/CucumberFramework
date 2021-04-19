@@ -65,22 +65,22 @@ public class ClaimDetail {
 	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
 	@FindBy(className="subheader")	WebElement claimHeader1;
 	//@FindBy(xpath = "//td[@class='subheader']") WebElement claimHeader1;
-	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
-	@FindBy(xpath = "//td[starts-with(text(),'Payment Date')]") WebElement paymentDate;
-    @FindBy(xpath = "//td[contains(text(),'Payment Type:')]") WebElement paymentType;
-	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumber;
-	@FindBy(xpath = "//td[contains(text(),'NPI')]") WebElement  claimNPI;
+	@FindBy(xpath = "//*[starts-with(text(),'Organization:')]") WebElement orgHeader;
+	@FindBy(xpath = "//*[starts-with(text(),'Payment Date:')]") WebElement paymentDate;
+    @FindBy(xpath = "//*[contains(text(),'Payment Type:')]") WebElement paymentType;
+	@FindBy(xpath = "//*[contains(text(),'Payment Number :')]") WebElement paymentNumber;
+	@FindBy(xpath = "//*[contains(text(),'NPI:')]") WebElement  claimNPI;
 	@FindBy(name="claimType")	WebElement filterClaims;
 	//@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
 	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
 	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
-	@FindBy(xpath = "//a[contains(text(),'Patient Name')]") WebElement patientName;
+	@FindBy(xpath = "//*[contains(text(),'Patient Name/')]") WebElement patientName;
 	@FindBy(xpath = "//span[contains(text(),'Patient ID')]") WebElement patientID;
-	@FindBy(xpath = "//span[contains(text(),'Subscriber ID')]") WebElement subscbrID;
+	@FindBy(xpath = "//*[contains(text(),'Subscriber ID')]") WebElement subscbrID;
 	@FindBy(xpath = "//span[contains(text(),'Corrected ID')]") WebElement correctedID;
 	@FindBy(xpath = "//td[contains(text(),'Rendering Provider')]") WebElement rendPrvdr;
 	@FindBy(xpath = "//td[contains(text(),'Claim #')]") WebElement claimHeader;
-	@FindBy(xpath = "//td[starts-with(text(),'Group')]") WebElement grpPolicy;
+	@FindBy(xpath = "//td[starts-with(text(),'Group Policy Number/')]") WebElement grpPolicy;
 	@FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]") WebElement claimDOS;
 	@FindBy(xpath = "//td[contains(text(),'Description of Service')]") WebElement descService;
 	@FindBy(xpath = "//td[contains(text(),'Amount Charged')]") WebElement amntCharged;
@@ -92,10 +92,16 @@ public class ClaimDetail {
 	@FindBy(xpath = "//a[contains(text(),'Adj Reason Code')]") WebElement adj_code;
 	@FindBy(xpath = "//a[contains(text(),'RMK Code')]") WebElement rmk_code;
 	@FindBy(xpath = "//td[contains(text(),'Patient Resp')]") WebElement patientResp;
+	@FindBy(xpath = "//*[contains(text(),'Total Claim Paid')]") WebElement totalClaimTxt;
 	@FindBy(xpath = "//td[contains(text(),'Remark Code')]") WebElement remarkCode;
 	@FindBy(xpath = "//td[contains(text(),'Description')]") WebElement remarkDesc;
 	@FindBy(xpath = "//td[contains(text(),'Adjustment Code')]") WebElement adjustmentCode;
 	@FindBy(xpath = "//td[contains(text(),'Description')]") WebElement adjustmentDesc;
+	@FindBy(xpath = "//a[contains(text(),'Adobe Reader')]") WebElement adobeReaderLink;
+	@FindBy(xpath = "//a[contains(text(),'Privacy Policy')]") WebElement privacyPolicyLink;
+	@FindBy(xpath = "//a[contains(text(),'Terms of Use')]") WebElement termsOfUseUiLink;
+	@FindBy(xpath = "//input[@value='Return to Remittance Detail']") WebElement returnToRemittanceDetailButton;
+	@FindBy(xpath = "//input[@value='Print Claim Detail']") WebElement printClaimDetailButton;
 	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'1')]") WebElement paginationNo1;
 	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'2')]") WebElement paginationNo2;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
@@ -160,11 +166,12 @@ public class ClaimDetail {
 	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
 	
+	@FindBy(xpath="//a[@id='paymentNbr_1']")
+	private WebElement enterRemittanceDtlPage;
 	
-	
-	
-	
-	
+	@FindBy(xpath="//span[@id='claimID_1']//a")
+	private WebElement enterClaimDtlPage;
+
 	
 private TestBase testConfig;
 
@@ -587,6 +594,7 @@ public void verifyClaimDtlPageData() throws Exception
 	}
 	
 }
+
 
 public void verifyClaimDtlPageData(String usertype) throws Exception  
 {
@@ -1406,10 +1414,22 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	
 }
 
+public void enterRemittancedetailPage() {
+	Element.clickByJS(testConfig, enterRemittanceDtlPage, "Payment 1st link");
+}
+
+public void enterClaimdetailPage() {
+	Element.clickByJS(testConfig, enterClaimDtlPage, "claim detail number link");
+	String claimDetailPageTitle = testConfig.driver.getTitle().trim(); //View Claim Details
+	Helper.compareEquals(testConfig, "View Claim Details page Title", "View Claim Details", claimDetailPageTitle);
+}
 
 
 public void verifyAllHeadersClaimDtl() throws Exception
-{
+{    
+	enterRemittancedetailPage();
+	enterClaimdetailPage();
+	
      String claimHeader1UI = claimHeader1.getText();
 	 if(!claimHeader1UI.equalsIgnoreCase("0"))
 	     Helper.compareEquals(testConfig, "Comparing Claim Detail Header", claimHeader1UI, "Claim Detail");
@@ -1456,46 +1476,46 @@ public void verifyAllHeadersClaimDtlPay() throws Exception
 
 public void verifyColumnHeadersClaimDtl() throws Exception
 {
-	 Boolean acctNumUI = acctNum.isDisplayed();
+	 Boolean acctNumUI = acctNum.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Account Number Column", true, acctNumUI);
 	 
-//	 Boolean patientNameUI = patientName.isDisplayed();
-//	 Helper.compareEquals(testConfig, "Patient Name Column", true, patientNameUI);
+	 Boolean patientNameUI = patientName.isDisplayed(); 
+	 Helper.compareEquals(testConfig, "Patient Name Column", true, patientNameUI);
 	 
-//	 Boolean patientIDUI = patientID.isDisplayed();
-//	 Helper.compareEquals(testConfig, "Patient ID Column", true, patientIDUI);
+	// Boolean patientIDUI = patientID.isDisplayed();
+	// Helper.compareEquals(testConfig, "Patient ID Column", true, patientIDUI);
 	 
-	 Boolean subscbrIDUI = subscbrID.isDisplayed();
+	 Boolean subscbrIDUI = subscbrID.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Subscriber ID Column", true, subscbrIDUI);
 	 
-	 Boolean correctedIDUI = correctedID.isDisplayed();
+	 Boolean correctedIDUI = correctedID.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "correctedID Column", true, correctedIDUI);
 	 
-	 Boolean rendPrvdrUI = rendPrvdr.isDisplayed();
+	 Boolean rendPrvdrUI = rendPrvdr.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Rendering Provider Column", true, rendPrvdrUI);
 	 
-	 Boolean claimHeaderUI = claimHeader.isDisplayed();
+	 Boolean claimHeaderUI = claimHeader.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Claim #/Claim Type Column", true, claimHeaderUI);
 	
-	 Boolean grpPolicyUI = grpPolicy.isDisplayed();
+	 Boolean grpPolicyUI = grpPolicy.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Group Policy Number/Product Name Column", true, grpPolicyUI);
 	
-	 Boolean remitDOSUI = claimDOS.isDisplayed();
+	 Boolean remitDOSUI = claimDOS.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "DOS Column", true, remitDOSUI);
 	
-	 Boolean descServiceUI = descService.isDisplayed();
+	 Boolean descServiceUI = descService.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Description of Service Column", true, descServiceUI);
 	 
-	 Boolean amntChargedUI = amntCharged.isDisplayed();
+	 Boolean amntChargedUI = amntCharged.isDisplayed();  
 	 Helper.compareEquals(testConfig, "Amount Charged Column", true, amntChargedUI);
 	 
-	 Boolean serviceAdjUI = serviceAdj.isDisplayed();
+	 Boolean serviceAdjUI = serviceAdj.isDisplayed();  
 	 Helper.compareEquals(testConfig, "Claim/Service Adj Charged Column", true, serviceAdjUI);
 	 
 	 Boolean provAdjUI = provAdj.isDisplayed();
 	 Helper.compareEquals(testConfig, "Prov Adj Discount Column", true, provAdjUI);
 	 
-	 Boolean amntAllowedUI = amntAllowed.isDisplayed();
+	 Boolean amntAllowedUI = amntAllowed.isDisplayed(); 
 	 Helper.compareEquals(testConfig, "Amount Allowed Column", true, amntAllowedUI);
 	 
 	 Boolean copayUI = copay.isDisplayed();
@@ -1512,6 +1532,40 @@ public void verifyColumnHeadersClaimDtl() throws Exception
 	
 	 Boolean patientRespUI = patientResp.isDisplayed();
 	 Helper.compareEquals(testConfig, "Patient Resp Column", true, patientRespUI);
+	 
+	 Boolean totalClaimTxtUI = totalClaimTxt.isDisplayed();
+	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxtUI);
+}
+
+public void verifyColumnFootersClaimDtl() throws Exception
+{	 
+	 Boolean totalClaimTxtUI = totalClaimTxt.isDisplayed();
+	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxtUI);
+	 
+	 String claimDtlDisc1 = "\"--\" indicates payer has not supplied this information.";
+	 Element.verifyTextPresent(claimDtlDisc1);
+	 
+	 String claimDtlDisc2 = "In order to print the Claim, you must have Adobe Reader installed on your machine. Please download ";
+	 Element.verifyTextPresent(claimDtlDisc2);
+	 
+	 String claimDtlDisc3 = " if it is not installed on your machine.";
+	 Element.verifyTextPresent(claimDtlDisc3);
+	 
+	 Boolean adobeReaderLinkUI = adobeReaderLink.isDisplayed();
+	 Helper.compareEquals(testConfig, "Adobe Reader link", true, adobeReaderLinkUI);
+	 
+	 Boolean privacyPolicyLinkUI = privacyPolicyLink.isDisplayed();
+	 Helper.compareEquals(testConfig, "Privacy Policy Link", true, privacyPolicyLinkUI);
+	 
+	 Boolean termsOfUseUiLinkUI = termsOfUseUiLink.isDisplayed();
+	 Helper.compareEquals(testConfig, "Terms of Use Link", true, termsOfUseUiLinkUI);
+	 
+	 Boolean returnToRemittanceDetailButtonUI = returnToRemittanceDetailButton.isDisplayed();
+	 Helper.compareEquals(testConfig, "Return to Remittance Detail Button", true, returnToRemittanceDetailButtonUI);
+	 
+	 Boolean printClaimDetailButtonUI = printClaimDetailButton.isDisplayed();
+	 Helper.compareEquals(testConfig, "print Claim Detail Button", true, printClaimDetailButtonUI);
+	 
 }
 
 

@@ -36,6 +36,12 @@ public class ClaimDetailSteps extends TestBase {
     	claimDetail.verifyColumnHeadersClaimDtl();
     }
     
+    @Then("^Validate Column Footers in the Page for Claim Detail Page$")
+    public void validate_Column_Footers_in_the_Page_for_Claim_Detail_Page() throws Throwable {
+       
+    	claimDetail.verifyColumnFootersClaimDtl();
+    }
+    
     @Then("^Validate Tricare Masking for Claim Detail Page$")
     public void validate_Tricare_Masking_for_Claim_Detail_Page() throws Throwable {
         

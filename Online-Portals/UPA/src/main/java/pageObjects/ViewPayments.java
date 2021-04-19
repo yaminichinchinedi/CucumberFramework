@@ -63,7 +63,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//a[contains(text(),'PDF')]")
 	WebElement lnkEpraPDF;
 	
-	@FindBy(id = "periodId")
+	@FindBy(xpath = "//select[@id='periodId']") 
 	WebElement drpDwnQuickSearch;
 	
 	@FindBy(id="mktTypeId")
@@ -208,19 +208,20 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
 	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
-	@FindBy(xpath = "//td[starts-with(text(),'Payment Number')]/a") WebElement paymentNumHyper;
+	//@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNumHyper; 
+	@FindBy(xpath = "//p[contains(text(),'Payment Number')]//a") WebElement paymentNumHyper;
 	@FindBy(xpath = "//td[@class='subheader']") WebElement viewPaymentsSubHeader;
 	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
 	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement activeDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'Payer')]") WebElement payerHeader;
 	@FindBy(xpath = "//td[contains(text(),'Payer')]") WebElement payerHeaderPrintPaymentSummary;
-	@FindBy(xpath = "//a[contains(text(),'Payment Date')]") WebElement payDateHeader;
+	@FindBy(xpath = "//*[contains(text(),'Payment Date')]") WebElement payDateHeader;
 	@FindBy(xpath = "//a[contains(text(),'NPI')]") WebElement npiHeader;
 	@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNum;
 	@FindBy(xpath = "//th[contains(text(),'Proxy')]") WebElement proxyNum;
 	@FindBy(xpath = "//a[contains(text(),'Amount')]") WebElement amountHeader;
-	@FindBy(xpath = "//a[starts-with(text(),'Type')]") WebElement typeHeader;
-	@FindBy(xpath = "//th[starts-with(text(),'Payment')]") WebElement paymentStatusHeader;
+	@FindBy(xpath = "//a[contains(text(),'Market Type')]") WebElement typeHeader; //
+	@FindBy(xpath = "//*[contains(text(),'Payment Status')][2]") WebElement paymentStatusHeader;
 	@FindBy(xpath = "//th[contains(text(),'Redemption')]") WebElement redemptionHeader;
 	@FindBy(xpath = "//a[contains(text(),'Market Type')]") WebElement marketTypeHeader;
 	@FindBy(xpath = "//span[contains(text(),'Returned Reason')]") WebElement returnedReasonHeader;
@@ -230,6 +231,8 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//span[contains(text(),'Payer')]") WebElement ppraHeader;
 	@FindBy(xpath = "//a[contains(text(),'Archive')]") WebElement archiveHeader;
 	@FindBy(xpath = "//input[@value='Print Payment Summary']") WebElement printBtn;
+	@FindBy(xpath = "//*[starts-with(text(),'In order to print the ERA, you must have Adobe Reader installed on your machine. Please download')]") 
+	WebElement printTextFooterTxt ;
 	@FindBy(xpath = "//input[@id='saveArchive']") WebElement saveBtn;
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//input[@name='btnSearch']") WebElement srchBtn;
@@ -250,7 +253,14 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	PaymentSummaryFislService service = null;
-	
+
+	public ViewPayments(TestBase testConfig)
+	{
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+	}
+
+	/*
 	public ViewPayments(TestBase testConfig)
 	{
 		super(testConfig);
@@ -276,7 +286,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 		else if(System.getProperty("Application").contains("CSR")){
 			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
 		}
-	}
+	} */
 	
 	public ViewPayments(TestBase testConfig,String filter)
 	{
@@ -4068,7 +4078,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean quickSearchUI = quickSearch.isDisplayed();
 		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
 		
-		Boolean marketTypUI = marketTyp.isDisplayed();
+		Boolean marketTypUI = marketTyp.isDisplayed(); 
 		Helper.compareEquals(testConfig, "Market Type Drop Down", true, marketTypUI);
 		
 		Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
@@ -4089,7 +4099,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean amountHeaderUI = amountHeader.isDisplayed();
 		Helper.compareEquals(testConfig, "Amount Header", true, amountHeaderUI);
 		
-		Boolean typeHeaderUI = typeHeader.isDisplayed();
+		Boolean typeHeaderUI = typeHeader.isDisplayed(); 
 		Helper.compareEquals(testConfig, "Type Header", true, typeHeaderUI);
 		
 		Boolean paymentStatusHeaderUI = paymentStatusHeader.isDisplayed();
@@ -4107,11 +4117,14 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean ppraHeaderUI = ppraHeader.isDisplayed();
 		Helper.compareEquals(testConfig, "Payer PRA Header", true, ppraHeaderUI);
 		
-		Boolean archiveHeaderUI = archiveHeader.isDisplayed();
-		Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
+		//Boolean archiveHeaderUI = archiveHeader.isDisplayed(); 
+		//Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
 		
 		Boolean printBtnUI = printBtn.isDisplayed();
 		Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
+		
+		Boolean printTextFooterUI = printTextFooterTxt.isDisplayed();
+		Helper.compareEquals(testConfig, "Print Text Footer UI", true, printTextFooterUI);
 	}
 
 	public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
