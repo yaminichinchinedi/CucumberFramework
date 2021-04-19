@@ -173,14 +173,15 @@ public class CSRHomePage {
 		}
     
     public void clickBillingServiceInfoLink()
-    {      Browser.wait(testConfig, 7);
+    {     
            Element.clickByJS(testConfig,lnkbillingservice,"Billing Service Information");
-           
     }
-    public void clickOptmPaySolnLink()
-    {      Browser.wait(testConfig, 2);
-           Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
-           
+    
+    public OptumPaySolution clickOptmPaySolnLink()
+    {
+        Element.fluentWait(testConfig, lnkOptPaySoln, 60, 1, "Optum Pay Solutions");   
+    	Element.clickByJS(testConfig,lnkOptPaySoln,"Optum Pay Solutions");
+		return new OptumPaySolution(testConfig);
     }
     public void clickManageInternalUserlink() {
 		Element.clickByJS(testConfig, lnkManageInternalUSer, "Manage Internal Users Link");
@@ -189,7 +190,7 @@ public class CSRHomePage {
 
 	public CSRHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
-			Helper.getPayerSchema(testConfig,searchCriteria);	
+			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		return this;

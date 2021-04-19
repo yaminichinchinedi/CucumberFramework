@@ -324,7 +324,7 @@ import main.java.reporting.Log;
 	
 
 	//Verifies element is present on the page 
-	public static void verifyElementVisiblity(WebElement button,String namOfButton)
+	public static void verifyElementIsEnabled(WebElement button,String namOfButton)
 	{
 		try
 		{
@@ -836,10 +836,15 @@ public static boolean waitForPresenceOfAllElements(TestBase testConfig,By locato
 	return true;
 }
 
-public static boolean waitForElementTobeClickAble(TestBase testConfig,WebElement elt, long timeOut) {
- WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
-	wait.until(ExpectedConditions.elementToBeClickable(elt));
-	return true;
+public static void waitForElementTobeClickAble(TestBase testConfig,WebElement elt, long timeOut) {
+	try {
+		WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
+		wait.until(ExpectedConditions.elementToBeClickable(elt));
+	}
+	catch(Exception e) {
+		Log.Fail("Execption occurred while checking the element" + e);
+	}
+	
 }
 
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)

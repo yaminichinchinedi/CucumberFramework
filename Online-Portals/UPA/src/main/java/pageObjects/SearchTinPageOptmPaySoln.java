@@ -55,6 +55,8 @@ public class SearchTinPageOptmPaySoln {
 	}
 	
 	
+	
+	
 	public SearchTinPageOptmPaySoln enterInvalidOrNotAssociatedTinAndSrch(String tinType, String userType) {
 		
 		String tin = null;		

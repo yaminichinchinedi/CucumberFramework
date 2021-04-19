@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.server.handler.interactions.touch.Scroll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -68,7 +70,7 @@ public class OptumPaySolution {
 	WebElement txtActivationAdminName;
 	@FindBy(xpath = "//div[@id='cancelationModal']//h2") 
 	WebElement duringTrialCancelPopUpHeading;
-	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']//h2") 
+	@FindBy(xpath = "//div[@id='cancelationPostTrialModal']//h2") ////*[@id="cancelationModal"]/h2
 	WebElement postTrialCancelPopUpHeading;
 	@FindBy(xpath = "//div[2]/div[1]/button[1]/span[1]") 
 	WebElement btnCancelOnPopUp;
@@ -100,9 +102,11 @@ public class OptumPaySolution {
 	List <WebElement> tileContentUI;
 	@FindBy(xpath="//span[contains(text(),'Manage My Plan')]")
 	WebElement manageMyPlanText;
-	@FindBy(id="openCancelationPostTrialPopup")
+	//@FindBy(id="openCancelationPostTrialPopup")
+	@FindBy(linkText="Cancel My Plan")
 	WebElement lnkCancelPlanPostTrial;
-	@FindBy(id="openCancelationPopup")
+	//@FindBy(id="openCancelationPopup")
+	@FindBy(linkText="Cancel My Plan")
 	WebElement lnkCancelPlanDuringTrial;
 	
 	@FindBy(className="wrapperTooltip")
@@ -135,13 +139,13 @@ public class OptumPaySolution {
    WebElement tilePlanType;
    @FindBy(id="logOutId")
    WebElement lnkLogOut;
-   @FindBy(xpath="//*[@id='ui-id-3']//div")
+   @FindBy(xpath="//*[@id='ui-id-1']//div")
 	WebElement hoverPlanType;
-	@FindBy(xpath="//*[@id='ui-id-4']//div	")
+	@FindBy(xpath="//*[@id='ui-id-2']//div")
 	WebElement hoverRate;
-	@FindBy(xpath="//*[@id='ui-id-5']/div")
+	@FindBy(xpath="//*[@id='ui-id-3']//div")
 	WebElement hoverFees;
-	@FindBy(xpath="//*[@id='ui-id-6']/div")
+	@FindBy(xpath="//*[@id='ui-id-4']//div")
 	WebElement hoverManageMyPlan;
 
 	@FindBy(id="rate")
@@ -320,6 +324,21 @@ public class OptumPaySolution {
 	@FindBy(className="text-red")
 	WebElement redTextError;
 	
+	@FindBy(xpath="//div[@class='modal-body']/p")
+	WebElement feeRefundPopUpText2;
+	
+	@FindBy(xpath="//div[@id='refundConfirmation']/p")
+	WebElement feeRefundPopUpText1;
+	
+	@FindBy(xpath="//span[contains(text(),'Cancel')]")
+	WebElement refundPopUpCancelButton;
+	
+	@FindBy(xpath="//span[contains(text(),'Refund') and @class='ui-button-text']")
+	WebElement refundPopUpRefundButton;
+	
+	@FindBy(xpath="//select[@name='selectedRefundReason']")
+	WebElement reasonDropDownrefundPopUp;
+	
 	@FindBy(xpath = "//button[contains(text(),'Get Started with Optum Pay Today')]") 
 	WebElement getStartedHeaderBtn;
 	@FindBy(xpath="//input[@value='Get Started']") 
@@ -351,6 +370,9 @@ public class OptumPaySolution {
 	WebElement btnSave;
 	@FindBy(xpath="//button[contains(text(),'Change']")
 	WebElement btnChange;
+	@FindBy(className="ui-button-text")
+	List<WebElement> acceptPremiumBtn;
+	
   //Added by Mohammad Khalid
   		String headerTop1_Premium ="Important reminder:";
   		String headerTop2_Premium ="Is your provider organization tax exempt?";
@@ -364,9 +386,13 @@ public class OptumPaySolution {
   		String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 	
 		private TestBase testConfig;
-		public OptumPaySolution(TestBase testConfig) {
+		
+		public OptumPaySolution(TestBase testConfig) 
+		{
 			this.testConfig=testConfig;
-			PageFactory.initElements(testConfig.driver, this);
+			PageFactory.initElements(testConfig.driver, this);		
+			   if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
+				   Element.fluentWait(testConfig, Element.findElement(testConfig, "xpath", "//*[@name='taxIndNbr']"), 60, 1, "Tin Selector");
 		}
 		public void verifyHeaders(){
 			Helper.compareEquals(testConfig, "1st Tile Header", "Provider Name", txtProvNameHeader.getText().trim());
@@ -412,7 +438,7 @@ public class OptumPaySolution {
 			Helper.compareEquals(testConfig, "2nd Tile text- Activation Date", "Activation Date:", planTypeInfo.substring(37, 53).trim());	
 			sqlRowNo=1344;
 			testConfig.getRunTimeProperty("statusOfStandardRecd");
-			testConfig.getRunTimeProperty("$SelectedOrDefault");
+			testConfig.getRunTimeProperty("SelectedOrDefault");
 			data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			String activationDate= data.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
 			activationDate=Helper.changeDateFormat(activationDate, "yyyy-mm-dd", "mm/dd/yyyy");
@@ -433,18 +459,10 @@ public class OptumPaySolution {
 			int sqlRowNo=1111,i=1,j=0;
 			HashMap<Integer, HashMap<String, String>> cancelReasonDB=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 			ArrayList<String> cancelReasonList=new ArrayList<String>(){{add("Not using the portal as much as I thought I would");add("I receive my data from a clearinghouse");add("I don't need the search tools");add("I don't need historical claim data");add("I don't need additional users, 2 is sufficient");add("The service is too costly for my practice");add("Other");}};
-			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Unlimited number of users");add("The ability to search claims");add("Years of claims and remittance history maintained for easy access");add("Multiple remittance options (835, EPRA or PPRA)");}};
-			
-			if(trialStatus.equalsIgnoreCase("PostTrial and Paid"))
-			{ 
-				Element.click(lnkCancelPlanPostTrial, "Cancel My Subscription Link");
-				Element.verifyElementPresent(popUpCancellationPostTrial, "Post Trail Pop Up Cancellation");
-				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Heading text","Call to cancel",postTrialCancelPopUpHeading.getText().toString());
-				Helper.compareEquals(testConfig, "Post Trail Cancellation Popup Body text","In order to cancel your participation in Optum Pay, you will need to call 1-877-620-6194 for assistance. The process may take up to 7 days to process, in which time you will be responsible for any charges to your account. If at any time you will like to reinstate the full functionality of Optum Pay, please return to this tab.",postTrialCancelPopUpText.getText().toString());
-			}
-			else if(trialStatus.equalsIgnoreCase("WithinTrial and Paid"))
-			{  
+			ArrayList<String> popUpTextList=new ArrayList<String>(){{add("Workflow management tools and claim count information");add("The ability to search claims");add("36 months of claims and remittance history maintained for easy access");}};
+ 
 				Element.click(lnkCancelPlanDuringTrial, "Cancel My Subscription Link");
+			
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","You are about to lose important functionality through Optum Pay.",duringTrialCancelPopUpHeading.getText().toString());
 				Helper.compareEquals(testConfig, "Trail Cancellation Popup Heading text","By cancelling your Optum Pay access, you will be losing features that many providers consider vital to their practice, including:",duringTrialCancelPopUpBody1.getText().toString());
 				for( WebElement cancelPopUptext : duringTrialCancelPopUpBody2)
@@ -470,7 +488,7 @@ public class OptumPaySolution {
 				Element.click(btnCancellationSubmitTrial,"click on yes i want to cancel");
 				Element.verifyElementPresent(errorCancelWithoutReason, "Error thrown when reason is not selected");
 				Helper.compareEquals(testConfig, "Error thrown when other reason is not given", "Please enter Other reason for termination.", errorCancelWithoutReason.getText().toString());
-			}
+				
 			
 		}
        
@@ -536,12 +554,8 @@ public class OptumPaySolution {
 
 		public OptumPaySolution validateFeeTitle()
 		{
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		    String feeTitle="Accrued fees month to date: $" +data.get("ACCRDFEE").toString().substring(0,data.get("ACCRDFEE").toString().length());
-  			Helper.compareContains(testConfig, "1st part of Fee Title", feeTitle, Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div[1]/div[3]/div[2]").getText());
-			//Helper.compareContains(testConfig, "2nd part of Fee Title", "Past due fees: $0.00", Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-options']/div/div[3]").getText());
-            //covered in another US
+			validatePastdueFee().validateAccruedFeesMonth();
+			
 			return this;
 		}
 
@@ -550,7 +564,7 @@ public class OptumPaySolution {
 		public OptumPaySolution verifyInvalidTINonOptumPaySolution(String invalidTIN) throws Exception 
 		{
 			Element.expectedWait(enterTIN, testConfig, "TIN field","TIN Field");
-			Element.enterData(enterTIN, invalidTIN, "TIN entered as : "+invalidTIN, "EnterTIN");
+			Element.enterDataByJS(testConfig,enterTIN, invalidTIN, "TIN entered as : "+invalidTIN);
 			Element.clickByJS(testConfig,searchBtn, "Search Button");
 			Browser.wait(testConfig, 4);
 			boolean isInteger;
@@ -581,7 +595,8 @@ public class OptumPaySolution {
 			Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			
 			if(portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().length()>0)
-			{String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
+			{//String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_DTTM").toString().trim().substring(0, 10).trim();
+			String activationDate= portalUserData.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().trim().substring(0, 10).trim();
 			 activationDate=Helper.changeDateFormat(activationDate, "yyyy-mm-dd", "mm/dd/yyyy");
 				Helper.compareContains(testConfig, "Plan Type Tile text- Activation Date", activationDate, tilePlanType.getText().trim());
 			}
@@ -645,9 +660,11 @@ public class OptumPaySolution {
 			  testConfig.getRunTimeProperty("prdctSelected").equalsIgnoreCase("Premium") &&
 			  testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") || testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AV") )
 			{
-			if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
+			//if( (changeRateValue.equals("valid value") && changeRateReason.equalsIgnoreCase("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
+		    if( (changeRateValue.equals("valid value") && changeRateReason.contains("Other"))|| (changeRateValue.equals("Invalid value") && (!rateValue.contains("-"))))
 			Element.clickByJS(testConfig, lnkChangeRate, "Change Rate link");	
-			Element.enterData(rateTxtBox, rateValue, "change rate", "rate change textbox");
+		    Element.clearData(rateTxtBox, "change rate");
+			Element.enterDataByJS(testConfig,rateTxtBox, rateValue, "change rate");
 			
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
 			Element.selectByVisibleText(rsnRtChngdrpdwn, "Other", "reason for change dropdown");
@@ -655,22 +672,24 @@ public class OptumPaySolution {
 			Element.selectByVisibleText(rsnRtChngdrpdwn, changeRateReason, "reason for change dropdown");
 			
 			if (changeRateReason.equalsIgnoreCase("Other"))
-			Element.enterData(otrRsnTxtAra, "Testing", "Other Change rate", "Other Change TextArea");
+			Element.enterDataByJS(testConfig,otrRsnTxtAra, "Testing", "Other Change rate");
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
-			Element.enterData(otrRsnTxtAra, "", "Other Change rate", "Other Change TextArea");
+			Element.enterDataByJS(testConfig,otrRsnTxtAra, "", "Other Change rate");
 			
 			Browser.wait(testConfig,1);
 			Element.clickByJS(testConfig,btnSaveChangeRate,"Save Rate Change");
 			
 			Helper.compareContains(testConfig, "PopUp text", "Are you sure?" ,popUpChangeRate.getText().trim());
-			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this" ,popUpChangeRate.getText().trim());
-			Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			Helper.compareContains(testConfig, "PopUp text", "If you proceed with this rate change the new per payment rate for this\n" + 
+					"TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
+			//Helper.compareContains(testConfig, "PopUp text", "TIN will be effective starting the next business day" ,popUpChangeRate.getText().trim());
 			
 	        Element.clickByJS(testConfig, btnChangeRatePopupChange, "Change btn click");
 			
 	        if (changeRateValue.equals("Invalid value")|| changeRateReason.equalsIgnoreCase("Other with Blank") )
-	        {
-	        String actual= Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-tabs']/div[1]").getText();
+	        {Browser.wait(testConfig, 2);
+	        String actual= Element.findElement(testConfig, "xpath", "//*[@id=\"optum-pay-tabs\"]/div[1]/ul/li").getText(); //rate_input--error_message
+	         //String actual= Element.findElement(testConfig, "class", "rate_input--error_message").getText();
 	        if (changeRateValue.equals("Invalid value"))
 	        Helper.compareContains(testConfig, "Error Validation", "The rate must be greater than or equal to 0 and less than the system global rate", actual);
 			if (changeRateReason.equalsIgnoreCase("Other with Blank"))
@@ -683,9 +702,9 @@ public class OptumPaySolution {
 		}
 			public void validateInfoIconHover() {
 				for(WebElement title: titles)
-				  Element.mouseHoverByJS(testConfig, title, "title");
-		 
-				Helper.compareEquals(testConfig, "Plan Type","Providers will be billed monthly\n" + 
+				Element.mouseHoverByJS(testConfig, title, "title");
+
+				Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly\n" + 
 						"for any fees incurred the previous\n" + 
 						"month. For example, fees accrued\n" + 
 						"during the month of June will be\n" + 
@@ -1065,11 +1084,25 @@ public class OptumPaySolution {
 			int sqlRowNo=1630;
 			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		    String feeTitle=null;
+		    if(StringUtils.equals(data.get("PASTDUEFEE").toString(),""))
+		    	feeTitle="Past due fees: $0.00";
+		    else
 			feeTitle="Past due fees: $" +data.get("PASTDUEFEE").toString();
 			 if(System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText());
+			Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTileUPA.getText().substring(feeTileUPA.getText().indexOf("Past"), feeTileUPA.getText().length()));
 			 else
-			 Helper.compareContains(testConfig, "Past due fee value", feeTitle, feeTile.getText());
+			 Helper.compareEquals(testConfig, "Past due fee value", feeTitle, feeTile.getText().substring(feeTile.getText().indexOf("Past"), feeTile.getText().length()));
+			return this;
+		}
+	 	public OptumPaySolution validateAccruedFeesMonth()
+		{
+			String amount= DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		    String feeTitle=null;
+			feeTitle="Accrued fees month to date: $" +amount;
+			if(System.getProperty("Application").contains("UPA"))
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")));
+			 else
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
 			return this;
 		}
 	 	
@@ -1144,12 +1177,12 @@ public class OptumPaySolution {
 			
 		}
 		public void verifyAccrudFeesInvoiceTab(String searchCriteria) {
-			int sqlRowNo=1616;
-			Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			Map data = DataBase.executeSelectQuery(testConfig,QUERY.PAST_DUE_ACCRUED_FEE, 1);
 		    String invoiceAccrudFee=null;
-		    if("TinWithInvoices".equals(searchCriteria)&& data.get("ACCRDFEE").toString().trim().length()>0)
-		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("ACCRDFEE").toString();
-		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("ACCRDFEE").toString().trim().length()==0)
+
+		    if("TinWithInvoices".equals(searchCriteria)&& data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()>0)
+		    invoiceAccrudFee="Accrued fees month to date: $" +data.get("DBT_FEE_ACCRD_AMT").toString();
+		    else if("TinWithoutInvoices".equals(searchCriteria)||data.get("DBT_FEE_ACCRD_AMT").toString().trim().length()==0)
 		    invoiceAccrudFee="Accrued fees month to date: $0.00" ;
 		    
 			Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());
@@ -1170,7 +1203,8 @@ public class OptumPaySolution {
 		}
 		
 		public void navigateToFeeSearchTab() {
-			Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+			//Element.click(testConfig, feeSearchTab, "Fee Search Tab", 3);
+			Element.clickByJS(testConfig, feeSearchTab, "Fee Search Tab");
 		}
 
 		public OptumPaySolution doSearch(String criteriaType) throws ParseException {
@@ -1178,19 +1212,19 @@ public class OptumPaySolution {
 			switch (criteriaType) {
 
 				case "feeSearchPaymentNumber": {
-					Browser.wait(testConfig, 5);
+//					Browser.wait(testConfig, 5);
 					String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("paymentNumber");
-					Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr, "payment number");
+					Element.enterDataByJS(testConfig, paymentNumber, dspl_consl_pay_nbr, "Enter Fee Search payment number as: " + dspl_consl_pay_nbr);
 					break;
 				}
 				case "feeSearchInvoiceNumber": {
-					Browser.wait(testConfig, 5);
 					String invoice_nbr = testConfig.getRunTimeProperty("invoiceNumber");
-					Element.enterData(invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber, "invoice number");
+					Element.enterDataByJS(testConfig,invoiceNumber, invoice_nbr, "Enter Fee Search invoice number as: " + invoiceNumber);
 					break;
 				}
-				case "feeSrchTINdetailsTabwthAllVal": {
-					Browser.wait(testConfig, 2);
+
+				case "feeSrchTINdetailsTabwthAllVal": 
+				{
 					clickDetailsTab();
 					Element.selectByVisibleText(feeTyp, "All", "All Value in Fee Type");
 					Element.selectByVisibleText(feeStatus, "All", "All Value in Fee Status");
@@ -1210,12 +1244,12 @@ public class OptumPaySolution {
 
 		public OptumPaySolution clickSearchBtn() {
 			Element.clickByJS(testConfig, searchButton, "Fee Search Button");
-			Browser.wait(testConfig, 2);
-			return new OptumPaySolution(testConfig);
+			return this;
 		}
+		
 		public OptumPaySolution clickDetailsTab() {
 			Element.clickByJS(testConfig, detailsTab, "details Tab");
-			return new OptumPaySolution(testConfig);
+			return this;
 		}
 		public String getRecordCountFromUI() {
 			String resultCount = divShowRslts.getText().toString();
@@ -1308,29 +1342,36 @@ public class OptumPaySolution {
 		}
 		
 		public OptumPaySolution clickFeesForRefund() {
-			Browser.wait(testConfig, 2);
-			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
+	        if(!refundFeeCheckbox.isDisplayed())
+	        	Element.fluentWait(testConfig, refundFeeCheckbox, 60, 1, "Show Fee for refund checkbox");
+     			Element.clickByJS(testConfig, refundFeeCheckbox, "Show Fee for refund checkbox");
 			return this;
 		}
 		
 		public OptumPaySolution validateFeeRefundButtonsAndFunctionality(String feeSearchCriteria) {
+			
 			clickFeesForRefund();
 		
-			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
-			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
-			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
-			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+		    Element.verifyElementNotEnabled(refundFeeButton, "refund fee button is disabled");
+		    Element.verifyElementNotEnabled(refundFeeCancelButton, "refund fee cancel button");
+		    Element.verifyElementIsEnabled(selectAll, "Select all");
+			
+//			Assert.assertFalse(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+//			Assert.assertFalse(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+//			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+//			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
             
 			Element.clickByJS(testConfig, refundSingleRow, "first entry in the refund fee");
-		    refundFeeCancelButton.click();
-		    Log.Comment("Cancel button clicked");
-			selectAll.click();
-			Log.Comment("Select All button clicked");
-		    
-			Assert.assertTrue(refundFeeButton.isEnabled(), "refund fee button assertion failed");
-			Assert.assertTrue(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
-			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
-			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
+			Element.clickByJS(testConfig, refundFeeCancelButton, "refund fee cancel button");
+			Element.clickByJS(testConfig, selectAll, "select All button");
+		   
+			Element.verifyElementIsEnabled(refundFeeButton, "Refund Button");
+			Element.verifyElementIsEnabled(refundFeeCancelButton, "refundFeeCancelButton");
+			Element.verifyElementIsEnabled(selectAll, "Select all");
+//			Assert.assertTrue(refundFeeButton.isEnabled(), "refund fee button assertion failed");
+//			Assert.assertTrue(refundFeeCancelButton.isEnabled(), "refund fee cancel button assertion failed");
+//			Assert.assertTrue(selectAll.isEnabled(), "refund fee select all assertion failed");
+//			Log.Comment("Refund fee, selectAll, cancel button assertion successfully completed");
 			
             if(feeSearchCriteria.equalsIgnoreCase("feeSearchInvoiceNumber")) {
             	Map<String,String> totalCount = DataBase.executeSelectQuery(testConfig,QUERY.EXPECTED_COUNT_FOR_FEE_REFUND_INVOICE_NUMBER, 1);
@@ -1342,10 +1383,8 @@ public class OptumPaySolution {
             	Helper.compareEquals(testConfig, "Asserting number of entries in DB vs UI", totalCount2.get("COUNT"), getRecordCountFromUI());
             }	
 			
-            clickFeesForRefund();			
-			Browser.wait(testConfig, 2);
-			clearButton.click();
-			Log.Comment("Fee search criteria's cleared");			
+            clickFeesForRefund();		
+            Element.clickByJS(testConfig, clearButton, "Clear button");
 			return this;
 		}		
 		
@@ -1355,7 +1394,7 @@ public class OptumPaySolution {
 	 	{
 	 		String planTypeInfoIconMsg="Your provider organization will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced within the first 5 business days of July. You will receive an email in advance of the debit to your TIN-level bank account and you can review the fees on the Invoices subtab.";
 	 		String rateInfoIconMsg="Per payment fees are calculated based on the total payment amount.";
-	 		String feesInfoIconMsg="To view individual per-payment fees, please visit the View Payments page.  Fees will be billed monthly.";
+	 		String feesInfoIconMsg="To view individual per- payment fees, please visit the View Payments page.  Fees will be billed monthly.";
 	 		String manageMyPlanInfoIconMsg="To cancel the full functionality of Optum Pay, the Provider administrator must complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com." + 
 	 				"Note:  Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.  Any fees incurred prior to cancellation will be billed at the end of the current billing cycle.";
 	 		
@@ -1423,15 +1462,16 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 		 				Element.clickByJS(testConfig, invoice, "invoice");
 		 				oldWindow=Browser.switchToNewWindow(testConfig);
 		 				
-		 				Browser.waitForLoad(testConfig.driver);
-		 				if(redTextError.isDisplayed())
-		 				{
-		 					Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
-		 				}
-		 				else 
-		 				{
-		 					Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber"+invoiceNum);
-		 				}
+		 				//Browser.waitForLoad(testConfig.driver);
+		 				try {
+                            if(redTextError.isDisplayed())
+                                Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
+                            //Log.Fail("The Invoice not available");
+                        }
+                        catch(Exception e)
+                        {
+                            Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber="+invoiceNum);
+                        }
 		 				Browser.closeBrowser(testConfig);
 		 				Browser.switchToParentWindow(testConfig, oldWindow);
 		 				break;
@@ -1441,6 +1481,58 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 	 		}	 		
 	 		return this;
 	 	}	
+
+
+		public void selectFeeAmountCheckBoxAndCalculateFeeAmount()
+		{
+			double feeAmount=0;
+			clickFeesForRefund();
+			
+			List<WebElement> ls = Element.findElements(testConfig, "xpath", "//table[@class='table fee_table']/tbody/tr");
+			int feeCount = ls.size();
+			Log.Comment("Total Fee Number" + feeCount);
+			testConfig.putRunTimeProperty("TotalNumberOfFees", String.valueOf(feeCount));
+			
+			for (int i=0; i<ls.size(); i++)
+			{
+				String xpathFeeAmount = "//table[@class='table fee_table']/tbody/tr["  + (i+1) + "]/td[5]";
+				WebElement FeeAmount = Element.findElement(testConfig, "xpath", xpathFeeAmount);
+				feeAmount = feeAmount + Double.valueOf(FeeAmount.getText().trim().substring(1, FeeAmount.getText().trim().length()));
+			}
+			
+			testConfig.putRunTimeProperty("TotFeeAmountRefund", String.valueOf(feeAmount));
+			
+			selectAll.click();
+			Log.Comment("Select All button clicked");
+			
+			refundFeeButton.click();
+			Log.Comment("Refund Button clicked");
+			
+		}
+		
+		
+		public void verifyTextOnRefundPopUI()
+		{
+			String ex_AreYouSure = "Are You Sure?";
+			String ex_RefundText = "You are about to refund "+ testConfig.getRunTimeProperty("TotalNumberOfFees") +" fees totaling $"+ testConfig.getRunTimeProperty("TotFeeAmountRefund") +". This amount will be reflected as a credit on the provider's next invoice. Please select the reason for the refund.";
+			
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_AreYouSure, feeRefundPopUpText1.getText().trim());
+			Helper.compareEquals(testConfig, "Refund Pop UI Text", ex_RefundText, feeRefundPopUpText2.getText().trim());
+			Element.clickByJS(testConfig, refundFeeCancelButton, "Refund Pop Up Cancel Button");
+		
+		}
+		
+		public void clickOnSelectAllandRefundButton()
+		{
+			Element.clickByJS(testConfig, selectAll, "Select All Button clicked");
+			Element.clickByJS(testConfig, refundFeeButton, "Refund Button");
+		}
+		
+		public void selectRefundReasonandClickOnRefundButton()
+		{
+			Element.selectByVisibleText(reasonDropDownrefundPopUp, "Fraud", "Selecting 'Fraud' Reason for Fee Refund");
+		}
+		
 
 		public void validateOptumPaySolutionPage(String userType, String portalAccess, String tinType) {
 
@@ -1480,7 +1572,7 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 				date=Helper.getCurrentDate("MM/dd/yyyy");
 
 				Element.clickByJS(testConfig, cancelSubscriptionLinkCsr, "Cancel link-CSR");
-
+                Element.clearData(cancelRequestDateTxtBox,"Cancel Request Date");
 				Element.enterDataByJS(testConfig, cancelRequestDateTxtBox, date, "Cancel Request Date");
 				Element.enterDataByJS(testConfig, firstNameTxtBox, fname, "First Name");
 				Element.enterDataByJS(testConfig, lastNameTxtBox, lname, "Last Name");
@@ -1546,7 +1638,10 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 			else Log.Fail("Premium Not Cancelled sucessfully");
 
 			if(trialStatus.compareToIgnoreCase("New Enroll WithinTrial and Paid")==0) {
+			  if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
 				Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(effectiveDate, 30).toString(), portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
+			  else
+				Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(effectiveDate, 29).toString(), portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
 			}
 			else Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Post Trial TIN", Helper.getCurrentDate("MM/dd/yyyy").toString(), Helper.changeDateFormat(testConfig, portalUserTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10), "yyyy-mm-dd","mm/dd/yyyy").toString());
 
@@ -1570,7 +1665,7 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 
 		public OptumPaySolution verifyPremiumCancelledOnUIAndChangeTinToPremium(String trialStatus, String portal) {
 			if(portal.equals("CSR"))
-				Helper.compareContains(testConfig, "Plan Change to Limited", "Limited", txtProvNameInfo.getText());
+				Helper.compareContains(testConfig, "Plan Change to Limited", "Limited",Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]//div[1]/div/div[2]").getText() );//txtProvNameInfo.getText());
 			else Element.verifyElementPresent(getStartedBtn, "getStartedBtn");
 
 			if(trialStatus.equals("New Enroll WithinTrial and Paid"))
@@ -1581,7 +1676,34 @@ public OptumPaySolution clickInvoiceNumberAndOpenPdf()
 			DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_CANCELLED_TO_STANDARD_ROWS);
 			return this;
 		}
+		
+		public OptumPaySolution convertToPremiumFromUpa()
+		{
+			Element.clickByJS(testConfig, getStartedBtn, "Get Started Btn");
+			Element.clickByJS(testConfig, acceptPremiumBtn.get(2), "I Accept, activate Premium");
+			return this;
+		}
 
+		public OptumPaySolution verifyEffectiveDateOfTrialPendingRecord(String portalAccess, String tinType) throws ParseException
+		{
+			String trialDate;
+
+			testConfig.putRunTimeProperty("prdSelection", portalAccess);
+			testConfig.putRunTimeProperty("stsOfStdRecd", "P");
+
+			if(portalAccess.equals("Premium") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PS");
+			else if(portalAccess.equals("Standard") && tinType.equals("AO"))
+				testConfig.putRunTimeProperty("SelectedOrDefault", "PD");
+			else Log.Fail("Invalid");
+
+			trialDate = DataBase.executeSelectQuery(testConfig, QUERY.PREMIUM_TRIAL_FOR_TIN, 1).get("PRTL_PRDCT_SELECT_EFF_DTTM").toString();
+
+			Map selectionTable = DataBase.executeSelectQuery(testConfig, QUERY.PRODUCT_SELECTION_TIN_QUERY, 1);
+
+			Helper.compareEquals(testConfig, "Effective date of inserted Standard record for Within Trial TIN", Helper.addDays(trialDate, 30).toString(), selectionTable.get("PRTL_PRDCT_SELECT_EFF_DTTM").toString().substring(0, 10));
+			return this;
+		}
 
 }
 

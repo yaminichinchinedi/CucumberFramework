@@ -40,7 +40,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	public void user_Deletes_paymentdetail_record_from_ole_ppra_status_dtl_and_ole_ppra_status_table(String PaymentNumber) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("PaymentNumber",PaymentNumber);
-		Browser.wait(testConfig, 10); 
+		Browser.wait(testConfig, 5); 
 		//
 		int sqlRowNo1=227;
         testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);
@@ -53,11 +53,12 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
         DataBase.executeDeleteQuery(testConfig, sqlRowNo2);
 	}
 	
-	@Then("^User selects \"([^\"]*)\" for Consol_Pay_Nmbr \"([^\"]*)\" with NPI value as \"([^\"]*)\" with fromdate \"([^\"]*)\" and todate \"([^\"]*)\" and click on search button\\.$")
+	@Then("^User selects \"([^\"]*)\" for Dspl_Consol_Pay_Nmbr \"([^\"]*)\" with NPI value as \"([^\"]*)\" with fromdate \"([^\"]*)\" and todate \"([^\"]*)\" and click on search button\\.$")
 	public void user_selects_for_Consol_Pay_Nmbr_with_NPI_value_as_with_fromdate_and_todate_and_click_on_search_button(String srchCriteria, String PaymentNumber, String NPI, String DOPFromDate, String DOPToDate ) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", PaymentNumber);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);
+		testConfig.putRunTimeProperty("srchCriteria",srchCriteria);
 		System.setProperty("NPI", NPI);
 		System.setProperty("DOPFromDate", DOPFromDate);
 		System.setProperty("DOPToDate", DOPToDate);
@@ -69,6 +70,7 @@ public class SearchRemittanceSearchCriteriaSteps extends TestBase{
 	    // Write code here that turns the phrase above into concrete actions
 		System.setProperty("CONSL_PAY_NBR", PaymentNumber);
 		testConfig.putRunTimeProperty("CONSL_PAY_NBR",PaymentNumber);
+		testConfig.putRunTimeProperty("srchCriteria",srchCriteria);
 		srchCriteriaPage.doSearch(srchCriteria); 
 	}
 	

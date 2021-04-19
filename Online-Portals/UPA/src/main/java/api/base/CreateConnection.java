@@ -100,7 +100,7 @@ public abstract class CreateConnection {
 				    String responseLine = null;
 				    while ((responseLine = br.readLine()) != null) {
 				        //response1.append(responseLine.trim());
-						System.out.println(responseLine);
+//						System.out.println(responseLine);
 				        response = response + responseLine.trim();
 				    }
 				}

@@ -153,7 +153,7 @@ public class SearchTinPageSearchRemittance {
 		 
     case "PROV":
        {   
-      	 //Element.selectVisibleText(txtboxTinNo,tin,"Enter TIN in CSR");
+      	 
       	 Element.enterData(txtboxTinNo, tin, "Enter TIN", "Enter TIN in CSR");
       	 Element.click(submitBtn, "Click Search Button");
       	 break;
@@ -272,12 +272,15 @@ public class SearchTinPageSearchRemittance {
 	public String getTinCSR(String paymentType)
 	{
 		dataProvider=new ViewPaymentsDataProvider(testConfig);
-		return "";//dataProvider.getTinForPaymentType(paymentType);
+		String tin=dataProvider.getTinForSearchCriteria(paymentType,"","");
+		return tin;//dataProvider.getTinForPaymentType(paymentType);
 	}
 	
 	public SearchTinPageSearchRemittance enterHCTin(String Tin)
     {
-	  Element.enterData(txtboxTinNo,Tin, "Enter Tin as : " +Tin, "Tin Textbox");
+		Element.waitForElementTobeClickAble(testConfig, txtboxTinNo, 20);
+		Element.clickByJS(testConfig, txtboxTinNo, "TIN text box");
+		Element.enterData(txtboxTinNo,Tin, "Enter Tin as : " +Tin, "Tin Textbox");
       return this;
     }
 	
