@@ -82,7 +82,7 @@ And User clicks on UPA logout
 
 
 #Author: Mohammad Khalid-invoices tab not available
-@UPA_OPS_US3222937_ProvAdmin @UPAStable
+@UPA_OPS_US3222937_ProvAdmin @UPAStable 
 Scenario Outline: To validate Invoices tab for Provider admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -100,7 +100,7 @@ And User clicks on UPA logout
 
  
  #Author: Mohammad Khalid-invoices tab not available
-@UPA_OPS_US3222937_BSAdmin @UPAStable
+@UPA_OPS_US3222937_BSAdmin @UPAStable 
 Scenario Outline: To validate Invoices tab for BS admin users
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -147,18 +147,41 @@ And User clicks on UPA logout
       
       
 #Author: Mohammad Khalid
-@UPA_OPS_US3106783 @UPAStable
+@UPA_OPS_US3106783 @UPAStable 
 Scenario Outline: To test page text messaging on OPS for Prov Admin
 
 Given User navigates to UPA portal and enters "<credentials>" and login
 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 And User clicks on Optum Pay Solutions tab
+Then User validated header and footer message on options tab for "<tinType>" for "<userType>".
 Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
 And User clicks on UPA logout
 
  Examples:
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
  |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		AO			|  
+ |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		VO			|  
+ |      PROV_Admin | 	 PROV				|		 WithinTrial and Paid 		|			Premium		  |   AO			|
+ 
+     
+#Author: Amit
+@UPA_OPS_US @UPAStable 
+Scenario Outline: To test page text messaging on OPS for BS Admin
+
+Given User navigates to UPA portal and enters "<credentials>" and login
+And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+And User clicks on Optum Pay Solutions tab
+Then User Enters tin for OPS and click on search button for "<userType>".
+Then User validated header and footer message on options tab for "<tinType>" for "<userType>".
+Then User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile 
+And User clicks on UPA logout
+
+ Examples:
+ |	credentials  |    userType  | 			searchCriteria				|		portalAccess	| tinType	 	|  
+ |   BS_Admin  	 | 	 			BS		|		 	PremiumOrStandardTIN		|			Premium  	  |		AO			|  
+ |   BS_Admin  	 | 	 			BS		|		 	PremiumOrStandardTIN		|			Premium  	  |		VO			|
+ 
+ 
  
  
  #Author: Mohammad Khaid

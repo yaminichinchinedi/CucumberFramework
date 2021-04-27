@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
+
 import org.testng.Assert;
 
 public class UPAHomePage extends HomePage {
@@ -341,7 +343,6 @@ public class UPAHomePage extends HomePage {
 			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
-		testConfig.putRunTimeProperty("portalAccess",portalAccess);
 		testConfig.putRunTimeProperty("userType",userType);
 		switch (userType)
 			{
@@ -421,6 +422,23 @@ public class UPAHomePage extends HomePage {
 				break;
 			case "PROV":
 				if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") && StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and Paid")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				}
+				else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
 						credentials.equalsIgnoreCase("PROV_Admin") &&
 						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
 					String[] expectedProvHeaders = {

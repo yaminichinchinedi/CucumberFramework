@@ -1117,6 +1117,7 @@ public class ViewPaymentsDataProvider {
 				}
 			if (searchCriteria.contains("WithinTrial and Paid")&& !tinType.equals("VO"))
 			{
+				testConfig.putRunTimeProperty("searchCriteria", "WithinTrial and Paid");
 		testConfig.putRunTimeProperty("portalAcs", "Premium");
 		testConfig.putRunTimeProperty("portalStat", "PS");
 		//sqlRowNo=1620;
