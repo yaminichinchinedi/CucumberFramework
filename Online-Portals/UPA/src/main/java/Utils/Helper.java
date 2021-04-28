@@ -317,6 +317,7 @@ public class Helper
 		
 			if (!actual.equals(expected))
 			{
+				Log.Comment("Difference in expected and actual is: "+StringUtils.difference(expected, actual));
 				Log.Fail(what, expected, actual);
 			}
 			else

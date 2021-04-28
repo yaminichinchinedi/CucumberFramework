@@ -11,6 +11,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.NoSuchWindowException;
@@ -223,7 +224,6 @@ public  class Log extends ExtentTestManager {
 		public static void Fail(String what, String expected, String actual) {
 			
 			Fail("Failed comparison of"+ " " + what + '\n' +"Expected was :" + " " +  expected + " " + '\n' + "Actual is :" + " " + actual);
-			
 		}
 		
 	public static void Pass(String what, String expected, String actual) {
