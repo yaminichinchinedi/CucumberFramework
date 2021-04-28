@@ -32,7 +32,7 @@ Feature:  UPA Home Page Functionality - Post Login
     Examples:
       | credentials | userType  |
       | BS_Admin    | BS_Admin  |
-      #| PAY_Admin   | PAY_Admin |
+      | PAY_Admin   | PAY_Admin |
 
   @UPA_US3179215 @homePage_func
   Scenario Outline: Provider Home page Carousel Text Validation
