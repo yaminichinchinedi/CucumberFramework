@@ -344,6 +344,7 @@ public class UPAHomePage extends HomePage {
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);
+		testConfig.putRunTimeProperty("searchCriteria", searchCriteria);
 		switch (userType)
 			{
 			   case "PROV": 
