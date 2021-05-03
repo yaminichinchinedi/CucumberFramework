@@ -1,11 +1,18 @@
 package main.java.stepDefinitions.RemittanceDetail;
 
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.RemittanceDetail;
 import main.java.pageObjects.SearchRemittance;
-import main.java.pageObjects.ValidateEnrollmentTypePage;
 
 public class RemittanceDetailSteps extends TestBase {
 	
@@ -306,5 +313,20 @@ public class RemittanceDetailSteps extends TestBase {
 	 @Then("^User verifies Print Request and Print Available button is disabled$")
 	 public void user_verifies_Print_Request_and_Print_Available_button_is_disabled() throws Throwable {
 		 remitDetail.verifyPrintAvilableRequestVisiblity();
-	 }
+	}
+
+	@Then("Verify FISL Response vs Remittance Detail UI")
+	public void verifyFISLResponseVsRemittanceDetailUI()
+			throws SAXException, ParserConfigurationException, IOException, JAXBException {
+		remitDetail.validateFISLvsUI();
+	}
+	@When("^Validate Payment with PLB Adjustments$")
+    public void validate_Payment_with_PLB_Adjustments() throws Throwable {
+       
+    	remitDetail.validatePLBAdj();
+    }
+	@And("User Enters TIN for Check Number")
+	public void userEntersTINForCheckNumber() {
+		remitDetail.enterTINForCheckNumber();
+	}
 }

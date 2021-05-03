@@ -39,6 +39,7 @@ public class SearchRemittanceSearchCriteria {
 	
 	TestBase testConfig=TestBase.getInstance();
 	private ViewPaymentsDataProvider dataProvider;
+	private RemittanceDetail remittanceDetail = new RemittanceDetail(testConfig);
 	
 	@FindBy(id="checkNumberInputId")
 	WebElement checkNumber;
@@ -200,6 +201,7 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittance doSearch(String criteriaType) throws ParseException 
 	{
+		remittanceDetail.handleTechnicalDifficultyError();
 		String date="";
 		Map srchData=null;
 		int sqlRow = 0;

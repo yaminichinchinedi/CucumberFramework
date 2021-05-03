@@ -177,4 +177,48 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 				"VALUES ('{$tin}', 'Premium', 'P', 'A', CURRENT date, 'SYSTEM', 'SYSTEM', 'SYSTEM', CURRENT date, 'SYSTEM', CURRENT date, 'AllPayerPortal', 'SYSTEM', CURRENT date, 'Automation', 'TR'), \r\n" + 
 				"('{$tin}', 'Standard', 'F', 'P', CURRENT date+30, 'SYSTEM', 'SYSTEM', 'SYSTEM', CURRENT date+30, 'SYSTEM', CURRENT date+30, 'AllPayerPortal', 'SYSTEM', CURRENT date+30, 'Automation', 'PD')\r";
 		
+		public static final String GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS = "Select DISTINCT PROV_TAX_ID_NBR, UCP_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where CP_DSPL_CONSL_PAY_NBR IN\n" +
+				"(Select DISTINCT CP_DSPL_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where UCP_CONSL_PAY_NBR in (SELECT CONSL_PAY_NBR\n" +
+				"FROM PP001.PROVIDER_PAYOR_ADJUSTMENT\n" +
+				"GROUP BY CONSL_PAY_NBR\n" +
+				"HAVING COUNT(*) = 4\n" +
+				"ORDER BY CONSL_PAY_NBR ASC LIMIT 1))";
+
+		public static final String GET_TIN_PAYMENT_NUMBER_FOR_PLB_ADJUSTMENTS = "Select DISTINCT PROV_TAX_ID_NBR, UCP_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where CP_DSPL_CONSL_PAY_NBR IN\n" +
+				"(Select DISTINCT CP_DSPL_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where UCP_CONSL_PAY_NBR in (SELECT CONSL_PAY_NBR\n" +
+				"FROM PP001.PROVIDER_PAYOR_ADJUSTMENT\n" +
+				"GROUP BY CONSL_PAY_NBR\n" +
+				"HAVING COUNT(*) = 2\n" +
+				"ORDER BY CONSL_PAY_NBR ASC LIMIT 1))";
+
+		public static final String GET_CONSL_PAY_NBR_FOR_REMITTANCE_DETAIL = "SELECT SC.CP_DSPL_CONSL_PAY_NBR, PA.CONSL_PAY_NBR\n" +
+				"FROM OLE.SRCH_CONSOL_TBL SC\n" +
+				"LEFT JOIN PP001.PROVIDER_PAYOR_ADJUSTMENT PA ON SC.UCP_CONSL_PAY_NBR = PA.CONSL_PAY_NBR\n" +
+				"WHERE PROV_TAX_ID_NBR = '{$tin}'\n" +
+				"ORDER BY SC.CP_SETL_DT DESC\n" +
+				"FETCH FIRST ROW ONLY";
+
+		public static final String GET_PAYER_SCHEMA = "(Select DISTINCT PAYR_SCHM_NM from OLE.PAYER where PAYR_835_ID IN \n" +
+				"(Select DISTINCT PAYR_835_ID from OLE.SUB_PAYER where SUB_PAYR_DSPL_NM = '{$ui_Payer}'))";
+
+		public static final String GET_UCP_CONSOLIDATED_PAYMENT_NUMBER = "Select DISTINCT UCP_CONSL_PAY_NBR from OLE.SRCH_CONSOL_TBL where CP_DSPL_CONSL_PAY_NBR = '{$cpDsplConslPayNbr}'";
+
+		public static final String GET_PLB_DATA_FROM_DB = "Select PROV_ADJ_RSN_CD,PROV_ADJ_ID,PROV_PAYR_ADJ_AMT from PP001.PROVIDER_PAYOR_ADJUSTMENT WHERE CONSL_PAY_NBR = '{$ucpConsolidatedPaymentNumber}'";
+		
+		public static final String GET_CHECK_NUMBER_AND_TIN = "select cpd.CHK_NBR as CHECK_NBR,p.PROV_TAX_ID_NBR\n" +
+				"from PP001.PROVIDER p, PP001.UNCONSOLIDATED_PAYMENT ucp,PP001.CONSOLIDATED_PAYMENT cp,\n" +
+				"OLE.PROC_CTL pc,\n" +
+				"PP001.CONSL_PAY_DTL cpd,\n" +
+				"OLE.ENROLLED_PROVIDER e\n" +
+				"where \n" +
+				"p.PROV_TAX_ID_NBR=e.PROV_TIN_NBR \n" +
+				"and cpd.CONSL_PAY_NBR = ucp.CONSL_PAY_NBR\n" +
+				"and p.PROV_KEY_ID =ucp.PROV_KEY_ID \n" +
+				"and cp.PROC_CTL_ID=pc.PROC_CTL_ID \n" +
+				"and e.ENRL_STS_CD='A' \n" +
+				"and pc.EXTRACT_STS_CD='C' \n" +
+				"and cpd.CHK_NBR is not null\n" +
+				"and cp.setl_dt between current date - 6 MONTHS and current date\n" +
+				"fetch first row only with ur";
+		
 }
