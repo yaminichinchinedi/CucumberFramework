@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsRequest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -293,6 +294,7 @@ public class RemittanceDetail {
 	private ViewPaymentsDataProvider dataProvider;
 	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();
     EPSClaimsResponseUI epsClaimsResponseUI = new EPSClaimsResponseUI();
+    EpsClaimsRequest epsClaimsRequest = new EpsClaimsRequest();
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
 	
@@ -2655,15 +2657,11 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception {
     handleTechnicalDifficultyError();
 
     if (testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0) {
-        String xmlRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<ns21:EpsClaimsRequest xmlns=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns20=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/Edi835ContentService_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns10=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns21=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentDetailService_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns19=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns18=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentUpdateService_v1_0\">\n" +
-                "\t<ns19:SearchCriteria ns19:FromRecord=\"-1\" ns19:MaxResult=\"10\" ns19:SortDirection=\"ASC\" ns19:SortFieldNumber=\"0\"/>\n" +
-                "\t<ns3:PaymentIdentifier>" + getFinalIdentifier() + "</ns3:PaymentIdentifier>\n" +
-                "    <ns2:ClaimFilterTypeCode>22</ns2:ClaimFilterTypeCode>\n" +
-                "</ns21:EpsClaimsRequest>";
-        Log.Comment("XML Request : \n" + xmlRequest);
 
-        String response = invokePostCall(xmlRequest);
+        // String response = invokePostCall(xmlRequest);
+        String response = epsRemittanceDetailHelper.postRequestGetResponse(
+                epsClaimsRequest.getEpsClaimsRequestWithReversal(getFinalIdentifier()));
+        Log.Comment("XML Response \n"+response);
 
         coreFISLvalidationWithUI(response);
     } else {
@@ -7025,15 +7023,10 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 
         if (testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0) {
 
-            String xmlRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                    "<ns21:EpsClaimsRequest xmlns=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns20=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/Edi835ContentService_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns10=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns21=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentDetailService_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns19=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns18=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentUpdateService_v1_0\">\n" +
-                    "\t<ns19:SearchCriteria ns19:FromRecord=\"-1\" ns19:MaxResult=\"10\" ns19:SortDirection=\"ASC\" ns19:SortFieldNumber=\"0\"/>\n" +
-                    "\t<ns3:PaymentIdentifier>"+getFinalIdentifier()+"</ns3:PaymentIdentifier>\n" +
-                    "    <ns2:ClaimFilterTypeCode>2,3</ns2:ClaimFilterTypeCode>\n" +
-                    "</ns21:EpsClaimsRequest>";
-            Log.Comment("XML Request : \n" + xmlRequest);
-
-            String response = invokePostCall(xmlRequest);
+            // String response = invokePostCall(xmlRequest);
+            String response = epsRemittanceDetailHelper.postRequestGetResponse(
+                    epsClaimsRequest.getEpsClaimsRequestWithCOB(getFinalIdentifier()));
+            Log.Comment("XML Response : "+response);
 
             coreFISLvalidationWithUI(response);
         }
@@ -7074,14 +7067,10 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         handleTechnicalDifficultyError();
         loadRemittanceDetailUIdata();
 
-        String xmlRequest = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
-                "<ns21:EpsClaimsRequest xmlns=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns20=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/Edi835ContentService_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns10=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns21=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentsService_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentDetailService_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns19=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns18=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/PaymentUpdateService_v1_0\">\n" +
-                "\t<ns19:SearchCriteria ns19:FromRecord=\"-1\" ns19:MaxResult=\"10\" ns19:SortDirection=\"ASC\" ns19:SortFieldNumber=\"0\"/>\n" +
-                "\t<ns3:PaymentIdentifier>" + getFinalIdentifier() + "</ns3:PaymentIdentifier>\n" +
-                "</ns21:EpsClaimsRequest>";
-        Log.Comment("XML Request : \n" + xmlRequest);
-
-        String response = invokePostCall(xmlRequest);
+        // String response = invokePostCall(xmlRequest);
+        String response = epsRemittanceDetailHelper.postRequestGetResponse(
+                epsClaimsRequest.getEpsClaimsRequestWithIdentifier(getFinalIdentifier()));
+        Log.Comment("XML Response : \n"+response);
 
         coreFISLvalidationWithUI(response);
     }
@@ -7408,14 +7397,11 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	
 	public void validatePLBAdj() throws Exception {
         try {
-            Boolean adjCodePLBUI = adjCodePLB.isDisplayed();
-            Helper.compareEquals(testConfig, "Adj Reason Code Header is Present for PLB", true, adjCodePLBUI);
+            Helper.compareEquals(testConfig, "Adj Reason Code Header is Present for PLB", true, adjCodePLB.isDisplayed());
 
-            Boolean refCodePLBUI = refCodePLB.isDisplayed();
-            Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLBUI);
+            Helper.compareEquals(testConfig, "Reference # Header is Present for PLB", true, refCodePLB.isDisplayed());
 
-            Boolean amntPLBHeaderUI = amntPLBHeader.isDisplayed();
-            Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeaderUI);
+            Helper.compareEquals(testConfig, "Amount Header is Present for PLB", true, amntPLBHeader.isDisplayed());
 
             List<WebElement> list = testConfig.driver.findElements(By.xpath("//div[@id='onlyplb']/table/tbody/tr/td/table/tbody/tr/td/div[@id='flow1']/table/tbody/tr"));
 
