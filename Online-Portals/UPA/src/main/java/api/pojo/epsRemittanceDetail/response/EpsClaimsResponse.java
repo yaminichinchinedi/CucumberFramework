@@ -736,32 +736,32 @@ public class EpsClaimsResponse {
     public static class EpsClaims {
 
         @XmlElement(name = "ClaimOrder")
-        protected byte claimOrder;
+        protected String claimOrder;
         @XmlElement(name = "EpsSubscriber", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsSubscriber epsSubscriber;
         @XmlElement(name = "ClaimIdentifier", required = true)
         protected String claimIdentifier;
         @XmlElement(name = "StartDate", required = true)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar startDate;
+        protected String startDate;
         @XmlElement(name = "EndDate", required = true)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar endDate;
+        protected String endDate;
         @XmlElement(name = "OrganizationName", required = true)
         protected String organizationName;
         @XmlElement(name = "ClaimDate", required = true)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar claimDate;
+        protected String claimDate;
         @XmlElement(name = "EpsClaimStatusCode", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsClaimStatusCode epsClaimStatusCode;
         @XmlElement(name = "ChargedAmount")
-        protected float chargedAmount;
+        protected String chargedAmount;
         @XmlElement(name = "EpsPatient", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsPatient epsPatient;
         @XmlElement(name = "EpsFacilityTypeCode", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsFacilityTypeCode epsFacilityTypeCode;
         @XmlElement(name = "EpsClaimDateTimeQualifer")
-        protected byte epsClaimDateTimeQualifer;
+        protected String epsClaimDateTimeQualifer;
         @XmlElement(name = "EpsAmountQualifierCode", required = true)
         protected String epsAmountQualifierCode;
         @XmlElement(name = "EpsDiagnosisRelatedGroupCode", required = true)
@@ -772,23 +772,23 @@ public class EpsClaimsResponse {
         protected EpsClaimsResponse.EpsClaims.TypeOfBillCode typeOfBillCode;
         @XmlElement(name = "EarlyServiceStartDate", required = true)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar earlyServiceStartDate;
+        protected String earlyServiceStartDate;
         @XmlElement(name = "LateServiceEndDate", required = true)
         @XmlSchemaType(name = "date")
-        protected XMLGregorianCalendar lateServiceEndDate;
+        protected String lateServiceEndDate;
         @XmlElement(name = "AllowedAmount")
-        protected float allowedAmount;
+        protected String allowedAmount;
         @XmlElement(name = "CoveredAmount")
-        protected float coveredAmount;
+        protected String coveredAmount;
         @XmlElement(name = "ClaimPayAmount")
-        protected float claimPayAmount;
+        protected String claimPayAmount;
         @XmlElement(name = "EpsClaimTypeCode", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsClaimTypeCode epsClaimTypeCode;
         @XmlElement(name = "CoordinationOfBenefitsCode", required = true)
         protected String coordinationOfBenefitsCode;
         @XmlElement(name = "ProcessDateTime", required = true)
         @XmlSchemaType(name = "dateTime")
-        protected XMLGregorianCalendar processDateTime;
+        protected String processDateTime;
         @XmlElement(name = "EpsRenderingProviders", required = true)
         protected EpsClaimsResponse.EpsClaims.EpsRenderingProviders epsRenderingProviders;
         @XmlElement(name = "EpsClaimServices")
@@ -798,7 +798,7 @@ public class EpsClaimsResponse {
          * Gets the value of the claimOrder property.
          * 
          */
-        public byte getClaimOrder() {
+        public String getClaimOrder() {
             return claimOrder;
         }
 
@@ -806,7 +806,7 @@ public class EpsClaimsResponse {
          * Sets the value of the claimOrder property.
          * 
          */
-        public void setClaimOrder(byte value) {
+        public void setClaimOrder(String value) {
             this.claimOrder = value;
         }
 
@@ -866,7 +866,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getStartDate() {
+        public String getStartDate() {
             return startDate;
         }
 
@@ -878,7 +878,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setStartDate(XMLGregorianCalendar value) {
+        public void setStartDate(String value) {
             this.startDate = value;
         }
 
@@ -890,7 +890,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getEndDate() {
+        public String getEndDate() {
             return endDate;
         }
 
@@ -902,7 +902,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setEndDate(XMLGregorianCalendar value) {
+        public void setEndDate(String value) {
             this.endDate = value;
         }
 
@@ -938,7 +938,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getClaimDate() {
+        public String getClaimDate() {
             return claimDate;
         }
 
@@ -950,7 +950,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setClaimDate(XMLGregorianCalendar value) {
+        public void setClaimDate(String value) {
             this.claimDate = value;
         }
 
@@ -982,7 +982,7 @@ public class EpsClaimsResponse {
          * Gets the value of the chargedAmount property.
          * 
          */
-        public float getChargedAmount() {
+        public String getChargedAmount() {
             return chargedAmount;
         }
 
@@ -990,7 +990,7 @@ public class EpsClaimsResponse {
          * Sets the value of the chargedAmount property.
          * 
          */
-        public void setChargedAmount(float value) {
+        public void setChargedAmount(String value) {
             this.chargedAmount = value;
         }
 
@@ -1046,7 +1046,7 @@ public class EpsClaimsResponse {
          * Gets the value of the epsClaimDateTimeQualifer property.
          * 
          */
-        public byte getEpsClaimDateTimeQualifer() {
+        public String getEpsClaimDateTimeQualifer() {
             return epsClaimDateTimeQualifer;
         }
 
@@ -1054,7 +1054,7 @@ public class EpsClaimsResponse {
          * Sets the value of the epsClaimDateTimeQualifer property.
          * 
          */
-        public void setEpsClaimDateTimeQualifer(byte value) {
+        public void setEpsClaimDateTimeQualifer(String value) {
             this.epsClaimDateTimeQualifer = value;
         }
 
@@ -1162,7 +1162,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getEarlyServiceStartDate() {
+        public String getEarlyServiceStartDate() {
             return earlyServiceStartDate;
         }
 
@@ -1174,7 +1174,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setEarlyServiceStartDate(XMLGregorianCalendar value) {
+        public void setEarlyServiceStartDate(String value) {
             this.earlyServiceStartDate = value;
         }
 
@@ -1186,7 +1186,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getLateServiceEndDate() {
+        public String getLateServiceEndDate() {
             return lateServiceEndDate;
         }
 
@@ -1198,7 +1198,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setLateServiceEndDate(XMLGregorianCalendar value) {
+        public void setLateServiceEndDate(String value) {
             this.lateServiceEndDate = value;
         }
 
@@ -1206,7 +1206,7 @@ public class EpsClaimsResponse {
          * Gets the value of the allowedAmount property.
          * 
          */
-        public float getAllowedAmount() {
+        public String getAllowedAmount() {
             return allowedAmount;
         }
 
@@ -1214,7 +1214,7 @@ public class EpsClaimsResponse {
          * Sets the value of the allowedAmount property.
          * 
          */
-        public void setAllowedAmount(float value) {
+        public void setAllowedAmount(String value) {
             this.allowedAmount = value;
         }
 
@@ -1222,7 +1222,7 @@ public class EpsClaimsResponse {
          * Gets the value of the coveredAmount property.
          * 
          */
-        public float getCoveredAmount() {
+        public String getCoveredAmount() {
             return coveredAmount;
         }
 
@@ -1230,7 +1230,7 @@ public class EpsClaimsResponse {
          * Sets the value of the coveredAmount property.
          * 
          */
-        public void setCoveredAmount(float value) {
+        public void setCoveredAmount(String value) {
             this.coveredAmount = value;
         }
 
@@ -1238,7 +1238,7 @@ public class EpsClaimsResponse {
          * Gets the value of the claimPayAmount property.
          * 
          */
-        public float getClaimPayAmount() {
+        public String getClaimPayAmount() {
             return claimPayAmount;
         }
 
@@ -1246,7 +1246,7 @@ public class EpsClaimsResponse {
          * Sets the value of the claimPayAmount property.
          * 
          */
-        public void setClaimPayAmount(float value) {
+        public void setClaimPayAmount(String value) {
             this.claimPayAmount = value;
         }
 
@@ -1306,7 +1306,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public XMLGregorianCalendar getProcessDateTime() {
+        public String getProcessDateTime() {
             return processDateTime;
         }
 
@@ -1318,7 +1318,7 @@ public class EpsClaimsResponse {
          *     {@link XMLGregorianCalendar }
          *     
          */
-        public void setProcessDateTime(XMLGregorianCalendar value) {
+        public void setProcessDateTime(String value) {
             this.processDateTime = value;
         }
 
@@ -1491,20 +1491,20 @@ public class EpsClaimsResponse {
 
             @XmlElement(name = "ServiceStartDate", required = true)
             @XmlSchemaType(name = "date")
-            protected XMLGregorianCalendar serviceStartDate;
+            protected String serviceStartDate;
             @XmlElement(name = "ServiceEndDate", required = true)
             @XmlSchemaType(name = "date")
-            protected XMLGregorianCalendar serviceEndDate;
+            protected String serviceEndDate;
             @XmlElement(name = "AllowedAmount")
-            protected float allowedAmount;
+            protected String allowedAmount;
             @XmlElement(name = "EpsServiceDescription", required = true)
             protected String epsServiceDescription;
             @XmlElement(name = "EpsServiceDateTimeQualifer")
-            protected short epsServiceDateTimeQualifer;
+            protected String epsServiceDateTimeQualifer;
             @XmlElement(name = "LineItemChargeAmount")
-            protected float lineItemChargeAmount;
+            protected String lineItemChargeAmount;
             @XmlElement(name = "LineItemPaidAmount")
-            protected float lineItemPaidAmount;
+            protected String lineItemPaidAmount;
             @XmlElement(name = "EpsServiceCodeText", required = true)
             protected String epsServiceCodeText;
             @XmlElement(name = "EpsProcedureCodeText", required = true)
@@ -1513,11 +1513,13 @@ public class EpsClaimsResponse {
             protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsAmountQualifierCode epsAmountQualifierCode;
             @XmlElement(name = "ProcessDateTime", required = true)
             @XmlSchemaType(name = "dateTime")
-            protected XMLGregorianCalendar processDateTime;
+            protected String processDateTime;
             @XmlElement(name = "EpsUnitOfServicePaidCount")
-            protected float epsUnitOfServicePaidCount;
+            protected String epsUnitOfServicePaidCount;
             @XmlElement(name = "EpsClaimPaymentServiceAdjustments")
-            protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments epsClaimPaymentServiceAdjustments;
+           /* protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments epsClaimPaymentServiceAdjustments;
+            @XmlElement(name = "EpsPayerReferenceIdentifierQualifierCodes", required = true) */
+            protected List<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments> epsClaimPaymentServiceAdjustments;
             @XmlElement(name = "EpsPayerReferenceIdentifierQualifierCodes", required = true)
             protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsPayerReferenceIdentifierQualifierCodes epsPayerReferenceIdentifierQualifierCodes;
 
@@ -1529,7 +1531,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public XMLGregorianCalendar getServiceStartDate() {
+            public String getServiceStartDate() {
                 return serviceStartDate;
             }
 
@@ -1541,7 +1543,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public void setServiceStartDate(XMLGregorianCalendar value) {
+            public void setServiceStartDate(String value) {
                 this.serviceStartDate = value;
             }
 
@@ -1553,7 +1555,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public XMLGregorianCalendar getServiceEndDate() {
+            public String getServiceEndDate() {
                 return serviceEndDate;
             }
 
@@ -1565,7 +1567,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public void setServiceEndDate(XMLGregorianCalendar value) {
+            public void setServiceEndDate(String value) {
                 this.serviceEndDate = value;
             }
 
@@ -1573,7 +1575,7 @@ public class EpsClaimsResponse {
              * Gets the value of the allowedAmount property.
              * 
              */
-            public float getAllowedAmount() {
+            public String getAllowedAmount() {
                 return allowedAmount;
             }
 
@@ -1581,7 +1583,7 @@ public class EpsClaimsResponse {
              * Sets the value of the allowedAmount property.
              * 
              */
-            public void setAllowedAmount(float value) {
+            public void setAllowedAmount(String value) {
                 this.allowedAmount = value;
             }
 
@@ -1613,7 +1615,7 @@ public class EpsClaimsResponse {
              * Gets the value of the epsServiceDateTimeQualifer property.
              * 
              */
-            public short getEpsServiceDateTimeQualifer() {
+            public String getEpsServiceDateTimeQualifer() {
                 return epsServiceDateTimeQualifer;
             }
 
@@ -1621,7 +1623,7 @@ public class EpsClaimsResponse {
              * Sets the value of the epsServiceDateTimeQualifer property.
              * 
              */
-            public void setEpsServiceDateTimeQualifer(short value) {
+            public void setEpsServiceDateTimeQualifer(String value) {
                 this.epsServiceDateTimeQualifer = value;
             }
 
@@ -1629,7 +1631,7 @@ public class EpsClaimsResponse {
              * Gets the value of the lineItemChargeAmount property.
              * 
              */
-            public float getLineItemChargeAmount() {
+            public String getLineItemChargeAmount() {
                 return lineItemChargeAmount;
             }
 
@@ -1637,7 +1639,7 @@ public class EpsClaimsResponse {
              * Sets the value of the lineItemChargeAmount property.
              * 
              */
-            public void setLineItemChargeAmount(float value) {
+            public void setLineItemChargeAmount(String value) {
                 this.lineItemChargeAmount = value;
             }
 
@@ -1645,7 +1647,7 @@ public class EpsClaimsResponse {
              * Gets the value of the lineItemPaidAmount property.
              * 
              */
-            public float getLineItemPaidAmount() {
+            public String getLineItemPaidAmount() {
                 return lineItemPaidAmount;
             }
 
@@ -1653,7 +1655,7 @@ public class EpsClaimsResponse {
              * Sets the value of the lineItemPaidAmount property.
              * 
              */
-            public void setLineItemPaidAmount(float value) {
+            public void setLineItemPaidAmount(String value) {
                 this.lineItemPaidAmount = value;
             }
 
@@ -1737,7 +1739,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public XMLGregorianCalendar getProcessDateTime() {
+            public String getProcessDateTime() {
                 return processDateTime;
             }
 
@@ -1749,7 +1751,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public void setProcessDateTime(XMLGregorianCalendar value) {
+            public void setProcessDateTime(String value) {
                 this.processDateTime = value;
             }
 
@@ -1757,7 +1759,7 @@ public class EpsClaimsResponse {
              * Gets the value of the epsUnitOfServicePaidCount property.
              * 
              */
-            public float getEpsUnitOfServicePaidCount() {
+            public String getEpsUnitOfServicePaidCount() {
                 return epsUnitOfServicePaidCount;
             }
 
@@ -1765,7 +1767,7 @@ public class EpsClaimsResponse {
              * Sets the value of the epsUnitOfServicePaidCount property.
              * 
              */
-            public void setEpsUnitOfServicePaidCount(float value) {
+            public void setEpsUnitOfServicePaidCount(String value) {
                 this.epsUnitOfServicePaidCount = value;
             }
 
@@ -1777,8 +1779,15 @@ public class EpsClaimsResponse {
              *     {@link EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments }
              *     
              */
-            public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
+      /*      public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
                 return epsClaimPaymentServiceAdjustments;
+            } */
+            
+            public List<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments> getEpsClaimPaymentServiceAdjustments() {
+                if (epsClaimPaymentServiceAdjustments== null) {
+                epsClaimPaymentServiceAdjustments= new ArrayList<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments>();
+                }
+                return this.epsClaimPaymentServiceAdjustments;
             }
 
             /**
@@ -1789,9 +1798,9 @@ public class EpsClaimsResponse {
              *     {@link EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments }
              *     
              */
-            public void setEpsClaimPaymentServiceAdjustments(EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments value) {
+     /*       public void setEpsClaimPaymentServiceAdjustments(EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments value) {
                 this.epsClaimPaymentServiceAdjustments = value;
-            }
+            } */
 
             /**
              * Gets the value of the epsPayerReferenceIdentifierQualifierCodes property.
@@ -1963,28 +1972,28 @@ public class EpsClaimsResponse {
             public static class EpsClaimPaymentServiceAdjustments {
 
                 @XmlElement(name = "Amount")
-                protected float amount;
+                protected String amount;
                 @XmlElement(name = "EpsClaimPaymentAdjustmentReasonCodes", required = true)
                 protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments.EpsClaimPaymentAdjustmentReasonCodes epsClaimPaymentAdjustmentReasonCodes;
                 @XmlElement(name = "DeductibleCoInsuranceCoPayAmount")
-                protected float deductibleCoInsuranceCoPayAmount;
+                protected String deductibleCoInsuranceCoPayAmount;
                 @XmlElement(name = "ProcessDateTime", required = true)
                 @XmlSchemaType(name = "dateTime")
-                protected XMLGregorianCalendar processDateTime;
+                protected String processDateTime;
                 @XmlElement(name = "PatientResponsibilityTotalAmount")
-                protected float patientResponsibilityTotalAmount;
+                protected String patientResponsibilityTotalAmount;
                 @XmlElement(name = "NotCoveredTotalAmount")
-                protected float notCoveredTotalAmount;
+                protected String notCoveredTotalAmount;
                 @XmlElement(name = "EpsClaimPaymentAdjustmentGroupCode", required = true)
                 protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments.EpsClaimPaymentAdjustmentGroupCode epsClaimPaymentAdjustmentGroupCode;
                 @XmlElement(name = "AdjustmentQuantityCount")
-                protected byte adjustmentQuantityCount;
+                protected String adjustmentQuantityCount;
 
                 /**
                  * Gets the value of the amount property.
                  * 
                  */
-                public float getAmount() {
+                public String getAmount() {
                     return amount;
                 }
 
@@ -1992,7 +2001,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the amount property.
                  * 
                  */
-                public void setAmount(float value) {
+                public void setAmount(String value) {
                     this.amount = value;
                 }
 
@@ -2024,7 +2033,7 @@ public class EpsClaimsResponse {
                  * Gets the value of the deductibleCoInsuranceCoPayAmount property.
                  * 
                  */
-                public float getDeductibleCoInsuranceCoPayAmount() {
+                public String getDeductibleCoInsuranceCoPayAmount() {
                     return deductibleCoInsuranceCoPayAmount;
                 }
 
@@ -2032,7 +2041,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the deductibleCoInsuranceCoPayAmount property.
                  * 
                  */
-                public void setDeductibleCoInsuranceCoPayAmount(float value) {
+                public void setDeductibleCoInsuranceCoPayAmount(String value) {
                     this.deductibleCoInsuranceCoPayAmount = value;
                 }
 
@@ -2044,7 +2053,7 @@ public class EpsClaimsResponse {
                  *     {@link XMLGregorianCalendar }
                  *     
                  */
-                public XMLGregorianCalendar getProcessDateTime() {
+                public String getProcessDateTime() {
                     return processDateTime;
                 }
 
@@ -2056,7 +2065,7 @@ public class EpsClaimsResponse {
                  *     {@link XMLGregorianCalendar }
                  *     
                  */
-                public void setProcessDateTime(XMLGregorianCalendar value) {
+                public void setProcessDateTime(String value) {
                     this.processDateTime = value;
                 }
 
@@ -2064,7 +2073,7 @@ public class EpsClaimsResponse {
                  * Gets the value of the patientResponsibilityTotalAmount property.
                  * 
                  */
-                public float getPatientResponsibilityTotalAmount() {
+                public String getPatientResponsibilityTotalAmount() {
                     return patientResponsibilityTotalAmount;
                 }
 
@@ -2072,7 +2081,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the patientResponsibilityTotalAmount property.
                  * 
                  */
-                public void setPatientResponsibilityTotalAmount(float value) {
+                public void setPatientResponsibilityTotalAmount(String value) {
                     this.patientResponsibilityTotalAmount = value;
                 }
 
@@ -2080,7 +2089,7 @@ public class EpsClaimsResponse {
                  * Gets the value of the notCoveredTotalAmount property.
                  * 
                  */
-                public float getNotCoveredTotalAmount() {
+                public String getNotCoveredTotalAmount() {
                     return notCoveredTotalAmount;
                 }
 
@@ -2088,7 +2097,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the notCoveredTotalAmount property.
                  * 
                  */
-                public void setNotCoveredTotalAmount(float value) {
+                public void setNotCoveredTotalAmount(String value) {
                     this.notCoveredTotalAmount = value;
                 }
 
@@ -2120,7 +2129,7 @@ public class EpsClaimsResponse {
                  * Gets the value of the adjustmentQuantityCount property.
                  * 
                  */
-                public byte getAdjustmentQuantityCount() {
+                public String getAdjustmentQuantityCount() {
                     return adjustmentQuantityCount;
                 }
 
@@ -2128,7 +2137,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the adjustmentQuantityCount property.
                  * 
                  */
-                public void setAdjustmentQuantityCount(byte value) {
+                public void setAdjustmentQuantityCount(String value) {
                     this.adjustmentQuantityCount = value;
                 }
 
@@ -2244,7 +2253,7 @@ public class EpsClaimsResponse {
                 public static class EpsClaimPaymentAdjustmentReasonCodes {
 
                     @XmlElement(name = "Code")
-                    protected byte code;
+                    protected String code;
                     @XmlElement(name = "Description", required = true)
                     protected String description;
 
@@ -2252,7 +2261,7 @@ public class EpsClaimsResponse {
                      * Gets the value of the code property.
                      * 
                      */
-                    public byte getCode() {
+                    public String getCode() {
                         return code;
                     }
 
@@ -2260,7 +2269,7 @@ public class EpsClaimsResponse {
                      * Sets the value of the code property.
                      * 
                      */
-                    public void setCode(byte value) {
+                    public void setCode(String value) {
                         this.code = value;
                     }
 
@@ -2325,7 +2334,7 @@ public class EpsClaimsResponse {
                 @XmlElement(name = "Code", required = true)
                 protected String code;
                 @XmlElement(name = "Identifier")
-                protected byte identifier;
+                protected String identifier;
                 @XmlElement(name = "ProcessDateTime", required = true)
                 protected String processDateTime;
 
@@ -2357,7 +2366,7 @@ public class EpsClaimsResponse {
                  * Gets the value of the identifier property.
                  * 
                  */
-                public byte getIdentifier() {
+                public String getIdentifier() {
                     return identifier;
                 }
 
@@ -2365,7 +2374,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the identifier property.
                  * 
                  */
-                public void setIdentifier(byte value) {
+                public void setIdentifier(String value) {
                     this.identifier = value;
                 }
 
@@ -2426,7 +2435,7 @@ public class EpsClaimsResponse {
         public static class EpsClaimStatusCode {
 
             @XmlElement(name = "Code")
-            protected byte code;
+            protected String code;
             @XmlElement(name = "Description", required = true)
             protected String description;
 
@@ -2434,7 +2443,7 @@ public class EpsClaimsResponse {
              * Gets the value of the code property.
              * 
              */
-            public byte getCode() {
+            public String getCode() {
                 return code;
             }
 
@@ -2442,7 +2451,7 @@ public class EpsClaimsResponse {
              * Sets the value of the code property.
              * 
              */
-            public void setCode(byte value) {
+            public void setCode(String value) {
                 this.code = value;
             }
 
@@ -2582,13 +2591,13 @@ public class EpsClaimsResponse {
         public static class EpsFacilityTypeCode {
 
             @XmlElement(name = "Code")
-            protected byte code;
+            protected String code;
 
             /**
              * Gets the value of the code property.
              * 
              */
-            public byte getCode() {
+            public String getCode() {
                 return code;
             }
 
@@ -2596,7 +2605,7 @@ public class EpsClaimsResponse {
              * Sets the value of the code property.
              * 
              */
-            public void setCode(byte value) {
+            public void setCode(String value) {
                 this.code = value;
             }
 
@@ -2649,9 +2658,9 @@ public class EpsClaimsResponse {
         public static class EpsPatient {
 
             @XmlElement(name = "EpsPatientIdentifier")
-            protected int epsPatientIdentifier;
+            protected String epsPatientIdentifier;
             @XmlElement(name = "PatientAccountNumber")
-            protected int patientAccountNumber;
+            protected String patientAccountNumber;
             @XmlElement(name = "PatientFirstName", required = true)
             protected String patientFirstName;
             @XmlElement(name = "PatientMiddleName")
@@ -2665,7 +2674,7 @@ public class EpsClaimsResponse {
              * Gets the value of the epsPatientIdentifier property.
              * 
              */
-            public int getEpsPatientIdentifier() {
+            public String getEpsPatientIdentifier() {
                 return epsPatientIdentifier;
             }
 
@@ -2673,7 +2682,7 @@ public class EpsClaimsResponse {
              * Sets the value of the epsPatientIdentifier property.
              * 
              */
-            public void setEpsPatientIdentifier(int value) {
+            public void setEpsPatientIdentifier(String value) {
                 this.epsPatientIdentifier = value;
             }
 
@@ -2681,7 +2690,7 @@ public class EpsClaimsResponse {
              * Gets the value of the patientAccountNumber property.
              * 
              */
-            public int getPatientAccountNumber() {
+            public String getPatientAccountNumber() {
                 return patientAccountNumber;
             }
 
@@ -2689,7 +2698,7 @@ public class EpsClaimsResponse {
              * Sets the value of the patientAccountNumber property.
              * 
              */
-            public void setPatientAccountNumber(int value) {
+            public void setPatientAccountNumber(String value) {
                 this.patientAccountNumber = value;
             }
 
@@ -2920,9 +2929,9 @@ public class EpsClaimsResponse {
 
             @XmlElement(name = "ProcessDateTime", required = true)
             @XmlSchemaType(name = "dateTime")
-            protected XMLGregorianCalendar processDateTime;
+            protected String processDateTime;
             @XmlElement(name = "NationalProviderIdentifier")
-            protected int nationalProviderIdentifier;
+            protected String nationalProviderIdentifier;
             @XmlElement(name = "EntityIdentifierCode", required = true)
             protected EpsClaimsResponse.EpsClaims.EpsRenderingProviders.EntityIdentifierCode entityIdentifierCode;
             @XmlElement(name = "EpsIdentifierQualifierCode", required = true)
@@ -2938,7 +2947,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public XMLGregorianCalendar getProcessDateTime() {
+            public String getProcessDateTime() {
                 return processDateTime;
             }
 
@@ -2950,7 +2959,7 @@ public class EpsClaimsResponse {
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public void setProcessDateTime(XMLGregorianCalendar value) {
+            public void setProcessDateTime(String value) {
                 this.processDateTime = value;
             }
 
@@ -2958,7 +2967,7 @@ public class EpsClaimsResponse {
              * Gets the value of the nationalProviderIdentifier property.
              * 
              */
-            public int getNationalProviderIdentifier() {
+            public String getNationalProviderIdentifier() {
                 return nationalProviderIdentifier;
             }
 
@@ -2966,7 +2975,7 @@ public class EpsClaimsResponse {
              * Sets the value of the nationalProviderIdentifier property.
              * 
              */
-            public void setNationalProviderIdentifier(int value) {
+            public void setNationalProviderIdentifier(String value) {
                 this.nationalProviderIdentifier = value;
             }
 
@@ -3312,9 +3321,9 @@ public class EpsClaimsResponse {
             @XmlElement(name = "GroupThumbnail", required = true)
             protected EpsClaimsResponse.EpsClaims.EpsSubscriber.GroupThumbnail groupThumbnail;
             @XmlElement(name = "SubscriberIdentifier")
-            protected int subscriberIdentifier;
+            protected String subscriberIdentifier;
             @XmlElement(name = "AccountNumber")
-            protected int accountNumber;
+            protected String accountNumber;
             @XmlElement(name = "EntityIdentifierCode", required = true)
             protected EpsClaimsResponse.EpsClaims.EpsSubscriber.EntityIdentifierCode entityIdentifierCode;
             @XmlElement(name = "ProductName", required = true)
@@ -3374,7 +3383,7 @@ public class EpsClaimsResponse {
              * Gets the value of the subscriberIdentifier property.
              * 
              */
-            public int getSubscriberIdentifier() {
+            public String getSubscriberIdentifier() {
                 return subscriberIdentifier;
             }
 
@@ -3382,7 +3391,7 @@ public class EpsClaimsResponse {
              * Sets the value of the subscriberIdentifier property.
              * 
              */
-            public void setSubscriberIdentifier(int value) {
+            public void setSubscriberIdentifier(String value) {
                 this.subscriberIdentifier = value;
             }
 
@@ -3390,7 +3399,7 @@ public class EpsClaimsResponse {
              * Gets the value of the accountNumber property.
              * 
              */
-            public int getAccountNumber() {
+            public String getAccountNumber() {
                 return accountNumber;
             }
 
@@ -3398,7 +3407,7 @@ public class EpsClaimsResponse {
              * Sets the value of the accountNumber property.
              * 
              */
-            public void setAccountNumber(int value) {
+            public void setAccountNumber(String value) {
                 this.accountNumber = value;
             }
 
@@ -3556,13 +3565,13 @@ public class EpsClaimsResponse {
             public static class GroupThumbnail {
 
                 @XmlElement(name = "GroupIdentifier")
-                protected int groupIdentifier;
+                protected String groupIdentifier;
 
                 /**
                  * Gets the value of the groupIdentifier property.
                  * 
                  */
-                public int getGroupIdentifier() {
+                public String getGroupIdentifier() {
                     return groupIdentifier;
                 }
 
@@ -3570,7 +3579,7 @@ public class EpsClaimsResponse {
                  * Sets the value of the groupIdentifier property.
                  * 
                  */
-                public void setGroupIdentifier(int value) {
+                public void setGroupIdentifier(String value) {
                     this.groupIdentifier = value;
                 }
 
@@ -3718,7 +3727,7 @@ public class EpsClaimsResponse {
         public static class TypeOfBillCode {
 
             @XmlElement(name = "Code")
-            protected byte code;
+            protected String code;
             @XmlElement(name = "Description", required = true)
             protected String description;
 
@@ -3726,7 +3735,7 @@ public class EpsClaimsResponse {
              * Gets the value of the code property.
              * 
              */
-            public byte getCode() {
+            public String getCode() {
                 return code;
             }
 
@@ -3734,7 +3743,7 @@ public class EpsClaimsResponse {
              * Sets the value of the code property.
              * 
              */
-            public void setCode(byte value) {
+            public void setCode(String value) {
                 this.code = value;
             }
 
@@ -3812,7 +3821,7 @@ public class EpsClaimsResponse {
         @XmlElement(required = true)
         protected EpsClaimsResponse.ResponseReturnStatus.ResponseReturnCode responseReturnCode;
         @XmlElement(name = "TotalCount")
-        protected byte totalCount;
+        protected String totalCount;
 
         /**
          * Gets the value of the requestIdentifier property.
@@ -3866,7 +3875,7 @@ public class EpsClaimsResponse {
          * Gets the value of the totalCount property.
          * 
          */
-        public byte getTotalCount() {
+        public String getTotalCount() {
             return totalCount;
         }
 
@@ -3874,7 +3883,7 @@ public class EpsClaimsResponse {
          * Sets the value of the totalCount property.
          * 
          */
-        public void setTotalCount(byte value) {
+        public void setTotalCount(String value) {
             this.totalCount = value;
         }
 
@@ -3906,7 +3915,7 @@ public class EpsClaimsResponse {
         })
         public static class ResponseReturnCode {
 
-            protected short code;
+            protected String code;
             @XmlElement(required = true)
             protected String desc;
 
@@ -3914,7 +3923,7 @@ public class EpsClaimsResponse {
              * Gets the value of the code property.
              * 
              */
-            public short getCode() {
+            public String getCode() {
                 return code;
             }
 
@@ -3922,7 +3931,7 @@ public class EpsClaimsResponse {
              * Sets the value of the code property.
              * 
              */
-            public void setCode(short value) {
+            public void setCode(String value) {
                 this.code = value;
             }
 

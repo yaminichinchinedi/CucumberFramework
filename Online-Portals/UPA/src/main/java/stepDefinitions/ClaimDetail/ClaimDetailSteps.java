@@ -21,7 +21,7 @@ public class ClaimDetailSteps extends TestBase {
     @Then("^Verify Claim Detail UI vs FISL Response for \"([^\"]*)\"$")
     public void verify_Claim_Detail_UI_vs_FISL_Response_for(String usertype) throws Throwable {
     
-    	claimDetail.verifyClaimDtlPageData(usertype);
+    	claimDetail.verifyClaimDtlPageData_latest(usertype);
     }
     
     @Then("^Validate all Headers in the Page for Claim Detail Page$")

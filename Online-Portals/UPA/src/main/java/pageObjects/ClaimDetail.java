@@ -2,10 +2,13 @@ package main.java.pageObjects;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -13,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.parsers.ParserConfigurationException;
+
 import java.util.Map.Entry;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -23,13 +31,20 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
+import org.xml.sax.SAXException;
+
 import main.java.reporting.*;
 
 import com.mysql.jdbc.StringUtils;
+
+import cucumber.deps.com.thoughtworks.xstream.converters.basic.DateConverter;
+
 import org.openqa.selenium.Dimension;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.api.manage.EpsPaymentsSearch.EpsRemittanceDetailHelper;
+import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsResponse;
 import main.java.fislServices.FISLConnection2;
 import main.java.fislServices.ReadTagsfromFISLResponse;
 import main.java.nativeFunctions.Browser;
@@ -42,8 +57,8 @@ import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.HomePage;
 
 public class ClaimDetail {
-	
-	
+	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();
+
 	//Writing all Locators here
 	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
 	@FindBy(name="providerTIN")	WebElement enterTIN;
@@ -106,7 +121,7 @@ public class ClaimDetail {
 	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'2')]") WebElement paginationNo2;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
 	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
-    @FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]") WebElement payernameUI;
+    @FindBy(xpath = "//*[@class='ellipsis wrapperTooltip'][1]") WebElement payernameUI;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
 	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
 	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
@@ -165,6 +180,7 @@ public class ClaimDetail {
 	@FindBy(xpath = "//div[@id='msgforplb']//span[1]") WebElement claimmsg;
 	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
+	@FindBy(xpath = "//*[contains(text(),'Payment Number:')]") WebElement paymentNo;
 	
 	@FindBy(xpath="//a[@id='paymentNbr_1']")
 	private WebElement enterRemittanceDtlPage;
@@ -1011,9 +1027,8 @@ public void verifyClaimDtlPageData(String usertype) throws Exception
 	{
 		Browser.wait(testConfig, 2);
 		String ui_Payer = payernameUI.getText();
-		//String ui_Payer = payerUI.getText();
 	    Log.Comment("The First Payer Name displayed is:" + ui_Payer);
-		Element.click(paymentNo1, "Payment No");
+	    enterRemittancedetailPage();
 		Browser.wait(testConfig, 2);
 		String paymentNum1 = paymentno.getText();
 		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
@@ -1427,9 +1442,7 @@ public void enterClaimdetailPage() {
 
 public void verifyAllHeadersClaimDtl() throws Exception
 {    
-	enterRemittancedetailPage();
-	enterClaimdetailPage();
-	
+	 enterClaimdetailPage();
      String claimHeader1UI = claimHeader1.getText();
 	 if(!claimHeader1UI.equalsIgnoreCase("0"))
 	     Helper.compareEquals(testConfig, "Comparing Claim Detail Header", claimHeader1UI, "Claim Detail");
@@ -1598,8 +1611,269 @@ public void verifyTricareMaskingClaimDtl() throws Exception
 			Element.clickByJS(testConfig, paymentno, "Payment Number");
 			return new ViewPayments(testConfig);
 		}
-	
+		
+		public void verifyClaimDtlPageData_latest(String usertype) throws Exception  {
+			
+			String ui_Payer = payernameUI.getText();
+			 Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+			 Element.click(paymentNo1, "Payment No");
+			Browser.wait(testConfig, 2);
+			
+		String paymentNum1 = paymentNo.getText();
+		String paymentNum = paymentNum1.substring(paymentNum1.lastIndexOf(":")+1, paymentNum1.length()).trim();
+		Log.Comment("The First Payment Number displayed is:" + paymentNum);
+		List<WebElement> patientNames = testConfig.driver.findElements(By.xpath("//td[starts-with(@id,'patientName_')]"));   
+		Log.Comment("/************ List of Patient Names Present in Remittance Detail Page are as follows **********/"); 
+		for(WebElement patientNamesUI :patientNames) 
+		{
+			Log.Comment(patientNamesUI.getText());
+		}  
+		 
+		int sqlRowNo = 184;
+		testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+		Map payerSchema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+		Log.Comment("Message from DB for Payer Schema:" + payerSchema);
+
+			sqlRowNo = 203;
+			testConfig.putRunTimeProperty("ui_Payer",ui_Payer);
+			Map payerSchema1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			
+			String payerSchemaUI = (payerSchema1.toString()).substring(14,19);
+			Log.Comment("Payer Schema is :" + payerSchemaUI);
+			
+		    sqlRowNo = 185;
+			testConfig.putRunTimeProperty("paymentNum",paymentNum);
+			Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			String paymentNumDB2 = (paymentNumDB1.toString());
+			String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length() - 1);
+			String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
+			Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
+		    
+			sqlRowNo = 186;
+			testConfig.putRunTimeProperty("paymentNum",paymentNum);
+			Map orginDate = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			String orginDateDB1 = orginDate.toString();
+			String orginDateDB2 = orginDateDB1.substring(1, orginDateDB1.length() - 1);
+			String orginDateDB3 = orginDateDB2.substring(11,orginDateDB2.length());
+			String orginDateDB = orginDateDB3.replaceAll("-", "");
+			Log.Comment("The Settlement Date is :" + orginDateDB);
+			String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
+			Log.Comment("The Final String is :" + finalidentifier); 
+	  
+			
+			String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
+		           "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+		           "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+		           "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
+		           "</ns17:EpsClaimsRequest>";
+				
+			     String response=new FISLConnection2().getEraResponse1(requestXml);
+			     epsRemittanceDetailHelper.setRemittanceDetailResponse(response);
+			     String output = epsRemittanceDetailHelper.formatXML(response);
+				//String response = invokePostCall(requestXml);
+				coreFISLValidationWithClaimUI(output);
+	 }
+			 
+		
+		
+		
+		private String invokePostCall(String xmlRequest) throws IOException, SAXException, ParserConfigurationException, JAXBException, KeyManagementException, NoSuchAlgorithmException {
+			
+		    String response;
+		    int count = 0;
+		    do {
+		        Browser.wait(testConfig, 5);
+		        response = epsRemittanceDetailHelper.postRequestGetResponse(xmlRequest);
+		        Log.Comment("XML Response : \n" + response);
+		        count++;
+		    } while ((response.contains("code>005<") || response.contains("code>404<")) && count < 5);
+		    return response;
+		}
+		
+		private void coreFISLValidationWithClaimUI(String response) throws JAXBException{
+			  EpsClaimsResponse epsClaimsResponse = epsRemittanceDetailHelper.convertXMLStringToPOJO(response);
+             
+			  if(epsClaimsResponse.getResponseReturnStatus().getResponseReturnCode().getCode().contentEquals("200")) {
+				  int claimSize = epsClaimsResponse.getEpsClaims().size();
+				  
+				  for(int i=0; i<claimSize; i++){  
+					  int r=1;
+					  int c;
+					  Log.Comment("claimSize is: "+ claimSize);				  
+					  Element.findElement(testConfig, "xpath", String.format("//span[@id='claimID_%s']//a",i+1)).click();
+					  
+					  Log.Comment("Entered claim details page");
+					  String firstName = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getPersonName().getFirstName();			  
+					  String middleName = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getPersonName().getMiddleName();					  
+					  String lastName = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getPersonName().getLastName();
+					  String subscriberIdentifier = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getSubscriberIdentifier();
+					  String accountNumber = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getAccountNumber();
+					  String claimIdentifier = epsClaimsResponse.getEpsClaims().get(i).getClaimIdentifier(); 
+					  String groupIdentifier = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getGroupThumbnail().getGroupIdentifier(); 
+					  String productName = epsClaimsResponse.getEpsClaims().get(i).getEpsSubscriber().getProductName();
+					  String claimPayAmount = addingZeroAtTheEnd(epsClaimsResponse.getEpsClaims().get(i).getClaimPayAmount());
+					  String TotalClaimUI = Element.findElement(testConfig, "xpath", "//td[contains(text(),'Total Claim Paid')]").getText();
+					  TotalClaimUI = TotalClaimUI.substring(TotalClaimUI.indexOf("$")+1, TotalClaimUI.length());
+					  Helper.compareEquals(testConfig, "Total Claim UI", claimPayAmount, TotalClaimUI);
+				
+		//Adding claim list first row  
+					  ArrayList<String> claimslist = new ArrayList<String>();
+					  claimslist.add(accountNumber);
+					  if(middleName.length() > 0) {
+						  claimslist.add(firstName+" "+middleName+" "+lastName+"/"+subscriberIdentifier);
+			    	  }
+					  else {
+						  claimslist.add(firstName+" "+lastName+"/"+subscriberIdentifier);
+					  }
+					  claimslist.add(subscriberIdentifier);
+					  claimslist.add(null);
+					  claimslist.add(claimIdentifier);
+					  claimslist.add(groupIdentifier+"/"+productName);
+					  
+					  for(int q=1; q<=6; q++) {
+						  if(q==4 || q==1) {
+							  continue;
+						  }
+					      String claimListUI = Element.findElement(testConfig, "xpath", String.format("//p[contains(text(),'Payment Type:')]/../../../../../../../tr[3]//table[1]/tbody/tr[3]/td[%s][1]",q)).getText(); 
+					      if(claimListUI.contains("/")) {
+					    	  String[] nameUI1 = claimListUI.split("/");
+					    	  String nameUI = nameUI1[0]; 
+				              Helper.compareEquals(testConfig,"Validating Claim List details", true,claimslist.get(q-1).contains(nameUI));
+					      }
+					      else {
+		                      Helper.compareEquals(testConfig, "Validating Claim List details", claimslist.get(q-1),claimListUI);
+					      }      
+					  } 
+					  
+					  int claimServicesSize = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().size();
+					  Log.Comment("claimServicesSize is: "+ claimServicesSize);		  
+		              Helper.compareEquals(testConfig,"Validating claim service size",String.valueOf(claimServicesSize),String.valueOf(Element.findElements(testConfig, "xpath", "//td[contains(text(),'Service Subtotal')]").size()));
+			
+					  for(int j=0; j<claimServicesSize; j++) {
+						  String serviceStartDate = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getServiceStartDate(); 
+						  String serviceEndDate = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getServiceEndDate();  
+						  String epsServiceDescription = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsServiceDescription(); 
+						  String lineItemChargeAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getLineItemChargeAmount();  
+						  lineItemChargeAmount = addingZeroAtTheEnd(lineItemChargeAmount);
+						  String allowedAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getAllowedAmount();   
+						  allowedAmount = addingZeroAtTheEnd(allowedAmount);
+						  String lineItemPaidAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getLineItemPaidAmount();  
+						  lineItemPaidAmount = addingZeroAtTheEnd(lineItemPaidAmount);
+						  int ClaimPaymentServiceAdjustmentsSize = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().size();
+						  Log.Comment("ClaimPaymentServiceAdjustmentsSize is: "+ ClaimPaymentServiceAdjustmentsSize);
+						  String code1 = null;
+						  String deductibleCoInsuranceCoPayAmount = null;
+						  String amount;
+						  String code2;
+						  String PatientResponsibilityTotalAmount;
+						  if(ClaimPaymentServiceAdjustmentsSize == 2) {
+							  code1 = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getEpsClaimPaymentAdjustmentReasonCodes().getCode(); 				  
+							  deductibleCoInsuranceCoPayAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getDeductibleCoInsuranceCoPayAmount();  
+							  amount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(1).getAmount(); 
+							  amount = addingZeroAtTheEnd(amount);					  
+							  code2 = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(1).getEpsClaimPaymentAdjustmentReasonCodes().getCode(); 
+							  PatientResponsibilityTotalAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(1).getPatientResponsibilityTotalAmount();
+							  PatientResponsibilityTotalAmount = addingZeroAtTheEnd(PatientResponsibilityTotalAmount);
+						  }
+						  else {
+							  amount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getAmount();  
+							  amount = addingZeroAtTheEnd(amount);						  
+							  code2 = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getEpsClaimPaymentAdjustmentReasonCodes().getCode(); 
+							  PatientResponsibilityTotalAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getPatientResponsibilityTotalAmount();
+							  PatientResponsibilityTotalAmount = addingZeroAtTheEnd(PatientResponsibilityTotalAmount);
+						  }
+						  
+					      //Adding each cell value corresponding to each claim services details from the API which we want to validate dynamically
+						  ArrayList<String> claimsServiceslist = new ArrayList<String>();
+						  claimsServiceslist.add(Helper.changeDateFormat(testConfig, serviceStartDate, "yyyy-mm-dd", "mm/dd/yyyy")+" - "+Helper.changeDateFormat(testConfig, serviceEndDate, "yyyy-mm-dd", "mm/dd/yyyy"));
+						  claimsServiceslist.add(epsServiceDescription);
+						  
+						  if(lineItemChargeAmount != null) {
+							  claimsServiceslist.add("$"+lineItemChargeAmount);
+						  };
+						  if(allowedAmount != null) {
+							  claimsServiceslist.add("$"+allowedAmount);
+						  };
+						  if(lineItemPaidAmount != null) {
+							  claimsServiceslist.add("$"+lineItemPaidAmount);
+						  };
+						  if(ClaimPaymentServiceAdjustmentsSize==2) {
+							  if(deductibleCoInsuranceCoPayAmount != null) {
+								  claimsServiceslist.add("-$"+deductibleCoInsuranceCoPayAmount);
+							  };
+							  if(code1 != null) {
+								  claimsServiceslist.add(code1);
+							  };
+							  if(deductibleCoInsuranceCoPayAmount != null) {
+								  claimsServiceslist.add("$"+deductibleCoInsuranceCoPayAmount);
+							  };
+							  if(amount != null && !amount.contentEquals("0.00")) {
+								  claimsServiceslist.add("-$"+amount);
+							  };
+							  if(code2 != null) {
+								  claimsServiceslist.add(code2);
+							  }
+							  if(PatientResponsibilityTotalAmount != null && !PatientResponsibilityTotalAmount.contentEquals("0.00")) {
+								  claimsServiceslist.add("$"+PatientResponsibilityTotalAmount);
+							  }
+						  }
+						  else {
+							  if(amount != null && !amount.contentEquals("0.00")) {  
+								  claimsServiceslist.add("-$"+amount);
+							  }
+							  if(code2 != null) {
+								  claimsServiceslist.add(code2);
+							  }  
+							  if(PatientResponsibilityTotalAmount != null && !PatientResponsibilityTotalAmount.contentEquals("0.00")) {
+								  claimsServiceslist.add("$"+PatientResponsibilityTotalAmount);
+							  }
+						  }
+						  int rowNum = Element.findElements(testConfig, "xpath", "//div[@id='flow1']//tr").size();  
+						  int colNum = Element.findElements(testConfig, "xpath", "//div[@id='flow1']//tr[1]/td").size(); 
+						  boolean flag=false;
+						  int t=0;
+					
+						  //Iterating the UI elements and asserting API vs UI	  
+						  for(; r<rowNum; r++) {
+							  for(c=1; c<=colNum; c++) {
+								  if(t < claimsServiceslist.size()) {
+									  String claimListUI = Element.findElement(testConfig, "xpath", String.format("//div[@id='flow1']//tr[%s]/td[%s]",r,c)).getText().trim();
+									  if(claimListUI.trim().contentEquals("--") || claimListUI.length() < 1) {
+										  continue;
+									  }
+									  else {										    
+										    Helper.compareEquals(testConfig, "Validating claim details in each cells in API vs UI", claimsServiceslist.get(t), claimListUI);
+											t++;
+											if(t == claimsServiceslist.size()) {
+												 flag = true;
+											} 
+									  }  
+								 }
+								  if(flag==true) { break; }
+							  }
+							  if(flag==true) { break; }
+						  }
+						  r=r+2;
+					  }	  					  
+						  Log.Comment("#########################################################################################");			  
+						  testConfig.driver.navigate().back();
+					  }
+				  }
+			  }
+		
+		public String addingZeroAtTheEnd(String test) {
+			if(test.trim().contentEquals("--") || test.length() < 1) {
+				return null;
+			}
+			if(test.charAt(test.length()-2)=='.') {
+				 test = test.concat("0");
+			}
+			return test;
+	   }
+	    
 }
+
+
 
 
 

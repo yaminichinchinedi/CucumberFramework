@@ -10,7 +10,6 @@ Scenario Outline: Claim Detail UI Functionality and Data Check
      Given User navigates to UPA portal and enters "<credentials>" and login
      And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
      Then User clicks on Search Remittance link for UPA
-     Then User Enters tin and click on search button for "<userType>".
      Then User enters "<searchBy>" and click on search button.
      Then Verify Claim Detail UI vs FISL Response for "<usertype>"
      Then Validate all Headers in the Page for Claim Detail Page

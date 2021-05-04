@@ -183,5 +183,26 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 				"            GROUP BY CONSL_PAY_NBR\r\n" + 
 				"            HAVING COUNT(*) = 4\r\n" + 
 				"            ORDER BY CONSL_PAY_NBR ASC LIMIT 1))";
+		public static final String GET_CHECK_NUMBER = "select\n" +
+				"       ucp.UCONSL_PAY_NBR\n" +
+				"from\n" +
+				"       PP001.PROVIDER               p\n" +
+				"     , PP001.UNCONSOLIDATED_PAYMENT ucp\n" +
+				"     , PP001.CONSOLIDATED_PAYMENT   cp\n" +
+				"     , OLE.PROC_CTL                 pc\n" +
+				"where\n" +
+				"       cp.CONSL_PAY_NBR     = ucp.CONSL_PAY_NBR\n" +
+				"       and p.PROV_KEY_ID    =ucp.PROV_KEY_ID\n" +
+				"       and cp.PROC_CTL_ID   =pc.PROC_CTL_ID\n" +
+				"       and p.PROV_TAX_ID_NBR='{$tin}'\n" +
+				"       and pc.EXTRACT_STS_CD='C'\n" +
+				"       and cp.setl_dt between current date - 6 MONTHS and current date\n" +
+				"fetch first row only with ur";
+		
+	  public static final String Enhancement_Invoice_Grid_Data = "SELECT dfi.Prov_Tin_Nbr, dfi.BILL_CYC_STRT_DT, dfi.BILL_CYC_END_DT, dfi.INVC_TOT_AMT, dfi.INVC_NBR, dfi.INVC_STS, dfi.PAID_DATE, dfi.PAID_BY_USER, dfi.CONFIRM_NBR, pu.FST_NM, pu.LST_NM\r\n" + 
+	  		"FROM OLE.DEBIT_FEE_INVCE dfi\r\n" + 
+	  		"LEFT JOIN OLE.PORTAL_USER pu ON pu.PORTAL_USER_ID = dfi.PAID_BY_USER\r\n" + 
+	  		"WHERE dfi.INVC_STS <> 'IC' AND INVC_TYP = 'PPP' AND PROV_TIN_NBR = '{$tin}'\r\n" + 
+	  		"Order by INVC_NBR";
 		
 }
