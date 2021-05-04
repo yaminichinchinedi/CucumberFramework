@@ -4390,14 +4390,14 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		String actualParagraph, expectedHeader, expectedPara, expectedPara2;
 		WebElement header, paragraphTag;
 
-		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='view-payments-tabs']/div[1]"), 30);
 
 		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
 			case "PROV_Admin_Premium_AO":
-				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
-				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
-				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header");
-				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph");
+				header = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[2]");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header").trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph").trim();
 				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
 				break;
 			case "PROV_Admin_Standard_AO":

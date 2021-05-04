@@ -932,7 +932,7 @@ public class ViewPaymentsDataProvider {
 		}
 
 		case "Multiple_PLB_ProvAdmin": {
-			sqlRowNo = 1904;
+			query = QUERY.GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS;
 			break;
 		}
 
