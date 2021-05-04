@@ -244,6 +244,10 @@ public class ViewPaymentsSteps extends TestBase {
     public void set_search_filters_for_having_With(String archivefilter, String quickSearchFilter, String filterPayments) throws Throwable {
     	viewPayment.setSearchFilters(filterPayments, quickSearchFilter, archivefilter, filterPayments);
     }
+	@Then("^Set search filters for Payer \"([^\"]*)\" having \"([^\"]*)\"$")
+	public void set_search_filters_for_Payer_having(String filterpayments, String quicksearchfilter) throws Throwable {
+		viewPayment.setSearchFiltersPayer(filterpayments, quicksearchfilter, filterpayments);
+	}
 
     @Then("^Validate the data of Print Payment Summary page\\.$")
     public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
@@ -332,7 +336,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Validate the data between Single Payment Summary page and poped up Print payment Summary page$")
     public void validate_the_data_between_Single_Payment_Summary_page_and_poped_up_Print_payment_Summary_page() throws Throwable {
-    	viewPayment.vaidateHeadersColumns("View Payments");
+    	viewPayment.validateSinglePaymentPageData();
     }
     
     @Then("^Validate Fee Amount column is not displayed\\.$")

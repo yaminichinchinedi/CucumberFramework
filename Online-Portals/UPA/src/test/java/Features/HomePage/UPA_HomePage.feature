@@ -1,14 +1,14 @@
-#Author: Sunanda
+#Author: Marsha(Stabilisation)
 
 @UPAhomePage
-Feature: Post-Login T&C Page and Bring More Power Page Functionality 
-
+Feature:  UPA Home Page Functionality - Post Login 
+	#Author: Sunanda
   @UPABringMorePage_1 @homePage_func
   Scenario Outline: Bring More Power Page Functionality for user associated only with ACH TINs
     Given Is to verify if atleast one standard "<portalAccess>" TIN with "<tinType>" is associated with "<userType>" and has "<trialStatus>" with "<SelectedOrDefault>" and "<statusOfStandardRecd>"
    	And User navigates to UPA portal and enters "<userType>" and login when the Terms and Conditions are not accepted
     Then User verifies the presence of Bring More Power pop-up and clicks No Thanks
-    And   User clicks on UPA logout
+    And User clicks on UPA logout
     And User navigates to UPA portal and enters "<userType>" and login
     Then User verifies the presence of Bring More Power pop-up and clicks I Accept
     And User verifies the insertion of pending PS record and inactivation of PD record in the product selection table for all the associated standard tins
@@ -25,7 +25,7 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
       | PROV_Admin_HomePage_AO |   PROV     		|		Standard			  |		AO			|     A     |					P					 |				PD			 |
       
   #Author : Vinay Raghumanda
-  @UPA_US3179215 @homePage_func
+  @UPA_US3179215 @homePage_func 
   Scenario Outline: BS and Payer admins Home Page Carousel Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
@@ -46,6 +46,7 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
       | PROV_Admin  | PROV     | PostTrial and Paid   | VO      | Premium      |
+      | PROV_Admin  | PROV     | WithinTrial and Paid | AO      | Premium      |
   
   #Author: Marsha        
 	@UPAUS2948683TnC_1 @homePage_func
@@ -63,7 +64,7 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
 	      |      PAY_Admin     	|   PAY       | 
 	      |      PAY_Gen       	|   PAY       |      
   
-  @UPAResourceTabDropDownUPA_1 @US2999285 @US3221194 @US3221199 @homePage_func
+  @UPAResourceTabDropDownUPA_1 @US2999285 @US3221194 @US3221199 @homePage_func @US3221207
   Scenario Outline: Resource Tab dropdown Post Login
 		Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
@@ -74,20 +75,6 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
     Then User clicks on Partners link and verifies the page
     When User hovers on the Resources DropDown
     Then User clicks on Document Vault and verifies the page
-    
-    Examples:
-      |      userType       |   
-      |      PROV_Admin     |   
-      |      PROV_Gen       |   
-      |      BS_Admin       |  
-      |      BS_Gen         | 
-      |      PAY_Admin     	| 
-      |      PAY_Gen     	  |  
-
- 		#Author:Sayonee   
-    @UPAUS3221207_1 @US3221207 @homePage_func
-  	Scenario Outline: Add Capitation Reports Link in Resource Tab dropdown Post Login
-		Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
     Then User clicks on Capitation Report
     Examples:
@@ -97,25 +84,27 @@ Feature: Post-Login T&C Page and Bring More Power Page Functionality
       |      BS_Admin       |  
       |      BS_Gen         | 
       |      PAY_Admin     	| 
-      |      PAY_Gen     	  | 
+      |      PAY_Gen     	  |  
+
       
    #OBSOLETE   
-	 @UPAUS2948688_1 
-	 Scenario Outline: UPA HomePage Alert 
-   Given User navigates to UPA portal and enters "<credentials>" and login
-   And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-   And User verifies HomePage Alert depending upon "<portalAccess>" and "<tinType>"
+	 #@UPAUS2948688_1 
+	 #Scenario Outline: UPA HomePage Alert 
+   #Given User navigates to UPA portal and enters "<credentials>" and login
+   #And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   #And User verifies HomePage Alert depending upon "<portalAccess>" and "<tinType>"
         
-		 Examples:
-			 |		credentials  |    userType    | 			searchCriteria			|		portalAccess	  | tinType		|
-			 |     PROV_Admin  |     PROV     	|		WithinTrial and NotPaid	|		Standard     	  |		AO			|
-			 |     PROV_Admin  |     PROV     	|		WithinTrial and Paid	  |		Premium     	  |		AO			|
+		# Examples:
+		#	 |		credentials  |    userType    | 			searchCriteria			|		portalAccess	  | tinType		|
+		#	 |     PROV_Admin  |     PROV     	|		WithinTrial and NotPaid	|		Standard     	  |		AO			|
+		#	 |     PROV_Admin  |     PROV     	|		WithinTrial and Paid	  |		Premium     	  |		AO			|
 	
 		#OBSOLETE
-	  @UPAPopularFAQ_1 
-  	Scenario: Popular FAQs section
-		Given User navigates to UPA Sys Test application
-    When User scrolls to popular FAQ section
-    Then Verify all Popular FAQ links are present
-    And Click on VIEW ALL FAQs button and verify all FAQs are present
+	  #@UPAPopularFAQ_1 
+  	#Scenario: Popular FAQs section
+		#Given User navigates to UPA Sys Test application
+    #When User scrolls to popular FAQ section
+    #Then Verify all Popular FAQ links are present
+    #And Click on VIEW ALL FAQs button and verify all FAQs are present
+
     	              

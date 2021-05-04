@@ -316,16 +316,19 @@ public void verifyAddProvConfirmPage(){
 		Assert.assertTrue(expected.equals(actual), "Page Text validation failed");
 		Log.Comment("Text Validation successful : \n"+actual);
 	}
-	public void verifyProviderPageText(String tinType, String portalAccess) {
-		if("VO".equalsIgnoreCase(tinType))
-			Helper.compareEquals(testConfig, "pagetText", "As part of your virtual card payment option, you have access to the full functionality of Optum Pay. This allows your billing service provider to access all of your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText());
-		if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Premium".equalsIgnoreCase(portalAccess))
-			Helper.compareEquals(testConfig, "pagetText", "With the full functionality of Optum Pay, your billing service provider is able to access all your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText().trim());
-		if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Standard".equalsIgnoreCase(portalAccess))
-			{Helper.compareEquals(testConfig, "pagetText", "Activating the full functionality of Optum Pay will help the billing service more efficiently manage your claim and remittance data. Learn More.", pageTextProviderParagraph.getText().trim());
-			 Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
-			}
-	}
+	
+	
+    public void verifyProviderPageText(String tinType, String portalAccess) {
+        if("VO".equalsIgnoreCase(tinType))
+            Helper.compareEquals(testConfig, "pagetText", "As part of your virtual card payment option, you have access to Optum Pay premium. This allows your billing service provider to access all of your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText());
+        if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Premium".equalsIgnoreCase(portalAccess))
+            Helper.compareEquals(testConfig, "pagetText", "With Optum Pay premium, your billing service provider is able to access all your claims and remittance data and work more efficiently for you.", pageTextProviderParagraph.getText().trim());
+        if(("AO".equalsIgnoreCase(tinType)||"AV".equalsIgnoreCase(tinType)) && "Standard".equalsIgnoreCase(portalAccess))
+            {
+             Helper.compareEquals(testConfig, "pagetText", "Activating Optum Pay premium will help the billing service more efficiently manage your claim and remittance data. Learn More.", pageTextProviderParagraph.getText().trim());
+             Helper.compareEquals(testConfig,"pagetext", "Do you use a billing service provider?", pageText1.getText().trim());
+            }
+    }
 
 
 	/**

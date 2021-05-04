@@ -3,11 +3,16 @@ package main.java.pageObjects;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +22,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
+
 import org.testng.Assert;
 
 public class UPAHomePage extends HomePage {
@@ -95,7 +101,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText = "Billing Service Information") 
 	WebElement lnkBsInfo;
 	
-	@FindBy(xpath = "//a[@id='tabOptumPay']") 
+	@FindBy(linkText = "Optum Pay Solutions") 
 	WebElement lnkOptumPaySol;
 	
 	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")
@@ -174,6 +180,10 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
+	@FindBy(className="slide image")
+	List<WebElement> imageTiles;
+	@FindBy(className="slide video")
+	List<WebElement> videoTiles;
 	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -330,11 +340,11 @@ public class UPAHomePage extends HomePage {
 	
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
-			Helper.getPayerSchema(testConfig,searchCriteria);	
+			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
-		testConfig.putRunTimeProperty("portalAccess",portalAccess);
 		testConfig.putRunTimeProperty("userType",userType);
+		testConfig.putRunTimeProperty("searchCriteria", searchCriteria);
 		switch (userType)
 			{
 			   case "PROV": 
@@ -413,6 +423,23 @@ public class UPAHomePage extends HomePage {
 				break;
 			case "PROV":
 				if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") && StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and Paid")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				}
+				else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
 						credentials.equalsIgnoreCase("PROV_Admin") &&
 						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
 					String[] expectedProvHeaders = {
@@ -519,36 +546,21 @@ public class UPAHomePage extends HomePage {
 	}
 
 	private void homePageCarouselTextValidation(String[] expectedHeaders, String[] expectedTexts) {
+		int j=0;
+		for(WebElement img : imageTiles)
+		{
+			Element.waitTillTextAppears(img, expectedHeaders[j], testConfig);
+			String actualText = img.getText().trim() +
+					img.getText().trim();
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j++], actualText);
+		}  
 
-		WebElement windowSlides = Element.findElement(testConfig, "xpath", "//*[@class=\"slides-window\"]");
-		List<WebElement> imageTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide image\"]"));
-		List<WebElement> videoTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide video\"]"));
-
-		int counter = 0;
-		while(!(imageTiles.get(0).findElement(By.tagName("h2")).getText().trim().equals(expectedHeaders[0]))){
-			Browser.wait(testConfig, 2);
-			windowSlides = Element.findElement(testConfig, "xpath", "//*[@class=\"slides-window\"]");
-			imageTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide image\"]"));
-			videoTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide video\"]"));
-			counter++;
-			if(counter>10){
-				break;
-			}
-		}
-
-		int j = 0;
-		for (int i = 0; i < imageTiles.size(); i++) {
-			Element.waitTillTextAppears(imageTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
-			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
-					imageTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
-			j++;
-		}
-		for (int i = 0; i < videoTiles.size(); i++) {
-			Element.waitTillTextAppears(videoTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
-			String actualText = videoTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
-					videoTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
+		for(WebElement vid : videoTiles)
+		{
+			Element.waitTillTextAppears(vid, expectedHeaders[j], testConfig);
+			String actualText = vid.getText().trim() +
+					vid.getText().trim();
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j++], actualText);
 		}
 	}
 	
@@ -571,19 +583,19 @@ public class UPAHomePage extends HomePage {
 	}
 
 	
-	public void verifyStandardTinAssociation(String userType) {
+	public void verifyStandardTinAssociation(String userType) throws IOException {
 		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
 		testConfig.putRunTimeProperty("id",id);
-		int sql=1348;
-		Map standardTin = DataBase.executeSelectQuery(testConfig,sql, 1);
-		String rows=standardTin.get("ROWS").toString();
-		testConfig.putRunTimeProperty("rows",rows);
-		int count = Integer.parseInt(rows);
-		
-		if (count==0)			
-			Log.Fail("Insert any Standard TIN from backend");		
-		else	
-			Log.Pass(count+" "+"standard TIN(s) associated with the user, proceeding to check visibility of Bring More Power pop-up");
+		int sqlTin=23;
+		ArrayList<String> tins = new ArrayList<>();
+		HashMap<Integer, HashMap<String, String>> tinsDb = DataBase.executeSelectQueryALL(testConfig, sqlTin); //DataBase.executeSelectQuery(testConfig, sqlTin, 1);
+	
+		DataBase.executeDeleteQuery(testConfig, QUERY.DELETE_ALL_TINS_FOR_USER);
+		for (Integer tmp : tinsDb.keySet()) {
+			tins.add(tinsDb.get(tmp).get("PROV_TIN_NBR"));
+			testConfig.putRunTimeProperty("tin", tins.get(tmp-1).toString());
+			DataBase.executeInsertQuery(testConfig, QUERY.INSERT_ALL_STD_TRIAL_TINS_FOR_USER);
+		}
 		
 	}
 	public void verifyBringMorePowerPage() {

@@ -4,7 +4,7 @@
     @CSRRegression
 Feature: CSR_EPRA_Srch_Remittance  
 
-@CSREPRASrchRemitPage @CSR_EPRA_SR_Stab_Complete
+@CSREPRASrchRemitPage
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -33,7 +33,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 						|	    EPRADOPAndNpi	      |						RO					|					1				|			EPRA				|PROV       |
 						|	    EPRADOPAndNpi	      |						RO					|					2				|			EPRA				|PROV       |
 
-@CSR_EPRA_SR_Stab_Existing
+
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -60,4 +60,3 @@ Examples:
 						|	    EPRADOPAndNpi	      |						RW					|					2				|		EPRAgenerated	|PROV       |
 						|	    EPRADOPAndNpi	      |						RO					|					1				|		EPRAgenerated	|PROV       |
 						|	    EPRADOPAndNpi	      |						RO					|					2				|		EPRAgenerated	|PROV       |
-													

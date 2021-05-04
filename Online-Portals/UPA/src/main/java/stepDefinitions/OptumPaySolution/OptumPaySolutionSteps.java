@@ -147,10 +147,7 @@ public void user_validates(String paraName) throws Throwable
 @Then("^User validates Provider Name, Accrued Fees, Past Due Fees and Invoice Period Grid$")
 public void user_validates_Provider_Name_Accrued_Fees_Past_Due_Fees_and_Invoice_Period_Grid() throws Throwable
 {
-	optumPaySol.verifyProviderName();
-	optumPaySol.verifyAccruedFees();
-	optumPaySol.verifyPastDueFees();
-	optumPaySol.verifyInvoicePeriodGrid();
+	optumPaySol.verifyInvoiceTabHeader().verifyProviderName().verifyAccruedFees().verifyPastDueFees().verifyInvoicePeriodGrid();
 }
 
 
@@ -158,6 +155,10 @@ public void user_validates_Provider_Name_Accrued_Fees_Past_Due_Fees_and_Invoice_
 @Then("^User validates contents of Past due fee of Fee tiles for this page$")
 public void user_validates_contents_of_Past_due_fee_of_Fee_tiles_for_this_page() throws Throwable {
 	optumPaySol.validatePastdueFee();
+}
+@Then("^User validates contents of Accrued fee of Fee tiles for this page$")
+public void user_validates_contents_of_Accrued_fee_of_Fee_tiles_for_this_page() throws Throwable {
+	optumPaySol.validateAccruedFeesMonth();
 }
 @Then("^User verifies if Invoices tab is available for \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\" and \"([^\"]*)\"\\.$")
 public void user_verifies_if_Invoices_tab_is_available_for_and_and_and(String searchCriteria, String portalAccess, String tinType, String prdctRecSts) throws Throwable {
@@ -186,6 +187,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	@Then("^User validates info icon hover message for Plan Type, Rate, Fees and Manage My Plan tile$")
 	public void user_validates_info_icon_hover_message_for_Plan_Type_Rate_Fees_and_Manage_My_Plan_tile() throws Throwable {
 	    optumPaySol.verifyInfoIconMessagesforAllTiles();
+	}
+	
+	@Then("^User validated header and footer message on options tab for \"([^\"]*)\" for \"([^\"]*)\"\\.$")
+	public void user_validated_header_and_footer_message_on_options_tab_for_for(String tinType, String userType) throws Throwable {
+		optumPaySol.verifyHeaderFooterMsgOptionsTab(tinType,userType);
 	}
 
 	@Then("^User verifies if tiles are present for \"([^\"]*)\" TIN$")

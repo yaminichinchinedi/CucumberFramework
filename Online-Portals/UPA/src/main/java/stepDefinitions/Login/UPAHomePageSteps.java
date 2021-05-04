@@ -143,6 +143,7 @@ public class UPAHomePageSteps extends TestBase{
 	
 	@When("^User clicks on Optum Pay Solutions tab$")
 	public void user_clicks_on_Optum_Pay_Solutions_tab() throws Throwable {
+		Browser.wait(testConfig, 1);
 		 homePage.clickOnOptumPaySolutionsTabUPA();
 	}
 

@@ -317,6 +317,7 @@ public class Helper
 		
 			if (!actual.equals(expected))
 			{
+				Log.Comment("Difference in expected and actual is: "+StringUtils.difference(expected, actual));
 				Log.Fail(what, expected, actual);
 			}
 			else
@@ -695,7 +696,7 @@ public class Helper
 		if(argPeriod.contains("4-6"))
 		include91stAnd92ndDayInt = 2;
 
-		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0])+1);
+		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0]));
 		Date fromDate = addMonths(currentDate, -Integer.parseInt(periods[1]));
 		Integer endPeriod = getNumberOfDays(toDate, currentDate)-include91stAnd92ndDayInt;
 		Integer startPeriod = getNumberOfDays(fromDate, currentDate);
@@ -1886,10 +1887,14 @@ public static String addDays(String date, int days) throws ParseException {
 		}	
 	}	
 	
-	public static void getPayerSchema(TestBase testConfig,String searchCriteria)
+	public static void getPayerSchema(TestBase testConfig,String searchCriteria,String userType)
 	{
 		Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
-	     Map schema = DataBase.executeSelectQuery(testConfig,QUERY.GET_SCHEMA, 1);
+	     Map schema = null;
+	     if(StringUtils.equals("PAY", userType))
+	    	 schema=DataBase.executeSelectQuery(testConfig,QUERY.PAYR_DETAILS_FOR_PAYR_USER,1);
+	     else
+	    	 schema=DataBase.executeSelectQuery(testConfig,QUERY.GET_SCHEMA, 1);
 	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
 	     testConfig.putRunTimeProperty("PAYR_DSPL_NM", schema.get("PAYR_DSPL_NM").toString().trim());
 	     testConfig.putRunTimeProperty("PAYR_835_ID", schema.get("PAYR_835_ID").toString().trim());

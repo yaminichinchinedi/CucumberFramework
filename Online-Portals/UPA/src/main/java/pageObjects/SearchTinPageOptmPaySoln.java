@@ -34,17 +34,18 @@ public class SearchTinPageOptmPaySoln {
     {
       this.testConfig=testConfig;
 	  PageFactory.initElements(testConfig.driver, this);
-	  Browser.verifyURL(testConfig, "optumPaySolutions.do");
     }
 
 	public SearchTinPageOptmPaySoln enterTinAndSrch(String userType) {
 		switch (userType)
 		{
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
+				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,txtboxTinNo, testConfig.getRunTimeProperty("tin"), "tin textbox");
 			    Element.clickByJS(testConfig,btnSubmit, "Search Button");
 				break;
 			case "BS": 
+				Browser.wait(testConfig, 1);
 				Element.enterDataByJS(testConfig,txtboxTinNo, testConfig.getRunTimeProperty("tin"), "tin textbox");
 				Element.clickByJS(testConfig,btnSearch, "Search Button");
 				break;
