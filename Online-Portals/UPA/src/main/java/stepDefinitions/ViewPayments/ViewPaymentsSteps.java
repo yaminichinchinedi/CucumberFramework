@@ -392,8 +392,11 @@ public class ViewPaymentsSteps extends TestBase {
     public void verifyViewPaymentsPageTextForForFor(String credentials, String portalAccess) {
         viewPayment.verifyPageTextFor(credentials, portalAccess);
     }
-	
-
+  
+    @Then("^User clicks on greyed out area and verify popup text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void user_clicks_on_greyed_out_area_and_verify_popup_text_for_for(String credentials, String portalAccess) throws Throwable {
+    	viewPayment.clickGreyedOut().verifyPageTextFor(credentials, portalAccess);// 
+    }
 }
 
 

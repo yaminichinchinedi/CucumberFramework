@@ -215,6 +215,7 @@ And User verifies page text message "<PageTextMsg>"
 		Then Validate Search Remittance Page Text for "<credentials>" for "<portalAccess>"
 		Examples:
 			| credentials | userType | searchCriteria       | tinType | portalAccess |
+			| PROV_Admin  | PROV     | PremiumOrStandardTIN | VO      | Premium      |
 			| PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
 			| PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Standard     |
 			| PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
@@ -230,6 +231,5 @@ And User verifies page text message "<PageTextMsg>"
 		Examples:
 			| credentials | userType | searchCriteria | tinType | portalAccess |
 			| BS_Admin    | BS       | Last 60 days   | AO      | Premium      |
-			| BS_Admin    | BS       | Last 60 days   | AO      | Standard     |
 			| BS_Gen      | BS       | Last 60 days   | AO      | Premium      |
-			| BS_Gen      | BS       | Last 60 days   | AO      | Standard     |
+			

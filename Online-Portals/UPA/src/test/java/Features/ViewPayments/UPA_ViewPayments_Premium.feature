@@ -181,7 +181,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 
 
    #Author : Vinay Raghumanda
-	@US3179215
+	@US3179215 @US3438488
 	Scenario Outline: View payments page Text Validation for PROV users
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -194,6 +194,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 			| PROV_Gen    | PROV     | Premium      | AO      | PremiumOrStandardTIN |
 			| PROV_Gen    | PROV     | Standard     | AO      | PremiumOrStandardTIN |
 			| PROV_Admin  | PROV     | Premium      | VO      | PostTrial and Paid   |
+			| PROV_Gen    | PROV     | Premium      | VO      | PostTrial and Paid   |
 
 	@US3179215
 	Scenario Outline: View payments page Text Validation for BS Users
@@ -205,9 +206,9 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 		Examples:
 			| credentials | userType | portalAccess | tinType | searchCriteria |
 			| BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
-			| BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
+		#	| BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
 			| BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
-			| BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
+		#	| BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
 			
 			
 		#Author: Marsha

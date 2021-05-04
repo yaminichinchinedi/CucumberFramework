@@ -178,8 +178,11 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
-	@FindBy(className="slide image")
+	
+	//@FindBy(className="slide image")
+	@FindBy(className="slide__messageBox")
 	List<WebElement> imageTiles;
+	
 	@FindBy(className="slide video")
 	List<WebElement> videoTiles;
 	public UPAHomePage(TestBase testConfig) 
@@ -339,10 +342,14 @@ public class UPAHomePage extends HomePage {
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
-		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		//String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		String tin = "310538525"; 
+		testConfig.putRunTimeProperty("tinType", tinType);
+		testConfig.putRunTimeProperty("tin","310538525");
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("portalAccess",portalAccess);
 		testConfig.putRunTimeProperty("userType",userType);
+		testConfig.putRunTimeProperty("searchCriteria",searchCriteria);
 		switch (userType)
 			{
 			   case "PROV": 
@@ -385,7 +392,7 @@ public class UPAHomePage extends HomePage {
 	 */
 	public void verifyHomePageCarouselText(String userType, String credentials) {
 		switch (userType) {
-			case "BS_Admin":
+			case "BS":
 				String[] expectedBSHeaders = {
 						TestBase.contentMessages.getProperty("bs.admin.home.car1.header"),
 						TestBase.contentMessages.getProperty("bs.admin.home.car2.header"),

@@ -703,7 +703,8 @@ import main.java.reporting.Log;
 		  
 		      case "partialLinkText":
 			  return testConfig.driver.findElements(By.partialLinkText(locatorValue));  
-		
+		      case "className":
+				  return testConfig.driver.findElements(By.className(locatorValue));
 		     default:
 		     return null;  
 		  }
