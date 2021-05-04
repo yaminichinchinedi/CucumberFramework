@@ -31,9 +31,9 @@ Feature:  UPA Home Page Functionality - Post Login
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
     Examples:
       | credentials | userType  |
-      | BS_Admin    | 	BS  		|
-     # |   BS_Gen    |   BS     	|
-     # | PAY_Admin   | PAY_Admin |
+      | BS_Admin    | 	BS  	|
+      |   BS_Gen    |   BS     	|
+      | PAY_Admin   | PAY_Admin |
 
   @UPA_US3179215 @homePage_func
   Scenario Outline: Provider Home page Carousel Text Validation
@@ -47,6 +47,7 @@ Feature:  UPA Home Page Functionality - Post Login
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
       | PROV_Admin  | PROV     | PostTrial and Paid   | VO      | Premium      |
+      | PROV_Admin  | PROV     | WithinTrial and Paid | AO      | Premium      |
   
   #Author: Marsha        
 	@UPAUS2948683TnC_1 @homePage_func

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -178,9 +179,7 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
-	
-	//@FindBy(className="slide image")
-	@FindBy(className="slide__messageBox")
+	@FindBy(className="slide image")
 	List<WebElement> imageTiles;
 	
 	@FindBy(className="slide video")
@@ -342,12 +341,8 @@ public class UPAHomePage extends HomePage {
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
-		//String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
-		String tin = "310538525"; 
-		testConfig.putRunTimeProperty("tinType", tinType);
-		testConfig.putRunTimeProperty("tin","310538525");
+		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
-		testConfig.putRunTimeProperty("portalAccess",portalAccess);
 		testConfig.putRunTimeProperty("userType",userType);
 		testConfig.putRunTimeProperty("searchCriteria",searchCriteria);
 		switch (userType)
@@ -428,6 +423,23 @@ public class UPAHomePage extends HomePage {
 				break;
 			case "PROV":
 				if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") && StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and Paid")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				}
+				else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
 						credentials.equalsIgnoreCase("PROV_Admin") &&
 						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
 					String[] expectedProvHeaders = {
