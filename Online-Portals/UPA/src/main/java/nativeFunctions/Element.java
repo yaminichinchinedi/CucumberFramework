@@ -847,6 +847,34 @@ public static void waitForElementTobeClickAble(TestBase testConfig,WebElement el
 	
 }
 
+
+/**
+ * Author: Mohammad Khalid
+ *  */
+
+public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElement elt, int timeOut)
+{
+	for(int i=1; i<timeOut;i++)
+	{
+		if(elt.isDisplayed())
+		{
+			Log.Comment("The Element is Visible, coming out of loop...");
+			break;
+		}
+		else
+		{
+			Log.Comment("The Element is not Visible, hence refreshing the browser and waiting...");
+			Browser.browserRefresh(testConfig);
+			try {
+				Thread.sleep(i);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)
 {
 	try{

@@ -7587,7 +7587,7 @@ public RemittanceDetail clickPrintRequestButton()
 	verifyDownloadWindow();
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
-	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Available']"), 60);
+	Element.waitForElementWhileRefreshBrowser(testConfig, btnPrntavailable, 60);
 	Element.verifyElementPresent(btnPrntavailable, "Print Available");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	
@@ -7600,7 +7600,7 @@ public RemittanceDetail clickPrintButton()
 	File fileDirectory=new File(filedir);
 	Helper.purgeDirectory(fileDirectory);
 	Browser.browserRefresh(testConfig);
-	Element.waitForElementTobeClickAble(testConfig, btnPrntavailable, 60);
+	Element.waitForElementWhileRefreshBrowser(testConfig, btnPrntavailable, 120);
 	Element.click(btnPrntavailable, "Print Available Button");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));

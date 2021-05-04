@@ -48,7 +48,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^validate new Entry is created in Ole\\.EPRA_STATUS with C status for Consol_Pay_Nbr$")
 	public void validate_new_Entry_is_created_in_Ole_EPRA_STATUS_with_C_status_for_Consol_Pay_Nbr() throws Throwable {
 		
-		
+		Browser.wait(testConfig, 2);
 		srchRemittance.verifyEpraStatus("C");
 		//srchRemittance.getPDFfileNameEPRA();
 	}

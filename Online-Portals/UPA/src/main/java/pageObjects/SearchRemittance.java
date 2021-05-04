@@ -1571,20 +1571,27 @@ public class SearchRemittance extends ViewPayments {
 	public RemittanceDetail clickEPRAPDFlink_Enabled_SR(String srchType) {
 
 		int totalNoOfPages = getNumberOfPages();
+		boolean flag = false;
 		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
 			if (pageNum % 10 == 1) {
-				find_And_Click_835PDF_Icon_Enabled_SR();
+				flag=find_And_Click_835PDF_Icon_Enabled_SR();
+				if(flag==true)
+					break;
 			} else if (pageNum % 10 == 0) {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_835PDF_Icon_Enabled_SR();
+				flag=find_And_Click_835PDF_Icon_Enabled_SR();
+				if(flag==true)
+					break;
 				Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
 			} else {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_835PDF_Icon_Enabled_SR();
+				flag=find_And_Click_835PDF_Icon_Enabled_SR();
+				if(flag==true)
+					break;
 			}
 		}
 		return new RemittanceDetail(testConfig);
@@ -1802,6 +1809,8 @@ public class SearchRemittance extends ViewPayments {
 
 		Helper.compareContains(testConfig, "EPRA is downloaded", testConfig.getRunTimeProperty("id"),
 				data.get("EVNT_MSG").toString());
+		Helper.compareContains(testConfig, "Contains TIN", testConfig.getRunTimeProperty("tin"), data.get("EVNT_MSG").toString());
+		
 		if (testConfig.getRunTimeProperty("TobeDeleted") != null
 				&& testConfig.getRunTimeProperty("TobeDeleted").equals("PROV"))
 			DataBase.executeDeleteQuery(testConfig, 25);
@@ -1962,8 +1971,9 @@ public class SearchRemittance extends ViewPayments {
 	 * Remittance page
 	 **/
 
-	public void find_And_Click_PaymentNumber_SR() {
+	public boolean find_And_Click_PaymentNumber_SR() {
 		String expectedPaymntNo = null;
+		boolean flag_ClickedPaymentNumber=false;
 		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
 				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
@@ -1972,17 +1982,20 @@ public class SearchRemittance extends ViewPayments {
 			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath);
 			if (payNumber_SR.getText().trim().equalsIgnoreCase(expectedPaymntNo)) {
 				Element.clickByJS(testConfig, payNumber_SR, "Payment Number on SR page");
+				flag_ClickedPaymentNumber = true;
 				break;
 			}
 		}
+		return flag_ClickedPaymentNumber;
 	}
 
 	/**
 	 * Author: Mohammad Khalid Method to find on PDF Link on SR page
 	 */
 
-	public void find_And_Click_835PDF_Link_SR() {
+	public boolean find_And_Click_835PDF_Link_SR() {
 		String expectedPaymntNo = null;
+		boolean flag_Clicked_835Link=false;
 		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
 				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
@@ -2005,17 +2018,20 @@ public class SearchRemittance extends ViewPayments {
 				Helper.compareEquals(testConfig, "ePRA PDF link Hover Message after the click",
 						"ePRA in process, please wait for completion",
 						f_835_PDF_SR_AfterClick.getAttribute("title").trim());
+				flag_Clicked_835Link=true;
 				break;
 			}
 		}
+		return flag_Clicked_835Link;
 	}
 
 	/**
 	 * Author: Mohammad Khalid Method to find on PDF icon enabled on SR page
 	 */
 
-	public void find_And_Click_835PDF_Icon_Enabled_SR() {
+	public boolean find_And_Click_835PDF_Icon_Enabled_SR() {
 		String expectedPaymntNo = null;
+		boolean flag_Clicked_835PDF_Icon=false;
 		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
 				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
@@ -2029,9 +2045,12 @@ public class SearchRemittance extends ViewPayments {
 				wait.until(ExpectedConditions.elementToBeClickable(f_835_PDF_SR));
 				Element.clickByJS(testConfig, f_835_PDF_SR,
 						"835 PDF Icon on SR page for Payment Number: " + payNumber_SR.getText().trim());
+				flag_Clicked_835PDF_Icon = true;
 				break;
 			}
 		}
+		
+		return flag_Clicked_835PDF_Icon;
 	}
 
 	/**
@@ -2040,21 +2059,28 @@ public class SearchRemittance extends ViewPayments {
 
 	public RemittanceDetail clickPaymentNumber_SR_Page(String srchType) {
 		int totalNoOfPages = getNumberOfPages();
+		boolean flag=false;
 
 		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
 			if (pageNum % 10 == 1) {
-				find_And_Click_PaymentNumber_SR();
+				flag = find_And_Click_PaymentNumber_SR();
+				if(flag==true)
+					break;
 			} else if (pageNum % 10 == 0) {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_PaymentNumber_SR();
+				flag = find_And_Click_PaymentNumber_SR();
+				if(flag==true)
+					break;
 				Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
 			} else {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_PaymentNumber_SR();
+				flag = find_And_Click_PaymentNumber_SR();
+				if(flag==true)
+					break;
 			}
 		}
 		return new RemittanceDetail(testConfig);
@@ -2066,21 +2092,29 @@ public class SearchRemittance extends ViewPayments {
 
 	public RemittanceDetail click_835PDF_EPRA_SR(String srchType) {
 		int totalNoOfPages = getNumberOfPages();
+		boolean flag=false;
 
 		for (int pageNum = 1; pageNum <= totalNoOfPages; pageNum++) {
 			if (pageNum % 10 == 1) {
-				find_And_Click_835PDF_Link_SR();
+				flag=find_And_Click_835PDF_Link_SR();
+				if(flag==true)
+					break;
 			} else if (pageNum % 10 == 0) {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_835PDF_Link_SR();
+				flag=find_And_Click_835PDF_Link_SR();
+				if(flag==true)
+					break;
 				Element.click(testConfig, nextLink_SR, "Next Link on SR for multi Records", 5);
+				
 			} else {
 				String xpathNextPage = "(//a[@class='pageNo' and contains(text(),'" + (pageNum) + "')])[1]";
 				Element.click(testConfig, TestBase.driver.findElement(By.xpath(xpathNextPage)),
 						"The Page Number clicked is: " + (pageNum), 5);
-				find_And_Click_835PDF_Link_SR();
+				flag=find_And_Click_835PDF_Link_SR();
+				if(flag==true)
+					break;
 			}
 		}
 
@@ -2092,8 +2126,8 @@ public class SearchRemittance extends ViewPayments {
 	 */
 	public int getNumberOfPages() {
 		int noOfPages = 0;
-		if (getRecordCountFromUI() != null) {
-			noOfPages = Integer.parseInt(getRecordCountFromUI());
+		if (getRecordCountFromUI_EPRA_SR() != null) {
+			noOfPages = Integer.parseInt(getRecordCountFromUI_EPRA_SR());
 		} else
 			noOfPages = 1;
 

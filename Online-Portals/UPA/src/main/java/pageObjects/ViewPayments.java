@@ -167,8 +167,15 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(name="B3")
 	WebElement btnPrntPaymntSummary;
 	
-	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
+//	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
+	@FindBy(xpath = "//div[@id='view-payments']/table//tr[1]//div[2]/div[1]/span")
 	WebElement divShowRslts;
+	
+	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
+	WebElement lastPageCount_SR;
+	
+	@FindBy(xpath = "(//span[@class='pageNo'])[1]")
+	WebElement lastPageCountSR;
 	
 	@FindBy(id="viewPaymentsPremium")
 	WebElement popUpViewPay;
@@ -1019,11 +1026,11 @@ public void verifyFailedPaymentPopUp()
 		
 	}
 	
-	/*public String getRecordCountFromUI(){
+	public String getRecordCountFromUI(){
 		String resultCount=divShowRslts.getText().toString();
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
 		return resultCount.trim();
-	}*/
+	}
 	
 	/**
 	 * Authot: Mohammad Khalid
@@ -1031,17 +1038,16 @@ public void verifyFailedPaymentPopUp()
 	 * 
 	 * */
 	
-	public String getRecordCountFromUI()
+	public String getRecordCountFromUI_EPRA_SR()
 	{
 		String resultCount = null;
 		try
 		{
-			if (divShowRslts.isDisplayed())
+			if (lastPageCount_SR.isDisplayed())
 			{
-				resultCount=divShowRslts.getText().toString().trim();
-				Log.Comment("Page umber: " + resultCount);
-				resultCount=resultCount.substring(11,resultCount.length()).trim();
-				Log.Comment("Page umber1: " + resultCount);
+				resultCount=lastPageCountSR.getText().toString().trim();
+				resultCount=resultCount.substring(resultCount.lastIndexOf("of")+2, resultCount.length()).trim();
+				Log.Comment("Total Number of Pages: " + resultCount);
 			}
 			else
 			{
@@ -1055,7 +1061,6 @@ public void verifyFailedPaymentPopUp()
 		
 		return resultCount;
 	}
-	
 	
 	
 	public String getRecordCountFromUISR()

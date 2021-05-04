@@ -551,8 +551,8 @@ public class SearchRemittanceSearchCriteria {
 		    	String fromDate = System.getProperty("fromDate");
 		    	String toDate = System.getProperty("toDate");
 		    	
-		    	Element.enterData(patientFirstName, ptnt_fst_nm, "Enter First Name as : "+ptnt_lst_nm, "First Name");
-		    	Element.enterData(patientLastName, ptnt_lst_nm, "Enter Last Name as: "+ptnt_lst_nm, "Last Name");
+		    	Element.enterData(patientFirstName, ptnt_fst_nm.replace("-", " "), "Enter First Name as : "+ptnt_fst_nm, "First Name");
+		    	Element.enterData(patientLastName, ptnt_lst_nm.replace("-", " "), "Enter Last Name as: "+ptnt_lst_nm, "Last Name");
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
