@@ -155,9 +155,9 @@
     Examples: 
       | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
       | Super       | PROV      | TinWithInvoices    | Premium      | AO      | PS          |
-      #| Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
      #| Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |  #No Data for this combination
-     # | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
+      | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
      #| Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |  #Data issue in the DB
          
        

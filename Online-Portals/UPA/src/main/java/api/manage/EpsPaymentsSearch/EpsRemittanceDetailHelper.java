@@ -11,9 +11,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -23,8 +20,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -34,8 +29,7 @@ public class EpsRemittanceDetailHelper {
     private String connectionUrl=(testConfig.getRunTimeProperty(testConfig.getRunTimeProperty("Env")+"FISLURL_RemittanceDetail"));
     private String remittanceDetailResponse;
 
-    @SuppressWarnings("static-access")
-	public String getAuthToken() throws IOException, NoSuchAlgorithmException, KeyManagementException
+    public String getAuthToken() throws IOException
     {
         StringBuilder response = new StringBuilder();
         String authURL="https://gateway-stage-dmz.optum.com/auth/oauth2/token";
@@ -43,19 +37,13 @@ public class EpsRemittanceDetailHelper {
         // Opens connection with server
         URLConnection UrlConn = conn.openConnection();
         HttpsURLConnection httpUrlConn = (HttpsURLConnection) UrlConn;
+
         httpUrlConn.setDoOutput(true);
         httpUrlConn.setRequestMethod("POST");
         httpUrlConn.setRequestProperty("Content-Type", "application/json");
         httpUrlConn.setRequestProperty("Accept", "application/json");
         httpUrlConn.setDoOutput(true);
-        
-     /*   SSLContext context = SSLContext.getInstance("SSLv3");  //
-        context.init(null, null, null);  //
-        httpUrlConn.setDefaultSSLSocketFactory(context.getSocketFactory()); // */
-        SSLSocketFactory abc = httpUrlConn.getSSLSocketFactory(); //
-        System.out.print(abc); //
-        
-        httpUrlConn.connect(); 
+        httpUrlConn.connect();
         String payload = "{" +
                 "\"client_id\": \"NpOFhNDcNuDNiqZ3xHBvI7hDWzcV13CD\", " +
                 "\"client_secret\": \"04tYtsyfNSBFyJr3CcHCJuYSvIeOl6X1\", " +
@@ -77,7 +65,7 @@ public class EpsRemittanceDetailHelper {
         return  (response.substring(39,71));
     }
 
-    public final String postRequestGetResponse(String xmlRequest) throws IOException, SAXException, ParserConfigurationException, JAXBException, KeyManagementException, NoSuchAlgorithmException {
+    public final String postRequestGetResponse(String xmlRequest) throws IOException, SAXException, ParserConfigurationException, JAXBException {
         String response = "";
         String line;
 
@@ -90,7 +78,7 @@ public class EpsRemittanceDetailHelper {
         httpUrlConn = (HttpURLConnection) UrlConn;
 
         httpUrlConn.setDoOutput(true);
-        httpUrlConn.setRequestMethod("POST"); 
+        httpUrlConn.setRequestMethod("POST");
         httpUrlConn.setRequestProperty("Content-Type", "application/xml");
         httpUrlConn.setRequestProperty("Authorization", "Bearer " + getAuthToken());
         httpUrlConn.connect();

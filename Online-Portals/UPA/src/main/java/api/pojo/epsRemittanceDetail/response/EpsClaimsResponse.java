@@ -1779,7 +1779,7 @@ public class EpsClaimsResponse {
              *     {@link EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments }
              *     
              */
-      /*      public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
+       /*     public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
                 return epsClaimPaymentServiceAdjustments;
             } */
             

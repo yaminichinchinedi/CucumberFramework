@@ -12,12 +12,6 @@ public class ClaimDetailSteps extends TestBase {
 	
     ClaimDetail claimDetail = new ClaimDetail(testConfig);
     
-    @Then("^Verify Claim Detail UI vs FISL Response$")
-    public void verify_Claim_Detail_UI_vs_FISL_Response() throws Throwable {
-        
-    	claimDetail.verifyClaimDtlPageData();
-    }
-    
     @Then("^Verify Claim Detail UI vs FISL Response for \"([^\"]*)\"$")
     public void verify_Claim_Detail_UI_vs_FISL_Response_for(String usertype) throws Throwable {
     
@@ -41,13 +35,6 @@ public class ClaimDetailSteps extends TestBase {
        
     	claimDetail.verifyColumnFootersClaimDtl();
     }
-    
-    @Then("^Validate Tricare Masking for Claim Detail Page$")
-    public void validate_Tricare_Masking_for_Claim_Detail_Page() throws Throwable {
-        
-    	claimDetail.verifyTricareMaskingClaimDtl();
-    }
-   
 
     @Then("^Validate all Headers in the Page for Claim Detail Page for Payer$")
     public void validate_all_Headers_in_the_Page_for_Claim_Detail_Page_for_Payer() throws Throwable {

@@ -960,7 +960,7 @@ public void verifyFailedPaymentPopUp()
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
-				
+		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
@@ -1293,10 +1293,12 @@ public void verifyFailedPaymentPopUp()
 }
 	public ArrayList<String> getUIValuesForSinglePaymentPage()
 	{
+		Browser.wait(testConfig, 2);
 		ArrayList<String> headers=getHeadersFromResultTable();
 		List <String> rowValues=new ArrayList<String>();
 		int size=0;
 		WebElement dataRow=null;
+		Browser.wait(testConfig, 2);
 		if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
 			searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
 			if (!searchResultRows.isEmpty()) {
@@ -1307,6 +1309,7 @@ public void verifyFailedPaymentPopUp()
 			if(dataRow!=null)
 				size=dataRow.findElements(By.tagName("td")).size();
 		}
+		Browser.wait(testConfig, 2);
 		for (int i=0;i<size;i++)
 		{
 			String colValue="";
@@ -1785,7 +1788,7 @@ public void verifyFailedPaymentPopUp()
 		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
 		String[] identifiers = new String[] {};
 		epn.setEpsNationalProviderIdentifiers(identifiers);
- //		Log.Comment("Request: " + epn.toString());
+ 		Log.Comment("Request: " + epn.toString());
 		request = epn;
 
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(request);
@@ -4400,14 +4403,14 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		String actualParagraph, expectedHeader, expectedPara, expectedPara2;
 		WebElement header, paragraphTag;
 
-		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='view-payments-tabs']/div[1]"), 30);
 
 		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
 			case "PROV_Admin_Premium_AO":
-				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
-				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
-				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header");
-				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph");
+				header = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[2]");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header").trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph").trim();
 				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
 				break;
 			case "PROV_Admin_Standard_AO":

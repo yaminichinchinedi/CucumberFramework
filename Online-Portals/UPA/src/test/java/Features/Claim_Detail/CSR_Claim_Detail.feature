@@ -1,4 +1,4 @@
-#Author: Athyusha Thota
+#Author: Aravind
 
  @CSRRegression @CSRSanity @BothCSRUPAScenarios
 Feature: CSR Claim Detail
@@ -20,8 +20,8 @@ Feature: CSR Claim Detail
      
 Examples:
  
-        |		searchCriteria			  |	credentials	 | portalAccess  |tinType |userType | searchBy                   |
-		    |	TIN_FOR_CLAIM_DETAILS	  |	Super        |	  Premium    |  AO    | PROV    | byElectronicPaymentNoRemit |
+        |		searchCriteria			                                |	credentials	 | portalAccess  |tinType |userType | searchBy                   |
+		    |	GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS	  |	Super        |	  Premium    |  AO    | PROV    | byElectronicPaymentNoRemit |
 
         
 # Data is not there at backend, so it fails near TIN 

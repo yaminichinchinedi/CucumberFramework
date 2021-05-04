@@ -25,7 +25,7 @@ Feature:  UPA Home Page Functionality - Post Login
       | PROV_Admin_HomePage_AO |   PROV     		|		Standard			  |		AO			|     A     |					P					 |				PD			 |
       
   #Author : Vinay Raghumanda
-  @UPA_US3179215 @homePage_func
+  @UPA_US3179215 @homePage_func 
   Scenario Outline: BS and Payer admins Home Page Carousel Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
@@ -46,6 +46,7 @@ Feature:  UPA Home Page Functionality - Post Login
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
       | PROV_Admin  | PROV     | PostTrial and Paid   | VO      | Premium      |
+      | PROV_Admin  | PROV     | WithinTrial and Paid | AO      | Premium      |
   
   #Author: Marsha        
 	@UPAUS2948683TnC_1 @homePage_func

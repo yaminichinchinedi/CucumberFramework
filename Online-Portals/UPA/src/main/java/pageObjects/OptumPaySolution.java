@@ -60,8 +60,10 @@ public class OptumPaySolution {
 	WebElement lnkLogout;
 	@FindBy(linkText="Home") 
 	WebElement lnkHome;
-	@FindBy(xpath = "//div[@id=\"optum-pay-tabs\"]//div[1]//p[2]") 
-	WebElement pageText;
+	@FindBy(xpath = "//div[@class='topMessaggeDiv']") 
+	WebElement pageHeader;
+	@FindBy(xpath="//div[@class='bottomMessageDiv']")
+	WebElement pageFooter;
 	@FindBy(xpath = "//div[@id=\"optum-pay-options\"]//div[3]//div[2]") 
 	WebElement txtFeesInfoAO;
 	@FindBy(linkText="Cancel My Plan")
@@ -426,7 +428,7 @@ public class OptumPaySolution {
 				planTypeInfoForPremium();
 				Helper.compareEquals(testConfig, "During Trial Cancel pop-up", "You are about to lose important functionality through Optum Pay.", duringTrialCancelPopUpHeading.getText().trim());
 				Element.click(btnCancelOnPopUp, "Close pop-up 'X' button");
-				Element.verifyElementPresent(pageText, "Page Text");
+				Element.verifyElementPresent(pageHeader, "Page Text");
 				Element.click(testConfig, lnkHome, "Home", 3);
 				Element.click(testConfig, lnkLogout, "Logout", 3);
 			}
@@ -435,12 +437,12 @@ public class OptumPaySolution {
 				planTypeInfoForPremium();
 				Helper.compareEquals(testConfig, "Post Trial Cancel pop-up", "Call to cancel", postTrialCancelPopUpHeading.getText().trim());
 				Element.click(btnCancelOnPopUp, "Close pop-up 'X' button");
-				Element.verifyElementPresent(pageText, "Page Text");
+				Element.verifyElementPresent(pageHeader, "Page Text");
 			}
 		}
 		public void planTypeInfoForPremium() throws Exception {
 			String planTypeInfo= Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]//div//div[2]//div[2]").getText();
-			Element.verifyElementPresent(pageText, "Page Text");
+			Element.verifyElementPresent(pageHeader, "Page Text");
 			int sqlRowNo = 1;
 		    testConfig.getRunTimeProperty("tin");
 		    Map data = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
@@ -928,7 +930,13 @@ public class OptumPaySolution {
 			Element.click(invoicesTabOnOPS, "Invoices tab on OPS page");
 		}
 		
-		public void verifyProviderName() throws IOException, SQLException
+		public  OptumPaySolution verifyInvoiceTabHeader()
+		{
+			Helper.compareEquals(testConfig, "Invoice Tab Header",  TestBase.contentMessages.getProperty("provBS.admin.premium.ao.optumPaySolution.invoiceTab.header").trim(), pageHeader.getText().trim());
+			return this;
+		}
+		
+		public OptumPaySolution verifyProviderName() throws IOException, SQLException
 		{
 			String expectedProviderName = null;
 			testConfig.putRunTimeProperty("Prov_tin_nbr", testConfig.getRunTimeProperty("tin"));
@@ -936,9 +944,10 @@ public class OptumPaySolution {
 			expectedProviderName = (String) results.get("ORG_NM");
 			String actualProviderName = providerNameValueInvoicesTab.getText().substring(9, providerNameValueInvoicesTab.getText().length());
 			Helper.compareEquals(testConfig, "Provider Name", expectedProviderName, actualProviderName.trim());
+			return this;
 		}
 		
-		public void verifyAccruedFees()
+		public OptumPaySolution verifyAccruedFees()
 		{
 			String actualAccruedFeesTitle = accruedFeesInvoicesTab.getText().substring(0, 27);
 			String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(29, accruedFeesInvoicesTab.getText().length());
@@ -952,9 +961,10 @@ public class OptumPaySolution {
 			
 			Helper.compareEquals(testConfig, "Accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
 			Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim());
+			return this;
 		}
 		
-		public void verifyPastDueFees() throws IOException, SQLException
+		public OptumPaySolution verifyPastDueFees() throws IOException, SQLException
 		{
 			String expectedPastDueFees = null;
 			testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
@@ -967,9 +977,10 @@ public class OptumPaySolution {
 			
 			String actualPastDueFees = pastDueFeesInvoicesTab.getText().substring(16, pastDueFeesInvoicesTab.getText().length());
 			Helper.compareEquals(testConfig, "Past Due Fees", expectedPastDueFees, actualPastDueFees.trim());
+			return this;
 		}
 		
-		public void verifyInvoicePeriodGrid() throws IOException, SQLException, ParseException
+		public OptumPaySolution verifyInvoicePeriodGrid() throws IOException, SQLException, ParseException
 		{
 			List<WebElement> tableHeads = Element.findElements(testConfig, "xpath", "//table[@class='table']/thead/tr/th");
 			List<String> expectedTableHeads = new ArrayList<>();
@@ -1060,7 +1071,7 @@ public class OptumPaySolution {
 			        }
 				}
 			}
-			
+			return this;
 		}
 	 	public OptumPaySolution validatePastdueFee()
 		{
@@ -1410,21 +1421,48 @@ public class OptumPaySolution {
 			return this;
 		}		
 		
-
 		
-	public void verifyInfoIconMessagesforAllTiles()
+		public  OptumPaySolution verifyHeaderFooterMsgOptionsTab(String tinType,String userType)
 	 	{
-	 		String planTypeInfoIconMsg="Your provider organization will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced within the first 5 business days of July. You will receive an email in advance of the debit to your TIN-level bank account and you can review the fees on the Invoices subtab.";
-	 		String rateInfoIconMsg="Per payment fees are calculated based on the total payment amount.";
-	 		String feesInfoIconMsg="To view individual per- payment fees, please visit the View Payments page.  Fees will be billed monthly.";
-	 		String manageMyPlanInfoIconMsg="To cancel the full functionality of Optum Pay, the Provider administrator must complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com." + 
-	 				"Note:  Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.  Any fees incurred prior to cancellation will be billed at the end of the current billing cycle.";
-	 		
+			Element.expectedWait(pageHeader, testConfig, "Page header text to be displayed", "Page header Texr");
+			if(StringUtils.equals(userType, "PROV"))
+			{
+				if(StringUtils.equals(tinType, "AO")|| StringUtils.equals(tinType, "AV"))
+				{
+					Helper.compareEquals(testConfig, "Header on Options tab", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.optionsTab.header").trim(),pageHeader.getText());
+					Helper.compareEquals(testConfig, "Footer on Options tab",TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.optionsTab.footer").trim() ,pageFooter.getText().trim());
+				}else if(StringUtils.equals(tinType, "VO"))
+				{
+					Helper.compareEquals(testConfig, "Header on Options tab", TestBase.contentMessages.getProperty("prov.admin.premium.vo.optumPaySolution.optionsTab.header").trim(),pageHeader.getText());
+					Helper.compareEquals(testConfig, "Footer on Options tab",TestBase.contentMessages.getProperty("prov.admin.premium.vo.optumPaySolution.optionsTab.footer").trim() ,pageFooter.getText().trim());
+				}
+				else if(StringUtils.equals(tinType, "AO")|| StringUtils.equals(tinType, "AV") && StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and Paid"))
+				{
+					Helper.compareEquals(testConfig, "Header on Options tab", TestBase.contentMessages.getProperty("prov.admin.premium.trial.ao.optumPaySolution.optionsTab.header").trim(),pageHeader.getText());
+					Helper.compareEquals(testConfig, "Footer on Options tab",TestBase.contentMessages.getProperty("prov.admin.premium.trial.ao.optumPaySolution.optionsTab.footer").trim() ,pageFooter.getText().trim());
+				}
+			}else if(StringUtils.equals(userType, "BS"))
+			{
+				if(StringUtils.equals(tinType, "AO")|| StringUtils.equals(tinType, "AV"))
+				{
+					Helper.compareEquals(testConfig, "Header on Options tab", TestBase.contentMessages.getProperty("bs.admin.premium.ao.optumPaySolution.optionsTab.header").trim(),pageHeader.getText());
+					Helper.compareEquals(testConfig, "Footer on Options tab",TestBase.contentMessages.getProperty("bs.admin.premium.ao.optumPaySolution.optionsTab.footer").trim() ,pageFooter.getText().trim());
+				}else if(StringUtils.equals(tinType, "VO"))
+				{
+					Helper.compareEquals(testConfig, "Header on Options tab", TestBase.contentMessages.getProperty("prov.admin.premium.vo.optumPaySolution.optionsTab.header").trim(),pageHeader.getText());
+					Helper.compareEquals(testConfig, "Footer on Options tab",TestBase.contentMessages.getProperty("prov.admin.premium.vo.optumPaySolution.optionsTab.footer").trim() ,pageFooter.getText().trim());
+				}
+			}
 			
-	 		Helper.compareEquals(testConfig, "Plan Type Info Icon Message", planTypeInfoIconMsg, planTypeTileInfoIconMsg.getAttribute("title").trim());
-	 		Helper.compareEquals(testConfig, "Rate Info Icon Message", rateInfoIconMsg, rateTileInfoIconMsg.getAttribute("title").trim());
-	 		Helper.compareEquals(testConfig, "Fees Info Icon Message", feesInfoIconMsg, feesTileInfoIconMsg.getAttribute("title").trim());
-	 		Helper.compareContains(testConfig, "Manage My Plan Info Icon Message", manageMyPlanInfoIconMsg, manageMyPlanTileInfoIconMsg.getAttribute("title").replace("<br>", "").replaceAll("[\\n]", "").trim());
+	 		return this;
+	 	}
+		
+		public void verifyInfoIconMessagesforAllTiles()
+	 	{
+	 		Helper.compareEquals(testConfig, "Plan Type Info Icon Message", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.planTypeTile.infoIcon").trim(), planTypeTileInfoIconMsg.getAttribute("title").replaceAll("<p>", "").replaceAll("</p>", "").trim());
+	 		Helper.compareEquals(testConfig, "Rate Info Icon Message", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.rateTile.infoIcon").trim(), rateTileInfoIconMsg.getAttribute("title").replaceAll("<p>", "").replaceAll("</p>", "").trim());
+	 		Helper.compareEquals(testConfig, "Fees Info Icon Message", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.feeTile.infoIcon").trim(), feesTileInfoIconMsg.getAttribute("title").replaceAll("<p>", "").replaceAll("</p>", "").trim());
+	 		Helper.compareEquals(testConfig, "Manage My Plan Info Icon Message", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.manageMyPlanTile.infoIcon").trim(), manageMyPlanTileInfoIconMsg.getAttribute("title").replaceAll("<p>", "").replaceAll("</p>", "").replaceAll("<a href=\"#mailto:optumpay_cancel@optum.com@optum.com\">", "").replaceAll("</a>", "").trim());
 	 	}
 		
 		//Added by Mohammad
@@ -1439,8 +1477,6 @@ public class OptumPaySolution {
 					flag=true;
 				}
 			}
-			
-			
 			return flag;
 		}
 		
