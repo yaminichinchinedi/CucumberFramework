@@ -276,5 +276,38 @@ And User clicks on UPA logout
 			 |		credentials  |    userType    | 			searchCriteria									|		portalAccess	  | tinType		|
 			 |     PROV_Admin  |     PROV     	|		New Enroll WithinTrial and NotPaid	|		Standard     	  |		AO			|
 		            
+		            
+		 @UPAUS3453134
+  	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
+   	Given User navigates to UPA portal and enters "<credentials>" and login
+   	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   	And User clicks on Optum Pay Solutions tab
+   	Then User clicks on "Invoices" tab
+   	Then User clicks on Pay Now Button
+    Then User validates Process My Payment modal is displayed
+    Then User validates RTN when ABA Switch is "<ABA Switch>" and "<responseType>" response from ABA API
+
+    Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |  Invalid     |
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   N				 |  Invalid     |
+      
+		 @UPAUS3453134
+  	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
+   	Given User navigates to UPA portal and enters "<credentials>" and login
+   	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+   	And User clicks on Optum Pay Solutions tab
+   	Then User Enters tin for OPS and click on search button for "<userType>".
+   	Then User clicks on "Invoices" tab
+   	Then User clicks on Pay Now Button
+    Then User validates Process My Payment modal is displayed
+    Then User validates RTN when ABA Switch is "<ABA Switch>" and "<responseType>" response from ABA API
+    
+    Examples:
+      |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
+      |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |
+      |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |  Invalid     |
+      |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   N				 |  Invalid     |
 
 		               
