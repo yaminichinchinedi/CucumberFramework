@@ -2018,16 +2018,16 @@ public class SearchRemittance extends ViewPayments {
 		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
 				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-		for (int i = 1; i < ls_SinglePage.size(); i++) {
+		for (int i = 1; i < divSearchRslt.size(); i++) {
 			String xpath_PaymentNum = lsSinglePage + "["+(i + 1)+"]/td["+(getColumnsFromHeaderList("Payment Number") +1)+"]/a";
 			String xpath_835PDF = lsSinglePage + "["+(i+1)+"]/td[8]/table/tbody/tr/td[3]/span[1]/a";
 			String xpath_835PDF_AfterClick = lsSinglePage + "["+(i+1)+"]/td[8]/table/tbody/tr/td[3]/span[2]";
 			
-			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath_PaymentNum);
+			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1));
 			WebElement f_835_PDF_SR = Element.findElement(testConfig, "xpath", xpath_835PDF);
 			WebElement f_835_PDF_SR_AfterClick = Element.findElement(testConfig, "xpath", xpath_835PDF_AfterClick);
 			
-			actualPaymntNo = payNumber_SR.getText();
+			actualPaymntNo = payNumber.getText();
 			actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			if (StringUtils.equals(actualPaymntNo, expectedPaymntNo)) {
 				Element.clickByJS(testConfig, f_835_PDF_SR,
