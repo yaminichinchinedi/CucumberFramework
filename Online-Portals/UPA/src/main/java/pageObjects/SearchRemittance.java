@@ -1995,8 +1995,8 @@ public class SearchRemittance extends ViewPayments {
 		boolean flag_ClickedPaymentNumber=false;
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 		for (int i = 1; i < divSearchRslt.size(); i++) {
-			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1));
-			actualPaymntNo = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1)).getText();
+			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnHeaderList("Payment Number") +1));
+			actualPaymntNo = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnHeaderList("Payment Number") +1)).getText();
 			actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			if (StringUtils.equals(actualPaymntNo, expectedPaymntNo)) {
 				Element.clickByJS(testConfig, payNumber, "Payment Number on SR page");
@@ -2019,11 +2019,11 @@ public class SearchRemittance extends ViewPayments {
 				"//tr[@class='search-remittance__table_header']/../tr");
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 		for (int i = 1; i < divSearchRslt.size(); i++) {
-			String xpath_PaymentNum = lsSinglePage + "["+(i + 1)+"]/td["+(getColumnsFromHeaderList("Payment Number") +1)+"]/a";
+			String xpath_PaymentNum = lsSinglePage + "["+(i + 1)+"]/td["+(getColumnHeaderList("Payment Number") +1)+"]/a";
 			String xpath_835PDF = lsSinglePage + "["+(i+1)+"]/td[8]/table/tbody/tr/td[3]/span[1]/a";
 			String xpath_835PDF_AfterClick = lsSinglePage + "["+(i+1)+"]/td[8]/table/tbody/tr/td[3]/span[2]";
 			
-			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1));
+			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnHeaderList("Payment Number") +1));
 			WebElement f_835_PDF_SR = Element.findElement(testConfig, "xpath", xpath_835PDF);
 			WebElement f_835_PDF_SR_AfterClick = Element.findElement(testConfig, "xpath", xpath_835PDF_AfterClick);
 			
@@ -2057,7 +2057,7 @@ public class SearchRemittance extends ViewPayments {
 		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath", lsSinglePage);
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
 		for (int i = 1; i < ls_SinglePage.size(); i++) {
-			String xpath_PaymentNum = lsSinglePage + "["+(i + 1)+"]/td["+(getColumnsFromHeaderList("Payment Number") +1)+"]/a";
+			String xpath_PaymentNum = lsSinglePage + "["+(i + 1)+"]/td["+(getColumnHeaderList("Payment Number") +1)+"]/a";
 			String xpath_835PDF = lsSinglePage+"["+(i+1)+"]/td[8]/table/tbody/tr/td[3]/span[3]/a";
 			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath_PaymentNum);
 			WebElement f_835_PDF_SR = Element.findElement(testConfig, "xpath", xpath_835PDF);
@@ -2195,7 +2195,7 @@ public class SearchRemittance extends ViewPayments {
 	 * Method to fetch Column Name dynamically for Payment Number
 	 * */
 	
-	public int getColumnsFromHeaderList(String columnName)
+	public int getColumnHeaderList(String columnName)
 	{
 		List <String> headerList=new ArrayList<String>();
 		List<WebElement> listHeaders = Element.findElements(testConfig, "xpath", "//tr[@class='search-remittance__table_header']/td");

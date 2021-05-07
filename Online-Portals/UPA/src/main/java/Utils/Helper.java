@@ -1941,7 +1941,6 @@ public static String addDays(String date, int days) throws ParseException {
         
         try
         {
-            document.getNumberOfPages();
             contentPDF = new PDFTextStripper().getText(document);
         } 
         finally
