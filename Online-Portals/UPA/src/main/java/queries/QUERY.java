@@ -221,4 +221,14 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 				"and cp.setl_dt between current date - 6 MONTHS and current date\n" +
 				"fetch first row only with ur";
 		
+		public final static String TIN_WITH_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
+				"pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\r\n" + 
+				"AND dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR \r\n" + 
+				"AND ep.PAY_METH_TYP_CD='{$tinType}'\r\n" + 
+				"AND ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\r\n" + 
+				"AND ep.ENRL_STS_CD='A'\r\n" + 
+				"AND dfi.INVC_TOT_AMT > 0 AND dfi.INVC_STS = 'IR'\r\n" + 
+				"fetch first 1 rows only with ur";
+		
+		public final static String UPDATE_ABA_VALIDATOR_SWITCH = "UPDATE OLE.SYSTEM_CONFIGURATION SET PROC_DATA = '{$proc_data}' WHERE PROC_CD = 'ABA_API'\r\n";
 }

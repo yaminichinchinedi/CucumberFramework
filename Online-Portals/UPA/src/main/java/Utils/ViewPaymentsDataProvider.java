@@ -1143,7 +1143,9 @@ public class ViewPaymentsDataProvider {
 				
 			}
 
-		
+		if(searchCriteria.contains("ValidInvoice")){
+			query=QUERY.TIN_WITH_INVOICE;
+		}
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))

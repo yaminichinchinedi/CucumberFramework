@@ -218,6 +218,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		optumPaySol.clickInvoiceNumberAndOpenPdf();
 	}
 		
+		@Then("^User clicks on Pay Now Button$")
+	public void user_clicks_on_pay_now_button() throws Throwable {
+		optumPaySol.clickOnPayNowButton();
+	}
+		
 		
 	@Then("^User selects fees in the grid, calculate the total fee amount and clicks on Refund Fee button$")
 	public void user_selects_fees_in_the_grid_calculate_the_total_fee_amount_and_clicks_on_Refund_Fee_button() throws Throwable {
@@ -263,5 +268,17 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void user_clicks_on_Get_Started_to_select_Premium() throws Throwable {
 			optumPaySol.convertToPremiumFromUpa();
 		}
+		
+		@Then("^User validates Process My Payment modal is displayed$")
+		public void user_validates_Process_My_Payment_modal_is_displayed() throws Throwable {
+			optumPaySol.verifyProcessMyPaymentHeader();
+		}
+
+		@Then("^User validates RTN when ABA Switch is \"([^\"]*)\" and \"([^\"]*)\" response from ABA API$")
+		public void user_validates_RTN_when_ABA_Switch_is_and_response_from_ABA_API(String ABASwitch, String ABAResponse) throws Throwable {
+			optumPaySol.validateProcessMyPaymentHeader(ABASwitch, ABAResponse );
+
+		}
 }
+
 
