@@ -175,6 +175,10 @@ public class SearchRemittance extends ViewPayments {
 	@FindBy(xpath = "(//span[@class='pageNo'])[1]")
 	WebElement lastPageCountSR;
 	
+	
+	@FindBy(xpath = "//tr[@class='search-remittance__table_header']/../tr")
+	List<WebElement> divSearchRslt;
+	
 	public final static String lsSinglePage = "//tr[@class='search-remittance__table_header']/../tr";
 
 	private TestBase testConfig;
@@ -1989,16 +1993,13 @@ public class SearchRemittance extends ViewPayments {
 		String expectedPaymntNo = null;
 		String actualPaymntNo = null;
 		boolean flag_ClickedPaymentNumber=false;
-		List<WebElement> ls_SinglePage = Element.findElements(testConfig, "xpath",
-				lsSinglePage);
 		expectedPaymntNo = System.getProperty("ELECTRONIC_PAYMENT_NUMBER");
-		for (int i = 1; i < ls_SinglePage.size(); i++) {
-			String xpath = lsSinglePage + "["+(i+1)+"]/td["+(getColumnsFromHeaderList("Payment Number") +1)+"]/a";
-			WebElement payNumber_SR = Element.findElement(testConfig, "xpath", xpath);
-			actualPaymntNo = payNumber_SR.getText();
+		for (int i = 1; i < divSearchRslt.size(); i++) {
+			WebElement payNumber = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1));
+			actualPaymntNo = divSearchResults.get(i+1).findElements(By.tagName("td")).get((getColumnsFromHeaderList("Payment Number") +1)).getText();
 			actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			if (StringUtils.equals(actualPaymntNo, expectedPaymntNo)) {
-				Element.clickByJS(testConfig, payNumber_SR, "Payment Number on SR page");
+				Element.clickByJS(testConfig, payNumber, "Payment Number on SR page");
 				flag_ClickedPaymentNumber = true;
 				break;
 			}
@@ -2080,7 +2081,7 @@ public class SearchRemittance extends ViewPayments {
 	 * Author: Mohammad Khalid Method to click on Payment Number on SR page
 	 */
 
-	public RemittanceDetail clickPaymentNumberSRPage(String srchType) {
+	public RemittanceDetail clickPaymentNumber(String srchType) {
 		int totalNoOfPages = getNumberOfPages();
 		boolean flag=false;
 

@@ -120,7 +120,7 @@ public class SearchRemittanceSteps extends TestBase{
 	@Then("^User clicks on Payment Number when \"([^\"]*)\" and validate Remittance Detail page is opened\\.$")
 	public void user_clicks_on_Payment_Number_when_and_validate_Remittance_Detail_page_is_opened(String srchCriteria) throws Throwable {
 		
-		srchRemittance.clickPaymentNumberSRPage(srchCriteria);
+		srchRemittance.clickPaymentNumber(srchCriteria);
 	}
 	
 	@Then("^validate record is inserted in User_Event_Log for Remittance Detail$")
