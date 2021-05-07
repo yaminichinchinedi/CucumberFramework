@@ -38,6 +38,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
+
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
@@ -251,15 +252,6 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	
 	@FindBy(xpath="(//a[@class='pageNo' and contains(text(),'Next')])[1]")
 	WebElement nextLink_SR;
-	
-	/***
-	 * Added by Mohammad for EPRA Stabilisation
-	 * */
-	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
-	WebElement lastPageCount_SR;
-	
-	@FindBy(xpath = "(//span[@class='pageNo'])[1]")
-	WebElement lastPageCountSR;
 	
 	
 	Map dataRequiredForSearch;
@@ -557,6 +549,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	public ViewPayments verifyEpraStatus(String expectedStatus) 
 	 {
          Browser.browserRefresh(testConfig);
+         Browser.wait(testConfig, 2);
          String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
   		int sqlRowNo=206;
   		testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
@@ -1035,37 +1028,6 @@ public void verifyFailedPaymentPopUp()
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
 		return resultCount.trim();
 	}
-	
-	/**
-	 * Authot: Mohammad Khalid
-	 * Method to fetch the total pages for Payment Numbers
-	 * 
-	 * */
-	
-	public String getRecordCountFromUI_EPRA_SR()
-	{
-		String resultCount = null;
-		try
-		{
-			if (lastPageCount_SR.isDisplayed())
-			{
-				resultCount=lastPageCountSR.getText().toString().trim();
-				resultCount=resultCount.substring(resultCount.lastIndexOf("of")+2, resultCount.length()).trim();
-				Log.Comment("Total Number of Pages: " + resultCount);
-			}
-			else
-			{
-				resultCount = "1";
-			}
-		} 
-		catch (NoSuchElementException e)
-		{
-			Log.Comment("The TIN has only one record", testConfig);
-		}
-		
-		return resultCount;
-	}
-	
 	
 	
 	public String getRecordCountFromUISR()

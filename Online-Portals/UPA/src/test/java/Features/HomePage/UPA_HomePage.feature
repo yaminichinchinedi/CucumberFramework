@@ -1,5 +1,4 @@
 #Author: Marsha(Stabilisation)
-
 @UPAhomePage
 Feature:  UPA Home Page Functionality - Post Login 
 	#Author: Sunanda
@@ -106,5 +105,19 @@ Feature:  UPA Home Page Functionality - Post Login
     #When User scrolls to popular FAQ section
     #Then Verify all Popular FAQ links are present
     #And Click on VIEW ALL FAQs button and verify all FAQs are present
+    
+    
+  #Author: Mohammad Khalid
+  @US3415252_PostLogin
+   Scenario Outline: Resource Tab dropdown Post Login
+		Given User navigates to UPA portal and enters "<userType>" and login
+    When User hovers on the Resources DropDown
+    Then User clicks on Cancellation Form and verifies the url is pdf
+    Then user validates cancellation pdf form content under Post Login resources link
+    
+    
+     Examples:
+      |      userType       |   
+      |      PROV_Admin     | 
 
     	              

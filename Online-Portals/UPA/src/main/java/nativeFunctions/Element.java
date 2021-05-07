@@ -854,11 +854,12 @@ public static void waitForElementTobeClickAble(TestBase testConfig,WebElement el
 
 public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElement elt, int timeOut)
 {
-	for(int i=1; i<timeOut;i++)
+	for(int i=1; i<=timeOut;i++)
 	{
+		int count = 0;
 		if(elt.isDisplayed())
 		{
-			Log.Comment("The Element is Visible, coming out of loop...");
+			Log.Pass("The Element is Visible, coming out of loop...");
 			break;
 		}
 		else
@@ -866,9 +867,18 @@ public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElem
 			Log.Comment("The Element is not Visible, hence refreshing the browser and waiting...");
 			Browser.browserRefresh(testConfig);
 			try {
-				Thread.sleep(i);
+				++count;
+				
+				if (!(count==timeOut))
+				{	
+					Thread.sleep(i);
+				}
+				else
+				{
+					Log.Fail("Element not visible...");
+				}
+				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
