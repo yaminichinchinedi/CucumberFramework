@@ -67,31 +67,21 @@ public class ClaimDetail {
 	//Writing all Locators here
 	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
 	@FindBy(name="providerTIN")	WebElement enterTIN;
-	//@FindBy(xpath = "//input[@name='providerTIN']") WebElement enterTIN;
 	@FindBy(name="btnSubmit")	WebElement searchBtn;
-	//@FindBy(xpath = "//input[@name='btnSubmit']") WebElement searchBtn;
 	@FindBy(id="periodId")	WebElement quickSeacrhDrpDwn;
-	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSeacrhDrpDwn;
 	@FindBy(name="filterPayments")	WebElement filterPaymentsDrpDwn;
-	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterPaymentsDrpDwn;
 	@FindBy(id="mktTypeId")	WebElement mrktTypeDrpDwn;
-	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement mrktTypeDrpDwn;
 	@FindBy(id="payerFilterType")	WebElement payerDrpDwn;
-	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDwn;
 	@FindBy(id="archiveFilterType")	WebElement archiveDrpDwn;
-	//@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement archiveDrpDwn;
 	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
 	@FindBy(id="paymentNbr_1")	WebElement firstPaymentNumber;
-	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement firstPaymentNumber;
 	@FindBy(className="subheader")	WebElement claimHeader1;
-	//@FindBy(xpath = "//td[@class='subheader']") WebElement claimHeader1;
 	@FindBy(xpath = "//*[starts-with(text(),'Organization:')]") WebElement orgHeader;
 	@FindBy(xpath = "//*[starts-with(text(),'Payment Date:')]") WebElement paymentDate;
     @FindBy(xpath = "//*[contains(text(),'Payment Type:')]") WebElement paymentType;
 	@FindBy(xpath = "//*[contains(text(),'Payment Number :')]") WebElement paymentNumber;
 	@FindBy(xpath = "//*[contains(text(),'NPI:')]") WebElement  claimNPI;
 	@FindBy(name="claimType")	WebElement filterClaims;
-	//@FindBy(xpath = "//select[@name='claimType']") WebElement filterClaims;
 	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
 	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
 	@FindBy(xpath = "//*[contains(text(),'Patient Name/')]") WebElement patientName;
@@ -129,37 +119,26 @@ public class ClaimDetail {
     @FindBy(xpath = "//*[@class='ellipsis wrapperTooltip'][1]") WebElement payernameUI;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr[2]/td[1]/span[1]") WebElement payerUI;
 	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
-	//@FindBy(xpath = "//a[@id='paymentNbr_2']") WebElement paymentNo2;
 	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
-	//@FindBy(xpath = "//a[@id='paymentNbr_1']") WebElement paymentNo1;
 	@FindBy(xpath = "//p[contains(text(),'Payment Number :')]/a") WebElement paymentno;
 	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
 	@FindBy(xpath = "//span[@id='epra-print-1']//input[@value='Print Request']") WebElement printBtn;
 	@FindBy(xpath = "//input[@value='Return to Payment Summary']") WebElement returnBtn;
 	@FindBy(className="subheaderbold")	WebElement totPaidSubHdr;
-	//@FindBy(xpath = "//td[@class='subheaderbold']") WebElement totPaidSubHdr;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement cob_Msg;
 	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement reversalMsg;
 	@FindBy(id="periodId")	WebElement quickSearch;
-	//@FindBy(xpath = "//select[@id='periodId']") WebElement quickSearch;
 	@FindBy(id="mktTypeId")	WebElement marketTyp;
-	//@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
 	@FindBy(id="payerFilterType")	WebElement payerDrpDown;
-	//@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='claimType']//option") List<WebElement> filterClaimsOptionUI;
 	@FindBy(name="filterPayments")	WebElement filterDrpDown;
-	//@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'First Page')]") WebElement firstPage;
 	@FindBy(xpath = "//a[contains(text(),'Last Page')]") WebElement lastPage;
 	@FindBy(id="outerTable") WebElement remitOuterTable;
-	//@FindBy(xpath = "//table[@id='outerTable']") WebElement remitOuterTable;
 	@FindBy(id="patientName_") WebElement firstPatient;
-	//@FindBy(xpath = "//td[@id='patientName_']") WebElement firstPatient;
 	@FindBy(xpath = "//table[1]/tbody[1]/tr[1]/td[1]/div[1]/table[1]/tbody[1]/tr[1]/td[3]") WebElement amntChargedUI;
 	@FindBy(id="grpID_") WebElement grpPolicyUI;
-	//@FindBy(xpath = "//span[@id='grpID_']") WebElement grpPolicyUI;
 	@FindBy(id="subscriberID_") WebElement subscriberUI1;
-	//@FindBy(xpath = "//td[@id='subscriberID_']") WebElement subscriberUI1;
 	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimHash;
 	@FindBy(xpath = "//span[@id='claimID_']/span[1]") WebElement claimHash1;
 	@FindBy(xpath = "//table[1]/tbody[1]/tr[3]/td[5]/span[1]/span[1]") WebElement claimHashno;
@@ -172,11 +151,8 @@ public class ClaimDetail {
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement srchRemit;
 	@FindBy(id="paymentNbrTypeSelection") WebElement payNumdrpdwn;
-	//@FindBy(xpath = "//select[@id='paymentNbrTypeSelection']") WebElement payNumdrpdwn;
 	@FindBy(id="paymentNumberInputId") WebElement elcPayNum;
-	//@FindBy(xpath = "//input[@id='paymentNumberInputId']") WebElement elcPayNum;
 	@FindBy(name="searchRemittance") WebElement srchRemitBtn;
-	//@FindBy(xpath = "//input[@name='searchRemittance']") WebElement srchRemitBtn;
 	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotal;
 	@FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]") WebElement adjCodePLB;
 	@FindBy(xpath = "//td[contains(text(),'Reference #')]") WebElement refCodePLB;
@@ -223,21 +199,12 @@ public void verifyAllHeadersClaimDtl() throws Exception
      String claimHeader1UI = claimHeader1.getText();
 	 if(!claimHeader1UI.equalsIgnoreCase("0"))
 	     Helper.compareEquals(testConfig, "Comparing Claim Detail Header", claimHeader1UI, "Claim Detail");
- 
-	 Boolean org_UI = orgHeader.isDisplayed();
-	 Helper.compareEquals(testConfig, "Organization Header", true, org_UI);
-
-     Boolean paymentDateUI = paymentDate.isDisplayed();
-	 Helper.compareEquals(testConfig, "Payment Date Header", true, paymentDateUI);
-	
-	 Boolean paymentNum = paymentNumber.isDisplayed();
-	 Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNum);
 	 
-     Boolean paymentTypeUI = paymentType.isDisplayed();
-     Helper.compareEquals(testConfig, "Payment Type Header", true, paymentTypeUI);
-    
-     Boolean claimNPIUI = claimNPI.isDisplayed();
-     Helper.compareEquals(testConfig, "Claim NPI Header", true, claimNPIUI);
+	 Helper.compareEquals(testConfig, "Organization Header", true, orgHeader.isDisplayed());
+	 Helper.compareEquals(testConfig, "Payment Date Header", true, paymentDate.isDisplayed());
+	 Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNumber.isDisplayed());
+     Helper.compareEquals(testConfig, "Payment Type Header", true, paymentType.isDisplayed());
+     Helper.compareEquals(testConfig, "Claim NPI Header", true, claimNPI.isDisplayed());
 }
 
 
@@ -248,113 +215,49 @@ public void verifyAllHeadersClaimDtlPay() throws Exception
 	 if(!claimHeader1UI.equalsIgnoreCase("0"))
 	     Helper.compareEquals(testConfig, "Comparing Claim Detail Header", claimHeader1UI, "Claim Detail");
  
-	 Boolean org_UI = orgHeader.isDisplayed();
-	 Helper.compareEquals(testConfig, "Organization Header", true, org_UI);
-
-     Boolean paymentDateUI = paymentDate.isDisplayed();
-	 Helper.compareEquals(testConfig, "Payment Date Header", true, paymentDateUI);
-	
-	 Boolean paymentNum = paymentNumber.isDisplayed();
-	 Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNum);
-	 
-     Boolean paymentTypeUI = paymentType.isDisplayed();
-     Helper.compareEquals(testConfig, "Payment Type Header", true, paymentTypeUI);
+	 Helper.compareEquals(testConfig, "Organization Header", true, orgHeader.isDisplayed());
+	 Helper.compareEquals(testConfig, "Payment Date Header", true, paymentDate.isDisplayed());
+	 Helper.compareEquals(testConfig, "Payment Number Header", true, paymentNumber.isDisplayed());
+     Helper.compareEquals(testConfig, "Payment Type Header", true, paymentType.isDisplayed());
 
 }
 
-
-
 public void verifyColumnHeadersClaimDtl() throws Exception
 {
-	 Boolean acctNumUI = acctNum.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Account Number Column", true, acctNumUI);
-	 
-	 Boolean patientNameUI = patientName.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Patient Name Column", true, patientNameUI);
-	 
-	 Boolean subscbrIDUI = subscbrID.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Subscriber ID Column", true, subscbrIDUI);
-	 
-	 Boolean correctedIDUI = correctedID.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "correctedID Column", true, correctedIDUI);
-	 
-	 Boolean rendPrvdrUI = rendPrvdr.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Rendering Provider Column", true, rendPrvdrUI);
-	 
-	 Boolean claimHeaderUI = claimHeader.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Claim #/Claim Type Column", true, claimHeaderUI);
-	
-	 Boolean grpPolicyUI = grpPolicy.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Group Policy Number/Product Name Column", true, grpPolicyUI);
-	
-	 Boolean remitDOSUI = claimDOS.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "DOS Column", true, remitDOSUI);
-	
-	 Boolean descServiceUI = descService.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Description of Service Column", true, descServiceUI);
-	 
-	 Boolean amntChargedUI = amntCharged.isDisplayed();  
-	 Helper.compareEquals(testConfig, "Amount Charged Column", true, amntChargedUI);
-	 
-	 Boolean serviceAdjUI = serviceAdj.isDisplayed();  
-	 Helper.compareEquals(testConfig, "Claim/Service Adj Charged Column", true, serviceAdjUI);
-	 
-	 Boolean provAdjUI = provAdj.isDisplayed();
-	 Helper.compareEquals(testConfig, "Prov Adj Discount Column", true, provAdjUI);
-	 
-	 Boolean amntAllowedUI = amntAllowed.isDisplayed(); 
-	 Helper.compareEquals(testConfig, "Amount Allowed Column", true, amntAllowedUI);
-	 
-	 Boolean copayUI = copay.isDisplayed();
-	 Helper.compareEquals(testConfig, "Deduct/Coins/Copay Column", true, copayUI);
-	 
-	 Boolean paidPrvdrUI = paidPrvdr.isDisplayed();
-	 Helper.compareEquals(testConfig, "Paid to Provider Column", true, paidPrvdrUI);
-	 
-	 Boolean adjcode_UI = adj_code.isDisplayed();
-	 Helper.compareEquals(testConfig, "Adj Reason Code Column", true, adjcode_UI);
-	 
-	 Boolean rmkcode_UI = rmk_code.isDisplayed();
-	 Helper.compareEquals(testConfig, "RMK Code Column", true, rmkcode_UI);
-	
-	 Boolean patientRespUI = patientResp.isDisplayed();
-	 Helper.compareEquals(testConfig, "Patient Resp Column", true, patientRespUI);
-	 
-	 Boolean totalClaimTxtUI = totalClaimTxt.isDisplayed();
-	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxtUI);
+	 Helper.compareEquals(testConfig, "Account Number Column", true, acctNum.isDisplayed());	 
+	 Helper.compareEquals(testConfig, "Patient Name Column", true, patientName.isDisplayed());
+	 Helper.compareEquals(testConfig, "Subscriber ID Column", true, subscbrID.isDisplayed());
+	 Helper.compareEquals(testConfig, "correctedID Column", true, correctedID.isDisplayed());
+	 Helper.compareEquals(testConfig, "Rendering Provider Column", true, rendPrvdr.isDisplayed());
+	 Helper.compareEquals(testConfig, "Claim #/Claim Type Column", true, claimHeader.isDisplayed());
+	 Helper.compareEquals(testConfig, "Group Policy Number/Product Name Column", true, grpPolicy.isDisplayed());
+	 Helper.compareEquals(testConfig, "DOS Column", true, claimDOS.isDisplayed());
+	 Helper.compareEquals(testConfig, "Description of Service Column", true, descService.isDisplayed());
+	 Helper.compareEquals(testConfig, "Amount Charged Column", true, amntCharged.isDisplayed()); 
+	 Helper.compareEquals(testConfig, "Claim/Service Adj Charged Column", true, serviceAdj.isDisplayed());
+	 Helper.compareEquals(testConfig, "Prov Adj Discount Column", true, provAdj.isDisplayed());
+	 Helper.compareEquals(testConfig, "Amount Allowed Column", true, amntAllowed.isDisplayed());
+	 Helper.compareEquals(testConfig, "Deduct/Coins/Copay Column", true, copay.isDisplayed());
+	 Helper.compareEquals(testConfig, "Paid to Provider Column", true, paidPrvdr.isDisplayed());
+	 Helper.compareEquals(testConfig, "Adj Reason Code Column", true, adj_code.isDisplayed());
+	 Helper.compareEquals(testConfig, "RMK Code Column", true, rmk_code.isDisplayed());
+	 Helper.compareEquals(testConfig, "Patient Resp Column", true, patientResp.isDisplayed());
+	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxt.isDisplayed());
 }
 
 public void verifyColumnFootersClaimDtl() throws Exception
 {	 
-	 Boolean totalClaimTxtUI = totalClaimTxt.isDisplayed();
-	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxtUI);
-	 
-	 String claimDtlDisc1 = "\"--\" indicates payer has not supplied this information.";
-	 Element.verifyTextPresent(claimDtlDisc1);
-	 
-	 String claimDtlDisc2 = "In order to print the Claim, you must have Adobe Reader installed on your machine. Please download ";
-	 Element.verifyTextPresent(claimDtlDisc2);
-	 
-	 String claimDtlDisc3 = " if it is not installed on your machine.";
-	 Element.verifyTextPresent(claimDtlDisc3);
-	 
-	 Boolean adobeReaderLinkUI = adobeReaderLink.isDisplayed();
-	 Helper.compareEquals(testConfig, "Adobe Reader link", true, adobeReaderLinkUI);
-	 
-	 Boolean privacyPolicyLinkUI = privacyPolicyLink.isDisplayed();
-	 Helper.compareEquals(testConfig, "Privacy Policy Link", true, privacyPolicyLinkUI);
-	 
-	 Boolean termsOfUseUiLinkUI = termsOfUseUiLink.isDisplayed();
-	 Helper.compareEquals(testConfig, "Terms of Use Link", true, termsOfUseUiLinkUI);
-	 
-	 Boolean returnToRemittanceDetailButtonUI = returnToRemittanceDetailButton.isDisplayed();
-	 Helper.compareEquals(testConfig, "Return to Remittance Detail Button", true, returnToRemittanceDetailButtonUI);
-	 
-	 Boolean printClaimDetailButtonUI = printClaimDetailButton.isDisplayed();
-	 Helper.compareEquals(testConfig, "print Claim Detail Button", true, printClaimDetailButtonUI);
+	 Helper.compareEquals(testConfig, "Total Claim Txt footer text", true, totalClaimTxt.isDisplayed());
+	 Element.verifyTextPresent("\"--\" indicates payer has not supplied this information.");
+	 Element.verifyTextPresent("In order to print the Claim, you must have Adobe Reader installed on your machine. Please download ");
+	 Element.verifyTextPresent(" if it is not installed on your machine.");
+	 Helper.compareEquals(testConfig, "Adobe Reader link", true, adobeReaderLink.isDisplayed());
+	 Helper.compareEquals(testConfig, "Privacy Policy Link", true, privacyPolicyLink.isDisplayed());
+	 Helper.compareEquals(testConfig, "Terms of Use Link", true, termsOfUseUiLink.isDisplayed());
+	 Helper.compareEquals(testConfig, "Return to Remittance Detail Button", true, returnToRemittanceDetailButton.isDisplayed());
+	 Helper.compareEquals(testConfig, "print Claim Detail Button", true, printClaimDetailButton.isDisplayed());
 	 
 }
-
 		public ViewPayments clickPaymentNumber(){
 			paymentno=Element.findElement(testConfig, "xpath", "//p[contains(text(),'Payment Number :')]/a");
 			Element.clickByJS(testConfig, paymentno, "Payment Number");
@@ -421,8 +324,7 @@ public void verifyColumnFootersClaimDtl() throws Exception
 				  int claimSize = epsClaimsResponse.getEpsClaims().size();
 				  
 				  for(int i=0; i<claimSize; i++){  
-					  int r=1;
-					  int c;
+					  int r=1, c;
 					  Log.Comment("claimSize is: "+ claimSize);				  
 					  Element.findElement(testConfig, "xpath", String.format("//span[@id='claimID_%s']//a",i+1)).click();
 					  
@@ -485,11 +387,9 @@ public void verifyColumnFootersClaimDtl() throws Exception
 						  lineItemPaidAmount = addingZeroAtTheEnd(lineItemPaidAmount);
 						  int ClaimPaymentServiceAdjustmentsSize = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().size();
 						  Log.Comment("ClaimPaymentServiceAdjustmentsSize is: "+ ClaimPaymentServiceAdjustmentsSize);
-						  String code1 = null;
-						  String deductibleCoInsuranceCoPayAmount = null;
-						  String amount;
-						  String code2;
-						  String PatientResponsibilityTotalAmount;
+						  
+						  String code1 = null, deductibleCoInsuranceCoPayAmount = null, amount, code2, PatientResponsibilityTotalAmount;
+						  
 						  if(ClaimPaymentServiceAdjustmentsSize == 2) {
 							  code1 = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getEpsClaimPaymentAdjustmentReasonCodes().getCode(); 				  
 							  deductibleCoInsuranceCoPayAmount = epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().get(0).getDeductibleCoInsuranceCoPayAmount();  
@@ -584,7 +484,8 @@ public void verifyColumnFootersClaimDtl() throws Exception
 					  }
 				  }
 			  }
-		
+	
+		//Concatenating zero to the end
 		public String addingZeroAtTheEnd(String test) {
 			if(test.trim().contentEquals("--") || test.length() < 1) {
 				return null;
