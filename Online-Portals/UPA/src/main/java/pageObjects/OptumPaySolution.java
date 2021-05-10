@@ -246,12 +246,22 @@ public class OptumPaySolution {
 	List<WebElement> tableInvoiceDetailTableHeader;
 	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr")
 	List<WebElement> tableInvoiceDetailUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
 	List<WebElement> tableInvoiceAmountUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
-	List<WebElement> tableInvoiceNumberUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
-	List<WebElement> tableInvoiceDateUI;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
+    List<WebElement> tableInvoiceNumberUI;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+    List<WebElement> tableInvoiceDateUI;
+	@FindBy(xpath="//p[contains(text(),'Select an invoice to view billing details.')]")
+	private WebElement invoice_grid_header;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[6]")
+    List<WebElement> tableInvoiceConfirmationUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[5]")
+    List<WebElement> tableInvoiceProcessedByUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[1]/p[1]")
+	 WebElement txtInvoicesPageText1;
+	 @FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[1]/p[2]")
+	 WebElement txtInvoicesPageText2;
 
 
 	@FindBy(linkText = "Fee Search")
@@ -726,55 +736,25 @@ public class OptumPaySolution {
 	}
 
 	public void validateInfoIconHover() {
-		for (WebElement title : titles)
-			Element.mouseHoverByJS(testConfig, title, "title");
+		for(WebElement title: titles)
+            Element.mouseHoverByJS(testConfig, title, "title");
 
-		Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly\n" +
-				"for any fees incurred the previous\n" +
-				"month. For example, fees accrued\n" +
-				"during the month of June will be\n" +
-				"invoiced within the first 5\n" +
-				"business days of July. Provider\n" +
-				"administrators will receive an\n" +
-				"email in advance of the debit to\n" +
-				"the TIN-level bank account and\n" +
-				"they can review the fees on the\n" +
-				"Invoices subtab.", hoverPlanType.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "Per payment fees are\n" +
-				"calculated based on the\n" +
-				"total payment amount.\n" +
-				"Any rate changes will be\n" +
-				"effective the following\n" +
-				"business day.", hoverRate.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "To view individual per-\n" +
-				"payment fees, please visit\n" +
-				"the View Payments page.\n" +
-				"Fees will be billed monthly.\n" +
-				"To estimate monthly fees,\n" +
-				"select the Print Payment\n" +
-				"summary button from the\n" +
-				"View Payments page to\n" +
-				"download 30 days of\n" +
-				"payment data. Then,\n" +
-				"calculate that amount by\n" +
-				"the current rate.", hoverFees.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "To cancel the paid subscription,\n" +
-				"Provider administrators\n" +
-				"complete the Cancellation Fee\n" +
-				"Form found in the Resources link\n" +
-				"and email it to\n" +
-				"optumpay_cancel@optum.com.\n" +
-				"\n" +
-				"Note: Cancellation may take up\n" +
-				"to 7 days to process during which\n" +
-				"time the provider will be\n" +
-				"responsible for any charges to\n" +
-				"their account. Any fees incurred\n" +
-				"prior to cancellation will be billed\n" +
-				"at the end of the current billing\n" +
-				"cycle.", hoverManageMyPlan.getText().trim());
-
-	}
+          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by midJuly. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
+          Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.",hoverRate.getText().trim());
+          Helper.compareEquals(testConfig, "Rate", "To view individual per-\n" + 
+                  "payment fees, please visit\n" + 
+                  "the View Payments page.\n" + 
+                  "Fees will be billed monthly.\n" + 
+                  "To estimate monthly fees,\n" + 
+                  "select the Print Payment\n" + 
+                  "summary button from the\n" + 
+                  "View Payments page to\n" + 
+                  "download 30 days of\n" + 
+                  "payment data. Then,\n" + 
+                  "calculate that amount by\n" + 
+                  "the current rate.", hoverFees.getText().trim());
+          Helper.compareEquals(testConfig, "Manage my Plan", "To cancel the paid subscription, Provider administrators can either click on the \"Cancel my Plan\" button on the Solutions tab or complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com.",hoverManageMyPlan.getText().trim());          
+      }
 
 
 	public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
@@ -1125,6 +1105,8 @@ public class OptumPaySolution {
 			Element.verifyElementPresent(lnkInvoice, "Invoices Link");
 			Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
 			Element.verifyElementPresent(divPageMsg, "Page message");
+			verifyInvoicesPageText();
+            Element.verifyElementPresent(invoice_grid_header,"Invoice grid header");
 			verifyPastDuesInvoiceTab(searchCriteria);
 			verifyProviderNameInvoices();
 			verifyAccrudFeesInvoiceTab(searchCriteria);
@@ -1150,6 +1132,11 @@ public class OptumPaySolution {
 		}
 		return this;
 	}
+	
+	public void verifyInvoicesPageText() {
+        Helper.compareEquals(testConfig, "Invoices pagetext 1 ", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.pageText1"), txtInvoicesPageText1.getText().trim());
+        Helper.compareEquals(testConfig, "Invoices pagetext 2 ", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.pageText2"), txtInvoicesPageText2.getText().trim());
+    }
 
 	public void verifyProviderNameInvoices() {
 		int sqlRowNo = 1;
@@ -1159,27 +1146,58 @@ public class OptumPaySolution {
 	}
 
 	public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException, ParseException {
-		int sqlTable = 1120;
-		HashMap<Integer, HashMap<String, String>> invoiceTableData = DataBase.executeSelectQueryALL(testConfig, sqlTable);
+		HashMap<Integer,HashMap<String,String>>  invoiceTableData = DataBase.executeSelectQueryALL(testConfig, QUERY.Enhancement_Invoice_Grid_Data);
 		ArrayList<String> expectedHeader = new ArrayList<String>();
-		expectedHeader.add("Invoice Period");
-		expectedHeader.add("Total Invoice Amount");
-		expectedHeader.add("Download Invoice");
+		expectedHeader.add("Invoice");
+		expectedHeader.add("Billing Period");
+		expectedHeader.add("Amount Due");
+		expectedHeader.add("Processed By");
+		expectedHeader.add("Confirmation");
 
 		if ("TinWithInvoices".equals(searchCriteria)) {
 			ArrayList<String> actualContentUI = new ArrayList<String>();
 			for (WebElement header : tableInvoiceDetailTableHeader) {
-				actualContentUI.add(header.getText());
+				if(!header.getText().isEmpty()) {
+					  actualContentUI.add(header.getText());
+				  }
 			}
 
 			Helper.compareEquals(testConfig, "tableInvoiceDetailTableHeader", expectedHeader, actualContentUI);
 
-			for (int i = 0; i < tableInvoiceAmountUI.size(); i++) {
-				String startDate = Helper.changeDateFormat(invoiceTableData.get(i + 1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-				String endDate = Helper.changeDateFormat(invoiceTableData.get(i + 1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-				Helper.compareEquals(testConfig, "billing cycle", startDate + " - " + endDate, tableInvoiceDateUI.get(i).getText());
-				Helper.compareEquals(testConfig, "invoice amount", "$" + invoiceTableData.get(i + 1).get("INVC_TOT_AMT").toString(), tableInvoiceAmountUI.get(i).getText());
-				Helper.compareEquals(testConfig, "invoice number", invoiceTableData.get(i + 1).get("INVC_NBR").toString(), tableInvoiceNumberUI.get(i).getText());
+			for(int i=0; i<tableInvoiceAmountUI.size() ;i++) { 
+
+			    String invoice_Sts1 = String.format("//tbody/tr[%s]/td[4]/input[1]",i+1);
+			    String invoice_sts = Element.findElement(testConfig, "xpath", invoice_Sts1).getAttribute("value");		
+			    String invoice_StatusDB = invoiceTableData.get(i+1).get("INVC_STS").toString();
+				String  startDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				String  endDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				String firstName = invoiceTableData.get(i+1).get("FST_NM").toString();
+				String lastName = invoiceTableData.get(i+1).get("LST_NM").toString();
+
+				Helper.compareEquals(testConfig,"Billing Period",startDate+" - "+endDate,tableInvoiceDateUI.get(i).getText());
+
+				if(firstName.isEmpty() && lastName.isEmpty()) {
+					Helper.compareEquals(testConfig,"Processed By","---",tableInvoiceProcessedByUI.get(i).getText().trim());
+				}
+				else {		
+					Helper.compareEquals(testConfig,"Processed By",firstName+" "+lastName,tableInvoiceProcessedByUI.get(i).getText());
+				}
+
+				if(invoice_StatusDB.equals("IR") || invoice_StatusDB.equals("FP")){
+					Helper.compareEquals(testConfig,"Asserting the Invoice Status DB vs UI","Pay Now",invoice_sts);
+				}
+
+				if(invoice_StatusDB.equals("IP") || invoice_StatusDB.equals("FS") || invoice_StatusDB.equals("FC")){
+					Helper.compareEquals(testConfig,"Asserting the Invoice Status DB vs UI","Paid",invoice_sts);
+				}
+
+				if(invoice_sts.contentEquals("Paid")) {
+					Helper.compareEquals(testConfig,"Amount Due","$0.00",tableInvoiceAmountUI.get(i).getText());	
+				}
+				else {
+					Helper.compareEquals(testConfig,"Amount Due", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
+				}	
+				Helper.compareEquals(testConfig,"Invoice", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
 			}
 		}
 

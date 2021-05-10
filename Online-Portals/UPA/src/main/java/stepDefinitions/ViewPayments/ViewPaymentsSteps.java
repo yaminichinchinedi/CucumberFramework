@@ -3,12 +3,14 @@ package main.java.stepDefinitions.ViewPayments;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.RemittanceDetail;
+import main.java.pageObjects.SearchRemittance;
 import main.java.pageObjects.ViewPayments;
 
 public class ViewPaymentsSteps extends TestBase {
                
     ViewPayments viewPayment = new ViewPayments(testConfig);
-    
+
     @Then("^Validate all other columns in Show All State$")
      public void validate_all_other_columns_in_Show_All_State() throws Throwable {
     	viewPayment.verifyAllOtherDrpDwns();

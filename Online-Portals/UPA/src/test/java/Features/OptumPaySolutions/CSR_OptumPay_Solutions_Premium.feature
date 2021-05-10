@@ -144,7 +144,7 @@
   
          
 #Author:Amit    
-@CSRUS3221650_P  @CSRUS3329695 @CSRStable
+@CSRUS3221650  @CSRUS3329695 @CSRStable @CSRUS3449949
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
@@ -153,12 +153,12 @@
 		Then User verifies if Invoices tab is available for "<searchCriteria>" and "<portalAccess>" and "<tinType>" and "<prdctRecSts>".
 
     Examples: 
-      | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
+      | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
       | Super       | PROV      | TinWithInvoices    | Premium      | AO      | PS          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
-      | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
+     #| Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |  #No Data for this combination
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
-      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |   
+     #| Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |  #Data issue in the DB
          
        
          
