@@ -32,6 +32,9 @@ public class UPARegistrationPage extends TestBase{
 	@FindBy(linkText="HOW TO ENROLL")
 	private WebElement lnkHeaderHowtoEnroll;
 	
+	@FindBy(linkText="RESOURCES")
+	private WebElement lnkHeaderReources;
+	
 	@FindBy(linkText="FAQs")
 	private WebElement lnkHeaderFAQs;
 
@@ -188,6 +191,11 @@ public class UPARegistrationPage extends TestBase{
 	public HowToEnroll clickHowToEnrollLink() {
 		Element.click(lnkHeaderHowtoEnroll, "How to Enroll Link");
 		return new HowToEnroll(testConfig);
+	}
+	
+	public ResourcesPreLogin clickResourcesLink() {
+		Element.click(lnkHeaderReources, "Resources Link");
+		return new ResourcesPreLogin(testConfig);
 	}
 	
 	public BenefitsOfOptumPay clickBenefitsOfOptumPayLink() {

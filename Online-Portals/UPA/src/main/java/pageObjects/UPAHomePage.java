@@ -132,6 +132,9 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Cancel Form")
 	WebElement  resourcesCancelForm;
 	
+	@FindBy(linkText="Cancellation Form")
+	WebElement  CancellationForm;
+	
 	@FindBy(id="guide-top")
 	WebElement  guideSection;
 	
@@ -643,5 +646,33 @@ public class UPAHomePage extends HomePage {
 		Browser.wait(testConfig, 1);
 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
 		return new PaymentDataFilesUPA (testConfig);
+	}
+	
+	
+	/**
+	 * Author: Mohammad Khalid. 
+	 * Clicks on the Cancellation Form in Resources Drop down**/
+	
+	public void verifyCancellationFormLinkUnderResources()
+	{
+		Element.verifyElementPresent(CancellationForm, "Cancellation Form");
+		Element.click(CancellationForm, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Helper.compareEquals(testConfig, "Tnc windows", 2, Browser.getNoOfWindowHandles(testConfig));
+		Helper.compareContains(testConfig, "The Cancellation PDF URL", "pdf", testConfig.getDriver().getCurrentUrl());
+		Browser.verifyURL(testConfig, "pdf");
+	}
+	
+	public void verifyCancellationFormLinkPDFContentPostLogin() throws IOException
+	{
+		String expectedPDFContent=null;
+		String actualPDFContent=null;
+		
+		String exPDFPath = System.getProperty("user.dir") + "\\PDFDocuments\\CancellationForm.pdf";
+		
+		actualPDFContent = Helper.readPDF(TestBase.driver.getCurrentUrl());
+		expectedPDFContent = Helper.readPDF(exPDFPath);
+		
+		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
 	}
 }

@@ -38,6 +38,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
+
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
@@ -548,6 +549,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	public ViewPayments verifyEpraStatus(String expectedStatus) 
 	 {
          Browser.browserRefresh(testConfig);
+         Browser.wait(testConfig, 2);
          String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
   		int sqlRowNo=206;
   		testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
@@ -1026,38 +1028,6 @@ public void verifyFailedPaymentPopUp()
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
 		return resultCount.trim();
 	}
-	
-	/**
-	 * Authot: Mohammad Khalid
-	 * Method to fetch the total pages for Payment Numbers
-	 * 
-	 * */
-	
-/*	public String getRecordCountFromUI()
-	{
-		String resultCount = null;
-		try
-		{
-			if (divShowRslts.isDisplayed())
-			{
-				resultCount=divShowRslts.getText().toString().trim();
-				Log.Comment("Page umber: " + resultCount);
-				resultCount=resultCount.substring(11,resultCount.length()).trim();
-				Log.Comment("Page umber1: " + resultCount);
-			}
-			else
-			{
-				resultCount = "1";
-			}
-		} 
-		catch (NoSuchElementException e)
-		{
-			Log.Comment("The TIN has only one record", testConfig);
-		}
-		
-		return resultCount;
-	}*/
-	
 	
 	
 	public String getRecordCountFromUISR()

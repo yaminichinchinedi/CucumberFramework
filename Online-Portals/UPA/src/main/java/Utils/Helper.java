@@ -3,11 +3,13 @@ package main.java.Utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,7 +43,12 @@ import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.WebElement;
+import org.testng.internal.annotations.TestOrConfiguration;
 
 
 
@@ -1900,7 +1907,52 @@ public static String addDays(String date, int days) throws ParseException {
 	     testConfig.putRunTimeProperty("PAYR_835_ID", schema.get("PAYR_835_ID").toString().trim());
 	}
 	
-
+	
+	public static String readPDF(String pdfPath) throws IOException
+	{
+		String contentPDF=null;
+		PDDocument document = null;
+		
+		if (pdfPath.contains("https"))
+		{
+			InputStream is = null;
+			BufferedInputStream fileToParse = null;
+			try {
+				URL url = new URL(pdfPath);
+				is = url.openStream();
+				fileToParse = new BufferedInputStream(is);
+				document = PDDocument.load(fileToParse);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			finally
+			{
+				 fileToParse.close();
+		         is.close();
+			}
+		}
+		else
+		{
+			File file = new File(pdfPath);
+			document = PDDocument.load(file);
+		}
+        
+        try
+        {
+            contentPDF = new PDFTextStripper().getText(document);
+        } 
+        finally
+        {
+            if (document != null) {
+                document.close();
+            }
+           
+        }
+		return contentPDF;
+		
 	}
-
+	
+}
 
