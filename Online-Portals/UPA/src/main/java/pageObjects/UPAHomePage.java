@@ -552,14 +552,10 @@ public class UPAHomePage extends HomePage {
 	}
 
 	private void homePageCarouselTextValidation(String[] expectedHeaders, String[] expectedTexts) {
-		WebElement windowSlides = Element.findElement(testConfig, "xpath", "//div[@class='slides-window']");
-		imageTiles = windowSlides.findElements(By.xpath("//div[@class='slide__messageBox']"));
-
 		int counter = 0;
 		while(!(imageTiles.get(0).findElement(By.tagName("h2")).getText().trim().equals(expectedHeaders[0]))){
 			Browser.wait(testConfig, 2);
-			windowSlides = Element.findElement(testConfig, "xpath", "//div[@class='slides-window']");
-			imageTiles = windowSlides.findElements(By.xpath("//div[@class='slide__messageBox']"));
+			imageTiles = Element.findElements(testConfig, "xpath", "//div[@class='slide__messageBox']");//windowSlides.findElements(By.xpath("//div[@class='slide__messageBox']"));
 			counter++;
 			if(counter>10){
 				break;
