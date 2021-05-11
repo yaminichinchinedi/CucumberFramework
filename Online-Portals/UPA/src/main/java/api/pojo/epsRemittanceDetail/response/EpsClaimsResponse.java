@@ -1517,7 +1517,9 @@ public class EpsClaimsResponse {
             @XmlElement(name = "EpsUnitOfServicePaidCount")
             protected String epsUnitOfServicePaidCount;
             @XmlElement(name = "EpsClaimPaymentServiceAdjustments")
-            protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments epsClaimPaymentServiceAdjustments;
+           /* protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments epsClaimPaymentServiceAdjustments;
+            @XmlElement(name = "EpsPayerReferenceIdentifierQualifierCodes", required = true) */
+            protected List<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments> epsClaimPaymentServiceAdjustments;
             @XmlElement(name = "EpsPayerReferenceIdentifierQualifierCodes", required = true)
             protected EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsPayerReferenceIdentifierQualifierCodes epsPayerReferenceIdentifierQualifierCodes;
 
@@ -1777,8 +1779,15 @@ public class EpsClaimsResponse {
              *     {@link EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments }
              *     
              */
-            public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
+       /*     public EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments getEpsClaimPaymentServiceAdjustments() {
                 return epsClaimPaymentServiceAdjustments;
+            } */
+            
+            public List<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments> getEpsClaimPaymentServiceAdjustments() {
+                if (epsClaimPaymentServiceAdjustments== null) {
+                epsClaimPaymentServiceAdjustments= new ArrayList<EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments>();
+                }
+                return this.epsClaimPaymentServiceAdjustments;
             }
 
             /**
@@ -1789,9 +1798,9 @@ public class EpsClaimsResponse {
              *     {@link EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments }
              *     
              */
-            public void setEpsClaimPaymentServiceAdjustments(EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments value) {
+     /*       public void setEpsClaimPaymentServiceAdjustments(EpsClaimsResponse.EpsClaims.EpsClaimServices.EpsClaimPaymentServiceAdjustments value) {
                 this.epsClaimPaymentServiceAdjustments = value;
-            }
+            } */
 
             /**
              * Gets the value of the epsPayerReferenceIdentifierQualifierCodes property.

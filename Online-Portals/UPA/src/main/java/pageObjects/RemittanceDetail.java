@@ -2,299 +2,202 @@ package main.java.pageObjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import javax.xml.bind.JAXBException;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.Map.Entry;
 
-import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsRequest;
+import main.java.queries.QUERY;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.xml.sax.SAXException;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Reporter;
 
 import main.java.reporting.Log;
+
+import com.mysql.jdbc.StringUtils;
+
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
+import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsRequest;
+import org.xml.sax.SAXException;
+
+
 
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
-import main.java.api.manage.EpsPaymentsSearch.EpsRemittanceDetailHelper;
-import main.java.api.pojo.epsRemittanceDetail.response.EPSClaimsResponseUI;
-import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsResponse;
 import main.java.fislServices.FISLConnection2;
 import main.java.fislServices.ReadTagsfromFISLResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.queries.QUERY;
+import main.java.stepDefinitions.Login.CSRHomePageSteps;
+import main.java.stepDefinitions.RemittanceDetail.RemittanceDetailSteps;
+import main.java.stepDefinitions.ViewPayments.SearchTinPageViewPaymentsSteps;
+import main.java.pageObjects.CSRHomePage;
+import main.java.pageObjects.HomePage;
+import main.java.api.manage.EpsPaymentsSearch.EpsRemittanceDetailHelper;	
+import main.java.api.pojo.epsRemittanceDetail.response.EPSClaimsResponseUI;	
+import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsResponse;
 
 public class RemittanceDetail {
 	
-	@FindBy(xpath = ".//*[@id='hideheader']/table//tr[1]/td[1]")
-    WebElement verifyPageLoad;
-    @FindBy(xpath = ".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]")
-    WebElement subscriberID;
-    @FindBy(xpath = ".//*[@id='flow1']/table")
-    List<WebElement> plbSegment;
-    @FindBy(xpath = "//a[contains(text(),'View Payments')]")
-    WebElement viewPaymentsTab;
-    @FindBy(name = "providerTIN")
-    WebElement enterTIN;
-    @FindBy(name = "btnSubmit")
-    WebElement searchBtn;
-    @FindBy(id = "periodId")
-    WebElement quickSeacrhDrpDwn;
-    @FindBy(name = "filterPayments")
-    WebElement filterPaymentsDrpDwn;
-    @FindBy(id = "mktTypeId")
-    WebElement mrktTypeDrpDwn;
-    @FindBy(id = "payerFilterType")
-    WebElement payerDrpDwn;
-    @FindBy(id = "archiveFilterType")
-    WebElement archiveDrpDwn;
-    @FindBy(xpath = "//td[contains(text(),'Record Count:')]")
-    WebElement record;
-    @FindBy(id = "paymentNbr_1")
-    WebElement firstPaymentNumber;
-    @FindBy(className = "subheader")
-    WebElement remitHeader1;
-    @FindBy(className = "Subheaderbold")
-    WebElement orgHeader;
-    @FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]")
-    WebElement dosHeader;
-    @FindBy(xpath = "//tbody/tr[@class='columnHeaderText']/td[5]")
-    WebElement renderingHeader;
-    @FindBy(xpath = "//td[contains(text(),'Claim Number')]")
-    WebElement claimnumHeader;
-    @FindBy(xpath = "//div[@id='flow2']//td[7]")
-    WebElement patientpayHeader;
-    @FindBy(xpath = "//td[contains(text(),'Amount Paid')]")
-    WebElement amntpaidHeader;
-    @FindBy(xpath = "//*[starts-with(text(),'Payment Date')]")
-    WebElement paymentDate;
-    @FindBy(xpath = "//*[contains(text(),'Payment Type:')]")
-    WebElement paymentType;
-    @FindBy(xpath = "//*[contains(text(),'Payment Number')]")
-    WebElement paymentNumber;
-    @FindBy(xpath = "//*[contains(text(),'NPI')]")
-    WebElement remitNPI;
-    @FindBy(name = "claimType")
-    WebElement filterClaims;
-    @FindBy(xpath = "//select[@name='claimType']//option")
-    WebElement filterClaimsOptions;
-    @FindBy(xpath = "//td[contains(text(),'Account Number')]")
-    WebElement acctNum;
-    @FindBy(xpath = "//a[contains(text(),'Patient Name')]")
-    WebElement patientName;
-    @FindBy(xpath = "//span[contains(text(),'Patient ID')]")
-    WebElement patientID;
-    @FindBy(xpath = "//span[contains(text(),'Subscriber ID')]")
-    WebElement subscbrID;
-    @FindBy(xpath = "//span[contains(text(),'Corrected ID')]")
-    WebElement correctedID;
-    @FindBy(xpath = "//a[contains(text(),'Rendering Provider')]")
-    WebElement rendPrvdr;
-    @FindBy(xpath = "//td[contains(text(),'Claim #/')]")
-    WebElement claimHeader;
-    @FindBy(xpath = "//td[contains(text(),'Group Policy Number/')]")
-    WebElement grpPolicy;
-    @FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]")
-    WebElement remitDOS;
-    @FindBy(xpath = "//td[contains(text(),'Description of Service')]")
-    WebElement descService;
-    @FindBy(xpath = "//td[contains(text(),'Amount Charged')]")
-    WebElement amntCharged;
-    @FindBy(xpath = "//td[contains(text(),'Claim / Service Adj')]")
-    WebElement serviceAdj;
-    @FindBy(xpath = "//td[contains(text(),'Prov Adj Discount')]")
-    WebElement provAdj;
-    @FindBy(xpath = "//td[contains(text(),'Amount Allowed')]")
-    WebElement amntAllowed;
-    @FindBy(xpath = "//td[contains(text(),'Deduct/ Coins/ Copay')]")
-    WebElement copay;
-    @FindBy(xpath = "//td[contains(text(),'Total Paid to Provider:')]")
-    WebElement paidPrvdr;
-    @FindBy(xpath = "//a[contains(text(),'Adj Reason Code')]")
-    WebElement adj_code;
-    @FindBy(xpath = "//a[contains(text(),'RMK Code')]")
-    WebElement rmk_code;
-    @FindBy(xpath = "//td[contains(text(),'Patient Resp')]")
-    WebElement patientResp;
-    @FindBy(xpath = "//td[contains(text(),'Remark Code')]")
-    WebElement remarkCode;
-    @FindBy(xpath = "//td[contains(text(),'Description')]")
-    WebElement remarkDesc;
-    @FindBy(xpath = "//td[contains(text(),'Adjustment Code')]")
-    WebElement adjustmentCode;
-    @FindBy(xpath = "//td[contains(text(),'Description')]")
-    WebElement adjustmentDesc;
-    @FindBy(xpath = "//span[@class='pageNo'][contains(text(),'1')]")
-    WebElement paginationNo1;
-    @FindBy(xpath = "//span[@class='pageNo'][contains(text(),'2')]")
-    WebElement paginationNo2;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]")
-    WebElement subTotRecord;
-    @FindBy(xpath = "//a[contains(text(),'Next')]")
-    WebElement remitNext;
-    @FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]")
-    WebElement payerUI;
-    @FindBy(xpath = "//*[@class=\"ellipsis wrapperTooltip\"]")
-    WebElement payernameUI;
-    @FindBy(id = "paymentNbr_2")
-    WebElement paymentNo2;
-    @FindBy(id = "paymentNbr_1")
-    WebElement paymentNo1;
-    @FindBy(xpath = "//*[contains(text(),'Payment Number:')]")
-    WebElement paymentNo;
-    @FindBy(xpath = "//input[@value='Download 835']")
-    WebElement download;
-    @FindBy(xpath = "//*[@id=\"epra-print-1\"]/input")
-    WebElement printBtn;
-    @FindBy(xpath = "//input[@value='Print Page']")
-    WebElement printBtnPayer;
-    @FindBy(xpath = "//input[starts-with(@value,'Return to')]")
-    WebElement returnBtn;
-    @FindBy(className = "subheaderbold")
-    WebElement totPaidSubHdr;
-    @FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']")
-    WebElement cob_Msg;
-    @FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']")
-    WebElement reversalMsg;
-    @FindBy(id = "periodId")
-    WebElement quickSearch;
-    @FindBy(id = "mktTypeId")
-    WebElement marketTyp;
-    @FindBy(id = "payerFilterType")
-    WebElement payerDrpDown;
-    @FindBy(xpath = "//select[@name='claimType']//option")
-    List<WebElement> filterClaimsOptionUI;
-    @FindBy(name = "filterPayments")
-    WebElement filterDrpDown;
-    @FindBy(xpath = "//a[contains(text(),'First Page')]")
-    WebElement firstPage;
-    @FindBy(xpath = "//a[contains(text(),'Last Page')]")
-    WebElement lastPage;
-    @FindBy(id = "outerTable")
-    WebElement remitOuterTable;
-    @FindBy(id = "patientName_1")
-    WebElement firstPatient;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']//td[3]")
-    WebElement amntChargedUI;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']//td[4]")
-    WebElement amntChargedDRGCodeUI;
-    @FindBy(id = "grpPolNo_1")
-    WebElement grpPolicyUI;
-    @FindBy(id = "subscriberID_1")
-    WebElement subscriberUI1;
-    @FindBy(xpath = "//span[@id='claimID_1']/a")
-    WebElement claimHash;
-    @FindBy(xpath = "//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")
-    WebElement accntNum;
-    @FindBy(xpath = "//span[@id='claimID_1']/a")
-    WebElement claimType;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']//td[6]")
-    WebElement amntallowed;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']//td[7]")
-    WebElement copayUI;
-    @FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[11]")
-    WebElement patientresp;
-    @FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[5]")
-    WebElement provAdjDis;
-    @FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]")
-    WebElement homeBtn;
-    @FindBy(xpath = "//a[contains(text(),'Search Remittance')]")
-    WebElement srchRemit;
-    @FindBy(id = "paymentNbrTypeSelection")
-    WebElement payNumdrpdwn;
-    @FindBy(id = "paymentNumberInputId")
-    WebElement elcPayNum;
-    @FindBy(id = "checkNumberInputId")
-    WebElement checkPayNum;
-    @FindBy(name = "searchRemittance")
-    WebElement srchRemitBtn;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]")
-    WebElement subTotal;
-    @FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]")
-    WebElement adjCodePLB;
-    @FindBy(xpath = "//td[contains(text(),'Reference #')]")
-    WebElement refCodePLB;
-    @FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td[3]")
-    WebElement amntPLBHeader;
-    @FindBy(xpath = "//td[starts-with(@id,'patientName_')]")
-    List<WebElement> patientNameList;
-    @FindBy(xpath = "//div[@id='msgforplb']//span[1]")
-    WebElement claimmsg;
-    @FindBy(xpath = "//a[text()='EPS']")
-    WebElement rmksessionoutmsg;
-    @FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]")
-    List<WebElement> subTotalCount;
-    @FindBy(xpath = "//input[@value= 'Search']")
-    WebElement srchTINUPA;
-    @FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]")
-    WebElement homeBtnUPA;
-    @FindBy(xpath = "//input[@value='Print Request' and @type = 'button']")
-    WebElement btnPrint;
-    @FindBy(id = "printProcessing")
-    WebElement btnPrntProcessing;
-    @FindBy(xpath = "//input[@value='Download 835' and @type = 'button']")
-    WebElement download835;
-    @FindBy(xpath = "//input[@value='Print Available']")
-    WebElement btnPrntavailable;
-    @FindBy(xpath = "//input[@value='Return to Search Results']")
-    WebElement returnbtn;
-    @FindBy(xpath = "//b[contains(text(),'Your PDF is now available. To access your document')]")
-    WebElement msg;
-    @FindBy(xpath = "//td[contains(text(),'Subscriber Name')]")
-    WebElement subscrbrName;
-    @FindBy(xpath = "//td[contains(text(),'Payment Number')]")
-    WebElement remitpaymnthead;
-    @FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a")
-    WebElement PPRAPDFHyperlink;
-    @FindBy(xpath = "//span[contains(@id,'ppra')]//img")
-    WebElement pPRAPDFImage;
-    @FindBy(xpath = "//div[@id='hideheader']//table//tr")
-    List<WebElement> pageHeader;
-    @FindBy(xpath = "//div[@id='flow1']/table")
-    List<WebElement> pageBody;
-    @FindBy(linkText = "RMK Code")
-    WebElement rmkCode;
-    @FindBy(linkText = "Adj Reason Code")
-    WebElement adjCode;
-    @FindBy(xpath = "//span[contains(text(),'DRG Code')]")
-    WebElement drgCode;
-    @FindBy(name = "taxIdNbr")
-    WebElement prvdrTIN;
-    @FindBy(name = "providerTIN")
-    WebElement txtboxTinNo;
-    @FindBy(id = "taxIndNbrId")
-    WebElement tinDrpDwn;
-    @FindBy(name = "taxIdNbr")
-    WebElement bstinDrpDwn;
-    @FindBy(name = "taxIdNbr")
-    WebElement payertinDrpDwn;
-    @FindBy(xpath = "//input[@value='Search']")
-    WebElement submitBtn;
-    @FindBy(xpath = "//*[contains(text(),'Note: Above information provided by the member']")
-    WebElement noteMsg;
-    @FindBy(xpath = "//*[contains(text(),'technical difficulties')]")
-    WebElement errorPageUI;
-    @FindBy(id="paymentNbrTypeSelection")
-    WebElement paymentNumberType;
-    @FindBy(xpath = "//input[@name='paymentNumber']")
-    WebElement paymentNumberSearchRemit;
-    @FindBy(name="searchRemittance")
-    WebElement btnSearchRemittance;
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[1]") WebElement verifyPageLoad;
+	@FindBy(xpath=".//*[@id='hideheader']/table//tr[1]/td[3]/span[1]") WebElement subscriberID;
+	@FindBy(xpath=".//*[@id='flow1']/table") List<WebElement> plbSegment;
+	@FindBy(xpath = "//a[contains(text(),'View Payments')]") WebElement viewPaymentsTab;
+    @FindBy(name="providerTIN")	WebElement enterTIN;
+    @FindBy(name="btnSubmit")	WebElement searchBtn;
+    @FindBy(id="periodId")	WebElement quickSeacrhDrpDwn;
+    @FindBy(name="filterPayments")	WebElement filterPaymentsDrpDwn;
+    @FindBy(id="mktTypeId")	WebElement mrktTypeDrpDwn;
+    @FindBy(id="payerFilterType")	WebElement payerDrpDwn;
+    @FindBy(id="archiveFilterType")	WebElement archiveDrpDwn;
+	@FindBy(xpath = "//td[contains(text(),'Record Count:')]") WebElement record;
+	@FindBy(id="paymentNbr_1")	WebElement firstPaymentNumber;
+	@FindBy(className="subheader")	WebElement remitHeader1;
+	@FindBy(className="Subheaderbold")	WebElement orgHeader;
+	@FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]") WebElement dosHeader;
+	@FindBy(xpath = "//tbody/tr[@class='columnHeaderText']/td[5]") WebElement renderingHeader;
+	@FindBy(xpath = "//td[contains(text(),'Claim Number')]") WebElement claimnumHeader;
+	@FindBy(xpath = "//div[@id='flow2']//td[7]") WebElement patientpayHeader;
+	@FindBy(xpath = "//td[contains(text(),'Amount Paid')]") WebElement amntpaidHeader;
+	@FindBy(xpath = "//td[starts-with(text(),'Payment Date')]") WebElement paymentDate;
+    @FindBy(xpath = "//td[contains(text(),'Payment Type:')]") WebElement paymentType;
+	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement paymentNumber;
+	@FindBy(xpath = "//td[contains(text(),'NPI')]") WebElement remitNPI;
+	@FindBy(name="claimType")	WebElement filterClaims;
+	@FindBy(xpath = "//select[@name='claimType']//option") WebElement filterClaimsOptions;
+	@FindBy(xpath = "//td[contains(text(),'Account Number')]") WebElement acctNum;
+	@FindBy(xpath = "//a[contains(text(),'Patient Name')]") WebElement patientName;
+	@FindBy(xpath = "//span[contains(text(),'Patient ID')]") WebElement patientID;
+	@FindBy(xpath = "//span[contains(text(),'Subscriber ID')]") WebElement subscbrID;
+	@FindBy(xpath = "//span[contains(text(),'Corrected ID')]") WebElement correctedID;
+	@FindBy(xpath = "//a[contains(text(),'Rendering Provider')]") WebElement rendPrvdr;
+	@FindBy(xpath = "//td[contains(text(),'Claim #/')]") WebElement claimHeader;
+	@FindBy(xpath = "//td[contains(text(),'Group Policy Number/')]") WebElement grpPolicy;
+	@FindBy(xpath = "//td[contains(text(),'Date(s) of Service')]") WebElement remitDOS;
+	@FindBy(xpath = "//td[contains(text(),'Description of Service')]") WebElement descService;
+	@FindBy(xpath = "//td[contains(text(),'Amount Charged')]") WebElement amntCharged;
+	@FindBy(xpath = "//td[contains(text(),'Claim / Service Adj')]") WebElement serviceAdj;
+	@FindBy(xpath = "//td[contains(text(),'Prov Adj Discount')]") WebElement provAdj;
+	@FindBy(xpath = "//td[contains(text(),'Amount Allowed')]") WebElement amntAllowed;
+	@FindBy(xpath = "//td[contains(text(),'Deduct/ Coins/ Copay')]") WebElement copay;
+	@FindBy(xpath = "//td[contains(text(),'Total Paid to Provider:')]") WebElement paidPrvdr;
+	@FindBy(xpath = "//a[contains(text(),'Adj Reason Code')]") WebElement adj_code;
+	@FindBy(xpath = "//a[contains(text(),'RMK Code')]") WebElement rmk_code;
+	@FindBy(xpath = "//td[contains(text(),'Patient Resp')]") WebElement patientResp;
+	@FindBy(xpath = "//td[contains(text(),'Remark Code')]") WebElement remarkCode;
+	@FindBy(xpath = "//td[contains(text(),'Description')]") WebElement remarkDesc;
+	@FindBy(xpath = "//td[contains(text(),'Adjustment Code')]") WebElement adjustmentCode;
+	@FindBy(xpath = "//td[contains(text(),'Description')]") WebElement adjustmentDesc;
+	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'1')]") WebElement paginationNo1;
+	@FindBy(xpath = "//span[@class='pageNo'][contains(text(),'2')]") WebElement paginationNo2;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotRecord;
+	@FindBy(xpath = "//a[contains(text(),'Next')]") WebElement remitNext;
+	@FindBy(xpath = "//form[1]/table[1]/tbody[1]/tr[7]/td[1]/table[1]/tbody[1]/tr[1]/td[1]/table[1]/tbody[1]/tr[2]/td[1]") WebElement payerUI;
+	@FindBy(xpath ="//*[@class=\"ellipsis wrapperTooltip\"]")  WebElement payernameUI;
+	@FindBy(id="paymentNbr_2")	WebElement paymentNo2;
+	@FindBy(id="paymentNbr_1")	WebElement paymentNo1;
+	@FindBy(xpath = "//*[contains(text(),'Payment Number:')]") WebElement paymentNo;
+	@FindBy(xpath = "//input[@value='Download 835']") WebElement download;
+	@FindBy(xpath = "//span[@id='epra-print-1']//input[@class='form']") WebElement printBtn;
+	@FindBy(xpath = "//input[@value='Print Page']") WebElement printBtnPayer;
+	@FindBy(xpath = "//input[starts-with(@value,'Return to')]") WebElement returnBtn;
+	@FindBy(className="subheaderbold")	WebElement totPaidSubHdr;
+	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement cob_Msg;
+	@FindBy(xpath = "//div[@id='msgforplb']//span[@class='Subheaderbold']") WebElement reversalMsg;
+	@FindBy(id="periodId")	WebElement quickSearch;
+	@FindBy(id="mktTypeId")	WebElement marketTyp;
+	@FindBy(id="payerFilterType")	WebElement payerDrpDown;
+	@FindBy(xpath = "//select[@name='claimType']//option") List<WebElement> filterClaimsOptionUI;
+	@FindBy(name="filterPayments")	WebElement filterDrpDown;
+	@FindBy(xpath = "//a[contains(text(),'First Page')]") WebElement firstPage;
+	@FindBy(xpath = "//a[contains(text(),'Last Page')]") WebElement lastPage;
+	@FindBy(id="outerTable")	WebElement remitOuterTable;
+	@FindBy(id="patientName_1")	WebElement firstPatient;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[3]") WebElement amntChargedUI;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[4]") WebElement amntChargedDRGCodeUI;
+	@FindBy(id="grpPolNo_1")	WebElement grpPolicyUI;
+	@FindBy(id="subscriberID_1")	WebElement subscriberUI1;
+	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimHash;
+	@FindBy(xpath = "//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]") WebElement accntNum;
+	@FindBy(xpath = "//span[@id='claimID_1']/a") WebElement claimType;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[6]") WebElement amntallowed;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']//td[7]") WebElement copayUI;
+	@FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[11]") WebElement patientresp;
+	@FindBy(xpath = "//tr[contains(@class,'rowDarkbold')]//td[5]") WebElement provAdjDis;
+	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
+	@FindBy(xpath = "//a[contains(text(),'Search Remittance')]") WebElement srchRemit;
+	@FindBy(id="paymentNbrTypeSelection")	WebElement payNumdrpdwn;
+	@FindBy(id="paymentNumberInputId")	WebElement elcPayNum;
+	@FindBy(id="checkNumberInputId")	WebElement checkPayNum;
+	@FindBy(name="searchRemittance")	WebElement srchRemitBtn;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[1]") WebElement subTotal;
+	@FindBy(xpath = "//td[contains(text(),'Adj Reason Code')]") WebElement adjCodePLB;
+	@FindBy(xpath = "//td[contains(text(),'Reference #')]") WebElement refCodePLB;
+	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td[3]") WebElement amntPLBHeader;
+	@FindBy(xpath = "//td[starts-with(@id,'patientName_')]") List<WebElement> patientNameList;
+	@FindBy(xpath = "//div[@id='msgforplb']//span[1]") WebElement claimmsg;
+	@FindBy(xpath = "//a[text()='EPS']") WebElement rmksessionoutmsg;
+	@FindBy(xpath = "//tr[@class='rowDarkbold']/td[contains(text(), 'Subtotal')]") List<WebElement> subTotalCount;
+	@FindBy(xpath = "//input[@value= 'Search']") WebElement srchTINUPA;
+	@FindBy(xpath = "//div[@id='home']/a[contains(text(),'Home')]") WebElement homeBtnUPA;
+	@FindBy(xpath="//input[@value='Print Request' and @type = 'button']") WebElement btnPrint;
+	@FindBy(id="printProcessing") WebElement btnPrntProcessing;
+	@FindBy(xpath="//input[@value='Download 835' and @type = 'button']") WebElement download835;
+	@FindBy(xpath = "//input[@value='Print Available']") WebElement btnPrntavailable;
+	@FindBy(xpath = "//input[@value='Return to Search Results']") WebElement returnbtn;
+	@FindBy(xpath = "//b[contains(text(),'Your PDF is now available. To access your document')]") WebElement msg;
+	@FindBy(xpath = "//td[contains(text(),'Subscriber Name')]") WebElement subscrbrName;
+	@FindBy(xpath = "//td[contains(text(),'Payment Number')]") WebElement remitpaymnthead;
+	@FindBy(xpath = "//*[contains(text(),'Payer PRA')]//following::tr[1]/td[9]/table/tbody/tr/td/span[1]/a") WebElement PPRAPDFHyperlink;
+	@FindBy(xpath="//span[contains(@id,'ppra')]//img") WebElement pPRAPDFImage;
+	@FindBy(xpath="//div[@id='hideheader']//table//tr") List<WebElement> pageHeader;
+	@FindBy(xpath="//div[@id='flow1']/table") List<WebElement> pageBody;
+	@FindBy(linkText="RMK Code") WebElement rmkCode;	
+	@FindBy(linkText="Adj Reason Code") WebElement adjCode;	
+	@FindBy(xpath = "//span[contains(text(),'DRG Code')]") WebElement drgCode;
+	@FindBy(name="taxIdNbr") WebElement prvdrTIN;
+	@FindBy(name="providerTIN") WebElement txtboxTinNo;
+	@FindBy(id="taxIndNbrId") WebElement tinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement bstinDrpDwn;
+	@FindBy(name="taxIdNbr") WebElement payertinDrpDwn;
+    @FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
+	@FindBy(xpath = "//*[contains(text(),'Note: Above information provided by the member']") WebElement noteMsg;
+	@FindBy(xpath = "//*[contains(text(),'technical difficulties')]") WebElement errorPageUI;
+
+	 @FindBy(id="paymentNbrTypeSelection")	
+	 WebElement paymentNumberType;
+	 @FindBy(xpath = "//input[@name='paymentNumber']")
+	 WebElement paymentNumberSearchRemit;
+	 @FindBy(name="searchRemittance")
+	 WebElement btnSearchRemittance;
 	
 	private ViewPaymentsDataProvider dataProvider;
-	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();
-    EPSClaimsResponseUI epsClaimsResponseUI = new EPSClaimsResponseUI();
-    EpsClaimsRequest epsClaimsRequest = new EpsClaimsRequest();
+	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();	
+	EPSClaimsResponseUI epsClaimsResponseUI = new EPSClaimsResponseUI();
+	EpsClaimsRequest epsClaimsRequest = new EpsClaimsRequest();
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
 	
@@ -2161,13 +2064,13 @@ public void verifyCOBFilterClaimData() throws Exception
 	  		String finalidentifier = payerSchemaUI.concat("-").concat(paymentNumDB).concat("-").concat(orginDateDB);
 	  		Log.Comment("The Final String is :" + finalidentifier);
 	  		
-	  		
+	  	//condition for COB
 	  		String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
 	                  "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
 	                  "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
 	                  "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
-	                  "<ns2:ClaimFilterTypeCode>2,3</ns2:ClaimFilterTypeCode>" +
-	                  "</ns17:EpsClaimsRequest>";
+	                  "<ns2:ClaimFilterTypeCode>2,3</ns2:ClaimFilterTypeCode>" +  
+	                  "</ns17:EpsClaimsRequest>";                                 
 	  		
 	  		
 	  		String getResponse=new FISLConnection2().getEraResponse1(requestXml);
@@ -2638,7 +2541,6 @@ public void verifyCOBFilterClaimData() throws Exception
 	}
 }
 
-
 public void verifyReversalFilterClaimData(String usertype) throws Exception {
     Element.click(returnBtn, "Return Button");
     Browser.wait(testConfig, 2);
@@ -2673,17 +2575,15 @@ public void verifyReversalFilterClaimData(String usertype) throws Exception {
 
 }
 
-
-	public void enterTINMultiplePLBAdj() throws Exception {
-		String prov_TAX_ID_NBR = DataBase
-				.executeSelectQuery(testConfig, QUERY.GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS, 1)
-				.get("PROV_TAX_ID_NBR");
-		Log.Comment("The TIN for Multiple PLB Adj is:" + prov_TAX_ID_NBR);
-		testConfig.putRunTimeProperty("tin", prov_TAX_ID_NBR);
-		Element.click(enterTIN, "Enter TIN");
-		Element.enterData(enterTIN, prov_TAX_ID_NBR, "Entering TIN", "Enter TIN");
-		Element.click(searchBtn, "Search");
-	}
+public void enterTINMultiplePLBAdj() throws Exception
+{
+	String prov_TAX_ID_NBR = DataBase.executeSelectQuery(testConfig, QUERY.GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS, 1).get("PROV_TAX_ID_NBR");
+	Log.Comment("The TIN for Multiple PLB Adj is:" + prov_TAX_ID_NBR);
+	testConfig.putRunTimeProperty("tin", prov_TAX_ID_NBR);
+	Element.click(enterTIN, "Enter TIN");
+	Element.enterData(enterTIN, prov_TAX_ID_NBR, "Entering TIN", "Enter TIN");
+	Element.click(searchBtn, "Search");
+}
 
 public RemittanceDetail enterTinCSR(String paymentType, String usertype)
 {
@@ -2773,36 +2673,37 @@ public void enterElectronicNumForMultiplePLBCriteria() throws Exception
 }
 
 
-	public void verifyRemitPageDataUPA(String criteriaType) throws Exception {
-		if (criteriaType != "RemitDetail") {
-			handleTechnicalDifficultyError();
-			String cpDsplConslPayNbr = DataBase
-					.executeSelectQuery(testConfig, QUERY.GET_CONSL_PAY_NBR_FOR_REMITTANCE_DETAIL, 1)
-					.get("CP_DSPL_CONSL_PAY_NBR");
-			Log.Comment("cpDsplConslPayNbr is :" + cpDsplConslPayNbr);
-			testConfig.putRunTimeProperty("cpDsplConslPayNbr", cpDsplConslPayNbr);
-			Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number",
-					"Electronic Payment Number from 'Payment Number' dropdown");
-			Element.clickByJS(testConfig, paymentNumberSearchRemit, "Payment No text box");
-			Element.enterData(paymentNumberSearchRemit, cpDsplConslPayNbr,
-					"Enter Electronic payment number as: " + cpDsplConslPayNbr, "payment number");
-			Element.clickByJS(testConfig, btnSearchRemittance, "Search Remittance Button");
-		} else {
-			String cpDsplConslPayNbr = DataBase
-					.executeSelectQuery(testConfig, QUERY.GET_CONSL_PAY_NBR_FOR_REMITTANCE_DETAIL, 1)
-					.get("CP_DSPL_CONSL_PAY_NBR");
-			Log.Comment("cpDsplConslPayNbr is :" + cpDsplConslPayNbr);
-			testConfig.putRunTimeProperty("cpDsplConslPayNbr", cpDsplConslPayNbr);
-			Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown",
-					"Electronic Payment Dropdown");
-			Element.selectVisibleText(payNumdrpdwn, "Electronic Payment Number", "Payment Dropdown");
-			Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
-			Element.click(elcPayNum, "Electronic Payment Number");
-			Element.enterData(elcPayNum, cpDsplConslPayNbr, "Enter Electronic number as " + cpDsplConslPayNbr,
-					"Electonic Payment Number");
-			Element.click(srchRemitBtn, "Search Remit");
-		}
-	}
+public void verifyRemitPageDataUPA(String criteriaType) throws Exception  
+{
+	if (criteriaType != "RemitDetail") {
+		handleTechnicalDifficultyError();
+		String cpDsplConslPayNbr = DataBase
+				.executeSelectQuery(testConfig, QUERY.GET_CONSL_PAY_NBR_FOR_REMITTANCE_DETAIL, 1)
+				.get("CP_DSPL_CONSL_PAY_NBR");
+		Log.Comment("cpDsplConslPayNbr is :" + cpDsplConslPayNbr);
+		testConfig.putRunTimeProperty("cpDsplConslPayNbr", cpDsplConslPayNbr);
+		Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number",
+				"Electronic Payment Number from 'Payment Number' dropdown");
+		Element.clickByJS(testConfig, paymentNumberSearchRemit, "Payment No text box");
+		Element.enterData(paymentNumberSearchRemit, cpDsplConslPayNbr,
+				"Enter Electronic payment number as: " + cpDsplConslPayNbr, "payment number");
+		Element.clickByJS(testConfig, btnSearchRemittance, "Search Remittance Button");
+	} else {
+		String cpDsplConslPayNbr = DataBase
+				.executeSelectQuery(testConfig, QUERY.GET_CONSL_PAY_NBR_FOR_REMITTANCE_DETAIL, 1)
+				.get("CP_DSPL_CONSL_PAY_NBR");
+		Log.Comment("cpDsplConslPayNbr is :" + cpDsplConslPayNbr);
+		testConfig.putRunTimeProperty("cpDsplConslPayNbr", cpDsplConslPayNbr);
+		Element.expectedWait(payNumdrpdwn, testConfig, "Electronic Payment Dropdown",
+				"Electronic Payment Dropdown");
+		Element.selectVisibleText(payNumdrpdwn, "Electronic Payment Number", "Payment Dropdown");
+		Log.Comment("Payment Dropdown Selected: Electronic Payment Number is selected");
+		Element.click(elcPayNum, "Electronic Payment Number");
+		Element.enterData(elcPayNum, cpDsplConslPayNbr, "Enter Electronic number as " + cpDsplConslPayNbr,
+				"Electonic Payment Number");
+		Element.click(srchRemitBtn, "Search Remit");
+	}	
+}
 
 public void verifyMultiplePLBAdj() throws Exception
 {
@@ -3131,8 +3032,8 @@ public void enterElectronicNumForPLBOnlyCriteria() throws Exception
 
 	public void enterCheckNumber() throws Exception
 	{
-	    int sqlRowNo = 407;
-	    System.getProperty("tin");
+		int sqlRowNo = 407;
+		System.getProperty("tin");
 		Map UCONSL_PAY_NBR = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		String checkNumber = UCONSL_PAY_NBR.get("UCONSL_PAY_NBR").toString();
 		Log.Comment("The Electronic Payment Number is :" + checkNumber);
@@ -4020,13 +3921,13 @@ if(null == payerSchema)
 	Log.Comment("The Final String is :" + finalidentifier);
 	
 	
-	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
-            "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
-            "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
-            "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
-            "</ns17:EpsClaimsRequest>";
-	
-	
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
+		"<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
+		"<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
+		"<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" +
+		"</ns17:EpsClaimsRequest>";
+
+
 	String getResponse=new FISLConnection2().getEraResponse1(requestXml);
 	
 	String firstNameDB = getResponse.substring(getResponse.indexOf("<ns0:PatientFirstName>")+22, getResponse.indexOf("</ns0:PatientFirstName>"));
@@ -4594,33 +4495,6 @@ else
  if(!accntNumDB.equalsIgnoreCase("0"))
    	Helper.compareEquals(testConfig, "Comparing Account Number DB and UI", accntNumDB, accntNumUI);
 
-// String amntAllowedUI1 = amntallowed.getText();
-// String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-// Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
-// String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-// Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
-// if(!amntAllowedDB.equalsIgnoreCase("0"))
-//    Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
-
- /*
- String CopayUI1 = copayUI.getText();
- String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
- Log.Comment("Copay Amount from UI is :" + CopayUI);
- String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
- Log.Comment("Copay Amount from FISL is :" + CopayDB);
- if(!CopayDB.equalsIgnoreCase("0"))
-     Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
-   */ 
-// String patientrespUI1 = patientresp.getText();
-// String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
-// double patientrespU3 = Double.parseDouble(patientrespUI2);
-// String patientrespUI = Double.toString(patientrespU3);
-// Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
-// String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
-// Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
-// if(!patientrespDB.equalsIgnoreCase("0"))
-//     Helper.compareEquals(testConfig, "Comparing Patient Responsibilty UI and DB", patientrespDB, patientrespUI);
-
 }
 }
 
@@ -4677,7 +4551,7 @@ if(null == payerSchema)
 	Log.Comment("The Final String is :" + finalidentifier);
 	
 	
-	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+	String requestXml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" +
            "<ns17:EpsClaimsRequest xmlns:ns10=\"http://enterprise.optum.com/schema/cim/member/Member_v1_0\" xmlns:ns11=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\" xmlns:ns12=\"http://enterprise.optum.com/schema/cim/common/Payment_v1_0\" xmlns:ns13=\"http://enterprise.optum.com/schema/cim/common/Payee_v1_0\" xmlns:ns14=\"http://enterprise.optum.com/schema/cim/common/Payer_v1_0\" xmlns:ns15=\"http://enterprise.optum.com/schema/cim/provider/Provider_v1_0\" xmlns:ns16=\"http://enterprise.optum.com/schema/cim/common/ServiceMessage_v1_0\" xmlns:ns17=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\" xmlns:ns1=\"http://enterprise.optum.com/schema/cim/common/Service_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\" xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns6=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns7=\"http://enterprise.optum.com/schema/cim/common/Phone_v1_0\" xmlns:ns8=\"http://enterprise.optum.com/schema/cim/common/Contact_v1_0\" xmlns:ns9=\"http://enterprise.optum.com/schema/cim/common/Address_v1_0\">\r\n" +
            "<ns1:SearchCriteria ns1:FromRecord=\"-1\" ns1:MaxResult=\"10\" ns1:SortDirection=\"ASC\" ns1:SortFieldNumber=\"0\"/>\r\n" +
            "<ns3:PaymentIdentifier>"+finalidentifier+"</ns3:PaymentIdentifier>\r\n" + 
@@ -4762,7 +4636,7 @@ if(null == payerSchema)
     	amountChargedUI = Double.toString(amountChargedUI4);
     }
 
-    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+    Log.Comment("The Amount Charged from UI is :" + amountChargedUI);
        String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
        Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
        if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -4826,7 +4700,7 @@ if(null == payerSchema)
         	amountChargedUI = Double.toString(amountChargedUI4);
         }
         
-        Log.Comment("The Amount Charged from UI is :" + amountChargedUI);  
+        Log.Comment("The Amount Charged from UI is :" + amountChargedUI);
     	    String amountChargedDB = getResponse.substring(getResponse.indexOf("<ns4:ChargedAmount>")+19, getResponse.indexOf("</ns4:ChargedAmount>")); 
     	    Log.Comment("The Amount Charged from FISL is :" +amountChargedDB); 
     	    if(!amountChargedDB.equalsIgnoreCase("0"))
@@ -4938,34 +4812,6 @@ if(null == payerSchema)
      Log.Comment("Account Number from FISL is :" + accntNumDB);
      if(!accntNumDB.equalsIgnoreCase("0"))
        	Helper.compareEquals(testConfig, "Comparing Account Number DB and UI", accntNumDB, accntNumUI);
-    
-//     String amntAllowedUI1 = amntallowed.getText();
-//     String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-//     Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
-//     String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-//     Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
-//     if(!amntAllowedDB.equalsIgnoreCase("0"))
-//        Helper.compareEquals(testConfig, "Comparing Allowed Amounts DB and UI", amntAllowedDB, amntAllowedUI);
-   
-     /*
-     String CopayUI1 = copayUI.getText();
-     String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
-     Log.Comment("Copay Amount from UI is :" + CopayUI);
-     String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
-     Log.Comment("Copay Amount from FISL is :" + CopayDB);
-     if(!CopayDB.equalsIgnoreCase("0"))
-         Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
-       */
-//     String patientrespUI1 = patientresp.getText();
-//     String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
-//     double patientrespU3 = Double.parseDouble(patientrespUI2);
-//	 String patientrespUI = Double.toString(patientrespU3);
-//     Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
-//     String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
-//     Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
-//     if(!patientrespDB.equalsIgnoreCase("0"))
-//         Helper.compareEquals(testConfig, "Comparing Patient Responsibility Amount UI and DB", patientrespDB, patientrespUI);
-//
 }
 
 else
@@ -4977,8 +4823,8 @@ else
 sqlRowNo = 185;
 testConfig.putRunTimeProperty("paymentNum",paymentNum);
 Map paymentNumDB1 = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-String paymentNumDB2 = paymentNumDB1.toString();
-String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);
+String paymentNumDB2 = paymentNumDB1.toString();	
+String paymentNumDB3 = paymentNumDB2.substring(1, paymentNumDB2.length()- 1);	
 String paymentNumDB = paymentNumDB3.substring(18,paymentNumDB3.length());
 Log.Comment("The UCP_CONSL_PAY_NBR is :" + paymentNumDB);
 
@@ -5223,8 +5069,6 @@ String subscrbrUI1 = subscriberUI1.getText();
 
 if(subscrbrUI1.contains("/"))
 {
-	//String subscrbrUI = subscrbrUI1.replace("/", "");
-	
 	String subscrbrUI = subscrbrUI1.substring(0, subscrbrUI1.indexOf("/")-1).trim();
 	
 	Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
@@ -5244,14 +5088,6 @@ else
 	   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
 }
 
-
-//Log.Comment("Subscriber ID from UI is :" + subscrbrUI);
-//String subscrbrDB = getResponse.substring(getResponse.indexOf("<ns3:SubscriberIdentifier>")+26, getResponse.indexOf("</ns3:SubscriberIdentifier>"));
-//Log.Comment("The SubscriberID from FISL is :" + subscrbrDB);
-//if(!subscrbrDB.equalsIgnoreCase("0"))
-//   Helper.compareEquals(testConfig, "Comparing Subscriber ID DB and UI", subscrbrDB, subscrbrUI);
-
-
 String claimHashUI = claimHash.getText();
 Log.Comment("Claim # from UI is :" + claimHashUI);
 String claimTypeDB = getResponse.substring(getResponse.indexOf("<ns3:ClaimIdentifier>")+21, getResponse.indexOf("</ns3:ClaimIdentifier>"));
@@ -5266,32 +5102,6 @@ Log.Comment("Account Number from FISL is :" + accntNumDB);
 if(!accntNumDB.equalsIgnoreCase("0"))
   	Helper.compareEquals(testConfig, "Comparing Account Number DB and UI", accntNumDB, accntNumUI);
 
-//String amntAllowedUI1 = amntallowed.getText();
-//String amntAllowedUI = amntAllowedUI1.substring(amntAllowedUI1.indexOf("$")+1, amntAllowedUI1.length()-1);
-//Log.Comment("Amount Allowed from UI is :" + amntAllowedUI);
-//String amntAllowedDB = getResponse.substring(getResponse.indexOf("<ns4:AllowedAmount>")+19, getResponse.indexOf("</ns4:AllowedAmount>"));
-//Log.Comment("Amount Allowed from FISL is :" + amntAllowedDB);
-//if(!amntAllowedDB.equalsIgnoreCase("0"))
-//   Helper.compareEquals(testConfig, "Comparing Amounts Charged DB and UI", amntAllowedDB, amntAllowedUI);
-
-/*
-String CopayUI1 = copayUI.getText();
-String CopayUI = CopayUI1.substring(CopayUI1.indexOf("$")+1, CopayUI1.length()-1);
-Log.Comment("Copay Amount from UI is :" + CopayUI);
-String CopayDB = getResponse.substring(getResponse.indexOf("<ns4:DeductibleCoInsuranceCoPayAmount>")+38, getResponse.indexOf("</ns4:DeductibleCoInsuranceCoPayAmount>"));
-Log.Comment("Copay Amount from FISL is :" + CopayDB);
-if(!CopayDB.equalsIgnoreCase("0"))
-    Helper.compareEquals(testConfig, "Comparing Amounts Charged UI and DB", CopayDB, CopayUI);
-  */ 
-//String patientrespUI1 = patientresp.getText();
-//String patientrespUI2 = patientrespUI1.substring(patientrespUI1.indexOf("$")+1, patientrespUI1.length());
-//double patientrespU3 = Double.parseDouble(patientrespUI2);
-// String patientrespUI = Double.toString(patientrespU3);
-//Log.Comment("Patient Responsibilty Amount in UI is :" + patientrespUI);
-//String patientrespDB = getResponse.substring(getResponse.indexOf("<ns4:PatientResponsibilityTotalAmount>")+38, getResponse.indexOf("</ns4:PatientResponsibilityTotalAmount>"));
-//Log.Comment("Patient Responsibilty Amount in FISL is :" + patientrespDB);
-//if(!patientrespDB.equalsIgnoreCase("0"))
-//    Helper.compareEquals(testConfig, "Comparing Patient Responsibilty UI and DB", patientrespDB, patientrespUI);
 }
 }
 }
@@ -6313,7 +6123,7 @@ public RemittanceDetail clickPrintRequestButton()
 	verifyDownloadWindow();
 	Browser.browserRefresh(testConfig);
 	Browser.browserRefresh(testConfig);
-	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Print Available']"), 60);
+	Element.waitForElementWhileRefreshBrowser(testConfig, btnPrntavailable, 60);
 	Element.verifyElementPresent(btnPrntavailable, "Print Available");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	
@@ -6326,7 +6136,7 @@ public RemittanceDetail clickPrintButton()
 	File fileDirectory=new File(filedir);
 	Helper.purgeDirectory(fileDirectory);
 	Browser.browserRefresh(testConfig);
-	Element.waitForElementTobeClickAble(testConfig, btnPrntavailable, 60);
+	Element.waitForElementWhileRefreshBrowser(testConfig, btnPrntavailable, 120);
 	Element.click(btnPrntavailable, "Print Available Button");
 	Helper.compareEquals(testConfig, "Button", "Print Available", btnPrntavailable.getAttribute("value"));
 	Helper.isFileExist(fileDirectory,testConfig.getRunTimeProperty("tin"));
@@ -7001,48 +6811,47 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	}
 	
 	
-	public void verifyCOBFilterClaimData(String userType) throws Exception {
-        Element.click(returnBtn, "Return Button");
-        Browser.wait(testConfig, 2);
-        String ui_Payer = payernameUI.getText();
-        Log.Comment("The First Payer Name displayed is:" + ui_Payer);
+	public void verifyCOBFilterClaimData(String usertype) throws Exception
+	{
+		Element.click(returnBtn, "Return Button");
+		Browser.wait(testConfig, 2);
+		String ui_Payer = payernameUI.getText();
+		Log.Comment("The First Payer Name displayed is:" + ui_Payer);
 
-        Element.click(paymentNo1, "Payment No");
-        Browser.wait(testConfig, 2);
-        handleTechnicalDifficultyError();
+		Element.click(paymentNo1, "Payment No");
+		Browser.wait(testConfig, 2);
+		handleTechnicalDifficultyError();
 
-        Element.selectVisibleText(filterClaims, "COB Only", "Claim Filter DropDown");
-        Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
-        Log.Comment("Filter Claims Dropdown selected - COB Only");
+		Element.selectVisibleText(filterClaims, "COB Only", "Claim Filter DropDown");
+		Element.expectedWait(filterClaims, testConfig, "COB Only", "COB Only");
+		Log.Comment("Filter Claims Dropdown selected - COB Only");
 
-        Browser.wait(testConfig, 2);
-        handleTechnicalDifficultyError();
-        int size = testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
+		Browser.wait(testConfig, 2);
+		handleTechnicalDifficultyError();
+		int size = testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size();
+		Log.Comment("Size of the tlist is:" + size);
 
-        Log.Comment("Size of the tlist is:" + size);
+		if (testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0) {
 
-        if (testConfig.driver.findElements(By.xpath("//td[1]/div[2]/table[1]/tbody[1]/tr[1]/td[1]")).size() != 0) {
+		String response = epsRemittanceDetailHelper.postRequestGetResponse(epsClaimsRequest.getEpsClaimsRequestWithCOB(getFinalIdentifier()));
+		Log.Comment("XML Response : "+response);
+		coreFISLvalidationWithUI(response);
 
-            // String response = invokePostCall(xmlRequest);
-            String response = epsRemittanceDetailHelper.postRequestGetResponse(
-                    epsClaimsRequest.getEpsClaimsRequestWithCOB(getFinalIdentifier()));
-            Log.Comment("XML Response : "+response);
+		}
+		else {
+		        String claim = testConfig.driver.findElement(By.xpath("//div[@id='msgforplb']/span[@class='Subheaderbold']")).getText().substring(6, 46);
+		        Log.Comment("COB Only Message displaying on Remit Page is :" + claim);
+		        Helper.compareEquals(testConfig, "Checking data for COB Claim only", claim, "This payment contains adjustment(s) only");
+		        Log.Comment("COB Claim doesnt contain data for this criteria");
+		}
+	}
 
-            coreFISLvalidationWithUI(response);
-        }
-        else {
-            String claim = testConfig.driver.findElement(By.xpath("//div[@id='msgforplb']/span[@class='Subheaderbold']")).getText().substring(6, 46);
-            Log.Comment("COB Only Message displaying on Remit Page is :" + claim);
-            Helper.compareEquals(testConfig, "Checking data for COB Claim only", claim, "This payment contains adjustment(s) only");
-            Log.Comment("COB Claim doesnt contain data for this criteria");
-        }
-    }
-	
 	public ClaimDetail clickClaimNumber(){
 		Element.click(claimHash,"Claim Number");
 		return new ClaimDetail(testConfig);
 	}
 	
+
 	public void handleTechnicalDifficultyError() {
         try {
             int counter = 0;
@@ -7055,6 +6864,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         }
     }
 	
+
 	public void validateFISLvsUI() throws SAXException, JAXBException, ParserConfigurationException, IOException {
 
         Browser.wait(testConfig, 2);
@@ -7067,7 +6877,6 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         handleTechnicalDifficultyError();
         loadRemittanceDetailUIdata();
 
-        // String response = invokePostCall(xmlRequest);
         String response = epsRemittanceDetailHelper.postRequestGetResponse(
                 epsClaimsRequest.getEpsClaimsRequestWithIdentifier(getFinalIdentifier()));
         Log.Comment("XML Response : \n"+response);
@@ -7389,10 +7198,10 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 	
 	private void adjustmentReasonCodesValidation(EpsClaimsResponse epsClaimsResponse, int i, int j) {
         String pageSource = testConfig.getDriver().getPageSource();
-        if(pageSource.contains(epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().getEpsClaimPaymentAdjustmentReasonCodes().getCode())){
+ /*       if(pageSource.contains(epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().getEpsClaimPaymentAdjustmentReasonCodes().getCode())){
             Helper.compareEquals(testConfig, "Adjustment Reason Code Validation ", epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().getEpsClaimPaymentAdjustmentReasonCodes().getCode(),
                     epsClaimsResponse.getEpsClaims().get(i).getEpsClaimServices().get(j).getEpsClaimPaymentServiceAdjustments().getEpsClaimPaymentAdjustmentReasonCodes().getCode());
-        }
+        } */
     }
 	
 	public void validatePLBAdj() throws Exception {
@@ -7463,3 +7272,5 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         Element.click(searchBtn, "Search");
     }
 }
+	
+	

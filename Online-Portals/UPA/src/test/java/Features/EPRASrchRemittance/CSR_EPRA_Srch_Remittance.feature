@@ -60,4 +60,3 @@ Examples:
 						|	    EPRADOPAndNpi	      |						RW					|					2				|		EPRAgenerated	|PROV       |
 						|	    EPRADOPAndNpi	      |						RO					|					1				|		EPRAgenerated	|PROV       |
 						|	    EPRADOPAndNpi	      |						RO					|					2				|		EPRAgenerated	|PROV       |
-													

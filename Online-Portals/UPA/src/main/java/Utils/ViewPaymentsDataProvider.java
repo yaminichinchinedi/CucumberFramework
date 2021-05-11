@@ -1143,7 +1143,9 @@ public class ViewPaymentsDataProvider {
 				
 			}
 
-		
+		if(searchCriteria.contains("ValidInvoice")){
+			query=QUERY.TIN_WITH_INVOICE;
+		}
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
@@ -1320,7 +1322,9 @@ public class ViewPaymentsDataProvider {
 						|| searchCriteria.equalsIgnoreCase("PLB_Adj_Only_ProvAdmin")
 						|| searchCriteria.equalsIgnoreCase("byElectronicPaymentNoRemitBS")
 						|| searchCriteria.equalsIgnoreCase("Multiple_PLB_BSAdmin")
-						|| searchCriteria.equalsIgnoreCase("PLB_Adj_Only_BSAdmin")) {
+						|| searchCriteria.equalsIgnoreCase("PLB_Adj_Only_BSAdmin")
+						|| searchCriteria.equalsIgnoreCase("GET_TIN_PAYMENT_NUMBER_FOR_MULTIPLE_PLB_ADJUSTMENTS")) {
+					testConfig.putRunTimeProperty("DSPL_CONSOL_PAY_NBR", tinNumbers.get("DSPL_CONSOL_PAY_NBR").toString());
 					testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 					System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 				}

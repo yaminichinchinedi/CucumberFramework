@@ -1,5 +1,5 @@
-#Author: Marsha(Stabilisation)
 
+#Author: Marsha(Stabilisation)
 @UPAhomePage
 Feature:  UPA Home Page Functionality - Post Login 
 	#Author: Sunanda
@@ -25,14 +25,15 @@ Feature:  UPA Home Page Functionality - Post Login
       | PROV_Admin_HomePage_AO |   PROV     		|		Standard			  |		AO			|     A     |					P					 |				PD			 |
       
   #Author : Vinay Raghumanda
-  @UPA_US3179215_1 @homePage_func
+  @UPA_US3179215 @homePage_func 
   Scenario Outline: BS and Payer admins Home Page Carousel Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    And User clicks on UPA logout
     Examples:
       | credentials | userType  |
-      | BS_Admin    | 	BS  	|
-      |   BS_Gen    |   BS     	|
+      | BS_Admin    |   BS      |
+	  |   BS_Gen    |   BS     	|
       | PAY_Admin   | PAY_Admin |
 
   @UPA_US3179215 @homePage_func
@@ -40,6 +41,7 @@ Feature:  UPA Home Page Functionality - Post Login
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    And User clicks on UPA logout
     Examples:
       | credentials | userType | searchCriteria       | tinType | portalAccess |
       | PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
@@ -107,5 +109,18 @@ Feature:  UPA Home Page Functionality - Post Login
     #When User scrolls to popular FAQ section
     #Then Verify all Popular FAQ links are present
     #And Click on VIEW ALL FAQs button and verify all FAQs are present
-
+    
+    
+  #Author: Mohammad Khalid
+  @US3415252_PostLogin
+   Scenario Outline: Resource Tab dropdown Post Login
+		Given User navigates to UPA portal and enters "<userType>" and login
+    When User hovers on the Resources DropDown
+    Then User clicks on Cancellation Form and verifies the url is pdf
+    Then user validates cancellation pdf form content under Post Login resources link
+    
+    
+     Examples:
+      |      userType       |   
+      |      PROV_Admin     | 
     	              

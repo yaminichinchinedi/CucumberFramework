@@ -118,7 +118,7 @@ public class EpsRemittanceDetailHelper {
         return  reformattedStr;
     }
 
-    private String formatXML(String response) throws SAXException, IOException, ParserConfigurationException {
+    public String formatXML(String response) throws SAXException, IOException, ParserConfigurationException {
 
         response = response.replaceAll("ns[0-9]:", "").replaceAll("ns1[0-9]:", "");
         String remove = " xmlns:ns1=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/ClaimsService_v1_0\"  xmlns:ns0=\"http://enterprise.optum.com/schema/cim/api/finance/payables/provider/EpsPaymentMaintenanceService_v1_0\" xmlns:ns2=\"http://enterprise.optum.com/schema/cim/common/Person_v1_0\" xmlns:ns3=\"http://enterprise.optum.com/schema/cim/common/Identifier_v1_0\" xmlns:ns4=\"http://enterprise.optum.com/schema/cim/common/Common_v1_0\"  xmlns:ns5=\"http://enterprise.optum.com/schema/cim/common/Code_v1_0\" xmlns:ns10=\"http://enterprise.optum.com/schema/cim/product/Group_v1_0\"";

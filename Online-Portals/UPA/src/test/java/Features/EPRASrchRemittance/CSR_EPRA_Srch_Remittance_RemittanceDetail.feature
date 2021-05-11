@@ -4,7 +4,7 @@
 @CSREPRASrchRemitDtl  @CSRRegression @CSRSrchRemittanceEPRA
 Feature: CSR_EPRA_Srch_Remittance_RemittanceDetail
 
-
+@CSR_Stabilisation_SR_RD_Complete
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -22,13 +22,13 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	
 	Examples: 
 	
-		|		Search Criteria			|			credentials			|			priority		|			searchBy		|usertype    |
+    	|		Search Criteria			|			credentials			|			priority		|			searchBy		|usertype    |
 		|	EPRAElectronicPaymentNo	    |					Super				|					1				|			EPRA				| PROV       |
 		|	EPRAElectronicPaymentNo	    |					Super				|					2				|			EPRA				| PROV       |
 		|			EPRADOPAndNpi		|					Super				|					1				|			EPRA				| PROV       |
 		|			EPRADOPAndNpi		|					Super				|					2				|			EPRA				| PROV       |
 		|	EPRADOPAndAccountNo			|					Super				|					1				|			EPRA				| PROV       |
-		|	EPRADOPAndAccountNo			|					Super				|					2				|			EPRA				| PROV       |
+    	|	EPRADOPAndAccountNo			|					Super				|					2				|			EPRA				| PROV       |
 		|	EPRADOP&SubscriberID		|					Super				|					1				|			EPRA				| PROV       |
 		|	EPRADOP&SubscriberID		|					Super				|					2				|			EPRA				| PROV       |
 		|	EPRADOPAndClaimNo			| 				Super				|					1				|			EPRA				| PROV       |
@@ -43,10 +43,10 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|			EPRADOPAndNpi		|					RO				  |					2				|			EPRA				| PROV       |
 		|	EPRADOPAndAccountNo			|					RO				  |					1				|			EPRA				| PROV       |
 		|	EPRADOPAndAccountNo			|					RO				  |					2				|			EPRA				| PROV       |
-		|	EPRADOP&SubscriberID		|					RO				  |					1				|			EPRA				| PROV       |
+	    |	EPRADOP&SubscriberID		|					RO				  |					1				|			EPRA				| PROV       |
 		|	EPRADOP&SubscriberID		|					RO				  |					2				|			EPRA				| PROV       |
 		|	byDOPAndClaimNo				|  				RO				  |					1				|			EPRA				| PROV       |
-     	|	byDOPAndClaimNo				|  				RO				  |					2				|			EPRA				| PROV       |
+    	|	byDOPAndClaimNo				|  				RO				  |					2				|			EPRA				| PROV       |
 		|	EPRADOPAndPatientNm			|					RO				  |					1				|			EPRA				| PROV       |
 		|	EPRADOPAndPatientNm			|					RO				  |					2				|			EPRA				| PROV       |
 	    |	EPRADOPAndRenderingProvider |				  RO				  |					1				|			EPRA				| PROV       |
@@ -66,7 +66,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|	EPRADOPAndRenderingProvider |				  RW				  |					1				|			EPRA				| PROV       |
 		|	EPRADOPAndRenderingProvider |				  RW				  |					2				|			EPRA				| PROV       |
 
-	
+	@CSR_Stabilisation_SR_RD_Existing
 Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 	Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Search Remittance link
@@ -111,7 +111,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 			    	|	byDOPAndPatientNm			      |						RO				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RO				|					1				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RO				|					2				|			EPRAgenerated				|PROV       |		
-			    	|	EPRAElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|PROV       |		
+		    	|	EPRAElectronicPaymentNo	    |						RW				|					1				|			EPRAgenerated				|PROV       |		
 				  	|	EPRAElectronicPaymentNo	    |						RW				|					2				|			EPRAgenerated				|PROV       |		
 				  	|			EPRADOPAndNpi				    |						RW				|					1				|			EPRAgenerated				|PROV       |		
 				  	|			EPRADOPAndNpi				    |						RW				|					2				|			EPRAgenerated				|PROV       |		
@@ -125,7 +125,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Already Existing
 			    	|	EPRADOPAndPatientNm			    |						RW				|					2				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RW				|					1				|			EPRAgenerated				|PROV       |		
 			    	|	EPRADOPAndRenderingProvider |				    RW				|					2				|			EPRAgenerated				|PROV       |		
-	    
+    
 
 
 																
