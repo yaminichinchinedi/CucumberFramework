@@ -186,7 +186,7 @@ Examples:
 			| BS_Admin    | BS       | Standard     | AO      | WithinTrial and NotPaid   |       
 			| BS_Gen      | BS       | Standard     | AO      | WithinTrial and NotPaid   |    
 			 
-			 @US3438484_12  
+			 @US3438484
    Scenario Outline: View Payments - Clicking on geryed out area
    Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

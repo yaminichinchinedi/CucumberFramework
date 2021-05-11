@@ -350,6 +350,13 @@ public void verifyAddProvConfirmPage(){
 				actualParagraph = paragraphTag.getText().trim();
 				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
 				break;
+			case "PROV_Admin_Premium_VO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.billingServiceInformation.paragraph");
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
+				actualParagraph = paragraphTag.getText().trim();
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
+				break;	
 			case "BS_Admin_Premium_AO":
 				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
 				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
@@ -357,6 +364,13 @@ public void verifyAddProvConfirmPage(){
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.billingServiceInformation.paragraph");
 				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
 				break;
+			case "BS_Admin_Standard_AO":
+				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='billing-service-information-tabs']/div[1]/p[2]"), 30);
+				paragraphTag = Element.findElement(testConfig, "xpath", "//div[@id='billing-service-information-tabs']/div[1]/p[2]");
+				actualParagraph = paragraphTag.getText().trim();
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.billingServiceInformation.paragraph");
+				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
+				break;	
 			default:
 				break;
 		}
