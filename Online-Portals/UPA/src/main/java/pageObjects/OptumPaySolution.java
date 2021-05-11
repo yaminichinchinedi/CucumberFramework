@@ -989,7 +989,7 @@ public class OptumPaySolution {
 		String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(29, accruedFeesInvoicesTab.getText().length());
 		String expectedAccruedFees = null;
 		testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
-		Map<String, String> data = DataBase.executeSelectQuery(testConfig, 1616, 1);
+		Map<String, String> data = DataBase.executeSelectQuery(testConfig, QUERY.TOTAL_ACCRUED_FEES, 1);
 		if (data.get("ACCRDFEE").toString().isEmpty())
 			expectedAccruedFees = "0.00";
 		else
