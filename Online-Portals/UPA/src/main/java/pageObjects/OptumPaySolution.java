@@ -1769,14 +1769,11 @@ public class OptumPaySolution {
 		paymentModalChkBoxOPDebitAuthEnabledOrDisabled("disabled");
 		paymentModalSubmitbtnEnabledOrDisabled("disabled");
 		
-		System.out.println(txtboxPaymentModalRoutingNumber.getText());
-		System.out.println(txtboxPaymentModalAccountNumber.getText());
-		Helper.compareEquals(testConfig, "routing nu", "* Routing Number", txtboxPaymentModalRoutingNumber.getText());
-		Helper.compareEquals(testConfig, "routing nu", "* Account Number", txtboxPaymentModalAccountNumber.getText());
+		Helper.compareEquals(testConfig, "routing number", "* Routing Number", txtboxPaymentModalRoutingNumber.getText());
+		Helper.compareEquals(testConfig, "accounting number", "* Account Number", txtboxPaymentModalAccountNumber.getText());
     
 		Map attributes=Element.getAllAttributes(testConfig, routingNumber, "Routing Number");
-		System.out.println(attributes);
-		
+				
 		if(attributes.get("placeholder").equals("*********"))
 			Log.Pass("9 stars in routing number textbox");
 		else 
