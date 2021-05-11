@@ -1765,41 +1765,15 @@ public class OptumPaySolution {
 		}
 		Helper.compareEquals(testConfig, "ACCOUNT TYPE OPTIONS", expectedContent,actualContent );
 		Element.verifyElementPresent(btnCancelModalACHpayment, "Cancel button");
-
-		paymentModalChkBoxOPDebitAuthEnabledOrDisabled("disabled");
-		paymentModalSubmitbtnEnabledOrDisabled("disabled");
-		
+	    Element.verifyElementNotEnabled(btnSubmitModalACHpayment, "Submit Button");
+		Helper.compareEquals(testConfig, "checkbox ", "true", chkboxOptumFeeDebitAuth.getAttribute("disabled"));
 		Helper.compareEquals(testConfig, "routing number", "* Routing Number", txtboxPaymentModalRoutingNumber.getText());
 		Helper.compareEquals(testConfig, "accounting number", "* Account Number", txtboxPaymentModalAccountNumber.getText());
-    
-		Map attributes=Element.getAllAttributes(testConfig, routingNumber, "Routing Number");
-				
-		if(attributes.get("placeholder").equals("*********"))
-			Log.Pass("9 stars in routing number textbox");
-		else 
-			Log.Fail("9 stars not in routing number textbox");
+   		Helper.compareEquals(testConfig, "Routing Number comparison", "*********", routingNumber.getAttribute("placeholder"));
 		
 		return this;
 
 	}
-
-	public void paymentModalChkBoxOPDebitAuthEnabledOrDisabled(String expectedStatus) {
-		Map attributes=Element.getAllAttributes(testConfig, chkboxOptumFeeDebitAuth, "OptumFeeDebitAuth check box ");
-		boolean flag=attributes.containsKey("disabled");
-		if(expectedStatus.equalsIgnoreCase("disabled")&& flag==true ||expectedStatus.equalsIgnoreCase("enabled")&& flag==false  )
-			Log.Pass("is in correct state");
-		else 
-			Log.Fail("is not in correct status");
-		}
-	
-	public void paymentModalSubmitbtnEnabledOrDisabled(String expectedStatus) {
-		Map attributes=Element.getAllAttributes(testConfig, btnSubmitModalACHpayment, "OptumFeeDebitAuth check box ");
-		boolean flag=attributes.containsKey("disabled");
-		if(expectedStatus.equalsIgnoreCase("disabled")&& flag==true ||expectedStatus.equalsIgnoreCase("enabled")&& flag==false  )
-			Log.Pass("is in correct state");
-		else 
-			Log.Fail("is not in correct status");
-		}
 
 	public OptumPaySolution validateProcessMyPaymentHeader(String ABASwitch, String ABAResponse) throws IOException {
 
@@ -1886,10 +1860,9 @@ public class OptumPaySolution {
 	}
 
 	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
-		paymentModalChkBoxOPDebitAuthEnabledOrDisabled("enabled");
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
-		paymentModalSubmitbtnEnabledOrDisabled("enabled");
-
+		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
+		
 		
 	}
 }
