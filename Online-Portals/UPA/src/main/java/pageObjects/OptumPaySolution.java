@@ -389,6 +389,8 @@ public class OptumPaySolution {
 	@FindBy(className = "ui-button-text")
 	List<WebElement> acceptPremiumBtn;
 
+	@FindBy (id="invoiceAchPaymentModal")
+	WebElement popUpACHPaymentModal;
 	@FindBy(xpath = "//input[@value='Pay Now']")
 	WebElement payNow;
 
@@ -410,6 +412,30 @@ public class OptumPaySolution {
 	@FindBy(xpath = "//button[@class='btn-primary submitAchPayment ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']")
 	WebElement submitButton;
 
+	@FindBy (xpath="//*[@id='invoiceAchPaymentModal']/p")
+	List<WebElement> pageTextModalACHpayment;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[6]/div/div/p")
+	List<WebElement> txtScrollableDivModalACHpayment; 
+	
+	@FindBy(className="closeMakePaymentModal")
+	WebElement btnCancelModalACHpayment;
+	
+	@FindBy(className="submitAchPayment")
+	WebElement btnSubmitModalACHpayment;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[5]/div/label/input")
+	WebElement chkboxOptumFeeDebitAuth;
+	
+	@FindBy(xpath="//*[@id='refund_reason_selector']/option")
+	List<WebElement> drpdownAccountTypeSelector;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[1]")
+	WebElement txtboxPaymentModalRoutingNumber;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]")
+	WebElement txtboxPaymentModalAccountNumber;
+	
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
 	String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -1721,11 +1747,62 @@ public class OptumPaySolution {
 		return this;
 	}
 
-	public OptumPaySolution verifyProcessMyPaymentHeader() {
-		Helper.compareEquals(testConfig, "Process My Payment Header", "Process My Payment", processMyPayment.getText().trim());
+	public OptumPaySolution verifyProcessMyPaymentModal() {
+		ArrayList<String> expectedContent = new ArrayList<String>();
+		ArrayList<String> actualContent = new ArrayList<String>();
+		expectedContent.add("Savings");
+		expectedContent.add("Checking");
+		Element.verifyElementPresent(popUpACHPaymentModal, "ACH PAYMENT MODAL");
+		Helper.compareEquals(testConfig, "Process My Payment Header", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.header"), pageTextModalACHpayment.get(0).getText().trim());
+		Helper.compareContains(testConfig, "Enter your bank account information below to pay your premium fee(s).", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.pageText1"), pageTextModalACHpayment.get(1).getText().trim());
+		Helper.compareContains(testConfig, "Amount to pay", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.pageText2"), pageTextModalACHpayment.get(2).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 1", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText1"), txtScrollableDivModalACHpayment.get(0).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 2", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText2"), txtScrollableDivModalACHpayment.get(1).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 3", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText3"), txtScrollableDivModalACHpayment.get(2).getText().trim());
+		for(WebElement accType:drpdownAccountTypeSelector)
+		{
+			actualContent.add(accType.getText());
+		}
+		Helper.compareEquals(testConfig, "ACCOUNT TYPE OPTIONS", expectedContent,actualContent );
+		Element.verifyElementPresent(btnCancelModalACHpayment, "Cancel button");
+
+		paymentModalChkBoxOPDebitAuthEnabledOrDisabled("disabled");
+		paymentModalSubmitbtnEnabledOrDisabled("disabled");
+		
+		System.out.println(txtboxPaymentModalRoutingNumber.getText());
+		System.out.println(txtboxPaymentModalAccountNumber.getText());
+		Helper.compareEquals(testConfig, "routing nu", "* Routing Number", txtboxPaymentModalRoutingNumber.getText());
+		Helper.compareEquals(testConfig, "routing nu", "* Account Number", txtboxPaymentModalAccountNumber.getText());
+    
+		Map attributes=Element.getAllAttributes(testConfig, routingNumber, "Routing Number");
+		System.out.println(attributes);
+		
+		if(attributes.get("placeholder").equals("*********"))
+			Log.Pass("9 stars in routing number textbox");
+		else 
+			Log.Fail("9 stars not in routing number textbox");
+		
 		return this;
 
 	}
+
+	public void paymentModalChkBoxOPDebitAuthEnabledOrDisabled(String expectedStatus) {
+		Map attributes=Element.getAllAttributes(testConfig, chkboxOptumFeeDebitAuth, "OptumFeeDebitAuth check box ");
+		boolean flag=attributes.containsKey("disabled");
+		if(expectedStatus.equalsIgnoreCase("disabled")&& flag==true ||expectedStatus.equalsIgnoreCase("enabled")&& flag==false  )
+			Log.Pass("is in correct state");
+		else 
+			Log.Fail("is not in correct status");
+		}
+	
+	public void paymentModalSubmitbtnEnabledOrDisabled(String expectedStatus) {
+		Map attributes=Element.getAllAttributes(testConfig, btnSubmitModalACHpayment, "OptumFeeDebitAuth check box ");
+		boolean flag=attributes.containsKey("disabled");
+		if(expectedStatus.equalsIgnoreCase("disabled")&& flag==true ||expectedStatus.equalsIgnoreCase("enabled")&& flag==false  )
+			Log.Pass("is in correct state");
+		else 
+			Log.Fail("is not in correct status");
+		}
 
 	public OptumPaySolution validateProcessMyPaymentHeader(String ABASwitch, String ABAResponse) throws IOException {
 
@@ -1809,6 +1886,14 @@ public class OptumPaySolution {
 
 		}
 		return this;
+	}
+
+	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
+		paymentModalChkBoxOPDebitAuthEnabledOrDisabled("enabled");
+		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
+		paymentModalSubmitbtnEnabledOrDisabled("enabled");
+
+		
 	}
 }
 
