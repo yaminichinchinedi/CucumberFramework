@@ -176,13 +176,13 @@ public class SearchTinPagePaymentDataFiles {
 		WebElement paragraphTag=null;
 		String actualHeader;
 		String actualParagraph;
-		if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+	  if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
 		{
 			Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='payment-data-files']/div[1]/h2"), 30);
 			headerTag = Element.findElement(testConfig, "xpath", "//div[@id='payment-data-files']/div[1]/h2");
 			paragraphTag=Element.findElement(testConfig, "xpath", "//div[@id='payment-data-files']/div[1]/p[2]");	
 		}
-		if (testConfig.getRunTimeProperty("searchCriteria").equals("PostTrial and NotPaid"))
+		else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
 		{
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id=\"paymentDataFilesPremium\"]/h2"), 30);
 		headerTag = Element.findElement(testConfig, "xpath", "//*[@id=\"paymentDataFilesPremium\"]/h2");
