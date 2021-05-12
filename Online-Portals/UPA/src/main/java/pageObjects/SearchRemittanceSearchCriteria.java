@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -1771,13 +1772,13 @@ public class SearchRemittanceSearchCriteria {
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Admin_Standard_AO":
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("PostTrial and NotPaid"))
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
 				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.paragraph");
 				validateStandardUsers(expectedParagraph, expectedHeader);
 				}
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
 				{
 					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.header");
 					expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");
@@ -1790,13 +1791,13 @@ public class SearchRemittanceSearchCriteria {
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Gen_Standard_AO":
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("PostTrial and NotPaid"))
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
 				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.paragraph");
 				validateStandardUsers(expectedParagraph, expectedHeader);
 				}
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))	
 				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");

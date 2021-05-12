@@ -1,5 +1,6 @@
 package main.java.pageObjects;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
+
 import org.testng.Assert;
 
 public class SearchTinPagePaymentDataFiles {
@@ -135,13 +137,13 @@ public class SearchTinPagePaymentDataFiles {
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Admin_Standard_AO":
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
 				{
 					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.pageDataFiles.header");
 					expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.pageDataFiles.paragraph");
 					validateStandardUsers(expectedParagraph, expectedHeader);
 				}
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("PostTrial and NotPaid"))
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
 				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.pageDataFiles.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.pageDataFiles.paragraph");
@@ -152,13 +154,13 @@ public class SearchTinPagePaymentDataFiles {
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Gen_Standard_AO":
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
 				{
 					expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.pageDataFiles.header");
 					expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.pageDataFiles.paragraph");
 					validateStandardUsers(expectedParagraph, expectedHeader);
 				}
-				if (testConfig.getRunTimeProperty("searchCriteria").equals("PostTrial and NotPaid"))
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
 				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.pageDataFiles.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.pageDataFiles.paragraph");
