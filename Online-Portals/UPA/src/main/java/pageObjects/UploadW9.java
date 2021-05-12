@@ -52,7 +52,7 @@ public class UploadW9 {
 		PageFactory.initElements(testConfig.driver, this);
 
 
-	//	Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/div[5]/a[1]"), 60);
+		//Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//form[@id='EFTERAregForm']/div[5]/a[1]"), 60);
 
 		Element.expectedWait(fedW9Lnk, testConfig, "Fedral W9 Form Link", "FedW9Link");
 		String expectedURL;
