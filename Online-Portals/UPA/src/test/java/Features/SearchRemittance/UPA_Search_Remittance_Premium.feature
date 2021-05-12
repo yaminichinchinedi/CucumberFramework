@@ -207,7 +207,7 @@ And User verifies page text message "<PageTextMsg>"
  |    PROV_Gen     |        PROV     |PremiumOrStandardTIN  |	AO	    |		Standard     	|StandardPrvAdm|
  
 #Author : Vinay Raghumanda
-	@US3179215
+	@US3179215 @US3438488 #(VO is part of US3438488)
 	Scenario Outline: Search Remittance Page Text Validation
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

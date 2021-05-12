@@ -1841,7 +1841,7 @@ public class SearchRemittanceSearchCriteria {
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
 		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
 		actualParagraph = paragraphTag.getText().trim();
-		Helper.compareEquals(testConfig, "Page Text", expectedParagraph.trim(), actualParagraph);
+		Helper.compareEquals(testConfig, "Page Text", expectedParagraph, actualParagraph);
 	}
 }
 

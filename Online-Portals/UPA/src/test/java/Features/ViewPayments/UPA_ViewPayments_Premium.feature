@@ -206,9 +206,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 		Examples:
 			| credentials | userType | portalAccess | tinType | searchCriteria |
 			| BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
-		#	| BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
 			| BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
-		#	| BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
 			
 			
 		#Author: Marsha
