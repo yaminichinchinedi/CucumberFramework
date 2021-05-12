@@ -13,7 +13,6 @@ Feature: UPA Billing Service Information Functionality
       | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
       | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
       | BS_Admin    | BS       | Premium      | AO      | Last 60 days         |
-      | BS_Admin    | BS       | Premium      | AO      | Last 60 days         |
       | BS_Admin    | BS       | Standard     | AO      | PostTrial and NotPaid   |
 
 #Author:Sayonee

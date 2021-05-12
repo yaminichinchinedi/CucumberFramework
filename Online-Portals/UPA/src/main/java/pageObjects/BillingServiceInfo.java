@@ -351,7 +351,7 @@ public void verifyAddProvConfirmPage(){
 				Helper.compareEquals(testConfig, "Page text", expectedParagraph, actualParagraph);
 				break;
 			case "PROV_Admin_Premium_VO":
-				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.billingServiceInformation.paragraph");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.vo.billingServiceInformation.paragraph");
 				Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
 				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p");
 				actualParagraph = paragraphTag.getText().trim();

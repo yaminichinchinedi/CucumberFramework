@@ -70,7 +70,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 
 
   #Author : Vinay Raghumanda
-  @US3179215
+  @US3179215 @US3438484 #(vo is part of US3438484 )
   Scenario Outline: Manage Users Page Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -79,5 +79,6 @@ Feature: UPA Manage User Functionality for Premium TIN
     Examples:
       | credentials | userType | portalAccess | tinType | searchCriteria       |
       | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+      | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
       | PROV_Admin  | PROV     | Standard     | AO      | PremiumOrStandardTIN |
       | BS_Admin    | BS       | Premium      | AO      | Last 60 days   |

@@ -2858,6 +2858,13 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 				footerParagraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
 				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerParagraphTag);
 				break;
+			case "PROV_Admin_Premium_VO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.vo.manageUsers.paragraph");
+				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.premium.vo.manageUsers.footer.header");
+				expectedFooterParaText = TestBase.contentMessages.getProperty("prov.admin.premium.vo.manageUsers.footer.para");
+				footerParagraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"bottomMessageDiv\"]/p");
+				manageUserPageValidation(expectedParagraph, expectedFooterHeaderText, expectedFooterParaText, footerParagraphTag);
+				break;	
 			case "PROV_Admin_Standard_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.paragraph");
 				expectedFooterHeaderText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.manageUsers.footer.header");
