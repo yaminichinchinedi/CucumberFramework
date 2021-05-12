@@ -1818,7 +1818,7 @@ public class SearchRemittanceSearchCriteria {
 		WebElement paragraphTag;
 		String actualHeader;
 		String actualParagraph;
-		if (testConfig.getRunTimeProperty("searchCriteria").equals("WithinTrial and NotPaid"))
+		if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
 		{
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id='search-remmitance-tabs']/div[1]/h2"), 30);
 		headerTag = Element.findElement(testConfig, "xpath", "//*[@id='search-remmitance-tabs']/div[1]/h2");
