@@ -1,3 +1,4 @@
+
 package main.java.pageObjects;
 
 import main.java.nativeFunctions.Browser;
@@ -393,7 +394,7 @@ public class UPAHomePage extends HomePage {
 	 */
 	public void verifyHomePageCarouselText(String userType, String credentials) {
 		switch (userType) {
-			case "BS_Admin":
+			case "BS":
 				String[] expectedBSHeaders = {
 						TestBase.contentMessages.getProperty("bs.admin.home.car1.header"),
 						TestBase.contentMessages.getProperty("bs.admin.home.car2.header"),
@@ -681,3 +682,4 @@ public class UPAHomePage extends HomePage {
 		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
 	}
 }
+

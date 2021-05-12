@@ -240,11 +240,9 @@ Examples:
 		 Then Validate Payment Data File Page Text for "<credentials>" for "<portalAccess>"
 		 Examples:
 			 | credentials | userType | portalAccess | tinType | searchCriteria       |
+			 | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
 			 | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
-			 | PROV_Admin  | PROV     | Standard     | AO      | PremiumOrStandardTIN |
 			 | PROV_Gen    | PROV     | Premium      | AO      | PremiumOrStandardTIN |
-			 | PROV_Gen    | PROV     | Standard     | AO      | PremiumOrStandardTIN |
 			 | BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
-			 | BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
 			 | BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
-			 | BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
+			 

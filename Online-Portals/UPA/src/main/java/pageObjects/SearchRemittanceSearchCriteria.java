@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -1742,8 +1743,7 @@ public class SearchRemittanceSearchCriteria {
 	public void validatePageText(String accessType, String portalAccess) {
 
 		String expectedParagraph, expectedHeader, actualButtonText, expectedButtonText;
-		WebElement button = null;
-
+		WebElement button = null; 
 		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
 			case "PROV_Admin_Premium_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.searchRemittance.paragraph");
@@ -1772,19 +1772,42 @@ public class SearchRemittanceSearchCriteria {
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Admin_Standard_AO":
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.paragraph");
 				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.header");
+					expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");
+					validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				
 				break;
 			case "BS_Gen_Premium_AO":
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.premium.ao.searchRemittance.paragraph");
 				validatePremiumUsers(expectedParagraph);
 				break;
 			case "BS_Gen_Standard_AO":
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.header");
 				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.paragraph");
 				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))	
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
 				break;
+			case "PROV_Admin_Premium_VO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.vo.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;	
 			default:
 				break;
 		}
@@ -1795,9 +1818,18 @@ public class SearchRemittanceSearchCriteria {
 		WebElement paragraphTag;
 		String actualHeader;
 		String actualParagraph;
+		if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+		{
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id='search-remmitance-tabs']/div[1]/h2"), 30);
+		headerTag = Element.findElement(testConfig, "xpath", "//*[@id='search-remmitance-tabs']/div[1]/h2");
+		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id='search-remmitance-tabs']/div[1]/p[2]");
+		}
+		else
+		{
 		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id=\"seachRemittancePremium\"]/h2"), 30);
 		headerTag = Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/h2");
 		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/p[2]");
+		}
 		actualHeader = headerTag.getText().trim();
 		actualParagraph = paragraphTag.getText().trim();
 		Helper.compareEquals(testConfig, "PageText", expectedHeader, actualHeader);

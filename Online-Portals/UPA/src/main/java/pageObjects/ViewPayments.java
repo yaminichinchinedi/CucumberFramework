@@ -4408,8 +4408,13 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
 				actualParagraph = paragraphTag.getText().trim();
 				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.vo.viewPayments.topmessageDiv.paragraph");
-				Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+				Helper.compareEquals(testConfig, "Page Text", expectedPara.trim(), actualParagraph);
 				break;
+			case "PROV_Gen_Premium_VO":
+				actualParagraph = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]").getText().trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.vo.viewPayments.topmessageDiv.paragraph");
+				Helper.compareEquals(testConfig, "Page Text", expectedPara.trim(), actualParagraph);
+				break;	
 			case "BS_Admin_Premium_AO":
 				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
 				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
@@ -4418,10 +4423,29 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
 				break;
 			case "BS_Admin_Standard_AO":
+				
+				 if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+	
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.header");
+					expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.paragraph");
+					expectedPara2 = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.paragraph2");
+					validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+				 else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+	
+				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.header");
 				expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph1");
 				expectedPara2 = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph2");
 				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+				 else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "Last 30 days"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.greyedout.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.greyedout.paragraph");
+				VerifyGreyedOutText(expectedHeader, expectedPara);
+				}
 				break;
 			case "BS_Gen_Premium_AO":
 				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
@@ -4431,10 +4455,28 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
 				break;
 			case "BS_Gen_Standard_AO":
+			    if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+	
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.header");
+					expectedPara =   TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.paragraph");
+					expectedPara2 = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.paragraph2");
+					validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+			    else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+	
+				{
 				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.header");
 				expectedPara = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph1");
 				expectedPara2 = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph2");
 				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+			    else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "Last 30 days"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.greyedout.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.greyedout.paragraph");
+				VerifyGreyedOutText(expectedHeader, expectedPara);
+				}
 				break;
 			default:
 				break;
@@ -4453,6 +4495,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		actualParagraph2 = paragraphTag2.getText().trim();
 		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
 		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+		if(expectedPara2 !=null)
 		Helper.compareEquals(testConfig, "Page Text", expectedPara2, actualParagraph2);
 	}
 
@@ -4463,5 +4506,24 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
 		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
 	}
+	public ViewPayments clickGreyedOut()
+   {
+	WebElement greyArea=null;
+	greyArea = searchResultRows.get(1).findElements(By.tagName("td")).get(getHeadersFromResultTable().indexOf("Claim Count"));	
+	 Element.clickByJS(testConfig, greyArea, "GreyArea Portion clicked");	
+	 return this;
+   }
+	public ViewPayments VerifyGreyedOutText(String expectedHeader, String expectedPara)
+	   {
+		String actualHeader, actualParagraph;
+		actualHeader = Element.findElement(testConfig, "xpath", "//div[@id=\"viewPaymentsPremium\"]/h2").getText().trim();
+		actualParagraph = Element.findElement(testConfig, "xpath", "//div[@id=\"viewPaymentsPremium\"]/p[2]").getText().trim();
+	
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
 
+		
+		
+		 return this;
+	   } 
 }

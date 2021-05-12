@@ -1,3 +1,4 @@
+
 #Author: Marsha(Stabilisation)
 @UPAhomePage
 Feature:  UPA Home Page Functionality - Post Login 
@@ -31,7 +32,8 @@ Feature:  UPA Home Page Functionality - Post Login
     And User clicks on UPA logout
     Examples:
       | credentials | userType  |
-      | BS_Admin    | BS_Admin  |
+      | BS_Admin    |   BS      |
+	  |   BS_Gen    |   BS     	|
       | PAY_Admin   | PAY_Admin |
 
   @UPA_US3179215 @homePage_func
@@ -121,5 +123,4 @@ Feature:  UPA Home Page Functionality - Post Login
      Examples:
       |      userType       |   
       |      PROV_Admin     | 
-
     	              
