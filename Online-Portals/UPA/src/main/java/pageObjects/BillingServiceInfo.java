@@ -138,7 +138,7 @@ public class BillingServiceInfo {
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
 		Browser.waitForPageLoad(testConfig.driver);
 		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
-			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", "").trim();															
+			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", "");															
 			tinsAssocHeaderUI.add(allOptions);
 		}		
 		Helper.compareEquals(testConfig, "Provider BS Info Tab First Row Headers", tinsAssocHeader, tinsAssocHeaderUI);
