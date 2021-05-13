@@ -371,4 +371,16 @@ Examples:
 Examples:
  |  credentials   |    userType | 	   searchCriteria    |		portalAccess	  | tinType	  |  
  |     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
- |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|       
+ |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|  
+ 
+ 
+ @UPAUS3478620
+      Scenario Outline: Optum Pay Solutions - Header message update
+   Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+  Then User Enters tin for OPS and click on search button for "<userType>".
+  Then User clicks on "Invoices" tab
+  Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |

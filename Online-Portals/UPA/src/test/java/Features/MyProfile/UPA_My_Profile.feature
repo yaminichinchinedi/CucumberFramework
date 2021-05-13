@@ -2,7 +2,7 @@
 @UPAMyProfile
 Feature: UPA My Profile Functionality
 
-@checkmate
+@UPAcheckmate
   Scenario Outline: UPA My Profile UI Functionality Verifies User Details displayed on My profile Page from user details saved in Database for logged in user
 
     Given User navigates to UPA portal and enters "<userType>" and login
