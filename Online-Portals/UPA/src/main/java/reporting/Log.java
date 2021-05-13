@@ -11,6 +11,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.NoSuchWindowException;
@@ -87,9 +88,10 @@ public  class Log extends ExtentTestManager {
 	
 	public synchronized static void Fail(ITestResult result) 
 	{
-		if(testConfig.getRunTimeProperty("AlreadyFailed").equalsIgnoreCase("no"))
-		PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
-
+			if(testConfig.getRunTimeProperty("AlreadyFailed")!=null)
+			{}
+			else
+			PageInfo(testConfig, "Failed due to unknown exception : " + result.getThrowable());
 	}
 	
 	public synchronized static void skipped(ITestResult result) 
@@ -160,7 +162,7 @@ public  class Log extends ExtentTestManager {
 					try 
 					{
 					  String dest=captureScreenshot(testConfig);
-//					  ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
+                      ExtentTestManager.getTest().addScreenCaptureFromPath(dest).fail(message);
 					} 
 					catch (IOException e) 
 					{
@@ -222,7 +224,6 @@ public  class Log extends ExtentTestManager {
 		public static void Fail(String what, String expected, String actual) {
 			
 			Fail("Failed comparison of"+ " " + what + '\n' +"Expected was :" + " " +  expected + " " + '\n' + "Actual is :" + " " + actual);
-			
 		}
 		
 	public static void Pass(String what, String expected, String actual) {

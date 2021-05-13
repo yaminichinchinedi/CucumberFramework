@@ -3,11 +3,13 @@ package main.java.Utils;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -36,11 +38,17 @@ import main.java.nativeFunctions.DataProvider;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.ViewPayments;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.pdfbox.cos.COSDocument;
+import org.apache.pdfbox.pdfparser.PDFParser;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.WebElement;
+import org.testng.internal.annotations.TestOrConfiguration;
 
 
 
@@ -313,9 +321,12 @@ public class Helper
 			Log.Pass(what,expected, actual);
 			return;
 		}
-		
+		expected=expected.trim();
+		actual=actual.trim();
+
 			if (!actual.equals(expected))
 			{
+				Log.Comment("Difference in expected and actual is: "+StringUtils.difference(expected, actual));
 				Log.Fail(what, expected, actual);
 			}
 			else
@@ -694,7 +705,7 @@ public class Helper
 		if(argPeriod.contains("4-6"))
 		include91stAnd92ndDayInt = 2;
 
-		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0])+1);
+		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0]));
 		Date fromDate = addMonths(currentDate, -Integer.parseInt(periods[1]));
 		Integer endPeriod = getNumberOfDays(toDate, currentDate)-include91stAnd92ndDayInt;
 		Integer startPeriod = getNumberOfDays(fromDate, currentDate);
@@ -1885,16 +1896,65 @@ public static String addDays(String date, int days) throws ParseException {
 		}	
 	}	
 	
-	public static void getPayerSchema(TestBase testConfig,String searchCriteria)
+	public static void getPayerSchema(TestBase testConfig,String searchCriteria,String userType)
 	{
 		Helper.getDatesForSearchCriteria(testConfig, searchCriteria);
-		int sqlRowNo=1507;
-	     Map schema = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+	     Map schema = null;
+	     if(StringUtils.equals("PAY", userType))
+	    	 schema=DataBase.executeSelectQuery(testConfig,QUERY.PAYR_DETAILS_FOR_PAYR_USER,1);
+	     else
+	    	 schema=DataBase.executeSelectQuery(testConfig,QUERY.GET_SCHEMA, 1);
 	     testConfig.putRunTimeProperty("schema", schema.get("PAYR_SCHM_NM").toString().trim());
 	     testConfig.putRunTimeProperty("PAYR_DSPL_NM", schema.get("PAYR_DSPL_NM").toString().trim());
+	     testConfig.putRunTimeProperty("PAYR_835_ID", schema.get("PAYR_835_ID").toString().trim());
 	}
 	
-
+	
+	public static String readPDF(String pdfPath) throws IOException
+	{
+		String contentPDF=null;
+		PDDocument document = null;
+		
+		if (pdfPath.contains("https"))
+		{
+			InputStream is = null;
+			BufferedInputStream fileToParse = null;
+			try {
+				URL url = new URL(pdfPath);
+				is = url.openStream();
+				fileToParse = new BufferedInputStream(is);
+				document = PDDocument.load(fileToParse);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			
+			finally
+			{
+				 fileToParse.close();
+		         is.close();
+			}
+		}
+		else
+		{
+			File file = new File(pdfPath);
+			document = PDDocument.load(file);
+		}
+        
+        try
+        {
+            contentPDF = new PDFTextStripper().getText(document);
+        } 
+        finally
+        {
+            if (document != null) {
+                document.close();
+            }
+           
+        }
+		return contentPDF;
+		
 	}
-
+	
+}
 

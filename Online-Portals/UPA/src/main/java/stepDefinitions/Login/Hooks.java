@@ -51,6 +51,6 @@ public class Hooks extends TestBase{
 				DataBase.executeDeleteQuery(testConfig, sqlRowNo);
 			}
 		}
-		endTest(scn);
+		//endTest(scn);
 	 }
 }

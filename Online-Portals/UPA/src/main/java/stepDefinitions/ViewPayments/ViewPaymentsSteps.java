@@ -3,12 +3,14 @@ package main.java.stepDefinitions.ViewPayments;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.RemittanceDetail;
+import main.java.pageObjects.SearchRemittance;
 import main.java.pageObjects.ViewPayments;
 
 public class ViewPaymentsSteps extends TestBase {
                
     ViewPayments viewPayment = new ViewPayments(testConfig);
-    
+
     @Then("^Validate all other columns in Show All State$")
      public void validate_all_other_columns_in_Show_All_State() throws Throwable {
     	viewPayment.verifyAllOtherDrpDwns();
@@ -244,6 +246,10 @@ public class ViewPaymentsSteps extends TestBase {
     public void set_search_filters_for_having_With(String archivefilter, String quickSearchFilter, String filterPayments) throws Throwable {
     	viewPayment.setSearchFilters(filterPayments, quickSearchFilter, archivefilter, filterPayments);
     }
+	@Then("^Set search filters for Payer \"([^\"]*)\" having \"([^\"]*)\"$")
+	public void set_search_filters_for_Payer_having(String filterpayments, String quicksearchfilter) throws Throwable {
+		viewPayment.setSearchFiltersPayer(filterpayments, quicksearchfilter, filterpayments);
+	}
 
     @Then("^Validate the data of Print Payment Summary page\\.$")
     public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
@@ -332,7 +338,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Validate the data between Single Payment Summary page and poped up Print payment Summary page$")
     public void validate_the_data_between_Single_Payment_Summary_page_and_poped_up_Print_payment_Summary_page() throws Throwable {
-    	viewPayment.vaidateHeadersColumns("View Payments");
+    	viewPayment.validateSinglePaymentPageData();
     }
     
     @Then("^Validate Fee Amount column is not displayed\\.$")
@@ -364,8 +370,35 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_verifies_record_is_inserted_in_PPRA_STATUS_Table_with_Tin_No_Consolidated_No_and_Settlement_date()  {
     	viewPayment.verifyPPRA_Status();
     }
-	
+    
+    //Added by Mohammad Khalid
+    @Then("^Validate \"([^\"]*)\" column is displayed\\.$")
+    public void validate_column_is_displayed(String columnName) throws Throwable 
+    {
+    	viewPayment.verifyColumnPresent(columnName);
+    }
+    
+    @Then("^validate Fee Amount info icon message$")
+    public void validate_Fee_Amount_info_icon_message() throws Throwable 
+    {
+        viewPayment.verifyFeeAmountInfoHoverMessage();
+    }
+    
+    @Then("^validate \"([^\"]*)\" column values for each payment$")
+    public void validate_column_values_for_each_payment(String columnName) throws Throwable
+    {
+        viewPayment.verifyColumnValuesForEachPayment(columnName);
+    }
 
+    @Then("^Validate View Payments page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void verifyViewPaymentsPageTextForForFor(String credentials, String portalAccess) {
+        viewPayment.verifyPageTextFor(credentials, portalAccess);
+    }
+  
+    @Then("^User clicks on greyed out area and verify popup text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void user_clicks_on_greyed_out_area_and_verify_popup_text_for_for(String credentials, String portalAccess) throws Throwable {
+    	viewPayment.clickGreyedOut().verifyPageTextFor(credentials, portalAccess);// 
+    }
 }
 
 

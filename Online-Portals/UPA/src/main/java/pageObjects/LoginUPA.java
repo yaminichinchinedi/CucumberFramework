@@ -94,6 +94,9 @@ public class LoginUPA {
 	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
+	@FindBy(xpath="//span[contains(text(),'There are errors on the form that must be corrected before you can continue.')]")
+	WebElement lblErrorMsg;
+	
 	private TestBase testConfig;
 	String id, password;
 	String env = System.getProperty("env");
@@ -109,42 +112,52 @@ public class LoginUPA {
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
 		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
 		Element.click(btnLogin, "click Login button");
-		Browser.waitForPageLoad(testConfig);
+		Browser.waitForPageLoad(testConfig.driver);
 	}
+	public LoginUPA verifyIfUsernamePwdIsFilled() throws InterruptedException {      
+        if(testConfig.driver.getPageSource().contains("There are errors on the form"))
+        {
+          Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
+          Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+          Element.click(btnLogin, "click Login button");
+        }
+    
+  return this;
+  }
 
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
-		Browser.wait(testConfig, 3);
+		
+		if(!(txtboxUserName.isDisplayed() && txtboxPwd.isDisplayed()))
+			Element.fluentWait(testConfig, txtboxUserName, 100, 1, "Username field");
+		Element.clickByJS(testConfig, txtboxUserName, "UserName clicked");
 		Element.enterData(txtboxUserName, id, "Username entered as : " + id, "txtboxUserName");
-		Browser.wait(testConfig, 3);
-		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");
+		Element.clickByJS(testConfig, txtboxPwd, "Password clicked");
+		Element.enterData(txtboxPwd, password, "Password entered as : " + password, "txtboxPwd");		
 		Element.click(btnLogin, "click Login button");
-		Browser.wait(testConfig, 3);
+		verifyIfUsernamePwdIsFilled();
+		Browser.waitForPageLoad(testConfig.driver);
+		
 
 		try {
-			if (txtErrorMsg1 != null) {
-				if (txtErrorMsg1.isDisplayed()) {
+			  if (txtErrorMsg1 != null && txtErrorMsg1.isDisplayed()) 
+			   {
 					Log.Comment("Authentication error message displayed..trying again");
-					Browser.wait(testConfig, 3);
-					Element.fluentWait(testConfig, txtboxPwd, 120, 5, "txtboxOptumID");
 					Element.enterData(txtboxUserName, id, "Entered Optum ID as:" + " " + id, "txtboxOptumID");
-					Element.enterData(txtboxPwd, password, "Entered Optum ID password  as :" + " " + password,
-							"txtboxPwd");
+					Element.enterData(txtboxPwd, password, "Entered Optum ID password  as :" + " " + password,"txtboxPwd");
 					Element.click(btnLogin, "Sign In");
 				}
-			}
-		} catch (Exception e) {
+			
+		} 
+		catch (Exception e) {
 			Log.Comment("Authentication Error not present");
 		}
 		
-		//WebElement welcomeTxt = Element.findElement(testConfig, "xpath", "//span[contains(text(),'Welcome Screen')]");
-	    //if (welcomeTxt != null)
-		
-		//if(testConfig.driver.findElements(By.xpath("//span[contains(text(),'Welcome Screen')]")).size() != 0)
 		if(testConfig.driver.findElements(By.xpath("//div[@id='tabPrmryMenu']")).size() != 0)
 			Log.Comment("Security Question not present");
-		else {
+		else
+		{
 			for (int i = 0; i < 2; i++) {
 				securityQuestion = Element.findElement(testConfig, "id", "challengeQuestionLabelId");
 				if (securityQuestion != null) {
@@ -320,7 +333,7 @@ public class LoginUPA {
 	   Element.enterData(txtboxUserName, id, "Username entered as : " + id,"txtboxUserName");
 	   Element.enterData(txtboxPwd, password, "Password entered as : " + password ,"txtboxPwd");
 	   Element.click(btnLogin,"click Login button");
-       Browser.waitForPageLoad(testConfig);
+       Browser.waitForPageLoad(testConfig.driver);
 	   
 	   try{
 	   if(txtErrorMsg1!=null)

@@ -289,7 +289,6 @@ import main.java.reporting.Log;
 		
 		catch(Exception e)
 		{
-			Log.Comment("Unable to click " + namOfElement);
 			Log.Fail("Unable to click " + " " + "'"+namOfElement +"'"+ " " + " and exception is: " + '\n' + e);
 
 		}
@@ -325,7 +324,7 @@ import main.java.reporting.Log;
 	
 
 	//Verifies element is present on the page 
-	public static void verifyElementVisiblity(WebElement button,String namOfButton)
+	public static void verifyElementIsEnabled(WebElement button,String namOfButton)
 	{
 		try
 		{
@@ -704,7 +703,8 @@ import main.java.reporting.Log;
 		  
 		      case "partialLinkText":
 			  return testConfig.driver.findElements(By.partialLinkText(locatorValue));  
-		
+		      case "className":
+				  return testConfig.driver.findElements(By.className(locatorValue));
 		     default:
 		     return null;  
 		  }
@@ -837,10 +837,53 @@ public static boolean waitForPresenceOfAllElements(TestBase testConfig,By locato
 	return true;
 }
 
-public static boolean waitForElementTobeClickAble(TestBase testConfig,WebElement elt, long timeOut) {
- WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
-	wait.until(ExpectedConditions.elementToBeClickable(elt));
-	return true;
+public static void waitForElementTobeClickAble(TestBase testConfig,WebElement elt, long timeOut) {
+	try {
+		WebDriverWait wait =  new WebDriverWait(testConfig.driver, timeOut);
+		wait.until(ExpectedConditions.elementToBeClickable(elt));
+	}
+	catch(Exception e) {
+		Log.Fail("Execption occurred while checking the element" + e);
+	}
+	
+}
+
+
+/**
+ * Author: Mohammad Khalid
+ *  */
+
+public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElement elt, int timeOut)
+{
+	for(int i=1; i<=timeOut;i++)
+	{
+		int count = 0;
+		if(elt.isDisplayed())
+		{
+			Log.Pass("The Element is Visible, coming out of loop...");
+			break;
+		}
+		else
+		{
+			Log.Comment("The Element is not Visible, hence refreshing the browser and waiting...");
+			Browser.browserRefresh(testConfig);
+			try {
+				++count;
+				
+				if (!(count==timeOut))
+				{	
+					Thread.sleep(i);
+				}
+				else
+				{
+					Log.Fail("Element not visible...");
+				}
+				
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)

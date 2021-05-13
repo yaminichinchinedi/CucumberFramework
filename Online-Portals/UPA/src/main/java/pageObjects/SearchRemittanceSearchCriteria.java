@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import main.java.Utils.DataBase;
@@ -38,6 +40,7 @@ public class SearchRemittanceSearchCriteria {
 	
 	TestBase testConfig=TestBase.getInstance();
 	private ViewPaymentsDataProvider dataProvider;
+	private RemittanceDetail remittanceDetail = new RemittanceDetail(testConfig);
 	
 	@FindBy(id="checkNumberInputId")
 	WebElement checkNumber;
@@ -187,8 +190,8 @@ public class SearchRemittanceSearchCriteria {
 		}
 		
 //		WebElement check=Element.findElement(testConfig, "name", "taxIdNbr");
-		if(txtboxTinNo==null)
-			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
+//		if(txtboxTinNo==null)
+//			Element.expectedWait(btnSearchRemittance, testConfig, "Search Remittance button", "Search Remittance button");
 	}
 	
 	public void verifyFieldName()
@@ -199,6 +202,7 @@ public class SearchRemittanceSearchCriteria {
 	
 	public SearchRemittance doSearch(String criteriaType) throws ParseException 
 	{
+		remittanceDetail.handleTechnicalDifficultyError();
 		String date="";
 		Map srchData=null;
 		int sqlRow = 0;
@@ -208,6 +212,16 @@ public class SearchRemittanceSearchCriteria {
 		switch(criteriaType)
 		 {
 		
+		 case "byElectronicPaymentNoRemit": {
+			 Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+		    	Browser.wait(testConfig, 5);
+		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
+		    	String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("DSPL_CONSOL_PAY_NBR");
+		    	System.out.println(dspl_consl_pay_nbr);
+		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
+		    	break;
+		}
+			
 		 case "EPRAElectronicPaymentNo":  
 		    {
 
@@ -215,9 +229,7 @@ public class SearchRemittanceSearchCriteria {
 		    	Browser.wait(testConfig, 5);
 		    	Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 		    	String dspl_consl_pay_nbr = testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
-		    	//String dspl_consl_pay_nbr = System.getProperty("dspl_consl_pay_nbr");
-		    	System.out.println(dspl_consl_pay_nbr);
-		    	Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
+                Element.enterData(paymentNumber, dspl_consl_pay_nbr, "Enter Electronic payment number as: " + dspl_consl_pay_nbr, "payment number");
 		    	break;
 		    	
 		    }
@@ -335,9 +347,7 @@ public class SearchRemittanceSearchCriteria {
 		    case "EPRADOPAndAccountNo":
 		    {
 		    	String ptnt_acct_nbr = System.getProperty("ptnt_acct_nbr");
-		    	System.out.println(ptnt_acct_nbr);
 		    	Element.enterData(accountNo, ptnt_acct_nbr, "Enter patient account no as : "+ptnt_acct_nbr, "Account Number");
-		    	
 		    	String fromDate =  System.getProperty("fromDate");
 		    	String toDate =  System.getProperty("toDate");
 		    	
@@ -554,8 +564,8 @@ public class SearchRemittanceSearchCriteria {
 		    	String fromDate = System.getProperty("fromDate");
 		    	String toDate = System.getProperty("toDate");
 		    	
-		    	Element.enterData(patientFirstName, ptnt_fst_nm, "Enter First Name as : "+ptnt_lst_nm, "First Name");
-		    	Element.enterData(patientLastName, ptnt_lst_nm, "Enter Last Name as: "+ptnt_lst_nm, "Last Name");
+		    	Element.enterData(patientFirstName, ptnt_fst_nm.replace("-", " "), "Enter First Name as : "+ptnt_fst_nm, "First Name");
+		    	Element.enterData(patientLastName, ptnt_lst_nm.replace("-", " "), "Enter Last Name as: "+ptnt_lst_nm, "Last Name");
 		    	
 		    	if("EPRAgenerated".equals(testConfig.getRunTimeProperty("suite"))||"EPRAgeneratedPROVGen".equals(testConfig.getRunTimeProperty("suite"))
 		    			||"EPRAPayergeneratedAdmin".equals(testConfig.getRunTimeProperty("suite"))||"EPRAPayergeneratedGen".equals(testConfig.getRunTimeProperty("suite"))
@@ -813,29 +823,7 @@ public class SearchRemittanceSearchCriteria {
 		    	testConfig.putRunTimeProperty("paymentMethCode",srchData.get("PAY_METH_CD").toString());
 		    	testConfig.putRunTimeProperty("paymentStatusTypeID",srchData.get("PAY_STS_TYP_ID").toString());
 		    	break;
-		    
-		    /*case "byCheckNoOfConslPayDtl":
-		    	dataRequiredForSearch=dataProvider(criteriaType);
-		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
-		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
-		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHK_NBR").toString(), "payment number");
-		    	testConfig.putRunTimeProperty("key1", "CHK_NBR");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHK_NBR").toString());
-		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
-		    	break;
-		    	
-		    case "byCheckNoOfReoriginNacha":
-		    	dataRequiredForSearch=dataProvider(criteriaType);
-		    	Element.selectByVisibleText(paymentNumberType, "Check Number", "Check Number from 'Payment Number' dropdown");
-		    	Element.clickByJS(testConfig,checkNumber, "Check No text box");
-		    	Element.enterData(checkNumber, dataRequiredForSearch.get("CHECK_NBR").toString(), "Enter Check No as: " + dataRequiredForSearch.get("CHECK_NBR").toString(), "payment number");
-		    	testConfig.putRunTimeProperty("key1", "CHECK_NBR");
-		    	testConfig.putRunTimeProperty("value1", dataRequiredForSearch.get("CHECK_NBR").toString());
-		    	testConfig.putRunTimeProperty("fromDate", Helper.getDateBeforeOrAfterYears(-2,"yyyy-MM-dd"));
-		    	testConfig.putRunTimeProperty("toDate", Helper.getCurrentDate("yyyy-MM-dd"));
-		    	break;*/
-		    	
+
 		    case "byCheckNoOfReoriginNacha":
 		    case "byCheckNoOfConslPayDtl":
 		    
@@ -881,6 +869,7 @@ public class SearchRemittanceSearchCriteria {
 			 case "byHCPayment_Number":
 				{
 					Element.selectByVisibleText(paymentNumberType, "Electronic Payment Number", "Electronic Payment Number from 'Payment Number' dropdown");
+					Element.waitForElementTobeClickAble(testConfig, paymentNumber, 10);
 					Element.clickByJS(testConfig,paymentNumber, "Payment No text box");
 					Element.enterData(paymentNumber, System.getProperty("CONSL_PAY_NBR"), "Enter Electronic payment number as: " +System.getProperty("CONSL_PAY_NBR"), "payment number");
 					break;
@@ -888,10 +877,14 @@ public class SearchRemittanceSearchCriteria {
 	 	
 		    case "byHCDOPAndNpi":
 			{
+				Element.waitForElementTobeClickAble(testConfig, NPI, 10);
 				Element.clickByJS(testConfig,NPI, "NPItext box");
 				Element.enterData(NPI, System.getProperty("NPI"), "Filling NPI No: "+ System.getProperty("NPI"), "NPI");
+				Element.waitForElementTobeClickAble(testConfig, dopFromDate, 10);
 				Element.enterData(dopFromDate, System.getProperty("DOPFromDate"), "DoP From Date", "NPI");
-				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");   
+				Element.waitForElementTobeClickAble(testConfig, dopToDate, 10);
+				Element.enterData(dopToDate, System.getProperty("DOPToDate"), "DoP To Date", "NPI");
+
 				break;	    	
 			}		
 		    default:
@@ -1740,5 +1733,116 @@ public class SearchRemittanceSearchCriteria {
     		Helper.compareEquals(testConfig, "Button Enabled", null, btnSearchRemittance.getAttribute("disabled"));
     	return this;
     }
+
+	/**
+	 * Author : Vinay Raghumanda
+	 * Validates page text on Search Remittance screen for different types of users and roles.
+	 * @param accessType
+	 * @param portalAccess
+	 */
+	public void validatePageText(String accessType, String portalAccess) {
+
+		String expectedParagraph, expectedHeader, actualButtonText, expectedButtonText;
+		WebElement button = null; 
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Admin_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				button = Element.findElement(testConfig, "xpath", "//*[@type=\"button\"]/span[text()='Get Started']");
+				actualButtonText = button.getText().trim();
+				expectedButtonText = TestBase.contentMessages.getProperty("prov.admin.standard.ao.searchRemittance.buttonText");
+				Helper.compareEquals(testConfig, "Page Text", expectedButtonText, actualButtonText);
+				break;
+			case "PROV_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "PROV_Gen_Standard_AO":
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.general.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				break;
+			case "BS_Admin_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Admin_Standard_AO":
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.header");
+					expectedParagraph = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");
+					validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				
+				break;
+			case "BS_Gen_Premium_AO":
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.premium.ao.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;
+			case "BS_Gen_Standard_AO":
+				if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))	
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.header");
+				expectedParagraph = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.searchRemittance.paragraph");
+				validateStandardUsers(expectedParagraph, expectedHeader);
+				}
+				break;
+			case "PROV_Admin_Premium_VO":
+				expectedParagraph = TestBase.contentMessages.getProperty("prov.admin.premium.vo.searchRemittance.paragraph");
+				validatePremiumUsers(expectedParagraph);
+				break;	
+			default:
+				break;
+		}
+	}
+
+	private void validateStandardUsers(String expectedParagraph, String expectedHeader) {
+		WebElement headerTag;
+		WebElement paragraphTag;
+		String actualHeader;
+		String actualParagraph;
+		if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+		{
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id='search-remmitance-tabs']/div[1]/h2"), 30);
+		headerTag = Element.findElement(testConfig, "xpath", "//*[@id='search-remmitance-tabs']/div[1]/h2");
+		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id='search-remmitance-tabs']/div[1]/p[2]");
+		}
+		else
+		{
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@id=\"seachRemittancePremium\"]/h2"), 30);
+		headerTag = Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/h2");
+		paragraphTag=Element.findElement(testConfig, "xpath", "//*[@id=\"seachRemittancePremium\"]/p[2]");
+		}
+		actualHeader = headerTag.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "PageText", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "PageText", expectedParagraph, actualParagraph);
+	}
+
+	private void validatePremiumUsers(String expectedParagraph) {
+		WebElement paragraphTag;
+		String actualParagraph;
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//*[@class=\"topMessaggeDiv\"]"), 30);
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedParagraph, actualParagraph);
+	}
 }
 

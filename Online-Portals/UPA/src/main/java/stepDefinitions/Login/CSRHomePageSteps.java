@@ -22,7 +22,6 @@ public class CSRHomePageSteps extends TestBase{
 
 	@Given("^User navigates to CSR portal and enters credentials and login$")
 	public void user_navigates_to_CSR_portal_and_enters_credentials_and_login(String userType) throws Throwable {
-	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 	
@@ -30,7 +29,6 @@ public class CSRHomePageSteps extends TestBase{
 	
 	@Given("^User navigates to CSR portal and enters \"([^\"]*)\" and login$")
 	public void user_navigates_to_CSR_portal_and_enters_and_login(String userType) throws Throwable {
-	//	LoginCSR loginPage=new LoginCSR(testConfig);
 		homePage=loginPage.doLogin(userType);
 	}
 
@@ -122,7 +120,6 @@ public class CSRHomePageSteps extends TestBase{
 	public void user_clicks_on_Manage_Internal_Users_link() throws Throwable {
 		homePage.clickManageInternalUserlink();
 	}
-
 	
 	@Given("^User fetch tin on CSR for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_fetch_tin_on_CSR_for_for_for_for_for_Portal_Experience(String userType,String searchCriteria, String tinType, String portalAccess) throws Throwable {

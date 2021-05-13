@@ -1,4 +1,4 @@
-package main.java.stepDefinitions.rest.debitfee;
+package main.java.stepDefinitions.api;
 
 import io.restassured.response.Response;
 

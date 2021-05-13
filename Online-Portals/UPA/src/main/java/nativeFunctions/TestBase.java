@@ -1,9 +1,6 @@
 package main.java.nativeFunctions;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
@@ -49,9 +46,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import cucumber.api.Scenario;
-import test.java.TestDetails;
 import main.java.Utils.CopyDir;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
@@ -68,7 +63,7 @@ import java.net.URL;
 public class TestBase extends ReporterClass {
 
 
-
+	public static Properties contentMessages = null;
 	public static HashMap<String, TestDataReader> testDataReaderHashMap = new HashMap<String, TestDataReader>();
 	public static HashMap<Integer, HashMap<String, String>> genericErrors = new HashMap<Integer, HashMap<String, String>>();
 	
@@ -79,10 +74,10 @@ public class TestBase extends ReporterClass {
 	public SoftAssert softAssert;
 	protected static volatile TestBase testConfig;
 	public Connection DBConnection = null;
-	private final static String DEFAULT_SAUCE_USER = "pchaud19";
-	private final static String DEFAULT_SAUCE_ACCESSKEY = "ddc4d7ea-db56-4a8f-84b2-936339468a87";
-//	private final static String DEFAULT_SAUCE_USER = "ssharm31";
-//	private final static String DEFAULT_SAUCE_ACCESSKEY = "e6c7117a-aad7-4268-b384-aebbea2c28a8";
+	private final static String DEFAULT_SAUCE_USER = "tathyush";
+	private final static String DEFAULT_SAUCE_ACCESSKEY = "04adf716-44b3-4f49-af83-705b549ecbdd";
+	
+
 	
 //	private static HashMap<String, HashMap<String, String>> loginCredentials;
 
@@ -101,6 +96,17 @@ public class TestBase extends ReporterClass {
 		
 		try {
 			runtimeProperties.load(fileInput);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// Load content messages properties file
+		FileReader reader = null;
+		contentMessages = null;
+		try {
+			reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
+			contentMessages = new Properties();
+			contentMessages.load(reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -245,8 +251,8 @@ public class TestBase extends ReporterClass {
 				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
 				driver = initChromeDriver();
 			}
-			driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
 		
 		else 
@@ -407,16 +413,17 @@ public class TestBase extends ReporterClass {
 	     new Log(testConfig);
 	}
 
-/*	@AfterMethod()
+@AfterMethod()
 	public void endTest(ITestResult iTestResult) {
-		Log.endTest(iTestResult);
-	}*/
-
-	
-	public void endTest(Scenario scn) {
-		logReportSteps(scn.getStatus());
+	     logReportSteps(iTestResult);
 		 endReporting();
 	}
+
+	
+	/*public void endTest(Scenario scn) {
+		logReportSteps(scn.getStatus());
+		 endReporting();
+	}*/
 		
 	@AfterTest
 	public void tearDown() {
@@ -438,7 +445,7 @@ public class TestBase extends ReporterClass {
 
 	public WebDriver SetdriveronSauce(String Browser) {
 		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
-		//String URL = "https://sso-optum-sahil_d_sharma:e6c7117a-aad7-4268-b384-aebbea2c28a8@ondemand.us-west-1.saucelabs.com:443/wd/hub";
+
 		if (Browser.equalsIgnoreCase("IE")) {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("platform", "Windows 10");
@@ -467,6 +474,10 @@ public class TestBase extends ReporterClass {
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
 			caps = DesiredCapabilities.chrome();
+			
+			caps.setCapability("parent-tunnel", "optumtest");
+			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			
 			try {
 				driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {

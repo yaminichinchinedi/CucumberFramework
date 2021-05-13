@@ -53,17 +53,17 @@ public class SearchTinPageViewPayments {
 			case "PROV": //This case comes from CSR for providers to Enter TIN, not UPA flow
 				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,txtboxTinNo, testConfig.getRunTimeProperty("tin"), "tin textbox");
-			    Element.click(srchBtn, "Search Button");
+				Element.clickByJS(testConfig, srchBtn, "Search Button");
 				break;
 			case "BS": 
 				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,bstinDrpDwn, testConfig.getRunTimeProperty("tin"), "tin textbox");
-				Element.click(submitBtn, "Search Button");
+				Element.clickByJS(testConfig, submitBtn, "Search Button");
 				break;
-			case "Payer": 
+			case "PAY": 
 				Browser.wait(testConfig, 2);
 				Element.enterDataByJS(testConfig,payertinDrpDwn,testConfig.getRunTimeProperty("tin"), "tin textbox");
-				Element.click(submitBtn, "Search Button");
+				Element.clickByJS(testConfig, submitBtn, "Search Button");
 				break;
 			}
 		return this;

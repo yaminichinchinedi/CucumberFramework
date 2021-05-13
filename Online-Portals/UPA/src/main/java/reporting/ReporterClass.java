@@ -25,26 +25,28 @@ public abstract class ReporterClass {
 
     
     
-  /*  public synchronized static void logReportSteps(ITestResult result)
+   public synchronized static void logReportSteps(ITestResult result)
 	{
     	  if(result.getStatus() == ITestResult.FAILURE) 
     		  Log.Fail(result);
     	    else if(result.getStatus() == ITestResult.SKIP)
     	    	Log.skipped(result);
 	    ExtentTestManager.getTest().assignCategory(result.getMethod().getGroups());
-	}*/
+	}
     
     
-    public synchronized static void logReportSteps(String result)
-   	{
-       	  if(result.equalsIgnoreCase("failed")) 
-       		  Log.Fail(result);
+  //  public synchronized static void logReportSteps(String result)
+   	//{
+      // 	  if(result.equalsIgnoreCase("failed")) 
+       	//	  Log.Fail(result);
 //       	    else if(result.equalsIgnoreCase("passed"))
 //       	    	Log.Pass(result);
 //       	    else 
 //       	    	Log.skipped(result);
 //   	    ExtentTestManager.getTest().assignCategory(result.getMethod().getGroups());
-   	}
+   //	}
+   
+   
     public synchronized void endReporting() {
         EXTENT.flush();
     }

@@ -1,10 +1,9 @@
 #Author: Sahil D Sharma
-
  @UPADataBundleNEW  @UPARegression    @BothCSRUPAScenarios @fish
- Feature: UPA Billing Service Functionality
+ Feature: UPA Payment Data Files Functionality
 
 	@TC001 			
-	Scenario Outline: UI Validations for Data Bundle
+	Scenario Outline: Validating all fields on Payment Data Files
  	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When  User clicks on Payment Data Files Tab
@@ -20,8 +19,8 @@
 
 
 
-@TC002 			@coco
-	Scenario Outline: Verify Payer and PageButton Validations
+@TC002 		
+	Scenario Outline: Verify Payer List and PageButton functionality
 	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 	When  User clicks on Payment Data Files Tab
@@ -41,7 +40,7 @@ Examples:
    |  PROV_Admin    |    PROV      |    Last 9-13 months   |		 Premium		|		AO		|	
 
 
-@TC003	
+@TC003		
  	Scenario Outline: Validations to check errors 
  	Given User navigates to UPA portal and enters "<credentials>" and login
   And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -230,3 +229,20 @@ Examples:
    |   BS_Admin	    | 		BS		   |	  Last 4-6 months    |		 Premium		|		AO		|	  
    |  PROV_Admin    |    PROV      |    Last 9-13 months   |		 Premium		|		AO		|	
    |  PAY_Admin     |    Payer     |    Last 4-6 months    |		 Premium		|		AO		| 
+
+	#Author : Vinay Raghumanda
+	 @US3179215
+	 Scenario Outline: Payment Data Files page Text Validation for PROV users
+		 Given User navigates to UPA portal and enters "<credentials>" and login
+		 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		 When  User clicks on Payment Data Files Tab
+		 Then  User Enters tin and click on search button for "<userType>" on Payment Data Files page
+		 Then Validate Payment Data File Page Text for "<credentials>" for "<portalAccess>"
+		 Examples:
+			 | credentials | userType | portalAccess | tinType | searchCriteria       |
+			 | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
+			 | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+			 | PROV_Gen    | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+			 | BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
+			 | BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
+			 

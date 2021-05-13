@@ -1,8 +1,7 @@
-
 #Author: Rahul Krishna
 @CSROptumPaySolutions    
     Feature: Optum Pay Solutions Scenarios for Premium Tins
-    @CSRUS3136637
+    @CSRUS3136637 @CSRStable
     Scenario Outline: Optum Pay Soution New Layout Scenario
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -16,7 +15,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|   
          
-    @CSRUS3136627sss
+    @CSRUS3136627sss @CSRStable
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -34,7 +33,7 @@
          |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
  
    #Author: Sayonee
-    @CSRUS3136567
+    @CSRUS3136567 @CSRStable
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -48,7 +47,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|      
          
-    @CSRUS3138920 @CSRUS3138933
+    @CSRUS3138920 @CSRUS3138933 @CSRStable
     Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -61,7 +60,7 @@
          |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|      
-    @CSRUS3157067
+    @CSRUS3157067 @CSRStable
     Scenario Outline: Optum Pay Solutions Info Icon Hover 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -72,11 +71,11 @@
 
          |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
          |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
-         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+        |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid| 
      
    #Author: Aravind Lakshminarasimhan   
-    @CSRUS3290593 @CSRRegression
+    @CSRUS3290593 @CSRRegression @CSRStable
     Scenario Outline: Optum Pay Solutions Rate Tile CSR
     Given User navigates to CSR portal and enters "<credentials>" and login
     And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<selectedOrDefault>" for Portal Experience.
@@ -99,7 +98,7 @@
    #Scenario 4 - Premium Tin in trial period, VO Tin
    #Scenario 5 - Standard AO Tin           
          
-    @CSRUS3138933
+    @CSRUS3138933 @CSRStable
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -111,9 +110,26 @@
          |   credentials     |  tinType  |portalAccess| userType |searchCriteria    |		changeRateValue	   |changeRateReason|
          |    Super          |	AO			|  Premium	 |	PROV    |PostTrial and Paid|	 	valid value	       |			Other			|
          |    Super          |	AO			|  Premium	 |	PROV    |PostTrial and Paid| 	 	Invalid value      |	UHC requested	|
+         
+         
+         @CSRUS3138933_12 @CSRStable
+    Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User then validates the Change Rate popup based "<credentials>"
+     Examples:
+
+
+         |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
+         |    Super          |	AO			|  Premium | PROV   |PostTrial and Paid|
+        |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+        |    RO	           |	AO			|  Premium |PROV    |PostTrial and Paid|     
+		 
      
                       
- @CSRUS3232897
+ @CSRUS3232897 @CSRStable
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -128,7 +144,7 @@
   
          
 #Author:Amit    
-@CSRUS3221650_P    
+@CSRUS3221650  @CSRUS3329695 @CSRStable @CSRUS3449949
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
@@ -137,16 +153,105 @@
 		Then User verifies if Invoices tab is available for "<searchCriteria>" and "<portalAccess>" and "<tinType>" and "<prdctRecSts>".
 
     Examples: 
-      | credentials | userType | searchCriteria     | portalAccess | tinType | prdctRecSts |
+      | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
       | Super       | PROV      | TinWithInvoices    | Premium      | AO      | PS          |
       | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | PS          |
-      | Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |
+     #| Super       | PROV      | TinWithInvoices    | Premium      | VO      | PD          |  #No Data for this combination
       | Super       | PROV      | TinWithoutInvoices | Premium      | VO      | PD          |
+     #| Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |  #Data issue in the DB
          
+       
          
-         
-         
-         
-         
-         
-         
+     @CSRUS3238500 @CSRStable
+      Scenario Outline: Optum Pay Soution  Display Fee Search
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And User fetch tin on CSR for "<userType>" for "<Fee Search Criteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  		  Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+        Then User clicks on Fee Searh Tab on Optum Pay Solutions Page
+        Then User enters "<Fee Search Criteria>" on Fee Search page and click on search button.
+        Then verify that max 30 records are on single page and pagination links enabled/disabled accordingly 
+        
+        
+
+
+  Examples:
+
+          |   credentials     |   Fee Search Criteria   |tinType|portalAccess    |userType|
+          |    Super          |	feeSrchTINdetailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
+          |    Super          |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
+         |    RW             |	feeSrchTINdetailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
+         |    RW             |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
+          |    RO          |	feeSrchTINdetailsTabwthAllVal	    |  AO 	|	Premium		 |	PROV	|
+          |    RO          |	NofeeSearchTIN	    |  AO 	|	Premium		 |	PROV	|
+ 
+ 
+    @CSRUS3307485
+  	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  		Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+   	    Then User clicks on "Invoices" tab
+   	    Then User clicks on Invoice Number that opens pdf in new tab
+   	Examples:
+    	|    credentials     |	userType | 	portalAccess  |	searchCriteria   				| tinType		|
+        |       Super        | 	PROV	 |	Premium       |  PremiumOrStandardFeeInvoice 	|	  AO		|
+   
+ #Aravind - difficult to debug         
+   @CSRUS3374873 @CSRRegression
+   Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
+       Given User navigates to CSR portal and enters "<credentials>" and login
+       And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+           Then  User clicks on Optum Pay Solutions link on CSR HomePage
+       Then  User Enters tin for OPS and click on search button for "<userType>".
+       And   Change control to Optum Pay Solutions page
+       Then  User clicks on Fee Searh Tab on Optum Pay Solutions Page
+       And  User enters "<Fee Search Criteria 1>" on Fee Search page and click on search button.
+       Then  User enters "<Fee Search Criteria 1>" validates selectAll, Cancel, RefundFee buttons and select column functionality
+       And  User enters "<Fee Search Criteria 2>" on Fee Search page and click on search button.
+       Then  User enters "<Fee Search Criteria 2>" validates selectAll, Cancel, RefundFee buttons and select column functionality
+       And  User enters "<Fee Search Criteria 3>" on Fee Search page and click on search button.
+       Then  User enters "<Fee Search Criteria 3>" validates selectAll, Cancel, RefundFee buttons and select column functionality
+          
+      Examples:
+          |   credentials  |   searchCriteria         |tinType | portalAccess  |userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
+          |    Super       |     TinForFeeSearchRefund  |  AO      |    Premium           |    PROV     | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+ 
+  #Author: Marsha   -defect in og US
+  @CSRCancelPremiumDb @US2948675
+  Scenario Outline: CSR Optum Pay Solutions cancel subscription and check DB
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+	  Then User Enters tin for OPS and click on search button for "<userType>".
+	  Then Fill Cancel Details with Reason as "<reasonCode>" and Submit for "CSR" 
+  	Then Verify that the Premium is cancelled for "<searchCriteria>" on "CSR"
+		
+    Examples: 
+      | credentials | userType | searchCriteria     						| portalAccess | tinType | prdctRecSts |reasonCode|
+     | Super       | PROV     | PostTrial and Paid 						| Premium      | AO      | PS          |	R7			|
+      | Super       | PROV     |New Enroll WithinTrial and Paid | Premium      | AO      | PS          |	R7			|
+      
+      
+       #Author: Mohammad Khalid             
+@CSRUS3252558 
+Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR 
+	Given User navigates to CSR portal and enters "<credentials>" and login 
+	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+	Then  User clicks on Optum Pay Solutions link on CSR HomePage 
+	Then  User Enters tin for OPS and click on search button for "<userType>". 
+	And   Change control to Optum Pay Solutions page 
+	Then  User clicks on Fee Searh Tab on Optum Pay Solutions Page 
+	And  User enters "<Fee Search Criteria 1>" on Fee Search page and click on search button. 
+	
+	And User selects fees in the grid, calculate the total fee amount and clicks on Refund Fee button 
+	And User verifies Refund Pop Up UI is displayed, verifies text and clicks on Cancel button 
+	And User clicks on the Select All again and clicks on Refund Fee button 
+	Then User selects Refund reason and clicks on Refund button on Pop Up 
+	
+   
+       Examples: 
+		|   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
+		|    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
+            

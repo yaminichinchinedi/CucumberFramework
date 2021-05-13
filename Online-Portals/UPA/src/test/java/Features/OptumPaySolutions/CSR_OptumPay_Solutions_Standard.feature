@@ -1,10 +1,9 @@
-
 #Author: Rahul Krishna
-    
+@CSROptumPayStandard @CSROptumPaySolutions
 Feature: Optum Pay Solutions Scenarios for Standard Tins
    
   #Author: Marsha
-  @CSROptumPaySolutionsInvalidTINError @US2948675OPScsr
+  @CSROptumPaySolutionsInvalidTINError @US2948675OPScsr @CSRStable
   Scenario Outline: CSR Optum Pay Solutions check error msg display during invalid Tins
       Given User navigates to CSR portal and enters "<credentials>" and login
   		Then User clicks on Optum Pay Solutions link on CSR HomePage
@@ -28,7 +27,7 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 	  |   RW     	       | %$)abc$%^		|					  	
 	  |   RW         	   | 							|		
 	  
-	@CSRUS3138933
+	@CSRUS3138933_12 @CSRStable
     Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -37,13 +36,15 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
 		Then User then validates the Change Rate popup based "<credentials>"
      Examples:
 
-         |   credentials     |  tinType |portalAccess|userType|searchCriteria    |
-         |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
-         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
-         |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|     
+
+         |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
+         |    Super          |	AO			|  Standard	 | PROV   |PostTrial and NotPaid|
+        |    RW   		       |	AO			|  Standard	 |PROV    |PostTrial and NotPaid|
+         |    RO	           |	AO			|  Standard	 |PROV    |PostTrial and NotPaid|     
+		 
    
 #Author: Amit
-@CSRUS3221650_S
+@CSRUS3221650_S @CSRStable
     Scenario Outline: Optum Pay Solutions Validate Change Rate PopUp
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for "<prdctRecSts>" for Portal Experience.
@@ -55,6 +56,4 @@ Feature: Optum Pay Solutions Scenarios for Standard Tins
       | credentials | userType  | searchCriteria     | portalAccess | tinType | prdctRecSts |
       | Super       | PROV      | TinWithInvoices    | Standard     | AO      | PD          |
       | Super       | PROV      | TinWithoutInvoices | Standard     | AV      | PD          |
-      | Super       | PROV      | TinWithoutInvoices | Premium      | AV      | TR          |
-		
-		
+      

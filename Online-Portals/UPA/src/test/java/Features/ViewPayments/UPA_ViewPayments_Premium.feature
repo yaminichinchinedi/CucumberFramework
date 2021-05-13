@@ -1,12 +1,12 @@
 #Author: amit_kushwah@optum.com
 @UPA_ViewPayments_Premium
-Feature: UPA Manage User Functionality for Premium TIN
+Feature: UPA ViewPayments Functionality for Premium TIN
 
   	#Author: AMIT
-  	@UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable
+  	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
-    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".		
 		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
@@ -40,7 +40,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Examples:
 
 			|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|		Last 30 days	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
       |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
  			 
  			 
@@ -89,15 +89,12 @@ Feature: UPA Manage User Functionality for Premium TIN
 		Then Click on Claim number on Remittance Detail screen and go to Claim Detail screen.
 		Then Click on Payment number on Claim detail screen and go to single Payment View Payment screen.
 		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
-		Then Click on print Payment Summary button.
-		And  Set FISL Parameters "<key>" and "<value>"
-		Then Validate the data of Print Payment Summary page.
 		Then Validate the data between Single Payment Summary page and poped up Print payment Summary page
     
 		 Examples:
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
-      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 		New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Standard		|		AO		|	Show All				|	 	Last 30 days		| 		New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter	|
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 		New		  |
+      |   PROV_Admin	  | 		PROV		|		Last 30 days 	 |		 Premium		|		AO		|	Show All				|	 	Last 30 days		| 		New		  |
     
 		
 		
@@ -167,4 +164,138 @@ Feature: UPA Manage User Functionality for Premium TIN
       |   BS_Admin	 | 		BS		  |	  Last 60 days   |		 Premium		|		AO		|	Show All				|	  Last 60 days	  | 		New		          |
       |   BS_Gen	   | 		BS		  |		Last 60 days 	 |		 Premium		|		AO		|	Show All				|	 	Last 60 days		| 		New		          |
 
-	
+		#Author: Mohammad Khalid
+ 		@UPAViewPayments_US3080022 @UPAViewPayments_US3080019
+ 		Scenario Outline: Access Payments - View Payments - Provider Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate "Fee Amount" column is displayed.
+		Then validate Fee Amount info icon message
+		Then Validate amount is displayed for payments present in debit fee rate table.
+		
+		Examples:
+
+	  |    credentials  |  userType 	|	searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter |
+      |   PROV_Admin	| 		PROV	|	Last 30 days   |     Premium		|		AO	|	Show All		|		Last 30 days	| 	New 	    |
+
+
+   #Author : Vinay Raghumanda
+	@US3179215 @US3438488
+	Scenario Outline: View payments page Text Validation for PROV users
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate View Payments page Text for "<credentials>" for "<portalAccess>"
+		Examples:
+			| credentials | userType | portalAccess | tinType | searchCriteria       |
+			| PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+			| PROV_Admin  | PROV     | Standard     | AO      | PremiumOrStandardTIN |
+			| PROV_Gen    | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+			| PROV_Gen    | PROV     | Standard     | AO      | PremiumOrStandardTIN |
+			| PROV_Admin  | PROV     | Premium      | VO      | PostTrial and Paid   |
+			| PROV_Gen    | PROV     | Premium      | VO      | PostTrial and Paid   |
+
+	@US3179215
+	Scenario Outline: View payments page Text Validation for BS Users
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate View Payments page Text for "<credentials>" for "<portalAccess>"
+		Examples:
+			| credentials | userType | portalAccess | tinType | searchCriteria |
+			| BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
+			| BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
+			
+			
+		#Author: Marsha
+		@UPAViewPaymentsFeeAmtCol_Prov_premium    @US3106945
+		Scenario Outline: View Payments - Fee Amount Column for Premium TIN Provider
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate Fee Amount column is displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is displayed.
+
+			Examples:
+      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	
+      |   PROV_Admin	  | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
+      |   PROV_Gen	    | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
+
+		#Author: Marsha
+		@UPAViewPaymentsFeeAmtCol_BS_premium   @US3106945
+ 		Scenario Outline: View Payments - Fee Amount Column for Premium TIN BS
+    Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate Fee Amount column is displayed.
+		Then Click on print Payment Summary button.
+		Then Validate Fee Amount column is displayed.
+     Examples:
+    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria   | tinType		|
+             |       BS_Admin        | 			 BS			    	  |			Premium		  	|  Last 30 days    |   AO	 			|
+             |       BS_Gen          | 			 BS		    			|			Premium		  	|  Last 30 days    | 	 AO	  	  |
+             
+                
+      #Author: AMIT 
+		@UPA_ViewPaymentPayer_1 @UPA_ViewPaymentStable @UPA_ViewPaymentPremium
+ 		Scenario Outline: Access Payments - View Payments - Provider Premium
+ 		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Set search filters for Payer "<filterpayments>" having "<quicksearchfilter>"
+		Then Click on print Payment Summary button.
+		Then Validate the data of Print Payment Summary page.
+    Examples:
+      |    credentials  |  	userType	 	|		searchCriteria  |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months  | 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 6-9 months 	|		 Premium		|		AO		|	Show All				|	Last 6-9 months  | 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 60 days 		 	|		 Premium		|		AO		|	Show All				|	Last 60 days 		  | 
+      |    PAY_Gen		  | 	   PAY		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 
+		
+
+#Author: AMIT 
+  	@UPA_ViewPaymentPayer_2  @UPA_ViewPaymentStable @UPA_ViewPaymentPremium
+		Scenario Outline: Access Payments - View Payments - Provider Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".		
+		Then Set search filters for Payer "<filterpayments>" having "<quicksearchfilter>"
+		Then Validate grid no longer displays Type column or Payment Status field and is relabeled to ACH Trace
+		Then Verify Search Results With "<filterpayments>" for "<quicksearchfilter>" With "<archivefilter>"
+		Then Validate 835, ePRA and Payer PRA are enabled
+		Then Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.
+ 		Examples:
+   	  |    credentials  |  	userType	 	|		searchCriteria  |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months  | 
+      |    PAY_Gen		  | 	   PAY		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	|
+		
+		
+		#Author: Amit
+		@UPA_ViewPaymentPayer @UPA_ViewPaymentStable @UPA_ViewPaymentPremium
+		Scenario Outline: Access Payments - View Payments - Provider Premium
+		Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Set search filters for Payer "<filterpayments>" having "<quicksearchfilter>"
+		Then Click on Payment number and go to Remittance Detail screen.
+		Then Click on Claim number on Remittance Detail screen and go to Claim Detail screen.
+		Then Click on Payment number on Claim detail screen and go to single Payment View Payment screen.
+		Then Validate 835, ePRA and Payer PRA are enabled
+		Then Validate the data between Single Payment Summary page and poped up Print payment Summary page
+		Examples:
+   	  |    credentials  |  	userType	 	|		searchCriteria  |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 30 days			|		 Premium		|		AO		|	Show All				|	Last 30 days		  | 
+			|    PAY_Admin    | 	   PAY	 	  |	Last 6-9 months 	|		 Premium		|		AO		|	Show All				|	Last 6-9 months   | 
+      |    PAY_Gen		  | 	   PAY		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	|
+		
+             
+      
+			

@@ -37,6 +37,8 @@ import main.java.fislServices.PaymentSummaryFislService;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
+
 import main.java.reporting.Log;
 import main.java.reporting.Log;
 
@@ -63,7 +65,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath="//a[contains(text(),'PDF')]")
 	WebElement lnkEpraPDF;
 	
-	@FindBy(id = "periodId")
+	@FindBy(xpath = "//select[@id='periodId']") 
 	WebElement drpDwnQuickSearch;
 	
 	@FindBy(id="mktTypeId")
@@ -167,6 +169,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(name="B3")
 	WebElement btnPrntPaymntSummary;
 	
+//	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Last Page')])[1]")
 	@FindBy(xpath = "//div[@id='view-payments']/table//tr[1]//div[2]/div[1]/span")
 	WebElement divShowRslts;
 	
@@ -208,19 +211,20 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//select[@id='mktTypeId']") WebElement marketTyp;
 	@FindBy(xpath = "//select[@id='payerFilterType']") WebElement payerDrpDown;
 	@FindBy(xpath = "//select[@name='filterPayments']") WebElement filterDrpDown;
-	@FindBy(xpath = "//td[starts-with(text(),'Payment Number')]/a") WebElement paymentNumHyper;
+	//@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNumHyper; 
+	@FindBy(xpath = "//p[contains(text(),'Payment Number')]//a") WebElement paymentNumHyper;
 	@FindBy(xpath = "//td[@class='subheader']") WebElement viewPaymentsSubHeader;
 	@FindBy(xpath = "//td[starts-with(text(),'Organization:')]") WebElement orgHeader;
 	@FindBy(xpath = "//select[@id='archiveFilterType']") WebElement activeDrpDown;
 	@FindBy(xpath = "//a[contains(text(),'Payer')]") WebElement payerHeader;
 	@FindBy(xpath = "//td[contains(text(),'Payer')]") WebElement payerHeaderPrintPaymentSummary;
-	@FindBy(xpath = "//a[contains(text(),'Payment Date')]") WebElement payDateHeader;
+	@FindBy(xpath = "//*[contains(text(),'Payment Date')]") WebElement payDateHeader;
 	@FindBy(xpath = "//a[contains(text(),'NPI')]") WebElement npiHeader;
 	@FindBy(xpath = "//a[contains(text(),'Payment Number')]") WebElement paymentNum;
 	@FindBy(xpath = "//th[contains(text(),'Proxy')]") WebElement proxyNum;
 	@FindBy(xpath = "//a[contains(text(),'Amount')]") WebElement amountHeader;
-	@FindBy(xpath = "//a[starts-with(text(),'Type')]") WebElement typeHeader;
-	@FindBy(xpath = "//th[starts-with(text(),'Payment')]") WebElement paymentStatusHeader;
+	@FindBy(xpath = "//a[contains(text(),'Market Type')]") WebElement typeHeader; //
+	@FindBy(xpath = "//*[contains(text(),'Payment Status')][2]") WebElement paymentStatusHeader;
 	@FindBy(xpath = "//th[contains(text(),'Redemption')]") WebElement redemptionHeader;
 	@FindBy(xpath = "//a[contains(text(),'Market Type')]") WebElement marketTypeHeader;
 	@FindBy(xpath = "//span[contains(text(),'Returned Reason')]") WebElement returnedReasonHeader;
@@ -230,6 +234,8 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//span[contains(text(),'Payer')]") WebElement ppraHeader;
 	@FindBy(xpath = "//a[contains(text(),'Archive')]") WebElement archiveHeader;
 	@FindBy(xpath = "//input[@value='Print Payment Summary']") WebElement printBtn;
+	@FindBy(xpath = "//*[starts-with(text(),'In order to print the ERA, you must have Adobe Reader installed on your machine. Please download')]") 
+	WebElement printTextFooterTxt ;
 	@FindBy(xpath = "//input[@id='saveArchive']") WebElement saveBtn;
 	@FindBy(xpath = "//a[@class='exante-default-header-txt-bold'][contains(text(),'Home')]") WebElement homeBtn;
 	@FindBy(xpath = "//input[@name='btnSearch']") WebElement srchBtn;
@@ -237,6 +243,19 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	@FindBy(xpath = "//td[@class='errors']") WebElement errormsgcsr;
 	@FindBy(xpath = "//table[@class='tableborder']/tbody/tr/td/table/tbody/tr") List<WebElement> payerTable;
 		
+	//Added by Mohammad: WebElement Fee Amount Info Icon Message
+	@FindBy(xpath="//span[@class='wrapperTooltip']")
+	WebElement iHoverMessageFeeAmount_UPA;
+	
+	@FindBy(xpath="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr")
+	WebElement tableViewPayments;
+	
+	@FindBy(xpath="//tr[@class='search-remittance__table_header']/../tr")
+	List<WebElement> payNumber_SR_P1;
+	
+	@FindBy(xpath="(//a[@class='pageNo' and contains(text(),'Next')])[1]")
+	WebElement nextLink_SR;
+	
 	
 	Map dataRequiredForSearch;
 	public SearchRemittance searchRemittance;
@@ -244,7 +263,14 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String [] expectedOptions= {"Last 30 days","Last 60 days","Last 90 days","Last 4-6 months","Last 6-9 months","Last 9-13 months"};
 	PaymentSummaryFislService service = null;
-	
+
+	public ViewPayments(TestBase testConfig)
+	{
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+	}
+
+	/*
 	public ViewPayments(TestBase testConfig)
 	{
 		super(testConfig);
@@ -270,7 +296,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 		else if(System.getProperty("Application").contains("CSR")){
 			Element.verifyElementPresent(drpDwnQuickSearch,"Quick Search dropdown");
 		}
-	}
+	} */
 	
 	public ViewPayments(TestBase testConfig,String filter)
 	{
@@ -533,6 +559,7 @@ public class ViewPayments extends ViewPaymentsDataProvider{
 	public ViewPayments verifyEpraStatus(String expectedStatus) 
 	 {
          Browser.browserRefresh(testConfig);
+         Browser.wait(testConfig, 2);
          String paymentNumDB = System.getProperty("CONSL_PAY_NBR");
   		int sqlRowNo=206;
   		testConfig.putRunTimeProperty("paymentNumDB", paymentNumDB);
@@ -935,7 +962,7 @@ public void verifyFailedPaymentPopUp()
 	{
 		Element.selectByVisibleText(drpDwnFilterPayments,filterPayments,filterPayments + " " +" from 'Filter payments' dropdown");
 		Browser.waitForLoad(testConfig.driver);
-				
+		drpDwnQuickSearch=Element.findElement(testConfig, "id", "periodId");
 		Element.selectByVisibleText(drpDwnQuickSearch,quickSearchFilter,quickSearchFilter + " " +" from 'Quick Search' dropdown");
 		Browser.waitForLoad(testConfig.driver);
 		
@@ -1011,7 +1038,6 @@ public void verifyFailedPaymentPopUp()
 		resultCount=resultCount.substring("Showing".length(), resultCount.indexOf("Results"));
 		return resultCount.trim();
 	}
-	
 	
 	
 	public String getRecordCountFromUISR()
@@ -1195,7 +1221,7 @@ public void verifyFailedPaymentPopUp()
 			           pageNo++;
 			     }
 		 }
-		Log.Comment("Details from UI is: "+outerMap.toString());
+//		Log.Comment("Details from UI is: "+outerMap.toString());
 		return outerMap;
 	   
     }
@@ -1235,6 +1261,50 @@ public void verifyFailedPaymentPopUp()
 	return (ArrayList<String>) headerList;
 	   
 }
+	public ArrayList<String> getUIValuesForSinglePaymentPage()
+	{
+		Browser.wait(testConfig, 2);
+		ArrayList<String> headers=getHeadersFromResultTable();
+		List <String> rowValues=new ArrayList<String>();
+		int size=0;
+		WebElement dataRow=null;
+		Browser.wait(testConfig, 2);
+		if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
+			searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
+			if (!searchResultRows.isEmpty()) {
+				size=searchResultRows.get(0).findElements(By.tagName("td")).size();
+			}
+		}else{
+			dataRow=Element.findElement(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[2]");
+			if(dataRow!=null)
+				size=dataRow.findElements(By.tagName("td")).size();
+		}
+		Browser.wait(testConfig, 2);
+		for (int i=0;i<size;i++)
+		{
+			String colValue="";
+			if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page")))
+			{
+				colValue=searchResultRows.get(1).findElements(By.tagName("td")).get(i).getText();
+				rowValues.add(colValue);
+			}
+			else
+			{
+				colValue=dataRow.findElements(By.tagName("td")).get(i).getText();
+				if(i==size-1 && !StringUtils.equals("PAY", testConfig.getRunTimeProperty("userType")))
+				{
+					WebElement temp=dataRow.findElements(By.tagName("td")).get(i).findElement(By.tagName("select"));
+					colValue=Element.getFirstSelectedOption(testConfig, temp, "text");
+					rowValues.add(colValue);
+				}
+				else if(i>=headers.indexOf("835 / EPRA") && i<(size-1))
+					continue;
+				else if(i!=(size-1))
+					rowValues.add(colValue);
+			}
+		}
+		return (ArrayList<String>) rowValues;
+	}
 	    	
 	/**
 	 * Select all filters, takes arguments
@@ -1280,12 +1350,11 @@ public void verifyFailedPaymentPopUp()
 		  {
 			innerMap=new LinkedHashMap<String, String>();
 			
-			if( payments[i].getArchiveIndicator()==null && ("N".equals(testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR"))
-					|| "Show All".equals(testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR"))))
+			if( payments[i].getArchiveIndicator()==null && StringUtils.equals("N",testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")) || StringUtils.equals("Show All",testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
 				innerMap.put("Payment Status",getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
-			else if(payments[i].getArchiveIndicator().equals(testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
+			else if(StringUtils.equals(payments[i].getArchiveIndicator(), testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
 				innerMap.put("Payment Status",getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
-			else if("Show All".equals(testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
+			else if(StringUtils.equals("Show All",testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
 				innerMap.put("Payment Status",getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
 			else
 				continue;
@@ -1325,7 +1394,7 @@ public void verifyFailedPaymentPopUp()
 			outerMap.put(innerMap.get("Payment Number")+ "_" + innerMap.get("Payment Date"), innerMap);
 		 }
 		  
-		 Log.Comment("Details from FISL is: "  +outerMap.toString());
+//		 Log.Comment("Details from FISL is: "  +outerMap.toString());
 		 return outerMap;
 	}
 	
@@ -1463,6 +1532,8 @@ public void verifyFailedPaymentPopUp()
     	return noOfPages;
 	 } 
 	
+	
+		
 	public int getNumberOfPagesSR()
 	 {
 		int noOfPages=0;
@@ -1654,7 +1725,8 @@ public void verifyFailedPaymentPopUp()
 		Object request = null;
 		String[] pay_835_id;
 		if("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
-			 pay_835_id = new String[] {"87726"};
+			Map data=DataBase.executeSelectQuery(testConfig, QUERY.PAYR_DETAILS_FOR_PAYR_USER, 1);
+			 pay_835_id = new String[] {data.get("PAYR_835_ID").toString().trim()};
 		}
 		else {
 			 pay_835_id = new String[] {};
@@ -1672,11 +1744,13 @@ public void verifyFailedPaymentPopUp()
 		parameterMap.setComparator("Equals");
 		parameterMapList.add(parameterMap);
 		
+		if(null != testConfig.getRunTimeProperty("key")){
 		parameterMap = new ParameterMap();
 		parameterMap.setKey(testConfig.getRunTimeProperty("key"));
 		parameterMap.setValue(testConfig.getRunTimeProperty("value"));
 		parameterMap.setComparator("Equals");
 		parameterMapList.add(parameterMap);
+		}
 		searchCriteria.setParameterMap(parameterMapList);
 
 		PaymentMadeOnDateRange paymentMadeOnDateRange = epn.getPaymentMadeOnDateRange();
@@ -1684,7 +1758,7 @@ public void verifyFailedPaymentPopUp()
 		paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
 		String[] identifiers = new String[] {};
 		epn.setEpsNationalProviderIdentifiers(identifiers);
-		System.out.println("Request: " + epn.toString());
+ 		Log.Comment("Request: " + epn.toString());
 		request = epn;
 
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) epsPaymentSearchRequestHelper.postRequestGetResponse(request);
@@ -2984,6 +3058,8 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	}
 	
 	
+		
+	
 	public RemittanceDetail clickPaymentNumber(String srchType)
 	{
 		
@@ -3224,6 +3300,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		int columnIndex=tblHeader.indexOf(columnName);
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		Log.Comment("Expected Payment number is: "+expectedPaymntNo);
 		boolean found=false;
 		WebElement link =null;
 		int totalNoOfPages=getNumberOfPagesSR();	
@@ -3243,7 +3320,6 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 					actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 					actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
 			    	   if(actualPaymntNo.contains(expectedPaymntNo)){
-			    		   System.out.println("expected payment num : "+expectedPaymntNo);
 			    		   found=true;
 			    		   claimCount=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 			    		   if(claimCount.getText().toString().equals("0")){
@@ -3276,6 +3352,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	public ViewPayments verify835EPRAlink(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		Log.Comment("Expected electronic payment number is: "+expectedPaymntNo);
 		boolean found=false;
 		WebElement link =null;
 		WebElement epraLink=null;
@@ -3338,7 +3415,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		String label=btnSave.getAttribute("value").trim();
 		Helper.compareEquals(testConfig, "Save button relabeled", "Save", label);
 		if (Element.findElement(testConfig, "xpath", "//*[contains(text(),'Save Archieve')]")== null)
-			Log.Pass("Save Archieve button is not present");
+			Log.Pass("\b Pass: Save Archieve button is not present");
 		return this;
 		
 	}
@@ -3453,6 +3530,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	public ViewPayments verifyPaymentStatusColumnDropdwn(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		Log.Comment("Expected Payment number is "+expectedPaymntNo);
 		boolean found=false;
 		int totalNoOfPages=getNumberOfPages();	
 		WebElement drpDwnPaymntStatusCol=null;
@@ -3576,11 +3654,11 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	
 	public ViewPayments verifyGetStartedModal(){
 		Element.verifyElementPresent(popUpGetStarted, "Bring More power to you");
-		Element.click(btnNoThnx, "No Thanx Button");
+		Element.clickByJS(testConfig, btnNoThnx, "No Thanx Button");
 		Element.verifyElementNotPresent(popUpGetStarted, "Bring More power to you");
 		clickGrayedClaimCount();
-		Element.click(btnGetStarted, "Get Started button");
-		Element.click(btnIAccept, "I Accept Button");
+		Element.clickByJS(testConfig, btnGetStarted, "Get Started button");
+		Element.clickByJS(testConfig, btnIAccept, "I Accept Button");
 		return this;
 	}
 	
@@ -3592,19 +3670,17 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	}
 	
 	public ViewPayments clickCloseOnPopUp(){
-		Element.click(btnClosePopup, "Close Pop Up");
+		Element.clickByJS(testConfig, btnClosePopup, "Close Pop Up");
 		Element.verifyElementNotPresent(popUpViewPay, "View Payments PopUp");
 		return this;
 	}
 	
-	public ViewPayments vaidateHeadersColumns(String page) throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
-		ArrayList<String> headers=getHeadersFromResultTable();
-		headers.remove("835 / EPRA");
-		headers.remove(10);
+	public ViewPayments validateSinglePaymentPageData() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+		ArrayList<String> headers=getUIValuesForSinglePaymentPage();
 		testConfig.putRunTimeProperty("page", "printPaymentSummary");
-
+		clickPrintPaymentBtn();
 		String parentWin=Browser.switchToNewWindow(testConfig);
-		ArrayList<String> headersPop=getHeadersFromResultTable();
+		ArrayList<String> headersPop=getUIValuesForSinglePaymentPage();
 
 		Browser.switchToParentWindow(testConfig, parentWin);
 		Helper.compareEquals(testConfig,"Single payment Summary and print payment Summary ", headers, headersPop);
@@ -3614,6 +3690,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	public ViewPayments verifyFeeAmountDash(){
 		String actualPaymntNo="";
 		String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		String conslpayno=testConfig.getRunTimeProperty("CONSL_PAY_NBR");
 		boolean found=false;
 		int totalNoOfPages=getNumberOfPages();	
 		ArrayList<String> tblHeader=new ArrayList<String>();
@@ -3630,12 +3707,12 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		    	   if(actualPaymntNo.contains(expectedPaymntNo)){
 		    		found=true;
 					String feeAmountUI=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).getText().toString();
-					int sqlRowNo=1510;
+					int sqlRowNo=1121;//1510;
 					Map results = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 					if(results==null)
 						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "-", feeAmountUI);
 					else
-						Helper.compareEquals(testConfig, "Fee Amount on View Payments", results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
+						Helper.compareEquals(testConfig, "Fee Amount on View Payments", "$"+results.get("DBT_FEE_ACCRD_AMT"), feeAmountUI);
 		    	   }
 		    	   if(found==true)break;
 		        }
@@ -4061,7 +4138,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean quickSearchUI = quickSearch.isDisplayed();
 		Helper.compareEquals(testConfig, "Quick Search Drop Down", true, quickSearchUI);
 		
-		Boolean marketTypUI = marketTyp.isDisplayed();
+		Boolean marketTypUI = marketTyp.isDisplayed(); 
 		Helper.compareEquals(testConfig, "Market Type Drop Down", true, marketTypUI);
 		
 		Boolean activeDrpDownUI = activeDrpDown.isDisplayed();
@@ -4082,7 +4159,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean amountHeaderUI = amountHeader.isDisplayed();
 		Helper.compareEquals(testConfig, "Amount Header", true, amountHeaderUI);
 		
-		Boolean typeHeaderUI = typeHeader.isDisplayed();
+		Boolean typeHeaderUI = typeHeader.isDisplayed(); 
 		Helper.compareEquals(testConfig, "Type Header", true, typeHeaderUI);
 		
 		Boolean paymentStatusHeaderUI = paymentStatusHeader.isDisplayed();
@@ -4100,11 +4177,14 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		Boolean ppraHeaderUI = ppraHeader.isDisplayed();
 		Helper.compareEquals(testConfig, "Payer PRA Header", true, ppraHeaderUI);
 		
-		Boolean archiveHeaderUI = archiveHeader.isDisplayed();
-		Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
+		//Boolean archiveHeaderUI = archiveHeader.isDisplayed(); 
+		//Helper.compareEquals(testConfig, "Archive Header", true, archiveHeaderUI);
 		
 		Boolean printBtnUI = printBtn.isDisplayed();
 		Helper.compareEquals(testConfig, "Print Button", true, printBtnUI);
+		
+		Boolean printTextFooterUI = printTextFooterTxt.isDisplayed();
+		Helper.compareEquals(testConfig, "Print Text Footer UI", true, printTextFooterUI);
 	}
 
 	public void verifyPayNumHypherLinkClaimDtlPayer() throws Exception
@@ -4236,9 +4316,214 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		    Element.clickByJS(testConfig,firstPaymentNumber, "First payment Number");
 			
 		}
+		
+		
+		//Added by Mohammad
+		public void verifyFeeAmountInfoHoverMessage()
+		{
+			String iHoverMessageFeeAmount = "If you are an administrator, you have access to the Optum Pay Solutions tab to view total accrued fees for the month. The fees do not include taxes. If your organization is tax exempt, please send your certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
+			Helper.compareEquals(testConfig, "Fee Amount Info Icon Hover Message", iHoverMessageFeeAmount, iHoverMessageFeeAmount_UPA.getAttribute("title"));
+		}
+		
+		public void verifyColumnValuesForEachPayment(String columnName)
+		{
+			int columnNumber = 0;
+			
+			ArrayList<String> tblHeader=new ArrayList<String>();
+			tblHeader=getHeadersFromResultTable();
+			
+			for (int i=0; i<tblHeader.size(); i++)
+			{
+				Log.Comment("Col Name: " + tblHeader.get(i));
+				if(tblHeader.get(i).equalsIgnoreCase(columnName))
+				{
+					columnNumber=i+1;
+				}
+			}
+			
+			List<WebElement> rowsForEachPayment = Element.findElements(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
+			
+			for (int j=0; j<rowsForEachPayment.size()-2; j++)
+			{
+				
+				String xpathPayerName="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr["+ (j+2) +"]/td[1]";
+				WebElement payerName = Element.findElement(testConfig, "xpath", xpathPayerName);
+				
+				String payerNameforEachPayment = payerName.getText();
+				
+				String xpathColumnNameRequired="//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr["+ (j+2) +"]/td["+columnNumber+"]";
+				WebElement xpathColumnName = Element.findElement(testConfig, "xpath", xpathColumnNameRequired);
+				
+				String xpathColumnNameRequiredforEachPayment = xpathColumnName.getText();
+				
+				Log.Comment("For Payer Name: " + payerNameforEachPayment + ", " + columnName + " column value for each payment is: " + xpathColumnNameRequiredforEachPayment);
+				
+			}
+			
+		}
 
+	/**
+	 *Author : Vinay Raghumanda
+	 * Validates page text in View Payments screen for different types of users.
+	 * @param credentials
+	 * @param portalAccess
+	 */
+	public void verifyPageTextFor(String accessType, String portalAccess) {
 
+		String actualParagraph, expectedHeader, expectedPara, expectedPara2;
+		WebElement header, paragraphTag;
+
+		Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='view-payments-tabs']/div[1]"), 30);
+
+		switch (accessType + "_" + portalAccess + "_" + testConfig.getRunTimeProperty("tinType")) {
+			case "PROV_Admin_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[2]");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//div[@id='view-payments-tabs']/div[1]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.header").trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.ao.viewPayments.topMessageDiv.paragraph").trim();
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Admin_Standard_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.admin.standard.ao.viewPayments.topMessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.standard.ao.viewPayments.topMessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Gen_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.premium.ao.viewPayments.topMessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.general.premium.ao.viewPayments.topMessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Gen_Standard_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				expectedHeader = TestBase.contentMessages.getProperty("prov.general.standard.ao.viewPayments.topmessageDiv.header");
+				expectedPara = TestBase.contentMessages.getProperty("prov.general.standard.ao.viewPayments.topmessageDiv.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "PROV_Admin_Premium_VO":
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+				actualParagraph = paragraphTag.getText().trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.vo.viewPayments.topmessageDiv.paragraph");
+				Helper.compareEquals(testConfig, "Page Text", expectedPara.trim(), actualParagraph);
+				break;
+			case "PROV_Gen_Premium_VO":
+				actualParagraph = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]").getText().trim();
+				expectedPara = TestBase.contentMessages.getProperty("prov.admin.premium.vo.viewPayments.topmessageDiv.paragraph");
+				Helper.compareEquals(testConfig, "Page Text", expectedPara.trim(), actualParagraph);
+				break;	
+			case "BS_Admin_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.premium.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.premium.ao.viewPayments.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "BS_Admin_Standard_AO":
+				
+				 if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+	
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.header");
+					expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.paragraph");
+					expectedPara2 = TestBase.contentMessages.getProperty("bs.admin.standard.withinTrialNotPaid.ao.viewPayments.paragraph2");
+					validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+				 else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+	
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph1");
+				expectedPara2 = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.paragraph2");
+				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+				 else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "Last 30 days"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.greyedout.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.admin.standard.ao.viewPayments.greyedout.paragraph");
+				VerifyGreyedOutText(expectedHeader, expectedPara);
+				}
+				break;
+			case "BS_Gen_Premium_AO":
+				header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]/b");
+				paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.premium.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.premium.ao.viewPayments.paragraph");
+				validateForPageText(expectedHeader, expectedPara, header, paragraphTag);
+				break;
+			case "BS_Gen_Standard_AO":
+			    if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and NotPaid"))
+	
+				{
+					expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.header");
+					expectedPara =   TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.paragraph");
+					expectedPara2 = TestBase.contentMessages.getProperty("bs.general.standard.withinTrialNotPaid.ao.viewPayments.paragraph2");
+					validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+			    else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "PostTrial and NotPaid"))
+	
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph1");
+				expectedPara2 = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.paragraph2");
+				validatePageText2(expectedHeader, expectedPara, expectedPara2);
+				}
+			    else if (StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "Last 30 days"))
+				{
+				expectedHeader = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.greyedout.header");
+				expectedPara = TestBase.contentMessages.getProperty("bs.general.standard.ao.viewPayments.greyedout.paragraph");
+				VerifyGreyedOutText(expectedHeader, expectedPara);
+				}
+				break;
+			default:
+				break;
+		}
 
 	}
 
+	private void validatePageText2(String expectedHeader, String expectedPara, String expectedPara2) {
+		WebElement header, paragraphTag, paragraphTag2;
+		String actualHeader, actualParagraph, actualParagraph2;
+		header = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/h2");
+		paragraphTag = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[2]");
+		paragraphTag2 = Element.findElement(testConfig, "xpath", "//*[@class=\"topMessaggeDiv\"]/p[3]");
+		actualHeader = header.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		actualParagraph2 = paragraphTag2.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+		if(expectedPara2 !=null)
+		Helper.compareEquals(testConfig, "Page Text", expectedPara2, actualParagraph2);
+	}
 
+	private void validateForPageText(String expectedHeader, String expectedPara, WebElement header, WebElement paragraphTag) {
+		String actualHeader, actualParagraph;
+		actualHeader = header.getText().trim();
+		actualParagraph = paragraphTag.getText().trim();
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+	}
+	public ViewPayments clickGreyedOut()
+   {
+	WebElement greyArea=null;
+	greyArea = searchResultRows.get(1).findElements(By.tagName("td")).get(getHeadersFromResultTable().indexOf("Claim Count"));	
+	 Element.clickByJS(testConfig, greyArea, "GreyArea Portion clicked");	
+	 return this;
+   }
+	public ViewPayments VerifyGreyedOutText(String expectedHeader, String expectedPara)
+	   {
+		String actualHeader, actualParagraph;
+		actualHeader = Element.findElement(testConfig, "xpath", "//div[@id=\"viewPaymentsPremium\"]/h2").getText().trim();
+		actualParagraph = Element.findElement(testConfig, "xpath", "//div[@id=\"viewPaymentsPremium\"]/p[2]").getText().trim();
+	
+		Helper.compareEquals(testConfig, "Page Text", expectedHeader, actualHeader);
+		Helper.compareEquals(testConfig, "Page Text", expectedPara, actualParagraph);
+
+		
+		
+		 return this;
+	   } 
+}

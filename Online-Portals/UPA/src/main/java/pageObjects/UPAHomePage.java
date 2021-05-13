@@ -1,13 +1,19 @@
+
 package main.java.pageObjects;
 
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +23,7 @@ import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.ViewPaymentsDataProvider;
+
 import org.testng.Assert;
 
 public class UPAHomePage extends HomePage {
@@ -95,7 +102,7 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText = "Billing Service Information") 
 	WebElement lnkBsInfo;
 	
-	@FindBy(xpath = "//a[@id='tabOptumPay']") 
+	@FindBy(linkText = "Optum Pay Solutions") 
 	WebElement lnkOptumPaySol;
 	
 	@FindBy (xpath="//table[@id='outerTable']//section/div[1]//p")
@@ -120,11 +127,14 @@ public class UPAHomePage extends HomePage {
 	@FindBy(linkText="Document Vault")
 	WebElement  resourcesDocVault;
 	
-	@FindBy(xpath = "//b[contains(text(),'Partner Links')]")
+	@FindBy(xpath = "//span[contains(text(),'Partner Links')]")
 	WebElement  resourcesPartnerLink;
 	
 	@FindBy(linkText="Cancel Form")
 	WebElement  resourcesCancelForm;
+	
+	@FindBy(linkText="Cancellation Form")
+	WebElement  CancellationForm;
 	
 	@FindBy(id="guide-top")
 	WebElement  guideSection;
@@ -174,6 +184,13 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
+	@FindBy(className="slide__messageBox")
+	List<WebElement> imageTiles;
+	@FindBy(className="slide video")
+	List<WebElement> videoTiles;
+	@FindBy(className="carousel__nav__label")
+	List<WebElement> carouselNav;	
+
 	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -330,9 +347,11 @@ public class UPAHomePage extends HomePage {
 	
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
-			Helper.getPayerSchema(testConfig,searchCriteria);	
+			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
+		testConfig.putRunTimeProperty("userType",userType);
+		testConfig.putRunTimeProperty("searchCriteria", searchCriteria);
 		switch (userType)
 			{
 			   case "PROV": 
@@ -343,9 +362,9 @@ public class UPAHomePage extends HomePage {
 				 if ((!tinList.contains(Enrolledtin))) 
 				 {
 					Element.click(homeTab, "home Tab");
-					Browser.waitForLoad(TestBase.driver);
+					Browser.waitForLoad(testConfig.driver);
 					Browser.wait(testConfig, 2);
-					Element.expectedWait(prvdrTIN, testConfig, "Tin dropdown", "Tin dropdown");
+					Element.fluentWait(testConfig, prvdrTIN, 60, 1, "Tin dropdown");
 				 }
 				Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
 				break;
@@ -367,74 +386,192 @@ public class UPAHomePage extends HomePage {
 		return tin;
 	}
 
-	public void verifyHomePageCarouselText(String userType) {
-		switch (userType){
-			case "BS_Admin":
-
+	/**
+	 * Author: Vinay Raghumanda
+	 * Verifies Home page Carousel text for different types of users
+	 * @param userType
+	 * @param credentials
+	 */
+	public void verifyHomePageCarouselText(String userType, String credentials) {
+		switch (userType) {
+			case "BS":
 				String[] expectedBSHeaders = {
-						"Missing the Optum Pay features you need?",
-						"Debit authorization required.",
-						"Is your client's practice tax exempt?",
-						"Missing the full functionality of Optum Pay?",
-						"What is Optum Pay?"
+						TestBase.contentMessages.getProperty("bs.admin.home.car1.header"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car2.header"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car3.header"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car4.header"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car5.header")
 				};
-
 				String[] expectedBSTexts = {
-						"Missing the Optum Pay features you need?The upgraded Optum Pay portal gives you more ways to manage claims payment and remittance. Talk to your provider client about activating Optum Pay.",
-						"Debit authorization required.Your ACH clients Optum Pay fees will be deducted from their TIN level bank account on a monthly basis, they will need to provide Optum Bank Company ID (1243848776) and Company Name (Optum Pay) to their bank to authorize a debit from their account.",
-						"Is your client's practice tax exempt?Send their tax exemption certificate to optumpay_taxexempt@optum.com",
-						"Missing the full functionality of Optum Pay?New features include: workflow management settings, claim counts and expanded access to historical claim payment data and search history. Talk to your provider client about activating Optum Pay.",
-						"What is Optum Pay?Watch this short video to learn about the new features and functionality that are included with an Optum Pay activation."
+						TestBase.contentMessages.getProperty("bs.admin.home.car1.text"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car2.text"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car3.text"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car4.text"),
+						TestBase.contentMessages.getProperty("bs.admin.home.car5.text")
 				};
 				homePageCarouselTextValidation(expectedBSHeaders, expectedBSTexts);
 				break;
 			case "PAY_Admin":
-
 				String[] expectedPayerHeaders = {
-						"Why Optum Pay?",
-						"Less paper. Better tools.",
-						"Flexibility with Optum Pay.",
-						"Getting questions about Optum Pay from providers?",
-						"What is Optum Pay?"
+						TestBase.contentMessages.getProperty("payer.admin.home.car1.header"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car2.header"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car3.header"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car4.header"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car5.header")
 				};
-
 				String[] expectedPayerTexts = {
-						"Why Optum Pay?It makes managing claims payment and remittance processes easier and more efficient.",
-						"Less paper. Better tools.Optum Pay is designed to increase practice efficiency.",
-						"Flexibility with Optum Pay.Providers can select from two payment options - ACH and virtual card payment. If ACH is selected, a basic level of the Optum Pay portal is offered at no charge.",
-						"Getting questions about Optum Pay from providers?Our call center can help. Have them call 1�877�620�6194 or email us at optumpay@optum.com.",
-						"What is Optum Pay?Watch this short video to learn about the new features and functionality that are included with an Optum Pay activation."
+						TestBase.contentMessages.getProperty("payer.admin.home.car1.text"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car2.text"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car3.text"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car4.text"),
+						TestBase.contentMessages.getProperty("payer.admin.home.car5.text")
 				};
 				homePageCarouselTextValidation(expectedPayerHeaders, expectedPayerTexts);
 				break;
+			case "PROV":
+				if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO") && StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "WithinTrial and Paid")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.trial.home.car3.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				}
+				else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car4.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car4.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car3.header"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car4.header"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car5.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car3.text"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car4.text"),
+							TestBase.contentMessages.getProperty("prov.admin.standard.home.car5.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Gen") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car3.header"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car4.header"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car5.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car3.text"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car4.text"),
+							TestBase.contentMessages.getProperty("prov.general.premium.home.car5.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard") &&
+						credentials.equalsIgnoreCase("PROV_Gen") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car3.header"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car4.header"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car5.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car3.text"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car4.text"),
+							TestBase.contentMessages.getProperty("prov.general.standard.home.car5.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
+						credentials.equalsIgnoreCase("PROV_Admin") &&
+						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("VO")) {
+					String[] expectedProvHeaders = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car1.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car2.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car3.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car4.header"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car5.header")
+					};
+
+					String[] expectedProvTexts = {
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car1.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car2.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car3.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car4.text"),
+							TestBase.contentMessages.getProperty("prov.admin.premium.vo.home.car5.text")
+					};
+					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					break;
+				} else {
+					Log.Comment("Search criteria not met");
+				}
 		}
 	}
 
 	private void homePageCarouselTextValidation(String[] expectedHeaders, String[] expectedTexts) {
-
-		WebElement windowSlides = Element.findElement(testConfig, "xpath", "//*[@class=\"slides-window\"]");
-		List<WebElement> imageTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide image\"]"));
-		List<WebElement> videoTiles = windowSlides.findElements(By.xpath("//*[@class=\"slide video\"]"));
-
-
-		int j=0;
-		for(int i=0; i<imageTiles.size(); i++){
-			Element.waitTillTextAppears(imageTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
-			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim()+
+		int counter = 0;
+		while(!(imageTiles.get(0).findElement(By.tagName("h2")).getText().trim().equals(expectedHeaders[0]))){
+			Browser.wait(testConfig, 2);
+			imageTiles = Element.findElements(testConfig, "xpath", "//div[@class='slide__messageBox']");//windowSlides.findElements(By.xpath("//div[@class='slide__messageBox']"));
+			counter++;
+			if(counter>10){
+				break;
+			}
+		}
+		
+		int j = 0;
+		for (int i = 0; i < imageTiles.size(); i++) {
+			Element.click(carouselNav.get(i), "Carousel Navigation");
+			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
 					imageTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Assert.assertTrue(actualText.equals(expectedTexts[j]), "Text Validation failed");
-			Log.Comment("Text validated successfully: \n"+actualText+"\n");
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
 			j++;
 		}
-		for(int i=0; i<videoTiles.size(); i++){
-			Element.waitTillTextAppears(videoTiles.get(i).findElement(By.tagName("h2")), expectedHeaders[j], testConfig);
-			String actualText = videoTiles.get(i).findElement(By.tagName("h2")).getText().trim()+
-					videoTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Assert.assertTrue(actualText.equals(expectedTexts[j]), "Text Validation failed");
-			Log.Comment("Text validated successfully: \n"+actualText+"\n");
-			j++;
-		}
-  }
+	}
 	
 	public void verifyPartnersLink()
 	{
@@ -455,19 +592,19 @@ public class UPAHomePage extends HomePage {
 	}
 
 	
-	public void verifyStandardTinAssociation(String userType) {
+	public void verifyStandardTinAssociation(String userType) throws IOException {
 		String id=testConfig.runtimeProperties.getProperty("UPA_"+"OptumID_"+userType+"_"+System.getProperty("env"));
 		testConfig.putRunTimeProperty("id",id);
-		int sql=1348;
-		Map standardTin = DataBase.executeSelectQuery(testConfig,sql, 1);
-		String rows=standardTin.get("ROWS").toString();
-		testConfig.putRunTimeProperty("rows",rows);
-		int count = Integer.parseInt(rows);
-		
-		if (count==0)			
-			Log.Fail("Insert any Standard TIN from backend");		
-		else	
-			Log.Pass(count+" "+"standard TIN(s) associated with the user, proceeding to check visibility of Bring More Power pop-up");
+		int sqlTin=23;
+		ArrayList<String> tins = new ArrayList<>();
+		HashMap<Integer, HashMap<String, String>> tinsDb = DataBase.executeSelectQueryALL(testConfig, sqlTin); //DataBase.executeSelectQuery(testConfig, sqlTin, 1);
+	
+		DataBase.executeDeleteQuery(testConfig, QUERY.DELETE_ALL_TINS_FOR_USER);
+		for (Integer tmp : tinsDb.keySet()) {
+			tins.add(tinsDb.get(tmp).get("PROV_TIN_NBR"));
+			testConfig.putRunTimeProperty("tin", tins.get(tmp-1).toString());
+			DataBase.executeInsertQuery(testConfig, QUERY.INSERT_ALL_STD_TRIAL_TINS_FOR_USER);
+		}
 		
 	}
 	public void verifyBringMorePowerPage() {
@@ -509,14 +646,40 @@ public class UPAHomePage extends HomePage {
 		   String expectePrivacydURL = "https://www.uhcprovider.com/en/resource-library/link-provider-self-service.html";
 		   Browser.verifyURL(testConfig, expectePrivacydURL);
 		   Browser.switchToParentWindow(testConfig,  parentwindowhandle);
-		
-
 	}
 	public PaymentDataFilesUPA clickPaymentDataFilesTab() 
 	{
-		Browser.wait(testConfig, 3);
+		Browser.wait(testConfig, 1);
 		Element.clickByJS(testConfig,paymentDataFilesTab, "Payment Data Files tab");
-		return new PaymentDataFilesUPA(testConfig);
-
+		return new PaymentDataFilesUPA (testConfig);
+	}
+	
+	
+	/**
+	 * Author: Mohammad Khalid. 
+	 * Clicks on the Cancellation Form in Resources Drop down**/
+	
+	public void verifyCancellationFormLinkUnderResources()
+	{
+		Element.verifyElementPresent(CancellationForm, "Cancellation Form");
+		Element.click(CancellationForm, "TnC");
+		Browser.switchToNewWindow(testConfig);
+		Helper.compareEquals(testConfig, "Tnc windows", 2, Browser.getNoOfWindowHandles(testConfig));
+		Helper.compareContains(testConfig, "The Cancellation PDF URL", "pdf", testConfig.getDriver().getCurrentUrl());
+		Browser.verifyURL(testConfig, "pdf");
+	}
+	
+	public void verifyCancellationFormLinkPDFContentPostLogin() throws IOException
+	{
+		String expectedPDFContent=null;
+		String actualPDFContent=null;
+		
+		String exPDFPath = System.getProperty("user.dir") + "\\PDFDocuments\\CancellationForm.pdf";
+		
+		actualPDFContent = Helper.readPDF(TestBase.driver.getCurrentUrl());
+		expectedPDFContent = Helper.readPDF(exPDFPath);
+		
+		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
 	}
 }
+

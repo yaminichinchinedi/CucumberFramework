@@ -168,7 +168,7 @@ Scenario Outline: - verify search results for search remittance
 	Then User clicks on Search Remittance link for UPA
 	Then User Enters Search Remittance tin and click on search button for "<userType>".
 	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Criteria Type>"	
+	Then verify search results for "<Search Criteria>"	
 	Examples:
 
 		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
@@ -206,3 +206,31 @@ And User verifies page text message "<PageTextMsg>"
  |    PROV_Gen     |        PROV     |PremiumOrStandardTIN  |	AO	    |		Premium     	|PremiumPrvGen |
  |    PROV_Gen     |        PROV     |PremiumOrStandardTIN  |	AO	    |		Standard     	|StandardPrvAdm|
  
+#Author : Vinay Raghumanda
+	#(VO is part of US3438488)
+	@US3179215 @US3438488 
+ Scenario Outline: Search Remittance Page Text Validation
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Search Remittance link for UPA
+		Then Validate Search Remittance Page Text for "<credentials>" for "<portalAccess>"
+		Examples:
+			| credentials | userType | searchCriteria       | tinType | portalAccess |
+			| PROV_Admin  | PROV     | PremiumOrStandardTIN | VO      | Premium      |
+			| PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
+			| PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Standard     |
+			| PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
+			| PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
+
+	@US3179215
+	Scenario Outline: Search Remittance Page Text Validation
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Search Remittance link for UPA
+		Then User Enters Search Remittance tin and click on search button for "<userType>".
+		Then Validate Search Remittance Page Text for "<credentials>" for "<portalAccess>"
+		Examples:
+			| credentials | userType | searchCriteria | tinType | portalAccess |
+			| BS_Admin    | BS       | Last 60 days   | AO      | Premium      |
+			| BS_Gen      | BS       | Last 60 days   | AO      | Premium      |
+			
