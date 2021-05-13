@@ -69,10 +69,9 @@ public class BillingServiceInfo {
 	@FindBy(xpath = "//td[2]//a[contains(text(),'Home')]") WebElement btnHome;
 	@FindBy(linkText="Billing Service Information") WebElement lnkBillingService;
 	@FindBy(xpath = "//td[contains(text(),'Pending Requests')]") WebElement txtprovPendReq;
-	@FindBy(xpath = "//*[@id=\"billingServiceViewInfoForm\"]/table/tbody/tr[17]/td/table/tbody/tr[2]/td/div/table/tbody/tr[2]/td[3]") WebElement pendreqdate;
-	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[1]/td") WebElement provHistory;
-	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[2]//tr[2]//td[1]") WebElement provHisDate;
-	@FindBy(xpath = "//form[@id=\"billingServiceViewInfoForm\"]//table//tr[19]//tr[2]//tr[2]//td[4]") WebElement provEffcDate;
+	@FindBy(xpath = "//form[@id='billingServiceViewInfoForm']//table//tr[19]//tr[1]/td") WebElement provHistory;
+	@FindBy(xpath = "//form[@id='billingServiceViewInfoForm']//table//tr[19]//tr[2]//tr[2]//td[1]") WebElement provHisDate;
+	@FindBy(xpath = "//form[@id='billingServiceViewInfoForm']//table//tr[19]//tr[2]//tr[2]//td[4]") WebElement provEffcDate;
 	@FindBy(name="apprCheck") WebElement approvePendingReq;
 	@FindBy(name="effectiveDt_2317") WebElement pendeffectdate;
 	@FindBy(name="btnSaveAssoc") WebElement btnProvSave;
@@ -138,9 +137,9 @@ public class BillingServiceInfo {
 		List<String> tinsAssocHeaderUI = new ArrayList<String>();
 		Browser.waitForPageLoad(testConfig.driver);
 		for(int i=1; i<=tinsAssocHeader.size(); i++){			     	  		
-			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", "");															
+			String allOptions=	Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr[16]//table//tr[1]/th["+i+"]").getText().replace("\n", " ");															
 			tinsAssocHeaderUI.add(allOptions);
-		}		
+		}	
 		Helper.compareEquals(testConfig, "Provider BS Info Tab First Row Headers", tinsAssocHeader, tinsAssocHeaderUI);
 	  if(testConfig.driver.findElements(By.xpath("//table//tr[16]//tr[2]//td[4]")).size() != 0) {	  
 		  String effecDate = Element.findElement(testConfig, "xpath", "//table//tr[16]//tr[2]//td[4]").getText().trim();
@@ -161,22 +160,25 @@ public class BillingServiceInfo {
 	
 public void verifyProvSecondRow() throws ParseException{
 	int sql=16;
+	int j;
+	if(Element.findElements(testConfig, "xpath", "//td[contains (text(), 'No Billing Service associations exist')]").size()==0)
+		 j=18;
+	else 
+		 j=17;
 	Map data = DataBase.executeSelectQuery(testConfig,sql, 1); 
 	testConfig.putRunTimeProperty("bsname",data.get("BS_NM").toString());
 		Helper.compareEquals(testConfig, "Pending Request Header in Provider Tab", "Pending Requests", txtprovPendReq.getText());
 		ArrayList<String> pendingReqHeaders = new ArrayList<String>(Arrays.asList("Provider TIN", "Name of Billing Service", "Request Date","Status","Approve","Deny","Effective Date","Notify"));
 		List<String> pendingReqHeadersUI = new ArrayList<String>();
 		
+		
+		
 		for(int i=1; i<=pendingReqHeaders.size(); i++){																	
-			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']/table//tr[17]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
+			String allOptions = testConfig.driver.findElement(By.xpath("//form[@id='billingServiceViewInfoForm']/table//tr["+j+"]//tr[2]//tr[1]/th["+i+"]")).getText().trim();
 			pendingReqHeadersUI.add(allOptions);
 		}
 		Helper.compareEquals(testConfig, "Provider BS Info Tab Second Row Headers", pendingReqHeaders, pendingReqHeadersUI);
-		int j;
-		if(Element.findElements(testConfig, "xpath", "//td[contains (text(), 'No Billing Service associations exist')]").size()==0)
-			 j=18;
-		else 
-			 j=17;		
+		
 		List<WebElement> tinGridRows = Element.findElements(testConfig, "xpath","//form[@id='billingServiceViewInfoForm']//table//tr["+j+"]//tr[2]//tr");
 		String tin = System.getProperty("provTIN");
 		for (int i = 1; i < tinGridRows.size(); i++) {
@@ -195,9 +197,9 @@ public void verifyProvSecondRow() throws ParseException{
 			}
 
 		}
-		
-		Element.isValidFormat("mm/dd/yyyy",pendreqdate.getText().trim(),Locale.ENGLISH);
-  	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendreqdate.getText().trim(),Locale.ENGLISH));
+		WebElement pendReqDate=Element.findElement(testConfig, "xpath", "//form[@id='billingServiceViewInfoForm']//tr["+j+"]//tr[2]/td[3]");
+		Element.isValidFormat("mm/dd/yyyy",pendReqDate.getText().trim(),Locale.ENGLISH);
+  	    Log.Pass("isValid - mm/dd/yyyy = " + Element.isValidFormat("mm/dd/yyyy", pendReqDate.getText().trim(),Locale.ENGLISH));
 }
 	
 	public void verifyProvThirdRow() throws ParseException{
@@ -231,7 +233,7 @@ public void verifyProvSecondRow() throws ParseException{
 
 }
 	
-	public void verifyAssocProv(){
+	public void verifyAssocProv(){			
 		Browser.wait(testConfig, 3);
 		Element.clickByJS(testConfig, lnkAnniversaryHeader, "Anniversary link header");
 	    int count = Element.findElements(testConfig, "xpath", "//table/tbody/tr[16]//tr//tr").size();

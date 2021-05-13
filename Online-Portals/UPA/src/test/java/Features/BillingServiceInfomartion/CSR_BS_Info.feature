@@ -4,7 +4,7 @@
 @CSRRegression  @CSRBSInfoTab
 Feature: CSR Billing Service Info Tab
 @US2872239
-Scenario Outline: BS Info Functionality 
+Scenario Outline: Biiling Service Information Functionality for "<credentials>"
  
    Given User navigates to CSR portal and enters "<credentials>" and login   
    And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
