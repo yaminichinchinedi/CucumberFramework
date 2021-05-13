@@ -483,8 +483,8 @@ public class OptumPaySolution {
 	String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 
 	private TestBase testConfig;
-    List <String> optumPaySolndata=new ArrayList<String>();
-    
+	
+    Map< String, String> optumPaySolndata=new HashMap<String, String>();
 	public OptumPaySolution(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -1838,8 +1838,8 @@ public class OptumPaySolution {
 				if (ValidRoutNos.contains(routingNo)) {
 					Element.enterData(routingNumber, routingNo, "Read from excel and Enter Routing Number", "routingNumber");
 					Element.enterData(accountNumber, accountNo, "Read from excel and Enter Account Number", "accountNumber");
-					optumPaySolndata.add(routingNo);
-					optumPaySolndata.add(accountNo);
+					optumPaySolndata.put("RTE_TRNS_NBR", routingNo);
+					optumPaySolndata.put("BANK_ACCT_NBR", accountNo);
 					//finInstAcctNum.sendKeys(Keys.TAB);
 					Element.enterKeys(accountNumber, Keys.TAB, "TAB Key entering", "TAB Key");
 					Browser.wait(testConfig, 5);
@@ -1903,7 +1903,7 @@ public class OptumPaySolution {
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
 		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
 		WebElement slt=Element.findElement(testConfig, "id", "refund_reason_selector");
-		optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, slt, "text"));
+		optumPaySolndata.put("ACCT_TYP_ID",Element.getFirstSelectedOption(testConfig, slt, "text"));
 		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
 	        
 	       
@@ -1914,7 +1914,7 @@ public class OptumPaySolution {
           Helper.compareEquals(testConfig, "paragraph message", "We have received your payment. Please allow three business days for processing. Below is your confirmation number which can also be referenced at any time on the invoices tab.", paragraphTxt.getText().trim());
           Element.verifyElementPresent(confirmNumber, "Confirmation Number ");
           Element.verifyElementPresent(amtPaid, "Amount paid ");
-  		  optumPaySolndata.add(Element.findElement(testConfig, "xpath", "//div[@id='invoiceAchPaymentModal']/p[3]/strong").getText());
+  		  optumPaySolndata.put("CONFIRM_NBR",Element.findElement(testConfig, "xpath", "//div[@id='invoiceAchPaymentModal']/p[3]/strong").getText());
 
           Element.clickByJS(testConfig,closeBtn, "Close Button");
           Element.fluentWait(testConfig, paidBtn, 60, 1, "Paid Button");
@@ -1923,14 +1923,14 @@ public class OptumPaySolution {
           verifyupdatedRcrdsDB();
     }
 	public void verifyupdatedRcrdsDB(){
-		String	acct_typ_id=null;
+		String	ACCT_TYP_ID=null;
 		try{
 		Map portalUserData = DataBase.executeSelectQuery(testConfig, 7, 1);
 		Map currDateDB = DataBase.executeSelectQuery(testConfig, 1910, 1);
-		if (StringUtils.equals(optumPaySolndata.get(2), "Checking"))
-			acct_typ_id="1";
-		else if(StringUtils.equals(optumPaySolndata.get(2), "saving"))
-			acct_typ_id="2";
+		if (StringUtils.equals(optumPaySolndata.get("ACCT_TYP_ID"), "Checking"))
+			ACCT_TYP_ID="1";
+		else if(StringUtils.equals(optumPaySolndata.get("ACCT_TYP_ID"), "saving"))
+			ACCT_TYP_ID="2";
 		HashMap<Integer, HashMap<String, String>> updatedDebitFee = DataBase.executeSelectQueryALL(testConfig, QUERY.UPDATED_DEBIT_FEE_INVCE);
 		
 		for (int i = 1; i <= updatedDebitFee.size(); i++) {
@@ -1938,13 +1938,13 @@ public class OptumPaySolution {
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_BY_USER").toString(),portalUserData.get("PORTAL_USER_ID").toString());
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_DATE").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("INVC_STS").toString(),"IP" );
-				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("CONFIRM_NBR").toString(),optumPaySolndata.get(3) );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("CONFIRM_NBR").toString(),optumPaySolndata.get("CONFIRM_NBR") );
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_CONSENT_IND").toString(),"Y" );
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_ID").toString(),portalUserData.get("PORTAL_USER_ID").toString());
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_DTTM").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
-				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("RTE_TRNS_NBR").toString(),optumPaySolndata.get(0));
-				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("BANK_ACCT_NBR").toString(),optumPaySolndata.get(1));
-				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("ACCT_TYP_ID").toString(),acct_typ_id );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("RTE_TRNS_NBR").toString(),optumPaySolndata.get("RTE_TRNS_NBR"));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("BANK_ACCT_NBR").toString(),optumPaySolndata.get("BANK_ACCT_NBR"));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("ACCT_TYP_ID").toString(),ACCT_TYP_ID );
 				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_TYPE").toString(),"AO" );
 		}
 		}
