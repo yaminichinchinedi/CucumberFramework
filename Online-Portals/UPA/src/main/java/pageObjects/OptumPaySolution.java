@@ -435,6 +435,37 @@ public class OptumPaySolution {
 	
 	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]")
 	WebElement txtboxPaymentModalAccountNumber;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]/input")
+	WebElement paynowbtn;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[1]/input")
+	WebElement routingNum;
+
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]/input")
+	WebElement accntNum;
+	
+	@FindBy(name="invoicesAchPaymentForm.consent")
+	WebElement accepcheck;
+	
+	@FindBy(xpath="//span[text()='Submit']")
+	WebElement subBtn;
+	
+	@FindBy(xpath="//p[text()='Thank You']")
+	WebElement Thnkyou;
+	@FindBy(xpath="//p[text()='Confirmation Number: ']")
+	WebElement confirmNumber;
+	@FindBy(xpath="//p[text()='Amount Paid: ']")
+	WebElement amtPaid;
+	@FindBy(xpath="//button[@class='btn-secondary closeMakePaymentModal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-primary closeAndRefresh']")
+	WebElement closeBtn;
+	@FindBy(xpath="//*[@id='invoiceAchPaymentModal']/p[2]")
+	WebElement paragraphTxt;
+	
+	@FindBy(xpath="//input[@class='btn btn-secondary mb-0']")
+	WebElement paidBtn;
+			
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+	WebElement amountDue;
 	
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
@@ -1862,9 +1893,24 @@ public class OptumPaySolution {
 	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
 		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
-		
+		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
+		 
 		
 	}
+	public void verifyThankyoupopup(){
+		Browser.wait(testConfig, 2);
+		  Helper.compareEquals(testConfig, "Header message", "Thank You", Thnkyou.getText().trim());
+		  Helper.compareEquals(testConfig, "paragraph message", "We have received your payment. Please allow three business days for processing. Below is your confirmation number which can also be referenced at any time on the invoices tab.", paragraphTxt.getText().trim()); 
+		  Element.verifyElementPresent(confirmNumber, "Confirmation Number ");
+		  Element.verifyElementPresent(amtPaid, "Amount paid ");
+		  Element.clickByJS(testConfig,closeBtn, "Close Button");
+		  Element.fluentWait(testConfig, paidBtn, 60, 1, "Paid Button");
+		  Element.verifyElementNotEnabled(paidBtn,"Paid Button");
+		  Helper.compareEquals(testConfig, "Amount Due", "$0.00", amountDue.getText().trim());
+		
+	}
+		
+	
 }
 
 
