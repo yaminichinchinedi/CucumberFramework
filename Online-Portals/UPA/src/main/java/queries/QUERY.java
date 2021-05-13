@@ -239,5 +239,5 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 		public final static String UPDATE_ABA_VALIDATOR_SWITCH = "UPDATE OLE.SYSTEM_CONFIGURATION SET PROC_DATA = '{$proc_data}' WHERE PROC_CD = 'ABA_API'\r\n";
 
 		public final static String TOTAL_ACCRUED_FEES = "Select SUM(DBT_FEE_ACCRD_AMT) as ACCRDFEE from OLE.DEBIT_FEE_ACCRD dfa where PROV_TIN_NBR='{$tin}' AND dfa.SETL_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and CURRENT_DATE ";
-		public final static String UPDATED_DEBIT_FEE_INVCE="Select * from OLE.DEBIT_FEE_INVCE where PROV_TIN_NBR='{$tin}' and INVC_NBR='{$invc_nbr}' ";
+		public final static String UPDATED_DEBIT_FEE_INVCE="Select * from OLE.DEBIT_FEE_INVCE where PROV_TIN_NBR='{$tin}' and INVC_NBR='{$invc_nbr}' order by LST_CHG_BY_DTTM desc fetch first 1 rows only with ur";
 }

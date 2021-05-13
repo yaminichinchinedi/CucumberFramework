@@ -470,8 +470,6 @@ public class OptumPaySolution {
     @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
     WebElement confNbr;
   
-	
-	
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
 	String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -1904,7 +1902,6 @@ public class OptumPaySolution {
 	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
 		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
-	//optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, Element.findElement(testConfig, "xpath", "//*[@id='refund_reason_selector]"), "text"));
 		WebElement slt=Element.findElement(testConfig, "id", "refund_reason_selector");
 		optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, slt, "text"));
 		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
