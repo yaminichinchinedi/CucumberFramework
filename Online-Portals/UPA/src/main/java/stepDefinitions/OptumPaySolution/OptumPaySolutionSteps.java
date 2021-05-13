@@ -285,6 +285,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void user_verifies_the_Modal_post_filling_information_and_Submits_the_ACH_Payment_Modal() throws Throwable {
 			optumPaySol.verifyProcessMyPaymentModalAfterEnteringUserInfo();
 		}
+		@Then("^User clicks on close button of Thank you popup$")
+        public void user_clicks_on_close_button_of_Thank_you_popup() throws Throwable {
+            optumPaySol.verifyThankyoupopup();
+        }
 
 }
 

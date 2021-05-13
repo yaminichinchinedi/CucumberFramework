@@ -327,7 +327,7 @@ And User clicks on UPA logout
       |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |
       
     #Author:Sayonee
-		 @UPAUS3443039
+		 @UPAUS3443039_12
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -338,7 +338,7 @@ And User clicks on UPA logout
     Then User validates Process My Payment modal
     Then User validates RTN when ABA Switch is "<ABA Switch>" and "<responseType>" response from ABA API
     Then User verifies the Modal post filling information and Submits the ACH Payment Modal
-
+		Then User clicks on close button of Thank you popup
     Examples:
     	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
  		  |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |            

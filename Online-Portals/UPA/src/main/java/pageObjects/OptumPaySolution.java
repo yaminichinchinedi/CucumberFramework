@@ -436,6 +436,27 @@ public class OptumPaySolution {
 	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]")
 	WebElement txtboxPaymentModalAccountNumber;
 	
+	@FindBy(xpath="//p[text()='Thank You']")
+    WebElement Thnkyou;
+    @FindBy(xpath="//p[text()='Confirmation Number: ']")
+    WebElement confirmNumber;
+    @FindBy(xpath="//p[text()='Amount Paid: ']")
+    WebElement amtPaid;
+    @FindBy(xpath="//button[@class='btn-secondary closeMakePaymentModal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-primary closeAndRefresh']")
+    WebElement closeBtn;
+    @FindBy(xpath="//*[@id='invoiceAchPaymentModal']/p[2]")
+    WebElement paragraphTxt;
+   
+    @FindBy(xpath="//input[@class='btn btn-secondary mb-0']")
+    WebElement paidBtn;
+           
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+    WebElement amountDue;
+    @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
+    WebElement confNbr;
+  
+	
+	
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
 	String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -449,7 +470,8 @@ public class OptumPaySolution {
 	String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 
 	private TestBase testConfig;
-
+    List <String> optumPaySolndata=new ArrayList<String>();
+    
 	public OptumPaySolution(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -1743,6 +1765,9 @@ public class OptumPaySolution {
 	}
 
 	public OptumPaySolution clickOnPayNowButton() {
+		
+		
+		testConfig.putRunTimeProperty("invc_nbr", Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]/a").getText());
 		Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
 		return this;
 	}
@@ -1800,6 +1825,8 @@ public class OptumPaySolution {
 				if (ValidRoutNos.contains(routingNo)) {
 					Element.enterData(routingNumber, routingNo, "Read from excel and Enter Routing Number", "routingNumber");
 					Element.enterData(accountNumber, accountNo, "Read from excel and Enter Account Number", "accountNumber");
+					optumPaySolndata.add(routingNo);
+					optumPaySolndata.add(accountNo);
 					//finInstAcctNum.sendKeys(Keys.TAB);
 					Element.enterKeys(accountNumber, Keys.TAB, "TAB Key entering", "TAB Key");
 					Browser.wait(testConfig, 5);
@@ -1862,8 +1889,57 @@ public class OptumPaySolution {
 	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
 		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
+		//optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, Element.findElement(testConfig, "xpath", "//*[@id='refund_reason_selector]"), "text"));
+		WebElement slt=Element.findElement(testConfig, "id", "refund_reason_selector");
+		optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, slt, "text"));
+		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
+	        
+	       
+    }
+    public void verifyThankyoupopup(){
+        Browser.wait(testConfig, 2);
+          Helper.compareEquals(testConfig, "Header message", "Thank You", Thnkyou.getText().trim());
+          Helper.compareEquals(testConfig, "paragraph message", "We have received your payment. Please allow three business days for processing. Below is your confirmation number which can also be referenced at any time on the invoices tab.", paragraphTxt.getText().trim());
+          Element.verifyElementPresent(confirmNumber, "Confirmation Number ");
+          Element.verifyElementPresent(amtPaid, "Amount paid ");
+  		  optumPaySolndata.add(Element.findElement(testConfig, "xpath", "//div[@id='invoiceAchPaymentModal']/p[3]/strong").getText());
+
+          Element.clickByJS(testConfig,closeBtn, "Close Button");
+          Element.fluentWait(testConfig, paidBtn, 60, 1, "Paid Button");
+          Element.verifyElementNotEnabled(paidBtn,"Paid Button");
+          Helper.compareEquals(testConfig, "Amount Due", "$0.00", amountDue.getText().trim());
+          verifyupdatedRcrdsDB();
+    }
+	public void verifyupdatedRcrdsDB(){
+		String	acct_typ_id=null;
+		try{
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, 7, 1);
+		Map currDateDB = DataBase.executeSelectQuery(testConfig, 1910, 1);
+		if (StringUtils.equals(optumPaySolndata.get(2), "Checking"))
+			acct_typ_id="1";
+		else if(StringUtils.equals(optumPaySolndata.get(2), "saving"))
+			acct_typ_id="2";
+		HashMap<Integer, HashMap<String, String>> updatedDebitFee = DataBase.executeSelectQueryALL(testConfig, QUERY.UPDATED_DEBIT_FEE_INVCE);
 		
+		for (int i = 1; i <= updatedDebitFee.size(); i++) {
 		
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_BY_USER").toString(),portalUserData.get("PORTAL_USER_ID").toString());
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_DATE").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("INVC_STS").toString(),"IP" );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("CONFIRM_NBR").toString(),optumPaySolndata.get(3) );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_CONSENT_IND").toString(),"Y" );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_ID").toString(),portalUserData.get("PORTAL_USER_ID").toString());
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_DTTM").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("RTE_TRNS_NBR").toString(),optumPaySolndata.get(0));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("BANK_ACCT_NBR").toString(),optumPaySolndata.get(1));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("ACCT_TYP_ID").toString(),acct_typ_id );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_TYPE").toString(),"AO" );
+		}
+		}
+		catch (Exception e)
+		{
+			Log.Comment("Exception occured as :" + " " + e);
+		}
 	}
 }
 
