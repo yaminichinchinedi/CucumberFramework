@@ -286,9 +286,13 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.verifyProcessMyPaymentModalAfterEnteringUserInfo();
 		}
 		@Then("^User clicks on close button of Thank you popup$")
-        public void user_clicks_on_close_button_of_Thank_you_popup() throws Throwable {
-            optumPaySol.verifyThankyoupopup();
-        }
+		public void user_clicks_on_close_button_of_Thank_you_popup() throws Throwable {
+		    optumPaySol.verifyThankyoupopup();
+		}
+		@Then("^verify the Invoice tab header message$")
+		public void verify_the_Invoice_tab_header_message() throws Throwable {
+			optumPaySol.verifyInvoiceTabHeader();
+		}
 
 }
 

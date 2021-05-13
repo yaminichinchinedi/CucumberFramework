@@ -435,23 +435,38 @@ public class OptumPaySolution {
 	
 	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]")
 	WebElement txtboxPaymentModalAccountNumber;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]/input")
+	WebElement paynowbtn;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[1]/input")
+	WebElement routingNum;
+
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]/input")
+	WebElement accntNum;
+	
+	@FindBy(name="invoicesAchPaymentForm.consent")
+	WebElement accepcheck;
+	
+	@FindBy(xpath="//span[text()='Submit']")
+	WebElement subBtn;
 	
 	@FindBy(xpath="//p[text()='Thank You']")
-    WebElement Thnkyou;
-    @FindBy(xpath="//p[text()='Confirmation Number: ']")
-    WebElement confirmNumber;
-    @FindBy(xpath="//p[text()='Amount Paid: ']")
-    WebElement amtPaid;
-    @FindBy(xpath="//button[@class='btn-secondary closeMakePaymentModal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-primary closeAndRefresh']")
-    WebElement closeBtn;
-    @FindBy(xpath="//*[@id='invoiceAchPaymentModal']/p[2]")
-    WebElement paragraphTxt;
-   
-    @FindBy(xpath="//input[@class='btn btn-secondary mb-0']")
-    WebElement paidBtn;
-           
-    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
-    WebElement amountDue;
+	WebElement Thnkyou;
+	@FindBy(xpath="//p[text()='Confirmation Number: ']")
+	WebElement confirmNumber;
+	@FindBy(xpath="//p[text()='Amount Paid: ']")
+	WebElement amtPaid;
+	@FindBy(xpath="//button[@class='btn-secondary closeMakePaymentModal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-primary closeAndRefresh']")
+	WebElement closeBtn;
+	@FindBy(xpath="//*[@id='invoiceAchPaymentModal']/p[2]")
+	WebElement paragraphTxt;
+	
+	@FindBy(xpath="//input[@class='btn btn-secondary mb-0']")
+	WebElement paidBtn;
+			
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+	WebElement amountDue;
+	
     @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
     WebElement confNbr;
   
@@ -1889,7 +1904,7 @@ public class OptumPaySolution {
 	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
 		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
 		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
-		//optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, Element.findElement(testConfig, "xpath", "//*[@id='refund_reason_selector]"), "text"));
+	//optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, Element.findElement(testConfig, "xpath", "//*[@id='refund_reason_selector]"), "text"));
 		WebElement slt=Element.findElement(testConfig, "id", "refund_reason_selector");
 		optumPaySolndata.add(Element.getFirstSelectedOption(testConfig, slt, "text"));
 		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
@@ -1941,6 +1956,8 @@ public class OptumPaySolution {
 			Log.Comment("Exception occured as :" + " " + e);
 		}
 	}
+		
+	
 }
 
 

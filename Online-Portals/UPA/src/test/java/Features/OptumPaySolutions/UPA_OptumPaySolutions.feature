@@ -311,7 +311,8 @@ And User clicks on UPA logout
       |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   N				 |  Invalid     |
 
  #Author:Sayonee
-		 @UPAUS3443039
+ #Author: sai
+		 @UPAUS3443039 @US3443069
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -321,6 +322,7 @@ And User clicks on UPA logout
     Then User validates Process My Payment modal
     Then User validates RTN when ABA Switch is "<ABA Switch>" and "<responseType>" response from ABA API
     Then User verifies the Modal post filling information and Submits the ACH Payment Modal
+    Then User clicks on close button of Thank you popup
 
     Examples:
     	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
@@ -338,7 +340,35 @@ And User clicks on UPA logout
     Then User validates Process My Payment modal
     Then User validates RTN when ABA Switch is "<ABA Switch>" and "<responseType>" response from ABA API
     Then User verifies the Modal post filling information and Submits the ACH Payment Modal
-		Then User clicks on close button of Thank you popup
+    Then User clicks on close button of Thank you popup
+
     Examples:
     	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| ABA Switch | responseType |
- 		  |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |            
+ 		  |       BS_Admin        	| 			  BS		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |     
+ 		  
+		 
+	#Author: Sai 
+	 @US3462418 @US3462418_ProvAdmin
+	 Scenario Outline: Optum Pay Solutions - Header message update
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	 And User clicks on Optum Pay Solutions tab
+	 Then User clicks on "Invoices" tab
+	 Then verify the Invoice tab header message
+Examples:
+    	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
+      |     PROV_Admin  | 	PROV			  |			Premium 		  |  PremiumOrStandardTIN   |	  AO			|
+      |     PROV_Admin  | 	PROV			  |			Standard 		  | PremiumOrStandardTIN    |	  AO			| 
+  
+  @US3462418 @US3462418_BSadmin
+  Scenario Outline: Optum Pay Solutions - Header message update
+   Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+  Then User Enters tin for OPS and click on search button for "<userType>".
+  Then User clicks on "Invoices" tab
+  Then verify the Invoice tab header message  
+Examples:
+ |  credentials   |    userType | 	   searchCriteria    |		portalAccess	  | tinType	  |  
+ |     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
+ |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|       
