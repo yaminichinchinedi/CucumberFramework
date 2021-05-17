@@ -321,7 +321,9 @@ public class Helper
 			Log.Pass(what,expected, actual);
 			return;
 		}
-		
+		expected=expected.trim();
+		actual=actual.trim();
+
 			if (!actual.equals(expected))
 			{
 				Log.Comment("Difference in expected and actual is: "+StringUtils.difference(expected, actual));

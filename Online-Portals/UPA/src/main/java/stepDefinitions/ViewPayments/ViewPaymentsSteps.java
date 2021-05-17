@@ -3,12 +3,14 @@ package main.java.stepDefinitions.ViewPayments;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.RemittanceDetail;
+import main.java.pageObjects.SearchRemittance;
 import main.java.pageObjects.ViewPayments;
 
 public class ViewPaymentsSteps extends TestBase {
                
     ViewPayments viewPayment = new ViewPayments(testConfig);
-    
+
     @Then("^Validate all other columns in Show All State$")
      public void validate_all_other_columns_in_Show_All_State() throws Throwable {
     	viewPayment.verifyAllOtherDrpDwns();
@@ -392,8 +394,11 @@ public class ViewPaymentsSteps extends TestBase {
     public void verifyViewPaymentsPageTextForForFor(String credentials, String portalAccess) {
         viewPayment.verifyPageTextFor(credentials, portalAccess);
     }
-	
-
+  
+    @Then("^User clicks on greyed out area and verify popup text for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void user_clicks_on_greyed_out_area_and_verify_popup_text_for_for(String credentials, String portalAccess) throws Throwable {
+    	viewPayment.clickGreyedOut().verifyPageTextFor(credentials, portalAccess);// 
+    }
 }
 
 

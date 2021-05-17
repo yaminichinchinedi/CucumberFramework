@@ -24,6 +24,7 @@ import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
 
 
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -603,6 +604,9 @@ public class EnrollmentSubmitted  {
 			Element.expectedWait(exitEnrollment, testConfig, "EXIT ENROLLMENT Button Text", "EXIT ENROLLMENT Button Text");
             Helper.compareEquals(testConfig, "EXIT ENROLLMENT Button Text",expected, exitEnrollment.getText());
 			Element.click(exitEnrollment, "EXIT ENROLLMENT");
+			if(System.getProperty("Application").contains("CSR"))
+			Browser.verifyURL(testConfig, "viewwelcome.do");
+			else
 			Browser.verifyURL(testConfig, expecteHOMEURL);
 		}
 		

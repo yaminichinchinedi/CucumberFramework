@@ -6,7 +6,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
   	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
-    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".		
 		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
@@ -181,7 +181,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 
 
    #Author : Vinay Raghumanda
-	@US3179215 
+	@US3179215 @US3438488
 	Scenario Outline: View payments page Text Validation for PROV users
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -194,6 +194,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 			| PROV_Gen    | PROV     | Premium      | AO      | PremiumOrStandardTIN |
 			| PROV_Gen    | PROV     | Standard     | AO      | PremiumOrStandardTIN |
 			| PROV_Admin  | PROV     | Premium      | VO      | PostTrial and Paid   |
+			| PROV_Gen    | PROV     | Premium      | VO      | PostTrial and Paid   |
 
 	@US3179215
 	Scenario Outline: View payments page Text Validation for BS Users
@@ -205,9 +206,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 		Examples:
 			| credentials | userType | portalAccess | tinType | searchCriteria |
 			| BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
-			| BS_Admin    | BS       | Standard     | AO      | Last 60 days   |
 			| BS_Gen      | BS       | Premium      | AO      | Last 60 days   |
-			| BS_Gen      | BS       | Standard     | AO      | Last 60 days   |
 			
 			
 		#Author: Marsha

@@ -28,9 +28,11 @@ Feature:  UPA Home Page Functionality - Post Login
   Scenario Outline: BS and Payer admins Home Page Carousel Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    And User clicks on UPA logout
     Examples:
       | credentials | userType  |
-      | BS_Admin    | BS_Admin  |
+      | BS_Admin    |   BS      |
+	  |   BS_Gen    |   BS     	|
       | PAY_Admin   | PAY_Admin |
 
   @UPA_US3179215 @homePage_func
@@ -38,6 +40,7 @@ Feature:  UPA Home Page Functionality - Post Login
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     Then Verify Home Page Carousel Text for "<userType>" with "<credentials>"
+    And User clicks on UPA logout
     Examples:
       | credentials | userType | searchCriteria       | tinType | portalAccess |
       | PROV_Admin  | PROV     | PremiumOrStandardTIN | AO      | Premium      |
@@ -118,6 +121,4 @@ Feature:  UPA Home Page Functionality - Post Login
     
      Examples:
       |      userType       |   
-      |      PROV_Admin     | 
-
-    	              
+      |      PROV_Admin     |

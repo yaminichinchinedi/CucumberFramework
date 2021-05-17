@@ -269,16 +269,31 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.convertToPremiumFromUpa();
 		}
 		
-		@Then("^User validates Process My Payment modal is displayed$")
-		public void user_validates_Process_My_Payment_modal_is_displayed() throws Throwable {
-			optumPaySol.verifyProcessMyPaymentHeader();
+		@Then("^User validates Process My Payment modal$")
+		public void user_validates_Process_My_Payment_modal() throws Throwable {
+			optumPaySol.verifyProcessMyPaymentModal();
 		}
+
 
 		@Then("^User validates RTN when ABA Switch is \"([^\"]*)\" and \"([^\"]*)\" response from ABA API$")
 		public void user_validates_RTN_when_ABA_Switch_is_and_response_from_ABA_API(String ABASwitch, String ABAResponse) throws Throwable {
 			optumPaySol.validateProcessMyPaymentHeader(ABASwitch, ABAResponse );
 
 		}
+		
+		@Then("^User verifies the Modal post filling information and Submits the ACH Payment Modal$")
+		public void user_verifies_the_Modal_post_filling_information_and_Submits_the_ACH_Payment_Modal() throws Throwable {
+			optumPaySol.verifyProcessMyPaymentModalAfterEnteringUserInfo();
+		}
+		@Then("^User clicks on close button of Thank you popup$")
+		public void user_clicks_on_close_button_of_Thank_you_popup() throws Throwable {
+		    optumPaySol.verifyThankyoupopup();
+		}
+		@Then("^verify the Invoice tab header message$")
+		public void verify_the_Invoice_tab_header_message() throws Throwable {
+			optumPaySol.verifyInvoiceTabHeader();
+		}
+
 }
 
 

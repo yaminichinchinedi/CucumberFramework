@@ -246,12 +246,22 @@ public class OptumPaySolution {
 	List<WebElement> tableInvoiceDetailTableHeader;
 	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr")
 	List<WebElement> tableInvoiceDetailUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
 	List<WebElement> tableInvoiceAmountUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
-	List<WebElement> tableInvoiceNumberUI;
-	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
-	List<WebElement> tableInvoiceDateUI;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]")
+    List<WebElement> tableInvoiceNumberUI;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
+    List<WebElement> tableInvoiceDateUI;
+	@FindBy(xpath="//p[contains(text(),'Select an invoice to view billing details.')]")
+	private WebElement invoice_grid_header;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[6]")
+    List<WebElement> tableInvoiceConfirmationUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[5]")
+    List<WebElement> tableInvoiceProcessedByUI;
+    @FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[1]/p[1]")
+	 WebElement txtInvoicesPageText1;
+	 @FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[1]/p[2]")
+	 WebElement txtInvoicesPageText2;
 
 
 	@FindBy(linkText = "Fee Search")
@@ -379,6 +389,8 @@ public class OptumPaySolution {
 	@FindBy(className = "ui-button-text")
 	List<WebElement> acceptPremiumBtn;
 
+	@FindBy (id="invoiceAchPaymentModal")
+	WebElement popUpACHPaymentModal;
 	@FindBy(xpath = "//input[@value='Pay Now']")
 	WebElement payNow;
 
@@ -400,6 +412,64 @@ public class OptumPaySolution {
 	@FindBy(xpath = "//button[@class='btn-primary submitAchPayment ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']")
 	WebElement submitButton;
 
+	@FindBy (xpath="//*[@id='invoiceAchPaymentModal']/p")
+	List<WebElement> pageTextModalACHpayment;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[6]/div/div/p")
+	List<WebElement> txtScrollableDivModalACHpayment; 
+	
+	@FindBy(className="closeMakePaymentModal")
+	WebElement btnCancelModalACHpayment;
+	
+	@FindBy(className="submitAchPayment")
+	WebElement btnSubmitModalACHpayment;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[5]/div/label/input")
+	WebElement chkboxOptumFeeDebitAuth;
+	
+	@FindBy(xpath="//*[@id='refund_reason_selector']/option")
+	List<WebElement> drpdownAccountTypeSelector;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[1]")
+	WebElement txtboxPaymentModalRoutingNumber;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]")
+	WebElement txtboxPaymentModalAccountNumber;
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]/input")
+	WebElement paynowbtn;
+	
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[1]/input")
+	WebElement routingNum;
+
+	@FindBy(xpath="//*[@id='invoicesAchPaymentForm']/div[3]/div[2]/input")
+	WebElement accntNum;
+	
+	@FindBy(name="invoicesAchPaymentForm.consent")
+	WebElement accepcheck;
+	
+	@FindBy(xpath="//span[text()='Submit']")
+	WebElement subBtn;
+	
+	@FindBy(xpath="//p[text()='Thank You']")
+	WebElement Thnkyou;
+	@FindBy(xpath="//p[text()='Confirmation Number: ']")
+	WebElement confirmNumber;
+	@FindBy(xpath="//p[text()='Amount Paid: ']")
+	WebElement amtPaid;
+	@FindBy(xpath="//button[@class='btn-secondary closeMakePaymentModal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-primary closeAndRefresh']")
+	WebElement closeBtn;
+	@FindBy(xpath="//*[@id='invoiceAchPaymentModal']/p[2]")
+	WebElement paragraphTxt;
+	
+	@FindBy(xpath="//input[@class='btn btn-secondary mb-0']")
+	WebElement paidBtn;
+			
+	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[3]")
+	WebElement amountDue;
+	
+    @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
+    WebElement confNbr;
+  
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
 	String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -413,7 +483,8 @@ public class OptumPaySolution {
 	String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
 
 	private TestBase testConfig;
-
+	
+    Map< String, String> optumPaySolndata=new HashMap<String, String>();
 	public OptumPaySolution(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -726,55 +797,25 @@ public class OptumPaySolution {
 	}
 
 	public void validateInfoIconHover() {
-		for (WebElement title : titles)
-			Element.mouseHoverByJS(testConfig, title, "title");
+		for(WebElement title: titles)
+            Element.mouseHoverByJS(testConfig, title, "title");
 
-		Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly\n" +
-				"for any fees incurred the previous\n" +
-				"month. For example, fees accrued\n" +
-				"during the month of June will be\n" +
-				"invoiced within the first 5\n" +
-				"business days of July. Provider\n" +
-				"administrators will receive an\n" +
-				"email in advance of the debit to\n" +
-				"the TIN-level bank account and\n" +
-				"they can review the fees on the\n" +
-				"Invoices subtab.", hoverPlanType.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "Per payment fees are\n" +
-				"calculated based on the\n" +
-				"total payment amount.\n" +
-				"Any rate changes will be\n" +
-				"effective the following\n" +
-				"business day.", hoverRate.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "To view individual per-\n" +
-				"payment fees, please visit\n" +
-				"the View Payments page.\n" +
-				"Fees will be billed monthly.\n" +
-				"To estimate monthly fees,\n" +
-				"select the Print Payment\n" +
-				"summary button from the\n" +
-				"View Payments page to\n" +
-				"download 30 days of\n" +
-				"payment data. Then,\n" +
-				"calculate that amount by\n" +
-				"the current rate.", hoverFees.getText().trim());
-		Helper.compareEquals(testConfig, "Plan Type", "To cancel the paid subscription,\n" +
-				"Provider administrators\n" +
-				"complete the Cancellation Fee\n" +
-				"Form found in the Resources link\n" +
-				"and email it to\n" +
-				"optumpay_cancel@optum.com.\n" +
-				"\n" +
-				"Note: Cancellation may take up\n" +
-				"to 7 days to process during which\n" +
-				"time the provider will be\n" +
-				"responsible for any charges to\n" +
-				"their account. Any fees incurred\n" +
-				"prior to cancellation will be billed\n" +
-				"at the end of the current billing\n" +
-				"cycle.", hoverManageMyPlan.getText().trim());
-
-	}
+          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by midJuly. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
+          Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.",hoverRate.getText().trim());
+          Helper.compareEquals(testConfig, "Rate", "To view individual per-\n" + 
+                  "payment fees, please visit\n" + 
+                  "the View Payments page.\n" + 
+                  "Fees will be billed monthly.\n" + 
+                  "To estimate monthly fees,\n" + 
+                  "select the Print Payment\n" + 
+                  "summary button from the\n" + 
+                  "View Payments page to\n" + 
+                  "download 30 days of\n" + 
+                  "payment data. Then,\n" + 
+                  "calculate that amount by\n" + 
+                  "the current rate.", hoverFees.getText().trim());
+          Helper.compareEquals(testConfig, "Manage my Plan", "To cancel the paid subscription, Provider administrators can either click on the \"Cancel my Plan\" button on the Solutions tab or complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com.",hoverManageMyPlan.getText().trim());          
+      }
 
 
 	public void rateTileCSRFeeAndDateVerification(String tinType, String portalAccess) {
@@ -983,7 +1024,7 @@ public class OptumPaySolution {
 		String actualAccruedFees = accruedFeesInvoicesTab.getText().substring(29, accruedFeesInvoicesTab.getText().length());
 		String expectedAccruedFees = null;
 		testConfig.putRunTimeProperty("tin", testConfig.getRunTimeProperty("tin"));
-		Map<String, String> data = DataBase.executeSelectQuery(testConfig, 1616, 1);
+		Map<String, String> data = DataBase.executeSelectQuery(testConfig, QUERY.TOTAL_ACCRUED_FEES, 1);
 		if (data.get("ACCRDFEE").toString().isEmpty())
 			expectedAccruedFees = "0.00";
 		else
@@ -1125,6 +1166,8 @@ public class OptumPaySolution {
 			Element.verifyElementPresent(lnkInvoice, "Invoices Link");
 			Element.clickByJS(testConfig, lnkInvoice, "Invoices Link");
 			Element.verifyElementPresent(divPageMsg, "Page message");
+			verifyInvoicesPageText();
+            Element.verifyElementPresent(invoice_grid_header,"Invoice grid header");
 			verifyPastDuesInvoiceTab(searchCriteria);
 			verifyProviderNameInvoices();
 			verifyAccrudFeesInvoiceTab(searchCriteria);
@@ -1150,6 +1193,11 @@ public class OptumPaySolution {
 		}
 		return this;
 	}
+	
+	public void verifyInvoicesPageText() {
+        Helper.compareEquals(testConfig, "Invoices pagetext 1 ", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.pageText1"), txtInvoicesPageText1.getText().trim());
+        Helper.compareEquals(testConfig, "Invoices pagetext 2 ", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.pageText2"), txtInvoicesPageText2.getText().trim());
+    }
 
 	public void verifyProviderNameInvoices() {
 		int sqlRowNo = 1;
@@ -1159,27 +1207,58 @@ public class OptumPaySolution {
 	}
 
 	public void verifyInvoiceDetailsTableUI(String searchCriteria) throws IOException, ParseException {
-		int sqlTable = 1120;
-		HashMap<Integer, HashMap<String, String>> invoiceTableData = DataBase.executeSelectQueryALL(testConfig, sqlTable);
+		HashMap<Integer,HashMap<String,String>>  invoiceTableData = DataBase.executeSelectQueryALL(testConfig, QUERY.Enhancement_Invoice_Grid_Data);
 		ArrayList<String> expectedHeader = new ArrayList<String>();
-		expectedHeader.add("Invoice Period");
-		expectedHeader.add("Total Invoice Amount");
-		expectedHeader.add("Download Invoice");
+		expectedHeader.add("Invoice");
+		expectedHeader.add("Billing Period");
+		expectedHeader.add("Amount Due");
+		expectedHeader.add("Processed By");
+		expectedHeader.add("Confirmation");
 
 		if ("TinWithInvoices".equals(searchCriteria)) {
 			ArrayList<String> actualContentUI = new ArrayList<String>();
 			for (WebElement header : tableInvoiceDetailTableHeader) {
-				actualContentUI.add(header.getText());
+				if(!header.getText().isEmpty()) {
+					  actualContentUI.add(header.getText());
+				  }
 			}
 
 			Helper.compareEquals(testConfig, "tableInvoiceDetailTableHeader", expectedHeader, actualContentUI);
 
-			for (int i = 0; i < tableInvoiceAmountUI.size(); i++) {
-				String startDate = Helper.changeDateFormat(invoiceTableData.get(i + 1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-				String endDate = Helper.changeDateFormat(invoiceTableData.get(i + 1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
-				Helper.compareEquals(testConfig, "billing cycle", startDate + " - " + endDate, tableInvoiceDateUI.get(i).getText());
-				Helper.compareEquals(testConfig, "invoice amount", "$" + invoiceTableData.get(i + 1).get("INVC_TOT_AMT").toString(), tableInvoiceAmountUI.get(i).getText());
-				Helper.compareEquals(testConfig, "invoice number", invoiceTableData.get(i + 1).get("INVC_NBR").toString(), tableInvoiceNumberUI.get(i).getText());
+			for(int i=0; i<tableInvoiceAmountUI.size() ;i++) { 
+
+			    String invoice_Sts1 = String.format("//tbody/tr[%s]/td[4]/input[1]",i+1);
+			    String invoice_sts = Element.findElement(testConfig, "xpath", invoice_Sts1).getAttribute("value");		
+			    String invoice_StatusDB = invoiceTableData.get(i+1).get("INVC_STS").toString();
+				String  startDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_STRT_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				String  endDate= Helper.changeDateFormat(invoiceTableData.get(i+1).get("BILL_CYC_END_DT").toString(), "yyyy-mm-dd", "mm/dd/yyyy");
+				String firstName = invoiceTableData.get(i+1).get("FST_NM").toString();
+				String lastName = invoiceTableData.get(i+1).get("LST_NM").toString();
+
+				Helper.compareEquals(testConfig,"Billing Period",startDate+" - "+endDate,tableInvoiceDateUI.get(i).getText());
+
+				if(firstName.isEmpty() && lastName.isEmpty()) {
+					Helper.compareEquals(testConfig,"Processed By","---",tableInvoiceProcessedByUI.get(i).getText().trim());
+				}
+				else {		
+					Helper.compareEquals(testConfig,"Processed By",firstName+" "+lastName,tableInvoiceProcessedByUI.get(i).getText());
+				}
+
+				if(invoice_StatusDB.equals("IR") || invoice_StatusDB.equals("FP")){
+					Helper.compareEquals(testConfig,"Asserting the Invoice Status DB vs UI","Pay Now",invoice_sts);
+				}
+
+				if(invoice_StatusDB.equals("IP") || invoice_StatusDB.equals("FS") || invoice_StatusDB.equals("FC")){
+					Helper.compareEquals(testConfig,"Asserting the Invoice Status DB vs UI","Paid",invoice_sts);
+				}
+
+				if(invoice_sts.contentEquals("Paid")) {
+					Helper.compareEquals(testConfig,"Amount Due","$0.00",tableInvoiceAmountUI.get(i).getText());	
+				}
+				else {
+					Helper.compareEquals(testConfig,"Amount Due", "$"+invoiceTableData.get(i+1).get("INVC_TOT_AMT").toString(),tableInvoiceAmountUI.get(i).getText());
+				}	
+				Helper.compareEquals(testConfig,"Invoice", invoiceTableData.get(i+1).get("INVC_NBR").toString(),tableInvoiceNumberUI.get(i).getText()); 
 			}
 		}
 
@@ -1699,12 +1778,37 @@ public class OptumPaySolution {
 	}
 
 	public OptumPaySolution clickOnPayNowButton() {
+		
+		
+		testConfig.putRunTimeProperty("invc_nbr", Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]/a").getText());
 		Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
 		return this;
 	}
 
-	public OptumPaySolution verifyProcessMyPaymentHeader() {
-		Helper.compareEquals(testConfig, "Process My Payment Header", "Process My Payment", processMyPayment.getText().trim());
+	public OptumPaySolution verifyProcessMyPaymentModal() {
+		ArrayList<String> expectedContent = new ArrayList<String>();
+		ArrayList<String> actualContent = new ArrayList<String>();
+		expectedContent.add("Savings");
+		expectedContent.add("Checking");
+		Element.verifyElementPresent(popUpACHPaymentModal, "ACH PAYMENT MODAL");
+		Helper.compareEquals(testConfig, "Process My Payment Header", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.header"), pageTextModalACHpayment.get(0).getText().trim());
+		Helper.compareContains(testConfig, "Enter your bank account information below to pay your premium fee(s).", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.pageText1"), pageTextModalACHpayment.get(1).getText().trim());
+		Helper.compareContains(testConfig, "Amount to pay", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModal.pageText2"), pageTextModalACHpayment.get(2).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 1", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText1"), txtScrollableDivModalACHpayment.get(0).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 2", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText2"), txtScrollableDivModalACHpayment.get(1).getText().trim());
+		Helper.compareEquals(testConfig, "scrollable div page Text 3", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutionsPaymentModalScrollableDiv.pageText3"), txtScrollableDivModalACHpayment.get(2).getText().trim());
+		for(WebElement accType:drpdownAccountTypeSelector)
+		{
+			actualContent.add(accType.getText());
+		}
+		Helper.compareEquals(testConfig, "ACCOUNT TYPE OPTIONS", expectedContent,actualContent );
+		Element.verifyElementPresent(btnCancelModalACHpayment, "Cancel button");
+	    Element.verifyElementNotEnabled(btnSubmitModalACHpayment, "Submit Button");
+		Helper.compareEquals(testConfig, "checkbox ", "true", chkboxOptumFeeDebitAuth.getAttribute("disabled"));
+		Helper.compareEquals(testConfig, "routing number", "* Routing Number", txtboxPaymentModalRoutingNumber.getText());
+		Helper.compareEquals(testConfig, "accounting number", "* Account Number", txtboxPaymentModalAccountNumber.getText());
+   		Helper.compareEquals(testConfig, "Routing Number comparison", "*********", routingNumber.getAttribute("placeholder"));
+		
 		return this;
 
 	}
@@ -1734,6 +1838,8 @@ public class OptumPaySolution {
 				if (ValidRoutNos.contains(routingNo)) {
 					Element.enterData(routingNumber, routingNo, "Read from excel and Enter Routing Number", "routingNumber");
 					Element.enterData(accountNumber, accountNo, "Read from excel and Enter Account Number", "accountNumber");
+					optumPaySolndata.put("RTE_TRNS_NBR", routingNo);
+					optumPaySolndata.put("BANK_ACCT_NBR", accountNo);
 					//finInstAcctNum.sendKeys(Keys.TAB);
 					Element.enterKeys(accountNumber, Keys.TAB, "TAB Key entering", "TAB Key");
 					Browser.wait(testConfig, 5);
@@ -1792,6 +1898,63 @@ public class OptumPaySolution {
 		}
 		return this;
 	}
+
+	public void verifyProcessMyPaymentModalAfterEnteringUserInfo() {
+		Element.click(testConfig, chkboxOptumFeeDebitAuth, "chkboxOptumFeeDebitAuth", 2);
+		Element.verifyElementIsEnabled(btnSubmitModalACHpayment, "Submit Button");
+		WebElement slt=Element.findElement(testConfig, "id", "refund_reason_selector");
+		optumPaySolndata.put("ACCT_TYP_ID",Element.getFirstSelectedOption(testConfig, slt, "text"));
+		Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
+	        
+	       
+    }
+    public void verifyThankyoupopup(){
+        Browser.wait(testConfig, 2);
+          Helper.compareEquals(testConfig, "Header message", "Thank You", Thnkyou.getText().trim());
+          Helper.compareEquals(testConfig, "paragraph message", "We have received your payment. Please allow three business days for processing. Below is your confirmation number which can also be referenced at any time on the invoices tab.", paragraphTxt.getText().trim());
+          Element.verifyElementPresent(confirmNumber, "Confirmation Number ");
+          Element.verifyElementPresent(amtPaid, "Amount paid ");
+  		  optumPaySolndata.put("CONFIRM_NBR",Element.findElement(testConfig, "xpath", "//div[@id='invoiceAchPaymentModal']/p[3]/strong").getText());
+
+          Element.clickByJS(testConfig,closeBtn, "Close Button");
+          Element.fluentWait(testConfig, paidBtn, 60, 1, "Paid Button");
+          Element.verifyElementNotEnabled(paidBtn,"Paid Button");
+          Helper.compareEquals(testConfig, "Amount Due", "$0.00", amountDue.getText().trim());
+          verifyupdatedRcrdsDB();
+    }
+	public void verifyupdatedRcrdsDB(){
+		String	ACCT_TYP_ID=null;
+		try{
+		Map portalUserData = DataBase.executeSelectQuery(testConfig, 7, 1);
+		Map currDateDB = DataBase.executeSelectQuery(testConfig, 1910, 1);
+		if (StringUtils.equals(optumPaySolndata.get("ACCT_TYP_ID"), "Checking"))
+			ACCT_TYP_ID="1";
+		else if(StringUtils.equals(optumPaySolndata.get("ACCT_TYP_ID"), "saving"))
+			ACCT_TYP_ID="2";
+		HashMap<Integer, HashMap<String, String>> updatedDebitFee = DataBase.executeSelectQueryALL(testConfig, QUERY.UPDATED_DEBIT_FEE_INVCE);
+		
+		for (int i = 1; i <= updatedDebitFee.size(); i++) {
+		
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_BY_USER").toString(),portalUserData.get("PORTAL_USER_ID").toString());
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAID_DATE").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("INVC_STS").toString(),"IP" );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("CONFIRM_NBR").toString(),optumPaySolndata.get("CONFIRM_NBR") );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_CONSENT_IND").toString(),"Y" );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_ID").toString(),portalUserData.get("PORTAL_USER_ID").toString());
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("LST_CHG_BY_DTTM").toString().substring(0, 10),currDateDB.get("CURRENT_DATE").toString() );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("RTE_TRNS_NBR").toString(),optumPaySolndata.get("RTE_TRNS_NBR"));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("BANK_ACCT_NBR").toString(),optumPaySolndata.get("BANK_ACCT_NBR"));
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("ACCT_TYP_ID").toString(),ACCT_TYP_ID );
+				Helper.compareEquals(testConfig, "DEBIT_FEE_INVC List", updatedDebitFee.get(i).get("PAYMENT_TYPE").toString(),"AO" );
+		}
+		}
+		catch (Exception e)
+		{
+			Log.Comment("Exception occured as :" + " " + e);
+		}
+	}
+		
+	
 }
 
 

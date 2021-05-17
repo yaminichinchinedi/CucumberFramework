@@ -171,3 +171,30 @@ Examples:
              |       BS_Admin        | 			 BS			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
              |       BS_Gen          | 			 BS		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |
              
+             
+     @US3438484 	 
+	Scenario Outline: View payments page Text Validation for BS Users
+		Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate View Payments page Text for "<credentials>" for "<portalAccess>"
+		Examples:
+			| credentials | userType | portalAccess | tinType | 		searchCriteria 			|
+			| BS_Admin    | BS       | Standard     | AO      | PostTrial and NotPaid   |
+			| BS_Gen      | BS       | Standard     | AO      | PostTrial and NotPaid   |
+			| BS_Admin    | BS       | Standard     | AO      | WithinTrial and NotPaid   |       
+			| BS_Gen      | BS       | Standard     | AO      | WithinTrial and NotPaid   |    
+			 
+			 @US3438484
+   Scenario Outline: View Payments - Clicking on geryed out area
+   Given User navigates to UPA portal and enters "<credentials>" and login
+		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then User clicks on greyed out area and verify popup text for "<credentials>" for "<portalAccess>"   
+		
+		 Examples:
+    				 |    credentials        |	 	 userType  			  | 	portalAccess      |	searchCriteria   | tinType		|
+             |       BS_Admin        | 			 BS			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
+             |       BS_Gen          | 			 BS		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |      

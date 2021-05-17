@@ -1,3 +1,4 @@
+
 package main.java.pageObjects;
 
 import main.java.nativeFunctions.Browser;
@@ -183,10 +184,13 @@ public class UPAHomePage extends HomePage {
 	
 	@FindBy(linkText="Logout") 
 	WebElement lnkLogout;
-	@FindBy(className="slide image")
+	@FindBy(className="slide__messageBox")
 	List<WebElement> imageTiles;
 	@FindBy(className="slide video")
 	List<WebElement> videoTiles;
+	@FindBy(className="carousel__nav__label")
+	List<WebElement> carouselNav;	
+
 	public UPAHomePage(TestBase testConfig) 
 	{
  		super(testConfig);
@@ -390,7 +394,7 @@ public class UPAHomePage extends HomePage {
 	 */
 	public void verifyHomePageCarouselText(String userType, String credentials) {
 		switch (userType) {
-			case "BS_Admin":
+			case "BS":
 				String[] expectedBSHeaders = {
 						TestBase.contentMessages.getProperty("bs.admin.home.car1.header"),
 						TestBase.contentMessages.getProperty("bs.admin.home.car2.header"),
@@ -549,21 +553,23 @@ public class UPAHomePage extends HomePage {
 	}
 
 	private void homePageCarouselTextValidation(String[] expectedHeaders, String[] expectedTexts) {
-		int j=0;
-		for(WebElement img : imageTiles)
-		{
-			Element.waitTillTextAppears(img, expectedHeaders[j], testConfig);
-			String actualText = img.getText().trim() +
-					img.getText().trim();
-			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j++], actualText);
-		}  
-
-		for(WebElement vid : videoTiles)
-		{
-			Element.waitTillTextAppears(vid, expectedHeaders[j], testConfig);
-			String actualText = vid.getText().trim() +
-					vid.getText().trim();
-			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j++], actualText);
+		int counter = 0;
+		while(!(imageTiles.get(0).findElement(By.tagName("h2")).getText().trim().equals(expectedHeaders[0]))){
+			Browser.wait(testConfig, 2);
+			imageTiles = Element.findElements(testConfig, "xpath", "//div[@class='slide__messageBox']");//windowSlides.findElements(By.xpath("//div[@class='slide__messageBox']"));
+			counter++;
+			if(counter>10){
+				break;
+			}
+		}
+		
+		int j = 0;
+		for (int i = 0; i < imageTiles.size(); i++) {
+			Element.click(carouselNav.get(i), "Carousel Navigation");
+			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
+					imageTiles.get(i).findElement(By.tagName("p")).getText().trim();
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
+			j++;
 		}
 	}
 	
@@ -676,3 +682,4 @@ public class UPAHomePage extends HomePage {
 		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
 	}
 }
+
