@@ -23,7 +23,7 @@ Feature: UPA Landing Page Pre-Login functionality
 	  Then User validates logo, Title, Enroll Now button,PDFs and Footer of this page
 	  And User also validates the How to Enroll page content
 	  
- @US3415252_PreLogin
+ @UPAUS3415252_PreLogin
 Scenario: Test the PDF Cancellation Form on Pre Login Screen
 	  Given User navigates to UPA Sys Test application
 	  Then user navigates to resources tab
