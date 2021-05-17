@@ -1,4 +1,3 @@
-
 #Author: Marsha(Stabilisation)
 @UPAhomePage
 Feature:  UPA Home Page Functionality - Post Login 
@@ -112,7 +111,7 @@ Feature:  UPA Home Page Functionality - Post Login
     
     
   #Author: Mohammad Khalid
-  @US3415252_PostLogin
+  @UPAUS3415252_PostLogin
    Scenario Outline: Resource Tab dropdown Post Login
 		Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
@@ -122,5 +121,4 @@ Feature:  UPA Home Page Functionality - Post Login
     
      Examples:
       |      userType       |   
-      |      PROV_Admin     | 
-    	              
+      |      PROV_Admin     |
