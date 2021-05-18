@@ -28,7 +28,7 @@ Examples:
 			 | PROV_Gen    | PROV     | Standard     | AO      | PremiumOrStandardTIN |
 		
    
-   	 @US3438484
+   	 @UPAUS3438484
 	 Scenario Outline: Payment Data Files page Text Validation for PROV users
 		 Given User navigates to UPA portal and enters "<credentials>" and login
 		 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

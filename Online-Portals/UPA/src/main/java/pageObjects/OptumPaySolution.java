@@ -1779,8 +1779,7 @@ public class OptumPaySolution {
 
 	public OptumPaySolution clickOnPayNowButton() {
 		
-		
-		testConfig.putRunTimeProperty("invc_nbr", Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]/a").getText());
+		testConfig.putRunTimeProperty("invc_nbr", payNow.findElement(By.xpath("./preceding::td[3]")).getText());
 		Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
 		return this;
 	}

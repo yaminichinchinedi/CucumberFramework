@@ -14,7 +14,7 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|				byDOP		  |		PROV_Gen	 |    PROV     |   Standard    |TinWthatlstOnePayNum   |  AV   |
 
 		
-		 @US3438484
+		 @UPAUS3438484
 	Scenario Outline: Search Remittance Page Text Validation
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
