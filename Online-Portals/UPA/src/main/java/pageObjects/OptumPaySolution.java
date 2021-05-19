@@ -816,7 +816,18 @@ public class OptumPaySolution {
 //                  "payment data. Then,\n" + 
 //                  "calculate that amount by\n" + 
 //                  "the current rate.", hoverFees.getText().trim());
-          Helper.compareEquals(testConfig, "Rate","To view individual per-payment fees, please visit the View Payments page.Fees will be billed monthly.To estimate monthly fees, select the Print Payment summary button from the\n View Payments page to download 30 days of payment data. Then,calculate that amount by the current rate.", hoverFees.getText().trim());
+          Helper.compareEquals(testConfig, "Rate","To view individual per-\n" + 
+          		"payment fees, please visit\n" + 
+          		"the View Payments page.\n" + 
+          		"Fees will be billed monthly.\n" + 
+          		"To estimate monthly fees,\n" + 
+          		"select the Print Payment\n" + 
+          		"summary button from the\n" + 
+          		"View Payments page to\n" + 
+          		"download 30 days of\n" + 
+          		"payment data. Then,\n" + 
+          		"calculate that amount by\n" + 
+          		"the current rate.", hoverFees.getText().trim());
           Helper.compareEquals(testConfig, "Manage my Plan", "To cancel the paid subscription, Provider administrators can either click on the \"Cancel my Plan\" button on the Solutions tab or complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com.",hoverManageMyPlan.getText().trim());          
       }
 

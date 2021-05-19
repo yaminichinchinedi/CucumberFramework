@@ -26,11 +26,11 @@
 
          |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|
          |    Super          |		withAccuredFee	  |  AO 	|	Premium		 |	PROV	|  
-        # |    RW	           |		withAccuredFee  	|  AO 	|	Premium		 |	PROV	|   
-        # |    RO   		       |		withAccuredFee  	| AO 	  |	Premium		 |	PROV	|
+         |    RW	           |		withAccuredFee  	|  AO 	|	Premium		 |	PROV	|   
+         |    RO   		       |		withAccuredFee  	| AO 	  |	Premium		 |	PROV	|
          |    Super          |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
-        # |    RW	           |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
-        # |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+         |    RW	           |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+         |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
  
    #Author: Sayonee
     @CSRUS3136567 @CSRStable
@@ -60,7 +60,7 @@
          |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|      
-    @CSRUS3157067 @CSRStable 
+    @CSRUS3157067 @CSRStable
     Scenario Outline: Optum Pay Solutions Info Icon Hover 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -71,7 +71,7 @@
 
          |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
          |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
-        |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid| 
      
    #Author: Aravind Lakshminarasimhan   
