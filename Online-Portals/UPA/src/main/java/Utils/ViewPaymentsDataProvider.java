@@ -1147,6 +1147,10 @@ public class ViewPaymentsDataProvider {
 			query=QUERY.TIN_WITH_INVOICE;
 		}
 
+		if(searchCriteria.contains("RefundInvoice")){
+			query=QUERY.TIN_WITH_REFUND_INVOICE;
+		}
+		
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
 				testConfig.putRunTimeProperty("invcAmt", "=0");
@@ -1158,7 +1162,7 @@ public class ViewPaymentsDataProvider {
 			if (searchCriteria.equalsIgnoreCase("withAccuredFee"))
 				testConfig.putRunTimeProperty("nullStatus", "is not null");
 			else if (searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
-				testConfig.putRunTimeProperty("nullStatus", "is null");
+				testConfig.putRunTimeProperty("nullStatus", "=0");
 			sqlRowNo = 1615;
 		}
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")
@@ -1328,6 +1332,7 @@ public class ViewPaymentsDataProvider {
 					testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 					System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
 				}
+				
 
 			}
 
