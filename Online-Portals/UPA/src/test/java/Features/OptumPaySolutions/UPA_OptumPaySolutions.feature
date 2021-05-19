@@ -357,8 +357,10 @@ And User clicks on UPA logout
 	 Then verify the Invoice tab header message
 Examples:
     	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
-      |     PROV_Admin  | 	PROV			  |			Premium 		  |  PremiumOrStandardTIN   |	  AO			|
-      |     PROV_Admin  | 	PROV			  |			Standard 		  | PremiumOrStandardTIN    |	  AO			| 
+    #  |     PROV_Admin  | 	PROV			  |			Premium 		  |  PremiumOrStandardTIN   |	  AO			|
+    #  |     PROV_Admin  | 	PROV			  |			Standard 		  | PremiumOrStandardTIN    |	  AO			|
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|
+     |       PROV_Admin       	| 			 PROV		   		|			Standard		  	|  				ValidInvoice  			  |	  AO			|
   
   @US3462418 @US3462418_BSadmin
   Scenario Outline: Optum Pay Solutions - Header message update
@@ -369,12 +371,15 @@ Examples:
   Then User clicks on "Invoices" tab
   Then verify the Invoice tab header message  
 Examples:
- |  credentials   |    userType | 	   searchCriteria    |		portalAccess	  | tinType	  |  
- |     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
- |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|  
+ |  credentials   |    userType | 	   portalAccess    |		searchCriteria	  | tinType	  |  
+ #|     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
+ #|     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|  
+      |    BS_Admin   |     BS     			  |			Premium 		  |  ValidInvoice  			  |	  AO			|
+      |   BS_Admin   |     BS     			  |			Standard 		  | ValidInvoice  			  |	  AO			|
+  
  
  #BELOW SCENARIO IS NOT ON STAGE
- @UPAUS3478620
+ @UPAUS3478620 
       Scenario Outline: PayNow btn disabled for Credit Invoice Prov
    Given User navigates to UPA portal and enters "<credentials>" and login
   And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -384,8 +389,8 @@ Examples:
   Examples:
     	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| 
       |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				RefundInvoice  			  |	  AO			| 
-    #  |       PROV_Admin       	| 			 PROV		   		|			Standard	  	|  				RefundInvoice  			  |	  AO			| 
-     # |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				RefundInvoice  			  |	  VO			| 
+      |       PROV_Admin       	| 			 PROV		   		|			Standard	  	|  				RefundInvoice  			  |	  AO			| 
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				RefundInvoice  			  |	  VO			| 
       
     @UPAUS3478620
       Scenario Outline: PayNow btn disabled for Credit Invoice BS 

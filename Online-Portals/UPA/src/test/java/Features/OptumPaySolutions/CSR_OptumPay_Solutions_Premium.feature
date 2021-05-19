@@ -15,7 +15,7 @@
          |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid|   
          
-    @CSRUS3136627sss @CSRStable
+    @CSRUS3136627sss @CSRStable 
     Scenario Outline: Optum Pay Soution Accured Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -26,11 +26,11 @@
 
          |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|
          |    Super          |		withAccuredFee	  |  AO 	|	Premium		 |	PROV	|  
-         |    RW	           |		withAccuredFee  	|  AO 	|	Premium		 |	PROV	|   
-         |    RO   		       |		withAccuredFee  	| AO 	  |	Premium		 |	PROV	|
+        # |    RW	           |		withAccuredFee  	|  AO 	|	Premium		 |	PROV	|   
+        # |    RO   		       |		withAccuredFee  	| AO 	  |	Premium		 |	PROV	|
          |    Super          |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
-         |    RW	           |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
-         |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+        # |    RW	           |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
+        # |    RO   		       |		withoutAccuredFee	| AO 	  |	Premium		 |	PROV	|
  
    #Author: Sayonee
     @CSRUS3136567 @CSRStable

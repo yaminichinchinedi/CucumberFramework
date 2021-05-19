@@ -16,7 +16,7 @@ public class QUERY {
 			"AND PC.EXTRACT_STS_CD = 'C'\r\n";
 		
 public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_USER pu INNER JOIN OLE.PORTAL_USER_PAYER_TIN pt on pu.PORTAL_USER_ID = pt.PORTAL_USER_ID INNER JOIN OLE.PAYER py ON pt.PAYR_TIN_NBR = py.PAYR_TIN_NBR WHERE pu.SSO_ID='{$id}'";
-		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.SETL_DT> current date -day(current date) -1 days and dba.SETL_DT <= last_day(current date) and dba.SETL_DT <= current date and DBT_FEE_ACCRD_STS in ('FS ,'FZ')";
+		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.SETL_DT> current date -day(current date) -1 days and dba.SETL_DT <= last_day(current date) and dba.SETL_DT <= current date and DBT_FEE_ACCRD_STS in ('FA' ,'FZ')";
 		public final static String TIN_WITH_DEBIT_ACCRD_FEE="select dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.DEBIT_FEE_ACCRD dfi,OLE.ENROLLED_PROVIDER ep,OLE.PRODUCT_SELECTION ps \r\n" +
 				"where  dfi.PROV_TIN_NBR=ep.PROV_TIN_NBR  and\r\n" +
 				"dfi.PROV_TIN_NBR=ps.PROV_TIN_NBR and ps.PRTL_PRDCT_SELECTED_GRP_NM='Premium' and ps.PRTL_PRDCT_SELECTED_STS_CD='A' and  ep.PAY_METH_TYP_CD='AO'\r\n" +
