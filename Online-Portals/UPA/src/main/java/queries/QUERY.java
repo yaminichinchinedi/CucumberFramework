@@ -240,4 +240,26 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 
 		public final static String TOTAL_ACCRUED_FEES = "Select SUM(DBT_FEE_ACCRD_AMT) as ACCRDFEE from OLE.DEBIT_FEE_ACCRD dfa where PROV_TIN_NBR='{$tin}' AND dfa.SETL_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and CURRENT_DATE ";
 		public final static String UPDATED_DEBIT_FEE_INVCE="Select * from OLE.DEBIT_FEE_INVCE where PROV_TIN_NBR='{$tin}' and INVC_NBR='{$invc_nbr}' order by LST_CHG_BY_DTTM desc fetch first 1 rows only with ur";
-}
+
+		public final static String DATE_OF_PAYMENT="SELECT p.PROV_TAX_ID_NBR,sr.SBSCR_ID, cp.SETL_DT, p.PROV_NPI_NBR, c.CLM_NBR, c.PTNT_ACCT_NBR, c.PTNT_FST_NM, c.PTNT_LST_NM, c.CLM_STRT_DT, c.CLM_END_DT\n" +
+				"from {$schema}.CONSOLIDATED_PAYMENT cp, \n" +
+				"OLE.ENROLLED_PROVIDER ep, OLE.product_selection ps, OLE.PRODUCT_CONFIGURATION pc,\n" +
+				"{$schema}.PROVIDER p,{$schema}.CLAIM c, {$schema}.UNCONSOLIDATED_PAYMENT ucp, {$schema}.SUBSCRIBER sr, {$schema}.CLAIM_UNCONSOLIDATED_PAYMENT cup,OLE.PROC_CTL PRC \n" +
+				"WHERE cp.prov_key_id = p.prov_key_id \n" +
+				"AND p.PROV_TAX_ID_NBR=ep.PROV_TIN_NBR \n" +
+				"AND ps.PROV_TIN_NBR=ep.PROV_TIN_NBR\n" +
+				"AND pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\n" +
+				"AND ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\n" +
+				"AND ps.PRTL_PRDCT_SELECTED_STS_CD='A'\n" +
+				"AND ep.PAY_METH_TYP_CD='{$tinType}'\n" +
+				"AND PRC.PROC_CTL_ID = cp.PROC_CTL_ID\n" +
+				"AND cp.CONSL_PAY_NBR = ucp.CONSL_PAY_NBR\n" +
+				"AND ucp.UCONSL_PAY_KEY_ID = cup.UCONSL_PAY_KEY_ID\n" +
+				"AND cup.CLM_KEY_ID = c.CLM_KEY_ID  \n" +
+				"AND c.SBSCR_KEY_ID = sr.SBSCR_KEY_ID \n" +
+				"AND p.PROV_NPI_NBR is not null\n" +
+				"AND ep.ENRL_STS_CD='A'\n" +
+				"AND PRC.EXTRACT_STS_CD = 'C'\n" +
+				"AND cp.SETL_DT between (current date - 30 days) AND current date \n" +
+				"order by cp.SETL_DT";
+	}

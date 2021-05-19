@@ -514,7 +514,8 @@ public class ViewPaymentsDataProvider {
 		case "byDOPAndNpi":
 		case "byDOPAndClaimNo":
 		case "byDOPAndPatientNm":
-			sqlRowNo = 430;
+			//sqlRowNo = 430;
+			query = QUERY.DATE_OF_PAYMENT;
 			break;
 
 		case "byDOPAndZeroPaymentClaims":
@@ -1265,6 +1266,17 @@ public class ViewPaymentsDataProvider {
 				} else if (searchCriteria.equalsIgnoreCase("byDOPAndZeroPaymentClaims")) {
 					testConfig.putRunTimeProperty("fromDate", tinNumbers.get("SETL_DT").toString());
 					testConfig.putRunTimeProperty("toDate", tinNumbers.get("SETL_DT").toString());
+				}
+
+				else if (searchCriteria.contains("DOP")) {
+					testConfig.putRunTimeProperty("fromDate", tinNumbers.get("SETL_DT").toString());
+					testConfig.putRunTimeProperty("toDate", tinNumbers.get("SETL_DT").toString());
+					testConfig.putRunTimeProperty("acntNo",tinNumbers.get("PTNT_ACCT_NBR").toString());
+					testConfig.putRunTimeProperty("sbscrId",tinNumbers.get("SBSCR_ID").toString());
+					testConfig.putRunTimeProperty("NPI",tinNumbers.get("PROV_NPI_NBR").toString());
+					testConfig.putRunTimeProperty("CLM_NBR",tinNumbers.get("CLM_NBR").toString());
+					testConfig.putRunTimeProperty("PATIENT_FIRST_NAME",tinNumbers.get("PTNT_FST_NM").toString());
+					testConfig.putRunTimeProperty("PATIENT_LAST_NAME",tinNumbers.get("PTNT_LST_NM").toString());
 				}
 
 				else if (searchCriteria.equalsIgnoreCase("EPRAPROVAdmin")

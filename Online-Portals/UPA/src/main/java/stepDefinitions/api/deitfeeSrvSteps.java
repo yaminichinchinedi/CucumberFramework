@@ -42,12 +42,6 @@ public class deitfeeSrvSteps {
 		return response;
 	}
 
-	@Then("^the web service should respond with a (\\d+) status code$")
-	public void the_web_service_should_respond_with_a_status_code(int status) throws Throwable {
-
-		int statusCode = response.getStatusCode();
-		Assert.assertEquals(statusCode, status);
-	}
 
 	@And("^verify debit fee API should return global level rate$")
 	public void verifyDebitFeeAPIShouldReturnGlobalLevelRate() {
