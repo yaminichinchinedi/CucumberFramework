@@ -312,7 +312,7 @@ And User clicks on UPA logout
 
  #Author:Sayonee
  #Author: sai
-		 @UPAUS3443039 @US3443069 @US3450360
+		 @UPAUS3443039 @US3443069 @UPAUS3450360
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -329,7 +329,7 @@ And User clicks on UPA logout
       |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |
       
     #Author:Sayonee
-		 @UPAUS3443039 @US3450360
+		 @UPAUS3443039 @UPAUS3450360
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
