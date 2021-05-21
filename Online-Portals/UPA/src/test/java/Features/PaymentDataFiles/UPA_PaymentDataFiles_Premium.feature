@@ -1,5 +1,5 @@
 #Author: Sahil D Sharma
- @UPADataBundleNEW  @UPARegression    @BothCSRUPAScenarios @fish
+ @UPAPaymentDataFilesPremium  @UPARegression 
  Feature: UPA Payment Data Files Functionality
 
 	@TC001 			
