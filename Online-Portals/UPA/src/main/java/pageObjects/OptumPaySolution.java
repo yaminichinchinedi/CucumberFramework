@@ -252,7 +252,7 @@ public class OptumPaySolution {
     List<WebElement> tableInvoiceNumberUI;
 	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
     List<WebElement> tableInvoiceDateUI;
-	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]")
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]")
 	List<WebElement> tableInvoicePayNowButtonUI;
 	@FindBy(xpath="//p[contains(text(),'Select an invoice to view billing details.')]")
 	private WebElement invoice_grid_header;
@@ -668,7 +668,6 @@ public class OptumPaySolution {
 
 	public OptumPaySolution validateFeeTitle() {
 		validatePastdueFee().validateAccruedFeesMonth();
-		//validatePastdueFee().verifyAccrudFeesInvoiceTab();
 		return this;
 	}
 
@@ -808,18 +807,6 @@ public class OptumPaySolution {
 
           Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by mid—July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
           Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.",hoverRate.getText().trim());
-//          Helper.compareEquals(testConfig, "Rate", "To view individual per-\n" + 
-//                  "payment fees, please visit\n" + 
-//                  "the View Payments page.\n" + 
-//                  "Fees will be billed monthly.\n" + 
-//                  "To estimate monthly fees,\n" + 
-//                  "select the Print Payment\n" + 
-//                  "summary button from the\n" + 
-//                  "View Payments page to\n" + 
-//                  "download 30 days of\n" + 
-//                  "payment data. Then,\n" + 
-//                  "calculate that amount by\n" + 
-//                  "the current rate.", hoverFees.getText().trim());
           Helper.compareEquals(testConfig, "Rate","To view individual per-\n" + 
           		"payment fees, please visit\n" + 
           		"the View Payments page.\n" + 
@@ -1171,7 +1158,7 @@ public class OptumPaySolution {
 	public OptumPaySolution validateAccruedFeesMonth() {
 		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
 		String feeTitle = null;
-		feeTitle = "fees month to date: $" + amount;
+		feeTitle = "Accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
 			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
