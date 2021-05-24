@@ -1173,9 +1173,9 @@ public class OptumPaySolution {
 		String feeTitle = null;
 		feeTitle = "fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")));
+			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
-			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
+			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")).replaceAll(",", ""));
 		return this;
 	}
 
