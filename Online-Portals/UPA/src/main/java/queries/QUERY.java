@@ -16,7 +16,7 @@ public class QUERY {
 			"AND PC.EXTRACT_STS_CD = 'C'\r\n";
 		
 public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_USER pu INNER JOIN OLE.PORTAL_USER_PAYER_TIN pt on pu.PORTAL_USER_ID = pt.PORTAL_USER_ID INNER JOIN OLE.PAYER py ON pt.PAYR_TIN_NBR = py.PAYR_TIN_NBR WHERE pu.SSO_ID='{$id}'";
-		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.PROC_DT> current date -day(current date) -1 days and dba.PROC_DT <= last_day(current date) and dba.SETL_DT <= current date";
+		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.SETL_DT> current date -day(current date) -1 days and dba.SETL_DT <= last_day(current date) and dba.SETL_DT <= current date and DBT_FEE_ACCRD_STS in ('FA' ,'FZ')";
 		public final static String TIN_WITH_DEBIT_ACCRD_FEE="select dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.DEBIT_FEE_ACCRD dfi,OLE.ENROLLED_PROVIDER ep,OLE.PRODUCT_SELECTION ps \r\n" +
 				"where  dfi.PROV_TIN_NBR=ep.PROV_TIN_NBR  and\r\n" +
 				"dfi.PROV_TIN_NBR=ps.PROV_TIN_NBR and ps.PRTL_PRDCT_SELECTED_GRP_NM='Premium' and ps.PRTL_PRDCT_SELECTED_STS_CD='A' and  ep.PAY_METH_TYP_CD='AO'\r\n" +
@@ -225,7 +225,7 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			  		"FROM OLE.DEBIT_FEE_INVCE dfi\r\n" + 
 			  		"LEFT JOIN OLE.PORTAL_USER pu ON pu.PORTAL_USER_ID = dfi.PAID_BY_USER\r\n" + 
 			  		"WHERE dfi.INVC_STS <> 'IC' AND INVC_TYP = 'PPP' AND PROV_TIN_NBR = '{$tin}'\r\n" + 
-			  		"Order by INVC_NBR";
+			  		"Order by BILL_CYC_STRT_DT desc";
 		
 		public final static String TIN_WITH_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
 				"pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\r\n" + 
@@ -239,5 +239,21 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 		public final static String UPDATE_ABA_VALIDATOR_SWITCH = "UPDATE OLE.SYSTEM_CONFIGURATION SET PROC_DATA = '{$proc_data}' WHERE PROC_CD = 'ABA_API'\r\n";
 
 		public final static String TOTAL_ACCRUED_FEES = "Select SUM(DBT_FEE_ACCRD_AMT) as ACCRDFEE from OLE.DEBIT_FEE_ACCRD dfa where PROV_TIN_NBR='{$tin}' AND dfa.SETL_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and CURRENT_DATE ";
+		
 		public final static String UPDATED_DEBIT_FEE_INVCE="Select * from OLE.DEBIT_FEE_INVCE where PROV_TIN_NBR='{$tin}' and INVC_NBR='{$invc_nbr}' order by LST_CHG_BY_DTTM desc fetch first 1 rows only with ur";
+
+
+		public final static String TIN_WITH_REFUND_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR , dfi.INVC_NBR as INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
+				"pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\r\n" + 
+				"AND dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR \r\n" + 
+				"AND ep.PAY_METH_TYP_CD='{$tinType}'\r\n" + 
+				"AND ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\r\n" + 
+				"AND ep.ENRL_STS_CD='A'\r\n" + 
+				"AND dfi.INVC_TOT_AMT < 0 AND dfi.INVC_STS = 'IR'\r\n";
+		
+		 public static final String INVOICE_SEARCH = "SELECT dfi.Prov_Tin_Nbr, dfi.BILL_CYC_STRT_DT, dfi.BILL_CYC_END_DT, dfi.INVC_TOT_AMT, dfi.INVC_NBR as INVC_NBR, dfi.INVC_STS, dfi.PAID_DATE, dfi.PAID_BY_USER, dfi.CONFIRM_NBR\r\n" + 
+			  		"FROM OLE.DEBIT_FEE_INVCE dfi\r\n" + 
+			  		"WHERE INVC_TYP = 'PPP' AND PROV_TIN_NBR = '{$tin}'\r\n";
+		 public static final String INVOICE_SEARCH_REFUND =INVOICE_SEARCH+"AND dfi.INVC_STS ='IR'AND dfi.INVC_TOT_AMT < 0";
+
 }

@@ -293,6 +293,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void verify_the_Invoice_tab_header_message() throws Throwable {
 			optumPaySol.verifyInvoiceTabHeader();
 		}
+		@Then("^verify that the Pay Now Button is disabled for Credit only Invoice$")
+		public void verify_that_the_Pay_Now_Button_is_disabled_for_Credit_only_Invoice() throws Throwable {
+		   optumPaySol.verifyPayNowButtonForRefundInvoice();
+		}
 
 }
 
