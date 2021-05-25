@@ -248,7 +248,9 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 				+"and dfa.DBT_FEE_ACCRD_AMT is not null AND dfa.PROC_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and LAST_DAY(CURRENT DATE) order by dfa.PROV_TIN_NBR desc fetch first 1 rows only with ur";
 		
 		public final static String UPDATE_PRODUCT_SELECTION = "UPDATE OLE.PRODUCT_SELECTION SET PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}',PRTL_PRDCT_SELECTED_STS_CD='A',PRTL_PRDCT_REC_STS_CD='{$prtl_prdct_selected_sts_cd}' where CNFG_ID ='{$cnfg_id}' ";
-	public final static String TIN_WITH_REFUND_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR , dfi.INVC_NBR as INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
+		public final static String UPDATE_ENROLLED_PROVIDER_PAY_MTHD = "UPDATE OLE.ENROLLED_PROVIDER set PAY_METH_TYP_CD='{$tinType}' where PROV_TIN_NBR = ='{$tin}' ";
+
+		public final static String TIN_WITH_REFUND_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR , dfi.INVC_NBR as INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
 				"pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\r\n" + 
 				"AND dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR \r\n" + 
 				"AND ep.PAY_METH_TYP_CD='{$tinType}'\r\n" + 

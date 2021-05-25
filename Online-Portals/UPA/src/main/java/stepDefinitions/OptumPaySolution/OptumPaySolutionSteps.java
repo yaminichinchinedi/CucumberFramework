@@ -43,8 +43,8 @@ public void user_validates_Tiles_of_this_page_in_order() throws Throwable {
 public void user_validates_contents_of_Fee_tiles_of_this_page() throws Throwable {
 	optumPaySol.validateFeeTitle();
 }	
-@Then("^User validates accrued conent fee on this page$")
-public void user_validates_accrued_conent_fee_on_this_page() throws Throwable {
+@Then("^User validates accrued content fee on this page$")
+public void user_validates_accrued_content_fee_on_this_page() throws Throwable {
 	optumPaySol.validtAccrdFeesMnthFrInvceTab();
 }
 @When("^User Validates Error Message upon Entering \"([^\"]*)\" on Optum Pay Solution$")

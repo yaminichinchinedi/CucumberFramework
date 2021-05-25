@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -1162,7 +1163,8 @@ public class OptumPaySolution {
 	public OptumPaySolution validateAccruedFeesMonth() {
 		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
 		String feeTitle = null;
-		feeTitle = "Accrued fees month to date: $" + amount;
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
 			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
@@ -1170,25 +1172,33 @@ public class OptumPaySolution {
 		return this;
 	}
 	public OptumPaySolution validtAccrdFeesMnthFrInvceTab() throws ParseException {
-		//Helper.changeDateFormat(testConfig, "05/24/2021", "MM/DD/YYYY", "MMM-DD-YY");
-		LocalDate.parse("2021-05-24").getMonth();
+
 		
 		if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard")) 
         testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PD");
 		else if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Premium")) 
 		testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
 
-		int update_prod=DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+		DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+		
 		Browser.browserRefresh(testConfig);
 		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
-		Map currDateDB = DataBase.executeSelectQuery(testConfig, 1910, 1);
-		currDateDB.get("CURRENT_DATE").toString();
-		//Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), currDateDB.get("CURRENT_DATE").toString(), "DD-MMM-YYYY");
-		Helper.changeDateFormat(testConfig, "2021/05/24", "YYYY/MM/DD", "DD-MMM-YY");
+		if(amount.isEmpty())
+			amount="0.00";
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+
 		String feeTitle = null;
-		feeTitle = "May accrued fees month to date: $" + amount;
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
 			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPAInvc.getText());
+		//Change the record to the origional record	
+			if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard"))
+			{
+				testConfig.putRunTimeProperty("portalAccess", "Premium");
+				testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
+			    DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+
+			}
 			return this;
 	}
 	public OptumPaySolution verifyInvoicesTab(String searchCriteria, String tinType, String portalAccess, String prdctRecSts) throws ParseException {
