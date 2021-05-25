@@ -8,10 +8,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -228,7 +230,9 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
 	WebElement feeTileUPA;
-
+	
+	@FindBy(xpath = "//div[@id='optum-pay-invoices']/div/div[2]/p")
+	WebElement feeTileUPAInvc;
 
 	@FindBy(linkText = "Invoices")
 	WebElement lnkInvoice;
@@ -1158,14 +1162,44 @@ public class OptumPaySolution {
 	public OptumPaySolution validateAccruedFeesMonth() {
 		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
 		String feeTitle = null;
-		feeTitle = "Accrued fees month to date: $" + amount;
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
 			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
 			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")).replaceAll(",", ""));
 		return this;
 	}
+	public OptumPaySolution validtAccrdFeesMnthFrInvceTab() throws ParseException {
 
+		
+		if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard")) 
+        testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PD");
+		else if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Premium")) 
+		testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
+
+		DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+		
+		Browser.browserRefresh(testConfig);
+		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		if(amount.isEmpty())
+			amount="0.00";
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+
+		String feeTitle = null;
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
+		if (System.getProperty("Application").contains("UPA"))
+			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPAInvc.getText());
+		//Change the record to the origional record	
+			if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard"))
+			{
+				testConfig.putRunTimeProperty("portalAccess", "Premium");
+				testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
+			    DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+
+			}
+			return this;
+	}
 	public OptumPaySolution verifyInvoicesTab(String searchCriteria, String tinType, String portalAccess, String prdctRecSts) throws ParseException {
 		if ("TinWithInvoices".equals(searchCriteria)) {
 			Element.verifyElementPresent(lnkInvoice, "Invoices Link");

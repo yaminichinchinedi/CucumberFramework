@@ -372,6 +372,7 @@ Examples:
   Then verify the Invoice tab header message  
 Examples:
 
+
  |  credentials   |    userType | 	   portalAccess    |		searchCriteria	  | tinType	  |  
  #|     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
  #|     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|  
@@ -408,3 +409,42 @@ Examples:
       |       BS_Admin      	| 			 BS		   		|			Premium		  	|  				RefundInvoice  			  |	  VO			| 
 
  
+ 
+ @US3485959
+ Scenario Outline: - Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA Prov
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User validates contents of Fee tiles of this page
+    Then User clicks on "Invoices" tab
+	 Then User validates accrued content fee on this page
+		And User clicks on UPA logout
+		
+		     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   PROV_Admin    |     PROV     	|		 	wthAccuredFee					|			Premium			|		AO			| 
+    @US3485959  
+    Scenario Outline: - Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    Then User validates contents of Fee tiles of this page
+    Then User clicks on "Invoices" tab
+	  Then User validates accrued content fee on this page
+		And User clicks on UPA logout
+		
+		     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   BS_Admin        |     BS     	|		 	wthAccuredFee					|			Premium			|		AO			|  
+      @US3485959
+   Scenario Outline: Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA VO Tins
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	 And User clicks on Optum Pay Solutions tab
+	 Then User clicks on "Invoices" tab
+	 Then User validates accrued content fee on this page 
+Examples:
+    	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
+      |     PROV_Admin  | 	PROV			  |			Premium 		  |  wthAccuredFee        |	  VO			|    
+
