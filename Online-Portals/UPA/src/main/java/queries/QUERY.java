@@ -260,6 +260,5 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			  		"FROM OLE.DEBIT_FEE_INVCE dfi\r\n" + 
 			  		"WHERE INVC_TYP = 'PPP' AND PROV_TIN_NBR = '{$tin}'\r\n";
 		 public static final String INVOICE_SEARCH_REFUND =INVOICE_SEARCH+"AND dfi.INVC_STS ='IR'AND dfi.INVC_TOT_AMT < 0";
-		 public static final String INVOICE_SEARCH_REFUND =INVOICE_SEARCH+"AND dfi.INVC_STS ='IR'AND dfi.INVC_TOT_AMT < 0";
 
 }
