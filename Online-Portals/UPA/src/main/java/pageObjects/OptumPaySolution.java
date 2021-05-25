@@ -6,8 +6,10 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -228,7 +230,9 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
 	WebElement feeTileUPA;
-
+	
+	@FindBy(xpath = "//div[@id='optum-pay-invoices']/div/div[2]/p")
+	WebElement feeTileUPAInvc;
 
 	@FindBy(linkText = "Invoices")
 	WebElement lnkInvoice;
@@ -1160,7 +1164,28 @@ public class OptumPaySolution {
 			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
 		return this;
 	}
+	public OptumPaySolution validtAccrdFeesMnthFrInvceTab() throws ParseException {
+		//Helper.changeDateFormat(testConfig, "05/24/2021", "MM/DD/YYYY", "MMM-DD-YY");
+		LocalDate.parse("2021-05-24").getMonth();
+		
+		if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard")) 
+        testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PD");
+		else if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Premium")) 
+		testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
 
+		int update_prod=DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+		Browser.browserRefresh(testConfig);
+		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		Map currDateDB = DataBase.executeSelectQuery(testConfig, 1910, 1);
+		currDateDB.get("CURRENT_DATE").toString();
+		//Helper.changeDateFormat(currDateDB.get("CURRENT_DATE").toString(), currDateDB.get("CURRENT_DATE").toString(), "DD-MMM-YYYY");
+		Helper.changeDateFormat(testConfig, "2021/05/24", "YYYY/MM/DD", "DD-MMM-YY");
+		String feeTitle = null;
+		feeTitle = "May accrued fees month to date: $" + amount;
+		if (System.getProperty("Application").contains("UPA"))
+			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPAInvc.getText());
+			return this;
+	}
 	public OptumPaySolution verifyInvoicesTab(String searchCriteria, String tinType, String portalAccess, String prdctRecSts) throws ParseException {
 		if ("TinWithInvoices".equals(searchCriteria)) {
 			Element.verifyElementPresent(lnkInvoice, "Invoices Link");

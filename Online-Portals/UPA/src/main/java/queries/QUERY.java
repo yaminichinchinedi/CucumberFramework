@@ -238,6 +238,14 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 		
 		public final static String UPDATE_ABA_VALIDATOR_SWITCH = "UPDATE OLE.SYSTEM_CONFIGURATION SET PROC_DATA = '{$proc_data}' WHERE PROC_CD = 'ABA_API'\r\n";
 
+
 		public final static String TOTAL_ACCRUED_FEES = "Select SUM(DBT_FEE_ACCRD_AMT) as ACCRDFEE from OLE.DEBIT_FEE_ACCRD dfa where PROV_TIN_NBR='{$tin}' AND dfa.SETL_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and CURRENT_DATE ";
 		public final static String UPDATED_DEBIT_FEE_INVCE="Select * from OLE.DEBIT_FEE_INVCE where PROV_TIN_NBR='{$tin}' and INVC_NBR='{$invc_nbr}' order by LST_CHG_BY_DTTM desc fetch first 1 rows only with ur";
+		
+		public final static String TIN_WITH_ACCRD_FEE="SELECT dfa.PROV_TIN_NBR as PROV_TAX_ID_NBR,ps.CNFG_ID,ps.PRTL_PRDCT_REC_STS_CD FROM OLE.DEBIT_FEE_ACCRD dfa,OLE.PRODUCT_SELECTION ps, OLE.ENROLLED_PROVIDER ep \r\n"+
+		        "WHERE ps.PROV_TIN_NBR=dfa.PROV_TIN_NBR AND dfa.PROV_TIN_NBR = ep.PROV_TIN_NBR AND ep.PAY_METH_TYP_CD='{$tinType}' AND ps.PRTL_PRDCT_SELECTED_GRP_NM='Premium' AND  PRTL_PRDCT_SELECTED_STS_CD='A' \r\n"
+				+"and dfa.DBT_FEE_ACCRD_AMT is not null AND dfa.PROC_DT between CURRENT_DATE - (DAY(CURRENT_DATE)-1) DAYS and LAST_DAY(CURRENT DATE) order by dfa.PROV_TIN_NBR desc fetch first 1 rows only with ur";
+		
+		public final static String UPDATE_PRODUCT_SELECTION = "UPDATE OLE.PRODUCT_SELECTION SET PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}',PRTL_PRDCT_SELECTED_STS_CD='A',PRTL_PRDCT_REC_STS_CD='{$prtl_prdct_selected_sts_cd}' where CNFG_ID ='{$cnfg_id}' ";
+
 }
