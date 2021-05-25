@@ -372,3 +372,30 @@ Examples:
  |  credentials   |    userType | 	   searchCriteria    |		portalAccess	  | tinType	  |  
  |     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
  |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|       
+
+ 
+ 
+ @qqqqqqqq
+ Scenario Outline: - Optum Pay Solutions - Provider VO tin tiles(content+tiles+hover) +add data on debit_fee_invc
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User validates contents of Fee tiles of this page
+		And User clicks on UPA logout
+		
+		     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   PROV_Admin    |     PROV     	|		 	withAccuredFee					|			Premium			|		AO			| 
+      
+      
+      @qerty
+   Scenario Outline: Optum Pay Solutions - Header message update
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	 And User clicks on Optum Pay Solutions tab
+	 Then User clicks on "Invoices" tab
+	 Then User validates accrued conent fee on this page 
+Examples:
+    	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
+      |     PROV_Admin  | 	PROV			  |			Standard 		  |  wthAccuredFee        |	  AO			|
+     # |     PROV_Admin  | 	PROV			  |			Premium 		  |  wthAccuredFee        |	  VO			|    
