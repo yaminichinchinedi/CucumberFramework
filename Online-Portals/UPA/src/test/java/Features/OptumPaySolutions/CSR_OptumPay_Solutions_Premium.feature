@@ -285,6 +285,9 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 	         |    Super       |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
 	         |    RW	        |	wthAccuredFee	   |  AO 	 |  Premium		 |	PROV	| 
 	         |    RO   		    |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    Super       |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  VO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
 	 
 
 	  
