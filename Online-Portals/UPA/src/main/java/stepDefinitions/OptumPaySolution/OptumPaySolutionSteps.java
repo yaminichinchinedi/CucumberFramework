@@ -301,6 +301,15 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		   optumPaySol.verifyPayNowButtonForRefundInvoice();
 		}
 
+		@Then("^User validates contents of current month accrued fees\\.$")
+		public void user_validates_contents_of_current_month_accrued_fees() throws Throwable {
+		   optumPaySol.validateAccruedFeesMonth();
+		}
+		@Then("^User validates contents of current month accrued fees of Invoices page\"([^\"]*)\"$")
+		public void user_validates_contents_of_current_month_accrued_fees_of_Invoices_page(String searchCriteria) throws Throwable {
+			optumPaySol.verifyTheAccrudFeeInvoiceTab(searchCriteria);
+		}
+
 }
 
 

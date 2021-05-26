@@ -2012,6 +2012,18 @@ public class OptumPaySolution {
 				}
 			}
 		}
+	public void verifyTheAccrudFeeInvoiceTab(String searchCriteria) {
+		Map data = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1);
+		String invoiceAccrudFee = null;
+		String d=Helper.getCurrentDate("MMM");
+	   if ("withAccuredFee".equals(searchCriteria) && data.get("DBT_FEE_ACCRD_AMT").toString().trim().length() > 0)
+		invoiceAccrudFee = d + " accrued fees month to date: $" + data.get("DBT_FEE_ACCRD_AMT").toString();
+		else if ("withoutAccuredFee".equals(searchCriteria) || data.get("DBT_FEE_ACCRD_AMT").toString().trim().length() == 0)
+			invoiceAccrudFee = d + " accrued fees month to date: $0.00";
+
+		Helper.compareContains(testConfig, "Accrud fee value", invoiceAccrudFee, divInvoicesAccrudFeesUI.getText());
+
+	}
 
 		
 	
