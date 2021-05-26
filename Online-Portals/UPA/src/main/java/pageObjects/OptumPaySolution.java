@@ -1190,6 +1190,8 @@ public class OptumPaySolution {
 		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
 			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPAInvc.getText());
+		else if (System.getProperty("Application").contains("CSR"))
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, divInvoicesAccrudFeesUI.getText());
 		//Change the record to the origional record	
 			if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard"))
 			{

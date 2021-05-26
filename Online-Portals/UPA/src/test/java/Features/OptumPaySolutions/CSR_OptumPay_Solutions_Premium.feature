@@ -262,13 +262,13 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 			And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 			Then User clicks on Optum Pay Solutions link on CSR HomePage
 			Then User Enters tin for OPS and click on search button for "<userType>".
-			Then User validates contents of current month accrued fees.
+			Then User validates contents of Fee tiles of this page
 	    		Examples:
 	
 	         |   credentials     |  searchCriteria |tinType|portalAccess |userType|
-	         |    Super          |  withAccuredFee |  AO 	 |	Premium	   |	PROV	|  
-	         |    RW	           |  withAccuredFee |  AO 	 |	Premium		 |	PROV	|   
-	         |    RO   		       |	withAccuredFee |  AO 	 |	Premium		 |	PROV	|
+	         |    Super          |  wthAccuredFee	 |  AO 	 |	Premium	   |	PROV	|  
+	         |    RW	           |  wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|   
+	         |    RO   		       |	wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|
 	   
 	 
 	 @CSRUS3485977
@@ -278,10 +278,13 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 			Then User clicks on Optum Pay Solutions link on CSR HomePage
 			Then User Enters tin for OPS and click on search button for "<userType>".  
 			Then User clicks on "Invoices" tab
-			Then User validates contents of current month accrued fees of Invoices page"<searchCriteria>"
+			Then User validates accrued content fee on this page
 				Examples:
 	
 	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
-	         |    Super       |	withAccuredFee   |  AO 	 |	Premium		 |	PROV	|
-	         |    RW	        |	withAccuredFee   |  AO 	 |  Premium		 |	PROV	| 
-	         |    RO   		    |	withAccuredFee   |  AO 	 |	Premium		 |	PROV	|
+	         |    Super       |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  AO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	 
+
+	  
