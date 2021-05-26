@@ -29,7 +29,7 @@ public class DataBase
 	
 	public enum DatabaseType
 	{
-		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test1(6),Test2(7);
+		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test1(6),Test2(7),IMPL2(8);
 
 	  public final int values;
 	  
@@ -158,7 +158,9 @@ public class DataBase
 		
          else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
     	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test2);
-           
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);  
        
       else
 	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
@@ -193,7 +195,9 @@ public class DataBase
 		
          else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
     	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test2);
-           
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);  
        
       else
 	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
@@ -251,6 +255,8 @@ public class DataBase
 	        dbType=DatabaseType.PROD;
 	        else if (System.getProperty("Database").equalsIgnoreCase("Automation"))
 		        dbType=DatabaseType.Automation;
+	        else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+		        dbType=DatabaseType.IMPL2;
 	        else
 	    	dbType=DatabaseType.IMPL; 
 		return dbType;
@@ -400,6 +406,9 @@ public class DataBase
 		
          else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
          return executeSelectQuery(testConfig,DatabaseType.Test2,sqlRow);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+             return executeSelectQuery(testConfig,DatabaseType.IMPL2,sqlRow);
     
          else
 	     return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
@@ -422,7 +431,9 @@ public class DataBase
 		
          else if (System.getProperty("Database").equalsIgnoreCase("Test2"))
          return executeSelectQuery(testConfig,DatabaseType.Test2,selectQuery);
-    
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+             return executeSelectQuery(testConfig,DatabaseType.IMPL2,selectQuery);
          else
 	     return executeSelectQuery(testConfig,DatabaseType.IMPL,selectQuery); 
 }
@@ -739,7 +750,12 @@ public class DataBase
 				userName = testConfig.getRunTimeProperty("IMPLDBUsername");
 				password = testConfig.getRunTimeProperty("IMPLDBPassword");
 				break;
-				
+			case IMPL2:
+				connectString = testConfig.getRunTimeProperty("IMPL2ConnectionString");
+				Log.Comment("Connecting to IMPL2 DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("IMPL2DBUsername");
+				password = testConfig.getRunTimeProperty("IMPL2DBPassword");
+				break;	
 			case PROD:
 				connectString = testConfig.getRunTimeProperty("ProdDBConnectionString");
 				Log.Comment("Connecting to Stage DB:-" + connectString);
@@ -951,6 +967,10 @@ public class DataBase
          else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
          {
 	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+       }
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
+         {
+	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);
        }
     else
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
