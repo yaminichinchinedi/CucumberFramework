@@ -263,4 +263,15 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			  		"WHERE INVC_TYP = 'PPP' AND PROV_TIN_NBR = '{$tin}'\r\n";
 		 public static final String INVOICE_SEARCH_REFUND =INVOICE_SEARCH+"AND dfi.INVC_STS ='IR'AND dfi.INVC_TOT_AMT < 0";
 
+         public final static String TIN_WITH_WAVIE ="   SELECT DFA.PROV_TIN_NBR AS PROV_TAX_ID_NBR,SUM(DFA.DBT_FEE_ACCRD_AMT) AS DBT_FEE_ACCRD_AMT\r\n" +
+                 "                FROM OLE.DEBIT_FEE_ACCRD DFA\r\n" +
+                 "                JOIN OLE.PRODUCT_SELECTION PS ON PS.PROV_TIN_NBR = DFA.PROV_TIN_NBR\r\n" +
+                 "                JOIN OLE.ENROLLED_PROVIDER EP ON EP.PROV_TIN_NBR = PS.PROV_TIN_NBR\r\n" +
+                 "                WHERE DFA.DBT_FEE_ACCRD_AMT > '0.0' AND PS.PRTL_PRDCT_SELECTED_GRP_NM = '{$portalAccess}' AND PRTL_PRDCT_SELECTED_CD = 'P' AND\r\n" +
+                 "                PS.PRTL_PRDCT_SELECTED_STS_CD = 'A' AND PS.PRTL_PRDCT_SELECTED_CD = 'P' AND EP.PAY_METH_TYP_CD = '{$tinType}' AND EP.ENRL_STS_CD = 'A' AND DFA.PROV_TIN_NBR NOT IN (\r\n" +
+                 "SELECT PROV_TIN_NBR FROM OLE.DEBIT_FEE_ADJUSTMENT WHERE (DATE(ADJ_REQ_ON) = CURRENT_DATE OR DATE(ADJ_REQ_ON) = (CURRENT_DATE - 1 DAY)) AND ADJ_COMP_DTTM IS NULL AND FULL_ADJ_IND ='Y')\r\n" +
+                 "GROUP BY DFA.PROV_TIN_NBR";
+	     
+	     
+
 }

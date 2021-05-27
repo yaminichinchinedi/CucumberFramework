@@ -300,6 +300,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void verify_that_the_Pay_Now_Button_is_disabled_for_Credit_only_Invoice() throws Throwable {
 		   optumPaySol.verifyPayNowButtonForRefundInvoice();
 		}
+		
+		@Then("^validate Wavie Full Fee functionality and options when clicked on it$")
+		public void validate_Wavie_Full_Fee_functionality_and_options_when_clicked_on_it() throws Throwable {
+			optumPaySol.verifyWavieButtonOptions();
+		}
 
 
 }

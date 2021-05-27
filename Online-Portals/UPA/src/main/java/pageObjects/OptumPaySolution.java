@@ -475,6 +475,48 @@ public class OptumPaySolution {
 	
     @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
     WebElement confNbr;
+    
+    @FindBy(xpath="//*[@id=\"optum-pay-options\"]/div[1]/div[3]/div[2]/div[1]/text()")
+	WebElement accrd_sum;
+    
+	@FindBy(id = "waiveButton")
+	WebElement wavieBtn;
+	
+	
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType']")
+	WebElement preselRadioBtn;
+    
+  
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType' and @class = 'partialWaive']")
+	WebElement partialRadioBtn;
+    
+  
+    @FindBy(xpath="//body[1]/div[7]/div[2]/form[1]/div[3]/div[1]/span[1]")
+	WebElement totAmtWavie;
+    
+
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType' and @class = 'partialWaive']")
+  	WebElement asteriskchk;
+    
+   @FindBy(xpath="//body/div[7]/div[2]/form[1]/div[6]/div[1]/span[1]")
+  	WebElement asttext;
+
+   
+	@FindBy(id = "feeTypeOption_selector")
+	WebElement reasondrpdwn;
+
+ 
+    @FindBy(xpath="//*[@id='waiveFeesForm']/div[5]/div/p")
+    WebElement txtModalWaiveFee;
+    
+  
+    @FindBy(xpath="//button[contains(text(),'Cancel')]")
+    WebElement wavieCancelBtn;
+    
+  
+    @FindBy(xpath="//button[contains(text(),'Continue')]")
+    WebElement wavieContBtn;
+  
   
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
@@ -2014,6 +2056,36 @@ public class OptumPaySolution {
 				}
 			}
 		}
+		
+	public void verifyWavieButtonOptions()
+	{
+        Helper.compareEquals(testConfig, "Waive Fees", true, wavieBtn.isDisplayed());
+		Element.click(wavieBtn, "Waive Fees");
+		Helper.compareEquals(testConfig, "Waive Total Amount Radio Button Checked", true, preselRadioBtn.isSelected());
+		Helper.compareEquals(testConfig, "Waive Total Amount Radio Button Checked", false, partialRadioBtn.isSelected());
+		Helper.compareEquals(testConfig, "Wavie Fee with Asterisk", "* Waived fees", asttext.getText().trim());
+		Select drpdwn = new Select(testConfig.driver.findElement(By.xpath("//select[@id='waiveFeeReason']")));
+	    List <WebElement> options = drpdwn.getOptions();
+	    int size = options.size();
+	    List<String> opts = new ArrayList<>();
+	    List<String> optsUI = new ArrayList<>();
+	    for(int i =0; i<size ; i++)
+	    {
+	         String optionsUI = options.get(i).getText();
+	         optsUI.add(optionsUI);
+	         optsUI.addAll(opts);
+	     }
+	      
+	    ArrayList<String> optsDB = new ArrayList<String>(
+    	      Arrays.asList("Select reason", "UHC Requested, Provider Meets Criteria for Large Volume", "Other"));
+
+	      
+	    Helper.compareEquals(testConfig, "Wavie Dropdown Options", optsDB.toString().trim(), optsUI.toString().trim());
+	    Helper.compareEquals(testConfig, "waive modal text",TestBase.contentMessages.getProperty("prov.admin.premium.ao.waiveFeeModalOptumPaySolutions.pageText1")+""+"$"+testConfig.getRunTimeProperty("DBT_FEE_ACCRD_AMT")+TestBase.contentMessages.getProperty("prov.admin.premium.ao.waiveFeeModalOptumPaySolutions.pageText2").trim(), txtModalWaiveFee.getText().trim());
+	    Helper.compareEquals(testConfig, "Wavie Cancel Button Enabled", true, wavieCancelBtn.isEnabled());
+	    Helper.compareEquals(testConfig, "Wavie Cntinue Button Disabled", false, wavieContBtn.isEnabled());
+	 }
+	
 	
 }
 

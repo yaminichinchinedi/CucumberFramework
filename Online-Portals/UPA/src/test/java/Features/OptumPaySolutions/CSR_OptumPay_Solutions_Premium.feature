@@ -289,5 +289,17 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 	         |    RW	        |	wthAccuredFee	   |  VO 	 |  Premium		 |	PROV	| 
 	         |    RO   		    |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
 	 
-
+@CSRUS3546055
+  Scenario Outline: Optum Pay Soution  Access Payments Accrued fee > $0 and Request is not in Progress
+	Given User navigates to CSR portal and enters "<credentials>" and login 
+	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+	Then  User clicks on Optum Pay Solutions link on CSR HomePage 
+	Then  User Enters tin for OPS and click on search button for "<userType>". 
+	Then validate Wavie Full Fee functionality and options when clicked on it
+	
+Examples: 
+     | credentials | userType | searchCriteria     				    | portalAccess | tinType | userType |
+     | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AO      | PROV     |
+  #   | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AV      |  PROV     |
+	 
 	  
