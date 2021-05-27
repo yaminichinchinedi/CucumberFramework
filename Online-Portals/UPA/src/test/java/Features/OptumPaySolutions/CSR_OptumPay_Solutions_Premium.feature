@@ -255,3 +255,39 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 		|   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
 		|    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
             
+#Author: Sai	
+		@CSRUS3485977
+	 Scenario Outline: Optum Pay Soution Current Month Accured Fees scenario 
+			Given User navigates to CSR portal and enters "<credentials>" and login
+			And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+			Then User clicks on Optum Pay Solutions link on CSR HomePage
+			Then User Enters tin for OPS and click on search button for "<userType>".
+			Then User validates contents of Fee tiles of this page
+	    		Examples:
+	
+	         |   credentials     |  searchCriteria |tinType|portalAccess |userType|
+	         |    Super          |  wthAccuredFee	 |  AO 	 |	Premium	   |	PROV	|  
+	         |    RW	           |  wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|   
+	         |    RO   		       |	wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|
+	   
+	 
+	 @CSRUS3485977
+	 Scenario Outline: Optum Pay Soution Current Month Accured Fees scenario Invoice tab
+			Given User navigates to CSR portal and enters "<credentials>" and login
+			And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+			Then User clicks on Optum Pay Solutions link on CSR HomePage
+			Then User Enters tin for OPS and click on search button for "<userType>".  
+			Then User clicks on "Invoices" tab
+			Then User validates accrued content fee on this page
+				Examples:
+	
+	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
+	         |    Super       |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  AO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    Super       |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  VO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
+	 
+
+	  
