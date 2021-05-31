@@ -1,5 +1,5 @@
 #Author: Sunanda
-@UPAOptumPaySolutions
+@UPAOptumPaySolutions @UPARegression
 Feature: - Optum Pay Solutions
   
    #OBSOLETE FOR NOW

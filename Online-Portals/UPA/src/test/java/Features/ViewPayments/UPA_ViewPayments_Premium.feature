@@ -1,5 +1,5 @@
 #Author: amit_kushwah@optum.com
-@UPA_ViewPayments_Premium
+@UPA_ViewPayments_Premium  @UPARegression
 Feature: UPA ViewPayments Functionality for Premium TIN
 
   	#Author: AMIT

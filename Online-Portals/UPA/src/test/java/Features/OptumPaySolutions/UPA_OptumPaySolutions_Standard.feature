@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@UPAOptumPaySolutions
+@UPAOptumPaySolutions @UPARegression
 Feature: - Optum Pay Solutions for Standard TINs
  
  @US3485959

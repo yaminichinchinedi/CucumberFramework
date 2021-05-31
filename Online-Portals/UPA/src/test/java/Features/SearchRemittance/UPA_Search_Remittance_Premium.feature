@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@UPASearchRemittancePRemium
+@UPASearchRemittancePRemium  @UPARegression
 Feature: UPA Search Remittance for Premium access portal			
 
 @UPAUS2879968 @OctRelease 

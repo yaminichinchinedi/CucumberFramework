@@ -1,4 +1,5 @@
 #Author: Amit Kushwah
+@UPARegression
 Feature: UPA Search Remittance for Standard portal access
 		@US2990582
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete

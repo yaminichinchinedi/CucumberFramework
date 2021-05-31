@@ -1,5 +1,5 @@
 #Author: Marsha(Stabilisation)
-@UPAhomePage
+@UPAhomePage @UPARegression
 Feature:  UPA Home Page Functionality - Post Login 
 	#Author: Sunanda
   @UPABringMorePage_1 @homePage_func

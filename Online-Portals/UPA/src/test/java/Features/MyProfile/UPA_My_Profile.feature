@@ -1,5 +1,5 @@
 #Author: vinit_rohela@optum.com
-@UPAMyProfile
+@UPAMyProfile @UPARegression
 Feature: UPA My Profile Functionality
 
 
