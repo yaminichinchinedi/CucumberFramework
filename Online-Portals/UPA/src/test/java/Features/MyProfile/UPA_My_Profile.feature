@@ -82,3 +82,22 @@ Scenario Outline: UPA My Profile UI Functionality Update and verify user details
     Examples:
       |      userType       |   accessType|
       |      PROV_Admin     |   PROV      |
+
+      
+@UPAUS2637587_UPA 
+Scenario Outline: UPA My Profile Fraud Prevention Check
+
+    Given User navigates to UPA portal and enters "<userType>" and login
+    When Click on UPA - My Profile Link
+    Then verify Change Password and Manage Security Questions Visibility
+    Then Verify Optum ID is added in My Profile Page 
+     
+Examples:
+      |      userType       |   accessType|
+      |      PROV_Admin     |   PROV      |
+      |      PROV_Gen       |   PROV      |
+      |      BS_Admin       |   BS     	  |
+      |      BS_Gen         |   BS     	  |
+      |      PAY_Admin     	|   PAY       |
+      |      PAY_Gen      	|   PAY       |
+  
