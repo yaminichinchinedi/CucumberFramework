@@ -1,5 +1,5 @@
 #Author: Sayonee
- @CSRRunReports
+ @CSRRunReports @CSRRegression
 
 Feature: CSR Run Reports Feature
 
