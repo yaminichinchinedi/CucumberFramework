@@ -1081,8 +1081,8 @@ public class OptumPaySolution {
 		else
 			expectedAccruedFees = data.get("ACCRDFEE").toString();
 
-		Helper.compareEquals(testConfig, "Accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
-		Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim());
+		Helper.compareContains(testConfig, "accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
+		Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim().replace(",",""));
 		return this;
 	}
 
@@ -1207,9 +1207,9 @@ public class OptumPaySolution {
 		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
 		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
-			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
+			Helper.compareContains(testConfig, "accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
-			Helper.compareContains(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")).replaceAll(",", ""));
+			Helper.compareContains(testConfig, "accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")).replaceAll(",", ""));
 		return this;
 	}
 	public OptumPaySolution validtAccrdFeesMnthFrInvceTab() throws ParseException {
