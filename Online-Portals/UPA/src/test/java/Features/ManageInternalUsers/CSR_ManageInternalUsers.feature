@@ -1,5 +1,5 @@
 #Author: Sayonee
-@CSRManageInternalUsers
+@CSRManageInternalUsers @CSRRegression
 Feature: Manage Internal Users link on CSR
 
   @US2944327

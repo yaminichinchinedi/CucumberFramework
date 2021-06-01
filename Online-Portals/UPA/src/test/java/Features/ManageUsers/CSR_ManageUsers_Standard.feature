@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
-@cloudCSRManageUsers 
+@cloudCSRManageUsers @CSRRegression
 Feature: CSR Manage Users functionality for Standard Tins
 @CSRUS2879930 @OctRelase 
 Scenario Outline: CSR Manage Purse User 

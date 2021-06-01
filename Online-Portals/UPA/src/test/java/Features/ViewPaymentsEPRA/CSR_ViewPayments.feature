@@ -1,5 +1,5 @@
 #Author: Pranav Kasula
-@BothCSRUPAScenarios @UPARegression  @ViewPayments 
+@BothCSRUPAScenarios @UPARegression  @ViewPayments  @CSRRegression
 Feature: View Payments CSR        
 
 Background: 
