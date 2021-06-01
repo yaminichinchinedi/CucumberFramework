@@ -1,5 +1,5 @@
 #Author: Sunanda
-@UPAPaymentDataFilesStandard
+@UPAPaymentDataFilesStandard @UPARegression
 Feature: UPA Payment Data Files Functionality for Standard TIN
 				
 Scenario Outline: UI Validations for Data Bundle
