@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -516,6 +517,13 @@ public class OptumPaySolution {
   
     @FindBy(xpath="//button[contains(text(),'Continue')]")
     WebElement wavieContBtn;
+    
+    @FindBy(xpath="//button[contains(text(),'Yes, continue')]")
+    WebElement wavieyesBtn;
+    
+  
+    @FindBy(xpath="//div[contains(text(),'Waived fees pending')]")
+    WebElement waviefeependng;
   
   
 	//Added by Mohammad Khalid
@@ -2085,6 +2093,40 @@ public class OptumPaySolution {
 	    Helper.compareEquals(testConfig, "Wavie Cancel Button Enabled", true, wavieCancelBtn.isEnabled());
 	    Helper.compareEquals(testConfig, "Wavie Cntinue Button Disabled", false, wavieContBtn.isEnabled());
 	 }
+	
+	
+	public void verifyWaivedfeespending(String searchCriteria)
+	{
+
+        if(searchCriteria.equalsIgnoreCase("ZERO_DEBIT_FEE"))
+        {
+            Helper.compareEquals(testConfig, "Waive Fees", false, wavieBtn.isEnabled());
+            Helper.compareEquals(testConfig, "Text", "Waived fees pending", waviefeependng.getText());
+        }
+        else
+        {
+        	Helper.compareEquals(testConfig, "Waive Fees", true, wavieBtn.isEnabled());
+        }
+
+    }
+	
+	
+	public void verifyDebitFeeAdj(String searchCriteria)
+	{
+		System.getProperty("tin");
+		
+		
+		if(searchCriteria.equalsIgnoreCase("ZERO_DEBIT_FEE"))
+		{
+			int update = DataBase.executeUpdateQuery(testConfig, QUERY.UPDATED_DEBIT_FEE_ADJ);
+		}
+		else
+		{
+			int update = DataBase.executeUpdateQuery(testConfig, QUERY.UPD_DEBIT_FEE_ADJ_NEG1);
+		}
+	    
+	}
+	
 	
 	
 }

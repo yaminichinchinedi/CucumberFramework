@@ -1,5 +1,6 @@
 package main.java.stepDefinitions.OptumPaySolution;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
@@ -306,6 +307,23 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.verifyWavieButtonOptions();
 		}
 
+		@Given("^Update the ADJ_REQ_ON Date to Current Date$")
+		public void update_the_ADJ_REQ_ON_Date_to_Current_Date() throws Throwable {
+			optumPaySol.verifyDebitFeeAdj();
+		}
+		
+		@Given("^Update the ADJ_REQ_ON Date to Current Date for \"([^\"]*)\"$")
+		public void update_the_ADJ_REQ_ON_Date_to_Current_Date_for(String searchCriteria) throws Throwable {
+			optumPaySol.verifyDebitFeeAdj(searchCriteria);
+		}
+		
+		
+
+      @Then("^validate Wavie Full Fee Button based on \"([^\"]*)\" enabled or not$")
+      public void validate_Wavie_Full_Fee_Button_based_on_enabled_or_not(String searchCriteria) throws Throwable {
+
+    	  optumPaySol.verifyWaivedfeespending(searchCriteria);
+      }
 
 }
 

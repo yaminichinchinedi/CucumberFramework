@@ -272,6 +272,29 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
                  "SELECT PROV_TIN_NBR FROM OLE.DEBIT_FEE_ADJUSTMENT WHERE (DATE(ADJ_REQ_ON) = CURRENT_DATE OR DATE(ADJ_REQ_ON) = (CURRENT_DATE - 1 DAY)) AND ADJ_COMP_DTTM IS NULL AND FULL_ADJ_IND ='Y')\r\n" +
                  "GROUP BY DFA.PROV_TIN_NBR";
 	     
-	     
+        
+         public final static String UPDATED_DEBIT_FEE_ADJ="UPDATE OLE.DEBIT_FEE_ADJUSTMENT\r\n" + 
+         		"         SET ADJ_REQ_ON = CURRENT DATE, TOTAL_FEE_INCURRED = '0.00'\r\n" + 
+         		"         WHERE PROV_TIN_NBR = '{$tin}' AND FULL_ADJ_IND = 'Y' AND ADJ_COMP_DTTM IS NULL";
+
+         public final static String ZERO_DEBIT_FEE="SELECT DFA.PROV_TIN_NBR AS PROV_TAX_ID_NBR \r\n" + 
+         		"FROM OLE.DEBIT_FEE_ADJUSTMENT DFA\r\n" + 
+         		"INNER JOIN OLE.ENROLLED_PROVIDER EP ON EP.PROV_TIN_NBR = DFA.PROV_TIN_NBR\r\n" + 
+         		"INNER JOIN OLE.PRODUCT_SELECTION PS ON PS.PROV_TIN_NBR = EP.PROV_TIN_NBR\r\n" + 
+         		"WHERE DFA.FULL_ADJ_IND = 'Y' AND DFA.ADJ_COMP_DTTM IS NULL "
+         		//+ "AND DFA.TOTAL_FEE_INCURRED IN ('0.00') "
+         		+ "AND EP.ENRL_STS_CD = 'A' AND EP.PAY_METH_TYP_CD = '{$tinType}'\r\n" + 
+         		"AND PRTL_PRDCT_SELECTED_GRP_NM = '{$portalAccess}' AND PRTL_PRDCT_SELECTED_CD = 'P' AND PRTL_PRDCT_SELECTED_STS_CD = 'A'\r\n" + 
+         		"fetch first row only";
+         
+         public final static String UPD_DEBIT_FEE_ADJ_NEG1="UPDATE OLE.DEBIT_FEE_ADJUSTMENT\r\n" + 
+         		" 		 SET ADJ_REQ_ON = CURRENT DATE-2, TOTAL_FEE_INCURRED = '99.00'\r\n" + 
+         		" 		WHERE PROV_TIN_NBR = '{$tin}' AND FULL_ADJ_IND = 'Y' AND ADJ_COMP_DTTM IS NULL ";
+         
+         
+         public static final String NOTZERO_DEBIT_FEE =ZERO_DEBIT_FEE;
+         
+         
+         
 
 }

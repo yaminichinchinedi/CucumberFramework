@@ -1160,6 +1160,16 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.TIN_WITH_WAVIE;
 		}
+		
+		if(searchCriteria.contains("ZERO_DEBIT_FEE")){
+
+			query=QUERY.ZERO_DEBIT_FEE;
+		}
+		
+		if(searchCriteria.contains("NOTZERO_DEBIT_FEE")){
+
+			query=QUERY.NOTZERO_DEBIT_FEE;
+		}
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
@@ -1352,6 +1362,20 @@ public class ViewPaymentsDataProvider {
 				{
 					testConfig.putRunTimeProperty("DBT_FEE_ACCRD_AMT", tinNumbers.get("DBT_FEE_ACCRD_AMT").toString());
 					testConfig.putRunTimeProperty("PROV_TIN_NBR", tinNumbers.get("PROV_TIN_NBR").toString());
+				}
+				
+				
+				if (searchCriteria.contains(QUERY.ZERO_DEBIT_FEE))
+
+				{
+				     System.setProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
+				}
+				
+				
+				if (searchCriteria.contains(QUERY.NOTZERO_DEBIT_FEE))
+
+				{
+				    System.setProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
 				}
 
 			}
