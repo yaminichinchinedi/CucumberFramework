@@ -1,10 +1,8 @@
 #Stabilized By: Sunanda
-
-#Author: Vinay Raghumanda
-@UPABSInfo  
+@UPABSInfo  @UPARegression
 Feature: UPA Billing Service Information Functionality
 
-  @US3179215 @US3438484
+  @US3179215 @UPAUS3438484
   Scenario Outline: Billing Service Information Page Text Validation for "<portalAccess>" "<credentials>" with "<tinType>" tin
     Given User navigates to UPA portal and enters "<credentials>" and login
     And   User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

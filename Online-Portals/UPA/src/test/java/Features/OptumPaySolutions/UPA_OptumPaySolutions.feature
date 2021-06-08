@@ -1,5 +1,5 @@
 #Author: Sunanda
-@UPAOptumPaySolutions
+@UPAOptumPaySolutions @UPARegression
 Feature: - Optum Pay Solutions
   
    #OBSOLETE FOR NOW
@@ -81,7 +81,7 @@ And User clicks on UPA logout
       
 
 
-#Author: Mohammad Khalid-invoices tab not available
+#Author: Mohammad Khalid
 @UPA_OPS_US3222937_ProvAdmin @UPAStable 
 Scenario Outline: To validate Invoices tab for Provider admin users
 
@@ -147,7 +147,7 @@ And User clicks on UPA logout
       
       
 #Author: Mohammad Khalid
-@UPA_OPS_US3106783 @UPAStable 
+@UPA_OPS_US3106783 @UPAStable
 Scenario Outline: To test page text messaging on OPS for Prov Admin
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -161,7 +161,7 @@ And User clicks on UPA logout
  |credentials      |    userType    | 			searchCriteria				|		portalAccess	  | tinType	    	|  
  |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		AO			|  
  |      PROV_Admin |   PROV     	|		 	PremiumOrStandardTIN		|			Premium  	  |		VO			|  
- |      PROV_Admin | 	 PROV				|		 WithinTrial and Paid 		|			Premium		  |   AO			|
+|      PROV_Admin | 	 PROV				|		 WithinTrial and Paid 		|			Premium		  |   AO			|
  
      
 #Author: Amit
@@ -217,7 +217,7 @@ And User clicks on UPA logout
        
        
        
-    @UPAUS3329105 @UPAStable
+    @UPAUS3329105 @UPAStable 
   	Scenario Outline: - Optum Pay Solutions - Invoice pdf open in new tab 
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -312,7 +312,7 @@ And User clicks on UPA logout
 
  #Author:Sayonee
  #Author: sai
-		 @UPAUS3443039 @US3443069 @US3450360
+		 @UPAUS3443039 @US3443069 @UPAUS3450360
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -329,7 +329,7 @@ And User clicks on UPA logout
       |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|   Y				 |    Valid     |
       
     #Author:Sayonee
-		 @UPAUS3443039 @US3450360
+		 @UPAUS3443039 @UPAUS3450360
   	Scenario Outline: - Optum Pays Solutions - Invoice Integration with ABA validator for ACH payment
    	Given User navigates to UPA portal and enters "<credentials>" and login
    	And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -357,8 +357,10 @@ And User clicks on UPA logout
 	 Then verify the Invoice tab header message
 Examples:
     	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
-      |     PROV_Admin  | 	PROV			  |			Premium 		  |  PremiumOrStandardTIN   |	  AO			|
-      |     PROV_Admin  | 	PROV			  |			Standard 		  | PremiumOrStandardTIN    |	  AO			| 
+    #  |     PROV_Admin  | 	PROV			  |			Premium 		  |  PremiumOrStandardTIN   |	  AO			|
+    #  |     PROV_Admin  | 	PROV			  |			Standard 		  | PremiumOrStandardTIN    |	  AO			|
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				ValidInvoice  			  |	  AO			|
+     |       PROV_Admin       	| 			 PROV		   		|			Standard		  	|  				ValidInvoice  			  |	  AO			|
   
   @US3462418 @US3462418_BSadmin
   Scenario Outline: Optum Pay Solutions - Header message update
@@ -369,6 +371,80 @@ Examples:
   Then User clicks on "Invoices" tab
   Then verify the Invoice tab header message  
 Examples:
- |  credentials   |    userType | 	   searchCriteria    |		portalAccess	  | tinType	  |  
- |     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
- |     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|       
+
+
+ |  credentials   |    userType | 	   portalAccess    |		searchCriteria	  | tinType	  |  
+ #|     BS_Admin   |     BS     	|		PremiumOrStandardTIN |		Premium     	  |		AO			|  
+ #|     BS_Admin   |     BS      |		PremiumOrStandardTIN |		Standard     	  |		AO			|  
+      |    BS_Admin   |     BS     			  |			Premium 		  |  ValidInvoice  			  |	  AO			|
+      |   BS_Admin   |     BS     			  |			Standard 		  | ValidInvoice  			  |	  AO			|
+  
+ 
+ #BELOW SCENARIO IS NOT ON STAGE
+ @UPAUS3478620 
+      Scenario Outline: PayNow btn disabled for Credit Invoice Prov
+   Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+  Then User clicks on "Invoices" tab
+  Then verify that the Pay Now Button is disabled for Credit only Invoice
+  Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| 
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				RefundInvoice  			  |	  AO			| 
+      |       PROV_Admin       	| 			 PROV		   		|			Standard	  	|  				RefundInvoice  			  |	  AO			| 
+      |       PROV_Admin       	| 			 PROV		   		|			Premium		  	|  				RefundInvoice  			  |	  VO			| 
+      
+    @UPAUS3478620
+      Scenario Outline: PayNow btn disabled for Credit Invoice BS 
+   Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+  Then User clicks on "Invoices" tab
+  Then verify that the Pay Now Button is disabled for Credit only Invoice
+  Examples:
+    	|    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   				| tinType		| 
+      |       BS_Admin       	| 			 BS	   		|			Premium		  	|  				RefundInvoice  			  |	  AO			| 
+      |       BS_Admin       	| 			 BS		   		|			Standard	  	|  				RefundInvoice  			  |	  AO			| 
+      |       BS_Admin      	| 			 BS		   		|			Premium		  	|  				RefundInvoice  			  |	  VO			| 
+
+ 
+ 
+ @US3485959
+ Scenario Outline: - Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA Prov
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User validates contents of Fee tiles of this page
+    Then User clicks on "Invoices" tab
+	 Then User validates accrued content fee on this page
+		And User clicks on UPA logout
+		
+		     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   PROV_Admin    |     PROV     	|		 	wthAccuredFee					|			Premium			|		AO			| 
+    @US3485959  
+    Scenario Outline: - Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA
+    Given User navigates to UPA portal and enters "<credential>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And   User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    Then User validates contents of Fee tiles of this page
+    Then User clicks on "Invoices" tab
+	  Then User validates accrued content fee on this page
+		And User clicks on UPA logout
+		
+		     Examples:
+   	  |    credential     |   userType  | 			searchCriteria				|		portalAccess	| tinType		|
+      |   BS_Admin        |     BS     	|		 	wthAccuredFee					|			Premium			|		AO			|  
+      @US3485959
+   Scenario Outline: Optum Pay Solutions - Add Current billing month to the Total accrued fees label - UPA VO Tins
+	 Given User navigates to UPA portal and enters "<credentials>" and login
+	 And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	 And User clicks on Optum Pay Solutions tab
+	 Then User clicks on "Invoices" tab
+	 Then User validates accrued content fee on this page 
+Examples:
+    	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
+      |     PROV_Admin  | 	PROV			  |			Premium 		  |  wthAccuredFee        |	  VO			|    
+

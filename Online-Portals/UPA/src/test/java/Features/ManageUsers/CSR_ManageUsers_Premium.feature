@@ -1,6 +1,6 @@
 #Author: Rahul Krishna
 
-@cloudCSRManageUsers
+@cloudCSRManageUsers @CSRRegression
 Feature: CSR Manage User Functionality for Premium Tins
 
 @CSRUS2879930 @OctRelease

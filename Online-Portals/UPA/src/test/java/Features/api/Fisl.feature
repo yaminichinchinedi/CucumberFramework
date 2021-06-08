@@ -9,8 +9,5 @@ Feature: Fisl Api
         Examples:
             |	Search Criteria   | userType  | portalAccess | tinType|
             |		byDOP		        |	 PROV     |   Premium    |   AO   |
-            |byDOPAndAccountNo  |	 PROV     |   Premium    |   AO   |
-            |byDOP&SubscriberID |	 PROV     |   Premium    |	 AO   |
-            |byDOPAndClaimNo    |	 PROV     |   Premium    |	 AO   |
-            |byDOPAndPatientNm  |	 PROV     |   Premium    |   AO   |
+
 

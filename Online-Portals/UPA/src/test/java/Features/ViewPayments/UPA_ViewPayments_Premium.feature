@@ -1,5 +1,5 @@
 #Author: amit_kushwah@optum.com
-@UPA_ViewPayments_Premium
+@UPA_ViewPayments_Premium  @UPARegression
 Feature: UPA ViewPayments Functionality for Premium TIN
 
   	#Author: AMIT
@@ -181,7 +181,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 
 
    #Author : Vinay Raghumanda
-	@US3179215 @US3438488
+	@US3179215 @UPAUS3438488
 	Scenario Outline: View payments page Text Validation for PROV users
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.

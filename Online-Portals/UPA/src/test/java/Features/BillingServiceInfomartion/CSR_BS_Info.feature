@@ -1,7 +1,7 @@
 #Author: Athyusha Thota
 #Stabilized By: Sunanda
 
-@CSRRegression  @CSRBSInfoTab
+@CSRRegression  @CSRBSInfoTab @CSRRegression
 Feature: CSR Billing Service Info Tab
 @US2872239
 Scenario Outline: Biiling Service Information Functionality for "<credentials>"

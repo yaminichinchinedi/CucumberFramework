@@ -1148,6 +1148,20 @@ public class ViewPaymentsDataProvider {
 			query=QUERY.TIN_WITH_INVOICE;
 		}
 
+		if(searchCriteria.contains("wthAccuredFee")){
+			query=QUERY.TIN_WITH_ACCRD_FEE;
+		}
+
+
+		if(searchCriteria.contains("RefundInvoice")){
+			query=QUERY.TIN_WITH_REFUND_INVOICE;
+		}
+		
+		if(searchCriteria.contains("TIN_WITH_WAVIE")){
+
+			query=QUERY.TIN_WITH_WAVIE;
+		}
+
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
 				testConfig.putRunTimeProperty("invcAmt", "=0");
@@ -1159,7 +1173,7 @@ public class ViewPaymentsDataProvider {
 			if (searchCriteria.equalsIgnoreCase("withAccuredFee"))
 				testConfig.putRunTimeProperty("nullStatus", "is not null");
 			else if (searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
-				testConfig.putRunTimeProperty("nullStatus", "is null");
+				testConfig.putRunTimeProperty("nullStatus", "=0");
 			sqlRowNo = 1615;
 		}
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")
@@ -1339,6 +1353,17 @@ public class ViewPaymentsDataProvider {
 					testConfig.putRunTimeProperty("DSPL_CONSOL_PAY_NBR", tinNumbers.get("DSPL_CONSOL_PAY_NBR").toString());
 					testConfig.putRunTimeProperty("elctronicNum", tinNumbers.get("CP_DSPL_CONSL_PAY_NBR").toString());
 					System.setProperty("consl_pay_nbr", tinNumbers.get("UCP_CONSL_PAY_NBR").toString());
+				}
+				if(searchCriteria.contains("wthAccuredFee")){
+					testConfig.putRunTimeProperty("cnfg_id", tinNumbers.get("CNFG_ID").toString());
+					
+				}
+				
+				if (searchCriteria.contains(QUERY.TIN_WITH_WAVIE))
+
+				{
+					testConfig.putRunTimeProperty("DBT_FEE_ACCRD_AMT", tinNumbers.get("DBT_FEE_ACCRD_AMT").toString());
+					testConfig.putRunTimeProperty("PROV_TIN_NBR", tinNumbers.get("PROV_TIN_NBR").toString());
 				}
 
 			}

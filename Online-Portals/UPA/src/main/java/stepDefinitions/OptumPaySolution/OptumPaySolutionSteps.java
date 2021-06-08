@@ -43,7 +43,10 @@ public void user_validates_Tiles_of_this_page_in_order() throws Throwable {
 public void user_validates_contents_of_Fee_tiles_of_this_page() throws Throwable {
 	optumPaySol.validateFeeTitle();
 }	
-
+@Then("^User validates accrued content fee on this page$")
+public void user_validates_accrued_content_fee_on_this_page() throws Throwable {
+	optumPaySol.validtAccrdFeesMnthFrInvceTab();
+}
 @When("^User Validates Error Message upon Entering \"([^\"]*)\" on Optum Pay Solution$")
 public void User_Validates_Error_Message_upon_Entering_Invalid_Tin_on_Optum_Pay_Solution(String InvalidTIN) throws Throwable {
 	optumPaySol.verifyInvalidTINonOptumPaySolution(InvalidTIN);
@@ -293,6 +296,16 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void verify_the_Invoice_tab_header_message() throws Throwable {
 			optumPaySol.verifyInvoiceTabHeader();
 		}
+		@Then("^verify that the Pay Now Button is disabled for Credit only Invoice$")
+		public void verify_that_the_Pay_Now_Button_is_disabled_for_Credit_only_Invoice() throws Throwable {
+		   optumPaySol.verifyPayNowButtonForRefundInvoice();
+		}
+		
+		@Then("^validate Wavie Full Fee functionality and options when clicked on it$")
+		public void validate_Wavie_Full_Fee_functionality_and_options_when_clicked_on_it() throws Throwable {
+			optumPaySol.verifyWavieButtonOptions();
+		}
+
 
 }
 

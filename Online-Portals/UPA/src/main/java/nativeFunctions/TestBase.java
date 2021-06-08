@@ -116,7 +116,7 @@ public class TestBase extends ReporterClass {
 		if (System.getProperty("env") == null)
 			urlHelper(runtimeProperties.getProperty(("Env")));
 
-		else if (System.getProperty("env").equals("Stage2"))
+		else if (System.getProperty("env").equals("Stage2")||System.getProperty("env").equals("ST2"))
 			urlHelper("Stage2");
 
 		else if (System.getProperty("env").equals("Stage")) 

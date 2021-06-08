@@ -8,10 +8,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -228,7 +230,9 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//div[@id='optum-pay-options']/div/div/div[3]/div/div[2]")
 	WebElement feeTileUPA;
-
+	
+	@FindBy(xpath = "//div[@id='optum-pay-invoices']/div/div[2]/p")
+	WebElement feeTileUPAInvc;
 
 	@FindBy(linkText = "Invoices")
 	WebElement lnkInvoice;
@@ -252,6 +256,8 @@ public class OptumPaySolution {
     List<WebElement> tableInvoiceNumberUI;
 	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[2]")
     List<WebElement> tableInvoiceDateUI;
+	@FindBy(xpath="//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[4]")
+	List<WebElement> tableInvoicePayNowButtonUI;
 	@FindBy(xpath="//p[contains(text(),'Select an invoice to view billing details.')]")
 	private WebElement invoice_grid_header;
 	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[6]")
@@ -469,15 +475,61 @@ public class OptumPaySolution {
 	
     @FindBy(xpath="//div[@id='invoiceAchPaymentModal']/p[3]/strong")
     WebElement confNbr;
+    
+    @FindBy(xpath="//*[@id=\"optum-pay-options\"]/div[1]/div[3]/div[2]/div[1]/text()")
+	WebElement accrd_sum;
+    
+	@FindBy(id = "waiveButton")
+	WebElement wavieBtn;
+	
+	
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType']")
+	WebElement preselRadioBtn;
+    
+  
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType' and @class = 'partialWaive']")
+	WebElement partialRadioBtn;
+    
+  
+    @FindBy(xpath="//body[1]/div[7]/div[2]/form[1]/div[3]/div[1]/span[1]")
+	WebElement totAmtWavie;
+    
+
+    @FindBy(xpath="//input[@name='waiveFeesForm.waiveType' and @class = 'partialWaive']")
+  	WebElement asteriskchk;
+    
+   @FindBy(xpath="//body/div[7]/div[2]/form[1]/div[6]/div[1]/span[1]")
+  	WebElement asttext;
+
+   
+	@FindBy(id = "feeTypeOption_selector")
+	WebElement reasondrpdwn;
+
+ 
+    @FindBy(xpath="//*[@id='waiveFeesForm']/div[5]/div/p")
+    WebElement txtModalWaiveFee;
+    
+  
+    @FindBy(xpath="//button[contains(text(),'Cancel')]")
+    WebElement wavieCancelBtn;
+    
+  
+    @FindBy(xpath="//button[contains(text(),'Continue')]")
+    WebElement wavieContBtn;
+  
   
 	//Added by Mohammad Khalid
 	String headerTop1_Premium = "Important reminder:";
 	String headerTop2_Premium = "Is your provider organization tax exempt?";
-	String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
+	String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready";
+
+	//String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready. Fees are debited within 5 days and are deducted from the provider's TIN-level banking account. If you haven't already, please contact the financial institution and ask that the following ACH company ID and name be added to your bank account: Company ID: 1243848776 and Company Name: Optum Pay. Not adding Optum Pay as an authorized agent may result in ACH return fees and/or termination of service.";
 	String pageTextTop2_Premium = "Send the tax exempt certificate to optumpay_taxexempt@optum.com to ensure correct billing.";
 
-	String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
-	String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
+	//String footer1_Premium = "If a provider cancels the full functionality of Optum Pay several features will be lost, including access to pdf remittance files, the ability to search historical data and unlimited user access (user access exceptions may apply, visit the FAQs for details).";
+	String footer1_Premium = "If a provider cancels the full functionality of Optum Pay premium several features will be lost, including the ability to search historical data, bundle payment files and access to workflow management tools.";
+	String footer2_Premium ="Click here for frequently asked questions.";
+	//String footer2_Premium = "Cancellation may take up to 7 days to process during which time the provider will be responsible for any charges to their account.";
 
 	String Message1_Standard = "Optum Pay brings more power to your practice";
 	String Message2_Standard = "We are improving our service to help simplify your workflow and take efficiency to the next level. For a low fee*, we now offer additional tools and resources to give you more of what you're looking for.";
@@ -662,7 +714,6 @@ public class OptumPaySolution {
 
 	public OptumPaySolution validateFeeTitle() {
 		validatePastdueFee().validateAccruedFeesMonth();
-
 		return this;
 	}
 
@@ -800,20 +851,20 @@ public class OptumPaySolution {
 		for(WebElement title: titles)
             Element.mouseHoverByJS(testConfig, title, "title");
 
-          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by midÂ—July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
+          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by mid—July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
           Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.",hoverRate.getText().trim());
-          Helper.compareEquals(testConfig, "Rate", "To view individual per-\n" + 
-                  "payment fees, please visit\n" + 
-                  "the View Payments page.\n" + 
-                  "Fees will be billed monthly.\n" + 
-                  "To estimate monthly fees,\n" + 
-                  "select the Print Payment\n" + 
-                  "summary button from the\n" + 
-                  "View Payments page to\n" + 
-                  "download 30 days of\n" + 
-                  "payment data. Then,\n" + 
-                  "calculate that amount by\n" + 
-                  "the current rate.", hoverFees.getText().trim());
+          Helper.compareEquals(testConfig, "Rate","To view individual per-\n" + 
+          		"payment fees, please visit\n" + 
+          		"the View Payments page.\n" + 
+          		"Fees will be billed monthly.\n" + 
+          		"To estimate monthly fees,\n" + 
+          		"select the Print Payment\n" + 
+          		"summary button from the\n" + 
+          		"View Payments page to\n" + 
+          		"download 30 days of\n" + 
+          		"payment data. Then,\n" + 
+          		"calculate that amount by\n" + 
+          		"the current rate.", hoverFees.getText().trim());
           Helper.compareEquals(testConfig, "Manage my Plan", "To cancel the paid subscription, Provider administrators can either click on the \"Cancel my Plan\" button on the Solutions tab or complete the Cancellation Fee Form found in the Resources link and email it to optumpay_cancel@optum.com.",hoverManageMyPlan.getText().trim());          
       }
 
@@ -981,8 +1032,8 @@ public class OptumPaySolution {
 	public void verifyPageText_Top_Premium() {
 		Helper.compareEquals(testConfig, "Header-1 Premium", headerTop1_Premium, topHeader1_ImpRem_Premium.getText().trim());
 		Helper.compareEquals(testConfig, "Header-2 Premium", headerTop2_Premium, topHeader2_IsYourProv_Premium.getText().trim());
-		Helper.compareEquals(testConfig, "Top Page Text -1 Premium", pageTextTop1_Premium, topMsg1_YouWill_Premium.getText().trim());
-		Helper.compareEquals(testConfig, "Top Page Text -2 Premium", pageTextTop2_Premium, topMsg2_SendTax_Premium.getText().trim());
+		Helper.compareContains(testConfig, "Top Page Text -1 Premium", pageTextTop1_Premium, topMsg1_YouWill_Premium.getText().trim());
+		Helper.compareContains(testConfig, "Top Page Text -2 Premium", pageTextTop2_Premium, topMsg2_SendTax_Premium.getText().trim());
 	}
 
 	public void verifyPageText_Footer_Premium() {
@@ -1030,8 +1081,8 @@ public class OptumPaySolution {
 		else
 			expectedAccruedFees = data.get("ACCRDFEE").toString();
 
-		Helper.compareEquals(testConfig, "Accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
-		Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim());
+		Helper.compareContains(testConfig, "accrued Fees Title", "Accrued fees month to date:", actualAccruedFeesTitle.trim());
+		Helper.compareEquals(testConfig, "Accrued Fees", expectedAccruedFees, actualAccruedFees.trim().replace(",",""));
 		return this;
 	}
 
@@ -1153,14 +1204,46 @@ public class OptumPaySolution {
 	public OptumPaySolution validateAccruedFeesMonth() {
 		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
 		String feeTitle = null;
-		feeTitle = "Accrued fees month to date: $" + amount;
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
 		if (System.getProperty("Application").contains("UPA"))
-			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")));
+			Helper.compareContains(testConfig, "accrued fee month value", feeTitle, feeTileUPA.getText().substring(0, feeTileUPA.getText().indexOf("\n")).replaceAll(",", ""));
 		else
-			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")));
+			Helper.compareContains(testConfig, "accrued fee month value", feeTitle, feeTile.getText().substring(0, feeTile.getText().indexOf("\n")).replaceAll(",", ""));
 		return this;
 	}
+	public OptumPaySolution validtAccrdFeesMnthFrInvceTab() throws ParseException {
 
+		
+		if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard")) 
+        testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PD");
+		else if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Premium")) 
+		testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
+
+		DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+		
+		Browser.browserRefresh(testConfig);
+		String amount = DataBase.executeSelectQuery(testConfig, QUERY.PAST_DUE_ACCRUED_FEE, 1).get("DBT_FEE_ACCRD_AMT").toString();
+		if(amount.isEmpty())
+			amount="0.00";
+		String month=Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH);
+
+		String feeTitle = null;
+		feeTitle = month+" "+"accrued fees month to date: $" + amount;
+		if (System.getProperty("Application").contains("UPA"))
+			Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, feeTileUPAInvc.getText());
+		else if (System.getProperty("Application").contains("CSR"))
+				Helper.compareEquals(testConfig, "Accrued fee month value", feeTitle, divInvoicesAccrudFeesUI.getText());
+		//Change the record to the origional record	
+			if (StringUtils.equals(testConfig.getRunTimeProperty("portalAccess"), "Standard"))
+			{
+				testConfig.putRunTimeProperty("portalAccess", "Premium");
+				testConfig.putRunTimeProperty("prtl_prdct_selected_sts_cd", "PS");
+			    DataBase.executeUpdateQuery(testConfig, QUERY.UPDATE_PRODUCT_SELECTION);
+
+			}
+			return this;
+	}
 	public OptumPaySolution verifyInvoicesTab(String searchCriteria, String tinType, String portalAccess, String prdctRecSts) throws ParseException {
 		if ("TinWithInvoices".equals(searchCriteria)) {
 			Element.verifyElementPresent(lnkInvoice, "Invoices Link");
@@ -1557,7 +1640,7 @@ public class OptumPaySolution {
 							Helper.compareContains(testConfig, "Not able to generate Invoice", "Something went wrong. We were unable to generate the invoice. Please close this tab and try again later.", redTextError.getText());
 						//Log.Fail("The Invoice not available");
 					} catch (Exception e) {
-						Browser.verifyURL(testConfig, "OPSInvoices.do?invoiceNumber=" + invoiceNum);
+						Browser.verifyURL(testConfig, "opsinvoices.do?method=index&invoicenumber=%20" + invoiceNum);
 					}
 					Browser.closeBrowser(testConfig);
 					Browser.switchToParentWindow(testConfig, oldWindow);
@@ -1706,6 +1789,8 @@ public class OptumPaySolution {
 		} else
 			testConfig.putRunTimeProperty("stdStatus", "A");
 
+		
+		Browser.wait(testConfig, 3);
 		Map portalUserTable = DataBase.executeSelectQuery(testConfig, QUERY.POST_CANCELLATION_TIN_STATUS, 1);
 
 		if (portalUserTable != null)
@@ -1779,8 +1864,7 @@ public class OptumPaySolution {
 
 	public OptumPaySolution clickOnPayNowButton() {
 		
-		
-		testConfig.putRunTimeProperty("invc_nbr", Element.findElement(testConfig, "xpath", "//div[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr/td[1]/a").getText());
+		testConfig.putRunTimeProperty("invc_nbr", payNow.findElement(By.xpath("./preceding::td[3]")).getText());
 		Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
 		return this;
 	}
@@ -1953,7 +2037,55 @@ public class OptumPaySolution {
 			Log.Comment("Exception occured as :" + " " + e);
 		}
 	}
+
+	public void verifyPayNowButtonForRefundInvoice() throws IOException {
+		testConfig.getRunTimeProperty("tin");
+		Map<String, String>  invoiceTableData = DataBase.executeSelectQuery(testConfig, QUERY.INVOICE_SEARCH_REFUND,1);
+
+			for(int i=0; i<tableInvoiceNumberUI.size() ;i++) { 
+                
+				if(tableInvoiceNumberUI.get(i).getText().equalsIgnoreCase(invoiceTableData.get("INVC_NBR").toString()))
+				{
+					if(tableInvoicePayNowButtonUI.get(i).findElement(By.cssSelector("input")).getAttribute("value").equals("Pay Now"))
+						Log.Pass("correct button Text");
+					else 
+						Log.Fail("invalid text");
+					
+					Element.click(tableInvoicePayNowButtonUI.get(i).findElement(By.cssSelector("input")),"clicking pay now button");
+					Element.verifyElementNotPresent(popUpACHPaymentModal, "ACH PAYMENT MODAL");
+				}
+			}
+		}
 		
+	public void verifyWavieButtonOptions()
+	{
+        Helper.compareEquals(testConfig, "Waive Fees", true, wavieBtn.isDisplayed());
+		Element.click(wavieBtn, "Waive Fees");
+		Helper.compareEquals(testConfig, "Waive Total Amount Radio Button Checked", true, preselRadioBtn.isSelected());
+		Helper.compareEquals(testConfig, "Waive Total Amount Radio Button Checked", false, partialRadioBtn.isSelected());
+		Helper.compareEquals(testConfig, "Wavie Fee with Asterisk", "* Waived fees", asttext.getText().trim());
+		Select drpdwn = new Select(testConfig.driver.findElement(By.xpath("//select[@id='waiveFeeReason']")));
+	    List <WebElement> options = drpdwn.getOptions();
+	    int size = options.size();
+	    List<String> opts = new ArrayList<>();
+	    List<String> optsUI = new ArrayList<>();
+	    for(int i =0; i<size ; i++)
+	    {
+	         String optionsUI = options.get(i).getText();
+	         optsUI.add(optionsUI);
+	         optsUI.addAll(opts);
+	     }
+	      
+	    ArrayList<String> optsDB = new ArrayList<String>(
+    	      Arrays.asList("Select reason", "UHC Requested, Provider Meets Criteria for Large Volume", "Other"));
+
+	      
+	    Helper.compareEquals(testConfig, "Wavie Dropdown Options", optsDB.toString().trim(), optsUI.toString().trim());
+	    Helper.compareEquals(testConfig, "waive modal text",TestBase.contentMessages.getProperty("prov.admin.premium.ao.waiveFeeModalOptumPaySolutions.pageText1")+""+"$"+testConfig.getRunTimeProperty("DBT_FEE_ACCRD_AMT")+TestBase.contentMessages.getProperty("prov.admin.premium.ao.waiveFeeModalOptumPaySolutions.pageText2").trim(), txtModalWaiveFee.getText().trim());
+	    Helper.compareEquals(testConfig, "Wavie Cancel Button Enabled", true, wavieCancelBtn.isEnabled());
+	    Helper.compareEquals(testConfig, "Wavie Cntinue Button Disabled", false, wavieContBtn.isEnabled());
+	 }
+	
 	
 }
 

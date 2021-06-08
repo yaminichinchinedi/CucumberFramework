@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@CSROptumPaySolutions    
+@CSROptumPaySolutions    @CSRRegression
     Feature: Optum Pay Solutions Scenarios for Premium Tins
     @CSRUS3136637 @CSRStable
     Scenario Outline: Optum Pay Soution New Layout Scenario
@@ -71,7 +71,7 @@
 
          |   credentials     |  tinType  |portalAccess|userType|searchCriteria|
          |    Super          |	AO			|  Premium	 | PROV   |PostTrial and Paid|
-        |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
+         |    RW   		       |	AO			|  Premium	 |PROV    |PostTrial and Paid|
          |    RO	           |	AO			|  Premium	 |PROV    |PostTrial and Paid| 
      
    #Author: Aravind Lakshminarasimhan   
@@ -98,7 +98,7 @@
    #Scenario 4 - Premium Tin in trial period, VO Tin
    #Scenario 5 - Standard AO Tin           
          
-    @CSRUS3138933 @CSRStable
+    @CSRUS3138933 @CSRStable 
     Scenario Outline: Optum Pay Solutions Plan Type Tile Content for Premium Tins
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -218,7 +218,7 @@
           |   credentials  |   searchCriteria         |tinType | portalAccess  |userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
           |    Super       |     TinForFeeSearchRefund  |  AO      |    Premium           |    PROV     | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
  
-  #Author: Marsha   -defect in og US
+  #Author: Marsha
   @CSRCancelPremiumDb @US2948675
   Scenario Outline: CSR Optum Pay Solutions cancel subscription and check DB
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -255,3 +255,51 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 		|   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
 		|    Super       |	 TinForFeeSearchRefund  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |  
             
+#Author: Sai	
+		@CSRUS3485977
+	 Scenario Outline: Optum Pay Soution Current Month Accured Fees scenario 
+			Given User navigates to CSR portal and enters "<credentials>" and login
+			And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+			Then User clicks on Optum Pay Solutions link on CSR HomePage
+			Then User Enters tin for OPS and click on search button for "<userType>".
+			Then User validates contents of Fee tiles of this page
+	    		Examples:
+	
+	         |   credentials     |  searchCriteria |tinType|portalAccess |userType|
+	         |    Super          |  wthAccuredFee	 |  AO 	 |	Premium	   |	PROV	|  
+	         |    RW	           |  wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|   
+	         |    RO   		       |	wthAccuredFee	 |  AO 	 |	Premium		 |	PROV	|
+	   
+	 
+	 @CSRUS3485977
+	 Scenario Outline: Optum Pay Soution Current Month Accured Fees scenario Invoice tab
+			Given User navigates to CSR portal and enters "<credentials>" and login
+			And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+			Then User clicks on Optum Pay Solutions link on CSR HomePage
+			Then User Enters tin for OPS and click on search button for "<userType>".  
+			Then User clicks on "Invoices" tab
+			Then User validates accrued content fee on this page
+				Examples:
+	
+	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
+	         |    Super       |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  AO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  AO 	 |	Premium		 |	PROV	|
+	         |    Super       |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
+	         |    RW	        |	wthAccuredFee	   |  VO 	 |  Premium		 |	PROV	| 
+	         |    RO   		    |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
+	 
+@CSRUS3546055 @checkmate
+  Scenario Outline: Optum Pay Soution  Access Payments Accrued fee > $0 and Request is not in Progress
+	Given User navigates to CSR portal and enters "<credentials>" and login 
+	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 
+	Then  User clicks on Optum Pay Solutions link on CSR HomePage 
+	Then  User Enters tin for OPS and click on search button for "<userType>". 
+	Then validate Wavie Full Fee functionality and options when clicked on it
+	
+Examples: 
+     | credentials | userType | searchCriteria     				    | portalAccess | tinType | userType |
+     | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AO      | PROV     |
+  #   | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AV      |  PROV     |
+	 
+	  

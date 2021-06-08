@@ -232,5 +232,9 @@ public class PaymentDataFilesUPASteps {
 	public void user_verifies_the_Maximize_your_efficiency_pop_up_for_standard_tin() throws Throwable {
 		paymentDataFilesUPA.verifyPopUp();
 	}
+	@Then("^Validate Payment Data File Page Text for \"([^\"]*)\" for \"([^\"]*)\"$")
+	public void validatePageTextForForFor(String credentials, String portalAccess) {
+		paymentDataFilesUPA.validatePageText(credentials, portalAccess);
+	}
 
 }

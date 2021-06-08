@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@UPASearchRemittancePRemium
+@UPASearchRemittancePRemium  @UPARegression
 Feature: UPA Search Remittance for Premium access portal			
 
 @UPAUS2879968 @OctRelease 
@@ -208,7 +208,7 @@ And User verifies page text message "<PageTextMsg>"
  
 #Author : Vinay Raghumanda
 	#(VO is part of US3438488)
-	@US3179215 @US3438488 
+	@US3179215 @UPAUS3438488 
  Scenario Outline: Search Remittance Page Text Validation
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
