@@ -323,7 +323,42 @@ Examples:
   #   | Super       | PROV     | NOTZERO_DEBIT_FEE 						| Premium      | AV      |  PROV     |
   
 
+      #Author: Mounika Talakanti       
+    @US3575899CSRUSWaivedFee
+    Scenario Outline: Optum Pay Soution Waive Fees scenario 
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies waive fees and clicks on waive fee button
+		Then User clicks cancel button
+		Then User verifies waive fees and clicks on waive fee button
+		Then User selects waived fee reason "<waivedFeeReason>" and click continue
+		Then User confirms waived fee and proceed
+		Then User verify waive fees pending
+		Then User verify waive fees button disabled
+	
+		
+    		Examples:
 
-  
+         |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|waivedFeeReason|
+         |    Super          |		withAccuredFee>0	  |  AO 	|	Premium		 |	PROV	| UHC Requested|
+        
+        
+        
+    #Author: Mounika Talakanti    
+		@US3575899CSRZeroWaiveFee
+    Scenario Outline: Optum Pay Soution Waive Fees scenario for accrued fee as 0
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies accrued fees as 0.00 and check waive fee button is disabled
+		
+    		Examples:
+
+         |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|
+         |    Super          |		withAccuredFee<=0	  |  AO 	|	Premium		 |	PROV	|
+ 
 	 
 	  
