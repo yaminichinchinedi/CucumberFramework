@@ -309,7 +309,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 
 		@Given("^Update the ADJ_REQ_ON Date to Current Date$")
 		public void update_the_ADJ_REQ_ON_Date_to_Current_Date() throws Throwable {
-			optumPaySol.verifyDebitFeeAdj();
+			//optumPaySol.verifyDebitFeeAdj();
 		}
 		
 		@Given("^Update the ADJ_REQ_ON Date to Current Date for \"([^\"]*)\"$")
@@ -358,6 +358,21 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void user_verify_waive_fee_button_disabled() throws Throwable {
 			optumPaySol.verifyWaiveFeesButtonDisabled();
 		}
+
+	@And("The accrued fee is abovezero")
+	public void the_accrued_fee_is_aboveZero() throws InterruptedException {
+		optumPaySol.accruedFeeIsZero();
+	}
+
+	@And("Request for waive full fee is not in the process")
+	public void request_for_waive_full_fee_is_not_in_the_process() {
+		optumPaySol.waiveFullFeeIsNotInProgress();
+	}
+
+	@Then("The system shall display the following-1. Display the Waive fees button as enabled under the Fees card")
+	public void the_system_shall_display_the_following() {
+		optumPaySol.waiveFeeButtonVisibility();
+	}
 
 }
 

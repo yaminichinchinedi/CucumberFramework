@@ -361,4 +361,19 @@ Examples:
          |    Super          |		withAccuredFee<=0	  |  AO 	|	Premium		 |	PROV	|
  
 	 
-	  
+#Author Felix Gozuacik
+
+      @US3575260 @WaiveFeeButton
+      Scenario Outline: Waive Fee button visible for fees greater than zero
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        And  The accrued fee is abovezero
+        And  Request for waive full fee is not in the process
+        Then The system shall display the following-1. Display the Waive fees button as enabled under the Fees card
+
+        Examples:
+          |   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
+          |    Super       |	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
