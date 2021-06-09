@@ -22,7 +22,7 @@ public class DataBase
 
 {
 	public static Connection con;
-	static Statement statement = null;
+	static Statement statement = null
 	static ResultSet rs;
 	
 	

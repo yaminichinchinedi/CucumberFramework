@@ -1183,7 +1183,12 @@ public class ViewPaymentsDataProvider {
 				testConfig.putRunTimeProperty("nullStatus", "is not null");
 			else if (searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
 				testConfig.putRunTimeProperty("nullStatus", "=0");
-			sqlRowNo = 1615;
+			    sqlRowNo = 1615;
+			 if(searchCriteria.equalsIgnoreCase("withAccuredFee>0"))
+				query=QUERY.TIN_NUMBER_ACCRUED_FEE_GRTR_THAN_0;
+			else if(searchCriteria.equalsIgnoreCase("withAccuredFee<=0"))
+				query=QUERY.TIN_NUMBER_ACCRUED_FEE_LESS_THAN_EQUAL_0;
+			
 		}
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")
 				|| searchCriteria.contains("feeSrchTINdetailsTabwthAllVal"))
