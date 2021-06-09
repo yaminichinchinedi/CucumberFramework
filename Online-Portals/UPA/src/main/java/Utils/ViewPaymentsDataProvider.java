@@ -1161,6 +1161,10 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.TIN_WITH_WAVIE;
 		}
+		if(searchCriteria.contains("ActiveTin")){
+
+			query=QUERY.ACTIVE_TIN;
+		}
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
