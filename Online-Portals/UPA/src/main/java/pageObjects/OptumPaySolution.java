@@ -240,6 +240,25 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
 	WebElement divPageMsg;
+	
+	@FindBy(id = "waiveButton")
+	WebElement waiveFeeButton;
+	
+	@FindBy(id = "waiveFeeReason")
+	WebElement waivedFeeReason;
+	
+	@FindBy(xpath = "//input[@id='waiveButton']/following-sibling::div")
+	WebElement waivedFeePending;
+
+
+	@FindBy(xpath = "//button[text()='Continue']")
+	WebElement continueButton;
+
+	@FindBy(xpath = "//button[text()='Cancel']")
+	WebElement cancelButton;
+	
+	@FindBy(xpath = "//button[text()='Yes, continue']")
+	WebElement confirmButton;
 
 	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[2]/p")
 	WebElement divInvoicesAccrudFeesUI;
@@ -2125,6 +2144,57 @@ public class OptumPaySolution {
 			int update = DataBase.executeUpdateQuery(testConfig, QUERY.UPD_DEBIT_FEE_ADJ_NEG1);
 		}
 	    
+	}
+	
+	public void verifyAndClickWaiveFee() {
+		String accruedFeeMonthValue="";
+		if (System.getProperty("Application").contains("UPA"))
+			accruedFeeMonthValue=feeTileUPA.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		else
+			accruedFeeMonthValue=feeTile.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		
+		
+		
+		float accruedFee=Float.valueOf(accruedFeeMonthValue);
+		if(accruedFee>0.00) {
+			Element.click(waiveFeeButton, "Waive Fee Button");
+		}
+
+	}
+	
+	public void verifyAccruedFeeAndCheckWaiveFeeButton() {
+		String accruedFeeMonthValue="";
+		if (System.getProperty("Application").contains("UPA"))
+			accruedFeeMonthValue=feeTileUPA.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		else
+			accruedFeeMonthValue=feeTile.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		
+		
+		Helper.compareEquals(testConfig, "Accrued Fees month to date", accruedFeeMonthValue.trim(), "0.00");
+		 
+			
+		
+
+	}
+
+	public void clickCancelButton() {
+		Element.click(cancelButton, "Cancel Button");
+	}
+	public void selectWaivedFeeReason(String reason) {
+		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee");
+		Element.click(continueButton, "Continue");
+	}
+	public void confirmAndProceedWaiveFee() {
+		Element.click(confirmButton, "Confirm Button");
+	}
+	
+	public void verifyWaiveFeePending() {
+		String waiveFeePendingMsg=waivedFeePending.getText().trim();
+		Helper.compareEquals(testConfig, "Waive Fee Pending",waiveFeePendingMsg, "Waived fees pending");		 
+	}
+
+	public void verifyWaiveFeesButtonDisabled() {
+		Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
 	}
 	
 	

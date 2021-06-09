@@ -324,6 +324,40 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 
     	  optumPaySol.verifyWaivedfeespending(searchCriteria);
       }
+      
+      @Then("^User verifies waive fees and clicks on waive fee button$")
+		public void verify_and_Click_WaiveFee() throws Throwable {
+			optumPaySol.verifyAndClickWaiveFee();
+		}
+		
+		@Then("^User verifies accrued fees as 0.00$")
+		public void verify_accrued_fee_and_Check_WaiveFee() throws Throwable {
+			optumPaySol.verifyAccruedFeeAndCheckWaiveFeeButton();
+		}
+		
+		@Then("^User clicks cancel button$")
+		public void user_clicks_cancel_button() throws Throwable {
+			optumPaySol.clickCancelButton();
+		}
+
+		
+		@Then("^User selects waived fee reason \"([^\"]*)\" and click continue$")
+		public void user_select_waived_fee_reason_click_continue(String reason) throws Throwable {
+			optumPaySol.selectWaivedFeeReason(reason);
+		}
+		
+		@Then("^User confirms waived fee and proceed$")
+		public void user_confirms_waived_fee() throws Throwable {
+			optumPaySol.confirmAndProceedWaiveFee();
+		}
+		@Then("^User verify waive fees pending$")
+		public void user_verify_waive_fee_pending() throws Throwable {
+			optumPaySol.verifyWaiveFeePending();
+		}
+		@Then("^User verify waive fees button disabled$")
+		public void user_verify_waive_fee_button_disabled() throws Throwable {
+			optumPaySol.verifyWaiveFeesButtonDisabled();
+		}
 
 }
 
