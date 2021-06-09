@@ -294,7 +294,25 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
          
          public static final String NOTZERO_DEBIT_FEE =ZERO_DEBIT_FEE;
          
-         
+         public final static String TIN_NUMBER_ACCRUED_FEE_GRTR_THAN_0="SELECT dfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR \r\n" + 
+ 				"FROM\r\n" + 
+ 				"    ole.DEBIT_FEE_ACCRD dfi,\r\n" + 
+ 				"    OLE.ENROLLED_PROVIDER ep,\r\n" + 
+ 				"    OLE.PRODUCT_SELECTION ps \r\n" + 
+ 				"    WHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR    AND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'    AND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\r\n" + 
+ 				"    AND ep.ENRL_STS_CD = 'A'\r\n" + 
+ 				"    AND DBT_FEE_ACCRD_AMT > 0 \r\n" + 
+ 				"    ORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY  ";
+ 		
+ 		public final static String TIN_NUMBER_ACCRUED_FEE_LESS_THAN_EQUAL_0=" SELECT dfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR \r\n" + 
+ 				"FROM\r\n" + 
+ 				"    ole.DEBIT_FEE_ACCRD dfi,\r\n" + 
+ 				"    OLE.ENROLLED_PROVIDER ep,\r\n" + 
+ 				"    OLE.PRODUCT_SELECTION ps \r\n" + 
+ 				"    WHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR    AND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'    AND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\r\n" + 
+ 				"    AND ep.ENRL_STS_CD = 'A'\r\n" + 
+ 				"    AND DBT_FEE_ACCRD_AMT <= 0\r\n" + 
+ 				"    ORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY";
          
 
 }
