@@ -828,11 +828,9 @@ public class ProviderInformationEFTERAEnroll {
 	public void verifyBusinesPhoneErrorMsg() {
 		Element.verifyTextPresent(error, "Invalid Data");
 		Element.verifyElementPresent(errorLink, "Error links");
-	
-		if(chkOther.isDisplayed())
-		Element.click(chkOther, "Other sub checkbox");
-		if(testConfig.getRunTimeProperty("testSuite").equals("CSR"))
-		testConfig.driver.navigate().back();
+	    Browser.navigateBack(chkOther, testConfig);
+
+		
 	}
 
 }

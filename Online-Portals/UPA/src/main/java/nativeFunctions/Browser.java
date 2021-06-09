@@ -26,6 +26,7 @@ import main.java.reporting.Log;
 import main.java.reporting.Log;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -42,6 +43,9 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+
+
 public class Browser 
  {
 	
@@ -55,6 +59,18 @@ public class Browser
 		waitForLoad(testConfig.driver);
 		wait(testConfig,3);
 	}
+	
+    public static void navigateBack(WebElement element,TestBase testConfig)
+    {
+    	if(element.isDisplayed())
+    		Element.click(element, "Other sub checkbox");
+    		
+    if (StringUtils.equals(testConfig.getRunTimeProperty("testSuite"), "CSR")) {
+    	testConfig.driver.navigate().back();
+    }
+    }
+	
+ 
 	
 	public static void scrollToBottom(TestBase testConfig)
 	{
