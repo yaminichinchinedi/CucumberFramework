@@ -60,17 +60,6 @@ public class Browser
 		wait(testConfig,3);
 	}
 	
-    public static void navigateBack(WebElement element,TestBase testConfig)
-    {
-    	if(element.isDisplayed())
-    		Element.click(element, "Other sub checkbox");
-    		
-    if (StringUtils.equals(testConfig.getRunTimeProperty("testSuite"), "CSR")) {
-    	testConfig.driver.navigate().back();
-    }
-    }
-	
- 
 	
 	public static void scrollToBottom(TestBase testConfig)
 	{

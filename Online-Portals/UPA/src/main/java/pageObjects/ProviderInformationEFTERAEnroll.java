@@ -828,7 +828,6 @@ public class ProviderInformationEFTERAEnroll {
 	public void verifyBusinesPhoneErrorMsg() {
 		Element.verifyTextPresent(error, "Invalid Data");
 		Element.verifyElementPresent(errorLink, "Error links");
-	    Browser.navigateBack(chkOther, testConfig);
 
 		
 	}
