@@ -294,6 +294,7 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
          
          public static final String NOTZERO_DEBIT_FEE =ZERO_DEBIT_FEE;
          
+         public final static String BusinessPhone_ENROLLED_PROVIDER="SELECT BUSINESS_PHONE_EXT,BUSINESS_PHONE FROM ole.ENROLLED_PROVIDER ORDER BY LST_CHG_BY_DTTM DESC";
          public final static String TIN_NUMBER_ACCRUED_FEE_GRTR_THAN_0="SELECT dfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR \r\n" + 
  				"FROM\r\n" + 
  				"    ole.DEBIT_FEE_ACCRD dfi,\r\n" + 
