@@ -311,7 +311,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void update_the_ADJ_REQ_ON_Date_to_Current_Date() throws Throwable {
 			//optumPaySol.verifyDebitFeeAdj();
 		}
-		
+
 		@Given("^Update the ADJ_REQ_ON Date to Current Date for \"([^\"]*)\"$")
 		public void update_the_ADJ_REQ_ON_Date_to_Current_Date_for(String searchCriteria) throws Throwable {
 			optumPaySol.verifyDebitFeeAdj(searchCriteria);

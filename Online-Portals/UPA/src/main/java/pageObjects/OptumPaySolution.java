@@ -2203,9 +2203,7 @@ public class OptumPaySolution {
 
 	public void accruedFeeIsZero(){
 		testConfig.getDriver().manage().timeouts().implicitlyWait(250, TimeUnit.SECONDS);
-		//Element.waitForPresenceOfElementLocated(testConfig, By.xpath("xpath //span[.='Accrued fees month to date:']") , 20);
-		WebElement amountElement = testConfig.getDriver().findElement(By.xpath("(//div[@class='mb-4'])[1]"));
-		String amount = amountElement.getText();
+		String amount = Element.findElement(testConfig, "xpath", "(//div[@class='mb-4'])[1]").getText();
 		amount = amount.substring(amount.indexOf("$")+1);
 		double amountValue = Double.parseDouble(amount);
 		Assert.assertTrue(amountValue >0, "Failed: Fee is not greater than zero");
@@ -2213,17 +2211,15 @@ public class OptumPaySolution {
 
 	}
 	public void waiveFullFeeIsNotInProgress(){
+		//code might be needed for future reference.
 //		 List<WebElement> pendingFeeMessageElements = testConfig.getDriver().findElements(By.xpath("//div[@class='mt-2 font-grey-italic' and contains(.,'Waived fees pending')]"));
 //		 Assert.assertTrue(pendingFeeMessageElements.isEmpty(), "Pending fees are in process. Acceptance criteria is not met!!!");
 		Element.verifyElementNotPresent(waiveFeesInProgressMessage, "Pending Fee Waive Request Message");
-		Log.Comment("=======>No pending fees are in process. Acceptance criteria is met ");
 	}
 
 	public void waiveFeeButtonVisibility() {
 		Element.verifyElementIsEnabled(wavieBtn,"Waive Fee Button");
-		Log.Comment("Waive Fee Button is Enabled: PASSED!!!");
 		Element.verifyElementPresent(wavieBtn,"Waive Fee Button");
-		Log.Comment("Waive Fee Button is Displayed: PASSED!!!");
 	}
 	
 	
