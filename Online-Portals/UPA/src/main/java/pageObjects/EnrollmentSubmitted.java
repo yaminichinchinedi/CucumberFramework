@@ -19,6 +19,7 @@ import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
@@ -396,6 +397,12 @@ public class EnrollmentSubmitted  {
 		Helper.compareEquals(testConfig, "Fin Bank Name", enrollmentInfoPageObj.getFinInstName().trim(), data.get("FIN_BNK_NM").toString().trim());
 		Helper.compareEquals(testConfig, "Fin Acnt Nbr", enrollmentInfoPageObj.getFinAcntNo().trim(), data.get("ACNT_NBR").toString().trim());
 		Helper.compareEquals(testConfig, "Fin Rte nmbr", enrollmentInfoPageObj.getFinRoutingNo().trim(), data.get("RTE_NBR").toString().trim());
+		
+		//Verify Business phone and extension		
+		Map BPData=DataBase.executeSelectQuery(testConfig, QUERY.BusinessPhone_ENROLLED_PROVIDER, 1);
+		Helper.compareEquals(testConfig, "Business Phone", enrollmentInfoPageObj.getBusinessPhone1().trim()+enrollmentInfoPageObj.getBusinessPhone2().trim()+enrollmentInfoPageObj.getBusinessPhone3().trim(), BPData.get("BUSINESS_PHONE").toString().trim());
+		Helper.compareEquals(testConfig, "Business Phone Extension", enrollmentInfoPageObj.getBusinessPhoneExt().trim(), BPData.get("BUSINESS_PHONE_EXT").toString().trim());
+		
 		
 		//verify BL or VC
 		int sqlRowNo=105;
