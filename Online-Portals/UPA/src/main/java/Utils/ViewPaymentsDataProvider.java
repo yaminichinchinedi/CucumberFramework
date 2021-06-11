@@ -461,6 +461,14 @@ public class ViewPaymentsDataProvider {
 			sqlRowNo = 29;
 			break;
 
+		case "TinAboveZeroFee":
+			query = QUERY.TINAboveZeroFee;
+			break;
+
+		case "TINEqualZeroFee_ProcessFeesInProgress":
+			query = QUERY.TINEqualZeroFee_ProcessFeesInProgress;
+			break;
+
 		case "NPI":
 			sqlRowNo = 249;
 			break;
