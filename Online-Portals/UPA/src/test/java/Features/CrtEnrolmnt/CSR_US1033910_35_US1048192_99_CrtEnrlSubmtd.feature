@@ -2,7 +2,7 @@
 #Author: Rahul Krishna
 Feature:Create Enrollment Home Page Validations 
 
-@US2952500_Positive_AO
+@CSRUS2952500_Positive_AO @CSR2021_PI02_IP
 
  Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
    
@@ -35,7 +35,7 @@ Feature:Create Enrollment Home Page Validations
                 	
 										      
 		
-		@US2952500_Positive_VO						      
+		@CSRUS2952500_Positive_VO @CSR2021_PI02_IP						      
 		Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
