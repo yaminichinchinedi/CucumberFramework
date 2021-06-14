@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -239,6 +241,25 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//div[@id=\"optum-pay-invoices\"]/div/div[1]/p")
 	WebElement divPageMsg;
+	
+	@FindBy(id = "waiveButton")
+	WebElement waiveFeeButton;
+	
+	@FindBy(id = "waiveFeeReason")
+	WebElement waivedFeeReason;
+	
+	@FindBy(xpath = "//input[@id='waiveButton']/following-sibling::div")
+	WebElement waivedFeePending;
+
+
+	@FindBy(xpath = "//button[text()='Continue']")
+	WebElement continueButton;
+
+	@FindBy(xpath = "//button[text()='Cancel']")
+	WebElement cancelButton;
+	
+	@FindBy(xpath = "//button[text()='Yes, continue']")
+	WebElement confirmButton;
 
 	@FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[2]/p")
 	WebElement divInvoicesAccrudFeesUI;
@@ -516,6 +537,16 @@ public class OptumPaySolution {
   
     @FindBy(xpath="//button[contains(text(),'Continue')]")
     WebElement wavieContBtn;
+    
+    @FindBy(xpath="//button[contains(text(),'Yes, continue')]")
+    WebElement wavieyesBtn;
+    
+  
+    @FindBy(xpath="//div[contains(text(),'Waived fees pending')]")
+    WebElement waviefeependng;
+
+	@FindBy(xpath = "//div[@class='mt-2 font-grey-italic' and contains(.,'Waived fees pending')]")
+	WebElement waiveFeesInProgressMessage;
   
   
 	//Added by Mohammad Khalid
@@ -851,7 +882,7 @@ public class OptumPaySolution {
 		for(WebElement title: titles)
             Element.mouseHoverByJS(testConfig, title, "title");
 
-          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by mid—July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
+          Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by midï¿½July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
           Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.",hoverRate.getText().trim());
           Helper.compareEquals(testConfig, "Rate","To view individual per-\n" + 
           		"payment fees, please visit\n" + 
@@ -2085,6 +2116,112 @@ public class OptumPaySolution {
 	    Helper.compareEquals(testConfig, "Wavie Cancel Button Enabled", true, wavieCancelBtn.isEnabled());
 	    Helper.compareEquals(testConfig, "Wavie Cntinue Button Disabled", false, wavieContBtn.isEnabled());
 	 }
+	
+	
+	public void verifyWaivedfeespending(String searchCriteria)
+	{
+
+        if(searchCriteria.equalsIgnoreCase("ZERO_DEBIT_FEE"))
+        {
+            Helper.compareEquals(testConfig, "Waive Fees", false, wavieBtn.isEnabled());
+            Helper.compareEquals(testConfig, "Text", "Waived fees pending", waviefeependng.getText());
+        }
+        else
+        {
+        	Helper.compareEquals(testConfig, "Waive Fees", true, wavieBtn.isEnabled());
+        }
+
+    }
+	
+	
+	public void verifyDebitFeeAdj(String searchCriteria)
+	{
+		System.getProperty("tin");
+		
+		
+		if(searchCriteria.equalsIgnoreCase("ZERO_DEBIT_FEE"))
+		{
+			int update = DataBase.executeUpdateQuery(testConfig, QUERY.UPDATED_DEBIT_FEE_ADJ);
+		}
+		else
+		{
+			int update = DataBase.executeUpdateQuery(testConfig, QUERY.UPD_DEBIT_FEE_ADJ_NEG1);
+		}
+	    
+	}
+	
+	public void verifyAndClickWaiveFee() {
+		String accruedFeeMonthValue="";
+		if (System.getProperty("Application").contains("UPA"))
+			accruedFeeMonthValue=feeTileUPA.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		else
+			accruedFeeMonthValue=feeTile.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		
+		
+		
+		float accruedFee=Float.valueOf(accruedFeeMonthValue);
+		if(accruedFee>0.00) {
+			Element.click(waiveFeeButton, "Waive Fee Button");
+		}
+
+	}
+	
+	public void verifyAccruedFeeAndCheckWaiveFeeButton() {
+		String accruedFeeMonthValue="";
+		if (System.getProperty("Application").contains("UPA"))
+			accruedFeeMonthValue=feeTileUPA.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		else
+			accruedFeeMonthValue=feeTile.getText().split(":")[1].trim().split("\n")[0].substring(1);
+		
+		
+		Helper.compareEquals(testConfig, "Accrued Fees month to date", accruedFeeMonthValue.trim(), "0.00");
+		 
+			
+		
+
+	}
+
+	public void clickCancelButton() {
+		Element.click(cancelButton, "Cancel Button");
+	}
+	public void selectWaivedFeeReason(String reason) {
+		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee");
+		Element.click(continueButton, "Continue");
+	}
+	public void confirmAndProceedWaiveFee() {
+		Element.click(confirmButton, "Confirm Button");
+	}
+	
+	public void verifyWaiveFeePending() {
+		String waiveFeePendingMsg=waivedFeePending.getText().trim();
+		Helper.compareEquals(testConfig, "Waive Fee Pending",waiveFeePendingMsg, "Waived fees pending");		 
+	}
+
+	public void verifyWaiveFeesButtonDisabled() {
+		Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
+	}
+
+	public void accruedFeeIsZero(){
+		testConfig.getDriver().manage().timeouts().implicitlyWait(250, TimeUnit.SECONDS);
+		String amount = Element.findElement(testConfig, "xpath", "(//div[@class='mb-4'])[1]").getText();
+		amount = amount.substring(amount.indexOf("$")+1);
+		double amountValue = Double.parseDouble(amount);
+		Assert.assertTrue(amountValue >0, "Failed: Fee is not greater than zero");
+		Log.Comment("============>>>>Amount is above Zero Verification PASSED!!!. Amount is: $" + amountValue);
+
+	}
+	public void waiveFullFeeIsNotInProgress(){
+		//code might be needed for future reference.
+//		 List<WebElement> pendingFeeMessageElements = testConfig.getDriver().findElements(By.xpath("//div[@class='mt-2 font-grey-italic' and contains(.,'Waived fees pending')]"));
+//		 Assert.assertTrue(pendingFeeMessageElements.isEmpty(), "Pending fees are in process. Acceptance criteria is not met!!!");
+		Element.verifyElementNotPresent(waiveFeesInProgressMessage, "Pending Fee Waive Request Message");
+	}
+
+	public void waiveFeeButtonVisibility() {
+		Element.verifyElementIsEnabled(wavieBtn,"Waive Fee Button");
+		Element.verifyElementPresent(wavieBtn,"Waive Fee Button");
+	}
+	
 	
 	
 }
