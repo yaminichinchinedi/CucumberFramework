@@ -1,5 +1,5 @@
 #Author: Marsha(Stabilisation)
-@UPALandingPage
+@UPALandingPage  @UPARegression
 Feature: UPA Landing Page Pre-Login functionality
 	#Author: Mohammad Khalid
 	@UPABenefitsOfOptumPay_US2998969 @UPABenefitsOfOptumPay_US3033482 

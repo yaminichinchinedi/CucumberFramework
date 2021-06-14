@@ -161,6 +161,30 @@ public class CreateMaintainEnrollment {
 		
 		testConfig.putRunTimeProperty("tin", tin);
 	}
+	
+	public CreateMaintainEnrollment enterTinAndSrch(String userType) {
+		selectUserType(userType);
+		String tin = testConfig.getRunTimeProperty("tin");
+		switch (userType) {
+		case "PROV": // This case comes from CSR for providers to Enter TIN, not UPA flow
+			Browser.wait(testConfig, 2);
+			Element.enterData(txtboxTinNo.get(0), tin, "Enter tin number as :" + " " + tin, "txtboxTinNo");
+			Element.clickByJS(testConfig, btnSearch.get(0), "Clicked search button");
+			break;
+		case "BS":
+			Browser.wait(testConfig, 2);
+			Element.enterData(txtboxTinNo.get(1), tin, "Enter tin number as :" + " " + tin, "txtboxTinNo");
+			Element.clickByJS(testConfig, btnSearch.get(2), "Clicked search button");
+			break;
+		case "PAY":
+			Browser.wait(testConfig, 2);
+			Element.selectByVisibleText(drpDownPayer, tin, "Payer as :" + " " + tin);
+			Element.clickByJS(testConfig, btnSearch.get(1), "Clicked search button");
+			break;
+		}
+		return this;
+	}
+
 
 }
 

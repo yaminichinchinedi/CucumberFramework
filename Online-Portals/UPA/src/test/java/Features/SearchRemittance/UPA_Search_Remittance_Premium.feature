@@ -1,19 +1,19 @@
 #Author: Rahul Krishna
-@UPASearchRemittancePRemium
+@UPASearchRemittancePRemium  @UPARegression
 Feature: UPA Search Remittance for Premium access portal			
 
 @UPAUS2879968 @OctRelease 
 Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	Then User clicks on Search Remittance link for UPA
-  Then User enters "<Search Criteria>" and click on search button.
-  Then Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace
-  Then Validate Claim Count column is present which appears as Hyperlink for nonzero claim count and on click redirects to Remittance Detail page
-  Then Validate ePRA,pPRA and 835 fields are enabled 
-   Then Validate Archived Coulmn,Save Archived button is relabeled to Payment Status and Save button respectively
-   Then Validate that Search Criertia box do not contain hyphen following colon on each search criteria option
+#	Given User navigates to UPA portal and enters "<credentials>" and login
+#	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+#	Then User clicks on Search Remittance link for UPA
+  #Then User enters "<Search Criteria>" and click on search button.
+  #Then Validate in Grid search Results,Type column or Payment Status field not displayed and is relabeled to ACH Trace
+  #Then Validate Claim Count column is present which appears as Hyperlink for nonzero claim count and on click redirects to Remittance Detail page
+  #Then Validate ePRA,pPRA and 835 fields are enabled 
+   #Then Validate Archived Coulmn,Save Archived button is relabeled to Payment Status and Save button respectively
+   #Then Validate that Search Criertia box do not contain hyphen following colon on each search criteria option
     
 
 	
@@ -47,8 +47,8 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 	Then Validate search button is enabled or disabled for "<portalAccess>"
 	Then User enters "<Search Criteria>" and click on search button.
 	Then verify search results for "<Search Criteria>"	
-	Then User clicks on Print Search Result button.
-	Then Validate the data of Print Search Remmit Page for "<Search Criteria>"
+#	Then User clicks on Print Search Result button.
+#	Then Validate the data of Print Search Remmit Page for "<Search Criteria>"
 
 	Examples:
 		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
@@ -56,23 +56,6 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 		|  	byDOS   		|	Super	 |    PROV     |   Premium    |		byDOS              |  AO   |
 		|byElectronicPaymentNo|	Super	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
 
-		@US2793563 
-Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	Then User clicks on Search Remittance link for UPA
-	Then verify error messages in search results
-	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
-
-	Examples:
-		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
-		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  AO   |
-		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  VO   |
-		|				byDOP		  |	PROV_Admin	 |    PROV     |   Premium    |		MoreThan13Months	   |  AV   |
-		|				byDOP		  |		PROV_Gen	 |    PROV     |   Premium    |		MoreThan13Months	   |  AO   |
-		|				byDOP		  |		PROV_Gen	 |    PROV     |   Premium    |		MoreThan13Months	   |  VO   |
-		|				byDOP		  |		PROV_Gen	 |    PROV     |   Premium    |		MoreThan13Months	   |  AV   |
 
 @UPAPROVSearchRemittance
 Scenario Outline: Search Remittance 
@@ -163,12 +146,12 @@ Examples:
 @PAYSearchRemittance
 Scenario Outline: - verify search results for search remittance
 
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	Then User clicks on Search Remittance link for UPA
-	Then User Enters Search Remittance tin and click on search button for "<userType>".
-	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
+#	Given User navigates to UPA portal and enters "<credentials>" and login
+#	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+#	Then User clicks on Search Remittance link for UPA
+#	Then User Enters Search Remittance tin and click on search button for "<userType>".
+#	Then User enters "<Search Criteria>" and click on search button.
+#	Then verify search results for "<Search Criteria>"	
 	Examples:
 
 		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|

@@ -1,5 +1,5 @@
 #Author: Rahul Krishna
-@CSROptumPaySolutions    
+@CSROptumPaySolutions    @CSRRegression
     Feature: Optum Pay Solutions Scenarios for Premium Tins
     @CSRUS3136637 @CSRStable
     Scenario Outline: Optum Pay Soution New Layout Scenario
@@ -289,7 +289,7 @@ Scenario Outline: Optum Pay Soution  Fee Refunds UI - CSR
 	         |    RW	        |	wthAccuredFee	   |  VO 	 |  Premium		 |	PROV	| 
 	         |    RO   		    |	wthAccuredFee	   |  VO 	 |	Premium		 |	PROV	|
 	 
-@CSRUS3546055
+@CSRUS3546055 @checkmate
   Scenario Outline: Optum Pay Soution  Access Payments Accrued fee > $0 and Request is not in Progress
 	Given User navigates to CSR portal and enters "<credentials>" and login 
 	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience. 

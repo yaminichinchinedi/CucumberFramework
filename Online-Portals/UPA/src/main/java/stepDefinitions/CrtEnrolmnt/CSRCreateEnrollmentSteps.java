@@ -74,6 +74,13 @@ public class CSRCreateEnrollmentSteps extends TestBase {
 		enrollment.validateViewEnrollment();
 		enrollment.clickEditBtn();
 	}
+	
+	@Then("^User Select User Type for \"([^\"]*)\" and enter tin and click Search$")
+	public void user_Select_User_Type_for_and_enter_tin_and_click_Search(String userType) throws Throwable {
+		CreateMaintainEnrollment enrollment = new CreateMaintainEnrollment(testConfig);
+		enrollment.enterTinAndSrch(userType);
+		enrollment.clickEditBtn();
+	}
 	   
 
 }

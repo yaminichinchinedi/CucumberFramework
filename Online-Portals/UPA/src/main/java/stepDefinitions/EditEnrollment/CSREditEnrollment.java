@@ -2,6 +2,7 @@ package main.java.stepDefinitions.EditEnrollment;
 
 import cucumber.api.java.en.Then;
 import main.java.nativeFunctions.TestBase;
+import main.java.pageObjects.CreateMaintainEnrollment;
 import main.java.pageObjects.EditEnrollment;
 
 public class CSREditEnrollment extends TestBase {
@@ -34,6 +35,12 @@ public class CSREditEnrollment extends TestBase {
     public void user_navigates_to_Payer_s_page_and_Change_the_Payment_Method_and_Valiadate_Payer_Enrolled_Provider_History_Table() throws Throwable {
     	editEnrollment.clickPayersTab();
     	editEnrollment.UpdatePaymentMethodandValidatePEPHistoryTable();
+    }
+    
+    @Then("^User clicks on edit and navigates to Payer page and verify  Payment Method for \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void user_clicks_on_edit_and_navigates_to_Payer_page_and_verify_Payment_Method_for_and(String payerName, String tinType) throws Throwable {
+    	editEnrollment.clickPayersTab();
+    	editEnrollment.verifyPaymentMethod(payerName, tinType);
     }
 
 }

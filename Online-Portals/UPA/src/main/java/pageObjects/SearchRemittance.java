@@ -21,6 +21,8 @@ import java.util.Map;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import io.restassured.path.json.JsonPath;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -28,12 +30,16 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import org.apache.commons.lang3.StringUtils;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 //import main.java.Utils.Config;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
@@ -55,6 +61,8 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 public class SearchRemittance extends ViewPayments {
+	private RequestSpecification requestSpecification;
+	private  Response response;
 
 	// @FindBy(xpath="//td[@class='errors']")
 	@FindBy(xpath = "//td[contains(text(),'No records match the selected search criteria. Cho')]")
@@ -381,7 +389,6 @@ public class SearchRemittance extends ViewPayments {
 		EpsPaymentsSummarySearchResponse searchResponse;
 		searchResponse = (EpsPaymentsSummarySearchResponse) epsSearchRemittanceRequestHelper
 				.postRequestGetResponse(request);
-
 		return searchResponse;
 	}
 
@@ -2206,11 +2213,151 @@ public class SearchRemittance extends ViewPayments {
 		return headerList.indexOf(columnName);
 	}
 	
-	
-	
-	
-	
-	
-	
+	public int getFISLAPIResponse(String requestType)
+			throws Throwable, IOException, SAXException, ParserConfigurationException {
+		Object request = null;
+		RequestSpecification Request = RestAssured.given();
+		String[] pay_835_id;
+		if (requestType.contains("DOP")) {
+			pay_835_id = new String[] {testConfig.getRunTimeProperty("PAYR_835_ID")};
+		}
+		else {
+			pay_835_id = new String[] { "87726" };
+		}
+		if (requestType.contains("DOP") || requestType.equals("byElectronicPaymentNo")
+				|| requestType.equals("byCheckNo")) {
+			DOP dop = new DOP();
+			dop.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			dop.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dop.setUserRole("PROVIDER");
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dop.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			String[] identifier = new String[] {};
+			dop.setEpsNationalProviderIdentifiers(identifier);
+			if (requestType.equals("byElectronicPaymentNo") || requestType.equals("byCheckNo")) {
+				SearchCriteria searchCriteria = dop.getSearchCriteria();
+				ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+				ParameterMap parameterMap = new ParameterMap();
+				parameterMap.setKey("PAYMENT_LEVEL_DETAIL");
+				parameterMap.setValue("Y");
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+				parameterMap = new ParameterMap();
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
 
+				searchCriteria.setParameterMap(parameterMapList);
+				String[] identifiers = new String[] {};
+				dop.setEpsNationalProviderIdentifiers(identifiers);
+			}
+			if (requestType.equals("byDOPAndNpi")) {
+				String[] identifiers = new String[] { testConfig.getRunTimeProperty("NPI").trim() };
+				dop.setEpsNationalProviderIdentifiers(identifiers);
+			}
+			System.out.println("DOP=" + dop.toString());
+			request = dop;
+		}
+		if (requestType.equals("byDOS") || requestType.equals("byDOSAndAcntNo")
+				|| requestType.equals("byDOSAndSubscriberId") || requestType.equals("byDOSAndClmNo")
+				|| (requestType.equals("byDOSAndPtntNm")) || (requestType.equals("byDOSAndNpi"))) {
+			DOS dos = new DOS();
+			dos.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			dos.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dos.setUserRole("PROVIDER");
+			SearchCriteria searchCriteria = dos.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey(testConfig.getRunTimeProperty("key"));
+			parameterMap.setValue(testConfig.getRunTimeProperty("value"));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+			if (requestType.equals("byDOSAndPtntNm")) {
+				parameterMap = new ParameterMap();
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+			}
+			searchCriteria.setParameterMap(parameterMapList);
+
+			// String[] identifiers = new String[]
+			// {"03432","04271","04567","06111","19402","31417","36273","37602","56693","56758",
+			// "62952","65088","66214","78857","81400","86047","86050","87726","91785","94265","95378","95467","95959","96385","99726",
+			// "APP01","ECHOH","ERIE1","MCLRN","MDWS5","NYU01","PINNA","RPMP5","SAM1","TEX01","UFNEP","UMR01","VACCN","WID01"};
+			if (requestType.equals("byDOSAndNpi")) {
+				String[] identifiers = new String[] { testConfig.getRunTimeProperty("NPI").trim() };
+				dos.setEpsNationalProviderIdentifiers(identifiers);
+			} else {
+				String[] identifiers = new String[] {};
+				dos.setEpsNationalProviderIdentifiers(identifiers);
+			}
+			ClaimServiceDateRange claimServiceDateRange = dos.getClaimServiceDateRange();
+			claimServiceDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			claimServiceDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			System.out.println("\nDOS=" + dos.toString());
+			request = dos;
+		}
+
+		if (requestType.equals("byDOPAndAccountNo") || requestType.equals("byDOP&SubscriberID")
+				|| requestType.equals("byDOPAndClaimNo") || (requestType.equals("byDOPAndPatientNm"))) {
+			DOP dopAccountNumber = new DOP();
+			dopAccountNumber.setEpsSecondaryPayerReferenceIdentifiers(pay_835_id);
+			dopAccountNumber.setTaxIdentifier(testConfig.getRunTimeProperty("tin").trim());
+			dopAccountNumber.setUserRole("PROVIDER");
+
+			SearchCriteria searchCriteria = dopAccountNumber.getSearchCriteria();
+			ArrayList<ParameterMap> parameterMapList = new ArrayList<>();
+			ParameterMap parameterMap = new ParameterMap();
+			parameterMap.setKey(testConfig.getRunTimeProperty("key"));
+			parameterMap.setValue(testConfig.getRunTimeProperty("value"));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+			if (requestType.equals("byDOPAndPatientNm")) {
+				parameterMap = new ParameterMap();
+				parameterMap.setKey(testConfig.getRunTimeProperty("key1"));
+				parameterMap.setValue(testConfig.getRunTimeProperty("value1"));
+				parameterMap.setComparator("Equals");
+				parameterMapList.add(parameterMap);
+			}
+			searchCriteria.setParameterMap(parameterMapList);
+			PaymentMadeOnDateRange paymentMadeOnDateRange = dopAccountNumber.getPaymentMadeOnDateRange();
+			paymentMadeOnDateRange.setFromDate(testConfig.getRunTimeProperty("fromDate"));
+			paymentMadeOnDateRange.setToDate(testConfig.getRunTimeProperty("toDate"));
+			String[] identifier = new String[] {};
+			dopAccountNumber.setEpsNationalProviderIdentifiers(identifier);
+			System.out.println("\nDOP Account Number=" + dopAccountNumber.toString());
+			request = dopAccountNumber;
+
+		}
+
+		RequestSpecification authrequest = RestAssured.given();
+		authrequest.header("content-Type", "application/json");
+		JSONObject requestBody = new JSONObject();
+		requestBody.put("client_id", "NpOFhNDcNuDNiqZ3xHBvI7hDWzcV13CD");
+		requestBody.put("client_secret", "04tYtsyfNSBFyJr3CcHCJuYSvIeOl6X1");
+		requestBody.put("grant_type", "client_credentials");
+		authrequest.body(requestBody.toString());
+		Response authresponse = authrequest.post("https://gateway-stage-dmz.optum.com/auth/oauth2/token");
+		int x = authresponse.getStatusCode();
+		//JsonPath jsonPathEvaluator = response.jsonPath();
+		//String auth = jsonPathEvaluator.get("access_token");
+		System.out.println(authresponse.getBody().asString());
+		System.out.println(authresponse.getBody().asString().substring(39,71));
+		Request.header("Authorization", "Bearer " + authresponse.getBody().asString().substring(39,71));
+		Request.header("content-Type", "application/json");
+		Request.body(request.toString());
+		response = Request.post(testConfig.getRunTimeProperty(testConfig.getRunTimeProperty("Env") + "FISLURL_Payments"));
+		int statusCode = response.getStatusCode();
+		return statusCode;
+	}
+
+	
+	public void verifyStatusCode(int expectedStatus, int actualStatus) {
+		Assert.assertEquals(expectedStatus, actualStatus);
+		Log.Comment("Verified the Status Code");
+	
+	}
 }

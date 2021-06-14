@@ -116,7 +116,7 @@ public class TestBase extends ReporterClass {
 		if (System.getProperty("env") == null)
 			urlHelper(runtimeProperties.getProperty(("Env")));
 
-		else if (System.getProperty("env").equals("Stage2"))
+		else if (System.getProperty("env").equals("Stage2")||System.getProperty("env").equals("ST2"))
 			urlHelper("Stage2");
 
 		else if (System.getProperty("env").equals("Stage")) 
@@ -378,11 +378,13 @@ public class TestBase extends ReporterClass {
 	//If browser type comes null from jenkins, pick up the browser type from Config.
 	public void tearUp() 
 	{
+		//if(!(runtimeProperties.getProperty("ExecutionType")).contains("WebService")) {
 		if (System.getProperty("BrowserType") == null)
 			setDriver(runtimeProperties.getProperty("BrowserType"));
 		else
 			setDriver(System.getProperty("BrowserType"));
 	}
+	//}
 
 	/*
 	@BeforeMethod()

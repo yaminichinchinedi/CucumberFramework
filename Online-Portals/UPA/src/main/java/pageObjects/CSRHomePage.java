@@ -119,11 +119,11 @@ public class CSRHomePage {
 	@FindBy(xpath = "//a[contains(text(),'Payment Data Files')]") 
 	WebElement linkPaymentDataFiles;
 	
-	CSRHomePage(TestBase testConfig) 
+	public CSRHomePage(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.fluentWait(testConfig, linkRunReports, 100, 1,"User is successfully logged in");
+		//Element.fluentWait(testConfig, linkRunReports, 100, 1,"User is successfully logged in");
 		
 	}
 
@@ -189,9 +189,11 @@ public class CSRHomePage {
 	}
 
 	public CSRHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
-		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
-			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
-		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
+		if(searchCriteria.contains("days") || searchCriteria.contains("month")){
+			Helper.getPayerSchema(testConfig,searchCriteria,userType);}
+		if(searchCriteria.contains("by")){
+			Helper.getPayerSchema(testConfig,"Last 30 days",userType);}
+		String tin = getTin(userType,searchCriteria,tinType,portalAccess);
 		System.setProperty("tin", tin);
 		return this;
 	}

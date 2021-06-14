@@ -1,7 +1,5 @@
 #Stabilized By: Sunanda
-
-#Author: Vinay Raghumanda
-@UPABSInfo  
+@UPABSInfo  @UPARegression
 Feature: UPA Billing Service Information Functionality
 
   @US3179215 @UPAUS3438484
