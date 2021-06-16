@@ -70,13 +70,29 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		providerEFTERAEnrollPage=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue();
 	}
 	
-	@Then("^User sets business phone \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
-	public void user_set_valid_business_phone(String businessPhone1,String businessPhone2,String businessPhone3,String businessPhoneExt) {
-		System.setProperty("BusinessPhone1", businessPhone1);
-		System.setProperty("BusinessPhone2", businessPhone2);
-		System.setProperty("BusinessPhone3", businessPhone3);
-		System.setProperty("BusinessPhoneExt", businessPhoneExt);
+	@Then("^User sets business phone$")
+	public void user_set_valid_business_phone() {	
+		System.setProperty("BusinessPhone1", Long.toString(Helper.generateRandomNumber(3)));
+		System.setProperty("BusinessPhone2", Long.toString(Helper.generateRandomNumber(3)));
+		System.setProperty("BusinessPhone3", Long.toString(Helper.generateRandomNumber(4)));
+		System.setProperty("BusinessPhoneExt", Long.toString(Helper.generateRandomNumber(5)));
 	}
+	
+	@Then("^User sets invalid business phone \"([^\"]*)\"$")
+	public void user_set_invalid_business_phone(String stringFormat) {
+		if(stringFormat.equals("AlphaNumericString")) {
+		System.setProperty("BusinessPhone1", Helper.generateRandomAlphaNumericString(3));
+		System.setProperty("BusinessPhone2", Helper.generateRandomAlphaNumericString(3));
+		System.setProperty("BusinessPhone3", Helper.generateRandomAlphaNumericString(4));
+		System.setProperty("BusinessPhoneExt", Helper.generateRandomAlphaNumericString(5));
+		}else if(stringFormat.equals("SpecialCharacters")) {
+			System.setProperty("BusinessPhone1", Helper.generateRandomSpecialCharacterString(3));
+			System.setProperty("BusinessPhone2", Helper.generateRandomSpecialCharacterString(3));
+			System.setProperty("BusinessPhone3", Helper.generateRandomSpecialCharacterString(4));
+			System.setProperty("BusinessPhoneExt",Helper.generateRandomSpecialCharacterString(5));
+		}
+	}
+
 	
 	@Then("^User fills all the information  and click on Continue$")
 	public void user_fills_all_the_information_and_click_on_Continue() throws Throwable {

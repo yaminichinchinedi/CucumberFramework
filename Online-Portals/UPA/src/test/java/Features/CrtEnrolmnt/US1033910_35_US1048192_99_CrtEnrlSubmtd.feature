@@ -1,7 +1,7 @@
 #Author: Rahul Krishna+
 Feature: Create Enrollment Home Page Validations 
 
-@US2952500_PositiveUPA_AO
+@UPAUS3610262_Positive_AO
 
  Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
@@ -11,7 +11,7 @@ Feature: Create Enrollment Home Page Validations
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 											|Enrollment Type|
 											|     AO        |
-		Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+		Then User sets business phone
 		Then User fills all the information  and click on Continue
 		Then User fills all the information on Identify Administrators page and click continue
 		#Need to check ABA Validator or Normal flow
@@ -27,15 +27,14 @@ Feature: Create Enrollment Home Page Validations
     
      Examples:
 
-          |   credentials     |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt | 
-          |    Super          |	AO		  	 | PROV   | 480| 835 | 7364 | 480 |
-        	|    Super          |	AO		  	 | PROV   | 813 |873 | 8247 | |
-        	|    Super          |	AO		  	 | PROV   | 209| 123 | 9956 | 480123 |
+          |   credentials     |
+          |    Super          |
                 	
 									
     											
 										      
-	@US2952500_PositiveUPA_VO									      
+	@UPAUS3610262_Positive_VO	
+									      
 	Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
@@ -45,7 +44,7 @@ Feature: Create Enrollment Home Page Validations
 	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 		| Enrollment Type |
 	  |       VO        |			
-	Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+	Then User sets business phone
 	Then User fills all the information  and click on Continue
 	Then User fills all the information on Identify Administrators page and click continue to W9
 	Then User uploads the WNine form and click continue
@@ -58,10 +57,8 @@ Feature: Create Enrollment Home Page Validations
 	
 	  Examples:
 
-          |   credentials     |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt | 
-          |    Super          |	AO		  	 | PROV   | 480| 835 | 7364 | 480 |
-        	|    Super          |	AO		  	 | PROV   | 813 |873 | 8247 | |
-        	|    Super          |	AO		  	 | PROV   | 209| 123 | 9956 | 480123 |
+          |   credentials     |
+          |    Super          |
            				
 									
     										
@@ -118,30 +115,26 @@ Feature: Create Enrollment Home Page Validations
    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
    And Also click on Print Enrollment page,download PDF and validates all the information from PDF page		
 
- @US2952500_Negative_UPA   
- Scenario Outline: US2952500 Provider navigates to UPA Application to validate error scenario for "BusinessPhone" in organization Information page.
+#Author: Shalini Mahavratayajula
+ @UPAUS3610262_Negative   
+ Scenario Outline: US3610262 Provider navigates to UPA Application to validate error scenario for "BusinessPhone" in organization Information page.
     
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
   	Then User clicks on Continue button of BeginEnrollment Page
 		Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-											|Enrollment Type|
-											|     AO        |	
-											|     VO        |														
-		Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+										|Enrollment Type|
+										|     AO        |		
+		Then User sets invalid business phone "<invalidBusinessPhone>"
 		Then User fills all the information  and click on Continue
 		Then User validate error messages
     
      Examples:
 
-          |   credentials     |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt |       	
-        	|    Super          |	AO		  	 | PROV   | abc| 123 | 4567 | 480123 |
-        	|    Super          |	AO		  	 | PROV   | $@%| 123 | 9956 |  			 |
-        	|    Super          |	AO		  	 | PROV   | 	 | 123 | 9956 |        |       	
-        	|    Super          |	VO		  	 | PROV   | abc| 123 | 4567 | 480123 |
-        	|    Super          |	VO		  	 | PROV   | $@&| 123 |  		| 72456  |
-       		|    Super          |	VO		  	 | PROV   | 234| 		 | 9956 |  			 |
-       						
+          |   credentials     | tinType |  invalidBusinessPhone |    	
+        	|    Super          |  AO  		|			AlphaNumericString  |
+        	|    Super          |  VO   	|			SpecialCharacters   |
+        				
     			
    		
 
