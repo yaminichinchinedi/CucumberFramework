@@ -341,7 +341,7 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
  				"    ORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY";
 
 
-	public static final String TINAboveZeroFee = "SELECT\n" +
+	public static final String TINAboveZeroFee = "    SELECT\n" +
 			"\tdfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR\n" +
 			"FROM\n" +
 			"\tole.DEBIT_FEE_ACCRD dfi,\n" +
@@ -350,13 +350,15 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"\tOLE.DEBIT_FEE_ADJUSTMENT dfa\n" +
 			"\tWHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR\tAND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'\tAND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\n" +
 			"\tAND ep.ENRL_STS_CD = 'A'\n" +
+			"\tAND ps.PRTL_PRDCT_REC_STS_CD ='PS'\n" +
 			"\tAND dfi.DBT_FEE_ACCRD_AMT > 0 \n" +
 			"\tAND ((DATE(ADJ_REQ_ON) != CURRENT_DATE OR DATE(ADJ_REQ_ON) != (CURRENT_DATE - 1 DAY)) \n" +
 			"    OR (ADJ_COMP_DTTM IS NOT NULL or FULL_ADJ_IND != 'Y' ))\n" +
-			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur ";
+			"    AND SETL_DT  <= CURRENT_DATE\n" +
+			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur";
 
 	public static final String TINEqualZeroFee_ProcessFeesInProgress = "SELECT\n" +
-			"\tdfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR\n" +
+			"dfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR\n" +
 			"FROM\n" +
 			"\tole.DEBIT_FEE_ACCRD dfi,\n" +
 			"\tOLE.ENROLLED_PROVIDER ep,\n" +
@@ -364,9 +366,12 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"\tOLE.DEBIT_FEE_ADJUSTMENT dfa\n" +
 			"\tWHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR\tAND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'\tAND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\n" +
 			"\tAND ep.ENRL_STS_CD = 'A'\n" +
-			"\tAND DBT_FEE_ACCRD_AMT = 0 \n" +
-			"\tAND (DATE(ADJ_REQ_ON) = CURRENT_DATE OR DATE(ADJ_REQ_ON) = (CURRENT_DATE - 1 DAY)) \n" +
-			"    AND ADJ_COMP_DTTM IS NULL AND FULL_ADJ_IND = 'Y' \n" +
+			"\tAND dfi.SETL_DT > CURRENT_DATE\n" +
+			"\tAND dfi.DBT_FEE_ACCRD_AMT = 0 \n" +
+			"\tAND ((DATE(ADJ_REQ_ON) != CURRENT_DATE OR DATE(ADJ_REQ_ON) != (CURRENT_DATE - 1 DAY)) \n" +
+			"\tAND SUBSTRING(SETL_DT ,6,2) = SUBSTRING(CURRENT_DATE,6,2)\n" +
+			"    OR (ADJ_COMP_DTTM IS NOT NULL or FULL_ADJ_IND != 'Y' ))\n" +
+			"    AND ps.PRTL_PRDCT_REC_STS_CD ='PS'\n" +
 			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur";
 }
 
