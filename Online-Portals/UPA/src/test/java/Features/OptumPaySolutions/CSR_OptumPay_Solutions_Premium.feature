@@ -306,7 +306,7 @@ Examples:
   
   
 
-@CSRUS3547110
+@CSRUS3547110 @CSR2021_PI02_IP
   Scenario Outline: Optum Pay Soution  Access Payments Accrued fee > $0 and Request is not in Progress
 	Given User navigates to CSR portal and enters "<credentials>" and login 
 	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -324,7 +324,7 @@ Examples:
   
 
       #Author: Mounika Talakanti       
-    @US3575899CSRUSWaivedFee
+    @CSRUS3575899 @CSR2021_PI02_IP
     Scenario Outline: Optum Pay Soution Waive Fees scenario 
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -347,7 +347,7 @@ Examples:
         
         
     #Author: Mounika Talakanti    
-		@US3575899CSRZeroWaiveFee
+		@CSRUS3575899 @CSR2021_PI02_IP
     Scenario Outline: Optum Pay Soution Waive Fees scenario for accrued fee as 0
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -363,7 +363,7 @@ Examples:
 	 
 #Author Felix Gozuacik
 
-      @US3575260 @WaiveFeeButton
+      @CSRUS3575260 @WaiveFeeButton @CSR2021_PI02_IP
       Scenario Outline: Waive Fee button visible for fees greater than zero
 
         Given User navigates to CSR portal and enters "<credentials>" and login

@@ -1,7 +1,7 @@
 #Author: Rahul Krishna+
 Feature: Create Enrollment Home Page Validations 
 
-@UPAUS3610262_Positive_AO
+@UPAUS3610262 @UPA2021_PI02_IP
 
  Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
@@ -33,7 +33,7 @@ Feature: Create Enrollment Home Page Validations
 									
     											
 										      
-	@UPAUS3610262_Positive_VO	
+	@UPAUS3610262	@UPA2021_PI02_IP
 									      
 	Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
   Given User navigates to UPA Sys Test application

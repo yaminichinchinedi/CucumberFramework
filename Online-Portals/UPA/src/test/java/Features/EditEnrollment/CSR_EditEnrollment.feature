@@ -1,4 +1,4 @@
- @CSRMaintainEnrollment @CSRRegression @US3498826 @CSR2021_PI02_IP
+ @CSRMaintainEnrollment @CSRRegression @CSRUS3498826 @CSR2021_PI02_IP
 Feature: Maintain Enrollment 
 
   Scenario Outline: Validate VPay payer on payers page within Edit enrollment
