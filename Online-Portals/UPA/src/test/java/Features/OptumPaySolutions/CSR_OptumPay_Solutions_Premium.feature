@@ -377,3 +377,36 @@ Examples:
         Examples:
           |   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
           |    Super       |	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+
+
+#Author Felix Gozuacik
+
+      @US3610665  @WaiveFeeButton
+      Scenario Outline: Waive Fee button visible for fees equal to zero while process payments are true
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        And  The accrued fee is zero
+        Then The system shall display the following-1. Display the Waive fees button as enabled under the Fees card
+
+        Examples:
+          | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
+          | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+
+#Author Felix Gozuacik
+
+      @US3547123   @WaiveFeeButton
+      Scenario Outline: Waive Fee button visible for fees equal to zero while process payments are true
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        When The user clicks on the Waive fees button
+        Then The system shall display and allow the user to do the following actions:Preselected Full fee, disabled partial fee, total amount displayed, dropdown options
+
+        Examples:
+          | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
+          | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |

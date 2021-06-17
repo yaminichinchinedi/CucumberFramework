@@ -7,6 +7,8 @@ import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.OptumPaySolution;
 import main.java.reporting.Log;
 
+import java.sql.SQLException;
+
 
 public class OptumPaySolutionSteps extends TestBase {
 	
@@ -361,7 +363,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 
 	@And("The accrued fee is abovezero")
 	public void the_accrued_fee_is_aboveZero() throws InterruptedException {
-		optumPaySol.accruedFeeIsZero();
+		optumPaySol.accruedFeeIsAboveZero();
 	}
 
 	@And("Request for waive full fee is not in the process")
@@ -374,6 +376,23 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		optumPaySol.waiveFeeButtonVisibility();
 	}
 
+
+	@And("The accrued fee is zero")
+	public void theAccruedFeeIsZero() {
+		optumPaySol.accruedFeeIsZero();
+	}
+
+
+
+	@When("The user clicks on the Waive fees button")
+	public void theUserClicksOnTheWaiveFeesButton() {
+	optumPaySol.waiveFeeButtonClick();
+	}
+
+	@Then("The system shall display and allow the user to do the following actions:Preselected Full fee, disabled partial fee, total amount displayed, dropdown options")
+	public void theSystemShallDisplayAndAllowTheUserToDoTheFollowingActionsPreselectedFullFeeDisabledPartialFeeTotalAmountDisplayedDropdownOptions(){
+	optumPaySol.partialDisabledAndFullSelectedAndOptionsGivenAndFullAmountShownVerifier();
+	}
 }
 
 
