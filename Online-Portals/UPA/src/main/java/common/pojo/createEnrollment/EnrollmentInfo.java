@@ -49,6 +49,10 @@ public  class EnrollmentInfo {
 	protected String mrktType;
 	protected String npi;
 	protected String provType;
+	protected String businessPhone1;
+	protected String businessPhone2;
+	protected String businessPhone3;
+	protected String businessPhoneExt;
 
 	//Primary Admin Info
 	protected String frstName;
@@ -254,6 +258,32 @@ public  class EnrollmentInfo {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
+	public String getBusinessPhone1() {
+		return businessPhone1;
+	}
+	public void setBusinessPhone1(String businessPhone1) {
+		this.businessPhone1 = businessPhone1;
+	}
+	public String getBusinessPhone2() {
+		return businessPhone2;
+	}
+	public void setBusinessPhone2(String businessPhone2) {
+		this.businessPhone2 = businessPhone2;
+	}
+	public String getBusinessPhone3() {
+		return businessPhone3;
+	}
+	public void setBusinessPhone3(String businessPhone3) {
+		this.businessPhone3 = businessPhone3;
+	}
+	public String getBusinessPhoneExt() {
+		return businessPhoneExt;
+	}
+	public void setBusinessPhoneExt(String businessPhoneExt) {
+		this.businessPhoneExt = businessPhoneExt;
+	}
+
+
 	public String getStateName() {
 		return stateName;
 	}

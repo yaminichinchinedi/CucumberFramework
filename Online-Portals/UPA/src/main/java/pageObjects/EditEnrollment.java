@@ -1099,4 +1099,26 @@ public class EditEnrollment {
 		Helper.compareEquals(testConfig, "Paymethod Method Validation", paymentTo,pephistorydata.get("PAY_METH_CD"));
 		return this;
 		}
+	
+	public void verifyPaymentMethod(String payerName, String tinType) {
+		for (int i = 1; i < payerTable.size(); i++) {
+			if ((payerName.trim())
+					.equalsIgnoreCase((payerTable.get(i).findElements(By.tagName("td")).get(0)).getText())) {
+				Browser.scrollTillAnElement(testConfig, payerTable.get(i).findElements(By.tagName("td")).get(0),
+						"Payer Name");
+				String payMeth = Element.getFirstSelectedOption(testConfig,
+						payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")),
+						"value");
+				Helper.compareEquals(testConfig, "Payment Method is disabled", "true", payerTable.get(i).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")).getAttribute("disabled"));
+				if(tinType.contentEquals("AO")) {
+					Helper.compareEquals(testConfig, "Payment Method", payMeth, "ACH");
+				}
+				if(tinType.contentEquals("VO")) {
+					Helper.compareEquals(testConfig, "Payment Method", payMeth, "Check");
+				}
+
+			}
+		}
+
+	}
 	}

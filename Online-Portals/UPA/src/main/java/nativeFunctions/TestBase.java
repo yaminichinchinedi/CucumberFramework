@@ -378,11 +378,13 @@ public class TestBase extends ReporterClass {
 	//If browser type comes null from jenkins, pick up the browser type from Config.
 	public void tearUp() 
 	{
+		//if(!(runtimeProperties.getProperty("ExecutionType")).contains("WebService")) {
 		if (System.getProperty("BrowserType") == null)
 			setDriver(runtimeProperties.getProperty("BrowserType"));
 		else
 			setDriver(System.getProperty("BrowserType"));
 	}
+	//}
 
 	/*
 	@BeforeMethod()

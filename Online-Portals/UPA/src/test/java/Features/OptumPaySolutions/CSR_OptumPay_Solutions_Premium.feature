@@ -301,5 +301,112 @@ Examples:
      | credentials | userType | searchCriteria     				    | portalAccess | tinType | userType |
      | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AO      | PROV     |
   #   | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AV      |  PROV     |
+  
+  
+  
+  
+
+@CSRUS3547110 @CSR2021_PI02_IP
+  Scenario Outline: Optum Pay Soution  Access Payments Accrued fee > $0 and Request is not in Progress
+	Given User navigates to CSR portal and enters "<credentials>" and login 
+	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	And Update the ADJ_REQ_ON Date to Current Date for "<searchCriteria>"
+	Then  User clicks on Optum Pay Solutions link on CSR HomePage 
+	Then  User Enters tin for OPS and click on search button for "<userType>". 
+  Then validate Wavie Full Fee Button based on "<searchCriteria>" enabled or not
+	
+Examples: 
+     | credentials | userType | searchCriteria     				    | portalAccess | tinType | userType |
+     | Super       | PROV     | ZERO_DEBIT_FEE 						| Premium      | AO      | PROV     |
+     | Super       | PROV     | NOTZERO_DEBIT_FEE 						| Premium      | AO      | PROV     |
+  #   | Super       | PROV     | TIN_WITH_WAVIE 						| Premium      | AV      |  PROV     |
+  #   | Super       | PROV     | NOTZERO_DEBIT_FEE 						| Premium      | AV      |  PROV     |
+  
+
+      #Author: Mounika Talakanti       
+    @CSRUS3575899 @CSR2021_PI02_IP
+    Scenario Outline: Optum Pay Soution Waive Fees scenario 
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies waive fees and clicks on waive fee button
+		Then User clicks cancel button
+		Then User verifies waive fees and clicks on waive fee button
+		Then User selects waived fee reason "<waivedFeeReason>" and click continue
+		Then User confirms waived fee and proceed
+		Then User verify waive fees pending
+		Then User verify waive fees button disabled
+	
+		
+    		Examples:
+
+         |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|waivedFeeReason|
+         |    Super          |		withAccuredFee>0	  |  AO 	|	Premium		 |	PROV	| UHC Requested|
+        
+        
+        
+    #Author: Mounika Talakanti    
+		@CSRUS3575899 @CSR2021_PI02_IP
+    Scenario Outline: Optum Pay Soution Waive Fees scenario for accrued fee as 0
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		And User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then User clicks on Optum Pay Solutions link on CSR HomePage
+		Then User Enters tin for OPS and click on search button for "<userType>".
+		Then User verifies accrued fees as 0.00 and check waive fee button is disabled
+		
+    		Examples:
+
+         |   credentials     |  searchCriteria	    |tinType|portalAccess|userType|
+         |    Super          |		withAccuredFee<=0	  |  AO 	|	Premium		 |	PROV	|
+ 
 	 
-	  
+#Author Felix Gozuacik
+
+      @CSRUS3575260 @WaiveFeeButton @CSR2021_PI02_IP
+      Scenario Outline: Waive Fee button visible for fees greater than zero
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        And  The accrued fee is abovezero
+        And  Request for waive full fee is not in the process
+        Then The system shall display the following-1. Display the Waive fees button as enabled under the Fees card
+
+        Examples:
+          |   credentials  |   searchCriteria           |tinType | portalAccess    |userType     | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3        |
+          |    Super       |	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+
+
+#Author Felix Gozuacik
+
+      @US3610665  @WaiveFeeButton
+      Scenario Outline: Waive Fee button visible for fees equal to zero while process payments are true
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        And  The accrued fee is zero
+        Then The system shall display the following-1. Display the Waive fees button as enabled under the Fees card
+
+        Examples:
+          | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
+          | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+
+#Author Felix Gozuacik
+
+      @US3547123   @WaiveFeeButton
+      Scenario Outline: Waive Fee button visible for fees equal to zero while process payments are true
+
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        When The user clicks on the Waive fees button
+        Then The system shall display and allow the user to do the following actions:Preselected Full fee, disabled partial fee, total amount displayed, dropdown options
+
+        Examples:
+          | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
+          | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |

@@ -1,10 +1,13 @@
 package main.java.stepDefinitions.OptumPaySolution;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.OptumPaySolution;
 import main.java.reporting.Log;
+
+import java.sql.SQLException;
 
 
 public class OptumPaySolutionSteps extends TestBase {
@@ -306,7 +309,90 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.verifyWavieButtonOptions();
 		}
 
+		@Given("^Update the ADJ_REQ_ON Date to Current Date$")
+		public void update_the_ADJ_REQ_ON_Date_to_Current_Date() throws Throwable {
+			//optumPaySol.verifyDebitFeeAdj();
+		}
 
+		@Given("^Update the ADJ_REQ_ON Date to Current Date for \"([^\"]*)\"$")
+		public void update_the_ADJ_REQ_ON_Date_to_Current_Date_for(String searchCriteria) throws Throwable {
+			optumPaySol.verifyDebitFeeAdj(searchCriteria);
+		}
+		
+		
+
+      @Then("^validate Wavie Full Fee Button based on \"([^\"]*)\" enabled or not$")
+      public void validate_Wavie_Full_Fee_Button_based_on_enabled_or_not(String searchCriteria) throws Throwable {
+
+    	  optumPaySol.verifyWaivedfeespending(searchCriteria);
+      }
+      
+      @Then("^User verifies waive fees and clicks on waive fee button$")
+		public void verify_and_Click_WaiveFee() throws Throwable {
+			optumPaySol.verifyAndClickWaiveFee();
+		}
+		
+		@Then("^User verifies accrued fees as 0.00$")
+		public void verify_accrued_fee_and_Check_WaiveFee() throws Throwable {
+			optumPaySol.verifyAccruedFeeAndCheckWaiveFeeButton();
+		}
+		
+		@Then("^User clicks cancel button$")
+		public void user_clicks_cancel_button() throws Throwable {
+			optumPaySol.clickCancelButton();
+		}
+
+		
+		@Then("^User selects waived fee reason \"([^\"]*)\" and click continue$")
+		public void user_select_waived_fee_reason_click_continue(String reason) throws Throwable {
+			optumPaySol.selectWaivedFeeReason(reason);
+		}
+		
+		@Then("^User confirms waived fee and proceed$")
+		public void user_confirms_waived_fee() throws Throwable {
+			optumPaySol.confirmAndProceedWaiveFee();
+		}
+		@Then("^User verify waive fees pending$")
+		public void user_verify_waive_fee_pending() throws Throwable {
+			optumPaySol.verifyWaiveFeePending();
+		}
+		@Then("^User verify waive fees button disabled$")
+		public void user_verify_waive_fee_button_disabled() throws Throwable {
+			optumPaySol.verifyWaiveFeesButtonDisabled();
+		}
+
+	@And("The accrued fee is abovezero")
+	public void the_accrued_fee_is_aboveZero() throws InterruptedException {
+		optumPaySol.accruedFeeIsAboveZero();
+	}
+
+	@And("Request for waive full fee is not in the process")
+	public void request_for_waive_full_fee_is_not_in_the_process() {
+		optumPaySol.waiveFullFeeIsNotInProgress();
+	}
+
+	@Then("The system shall display the following-1. Display the Waive fees button as enabled under the Fees card")
+	public void the_system_shall_display_the_following() {
+		optumPaySol.waiveFeeButtonVisibility();
+	}
+
+
+	@And("The accrued fee is zero")
+	public void theAccruedFeeIsZero() {
+		optumPaySol.accruedFeeIsZero();
+	}
+
+
+
+	@When("The user clicks on the Waive fees button")
+	public void theUserClicksOnTheWaiveFeesButton() {
+	optumPaySol.waiveFeeButtonClick();
+	}
+
+	@Then("The system shall display and allow the user to do the following actions:Preselected Full fee, disabled partial fee, total amount displayed, dropdown options")
+	public void theSystemShallDisplayAndAllowTheUserToDoTheFollowingActionsPreselectedFullFeeDisabledPartialFeeTotalAmountDisplayedDropdownOptions(){
+	optumPaySol.partialDisabledAndFullSelectedAndOptionsGivenAndFullAmountShownVerifier();
+	}
 }
 
 

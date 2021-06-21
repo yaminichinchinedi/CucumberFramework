@@ -70,6 +70,29 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		providerEFTERAEnrollPage=beginEnrollmentContinuePage.enrollAs(excelRow).clickContinue().clickContinue();
 	}
 	
+	@Then("^User sets business phone$")
+	public void user_set_valid_business_phone() {	
+		System.setProperty("BusinessPhone1", Long.toString(Helper.generateRandomNumber(3)));
+		System.setProperty("BusinessPhone2", Long.toString(Helper.generateRandomNumber(3)));
+		System.setProperty("BusinessPhone3", Long.toString(Helper.generateRandomNumber(4)));
+		System.setProperty("BusinessPhoneExt", Long.toString(Helper.generateRandomNumber(5)));
+	}
+	
+	@Then("^User sets invalid business phone \"([^\"]*)\"$")
+	public void user_set_invalid_business_phone(String stringFormat) {
+		if(stringFormat.equals("AlphaNumericString")) {
+		System.setProperty("BusinessPhone1", Helper.generateRandomAlphaNumericString(3));
+		System.setProperty("BusinessPhone2", Helper.generateRandomAlphaNumericString(3));
+		System.setProperty("BusinessPhone3", Helper.generateRandomAlphaNumericString(4));
+		System.setProperty("BusinessPhoneExt", Helper.generateRandomAlphaNumericString(5));
+		}else if(stringFormat.equals("SpecialCharacters")) {
+			System.setProperty("BusinessPhone1", Helper.generateRandomSpecialCharacterString(3));
+			System.setProperty("BusinessPhone2", Helper.generateRandomSpecialCharacterString(3));
+			System.setProperty("BusinessPhone3", Helper.generateRandomSpecialCharacterString(4));
+			System.setProperty("BusinessPhoneExt",Helper.generateRandomSpecialCharacterString(5));
+		}
+	}
+
 	
 	@Then("^User fills all the information  and click on Continue$")
 	public void user_fills_all_the_information_and_click_on_Continue() throws Throwable {
@@ -77,7 +100,23 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfo();
 	    
 	}
+	
+	@Then("^User validate error messages$")
+	public void user_validate_error_msg() {
+		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
+		providerEFTERAEnrollPage.verifyBusinesPhoneErrorMsg();
+		
+	}
 
+	
+	@Then("^User fills all the Organization information along with Business Phone \"(.*)\" and click on Continue$")
+	public void user_fills_all_the_Orginformation_and_click_on_Continue(String businessPhone) throws Throwable {
+		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
+		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfo();
+	    
+	}
+	
+	
 	@Then("^User navigates to Billing service information page and fill all fields and click on continue button$")
 	public void user_navigates_to_Billing_service_information_page_and_fill_all_fields_and_click_on_continue_button() throws Throwable {
 		ProviderInformationEFTERAEnroll	providerInformationEFTERAEnroll=new ProviderInformationEFTERAEnroll(testConfig);

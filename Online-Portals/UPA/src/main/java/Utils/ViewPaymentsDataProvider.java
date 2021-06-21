@@ -461,6 +461,14 @@ public class ViewPaymentsDataProvider {
 			sqlRowNo = 29;
 			break;
 
+		case "TinAboveZeroFee":
+			query = QUERY.TINAboveZeroFee;
+			break;
+
+		case "TINEqualZeroFee_ProcessFeesInProgress":
+			query = QUERY.TINEqualZeroFee_ProcessFeesInProgress;
+			break;
+
 		case "NPI":
 			sqlRowNo = 249;
 			break;
@@ -514,7 +522,8 @@ public class ViewPaymentsDataProvider {
 		case "byDOPAndNpi":
 		case "byDOPAndClaimNo":
 		case "byDOPAndPatientNm":
-			sqlRowNo = 430;
+			//sqlRowNo = 430;
+			query = QUERY.DATE_OF_PAYMENT;
 			break;
 
 		case "byDOPAndZeroPaymentClaims":
@@ -1160,6 +1169,20 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.TIN_WITH_WAVIE;
 		}
+		if(searchCriteria.contains("ActiveTin")){
+
+			query=QUERY.ACTIVE_TIN;
+		}
+		
+		if(searchCriteria.contains("ZERO_DEBIT_FEE")){
+
+			query=QUERY.ZERO_DEBIT_FEE;
+		}
+		
+		if(searchCriteria.contains("NOTZERO_DEBIT_FEE")){
+
+			query=QUERY.NOTZERO_DEBIT_FEE;
+		}
 
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
@@ -1173,7 +1196,12 @@ public class ViewPaymentsDataProvider {
 				testConfig.putRunTimeProperty("nullStatus", "is not null");
 			else if (searchCriteria.equalsIgnoreCase("withoutAccuredFee"))
 				testConfig.putRunTimeProperty("nullStatus", "=0");
-			sqlRowNo = 1615;
+			    sqlRowNo = 1615;
+			 if(searchCriteria.equalsIgnoreCase("withAccuredFee>0"))
+				query=QUERY.TIN_NUMBER_ACCRUED_FEE_GRTR_THAN_0;
+			else if(searchCriteria.equalsIgnoreCase("withAccuredFee<=0"))
+				query=QUERY.TIN_NUMBER_ACCRUED_FEE_LESS_THAN_EQUAL_0;
+			
 		}
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")
 				|| searchCriteria.contains("feeSrchTINdetailsTabwthAllVal"))
@@ -1281,6 +1309,17 @@ public class ViewPaymentsDataProvider {
 					testConfig.putRunTimeProperty("toDate", tinNumbers.get("SETL_DT").toString());
 				}
 
+				else if (searchCriteria.contains("DOP")) {
+					testConfig.putRunTimeProperty("fromDate", tinNumbers.get("SETL_DT").toString());
+					testConfig.putRunTimeProperty("toDate", tinNumbers.get("SETL_DT").toString());
+					testConfig.putRunTimeProperty("acntNo",tinNumbers.get("PTNT_ACCT_NBR").toString());
+					testConfig.putRunTimeProperty("sbscrId",tinNumbers.get("SBSCR_ID").toString());
+					testConfig.putRunTimeProperty("NPI",tinNumbers.get("PROV_NPI_NBR").toString());
+					testConfig.putRunTimeProperty("CLM_NBR",tinNumbers.get("CLM_NBR").toString());
+					testConfig.putRunTimeProperty("PATIENT_FIRST_NAME",tinNumbers.get("PTNT_FST_NM").toString());
+					testConfig.putRunTimeProperty("PATIENT_LAST_NAME",tinNumbers.get("PTNT_LST_NM").toString());
+				}
+
 				else if (searchCriteria.equalsIgnoreCase("EPRAPROVAdmin")
 						|| searchCriteria.equalsIgnoreCase("EPRAPROVGen")
 						|| searchCriteria.equalsIgnoreCase("EPRAgeneratedPROVAdmin")
@@ -1352,6 +1391,20 @@ public class ViewPaymentsDataProvider {
 				{
 					testConfig.putRunTimeProperty("DBT_FEE_ACCRD_AMT", tinNumbers.get("DBT_FEE_ACCRD_AMT").toString());
 					testConfig.putRunTimeProperty("PROV_TIN_NBR", tinNumbers.get("PROV_TIN_NBR").toString());
+				}
+				
+				
+				if (searchCriteria.contains(QUERY.ZERO_DEBIT_FEE))
+
+				{
+				     System.setProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
+				}
+				
+				
+				if (searchCriteria.contains(QUERY.NOTZERO_DEBIT_FEE))
+
+				{
+				    System.setProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
 				}
 
 			}
