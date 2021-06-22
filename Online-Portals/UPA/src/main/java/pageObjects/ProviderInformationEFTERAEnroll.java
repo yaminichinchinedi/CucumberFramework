@@ -223,6 +223,10 @@ public class ProviderInformationEFTERAEnroll {
 		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 		String expectedText = "To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		// Element.verifyTextPresent(txtSecurity, expectedText);
+		String phnField1 = Long.toString(Helper.generateRandomNumber(3));
+		String PhnField2 = Long.toString(Helper.generateRandomNumber(3));
+		String phnLstField = Long.toString(Helper.generateRandomNumber(4));
+
 
 		if (enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			Element.enterData(bsName, provName, "Enter provider name as :" + provName, "providerName");
@@ -240,28 +244,33 @@ public class ProviderInformationEFTERAEnroll {
 		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
 		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
 				"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
-		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
-				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
-				"businessPhone1");
-		Element.enterData(businessPhone2, System.getProperty("BusinessPhone2"),
-				"Entered business phone2 in second textbox as : " + System.getProperty("BusinessPhone2"),
-				"businessPhone2");
-		Element.enterData(businessPhone3, System.getProperty("BusinessPhone3"),
-				"Entered business phone3 in third textbox as : " + System.getProperty("BusinessPhone3"),
-				"businessPhone3");
-		Element.enterData(businessPhoneExt, System.getProperty("BusinessPhoneExt"),
-				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
-				"businessPhoneExt");
+//		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
+//				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
+//				"businessPhone1");
+//		Element.enterData(businessPhone2, System.getProperty("BusinessPhone2"),
+//				"Entered business phone2 in second textbox as : " + System.getProperty("BusinessPhone2"),
+//				"businessPhone2");
+//		Element.enterData(businessPhone3, System.getProperty("BusinessPhone3"),
+//				"Entered business phone3 in third textbox as : " + System.getProperty("BusinessPhone3"),
+//				"businessPhone3");
+//		Element.enterData(businessPhoneExt, System.getProperty("BusinessPhoneExt"),
+//				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
+//				"businessPhoneExt");
+		Element.enterData(businessPhone1, phnField1, "Entered first three digits of phone number as :"+phnField1, "firstPhnfield");
+		Element.enterData(businessPhone2, PhnField2, "Entered second three digits of phone number as :"+PhnField2, "secondPhnfield");
+		Element.enterData(businessPhone3, phnLstField, "Entered last three digits of phone number as :"+phnLstField, "lastPhnfield");
+
 
 		enrollmentInfoPageObj.setBusinessName(provName);
 		enrollmentInfoPageObj.setStreet(streetName);
 		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
 		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
 		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
-		enrollmentInfoPageObj.setBusinessPhone1(System.getProperty("BusinessPhone1"));
-		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
-		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
-		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
+//		enrollmentInfoPageObj.setBusinessPhone1(System.getProperty("BusinessPhone1"));
+//		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
+//		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
+//		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
+		enrollmentInfoPageObj.setAuthPhnNbr(phnField1+PhnField2+phnLstField);
 		// Element.click(chkOther, "Other sub checkbox");
 
 		// Element.click(btnContinue, "Continue button");
