@@ -386,7 +386,7 @@ public class EditEnrollment {
 	@FindBy(name="btnFinish")
 	WebElement btnFinish;
 	
-	@FindBy(xpath="//input[@value=' Finish ']")
+	@FindBy(xpath="//input[@value='Finish']")
 	WebElement btnFinishUPA;
 
 	@FindBy(xpath = "//td[contains(text(),'Patient Payment')]")
@@ -400,6 +400,10 @@ public class EditEnrollment {
 
 	@FindBy(xpath = "//td[@align='right']//input[@value='     Edit     ']")
 	WebElement btnEdit;
+	
+	@FindBy(name = "Print Enrollment Form")
+	WebElement PrintEnrollment;
+ 	
 
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
@@ -1121,4 +1125,36 @@ public class EditEnrollment {
 		}
 
 	}
+	public EditEnrollment editOrganizationInfo() throws IOException {
+		int rowNo = 1;
+		
+		String organizationName = Helper.generateRandomAlphabetsString(5);
+		String Address = Helper.generateRandomAlphabetsString(5);
+		Element.enterData(txtBoxOrgName, organizationName, "Enter Organization Name" + organizationName, "Organization Name");
+		Element.enterData(txtBoxOrgAddr, Address, "Enter Address" + Address, "Headquarter Address");
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		Element.enterData(txtBoxOrgCity, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"), "city");
+		Element.enterData(txtBoxorgZip1, data.GetData(rowNo, "ZipCode"), "Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "txtBoxorgZip1");
+		Element.selectVisibleText(drpDwnOrgState, data.GetData(rowNo, "State"), "Enter state name");	
+		Element.click(btnContinue, "Continue Button");
+		Browser.scrollToBottom(testConfig);
+		Element.fluentWait(testConfig, btnContinue, 60, 1, "Continue button");
+		Element.click(btnContinue, "Continue Button");
+		Browser.wait(testConfig, 2);
+		if (System.getProperty("Application").contains("UPA"))
+			Element.click(btnFinishUPA, "Finish button UPA");
+		else if (System.getProperty("Application").contains("CSR"))
+			Element.click(btnFinish, "FINISH button");
+		Browser.wait(testConfig, 2);
+		Element.click(submitBtn, "Submit button");
+		return this;
+		
+	}
+	public void enrollmentPDF() {
+		Browser.wait(testConfig, 2);
+		Element.verifyElementPresent(PrintEnrollment, "Print Enrollment Form");
+		Element.click(PrintEnrollment, "Print Enrollment Form");
+			
+		}
+
 	}
