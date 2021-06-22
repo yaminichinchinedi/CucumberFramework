@@ -1,6 +1,6 @@
 #Author:Sai
 Feature: Create Enrollment Terms and Conditons Update Validation.
-@CSRUS3501234_AO
+@CSRUS3501234_AO @CSR2021_PI03_01
 Scenario Outline: CSR Create Online enrollment PDF for AO tin
 Given User navigates to CSR portal and enters "<credentials>" and login 
 Then User clicks on Create/Maintain Enrollment link on CSR HomePage 
@@ -21,7 +21,7 @@ Examples:
 		|   credentials     |
 		|    Super          |
 		
-@CSRUS3501234_VO
+@CSRUS3501234_VO @CSR2021_PI03_01
 Scenario Outline: CSR Create Online enrollment PDF for VO tin		
   Given User navigates to CSR portal and enters "<credentials>" and login
 	Then User clicks on Create/Maintain Enrollment link on CSR HomePage

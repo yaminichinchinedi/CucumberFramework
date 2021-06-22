@@ -1,6 +1,6 @@
 #Author: Sai
 Feature: UPA Online Erollment PDF
- @UPAUS3501234
+ @UPAUS3501234 @UPA2021_PI03_01
  Scenario: UPA Online enrollment PDF for AO tin
  Given User navigates to UPA Sys Test application
  When User Clicks on Enroll Now from the landing page
@@ -17,7 +17,7 @@ Feature: UPA Online Erollment PDF
  And Also click on Print Enrollment page,download PDF and validates all the information from PDF page
 
 
- @UPAUS3501234_VO
+ @UPAUS3501234_VO @UPA2021_PI03_01
  Scenario: UPA Create Enrollment Terms and Conditions pdf for VO tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
