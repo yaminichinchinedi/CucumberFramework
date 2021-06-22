@@ -271,11 +271,15 @@ public class SearchRemittance extends ViewPayments {
 	public Object getFISLResponse(String requestType)
 			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		Object request = null;
-		String[] pay_835_id;
+		String[] pay_835_id = null;
 		if ("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
 			pay_835_id = new String[] { "87726" };
-		} else {
-			pay_835_id = new String[] {};
+		}
+		if (requestType.contains("DOP")) {
+			pay_835_id = new String[] {testConfig.getRunTimeProperty("PAYR_835_ID")};
+		}
+		else {
+			pay_835_id = new String[] { "87726" };
 		}
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(
 				requestType);

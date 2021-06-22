@@ -348,6 +348,9 @@ public class UPAHomePage extends HomePage {
 	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
+		if(searchCriteria.contains("DOP")){
+			Helper.getPayerSchema(testConfig,"Last 90 days",userType);
+		}
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);
