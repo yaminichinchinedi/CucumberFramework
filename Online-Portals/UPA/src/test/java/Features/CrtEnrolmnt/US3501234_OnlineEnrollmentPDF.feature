@@ -8,6 +8,7 @@ Feature: UPA Online Erollment PDF
  Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       AO        |
+ Then User sets business phone
  Then User fills all the information  and click on Continue
  Then User fills all the information on Identify Administrators page and click continue
  Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
@@ -24,6 +25,7 @@ Feature: UPA Online Erollment PDF
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
 										      | Enrollment Type |
 										      |       VO        |
+		Then User sets business phone
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     Then User uploads the WNine form and click continue
