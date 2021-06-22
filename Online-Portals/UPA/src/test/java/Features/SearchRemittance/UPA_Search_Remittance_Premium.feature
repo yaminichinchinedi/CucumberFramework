@@ -39,23 +39,6 @@ Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
 
 
 
-		@US2948676 
-Scenario Outline: Search Remittance Payment Number P1 & P2 Complete
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	Then User clicks on Search Remittance link for UPA
-	Then Validate search button is enabled or disabled for "<portalAccess>"
-	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
-	Then User clicks on Print Search Result button.
-	Then Validate the data of Print Search Remmit Page for "<Search Criteria>"
-
-	Examples:
-		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
-		|		byDOP		|	Super	 |    PROV     |   Premium    |		 	byDOP	       |  AO   |
-		|  	byDOS   		|	Super	 |    PROV     |   Premium    |		byDOS              |  AO   |
-		|byElectronicPaymentNo|	Super	 |    PROV     |   Premium    |	byElectronicPaymentNo  |  AO   |
-
 @UPAPROVSearchRemittance
 Scenario Outline: Search Remittance 
 	Given User navigates to UPA portal and enters "<credentials>" and login
@@ -141,37 +124,9 @@ Examples:
 		#|byDOSAndNpi         |	BS_Gen	 |    BS     |   Premium    |	  byDOSAndNpi           |  AO   |
 		
 	
-				
-@PAYSearchRemittance
-Scenario Outline: - verify search results for search remittance
-
-	Given User navigates to UPA portal and enters "<credentials>" and login
-	And User fetch tin for "<userType>" for "<searchRemitorPymntTIN>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-	Then User clicks on Search Remittance link for UPA
-	Then User Enters Search Remittance tin and click on search button for "<userType>".
-	Then User enters "<Search Criteria>" and click on search button.
-	Then verify search results for "<Search Criteria>"	
-	Examples:
-
-		|	Search Criteria	|	credentials	 |   userType  | portalAccess | searchRemitorPymntTIN  |tinType|
-		|		byDOP		|	PAY_Admin	 |    PAY     |   Premium    |		 	byDOP	       |  AO   |
-		|  	byDOS   		|	PAY_Admin	 |    PAY     |   Premium    |		byDOS              |  AO   |
-		|byElectronicPaymentNo|	PAY_Admin	 |    PAY     |   Premium    |	byElectronicPaymentNo  |  AO   |
-		|byDOPAndAccountNo  |	PAY_Admin	 |    PAY     |   Premium    |	  byDOPAndAccountNo    |  AO   |
-		|byDOP&SubscriberID  |	PAY_Admin	 |    PAY     |   Premium    |	  byDOP&SubscriberID    |  AO   |
-		|byDOPAndClaimNo     |	PAY_Admin	 |    PAY     |   Premium    |	  byDOPAndClaimNo       |  AO   |
-		|byDOPAndPatientNm   |	PAY_Admin	 |    PAY     |   Premium    |	  byDOPAndPatientNm          |  AO   |
-		#|byDOPAndNpi         |	PAY_Admin	 |    PAY     |   Premium    |	  byDOPAndNpi           |  AO   |
-		|byCheckNo         |	PAY_Admin	 |    PAY     |   Premium    |	    byCheckNo          |  AO   |
-		|byDOSAndAcntNo     |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndAcntNo    |  AO   |
-		|byDOSAndSubscriberId  |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndSubscriberId    |  AO   |
-		|   byDOSAndClmNo   |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndClmNo    |  AO   |
-		|   byDOSAndPtntNm   |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndPtntNm          |  AO   |
-		#|byDOSAndNpi         |	PAY_Admin	 |    PAY     |   Premium    |	  byDOSAndNpi           |  AO   |
-
 
 #Author khalid_mohammad@optum.com
-@UPA_SR_US2955421
+@UPA_SR_US2955421 @UPAPROVSearchRemittance
 Scenario Outline: To test page text messaging on Serach Remittance for Provider User
 
 Given User navigates to UPA portal and enters "<credentials>" and login
@@ -190,7 +145,7 @@ And User verifies page text message "<PageTextMsg>"
  
 #Author : Vinay Raghumanda
 	#(VO is part of US3438488)
-	@US3179215 @UPAUS3438488 
+	@US3179215 @UPAUS3438488 @UPAPROVSearchRemittance
  Scenario Outline: Search Remittance Page Text Validation
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -204,7 +159,7 @@ And User verifies page text message "<PageTextMsg>"
 			| PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Premium      |
 			| PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
 
-	@US3179215
+	@US3179215 @BSSearchRemittance
 	Scenario Outline: Search Remittance Page Text Validation
 		Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
