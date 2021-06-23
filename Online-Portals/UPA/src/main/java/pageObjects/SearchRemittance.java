@@ -22,6 +22,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import io.restassured.path.json.JsonPath;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -212,7 +214,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySearchResults(String requestType) throws IOException, InterruptedException, JAXBException,
-			SAXException, ParserConfigurationException, ParseException {
+			SAXException, ParserConfigurationException, ParseException, JSONException {
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
 		String totalRecordsFromFISL = String.valueOf(searchResponse.getData().getTotalCount());
@@ -267,13 +269,17 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public Object getFISLResponse(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		Object request = null;
-		String[] pay_835_id;
+		String[] pay_835_id = null;
 		if ("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
 			pay_835_id = new String[] { "87726" };
-		} else {
-			pay_835_id = new String[] {};
+		}
+		if (requestType.contains("DOP")) {
+			pay_835_id = new String[] {testConfig.getRunTimeProperty("PAYR_835_ID")};
+		}
+		else {
+			pay_835_id = new String[] { "87726" };
 		}
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(
 				requestType);
@@ -393,7 +399,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public Object getFISLResponse1(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		/** Creates POJO for Request.xml so that we can modify the elements */
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(
 				requestType);
@@ -557,7 +563,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySortingOrder(WebElement lnkName, String colName, String criteriaType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		List<String> newList = new ArrayList<String>();
 		List<Double> newDoubleList = new ArrayList<Double>();
 		switch (colName) {
@@ -742,7 +748,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public List<String> getExpectedDetailsFromFISL(String requestType, String colName)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		List<String> l = new ArrayList<String>();
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
@@ -751,7 +757,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySorting(String colName)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		String criteriaType = "byDOP";
 		switch (colName) {
 		case "Payer":
@@ -1981,7 +1987,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public ViewPayments verifyPrintSearchRemitPage(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		String parentWin = Browser.switchToNewWindow(testConfig);
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
