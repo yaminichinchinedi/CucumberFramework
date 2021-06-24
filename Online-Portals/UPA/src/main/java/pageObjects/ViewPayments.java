@@ -1306,6 +1306,7 @@ public void verifyFailedPaymentPopUp()
 					rowValues.add(colValue);
 			}
 		}
+		testConfig.putRunTimeProperty("page", "");
 		return (ArrayList<String>) rowValues;
 	}
 	    	
