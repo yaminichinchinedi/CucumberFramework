@@ -329,7 +329,40 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void verify_and_Click_WaiveFee() throws Throwable {
 			optumPaySol.verifyAndClickWaiveFee();
 		}
-		
+      
+      @Then("^User verifies waive fees$")
+		public void verify_WaiveFee() throws Throwable {
+			optumPaySol.verifyWaiveFee();
+		}
+      
+      //Piyush
+      @Then("^Verify Select Option to Waive Fees opens$")
+		public void verify_Select_Option_to_Waive_Fees_Window() throws Throwable {
+			optumPaySol.verifyWaiveFeesWindow();
+		}
+    
+   
+	@Then("^Verify Waive full and partial amount$")
+	public void Verify_Waivefull_and_partial_amount()
+	{
+		optumPaySol.Verify_Waivefull_and_partial_amount();
+	}
+	
+	  //Piyush
+    @Then("^Click on Home Link$")
+    public void Click_On_Home_Link(){
+  	  optumPaySol.ClickonHomeLink();
+    }
+	@When("^User Fetch ProviderTIN , WaivePartial and WaiveTotal amount$")
+	public void Fetch_ProviderTIN_WaivePartial_WaiveTotal()
+	{
+		optumPaySol.Fetch_ProviderTIN_WaivePartial_WaiveTotal_FromDB();
+	}
+      @Then("^Verify Select Option for waive fees \"([^\"]*)\" dropdown$")
+		public void verify_Select_Dropdown_Options(String reason) throws Throwable {
+			optumPaySol.verifySelect_Dropdown_Options(reason);
+		}
+      
 		@Then("^User verifies accrued fees as 0.00$")
 		public void verify_accrued_fee_and_Check_WaiveFee() throws Throwable {
 			optumPaySol.verifyAccruedFeeAndCheckWaiveFeeButton();
@@ -345,6 +378,39 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void user_select_waived_fee_reason_click_continue(String reason) throws Throwable {
 			optumPaySol.selectWaivedFeeReason(reason);
 		}
+		//Piyush
+		@Then("^User selects waived fee reason \"([^\"]*)\" from dropdown$")
+		public void user_select_waived_fee_reason(String reason) throws Throwable {
+			optumPaySol.selectWaivedFeeReasonOnly(reason);
+			if(reason.contains("Other"))
+			{
+				optumPaySol.VerifySelectOptionreasonText();
+			}
+		}
+	
+		//Piyush
+		@Then("^User Provides \"([^\"]*)\" in message box for \"([^\"]*)\" if \"([^\"]*)\" is other$")
+		public void User_Enter_Message_in_Text(String ReasonMessage, String ScenarioType,String waivedFeeReason)
+		{
+			if(waivedFeeReason.contains("Other") && ScenarioType.equalsIgnoreCase("PositiveMessage"))
+			{
+				optumPaySol.VerifyPositiveScenarioForMessage(ReasonMessage);
+			}	
+			else if(waivedFeeReason.contains("Other") && ScenarioType.equalsIgnoreCase("NegativeMessage")) {
+				optumPaySol.VerifyNegativeScenarioForMessage(ReasonMessage);
+				
+			}
+		}
+		
+		//Piyush
+		@Then("^Verify Continue button is enable for \"([^\"]*)\" mentioned$")
+		public void User_Enter_Message_in_Text(String ScenarioType)
+		{
+			if(ScenarioType.equalsIgnoreCase("PositiveMessage"))
+				optumPaySol.VerifyContinueEnable();
+			
+		}
+		
 		
 		@Then("^User confirms waived fee and proceed$")
 		public void user_confirms_waived_fee() throws Throwable {
@@ -354,6 +420,18 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void user_verify_waive_fee_pending() throws Throwable {
 			optumPaySol.verifyWaiveFeePending();
 		}
+		
+		@Then("^User Selects Waive Partail amount radio button$")
+		public void user_Select_Waive_Partail_amount() throws Throwable {
+			optumPaySol.Select_Waive_Partail_amount();
+		}
+		@Then("^Verify that field is displayed called Enter partial dollar amount and Verify \"([^\"]*)\" as per \"([^\"]*)\" data in text box$")
+		//@Then("^Verify that field is displayed called Enter partial dollar amount and Enter data as \"([^\"]*)\" in text box$")
+		public void Verify_field_Enter_partial_dollar_amount(String ErrorMessage,String ScenarioType) throws Throwable {
+			optumPaySol.Verify_Enter_partial_dollar_amount();
+			optumPaySol.Enter_Partial_Amount(ErrorMessage,ScenarioType);
+		}
+		
 		@Then("^User verify waive fees button disabled$")
 		public void user_verify_waive_fee_button_disabled() throws Throwable {
 			optumPaySol.verifyWaiveFeesButtonDisabled();

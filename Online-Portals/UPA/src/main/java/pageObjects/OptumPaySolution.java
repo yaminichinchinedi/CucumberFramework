@@ -33,6 +33,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import cucumber.api.java.en.Then;
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
@@ -257,6 +258,37 @@ public class OptumPaySolution {
 
 	@FindBy(xpath = "//button[text()='Cancel']")
 	WebElement cancelButton;
+	
+	//Piyush
+	@FindBy(xpath = "//*[contains(text(),'Select option to waive fees')]")
+	WebElement SelectOptionWaiveFeesPage;
+	//Piyush
+	@FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'This field is required.')]")
+	WebElement ThisIsRequiredFieldErrorMessage;
+	
+	//Piyush
+	@FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'Maximum character limit is 150')]")
+	WebElement MaximumCharacterLimitIs150ErrorMessage;
+	
+	//Piyush
+	@FindBy(xpath = "//textarea[@id='reasonText']")
+	WebElement SelectOptionreasonText;
+	
+	//Piyush
+	@FindBy(xpath = "//input[@id='partialAmount']")
+	WebElement EnterPartialAmountText;
+	
+	//Piyush
+	@FindBy(xpath = "//input[@id='partialAmount']/following-sibling::label")
+	WebElement PartialAmountErrorMessage;
+	
+	//Piyush
+	@FindBy(xpath = "//span[contains(text(),'Total amount:')]//ancestor::span[2]")
+	WebElement TotalAmountText;
+	
+
+
+	
 	
 	@FindBy(xpath = "//button[text()='Yes, continue']")
 	WebElement confirmButton;
@@ -2160,11 +2192,107 @@ public class OptumPaySolution {
 		
 		
 		float accruedFee=Float.valueOf(accruedFeeMonthValue);
-		if(accruedFee>0.00) {
+		if(accruedFee>0.00) { 
 			Element.click(waiveFeeButton, "Waive Fee Button");
+			
 		}
 
 	}
+	
+	/**
+	 * 
+	 */
+	public void verifyWaiveFee() {
+		
+		Element.verifyElementPresent(waiveFeeButton, "Select Option to waive fees window is closed, waive Fee Button is present");
+			//Element.click(waiveFeeButton, "Waive Fee Button");
+	//	}
+
+	}
+	
+	//Piyush
+	public void verifyWaiveFeesWindow() {
+		
+		
+		//Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
+		Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
+		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
+		for(String option : options)
+		{
+			System.out.println(option);
+		}
+		
+	}
+	
+	
+	//Piyush
+		public void ClickonHomeLink() {
+			
+	Element.click(testConfig, lnkHome, "Home", 3);
+		}
+	//Piyush
+	public void Verify_Waivefull_and_partial_amount() {
+			
+		String TotalAmount;
+		TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+		TotalAmount = TotalAmount.substring(15);
+		Helper.compareEquals(testConfig, "Total for Waive Full amount which is sum of processed and settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Full_DBT_Fee"), TotalAmount);
+		
+		Element.click(partialRadioBtn, "Waive Partial Radio button");
+		
+		TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+		TotalAmount = TotalAmount.substring(15);
+		Helper.compareEquals(testConfig, "Total for Waive Partail amount which is Settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Partial_DBT_Fee"), TotalAmount);	
+		
+		}
+	//Piyush
+	public void Fetch_ProviderTIN_WaivePartial_WaiveTotal_FromDB()
+	{
+		String query = QUERY.Waive_Partial_amount;
+			Map tinNumbers = null;
+			tinNumbers = DataBase.executeSelectQuery(testConfig, query, 1);
+			try {
+				Log.Comment("Tin retreived from query for " + tinNumbers.get("PROV_TIN_NBR").toString());
+				testConfig.putRunTimeProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
+				testConfig.putRunTimeProperty("Total_Partial_DBT_Fee", tinNumbers.get("TOTAL_PARTIAL_DBT_FEE").toString());
+				}
+			catch (Exception e) {
+				testConfig.putRunTimeProperty("AlreadyFailed", "yes");
+				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
+						testConfig);
+			}
+			String Full_query = QUERY.Waive_Full_Amt;
+			Full_query = Full_query.replace("$ReplaceTINNumber$", testConfig.getRunTimeProperty("tin"));
+			
+			Map<String, String> FulltinNumbers = DataBase.executeSelectQuery(testConfig, Full_query, 1);
+			try {
+				Log.Comment("Tin retreived from query for " + FulltinNumbers.get("PROV_TIN_NBR").toString());
+				testConfig.putRunTimeProperty("tin", FulltinNumbers.get("PROV_TIN_NBR").toString());
+				testConfig.putRunTimeProperty("Total_Full_DBT_Fee", FulltinNumbers.get("TOTAL_FULL_DBT_FEE").toString());
+				}
+			catch (Exception e) {
+				testConfig.putRunTimeProperty("AlreadyFailed", "yes");
+				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
+						testConfig);
+			}
+			
+}
+	
+	//Piyush
+	public void verifySelect_Dropdown_Options(String reason) {
+		
+		
+		//Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
+		Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
+		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
+		for(String option : options)
+		{
+			if(!(option.contains("Select reason")))
+			Helper.compareContains(testConfig, "Reason Drop down option", option,reason);
+		}
+		
+	}
+	
 	
 	public void verifyAccruedFeeAndCheckWaiveFeeButton() {
 		String accruedFeeMonthValue="";
@@ -2188,6 +2316,133 @@ public class OptumPaySolution {
 		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee");
 		Element.click(continueButton, "Continue");
 	}
+	//Piyush
+	public void selectWaivedFeeReasonOnly(String reason) {
+		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee: "+reason);
+		
+	}
+	
+	//Piyush
+		public void VerifySelectOptionreasonText() {
+			Map objAttribute;
+			Element.verifyElementPresent(SelectOptionreasonText, "Select Option reason Text for Other reason");
+			objAttribute = Element.getAllAttributes(testConfig, SelectOptionreasonText, "Select Option reason Text for Other reason");
+			String strDefault = (String) objAttribute.get("placeholder");
+			if(strDefault !=null) {				
+				Helper.compareEquals(testConfig, "Static Message for reason", "Max 150 characters", strDefault);
+			}
+			
+			//Max 150 characters
+		}
+		
+		//Piyush
+		public void VerifyPositiveScenarioForMessage(String ReasonText) {
+			int intStringLength = ReasonText.length();
+			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
+			Element.verifyElementPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is present before entering data");
+			Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length "+intStringLength);
+				
+			Element.verifyElementNotPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is not present after entering data");
+
+		}
+		
+		//Piyush
+		public void VerifyNegativeScenarioForMessage(String ReasonText) {
+			int intStringLength = ReasonText.length();
+			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
+			Element.verifyElementNotPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is not present before entering message of length "+intStringLength);
+	
+			Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length "+intStringLength);
+			
+			Element.verifyElementPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is appeared after entering message of length "+intStringLength);
+								
+		}
+		
+		
+		//Piyush
+		public void VerifyContinueEnable()
+		{
+			Element.click(waivedFeeReason, "Reason Drop down");
+			Helper.compareEquals(testConfig, "Waive Continue Button is enabled", true, wavieContBtn.isEnabled());
+		}
+
+		//piyush
+		public void Select_Waive_Partail_amount()
+		{
+			Element.click(partialRadioBtn, "Waive Partial Radio button");
+			
+		}
+		//piyush
+		public void Verify_Enter_partial_dollar_amount(){
+			Element.verifyElementPresent(EnterPartialAmountText, "Enter Partial Amount Text Box");
+		}
+		
+		public void Enter_Partial_Amount(String ErrorMessage_Expacted,String ScenarioType)
+		{
+			String TotalAmount;
+			TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+			TotalAmount = TotalAmount.substring(15);
+			double dblTotalAmount = Double.parseDouble(TotalAmount);
+			
+			
+			if(ScenarioType.equalsIgnoreCase("PositiveMessage"))
+			{
+				dblTotalAmount = dblTotalAmount/2;
+				String ValueToEnter = String.valueOf(dblTotalAmount);
+				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
+				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+				
+				if(ErrorMessage.equalsIgnoreCase("")) {
+					Log.Pass("No error message for Valid amount", ErrorMessage, ErrorMessage);
+				}
+				else {
+					Log.Fail("Received unexpected error message for valid amount", ErrorMessage, ErrorMessage);
+				}
+			}	
+			else if(ScenarioType.equalsIgnoreCase("NegativeMessage")) {
+				dblTotalAmount = dblTotalAmount+10;
+				String ValueToEnter = String.valueOf(dblTotalAmount);
+				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
+				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+			
+			if(ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
+				Log.Pass("Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}
+			else {
+				Log.Fail("Did not Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}
+			}else if(ScenarioType.equalsIgnoreCase("NegativeValue"))
+			{
+				Element.enterData(EnterPartialAmountText, "-1", "Enter data" + "-1" + "in Partial Amount Text Box", "Partial Amount Text Box");
+				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+			
+				Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
+				
+			/*if(ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
+				Log.Pass("Received Expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}
+			else {
+				Log.Fail("Did not Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}*/
+			Element.enterData(EnterPartialAmountText, "0", "Enter data" + "0" + "in Partial Amount Text Box", "Partial Amount Text Box");
+			ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+		
+			Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
+			/*
+			if(ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
+				Log.Pass("Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}
+			else {
+				Log.Fail("Did not Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+			}*/
+			}
+			
+			
+		}
+
+		//TotalAmountText		
+				//PartialAmountErrorMessage
+				
 	public void confirmAndProceedWaiveFee() {
 		Element.click(confirmButton, "Confirm Button");
 	}
