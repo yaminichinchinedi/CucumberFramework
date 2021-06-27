@@ -2360,4 +2360,14 @@ public class SearchRemittance extends ViewPayments {
 		Log.Comment("Verified the Status Code");
 	
 	}
+	
+	
+	public int getViewPaymentResponse() {
+		RequestSpecification request = RestAssured.given();
+		request.header("X-Client-Id", "0ba3f406-714d-442d-9d19-27c1aa18332c");
+		request.header("X-Client-Secret", "XOlSiT55LHp8UomQnR5s70uK4UvzzNgLkJdXJJKpUH58EPAfhs");
+		Response response = request.get("https://cert-gateway.vpayusa.com/api/documents/1001006004/PRA/download");
+		int statusCode = response.getStatusCode();
+		return statusCode;
+	}
 }
