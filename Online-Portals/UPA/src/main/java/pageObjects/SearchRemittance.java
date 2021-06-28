@@ -2388,7 +2388,41 @@ public class SearchRemittance extends ViewPayments {
 			Assert.fail("PDF file is empty");
 		}
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
+	}
+	
+	public Response getInvalidResponse(String method,String scenarioType) {
+		RequestSpecification request = RestAssured.given();
+		String url="";
+		String clientId="";
+		String clientSecret="";
+		Response response=null;
+		if(scenarioType.contains("401_Unauthorized")) {
+			url=testConfig.getRunTimeProperty("401_Unauthorized_url");
+		}else {
+		url=testConfig.getRunTimeProperty(scenarioType+"_url");
+		}
+		if(scenarioType.equals("401_UnauthorizedID")) {
+			clientId=testConfig.getRunTimeProperty("invalid_client_id");
+			clientSecret=testConfig.getRunTimeProperty("client_secret");
+		}else if(scenarioType.equals("401_UnauthorizedSecret")) {
+			clientId=testConfig.getRunTimeProperty("client_id");
+			clientSecret=testConfig.getRunTimeProperty("invalid_client_secret");
+		}else {
+			clientId=testConfig.getRunTimeProperty("client_id");
+			clientSecret=testConfig.getRunTimeProperty("client_secret");
+		}
+		
+		request.header("X-Client-Id",clientId);
+		request.header("X-Client-Secret",clientSecret);
+		
+		if(method.equals("GET")) {
+		 response= request.get(url);
+	      }else {
+	    	  response=request.post(url);
+	      }
+		
+		return response;
 	}
 }

@@ -38,6 +38,7 @@ public class Hooks extends TestBase{
 		{
 	    	Log.Fail("Failed to capture screenshot due to exception : " + e);
 	    }
+		if(System.getProperty("Application")!=null && testConfig.getRunTimeProperty("associationDone")!=null){
 		if(System.getProperty("Application").contains("UPA") && "true".equals(testConfig.getRunTimeProperty("associationDone"))){
 			
 			int sqlRowNo=1911;
@@ -50,6 +51,7 @@ public class Hooks extends TestBase{
 				sqlRowNo=1921;
 				DataBase.executeDeleteQuery(testConfig, sqlRowNo);
 			}
+		}
 		}
 		//endTest(scn);
 	 }

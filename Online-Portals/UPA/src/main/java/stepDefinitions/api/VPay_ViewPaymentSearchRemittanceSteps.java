@@ -34,5 +34,24 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 	}
 
 	
+	@Given("^Perform the \"([^\"]*)\" Action for Invalid \"([^\"]*)\" ViewPayments and SearchRemittance API$")
+	public void getInvalidResponse(String method,String scenarioType) throws Throwable {
+		serachRemittance = new SearchRemittance(testConfig);
+		response = serachRemittance.getInvalidResponse(method, scenarioType);
 	
+	}
+	@Then("^the web service should respond with NegativeScenarios \"([^\"]*)\" status code$")
+	public void webserviceInvalidResponseStatus(String status) throws Throwable {
+			Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
+		
+	}
+	@And("^verify \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+	public void verify_invalid_response_body(String statusCode,String type,String title) throws Throwable {
+		Assert.assertTrue(Integer.parseInt(statusCode)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
+		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
+		Assert.assertTrue(title.equals((String)response.jsonPath().get("title")),"Incorrect title");
+		if(statusCode.equals("404")) {
+			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
+		}
+	}
 }
