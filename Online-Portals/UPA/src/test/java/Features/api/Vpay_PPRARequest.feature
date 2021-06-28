@@ -1,13 +1,13 @@
- @Vpay_ViewPayments_SearchRemittance
-Feature: Vpay_PPRARequest
 
+Feature: Vpay_PPRARequest
+ @Vpay_ViewPayments_SearchRemittance
     Scenario: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance
     Given Perform the GET Action for valid ClientId/CilentSecret for ViewPayments and SearchRemittance API
-    Then the web service should respond with a 200 status code
+    Then the web service should respond with a "200" status code
     And verify pdf response is saved successfully
 
 
-    Scenario: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance
+      Scenario Outline: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance
     Given Perform the "<Method>" Action for Invalid scenarios ViewPayments and SearchRemittance API
     Then the web service should respond with NegativeScenarios "<statusCode>" status code
     And verify "<statusCode>" "<type>" "<title>"
@@ -20,6 +20,6 @@ Feature: Vpay_PPRARequest
     |GET   | 404 			|https://httpstatuses.com/404 | TRANSACTION_NOT_FOUND|
     |POST  | 405 			|https://httpstatuses.com/405 | Method Not Allowed|
     
-    
+  
     
     

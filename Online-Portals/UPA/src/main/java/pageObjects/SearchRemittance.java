@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -2362,12 +2363,32 @@ public class SearchRemittance extends ViewPayments {
 	}
 	
 	
-	public int getViewPaymentResponse() {
+	public Response getViewPaymentResponse() {
 		RequestSpecification request = RestAssured.given();
 		request.header("X-Client-Id", "0ba3f406-714d-442d-9d19-27c1aa18332c");
 		request.header("X-Client-Secret", "XOlSiT55LHp8UomQnR5s70uK4UvzzNgLkJdXJJKpUH58EPAfhs");
 		Response response = request.get("https://cert-gateway.vpayusa.com/api/documents/1001006004/PRA/download");
-		int statusCode = response.getStatusCode();
-		return statusCode;
+		
+		return response;
+	}
+	
+	public void verify_pdf_response(Response response) {
+		try {
+			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
+        if(pdfFile.exists())
+        	pdfFile.delete();
+		byte[] pdf=response.asByteArray();
+		FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/target/viewpayment.pdf");
+		fos.write(pdf);
+		fos.flush();
+		fos.close();
+		Thread.sleep(3000);
+		
+		if(pdfFile.length()==0) {
+			Assert.fail("PDF file is empty");
+		}
+		}catch(Exception e) {
+			
+		}
 	}
 }
