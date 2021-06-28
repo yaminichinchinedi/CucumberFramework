@@ -98,7 +98,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
     
 		
 		
- @UPAUS2955416
+# @UPAUS2955416
    #	Scenario Outline: Access Payments - View Payments - Header Page Text
    # Given User navigates to UPA portal and enters "<credentials>" and login
    # And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
