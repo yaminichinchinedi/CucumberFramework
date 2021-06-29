@@ -2368,12 +2368,14 @@ public class SearchRemittance extends ViewPayments {
 	
 	}
 
-
+	/*Verify Success response for valid request parameters transactionId,Client-Id and Client-Secret
+	are sent accordingly*/
 	public Response getViewPaymentResponse() {
 		RequestSpecification request = RestAssured.given();
 		request.header("X-Client-Id", testConfig.getRunTimeProperty("vPay_clientId"));
 		request.header("X-Client-Secret", testConfig.getRunTimeProperty("vPay_clientSecret"));
 		String url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		//TransactionIDs are hardCoded due to limitation in test data - From VPay
 		url=url.replace("{transactionId}", "1001006004");
 		Response response = request.get(url);
 		Log.Comment("Verified valid request parameters are sent");
@@ -2381,6 +2383,7 @@ public class SearchRemittance extends ViewPayments {
 		return response;
 	}
 
+	/*Validating If response is being saved in pdf format for PPRA request*/
 	public void verifyPdfDownload(Response response) {
 		try {
 			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
@@ -2389,6 +2392,7 @@ public class SearchRemittance extends ViewPayments {
 		byte[] pdf=response.asByteArray();
 		FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/target/viewpayment.pdf");
 		fos.write(pdf);
+		//Flush the writer
 		fos.flush();
 		fos.close();
 		Thread.sleep(3000);
@@ -2403,6 +2407,7 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
+	/*Validate API Response for NegativeScenarios*/
 	public Response getInvalidResponse(String method,String scenarioType) {
 		RequestSpecification request = RestAssured.given();
 		String url="";
@@ -2410,15 +2415,19 @@ public class SearchRemittance extends ViewPayments {
 		String clientSecret="";
 		Response response=null;
 		 url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		 //Validating 400 Bad Request
 		 if(scenarioType.contains("400badRequest")){
 			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));
 			 Log.Comment("Validated statusCode 400 Bad Request");
-		 }else if(scenarioType.contains("404notFound")) {
+		 }
+		 //Validating 404 Not Found
+		 else if(scenarioType.contains("404notFound")) {
 			url=url.replace("{transactionId}",String.valueOf(Helper.generateRandomNumber(10)));
 			 Log.Comment("Validated statusCode 404 Not Found");
 		 } else {
 			url=url.replace("{transactionId}", "1001006004");
 		}
+		//Validating 401 Unauthorized Response for Invalid ClientID & ClientSecret
 		if(scenarioType.equals("401unauthorizedID")) {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId")+Helper.generateRandomAlphaNumericString(5);
 			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
@@ -2440,7 +2449,8 @@ public class SearchRemittance extends ViewPayments {
 		if(method.equals("GET")) {
 		 response= request.get(url);
 	      }else {
-	    	  response=request.post(url);
+			//Validating 405 Response by sending Invalid Method POST
+			response=request.post(url);
 			Log.Comment("Validated statusCode 405 Method Not Allowed");
 
 		}
@@ -2450,6 +2460,7 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
+	/*Validate Response Body fields - status, type, title, detail */
 	public void verifyResponseBody(Response response,String status,String type,String title) {
 		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
 		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
@@ -2461,6 +2472,7 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
+	/*Validate Status Code on Page Level*/
 	public void verifyResponseStatus(String status,Response response) {
 		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
 		Log.Comment("Validated the Status Code");

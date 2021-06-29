@@ -22,7 +22,7 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 
 	}
 
-		/*Validating response statusCodes for PPRA request*/
+	/*Validate Status Code on Page Level for PPRA Request*/
 	@Then("^the web service should respond with a \"([^\"]*)\" status code$")
 	public void webserviceResponseStatus(String status) throws Throwable {
 		serachRemittance.verifyResponseStatus(status, response);
@@ -35,7 +35,7 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 		serachRemittance.verifyPdfDownload(response);
 	}
 
-		/*Validate API for NegativeScenarios*/
+		/*Validate Response API for NegativeScenarios*/
 	@Given("^Perform the \"([^\"]*)\" Action for Invalid \"([^\"]*)\" ViewPayments and SearchRemittance API$")
 	public void getInvalidResponse(String method,String scenarioType) throws Throwable {
 		serachRemittance = new SearchRemittance(testConfig);
