@@ -2401,7 +2401,7 @@ public class SearchRemittance extends ViewPayments {
 		if(scenarioType.contains("401_Unauthorized")) {
 			url=testConfig.getRunTimeProperty("401_Unauthorized_url");
 		}else if(scenarioType.contains("400_BadRequest")){
-			url=testConfig.getRunTimeProperty("400_BadRequest_url")+Helper.generateRandomAlphaNumericString(13)+"/835/download";
+			url=testConfig.getRunTimeProperty("400_BadRequest_url")+Helper.generateRandomAlphaNumericString(13)+"/PRA/download";
 			
 		}else {
 		url=testConfig.getRunTimeProperty(scenarioType+"_url");
