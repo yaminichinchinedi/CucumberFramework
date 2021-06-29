@@ -2400,15 +2400,18 @@ public class SearchRemittance extends ViewPayments {
 		Response response=null;
 		if(scenarioType.contains("401_Unauthorized")) {
 			url=testConfig.getRunTimeProperty("401_Unauthorized_url");
+		}else if(scenarioType.contains("400_BadRequest")){
+			url=testConfig.getRunTimeProperty("400_BadRequest_url")+Helper.generateRandomAlphaNumericString(13)+"/835/download";
+			
 		}else {
 		url=testConfig.getRunTimeProperty(scenarioType+"_url");
 		}
 		if(scenarioType.equals("401_UnauthorizedID")) {
-			clientId=testConfig.getRunTimeProperty("invalid_client_id");
+			clientId=testConfig.getRunTimeProperty("client_id")+Helper.generateRandomAlphaNumericString(5);
 			clientSecret=testConfig.getRunTimeProperty("client_secret");
 		}else if(scenarioType.equals("401_UnauthorizedSecret")) {
 			clientId=testConfig.getRunTimeProperty("client_id");
-			clientSecret=testConfig.getRunTimeProperty("invalid_client_secret");
+			clientSecret=Helper.generateRandomAlphaNumericString(40);
 		}else {
 			clientId=testConfig.getRunTimeProperty("client_id");
 			clientSecret=testConfig.getRunTimeProperty("client_secret");
@@ -2424,5 +2427,15 @@ public class SearchRemittance extends ViewPayments {
 	      }
 		
 		return response;
+	}
+	
+	public void verify_response_body(Response response,String status,String type,String title) {
+		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
+		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
+		Assert.assertTrue(title.equals((String)response.jsonPath().get("title")),"Incorrect title");
+		if(status.equals("404")) {
+			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
+		}
+	
 	}
 }

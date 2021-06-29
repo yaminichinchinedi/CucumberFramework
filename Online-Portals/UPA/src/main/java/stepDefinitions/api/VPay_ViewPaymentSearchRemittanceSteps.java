@@ -46,12 +46,7 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 		
 	}
 	@And("^verify \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
-	public void verify_invalid_response_body(String statusCode,String type,String title) throws Throwable {
-		Assert.assertTrue(Integer.parseInt(statusCode)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
-		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
-		Assert.assertTrue(title.equals((String)response.jsonPath().get("title")),"Incorrect title");
-		if(statusCode.equals("404")) {
-			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
-		}
+	public void verify_invalid_response_body(String status,String type,String title) throws Throwable {
+		serachRemittance.verify_response_body(response,status,type,title);
 	}
 }
