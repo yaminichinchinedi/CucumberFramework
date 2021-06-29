@@ -24,13 +24,13 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 
 	@Then("^the web service should respond with a \"([^\"]*)\" status code$")
 	public void webserviceResponseStatus(String status) throws Throwable {
-			Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
+		serachRemittance.verifyResponseStatus(status, response);
 		
 	}
 	@And("^verify pdf response is saved successfully$")
-	public void verify_pdf_response() throws Throwable {
+	public void verifyPdfDownload() throws Throwable {
 			
-		serachRemittance.verify_pdf_response(response);
+		serachRemittance.verifyPdfDownload(response);
 	}
 
 	
@@ -40,13 +40,9 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 		response = serachRemittance.getInvalidResponse(method, scenarioType);
 	
 	}
-	@Then("^the web service should respond with Scenarios \"([^\"]*)\" status code$")
-	public void webserviceInvalidResponseStatus(String status) throws Throwable {
-			Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
-		
-	}
+	
 	@And("^verify response body for Vpay PPRA Request View Payments and Search Remittance \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
 	public void verify_invalid_response_body(String status,String type,String title) throws Throwable {
-		serachRemittance.verify_response_body(response,status,type,title);
+		serachRemittance.verifyResponseBody(response,status,type,title);
 	}
 }

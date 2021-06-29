@@ -2365,14 +2365,16 @@ public class SearchRemittance extends ViewPayments {
 	
 	public Response getViewPaymentResponse() {
 		RequestSpecification request = RestAssured.given();
-		request.header("X-Client-Id", "0ba3f406-714d-442d-9d19-27c1aa18332c");
-		request.header("X-Client-Secret", "XOlSiT55LHp8UomQnR5s70uK4UvzzNgLkJdXJJKpUH58EPAfhs");
-		Response response = request.get("https://cert-gateway.vpayusa.com/api/documents/1001006004/PRA/download");
+		request.header("X-Client-Id", testConfig.getRunTimeProperty("vPay_clientId"));
+		request.header("X-Client-Secret", testConfig.getRunTimeProperty("vPay_clientSecret"));
+		String url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		url=url.replace("{transactionId}", "1001006004");
+		Response response = request.get(url);
 		
 		return response;
 	}
 	
-	public void verify_pdf_response(Response response) {
+	public void verifyPdfDownload(Response response) {
 		try {
 			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
         if(pdfFile.exists())
@@ -2398,18 +2400,18 @@ public class SearchRemittance extends ViewPayments {
 		String clientId="";
 		String clientSecret="";
 		Response response=null;
-		if(scenarioType.contains("401_Unauthorized")) {
-			url=testConfig.getRunTimeProperty("401_Unauthorized_url");
-		}else if(scenarioType.contains("400_BadRequest")){
-			url=testConfig.getRunTimeProperty("400_BadRequest_url")+Helper.generateRandomAlphaNumericString(13)+"/PRA/download";
-			
-		}else {
-		url=testConfig.getRunTimeProperty(scenarioType+"_url");
+		 url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		 if(scenarioType.contains("400badRequest")){	
+			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));	
+		}else if(scenarioType.contains("404notFound")) {
+			url=url.replace("{transactionId}",String.valueOf(Helper.generateRandomNumber(10)));
+		} else {	
+			url=url.replace("{transactionId}", "1001006004");
 		}
-		if(scenarioType.equals("401_UnauthorizedID")) {
+		if(scenarioType.equals("401unauthorizedID")) {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId")+Helper.generateRandomAlphaNumericString(5);
 			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
-		}else if(scenarioType.equals("401_UnauthorizedSecret")) {
+		}else if(scenarioType.equals("401unauthorizedSecret")) {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId");
 			clientSecret=Helper.generateRandomAlphaNumericString(40);
 		}else {
@@ -2429,7 +2431,7 @@ public class SearchRemittance extends ViewPayments {
 		return response;
 	}
 	
-	public void verify_response_body(Response response,String status,String type,String title) {
+	public void verifyResponseBody(Response response,String status,String type,String title) {
 		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
 		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
 		Assert.assertTrue(title.equals((String)response.jsonPath().get("title")),"Incorrect title");
@@ -2437,5 +2439,9 @@ public class SearchRemittance extends ViewPayments {
 			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
 		}
 	
+	}
+	
+	public void verifyResponseStatus(String status,Response response) {
+		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
 	}
 }

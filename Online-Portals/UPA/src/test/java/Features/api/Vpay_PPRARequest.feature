@@ -9,16 +9,16 @@ Feature: Vpay_PPRARequest
 
     Scenario Outline: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance API
     Given Perform the "<Method>" Action for Invalid "<scenarioType>" ViewPayments and SearchRemittance API
-    Then the web service should respond with Scenarios "<statusCode>" status code
+    Then the web service should respond with a "<statusCode>" status code
     And verify response body for Vpay PPRA Request View Payments and Search Remittance "<statusCode>","<type>","<title>"
     
     Examples:
   |scenarioType  						|Method|statusCode|type													|title|
-  | 400_BadRequest 					|GET	 | 400			|https://httpstatuses.com/400 | One or more validation errors occurred.|
-  | 401_UnauthorizedID 			|GET   | 401 			|https://httpstatuses.com/401 | Unauthorized|
-  | 401_UnauthorizedSecret  |GET   | 401 			|https://httpstatuses.com/401 | Unauthorized|
- 	| 404_NotFound 						|GET   | 404 			|https://httpstatuses.com/404 | Not Found |
- 	| 405_MethodNotAllowed 		|POST  | 405 			|https://httpstatuses.com/405 | Method Not Allowed|
+  | 400badRequest 					|GET	 | 400			|https://httpstatuses.com/400 | One or more validation errors occurred.|
+  | 401unauthorizedID 			|GET   | 401 			|https://httpstatuses.com/401 | Unauthorized|
+  | 401unauthorizedSecret   |GET   | 401 			|https://httpstatuses.com/401 | Unauthorized|
+ 	| 404notFound 						|GET   | 404 			|https://httpstatuses.com/404 | Not Found |
+ 	| 405methodNotAllowed 		|POST  | 405 			|https://httpstatuses.com/405 | Method Not Allowed|
     
   
     
