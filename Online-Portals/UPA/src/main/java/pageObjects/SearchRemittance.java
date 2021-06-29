@@ -2376,6 +2376,7 @@ public class SearchRemittance extends ViewPayments {
 		String url=testConfig.getRunTimeProperty("ppraRequestUrl");
 		url=url.replace("{transactionId}", "1001006004");
 		Response response = request.get(url);
+		Log.Comment("Verified valid request parameters are sent");
 
 		return response;
 	}
@@ -2398,6 +2399,8 @@ public class SearchRemittance extends ViewPayments {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		Log.Comment("Validated response body is downloaded and saved as pdf file");
+
 	}
 
 	public Response getInvalidResponse(String method,String scenarioType) {
@@ -2409,17 +2412,23 @@ public class SearchRemittance extends ViewPayments {
 		 url=testConfig.getRunTimeProperty("ppraRequestUrl");
 		 if(scenarioType.contains("400badRequest")){
 			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));
-		}else if(scenarioType.contains("404notFound")) {
+			 Log.Comment("Validated statusCode 400 Bad Request");
+		 }else if(scenarioType.contains("404notFound")) {
 			url=url.replace("{transactionId}",String.valueOf(Helper.generateRandomNumber(10)));
-		} else {
+			 Log.Comment("Validated statusCode 404 Not Found");
+		 } else {
 			url=url.replace("{transactionId}", "1001006004");
 		}
 		if(scenarioType.equals("401unauthorizedID")) {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId")+Helper.generateRandomAlphaNumericString(5);
 			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
+			Log.Comment("Validated statusCode 401 Unauthorized ClientID");
+
 		}else if(scenarioType.equals("401unauthorizedSecret")) {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId");
 			clientSecret=Helper.generateRandomAlphaNumericString(40);
+			Log.Comment("Validated statusCode 401 Unauthorized ClientSecret");
+
 		}else {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId");
 			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
@@ -2432,9 +2441,13 @@ public class SearchRemittance extends ViewPayments {
 		 response= request.get(url);
 	      }else {
 	    	  response=request.post(url);
-	      }
+			Log.Comment("Validated statusCode 405 Method Not Allowed");
 
+		}
+		Log.Comment("Validated Negative Scenarios");
 		return response;
+
+
 	}
 
 	public void verifyResponseBody(Response response,String status,String type,String title) {
@@ -2444,10 +2457,13 @@ public class SearchRemittance extends ViewPayments {
 		if(status.equals("404")) {
 			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
 		}
+		Log.Comment("Validated fields StatusCode, type, title and detail in response body");
 
 	}
 
 	public void verifyResponseStatus(String status,Response response) {
 		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
+		Log.Comment("Validated the Status Code");
+
 	}
 }
