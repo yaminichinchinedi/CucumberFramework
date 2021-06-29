@@ -14,7 +14,7 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 	private Response response;
 	public SearchRemittance serachRemittance;
 	
-	@Given("^Perform the GET Action for valid ClientId/CilentSecret for ViewPayments and SearchRemittance API$")
+	@Given("^Perform the GET Action for valid VPayClientId/VPayCilentSecret for ViewPayments and SearchRemittance API$")
 	public void perform_the_GET_action() throws Throwable {
 		serachRemittance = new SearchRemittance(testConfig);
 		response = serachRemittance.getViewPaymentResponse();
@@ -40,12 +40,12 @@ public class VPay_ViewPaymentSearchRemittanceSteps extends TestBase {
 		response = serachRemittance.getInvalidResponse(method, scenarioType);
 	
 	}
-	@Then("^the web service should respond with NegativeScenarios \"([^\"]*)\" status code$")
+	@Then("^the web service should respond with Scenarios \"([^\"]*)\" status code$")
 	public void webserviceInvalidResponseStatus(String status) throws Throwable {
 			Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
 		
 	}
-	@And("^verify \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
+	@And("^verify response body for Vpay PPRA Request View Payments and Search Remittance \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"$")
 	public void verify_invalid_response_body(String status,String type,String title) throws Throwable {
 		serachRemittance.verify_response_body(response,status,type,title);
 	}

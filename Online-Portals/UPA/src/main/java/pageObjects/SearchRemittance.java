@@ -2407,14 +2407,14 @@ public class SearchRemittance extends ViewPayments {
 		url=testConfig.getRunTimeProperty(scenarioType+"_url");
 		}
 		if(scenarioType.equals("401_UnauthorizedID")) {
-			clientId=testConfig.getRunTimeProperty("client_id")+Helper.generateRandomAlphaNumericString(5);
-			clientSecret=testConfig.getRunTimeProperty("client_secret");
+			clientId=testConfig.getRunTimeProperty("vPay_clientId")+Helper.generateRandomAlphaNumericString(5);
+			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
 		}else if(scenarioType.equals("401_UnauthorizedSecret")) {
-			clientId=testConfig.getRunTimeProperty("client_id");
+			clientId=testConfig.getRunTimeProperty("vPay_clientId");
 			clientSecret=Helper.generateRandomAlphaNumericString(40);
 		}else {
-			clientId=testConfig.getRunTimeProperty("client_id");
-			clientSecret=testConfig.getRunTimeProperty("client_secret");
+			clientId=testConfig.getRunTimeProperty("vPay_clientId");
+			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
 		}
 		
 		request.header("X-Client-Id",clientId);

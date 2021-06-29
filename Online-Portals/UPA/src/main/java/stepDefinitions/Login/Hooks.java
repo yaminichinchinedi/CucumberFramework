@@ -38,7 +38,7 @@ public class Hooks extends TestBase{
 		{
 	    	Log.Fail("Failed to capture screenshot due to exception : " + e);
 	    }
-		if(System.getProperty("Application")!=null && testConfig.getRunTimeProperty("associationDone")!=null){
+        if(!scn.getName().contains("API")) {
 		if(System.getProperty("Application").contains("UPA") && "true".equals(testConfig.getRunTimeProperty("associationDone"))){
 			
 			int sqlRowNo=1911;

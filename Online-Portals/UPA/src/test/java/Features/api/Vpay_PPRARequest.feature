@@ -1,16 +1,16 @@
  @Vpay_ViewPayments_SearchRemittance
 Feature: Vpay_PPRARequest
 
-    Scenario: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance
-    Given Perform the GET Action for valid ClientId/CilentSecret for ViewPayments and SearchRemittance API
+    Scenario: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance API
+    Given Perform the GET Action for valid VPayClientId/VPayCilentSecret for ViewPayments and SearchRemittance API
     Then the web service should respond with a "200" status code
     And verify pdf response is saved successfully
 
 
-      Scenario Outline: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance
+    Scenario Outline: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance API
     Given Perform the "<Method>" Action for Invalid "<scenarioType>" ViewPayments and SearchRemittance API
-    Then the web service should respond with NegativeScenarios "<statusCode>" status code
-    And verify "<statusCode>","<type>","<title>"
+    Then the web service should respond with Scenarios "<statusCode>" status code
+    And verify response body for Vpay PPRA Request View Payments and Search Remittance "<statusCode>","<type>","<title>"
     
     Examples:
   |scenarioType  						|Method|statusCode|type													|title|
