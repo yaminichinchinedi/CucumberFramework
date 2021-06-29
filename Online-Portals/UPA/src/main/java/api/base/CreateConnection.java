@@ -20,6 +20,8 @@ import main.java.api.pojo.epspaymentsearch.request.EpsPaymentsSearchRequest;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.SAXException;
 
 public abstract class CreateConnection {
@@ -33,7 +35,7 @@ public abstract class CreateConnection {
 	}
 	
 	
-	public String getAuthToken() throws IOException
+	public String getAuthToken() throws IOException, JSONException
 	{    
 		StringBuilder response = new StringBuilder();
 		String authURL="https://gateway-stage-dmz.optum.com/auth/oauth2/token";
@@ -66,10 +68,13 @@ public abstract class CreateConnection {
 						        response.append(responseLine.trim());
 						    }
 						}
-				return  (response.substring(39,71));
+				
+				JSONObject auth = new JSONObject(response.toString());
+				
+				return  (auth.getString("access_token"));
 	}
 
-	public final Object postRequestGetResponse(Object pojoRequest)throws  IOException, SAXException, ParserConfigurationException,JAXBException {
+	public final Object postRequestGetResponse(Object pojoRequest)throws  IOException, SAXException, ParserConfigurationException,JAXBException, JSONException {
 		String response = "";
 		String line;
 		

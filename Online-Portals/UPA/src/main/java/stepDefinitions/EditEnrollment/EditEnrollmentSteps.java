@@ -201,7 +201,15 @@ public class EditEnrollmentSteps extends TestBase {
     	maintainEnrollment.readPDFFile("BS");
 
     }
-	
+    @Then("^Edit organization information$")
+    public void edit_organization_information() throws Throwable {
+    	 editEnrollment.editOrganizationInfo();
+    }
+    @Then("^User Clicks on Print Enrollment Form$")
+	public void user_Clicks_on_Print_Enrollment_Form() throws Throwable {
+    	editEnrollment.enrollmentPDF();
+	}
+    
 
 
 }

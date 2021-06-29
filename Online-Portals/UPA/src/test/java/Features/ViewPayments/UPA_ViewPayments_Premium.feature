@@ -98,21 +98,21 @@ Feature: UPA ViewPayments Functionality for Premium TIN
     
 		
 		
- @UPAUS2955416
-   	Scenario Outline: Access Payments - View Payments - Header Page Text
-    Given User navigates to UPA portal and enters "<credentials>" and login
-    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-		When Click on View Payments Link for UPA
-    And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
+# @UPAUS2955416
+   #	Scenario Outline: Access Payments - View Payments - Header Page Text
+   # Given User navigates to UPA portal and enters "<credentials>" and login
+   # And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+	#	When Click on View Payments Link for UPA
+  #  And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
      
-     Examples:
-             |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 	|	  AO			|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
-             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
-             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
+  #   Examples:
+  #           |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
+  #           |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 	|	  AO			|
+  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+  #           |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
+  #           |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
              
      @UPAUS3015574
    	Scenario Outline: Access Payments - View Payments - PPRA link for Prov

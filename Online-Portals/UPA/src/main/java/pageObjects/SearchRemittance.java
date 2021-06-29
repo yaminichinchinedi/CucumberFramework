@@ -23,6 +23,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import io.restassured.path.json.JsonPath;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -213,7 +215,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySearchResults(String requestType) throws IOException, InterruptedException, JAXBException,
-			SAXException, ParserConfigurationException, ParseException {
+			SAXException, ParserConfigurationException, ParseException, JSONException {
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
 		String totalRecordsFromFISL = String.valueOf(searchResponse.getData().getTotalCount());
@@ -268,13 +270,17 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public Object getFISLResponse(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		Object request = null;
-		String[] pay_835_id;
+		String[] pay_835_id = null;
 		if ("PAY".equals(testConfig.getRunTimeProperty("userType"))) {
 			pay_835_id = new String[] { "87726" };
-		} else {
-			pay_835_id = new String[] {};
+		}
+		if (requestType.contains("DOP")) {
+			pay_835_id = new String[] {testConfig.getRunTimeProperty("PAYR_835_ID")};
+		}
+		else {
+			pay_835_id = new String[] { "87726" };
 		}
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(
 				requestType);
@@ -394,7 +400,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public Object getFISLResponse1(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		/** Creates POJO for Request.xml so that we can modify the elements */
 		EpsSearchRemittanceRequestHelper epsSearchRemittanceRequestHelper = new EpsSearchRemittanceRequestHelper(
 				requestType);
@@ -558,7 +564,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySortingOrder(WebElement lnkName, String colName, String criteriaType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		List<String> newList = new ArrayList<String>();
 		List<Double> newDoubleList = new ArrayList<Double>();
 		switch (colName) {
@@ -743,7 +749,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public List<String> getExpectedDetailsFromFISL(String requestType, String colName)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		List<String> l = new ArrayList<String>();
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
@@ -752,7 +758,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public void verifySorting(String colName)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		String criteriaType = "byDOP";
 		switch (colName) {
 		case "Payer":
@@ -1982,7 +1988,7 @@ public class SearchRemittance extends ViewPayments {
 	}
 
 	public ViewPayments verifyPrintSearchRemitPage(String requestType)
-			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException {
+			throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException {
 		String parentWin = Browser.switchToNewWindow(testConfig);
 		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(
 				requestType);
@@ -2361,8 +2367,8 @@ public class SearchRemittance extends ViewPayments {
 		Log.Comment("Verified the Status Code");
 	
 	}
-	
-	
+
+
 	public Response getViewPaymentResponse() {
 		RequestSpecification request = RestAssured.given();
 		request.header("X-Client-Id", testConfig.getRunTimeProperty("vPay_clientId"));
@@ -2370,10 +2376,10 @@ public class SearchRemittance extends ViewPayments {
 		String url=testConfig.getRunTimeProperty("ppraRequestUrl");
 		url=url.replace("{transactionId}", "1001006004");
 		Response response = request.get(url);
-		
+
 		return response;
 	}
-	
+
 	public void verifyPdfDownload(Response response) {
 		try {
 			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
@@ -2385,7 +2391,7 @@ public class SearchRemittance extends ViewPayments {
 		fos.flush();
 		fos.close();
 		Thread.sleep(3000);
-		
+
 		if(pdfFile.length()==0) {
 			Assert.fail("PDF file is empty");
 		}
@@ -2393,7 +2399,7 @@ public class SearchRemittance extends ViewPayments {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Response getInvalidResponse(String method,String scenarioType) {
 		RequestSpecification request = RestAssured.given();
 		String url="";
@@ -2401,11 +2407,11 @@ public class SearchRemittance extends ViewPayments {
 		String clientSecret="";
 		Response response=null;
 		 url=testConfig.getRunTimeProperty("ppraRequestUrl");
-		 if(scenarioType.contains("400badRequest")){	
-			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));	
+		 if(scenarioType.contains("400badRequest")){
+			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));
 		}else if(scenarioType.contains("404notFound")) {
 			url=url.replace("{transactionId}",String.valueOf(Helper.generateRandomNumber(10)));
-		} else {	
+		} else {
 			url=url.replace("{transactionId}", "1001006004");
 		}
 		if(scenarioType.equals("401unauthorizedID")) {
@@ -2418,19 +2424,19 @@ public class SearchRemittance extends ViewPayments {
 			clientId=testConfig.getRunTimeProperty("vPay_clientId");
 			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
 		}
-		
+
 		request.header("X-Client-Id",clientId);
 		request.header("X-Client-Secret",clientSecret);
-		
+
 		if(method.equals("GET")) {
 		 response= request.get(url);
 	      }else {
 	    	  response=request.post(url);
 	      }
-		
+
 		return response;
 	}
-	
+
 	public void verifyResponseBody(Response response,String status,String type,String title) {
 		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
 		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
@@ -2438,9 +2444,9 @@ public class SearchRemittance extends ViewPayments {
 		if(status.equals("404")) {
 			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
 		}
-	
+
 	}
-	
+
 	public void verifyResponseStatus(String status,Response response) {
 		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
 	}
