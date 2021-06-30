@@ -1,7 +1,7 @@
 #Author: Marsha(Stabilisation)
 @UPALandingPage  @UPARegression
 Feature: UPA Landing Page Pre-Login functionality
-	#Author: Mohammad Khalid
+	#Author:Mohammad Khalid
 	@UPABenefitsOfOptumPay_US2998969 @UPABenefitsOfOptumPay_US3033482 
 	Scenario: Verify text in  Benefits of Optum Pay Tab in UPA 
 		Given User navigates to UPA Sys Test application 

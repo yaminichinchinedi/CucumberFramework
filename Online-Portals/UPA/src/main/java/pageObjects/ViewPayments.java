@@ -43,6 +43,7 @@ import main.java.reporting.Log;
 import main.java.reporting.Log;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -865,9 +866,10 @@ public void verifyFailedPaymentPopUp()
 	/** Verifies the default selected 
 	 * filter drop down values 
 	 * @return object of this page
+	 * @throws JSONException 
 	 */
 	
-	public ViewPayments verifyDefaultSearchResultCount() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException
+	public ViewPayments verifyDefaultSearchResultCount() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException
 	{   
 		int i=0;
 		String expectedSelectedOption="Show All";
@@ -898,9 +900,10 @@ public void verifyFailedPaymentPopUp()
 	/**
 	 * By default record count should be the number 
 	 * of payments for last 30 days
+	 * @throws JSONException 
 	 */
 	
-	public void verifyDefaultSearchRecordCount() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public void verifyDefaultSearchRecordCount() throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{
 		if(!getRecordCountFromFISL().equalsIgnoreCase("0"))
 			Helper.compareEquals(testConfig, "Record count from FISL and UI where FISL for 30 days (by default) : ", getRecordCountFromFISL(), getRecordCountFromUI());
@@ -1303,6 +1306,7 @@ public void verifyFailedPaymentPopUp()
 					rowValues.add(colValue);
 			}
 		}
+		testConfig.putRunTimeProperty("page", "");
 		return (ArrayList<String>) rowValues;
 	}
 	    	
@@ -1311,10 +1315,11 @@ public void verifyFailedPaymentPopUp()
 	 * @param filterPayments,quickSearchFilter,Archivefilter & MktTypeFilter
 	 * Gets the record count from UI and fISL api and compares them.
 	 * @throws ParseException 
+	 * @throws JSONException 
 	 */
 	
 	
-	public ViewPayments verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException
+	public ViewPayments verifySearchResultsWithFilters(String filterPayments,String quickSearchFilter,String Archivefilter,String MktTypeFilter) throws IOException, InterruptedException, JAXBException, SAXException, ParserConfigurationException, ParseException, JSONException
 	{	
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse();
 		String totalRecordsFromFISL=String.valueOf(searchResponse.getData().getTotalCount());
@@ -1333,7 +1338,7 @@ public void verifyFailedPaymentPopUp()
 	
 
 
-	public String getRecordCountFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public String getRecordCountFromFISL() throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{
 		EpsPaymentsSummarySearchResponse responseFromFISL=(EpsPaymentsSummarySearchResponse) getFISLResponse();
 		return String.valueOf(responseFromFISL.getData().getTotalCount());
@@ -1616,9 +1621,10 @@ public void verifyFailedPaymentPopUp()
  * @throws IOException
  * @throws SAXException
  * @throws ParserConfigurationException
+ * @throws JSONException 
  */
 	
-	public ViewPayments verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public ViewPayments verifyZeroDollarPayments(String expectedPaymentType) throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{	
 		String archiveFilter = "Show All";	
 		String actualPaymntNo = "";
@@ -1720,7 +1726,7 @@ public void verifyFailedPaymentPopUp()
 		Element.click(btnSearch, "Search Button");
 		return this;
 	}
-	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public Object getFISLResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{
 		Object request = null;
 		String[] pay_835_id;
@@ -1769,9 +1775,10 @@ public void verifyFailedPaymentPopUp()
 	/**
 	 * Getting response from EPSA
 	 * @return type object of search request
+	 * @throws JSONException 
 	 */
 	
-	public Object getFISLResponse1() throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public Object getFISLResponse1() throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
@@ -1891,7 +1898,7 @@ public void verifyFailedPaymentPopUp()
 	}
 
 	
-	public String getFislPaymentSearchResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException {
+	public String getFislPaymentSearchResponse() throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		String response= "";
 		EpsPaymentSearchRequestHelper epsPaymentSearchRequestHelper = new EpsPaymentSearchRequestHelper();
 		EpsPaymentsSearchRequest epsPaymentsSearchRequest=epsPaymentSearchRequestHelper.createRequestPojo();
@@ -3029,7 +3036,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 	
 	
 
-	public ViewPayments verifyMktType(String marketType) throws JAXBException, IOException, SAXException, ParserConfigurationException
+	public ViewPayments verifyMktType(String marketType) throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException
 	{	
 		String archiveFilter = "Show All";	
         String dateToValidate = testConfig.getRunTimeProperty("setlDate");
@@ -3596,7 +3603,7 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		return this;
 	}
 	
-	public ViewPayments verifyPrintPaymentSummaryPage() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException{
+	public ViewPayments verifyPrintPaymentSummaryPage() throws JAXBException, IOException, SAXException, ParserConfigurationException, ParseException, JSONException{
 		String parentWin=Browser.switchToNewWindow(testConfig);
 		EpsPaymentsSummarySearchResponse searchResponse=(EpsPaymentsSummarySearchResponse) getFISLResponse();
 		Helper.compareMaps(testConfig, "Payments Details Comparison",getPaymentDetailsFromFISL(searchResponse), getPaymentDetailsFromUI());	

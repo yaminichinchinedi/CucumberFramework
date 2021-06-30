@@ -2,7 +2,7 @@
 #Author: Rahul Krishna
 Feature:Create Enrollment Home Page Validations 
 
-@CSRUS2952500_Positive_AO @CSR2021_PI02_IP
+@CSRUS3610262 @CSR2021_PI02_IP
 
  Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
    
@@ -12,7 +12,7 @@ Feature:Create Enrollment Home Page Validations
 		Then User Select User Type as "<userType>" and enter unique TIN and click Search
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "<tinType>" and click continue button
-		Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+		Then User sets business phone
 		Then User fills all the information  and click on Continue	
 		Then User fills all the information on Identify Administrators page and click continue
 		#Need to check ABA Validator or Normal flow
@@ -28,21 +28,19 @@ Feature:Create Enrollment Home Page Validations
    
    Examples:
 
-          |   credentials     |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt | 
-          |    Super          |	AO		  	 | PROV   | 480| 835 | 7364 | 480 |
-        	|    Super          |	AO		  	 | PROV   | 813 |873 | 8247 | |
-        	|    Super          |	AO		  	 | PROV   | 209| 123 | 9956 | 480123 |
+          |   credentials     |  tinType   |userType| 
+          |    Super          |	AO		  	 | PROV   |
                 	
 										      
 		
-		@CSRUS2952500_Positive_VO @CSR2021_PI02_IP						      
+		@CSRUS3610262		@CSR2021_PI02_IP			      
 		Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
 		Given User navigates to CSR portal and enters "<credentials>" and login
 		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
 		Then User Select User Type as "<userType>" and enter unique TIN and click Search
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "<tinType>" and click continue button 
-		Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+		Then User sets business phone
 		Then User fills all the information  and click on Continue	
     Then User fills all the information on Identify Administrators page and click continue to W9
     Then User uploads the WNine form and click continue
@@ -54,10 +52,9 @@ Feature:Create Enrollment Home Page Validations
     And Click on Exit Enrollment button navigates to the Optum Pay landing page 
     		Examples:
 
-          |   credentials   |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt |
-        	|    Super          |	VO		  	 | PROV   | 480| 835 | 7364 | 480 |
-        	|    Super          |	VO		  	 | PROV   | 813 |873 | 8247 | |
-        	|    Super          |	VO		  	 | PROV   | 209| 123 | 9956 | 480123 |
+          |   credentials   |  tinType   |userType| 
+        	|    Super        |	VO		  	 | PROV 	|
+   
          	
        				
 		
@@ -121,9 +118,10 @@ Feature:Create Enrollment Home Page Validations
          
    
    
-   @US2952500_Negative_CSR
+  #Author: Shalini Mahavratayajula
+   @CSRUS3610262_Negative
 
- Scenario Outline: US2952500 Provider Login to CSR Application to validate error scenario for "BusinessPhone" in organization Information page.
+ Scenario Outline: US3610262 Provider Login to CSR Application to validate error scenario for "BusinessPhone" in organization Information page.
    
    	When  ABN Validator Switch is set as 'Y'
 		Given User navigates to CSR portal and enters "<credentials>" and login
@@ -131,21 +129,17 @@ Feature:Create Enrollment Home Page Validations
 		Then User Select User Type as "<userType>" and enter unique TIN and click Search
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "<tinType>" and click continue button 
-		Then User sets business phone "<businessPhone1>","<businessPhone2>","<businessPhone3>","<businessPhoneExt>"
+		Then User sets invalid business phone "<invalidBusinessPhone>"
 		Then User fills all the information  and click on Continue	
 		Then User validate error messages
 		
    
     Examples:
 
-          |   credentials     |  tinType   |userType| businessPhone1 | businessPhone2 | businessPhone3 | businessPhoneExt |       	
-        	|    Super          |	AO		  	 | PROV   | abc| 123 | 4567 | 480123 |
-        	|    Super          |	AO		  	 | PROV   | $@%| 123 | 9956 |  			 |
-        	|    Super          |	AO		  	 | PROV   | 	 | 123 | 9956 |        |       	
-        	|    Super          |	VO		  	 | PROV   | abc| 123 | 4567 | 480123 |
-        	|    Super          |	VO		  	 | PROV   | $@&| 123 |  		| 72456  |
-       		|    Super          |	VO		  	 | PROV   | 234| 		 | 9956 |  			 |
-       						
+          |   credentials     |  tinType   |userType|   invalidBusinessPhone |    	
+        	|    Super          |	AO		  	 | PROV   |    AlphaNumericString  |
+        	|    Super          |	VO		  	 | PROV   |    SpecialCharacters   |
         	
+          	
         	      
  
