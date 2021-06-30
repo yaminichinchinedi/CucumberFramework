@@ -1,5 +1,7 @@
- @Vpay_ViewPayments_SearchRemittance
-Feature: Vpay_PPRARequest
+   #Author: Shalini Mahavratayajula
+   #Author: Mounika Talakanti
+   @US3613934
+ Feature: US3613934/US3517503 Vpay_PPRARequest
 
     Scenario: Validate the Vpay PPRARequest for ViewPayments and SearchRemittance API
     Given Perform the GET Action for valid VPayClientId/VPayCilentSecret for ViewPayments and SearchRemittance API

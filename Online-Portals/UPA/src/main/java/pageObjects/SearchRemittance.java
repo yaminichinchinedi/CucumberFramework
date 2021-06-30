@@ -2370,6 +2370,8 @@ public class SearchRemittance extends ViewPayments {
 
 	/*Verify Success response for valid request parameters transactionId,Client-Id and Client-Secret
 	are sent accordingly*/
+
+
 	public Response getViewPaymentResponse() {
 		RequestSpecification request = RestAssured.given();
 		request.header("X-Client-Id", testConfig.getRunTimeProperty("vPay_clientId"));
@@ -2383,7 +2385,11 @@ public class SearchRemittance extends ViewPayments {
 		return response;
 	}
 
-	/*Validating If response is being saved in pdf format for PPRA request*/
+
+	/** Validating If response is being saved in pdf format for PPRA request
+	 * @param response
+	 * @author Mounika Talakanti
+	 */
 	public void verifyPdfDownload(Response response) {
 		try {
 			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
@@ -2407,7 +2413,12 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
-	/*Validate API Response for NegativeScenarios*/
+	/** Validate API Response for NegativeScenarios
+	 * @param scenarioType
+	 * @param method
+	 * @return response
+	 * @author Shalini Mahavratayajula
+	 */
 	public Response getInvalidResponse(String method,String scenarioType) {
 		RequestSpecification request = RestAssured.given();
 		String url="";
@@ -2460,7 +2471,14 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
-	/*Validate Response Body fields - status, type, title, detail */
+	/** Validate API Response for NegativeScenarios
+	 * @param response
+	 * @param status
+	 * @param type
+	 * @param title
+	 * @author Shalini Mahavratayajula
+	 */
+
 	public void verifyResponseBody(Response response,String status,String type,String title) {
 		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
 		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
@@ -2472,7 +2490,11 @@ public class SearchRemittance extends ViewPayments {
 
 	}
 
-	/*Validate Status Code on Page Level*/
+	/** Validate API Response for NegativeScenarios
+	 * @param response
+	 * @param status
+	 * @author Shalini Mahavratayajula
+	 */
 	public void verifyResponseStatus(String status,Response response) {
 		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
 		Log.Comment("Validated the Status Code");
