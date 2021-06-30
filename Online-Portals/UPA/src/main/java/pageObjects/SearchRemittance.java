@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -2365,5 +2366,138 @@ public class SearchRemittance extends ViewPayments {
 		Assert.assertEquals(expectedStatus, actualStatus);
 		Log.Comment("Verified the Status Code");
 	
+	}
+
+	/*Verify Success response for valid request parameters transactionId,Client-Id and Client-Secret
+	are sent accordingly*/
+
+
+	public Response getViewPaymentResponse() {
+		RequestSpecification request = RestAssured.given();
+		request.header("X-Client-Id", testConfig.getRunTimeProperty("vPay_clientId"));
+		request.header("X-Client-Secret", testConfig.getRunTimeProperty("vPay_clientSecret"));
+		String url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		//TransactionIDs are hardCoded due to limitation in test data - From VPay
+		url=url.replace("{transactionId}", "1001006004");
+		Response response = request.get(url);
+		Log.Comment("Verified valid request parameters are sent");
+
+		return response;
+	}
+
+
+	/** Validating If response is being saved in pdf format for PPRA request
+	 * @param response
+	 * @author Mounika Talakanti
+	 */
+	public void verifyPdfDownload(Response response) {
+		try {
+			File pdfFile= new File(System.getProperty("user.dir")+"/target/viewpayment.pdf");
+        if(pdfFile.exists())
+        	pdfFile.delete();
+		byte[] pdf=response.asByteArray();
+		FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/target/viewpayment.pdf");
+		fos.write(pdf);
+		//Flush the writer
+		fos.flush();
+		fos.close();
+		Thread.sleep(3000);
+
+		if(pdfFile.length()==0) {
+			Assert.fail("PDF file is empty");
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		Log.Comment("Validated response body is downloaded and saved as pdf file");
+
+	}
+
+	/** Validate API Response for NegativeScenarios
+	 * @param scenarioType
+	 * @param method
+	 * @return response
+	 * @author Shalini Mahavratayajula
+	 */
+	public Response getInvalidResponse(String method,String scenarioType) {
+		RequestSpecification request = RestAssured.given();
+		String url="";
+		String clientId="";
+		String clientSecret="";
+		Response response=null;
+		 url=testConfig.getRunTimeProperty("ppraRequestUrl");
+		 //Validating 400 Bad Request
+		 if(scenarioType.contains("400badRequest")){
+			url=url.replace("{transactionId}", Helper.generateRandomAlphaNumericString(13));
+			 Log.Comment("Validated statusCode 400 Bad Request");
+		 }
+		 //Validating 404 Not Found
+		 else if(scenarioType.contains("404notFound")) {
+			url=url.replace("{transactionId}",String.valueOf(Helper.generateRandomNumber(10)));
+			 Log.Comment("Validated statusCode 404 Not Found");
+		 } else {
+			url=url.replace("{transactionId}", "1001006004");
+		}
+		//Validating 401 Unauthorized Response for Invalid ClientID & ClientSecret
+		if(scenarioType.equals("401unauthorizedID")) {
+			clientId=testConfig.getRunTimeProperty("vPay_clientId")+Helper.generateRandomAlphaNumericString(5);
+			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
+			Log.Comment("Validated statusCode 401 Unauthorized ClientID");
+
+		}else if(scenarioType.equals("401unauthorizedSecret")) {
+			clientId=testConfig.getRunTimeProperty("vPay_clientId");
+			clientSecret=Helper.generateRandomAlphaNumericString(40);
+			Log.Comment("Validated statusCode 401 Unauthorized ClientSecret");
+
+		}else {
+			clientId=testConfig.getRunTimeProperty("vPay_clientId");
+			clientSecret=testConfig.getRunTimeProperty("vPay_clientSecret");
+		}
+
+		request.header("X-Client-Id",clientId);
+		request.header("X-Client-Secret",clientSecret);
+
+		if(method.equals("GET")) {
+		 response= request.get(url);
+	      }else {
+			//Validating 405 Response by sending Invalid Method POST
+			response=request.post(url);
+			Log.Comment("Validated statusCode 405 Method Not Allowed");
+
+		}
+		Log.Comment("Validated Negative Scenarios");
+		return response;
+
+
+	}
+
+	/** Validate API Response for NegativeScenarios
+	 * @param response
+	 * @param status
+	 * @param type
+	 * @param title
+	 * @author Shalini Mahavratayajula
+	 */
+
+	public void verifyResponseBody(Response response,String status,String type,String title) {
+		Assert.assertTrue(Integer.parseInt(status)==((Integer)response.jsonPath().get("status")),"Incorrect status code");
+		Assert.assertTrue(type.equals((String)response.jsonPath().get("type")),"Incorrect type");
+		Assert.assertTrue(title.equals((String)response.jsonPath().get("title")),"Incorrect title");
+		if(status.equals("404")) {
+			Assert.assertTrue(((String)response.jsonPath().get("detail")).equals("TRANSACTION_NOT_FOUND"),"Incorrect detail");
+		}
+		Log.Comment("Validated fields StatusCode, type, title and detail in response body");
+
+	}
+
+	/** Validate API Response for NegativeScenarios
+	 * @param response
+	 * @param status
+	 * @author Shalini Mahavratayajula
+	 */
+	public void verifyResponseStatus(String status,Response response) {
+		Assert.assertTrue(Integer.parseInt(status)==response.getStatusCode(),"Incorrect status code");
+		Log.Comment("Validated the Status Code");
+
 	}
 }
