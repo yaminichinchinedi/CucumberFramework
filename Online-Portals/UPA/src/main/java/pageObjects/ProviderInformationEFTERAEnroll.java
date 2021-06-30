@@ -223,6 +223,8 @@ public class ProviderInformationEFTERAEnroll {
 		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 		String expectedText = "To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		// Element.verifyTextPresent(txtSecurity, expectedText);
+		
+
 
 		if (enrollmentInfoPageObj.getEnrollType().equals("BS"))
 			Element.enterData(bsName, provName, "Enter provider name as :" + provName, "providerName");
@@ -253,6 +255,8 @@ public class ProviderInformationEFTERAEnroll {
 				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
 				"businessPhoneExt");
 
+
+
 		enrollmentInfoPageObj.setBusinessName(provName);
 		enrollmentInfoPageObj.setStreet(streetName);
 		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
@@ -262,6 +266,7 @@ public class ProviderInformationEFTERAEnroll {
 		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
 		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
 		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
+		
 		// Element.click(chkOther, "Other sub checkbox");
 
 		// Element.click(btnContinue, "Continue button");

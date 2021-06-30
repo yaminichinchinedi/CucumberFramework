@@ -42,5 +42,15 @@ public class CSREditEnrollment extends TestBase {
     	editEnrollment.clickPayersTab();
     	editEnrollment.verifyPaymentMethod(payerName, tinType);
     }
+    
+    @Then("^User Edit organization information$")
+    public void user_Edit_organization_information() throws Throwable {
+        editEnrollment.editOrganizationInfo();
+    }
+    @Then("^User Click on Print Enrollment Form$")
+   	public void user_Click_on_Print_Enrollment_Form() throws Throwable {
+       	editEnrollment.enrollmentPDF();
+   	}
+
 
 }
