@@ -1240,11 +1240,13 @@ public void verifyFailedPaymentPopUp()
 	   int size=0;
 	   WebElement headerRow=null;
 	   if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
+		   Element.waitForPresenceOfElementLocated(testConfig, By.xpath("/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr"), 5);
 		   searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
 		   if (!searchResultRows.isEmpty()) {
 			   size=searchResultRows.get(0).findElements(By.tagName("td")).size();
 		   }
 	   }else{
+		   Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[1]"), 5);
 		   headerRow=Element.findElement(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[1]");
 		   
 		   if(headerRow!=null)
@@ -1273,11 +1275,13 @@ public void verifyFailedPaymentPopUp()
 		WebElement dataRow=null;
 		Browser.wait(testConfig, 2);
 		if("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))){
+			Element.waitForPresenceOfElementLocated(testConfig, By.xpath("/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr"), 5);
 			searchResultRows=Element.findElements(testConfig, "xpath", "/html/body/table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
 			if (!searchResultRows.isEmpty()) {
 				size=searchResultRows.get(0).findElements(By.tagName("td")).size();
 			}
 		}else{
+			Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[2]"), 5);
 			dataRow=Element.findElement(testConfig, "xpath", "//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr[2]");
 			if(dataRow!=null)
 				size=dataRow.findElements(By.tagName("td")).size();
