@@ -250,5 +250,24 @@ Examples:
         |    searchBy         |  credentials  | usertype|  payer     | paymentFrom| paymentTo|
         |     Provider_Admin  |   PROV_Admin  |  PROV   | UMR Inc    | ACH        | None     |
         |     Provider_Admin  |   PROV_Admin  |  PROV   | UMR Inc    | None       | ACH      |
+ 
+ #Author:Sai
+@UPAUS3501237 @UPA2021_PI03_01
+Scenario Outline: Online enrollment PDF - Provider Edit 
+ Given User navigates to UPA portal and enters "<credentials>" and login
+ And Clicks on Maintain Enrollment Tab
+ And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+ And Clicks on Edit button
+ And Verify Org,Payer and Bank Account Tabs are displayed
+ Then Edit organization information
+ Then User Clicks on Print Enrollment Form 
+
+
+ Examples:
+      | credentials | userType | portalAccess | tinType | searchCriteria       |
+      | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
+      | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
+      | PROV_Admin  | PROV     | Premium      | AV      | PremiumOrStandardTIN |
+
      
      

@@ -15,3 +15,23 @@ Feature: Maintain Enrollment
 	#		|    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	payer |
 	#		|   		Super	 	  | 		PROV		|		ActiveTin 	   |		 Premium		|		AO		|	VPay  |
 	#		|   		Super	 	  | 		PROV		|		ActiveTin   	 |		 Premium		|		VO		|	VPay  |
+	
+#Author:Sai
+
+@CSRUS3501237 @CSR2021_PI03_01
+Scenario Outline: Online enrollment PDF - Provider Edit 
+  Given User navigates to CSR portal and enters "<credentials>" and login
+	Then User clicks on Create/Maintain Enrollment link
+  Then User enters "<userType>" and active "<TIN>" based on "<payMethodCode>" and "<enrollmentStatusCode>"in Create/Maintain Enrollment page and navigate to edit enrollment page.
+  Then User Edit organization information 
+  Then User Click on Print Enrollment Form 
+
+  Examples:
+
+        |   credentials     |    userType   |  TIN | payMethodCode |   enrollmentStatusCode |
+        |      Super        |    PROV       |   AO |      ACH      |          A             | 
+        |      Super        |    PROV       |   VO |      ACH      |          A             |  
+        |      Super        |    PROV       |   AV |      ACH      |          A             |   
+        
+
+	
