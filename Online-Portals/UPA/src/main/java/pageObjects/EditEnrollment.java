@@ -431,20 +431,12 @@ public class EditEnrollment {
 	@FindBy(name="btnYes")
 	WebElement YesButton;
 	
-	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']/div[1]/p[1]")
-	WebElement confirmHeaderTxt;
+	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']")
+	WebElement popupTxt;
+		
+	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']//div[2]")
+	WebElement popTxtVO;
 	
-	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']/div[1]/p[2]")
-	WebElement confirmParagraphTxt;
-	
-	@FindBy(xpath=" //*[@id='chgPaymentMethodConfirmationModal']/div[2]/p[1]")
-	WebElement paymentHeaderTxt;
-	
-	@FindBy(xpath=" //*[@id='chgPaymentMethodConfirmationModal']/div[2]/p[2]")
-	WebElement paymentParagraphTxt;
-	
- 	
-
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
@@ -1207,17 +1199,16 @@ public class EditEnrollment {
 	
 		if(tinType.equals("AO")) {
 			Element.click(VCP, "Change to VCP");
-			Helper.compareEquals(testConfig, "Header message", "Are you sure?", confirmHeaderTxt.getText().trim());
-			Helper.compareEquals(testConfig, "Paragraph message", "You've changed your payment method to Virtual Card Payments (VCP). To confirm this change select Yes. To return your payment method to ACH select Cancel.", confirmParagraphTxt.getText().trim());
+			Helper.compareEquals(testConfig, "pop-up text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.popupText").trim(), popupTxt.getText().trim());
 			Element.click(YesBtn, "Yes button");
 			}
+
 		else if (tinType.equals("VO")) {
 			int rowNo = 1;
 			TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 			 Element.click(ACH, "Change to ACH");
 			 Browser.wait(testConfig, 2);
-			 Helper.compareEquals(testConfig, "Header message", "Your payment method change has not been saved.", paymentHeaderTxt.getText().trim());
-			 Helper.compareEquals(testConfig, "Paragraph message", "Your request to change the payment method to ACH is not complete. Please select the continue button and then follow the instructions to add your bank account information.", paymentParagraphTxt.getText().trim());
+			 Helper.compareEquals(testConfig, "pop-up text", TestBase.contentMessages.getProperty("prov.admin.premium.vo.invoicesOptumPaySolutions.popupText").trim(), popTxtVO.getText().trim());
 			 Element.click(continueBtn, "Continue to Bank Account(s)");
 			 Element.click(btnChngBankData, "Change Bank Data");
 			 Browser.wait(testConfig, 2);
