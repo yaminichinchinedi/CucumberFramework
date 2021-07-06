@@ -209,6 +209,23 @@ public class EditEnrollmentSteps extends TestBase {
 	public void user_Clicks_on_Print_Enrollment_Form() throws Throwable {
     	editEnrollment.enrollmentPDF();
 	}
+    @Then("^Clicks on Payers tab$")
+    public void clicks_on_Payers_tab() throws Throwable {
+    	editEnrollment.clickOnPayersTab();
+    }
+    
+    @Then("^User clicks on Edit button$")
+    public void user_clicks_on_Edit_button() throws Throwable {
+    	editEnrollment=maintainEnrollment.clickEditButn();  
+    }
+
+    @Then("^Change payment method preferences \"([^\"]*)\"$")
+    public void change_payment_method_preferences(String tinType) throws Throwable {
+        editEnrollment.changePaymentMethod(tinType);
+    }
+
+    
+
     
 
 
