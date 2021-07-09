@@ -2287,10 +2287,10 @@ public class OptumPaySolution {
 		//Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
 		Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
 		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
-		for(String option : options)
+		/*for(String option : options)
 		{
-			System.out.println(option);
-		}
+			System.out.println(option); 
+		}*/
 
 	}
 
@@ -2301,7 +2301,7 @@ public class OptumPaySolution {
 	Element.click(testConfig, lnkHome, "Home", 3);
 		}
 	//Piyush
-	public void Verify_Waivefull_and_partial_amount() {
+	public void VerifyWaivefullAndPartialAmount() {
 
 		String TotalAmount;
 		TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
@@ -2316,9 +2316,9 @@ public class OptumPaySolution {
 
 		}
 	//Piyush
-	public void Fetch_ProviderTIN_WaivePartial_WaiveTotal_FromDB()
+	public void FetchProviderTINWaivePartialWaiveTotalFromDB()
 	{
-		String query = QUERY.Waive_Partial_amount;
+		String query = QUERY.WAIVE_PARTIAL_AMOUNT;
 			Map tinNumbers = null;
 			tinNumbers = DataBase.executeSelectQuery(testConfig, query, 1);
 			try {
@@ -2331,7 +2331,7 @@ public class OptumPaySolution {
 				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
 						testConfig);
 			}
-			String Full_query = QUERY.Waive_Full_Amt;
+			String Full_query = QUERY.WAIVE_FULL_AMOUNT;
 			Full_query = Full_query.replace("$ReplaceTINNumber$", testConfig.getRunTimeProperty("tin"));
 
 			Map<String, String> FulltinNumbers = DataBase.executeSelectQuery(testConfig, Full_query, 1);
@@ -2349,11 +2349,10 @@ public class OptumPaySolution {
 }
 
 	//Piyush
-	public void verifySelect_Dropdown_Options(String reason) {
+	public void verifySelectDropdownOptions(String reason) {
 
 
-		//Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
-		Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
+		
 		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
 		for(String option : options)
 		{
@@ -2414,17 +2413,17 @@ public class OptumPaySolution {
 		}
 
 		//piyush
-		public void Select_Waive_Partail_amount()
+		public void SelectWaivePartailAmount()
 		{
 			Element.click(partialRadioBtn, "Waive Partial Radio button");
 
 		}
 		//piyush
-		public void Verify_Enter_partial_dollar_amount(){
+		public void VerifyEnterPartialDollarAmount(){
 			Element.verifyElementPresent(EnterPartialAmountText, "Enter Partial Amount Text Box");
 		}
 		//Piyush
-		public void Enter_Partial_Amount(String ErrorMessage_Expacted,String ScenarioType)
+		public void EnterPartialAmount(String ErrorMessage_Expacted,String ScenarioType)
 		{
 			String TotalAmount;
 			TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");

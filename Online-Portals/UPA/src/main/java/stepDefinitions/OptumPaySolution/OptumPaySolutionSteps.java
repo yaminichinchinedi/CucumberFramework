@@ -328,61 +328,62 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
       }
       
       @Then("^User verifies waive fees and clicks on waive fee button$")
-		public void verify_and_Click_WaiveFee() throws Throwable {
+		public void VerifyAndClickWaiveFee() throws Throwable {
 			optumPaySol.verifyAndClickWaiveFee();
 		}
       
       @Then("^User verifies waive fees$")
-		public void verify_WaiveFee() throws Throwable {
+		public void VerifyWaiveFee() throws Throwable {
 			optumPaySol.verifyWaiveFee();
 		}
       
       //Piyush
       @Then("^Verify Select Option to Waive Fees opens$")
-		public void verify_Select_Option_to_Waive_Fees_Window() throws Throwable {
+		public void VerifySelectOptionToWaiveFeesWindow() throws Throwable {
 			optumPaySol.verifyWaiveFeesWindow();
 		}
     
    
 	@Then("^Verify Waive full and partial amount$")
-	public void Verify_Waivefull_and_partial_amount()
+	public void VerifyWaiveFullAndPartialAmount()
 	{
-		optumPaySol.Verify_Waivefull_and_partial_amount();
+		optumPaySol.VerifyWaivefullAndPartialAmount();
 	}
 	
 	  //Piyush
     @Then("^Click on Home Link$")
-    public void Click_On_Home_Link(){
+    public void ClickOnHomeLink(){
   	  optumPaySol.ClickonHomeLink();
     }
 	@When("^User Fetch ProviderTIN , WaivePartial and WaiveTotal amount$")
-	public void Fetch_ProviderTIN_WaivePartial_WaiveTotal()
+	public void FetchProviderTINWaivePartialWaiveTotal()
 	{
-		optumPaySol.Fetch_ProviderTIN_WaivePartial_WaiveTotal_FromDB();
+		optumPaySol.FetchProviderTINWaivePartialWaiveTotalFromDB();
+		
 	}
       @Then("^Verify Select Option for waive fees \"([^\"]*)\" dropdown$")
-		public void verify_Select_Dropdown_Options(String reason) throws Throwable {
-			optumPaySol.verifySelect_Dropdown_Options(reason);
+		public void VerifySelectDropdownOptions(String reason) throws Throwable {
+			optumPaySol.verifySelectDropdownOptions(reason);
 		}
       
 		@Then("^User verifies accrued fees as 0.00$")
-		public void verify_accrued_fee_and_Check_WaiveFee() throws Throwable {
+		public void VerifyAccruedFeeAndCheckWaiveFee() throws Throwable {
 			optumPaySol.verifyAccruedFeeAndCheckWaiveFeeButton();
 		}
 		
 		@Then("^User clicks cancel button$")
-		public void user_clicks_cancel_button() throws Throwable {
+		public void UserClicksCancelButton() throws Throwable {
 			optumPaySol.clickCancelButton();
 		}
 
 		
 		@Then("^User selects waived fee reason \"([^\"]*)\" and click continue$")
-		public void user_select_waived_fee_reason_click_continue(String reason) throws Throwable {
+		public void UserSelectWaivedFeeReasonClickContinue(String reason) throws Throwable {
 			optumPaySol.selectWaivedFeeReason(reason);
 		}
 		//Piyush
 		@Then("^User selects waived fee reason \"([^\"]*)\" from dropdown$")
-		public void user_select_waived_fee_reason(String reason) throws Throwable {
+		public void UserSelectWaivedFeeReason(String reason) throws Throwable {
 			optumPaySol.selectWaivedFeeReasonOnly(reason);
 			if(reason.contains("Other"))
 			{
@@ -392,7 +393,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	
 		//Piyush
 		@Then("^User Provides \"([^\"]*)\" in message box for \"([^\"]*)\" if \"([^\"]*)\" is other$")
-		public void User_Enter_Message_in_Text(String ReasonMessage, String ScenarioType,String waivedFeeReason)
+		public void UserEnterMessageInText(String ReasonMessage, String ScenarioType,String waivedFeeReason)
 		{
 			if(waivedFeeReason.contains("Other") && ScenarioType.equalsIgnoreCase("PositiveMessage"))
 			{
@@ -406,7 +407,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		
 		//Piyush
 		@Then("^Verify Continue button is enable for \"([^\"]*)\" mentioned$")
-		public void User_Enter_Message_in_Text(String ScenarioType)
+		public void UserEnterMessageInText(String ScenarioType)
 		{
 			if(ScenarioType.equalsIgnoreCase("PositiveMessage"))
 				optumPaySol.VerifyContinueEnable();
@@ -424,14 +425,15 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		}
 		
 		@Then("^User Selects Waive Partail amount radio button$")
-		public void user_Select_Waive_Partail_amount() throws Throwable {
-			optumPaySol.Select_Waive_Partail_amount();
+		public void UserSelectWaivePartailAmount() throws Throwable {
+			optumPaySol.SelectWaivePartailAmount();
 		}
 		@Then("^Verify that field is displayed called Enter partial dollar amount and Verify \"([^\"]*)\" as per \"([^\"]*)\" data in text box$")
 		//@Then("^Verify that field is displayed called Enter partial dollar amount and Enter data as \"([^\"]*)\" in text box$")
-		public void Verify_field_Enter_partial_dollar_amount(String ErrorMessage,String ScenarioType) throws Throwable {
-			optumPaySol.Verify_Enter_partial_dollar_amount();
-			optumPaySol.Enter_Partial_Amount(ErrorMessage,ScenarioType);
+		public void VerifyFieldEnterPartialDollarAmount(String ErrorMessage,String ScenarioType) throws Throwable {
+			
+			optumPaySol.VerifyEnterPartialDollarAmount();
+			optumPaySol.EnterPartialAmount(ErrorMessage,ScenarioType);
 		}
 		
 		@Then("^User verify waive fees button disabled$")

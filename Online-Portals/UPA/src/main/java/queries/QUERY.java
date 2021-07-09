@@ -375,13 +375,13 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"    AND ps.PRTL_PRDCT_REC_STS_CD ='PS'\n" +
 			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur";
 	
-	public static final String Waive_Full_Amt = "Select PROV_TIN_NBR,sum(Total_DBT_Fee) as Total_Full_DBT_Fee from(\n"+
+	public static final String WAIVE_FULL_AMOUNT = "Select PROV_TIN_NBR,sum(Total_DBT_Fee) as Total_Full_DBT_Fee from(\n"+
 			"\tSelect PROV_TIN_NBR,Sum(DBT_FEE_ACCRD_AMT) as Total_DBT_Fee from OLE.DEBIT_FEE_ACCRD DFA\n"+ 
 			"\tgroup by PROV_TIN_NBR,SETL_DT\n"+
 			"\thaving SETL_DT Between CURRENT_DATE-(DAY(CURRENT_DATE)-1) and LAST_DAY(CURRENT_DATE)  and PROV_TIN_NBR = $ReplaceTINNumber$) as t group by PROV_TIN_NBR";
 
 
-	public static final String Waive_Partial_amount = "Select PROV_TIN_NBR,Sum(DBT_FEE_ACCRD_AMT) as Total_Partial_DBT_Fee from OLE.DEBIT_FEE_ACCRD DFA \n"+
+	public static final String WAIVE_PARTIAL_AMOUNT = "Select PROV_TIN_NBR,Sum(DBT_FEE_ACCRD_AMT) as Total_Partial_DBT_Fee from OLE.DEBIT_FEE_ACCRD DFA \n"+
 	"\tgroup by PROV_TIN_NBR,SETL_DT \n"+
 	"\thaving SETL_DT < CURRENT_DATE and SETL_DT >=CURRENT_DATE-(DAY(CURRENT_DATE)-1) and Sum(DBT_FEE_ACCRD_AMT)>0 and PROV_TIN_NBR in \n"+
 	"\t(Select PROV_TIN_NBR from OLE.DEBIT_FEE_ACCRD DFA \n"+
