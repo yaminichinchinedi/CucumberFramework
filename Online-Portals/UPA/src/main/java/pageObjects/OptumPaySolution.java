@@ -2271,7 +2271,11 @@ public class OptumPaySolution {
         Element.verifyElementNotEnabled(continueButton,"Continue Button");
     }
     
-    //Piyush
+    
+   /**
+    * Verify Waive Fee button is enabled
+    * @author piyush bagdiya
+    */
     public void verifyWaiveFee() {
 
 		Element.verifyElementPresent(waiveFeeButton, "Select Option to waive fees window is closed, waive Fee Button is present");
@@ -2280,7 +2284,10 @@ public class OptumPaySolution {
 
 	}
 
-	//Piyush
+/**
+ * This function is to verify Waive Fees Window
+ * @author piyush bagdiya
+ */
 	public void verifyWaiveFeesWindow() {
 
 
@@ -2295,28 +2302,36 @@ public class OptumPaySolution {
 	}
 
 
-	//Piyush
-		public void ClickonHomeLink() {
+	
+	/**Click on Home Link
+	 * @author piyush bagdiya
+	 */
+		public void clickOnHomeLink() {
 
 	Element.click(testConfig, lnkHome, "Home", 3);
 		}
-	//Piyush
-	public void VerifyWaivefullAndPartialAmount() {
+	/** Verify Total amount present on waive full and waive partial screen
+	 * @author piyush bagdiya
+	 */
+	public void verifyWaivefullAndPartialAmount() {
 
 		String TotalAmount;
-		TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+		TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
 		TotalAmount = TotalAmount.substring(15);
 		Helper.compareEquals(testConfig, "Total for Waive Full amount which is sum of processed and settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Full_DBT_Fee"), TotalAmount);
 
 		Element.click(partialRadioBtn, "Waive Partial Radio button");
 
-		TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+		TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
 		TotalAmount = TotalAmount.substring(15);
 		Helper.compareEquals(testConfig, "Total for Waive Partail amount which is Settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Partial_DBT_Fee"), TotalAmount);	
 
 		}
-	//Piyush
-	public void FetchProviderTINWaivePartialWaiveTotalFromDB()
+	/**
+	 * this function fetch TIN number for condition satisfyinh waive partial and waive total amount 
+	 * @author piyush Bagdiya
+	 */
+	public void fetchProviderTINWaivePartialWaiveTotalFromDB()
 	{
 		String query = QUERY.WAIVE_PARTIAL_AMOUNT;
 			Map tinNumbers = null;
@@ -2348,7 +2363,11 @@ public class OptumPaySolution {
 
 }
 
-	//Piyush
+/**
+ * This functions is to verify dropdown options for reason
+ * @param reason contains dropdown options present
+ * @author piyush bagdiya
+ */
 	public void verifySelectDropdownOptions(String reason) {
 
 
@@ -2362,14 +2381,21 @@ public class OptumPaySolution {
 
 	}
 	
-	//Piyush
+	/**
+	 * This function select waive fee reason from downdown
+	 * @param reason is the option to select from dropdown
+	 * @author piyush bagdiya
+	 */
 	public void selectWaivedFeeReasonOnly(String reason) {
 		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee: "+reason);
 
 	}
 
-	//Piyush
-		public void VerifySelectOptionreasonText() {
+	/**
+	 * This function Verify selected reason text option 
+	 * @author piyush bagdiya
+	 */
+		public void verifySelectOptionReasonText() {
 			Map objAttribute;
 			Element.verifyElementPresent(SelectOptionreasonText, "Select Option reason Text for Other reason");
 			objAttribute = Element.getAllAttributes(testConfig, SelectOptionreasonText, "Select Option reason Text for Other reason");
@@ -2381,8 +2407,12 @@ public class OptumPaySolution {
 			//Max 150 characters
 		}
 
-		//Piyush
-		public void VerifyPositiveScenarioForMessage(String ReasonText) {
+		/**
+		 * This function Verify positive scenario message for mandatory fields
+		 * @author piyush bagdiya
+		 * @param ReasonText is the error message to verify
+		 */
+		public void verifyPositiveScenarioForMessage(String ReasonText) {
 			int intStringLength = ReasonText.length();
 			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
 			Element.verifyElementPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is present before entering data");
@@ -2392,8 +2422,12 @@ public class OptumPaySolution {
 
 		}
 
-		//Piyush
-		public void VerifyNegativeScenarioForMessage(String ReasonText) {
+		/**
+		 * This function Verify negative scenario message for mandatory fields
+		 * @author piyush bagdiya
+		 * @param ReasonText is the error message to verify
+		 */
+		public void verifyNegativeScenarioForMessage(String ReasonText) {
 			int intStringLength = ReasonText.length();
 			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
 			Element.verifyElementNotPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is not present before entering message of length "+intStringLength);
@@ -2405,28 +2439,42 @@ public class OptumPaySolution {
 		}
 
 
-		//Piyush
-		public void VerifyContinueEnable()
+		/**
+		 * Verify continue button is Enabled
+		 * @author piyush bagdiya
+		 */
+		public void verifyContinueEnable()
 		{
 			Element.click(waivedFeeReason, "Reason Drop down");
 			Helper.compareEquals(testConfig, "Waive Continue Button is enabled", true, wavieContBtn.isEnabled());
 		}
 
-		//piyush
-		public void SelectWaivePartailAmount()
+		/**
+		 * This function select waive partial amount
+		 * @author piyush bagdiya
+		 */
+		public void selectWaivePartailAmount()
 		{
 			Element.click(partialRadioBtn, "Waive Partial Radio button");
 
 		}
-		//piyush
-		public void VerifyEnterPartialDollarAmount(){
+		/**
+		 * This function verifies Enter Partial Amount Text Box
+		 * @author piyush bagdiya
+		 */
+		public void verifyEnterPartialDollarAmount(){
 			Element.verifyElementPresent(EnterPartialAmountText, "Enter Partial Amount Text Box");
 		}
-		//Piyush
-		public void EnterPartialAmount(String ErrorMessage_Expacted,String ScenarioType)
+		/**
+		 * Enter partial amount and verify different scenarios
+		 * @param ErrorMessage_Expacted contains the error message
+		 * @param ScenarioType it contains positive and negative scenario
+		 * @author piyush bagdiya
+		 */
+		public void enterPartialAmount(String ErrorMessage_Expacted,String ScenarioType)
 		{
 			String TotalAmount;
-			TotalAmount = Element.GetTextPresent(TotalAmountText,"Total Amount Text");
+			TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
 			TotalAmount = TotalAmount.substring(15);
 			double dblTotalAmount = Double.parseDouble(TotalAmount);
 
@@ -2436,7 +2484,7 @@ public class OptumPaySolution {
 				dblTotalAmount = dblTotalAmount/2;
 				String ValueToEnter = String.valueOf(dblTotalAmount);
 				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
 
 				if(ErrorMessage.equalsIgnoreCase("")) {
 					Log.Pass("No error message for Valid amount", ErrorMessage, ErrorMessage);
@@ -2449,7 +2497,7 @@ public class OptumPaySolution {
 				dblTotalAmount = dblTotalAmount+10;
 				String ValueToEnter = String.valueOf(dblTotalAmount);
 				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
 
 			if(ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
 				Log.Pass("Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
@@ -2460,13 +2508,13 @@ public class OptumPaySolution {
 			}else if(ScenarioType.equalsIgnoreCase("NegativeValue"))
 			{
 				Element.enterData(EnterPartialAmountText, "-1", "Enter data" + "-1" + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
 
 				Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
 
 			
 			Element.enterData(EnterPartialAmountText, "0", "Enter data" + "0" + "in Partial Amount Text Box", "Partial Amount Text Box");
-			ErrorMessage = Element.GetTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+			ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
 
 			Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
 			

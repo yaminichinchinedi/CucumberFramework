@@ -347,18 +347,18 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	@Then("^Verify Waive full and partial amount$")
 	public void VerifyWaiveFullAndPartialAmount()
 	{
-		optumPaySol.VerifyWaivefullAndPartialAmount();
+		optumPaySol.verifyWaivefullAndPartialAmount();
 	}
 	
 	  //Piyush
     @Then("^Click on Home Link$")
     public void ClickOnHomeLink(){
-  	  optumPaySol.ClickonHomeLink();
+  	  optumPaySol.clickOnHomeLink();
     }
 	@When("^User Fetch ProviderTIN , WaivePartial and WaiveTotal amount$")
 	public void FetchProviderTINWaivePartialWaiveTotal()
 	{
-		optumPaySol.FetchProviderTINWaivePartialWaiveTotalFromDB();
+		optumPaySol.fetchProviderTINWaivePartialWaiveTotalFromDB();
 		
 	}
       @Then("^Verify Select Option for waive fees \"([^\"]*)\" dropdown$")
@@ -387,7 +387,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 			optumPaySol.selectWaivedFeeReasonOnly(reason);
 			if(reason.contains("Other"))
 			{
-				optumPaySol.VerifySelectOptionreasonText();
+				optumPaySol.verifySelectOptionReasonText();
 			}
 		}
 	
@@ -397,10 +397,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		{
 			if(waivedFeeReason.contains("Other") && ScenarioType.equalsIgnoreCase("PositiveMessage"))
 			{
-				optumPaySol.VerifyPositiveScenarioForMessage(ReasonMessage);
+				optumPaySol.verifyPositiveScenarioForMessage(ReasonMessage);
 			}	
 			else if(waivedFeeReason.contains("Other") && ScenarioType.equalsIgnoreCase("NegativeMessage")) {
-				optumPaySol.VerifyNegativeScenarioForMessage(ReasonMessage);
+				optumPaySol.verifyNegativeScenarioForMessage(ReasonMessage);
 				
 			}
 		}
@@ -410,7 +410,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		public void UserEnterMessageInText(String ScenarioType)
 		{
 			if(ScenarioType.equalsIgnoreCase("PositiveMessage"))
-				optumPaySol.VerifyContinueEnable();
+				optumPaySol.verifyContinueEnable();
 			
 		}
 		
@@ -426,14 +426,14 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		
 		@Then("^User Selects Waive Partail amount radio button$")
 		public void UserSelectWaivePartailAmount() throws Throwable {
-			optumPaySol.SelectWaivePartailAmount();
+			optumPaySol.selectWaivePartailAmount();
 		}
 		@Then("^Verify that field is displayed called Enter partial dollar amount and Verify \"([^\"]*)\" as per \"([^\"]*)\" data in text box$")
 		//@Then("^Verify that field is displayed called Enter partial dollar amount and Enter data as \"([^\"]*)\" in text box$")
 		public void VerifyFieldEnterPartialDollarAmount(String ErrorMessage,String ScenarioType) throws Throwable {
 			
-			optumPaySol.VerifyEnterPartialDollarAmount();
-			optumPaySol.EnterPartialAmount(ErrorMessage,ScenarioType);
+			optumPaySol.verifyEnterPartialDollarAmount();
+			optumPaySol.enterPartialAmount(ErrorMessage,ScenarioType);
 		}
 		
 		@Then("^User verify waive fees button disabled$")

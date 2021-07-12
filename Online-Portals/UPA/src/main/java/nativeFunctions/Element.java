@@ -495,7 +495,7 @@ import main.java.reporting.Log;
 		}
 	
 		
-	public static String GetTextPresent(WebElement element,String expectedText)
+	public static String getTextPresent(WebElement element,String expectedText)
 	{
 		String actualText = null;
 		try{
