@@ -355,12 +355,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
     public void ClickOnHomeLink(){
   	  optumPaySol.clickOnHomeLink();
     }
-	@When("^User Fetch ProviderTIN , WaivePartial and WaiveTotal amount$")
-	public void FetchProviderTINWaivePartialWaiveTotal()
-	{
-		optumPaySol.fetchProviderTINWaivePartialWaiveTotalFromDB();
-		
-	}
+	
       @Then("^Verify Select Option for waive fees \"([^\"]*)\" dropdown$")
 		public void VerifySelectDropdownOptions(String reason) throws Throwable {
 			optumPaySol.verifySelectDropdownOptions(reason);

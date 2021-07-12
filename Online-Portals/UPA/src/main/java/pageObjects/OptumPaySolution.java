@@ -2327,41 +2327,7 @@ public class OptumPaySolution {
 		Helper.compareEquals(testConfig, "Total for Waive Partail amount which is Settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Partial_DBT_Fee"), TotalAmount);	
 
 		}
-	/**
-	 * this function fetch TIN number for condition satisfyinh waive partial and waive total amount 
-	 * @author piyush Bagdiya
-	 */
-	public void fetchProviderTINWaivePartialWaiveTotalFromDB()
-	{
-		String query = QUERY.WAIVE_PARTIAL_AMOUNT;
-			Map tinNumbers = null;
-			tinNumbers = DataBase.executeSelectQuery(testConfig, query, 1);
-			try {
-				Log.Comment("Tin retreived from query for " + tinNumbers.get("PROV_TIN_NBR").toString());
-				testConfig.putRunTimeProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
-				testConfig.putRunTimeProperty("Total_Partial_DBT_Fee", tinNumbers.get("TOTAL_PARTIAL_DBT_FEE").toString());
-				}
-			catch (Exception e) {
-				testConfig.putRunTimeProperty("AlreadyFailed", "yes");
-				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
-						testConfig);
-			}
-			String Full_query = QUERY.WAIVE_FULL_AMOUNT;
-			Full_query = Full_query.replace("$ReplaceTINNumber$", testConfig.getRunTimeProperty("tin"));
-
-			Map<String, String> FulltinNumbers = DataBase.executeSelectQuery(testConfig, Full_query, 1);
-			try {
-				Log.Comment("Tin retreived from query for " + FulltinNumbers.get("PROV_TIN_NBR").toString());
-				testConfig.putRunTimeProperty("tin", FulltinNumbers.get("PROV_TIN_NBR").toString());
-				testConfig.putRunTimeProperty("Total_Full_DBT_Fee", FulltinNumbers.get("TOTAL_FULL_DBT_FEE").toString());
-				}
-			catch (Exception e) {
-				testConfig.putRunTimeProperty("AlreadyFailed", "yes");
-				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
-						testConfig);
-			}
-
-}
+	
 
 /**
  * This functions is to verify dropdown options for reason
