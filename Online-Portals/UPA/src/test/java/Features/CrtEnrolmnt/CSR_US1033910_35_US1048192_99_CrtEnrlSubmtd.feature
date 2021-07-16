@@ -142,4 +142,53 @@ Feature:Create Enrollment Home Page Validations
         	
           	
         	      
+@CSRUS2952537AO
+	Scenario Outline: CSRUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators AO enrollment
+   
+   	When ABN Validator Switch is updated to 'Y'
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+		Then User Select User Type as "<userType>" and enter unique TIN and click Search
+		Then User select Yes button of TIN not enrolled page
+		Then User select User Type Enrollment as "<tinType>" and click continue button
+		Then User sets business phone
+		Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+		Then User fills all the information on Identify Administrators page and click continue
+		When RTI API server is up
+		Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+    And Validate OrgInfo Indicators are saved in Database on Enrollment Page
+    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
+   
+   Examples:
+
+          |   credentials     |  tinType   |userType| 
+          |    Super          |	AO		  	 | PROV   |
+          
+ 	
+ 	@CSRUS2952537VO			      
+	Scenario Outline: CSRUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
+	
+		When ABN Validator Switch is updated to 'Y'
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+		Then User Select User Type as "<userType>" and enter unique TIN and click Search
+		Then User select Yes button of TIN not enrolled page
+		Then User select User Type Enrollment as "<tinType>" and click continue button 
+		Then User sets business phone
+		Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+    Then User fills all the information on Identify Administrators page and click continue to W9
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+    And Validate OrgInfo Indicators are saved in Database on Enrollment Page
+    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
+ 
+    		Examples:
+
+          |   credentials   |  tinType   |userType| 
+        	|    Super        |	VO		  	 | PROV 	|
+   
+         	             	
+                	           	
  

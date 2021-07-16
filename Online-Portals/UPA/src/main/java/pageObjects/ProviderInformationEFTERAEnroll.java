@@ -96,6 +96,13 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "bsName")
 	WebElement bsName;
 
+	@FindBy(xpath = "(//ul[contains(@class,'autocomplete ')]/li[1]/div)[1]")
+	WebElement autoPopulateProviderNameList;
+
+	
+	@FindBy(xpath = "(//ul[contains(@class,'autocomplete ')]/li[1]/div)[2]")
+	WebElement autoPopulateStreetList;
+	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
 	WebElement txtSecurity;
 
@@ -836,5 +843,92 @@ public class ProviderInformationEFTERAEnroll {
 
 		
 	}
+
+	
+	/** This method auto populates BusinessName(provName) and Business Address --- EPIM User stories
+	 * 
+	 * @return
+	 * @throws IOException
+	 * @throws InterruptedException 
+	 */
+	public ValidateEFTERAProviderInfo fillProviderOrgInfoWithAutoPopulatedInfo() throws IOException, InterruptedException {
+		int rowNo = 1;
+		String provName = "MAY";
+		String streetName =Helper.generateRandomAlphaNumericString(4);
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		String expectedText = "To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
+		
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+	        Thread.sleep(2000);
+	      
+	        Element.clickByJS(testConfig,autoPopulateProviderNameList, "Provider Name");	
+	        
+	    	Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+			enrollmentInfoPageObj.setProvType("Hospital/Facility");
+			Element.click(chkOther, "Other sub checkbox");
+			enrollmentInfoPageObj.setMrktType("Other");
+	        
+			
+		for(int i=0;i<10;i++) {
+			 Thread.sleep(2000);
+			Element.enterData(street, streetName, "Enter street name as : " + streetName,"Street");
+			 Thread.sleep(3000);
+			 if(autoPopulateStreetList.isDisplayed()) {
+		        Element.clickByJS(testConfig,autoPopulateStreetList, "Street Name");	
+		        break;
+			 }else {
+				 streetName = Helper.generateRandomAlphaNumericString(4);
+				 i++;
+			 }
+			}
+		
+		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
+				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
+				"businessPhone1");
+		Element.enterData(businessPhone2, System.getProperty("BusinessPhone2"),
+				"Entered business phone2 in second textbox as : " + System.getProperty("BusinessPhone2"),
+				"businessPhone2");
+		Element.enterData(businessPhone3, System.getProperty("BusinessPhone3"),
+				"Entered business phone3 in third textbox as : " + System.getProperty("BusinessPhone3"),
+				"businessPhone3");
+		Element.enterData(businessPhoneExt, System.getProperty("BusinessPhoneExt"),
+				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
+				"businessPhoneExt");
+
+		enrollmentInfoPageObj.setBusinessName(provName);
+		enrollmentInfoPageObj.setStreet(streetName);
+		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
+		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
+		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
+		enrollmentInfoPageObj.setBusinessPhone1(System.getProperty("BusinessPhone1"));
+		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
+		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
+		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
+		
+		Browser.wait(testConfig, 5);
+		if (enrollmentInfoPageObj.getEnrollType().equals("HO"))
+			// Same xpath has been used both for Continue and save changes button.
+			if (testConfig.driver.getCurrentUrl().contains("CSR"))
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"),
+						"Continue/Save Changes Button CSR");
+			else
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"),
+						"Continue/Save Changes Button");
+		else {
+			// Element.click(Element.findElement(testConfig, "xpath",
+			// "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
+			if (testConfig.driver.getCurrentUrl().contains("CSR"))
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"),
+						"Continue/Save Changes Button CSR");
+			else
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"),
+						"Continue/Save Changes Button");
+
+		}
+
+		return new ValidateEFTERAProviderInfo(testConfig);
+
+	}
+
 
 }
