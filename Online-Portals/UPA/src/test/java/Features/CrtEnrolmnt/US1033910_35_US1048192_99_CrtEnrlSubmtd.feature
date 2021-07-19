@@ -144,7 +144,7 @@ Feature: Create Enrollment Home Page Validations
 		| Enrollment Type |
 	  |       AO        |			
 	Then User sets business phone
-	Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+	Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
 	Then User fills all the information on Identify Administrators page and click continue
 	Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
   Then User uploads the WNine form and click continue
@@ -153,8 +153,12 @@ Feature: Create Enrollment Home Page Validations
 
      Examples:
 
-          |   credentials     |
-          |    Super          |
+          |   credentials     | checkAutoPopulate|
+          |    Super          |busNameYAndAddrY |
+          |    Super          |busNameYAndAddrN |
+          |    Super          |busNameNAndAddrY |
+          |    Super          |busNameNAndAddrN | 
+ 
                 	    
  
  @UPAUS2952537VO							      
@@ -167,15 +171,18 @@ Feature: Create Enrollment Home Page Validations
 		| Enrollment Type |
 	  |       VO        |			
 	Then User sets business phone
-	Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+	Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
 	Then User fills all the information on Identify Administrators page and click continue to W9
 	Then User uploads the WNine form and click continue
 	And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
   And Validate OrgInfo Indicators are saved in Database on Enrollment Page
   And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
 		
-	  Examples:
+	   Examples:
 
-          |   credentials     |
-          |    Super          |         
+          |   credentials     | checkAutoPopulate|
+          |    Super          |busNameYAndAddrY |
+          |    Super          |busNameYAndAddrN |
+          |    Super          |busNameNAndAddrY |
+          |    Super          |busNameNAndAddrN | 
  

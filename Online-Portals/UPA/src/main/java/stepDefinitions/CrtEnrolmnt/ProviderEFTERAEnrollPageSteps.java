@@ -245,10 +245,10 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		new ValidateEnrollmentTypePage(testConfig).verifyEnrolledActiveBSTIN();
 	}
 
-	@Then("^User fills the auto populated information for BusinessNameAddress and click on Continue$")
-	public void user_fills_auto_populated_information_and_click_on_Continue() throws Throwable {
+	@Then("^User fills the auto populated information for BusinessNameAddress \"([^\"]*)\" and click on Continue$")
+	public void user_fills_auto_populated_information_and_click_on_Continue(String checkAutoPopulate) throws Throwable {
 		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
-		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfoWithAutoPopulatedInfo();
+		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfoWithAutoPopulatedInfo(checkAutoPopulate);
 	    
 	}
 }

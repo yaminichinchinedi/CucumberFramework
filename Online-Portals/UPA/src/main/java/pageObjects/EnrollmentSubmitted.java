@@ -181,11 +181,12 @@ public class EnrollmentSubmitted  {
 		
 		testConfig.putRunTimeProperty("tin",enrollmentInfoPageObj.getTin());
 		Map<String,String> orgInfo=DataBase.executeSelectQuery(testConfig, QUERY.ORGINFO_IND, 1);
-				
+		
+			
 		//Organization Info Indicators are set to 'Y' If the values are auto populated else it is 'N'
-		Helper.compareEquals(testConfig, "Org Name Ind","Y", orgInfo.get("ORG_NAME_IND"));
+		Helper.compareEquals(testConfig, "Org Name Ind",testConfig.getRunTimeProperty("BusinessNameInd"), orgInfo.get("ORG_NAME_IND"));
 		Helper.compareEquals(testConfig, "Business Phone Ind","N", orgInfo.get("BUSINESS_PHONE_IND"));
-		Helper.compareEquals(testConfig, "Business Address Ind","Y", orgInfo.get("BUSINESS_ADDR_IND"));
+		Helper.compareEquals(testConfig, "Business Address Ind",testConfig.getRunTimeProperty("BusinessAddressInd"), orgInfo.get("BUSINESS_ADDR_IND"));
 		return this;
 	}
 	

@@ -152,7 +152,7 @@ Feature:Create Enrollment Home Page Validations
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "<tinType>" and click continue button
 		Then User sets business phone
-		Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+		Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
 		Then User fills all the information on Identify Administrators page and click continue
 		When RTI API server is up
 		Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
@@ -163,8 +163,12 @@ Feature:Create Enrollment Home Page Validations
    
    Examples:
 
-          |   credentials     |  tinType   |userType| 
-          |    Super          |	AO		  	 | PROV   |
+          |   credentials     |  tinType   |userType| checkAutoPopulate|
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrN |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |
+      
           
  	
  	@CSRUS2952537VO			      
@@ -177,18 +181,18 @@ Feature:Create Enrollment Home Page Validations
 		Then User select Yes button of TIN not enrolled page
 		Then User select User Type Enrollment as "<tinType>" and click continue button 
 		Then User sets business phone
-		Then User fills the auto populated information for BusinessNameAddress and click on Continue	
+		Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
     Then User fills all the information on Identify Administrators page and click continue to W9
     Then User uploads the WNine form and click continue
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
     And Validate OrgInfo Indicators are saved in Database on Enrollment Page
     And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
  
-    		Examples:
+    Examples:
 
-          |   credentials   |  tinType   |userType| 
-        	|    Super        |	VO		  	 | PROV 	|
-   
-         	             	
-                	           	
+          |   credentials     |  tinType   |userType| checkAutoPopulate|
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrN |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |         	           	
  

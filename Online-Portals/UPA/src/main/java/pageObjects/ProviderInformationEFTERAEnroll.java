@@ -100,7 +100,7 @@ public class ProviderInformationEFTERAEnroll {
 	WebElement autoPopulateProviderNameList;
 
 	
-	@FindBy(xpath = "(//ul[contains(@class,'autocomplete ')]/li[1]/div)[2]")
+	@FindBy(xpath = "//ul[@id='ui-id-2']/li/div")
 	WebElement autoPopulateStreetList;
 	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
@@ -851,14 +851,21 @@ public class ProviderInformationEFTERAEnroll {
 	 * @throws IOException
 	 * @throws InterruptedException 
 	 */
-	public ValidateEFTERAProviderInfo fillProviderOrgInfoWithAutoPopulatedInfo() throws IOException, InterruptedException {
+	public ValidateEFTERAProviderInfo fillProviderOrgInfoWithAutoPopulatedInfo(String checkAutoPopulate) throws IOException, InterruptedException {
 		int rowNo = 1;
-		String provName = "MAY";
-		String streetName =Helper.generateRandomAlphaNumericString(4);
+		
+	
+
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);	
 		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 		String expectedText = "To help ensure the security of your account, you must enter a physical address for your organization. PO Boxes are not allowed and cannot be used as your address of record. If you do attempt to use a PO Box, your enrollment may be delayed and may not be accepted.";
 		
-			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+		
+		if(checkAutoPopulate.equals("busNameYAndAddrY")) {
+			 provName = "MAY";
+			 streetName =Helper.generateRandomAlphaNumericString(4);
+		   Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
 	        Thread.sleep(2000);
 	      
 	        Element.clickByJS(testConfig,autoPopulateProviderNameList, "Provider Name");	
@@ -881,6 +888,65 @@ public class ProviderInformationEFTERAEnroll {
 				 i++;
 			 }
 			}
+		
+		testConfig.putRunTimeProperty("BusinessNameInd", "Y");
+		testConfig.putRunTimeProperty("BusinessAddressInd", "Y");
+		
+		}else if(checkAutoPopulate.equals("busNameYAndAddrN")) {
+			 provName = "MAY";
+			  Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+		        Thread.sleep(2000);
+		      
+		        Element.clickByJS(testConfig,autoPopulateProviderNameList, "Provider Name");	
+		        
+		    	Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+				enrollmentInfoPageObj.setProvType("Hospital/Facility");
+				Element.click(chkOther, "Other sub checkbox");
+				enrollmentInfoPageObj.setMrktType("Other");
+				Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+				Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
+						"city");
+				Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+				Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
+						"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+				
+				testConfig.putRunTimeProperty("BusinessNameInd", "Y");
+				testConfig.putRunTimeProperty("BusinessAddressInd", "N");
+			
+		}else if(checkAutoPopulate.equals("busNameNAndAddrY")) {
+			 provName = "abc";
+			 streetName ="1234";
+			  Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			  Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+				enrollmentInfoPageObj.setProvType("Hospital/Facility");
+				Element.click(chkOther, "Other sub checkbox");
+				enrollmentInfoPageObj.setMrktType("Other");
+		         Thread.sleep(2000);
+				Element.enterData(street, streetName, "Enter street name as : " + streetName,"Street");
+				 Thread.sleep(2000);
+	              Element.clickByJS(testConfig,autoPopulateStreetList, "Street Name");	
+			    testConfig.putRunTimeProperty("BusinessNameInd", "N");
+			      testConfig.putRunTimeProperty("BusinessAddressInd", "Y");
+		
+		}else {
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			  Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+				enrollmentInfoPageObj.setProvType("Hospital/Facility");
+				Element.click(chkOther, "Other sub checkbox");
+				enrollmentInfoPageObj.setMrktType("Other");
+		        
+			Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
+					"city");
+			Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
+					"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+			
+			testConfig.putRunTimeProperty("BusinessNameInd", "N");
+			testConfig.putRunTimeProperty("BusinessAddressInd", "N");
+		
+		}
+		
 		
 		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
 				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
