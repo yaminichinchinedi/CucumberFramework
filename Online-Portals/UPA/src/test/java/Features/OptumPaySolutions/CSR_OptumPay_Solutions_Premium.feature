@@ -484,3 +484,19 @@ Examples:
           | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
           | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
 
+          
+          
+#Author: Sai
+  @CSRUS3561600
+  Scenario Outline: Access Payments - Failed Payment Invoice UI
+			Given User navigates to CSR portal and enters "<credentials>" and login
+      And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+      Then User clicks on Optum Pay Solutions link on CSR HomePage
+      Then User Enters tin for OPS and click on search button for "<userType>".
+   	  Then User clicks on "Invoices" tab
+   	  Then User hover over purple dots
+      
+   Examples:
+	
+	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
+	         |    Super       |	FailedInvoice	   |  AO 	 |	Premium		 |	PROV	|

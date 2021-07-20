@@ -390,6 +390,12 @@ public void validateOptumPayTextonFinishBS() {
 	
 	
 }
+public EditEnrollment clickEditButn()
+{		
+		Browser.wait(testConfig, 2);
+        Element.click(btnEdit1, "Edit button");
+        return new EditEnrollment(testConfig);
 
+}
 
 }

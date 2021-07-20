@@ -403,8 +403,40 @@ public class EditEnrollment {
 	
 	@FindBy(name = "Print Enrollment Form")
 	WebElement PrintEnrollment;
- 	
-
+	
+	@FindBy(xpath="//input[@name='payMeth' and @value='VO']")
+	WebElement VCP;
+	
+	@FindBy(xpath="//input[@name='payMeth' and @value='AO']")
+	WebElement ACH;
+	
+	@FindBy(xpath="//span[contains(text(),'Cancel')]")
+	WebElement CancelBtn;
+	
+	@FindBy(xpath="//span[contains(text(),'Yes')]")
+	WebElement YesBtn;
+	
+	@FindBy(xpath="//span[contains(text(),'Continue to Bank Account(s)')]")
+	WebElement continueBtn;
+	
+	@FindBy(id="filebkl")
+	WebElement Choosefile;
+	
+	@FindBy(xpath="//input[@id='orgbankactfilebklnew']")
+	WebElement payerchoosefile;
+	
+	@FindBy(id="pendingw9")
+	WebElement w9file;
+	
+	@FindBy(name="btnYes")
+	WebElement YesButton;
+	
+	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']")
+	WebElement popupTxt;
+		
+	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']//div[2]")
+	WebElement popTxtVO;
+	
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
@@ -1156,5 +1188,78 @@ public class EditEnrollment {
 		Element.click(PrintEnrollment, "Print Enrollment Form");
 			
 		}
-
+	
+	public EditEnrollment clickOnPayersTab() {
+		
+		Element.click(tabsMenu.findElements(By.tagName("li")).get(1), "Payer (s) tab");
+		return this;
+		
 	}
+	public EditEnrollment changePaymentMethod(String tinType) throws IOException {
+	
+		if(tinType.equals("AO")) {
+			Element.click(VCP, "Change to VCP");
+			Helper.compareEquals(testConfig, "pop-up text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.popupText").trim(), popupTxt.getText().trim());
+			Element.click(YesBtn, "Yes button");
+			}
+
+		else if (tinType.equals("VO")) {
+			int rowNo = 1;
+			TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+			 Element.click(ACH, "Change to ACH");
+			 Browser.wait(testConfig, 2);
+			 Helper.compareEquals(testConfig, "pop-up text", TestBase.contentMessages.getProperty("prov.admin.premium.vo.invoicesOptumPaySolutions.popupText").trim(), popTxtVO.getText().trim());
+			 Element.click(continueBtn, "Continue to Bank Account(s)");
+			 Element.click(btnChngBankData, "Change Bank Data");
+			 Browser.wait(testConfig, 2);
+			 
+			 String firstName = Helper.generateRandomAlphabetsString(3);
+			 String LastName = Helper.generateRandomAlphabetsString(3);
+			 String phn1 = Long.toString(Helper.generateRandomNumber(3));
+			 String phn2 = Long.toString(Helper.generateRandomNumber(3));
+			 String phn3 = Long.toString(Helper.generateRandomNumber(4));
+			 String firstProvEmailAdr=Helper.getUniqueEmailId();
+			 
+			 String routingNo =data.GetData(rowNo, "RoutingNumber");
+			 String accountNo =data.GetData(rowNo, "AccountNumber");
+			 String cityName =data.GetData(rowNo, "City");
+			 String stateName =data.GetData(rowNo, "State");
+			 String zipCode =data.GetData(rowNo, "ZipCode");
+			  
+			 Element.enterData(txtBoxFName, firstName, "Enter First Name as : " + firstName,"firstName");
+			 Element.enterData(txtBoxLName, LastName, "Enter Last Name as : " + LastName,"lastName");
+			 Element.enterData(txtBoxPhoneNum1, phn1, "Enter Phone number in field 1 as:" + " "+phn1,"phoneNum");
+			 Element.enterData(txtBoxPhoneNum2, phn2, "Enter Phone number in field 2 as:" +" "+phn2,"phoneNum1");
+		     Element.enterData(txtBoxPhoneNum3, phn3, "Enter Phone number in field 3 as:" + " "+phn3 ,"phoneNum2");
+		     
+			 Element.enterData(txtBoxTitle, "ms", "Enter title as : ms" ,"Title");
+			 Element.enterData(txtBoxEmail, firstProvEmailAdr, "Enter email:"+ " "+firstProvEmailAdr ,"email");
+			 Element.enterData(txtBoxVerifyEmail, firstProvEmailAdr, "Enter verify email:" + " "+firstProvEmailAdr ,"verify email");
+			 Element.click(btnContinue, "Continue button");
+		
+			 Element.enterData(txtRoutingNo, routingNo, "Read from excel and Enter Routing Number", "routingNumber");
+			 Element.enterData(txtAccNo, accountNo, "Read from excel and Enter Account Number", "accountNumber");
+			 Element.enterData(txtBankCity, cityName,"Read from excel and Enter City name","finInstCity");
+			 Element.enterData(drpDwnBankState, stateName,"Select City from excel", "state");
+
+			 Element.enterData(txtZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
+			 Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
+			 Browser.wait(testConfig, 2);
+			 testConfig.driver.switchTo().frame("myblvcframe");
+			 Browser.waitForLoad(testConfig.driver);
+			 Element.enterData(Choosefile,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"choose btn");
+			 Element.click(btnUpdateBankAcc, "Update button");
+			 Browser.wait(testConfig, 3);
+			 testConfig.driver.switchTo().frame("myFrameorgactbkl");
+			
+			 Browser.waitForLoad(testConfig.driver);
+			 Element.enterData(w9file,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"W9 file");
+			 Browser.wait(testConfig, 2);
+			 Element.click(YesButton, "yes button");
+			 Browser.wait(testConfig, 2);
+			 Element.click(btnFinishUPA, "Finish button");}
+		
+		return this;
+	}
+
+}

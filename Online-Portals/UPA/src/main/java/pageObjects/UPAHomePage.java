@@ -452,22 +452,48 @@ public class UPAHomePage extends HomePage {
 				else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
 						credentials.equalsIgnoreCase("PROV_Admin") &&
 						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
-					String[] expectedProvHeaders = {
+					if(StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "positivePastdueFee"))
+					{
+						String[] expectedProvHeaders = {
+								
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.invc.header"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.header"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.header"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.header"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.header")
+							};
+
+							String[] expectedProvTexts = {
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.invc.text"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.text"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.text"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.text"),
+								TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.text")
+							};
+							homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					}
+					else
+					{
+						String[] expectedProvHeaders = {
+					
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.header"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.header"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.header"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car4.header"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.header")
-					};
+						};
 
-					String[] expectedProvTexts = {
+						String[] expectedProvTexts = {
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car1.text"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car2.text"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car3.text"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car4.text"),
 							TestBase.contentMessages.getProperty("prov.admin.premium.home.car5.text")
-					};
-					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+						};
+						homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					}
+					
+					
 					break;
 				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard") &&
 						credentials.equalsIgnoreCase("PROV_Admin") &&
@@ -492,6 +518,28 @@ public class UPAHomePage extends HomePage {
 				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Premium") &&
 						credentials.equalsIgnoreCase("PROV_Gen") &&
 						testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")) {
+					if(StringUtils.equals(testConfig.getRunTimeProperty("searchCriteria"), "positivePastdueFee"))
+					{
+						String[] expectedProvHeaders = {
+								
+								TestBase.contentMessages.getProperty("prov.general.premium.home.invc.header"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car1.header"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car2.header"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car3.header"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car5.header")
+							};
+
+							String[] expectedProvTexts = {
+								TestBase.contentMessages.getProperty("prov.general.premium.home.invc.text"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car1.text"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car2.text"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car3.text"),
+								TestBase.contentMessages.getProperty("prov.general.premium.home.car5.text")
+							};
+							homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					}
+					else
+					{
 					String[] expectedProvHeaders = {
 							TestBase.contentMessages.getProperty("prov.general.premium.home.car1.header"),
 							TestBase.contentMessages.getProperty("prov.general.premium.home.car2.header"),
@@ -508,6 +556,7 @@ public class UPAHomePage extends HomePage {
 							TestBase.contentMessages.getProperty("prov.general.premium.home.car5.text")
 					};
 					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
+					}
 					break;
 				} else if (testConfig.getRunTimeProperty("portalAccess").equalsIgnoreCase("Standard") &&
 						credentials.equalsIgnoreCase("PROV_Gen") &&
@@ -549,7 +598,8 @@ public class UPAHomePage extends HomePage {
 					};
 					homePageCarouselTextValidation(expectedProvHeaders, expectedProvTexts);
 					break;
-				} else {
+				} 
+				else {
 					Log.Comment("Search criteria not met");
 				}
 		}
@@ -571,7 +621,7 @@ public class UPAHomePage extends HomePage {
 			Element.click(carouselNav.get(i), "Carousel Navigation");
 			String actualText = imageTiles.get(i).findElement(By.tagName("h2")).getText().trim() +
 					imageTiles.get(i).findElement(By.tagName("p")).getText().trim();
-			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j], actualText);
+			Helper.compareEquals(testConfig, "Home Car Text", expectedTexts[j].trim(), actualText.trim());
 			j++;
 		}
 	}

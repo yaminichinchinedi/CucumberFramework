@@ -35,7 +35,7 @@ Feature:  UPA Home Page Functionality - Post Login
 	  |   BS_Gen    |   BS     	|
       | PAY_Admin   | PAY_Admin |
 
-  @UPA_US3179215 @homePage_func
+  @UPA_US3179215_prov @homePage_func
   Scenario Outline: Provider Home page Carousel Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -49,6 +49,8 @@ Feature:  UPA Home Page Functionality - Post Login
       | PROV_Gen    | PROV     | PremiumOrStandardTIN | AO      | Standard     |
       | PROV_Admin  | PROV     | PostTrial and Paid   | VO      | Premium      |
       | PROV_Admin  | PROV     | WithinTrial and Paid | AO      | Premium      |
+      | PROV_Admin  | PROV     | positivePastdueFee   | AO      | Premium      |
+      | PROV_Gen    | PROV     | positivePastdueFee   | AO      | Premium      |
   
   #Author: Marsha        
 	@UPAUS2948683TnC_1 @homePage_func
