@@ -159,15 +159,14 @@ Feature:Create Enrollment Home Page Validations
     Then User uploads the WNine form and click continue
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
     And Validate OrgInfo Indicators are saved in Database on Enrollment Page
-    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
    
    Examples:
 
           |   credentials     |  tinType   |userType| checkAutoPopulate|
-          |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
-          |    Super          |	VO		  	 | PROV   |busNameYAndAddrN |
-          |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
-          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |
+          |    Super          |	AO		  	 | PROV   |busNameYAndAddrY |
+          |    Super          |	AO		  	 | PROV   |busNameYAndAddrN |
+          |    Super          |	AO		  	 | PROV   |busNameNAndAddrY |
+          |    Super          |	AO		  	 | PROV   |busNameNAndAddrN |
       
           
  	
@@ -186,7 +185,6 @@ Feature:Create Enrollment Home Page Validations
     Then User uploads the WNine form and click continue
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
     And Validate OrgInfo Indicators are saved in Database on Enrollment Page
-    And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
  
     Examples:
 
@@ -194,5 +192,5 @@ Feature:Create Enrollment Home Page Validations
           |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
           |    Super          |	VO		  	 | PROV   |busNameYAndAddrN |
           |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
-          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |         	           	
- 
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |
+      
