@@ -1165,6 +1165,10 @@ public class ViewPaymentsDataProvider {
 			query=QUERY.TIN_WITH_REFUND_INVOICE;
 		}
 		
+		if(searchCriteria.contains("FailedInvoice")){
+			query=QUERY.TIN_WITH_FAILED_INVOICE;
+		}
+		
 		if(searchCriteria.contains("TIN_WITH_WAVIE")){
 
 			query=QUERY.TIN_WITH_WAVIE;
