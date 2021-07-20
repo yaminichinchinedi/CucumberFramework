@@ -379,6 +379,79 @@ Examples:
           |    Super       |	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
 
 
+          
+#Author: Piyush Bagdiya
+
+      @US3571231 @WaiveFeeButton @pbagdiyaa
+      Scenario Outline: Select Option is available for Full Waive Fee operation       
+      Given User navigates to CSR portal and enters "<credentials>" and login
+       And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+       Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        #And  The accrued fee is abovezero
+		When  User verifies waive fees and clicks on waive fee button
+		Then Verify Select Option to Waive Fees opens
+		And Verify Select Option for waive fees "<Options>" dropdown
+		Then User selects waived fee reason "<waivedFeeReason>" from dropdown
+		And User Provides "<ReasonMessage>" in message box for "<ScenarioType>" if "<waivedFeeReason>" is other
+		Then Verify Continue button is enable for "<ScenarioType>" mentioned
+		Then User clicks cancel button
+		Then User verifies waive fees
+		#Then User verifies waive fees and clicks on waive fee button
+		#Then User selects waived fee reason "<waivedFeeReason>" and click continue
+
+      Examples:
+      |ScenarioType|credentials|searchCriteria           |tinType | portalAccess    |userType     |Options|waivedFeeReason|ReasonMessage|
+      |PositiveMessage|Super|	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATest|
+      |NegativeMessage|Super|	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATestXXX|
+      
+      
+      #Author: Piyush Bagdiya
+
+      @US3571225 @WaiveFeeButton @pbagdiyaa @WaivePartial
+      Scenario Outline: Select Option is available for Partial Waive Fee operation       
+      Given User navigates to CSR portal and enters "<credentials>" and login
+       And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+       Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+        #And  The accrued fee is abovezero
+		When  User verifies waive fees and clicks on waive fee button
+		Then Verify Select Option to Waive Fees opens
+		And User Selects Waive Partail amount radio button
+		Then Verify that field is displayed called Enter partial dollar amount and Verify "<ErrorMessagePartial>" as per "<ScenarioType>" data in text box
+		And Verify Select Option for waive fees "<Options>" dropdown
+		Then User selects waived fee reason "<waivedFeeReason>" from dropdown
+		And User Provides "<ReasonMessage>" in message box for "<ScenarioType>" if "<waivedFeeReason>" is other
+		Then Verify Continue button is enable for "<ScenarioType>" mentioned
+		Then User clicks cancel button
+		Then User verifies waive fees
+		
+		#Then User verifies waive fees and clicks on waive fee button
+		#Then User selects waived fee reason "<waivedFeeReason>" and click continue
+		#The amount exceeds the fees due.
+      Examples:
+      |ScenarioType|credentials|searchCriteria           |tinType | portalAccess    |userType     |Options|waivedFeeReason|ReasonMessage|ErrorMessagePartial|
+      |PositiveMessage|Super|	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATest|No Error|
+      |NegativeValue|Super|	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATestXXX|Please enter dollar amount greater than $0|
+      |NegativeMessage|Super|	 TinAboveZeroFee  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATestXXX|The amount exceeds the fees due.|
+
+
+ #Author: Piyush Bagdiya
+
+      @US3571225 @WaiveFeeButton @pbagdiya @WaivePartial
+      Scenario Outline: Verify Full and Partial Waive fees 
+		 Given User navigates to CSR portal and enters "<credentials>" and login
+       	And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		Then  User clicks on Optum Pay Solutions link on CSR HomePage
+        Then  User Enters tin for OPS and click on search button for "<userType>".
+		And User verifies waive fees and clicks on waive fee button
+		Then Verify Select Option to Waive Fees opens
+		And Verify Waive full and partial amount
+		And User clicks cancel button
+		
+		Examples:
+		|ScenarioType|credentials|searchCriteria |tinType | portalAccess    |userType     |Options|waivedFeeReason|ReasonMessage|ErrorMessagePartial|
+		|PositiveMessage|Super|	 FullPartialTin  |  AO 	 |	Premium		   |	PROV	 |UHC Requested*Provider Meets Criteria for Large Volume*Other|Other|This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.This is QA Test.QATest|No Error|
 #Author Felix Gozuacik
 
       @US3610665  @WaiveFeeButton
@@ -410,6 +483,7 @@ Examples:
         Examples:
           | credentials | searchCriteria                        | tinType | portalAccess | userType | Fee Search Criteria 1  | Fee Search Criteria 2  | Fee Search Criteria 3         |
           | Super       | TINEqualZeroFee_ProcessFeesInProgress  |  AO 	 |	Premium		   |	PROV	 | feeSearchInvoiceNumber | feeSearchPaymentNumber |feeSrchTINdetailsTabwthAllVal |
+
           
           
 #Author: Sai

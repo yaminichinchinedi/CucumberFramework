@@ -22,7 +22,7 @@ public class SearchTINPageOptumPaySolnSteps extends TestBase {
 		//srchTinOPSPage.enterTin("TinWthAccuredFeeStat").clickSearchBtn();
 	}
 	@Then("^User Enters tin for OPS and click on search button for \"([^\"]*)\"\\.$")
-	public void user_Enters_tin_for_OPS_and_click_on_search_button_for(String userType) throws Throwable {
+	public void UserEntersTinForOPSAndClickOnSearchButton(String userType) throws Throwable {
 		srchTinOPSPage.enterTinAndSrch(userType);
 	}
 	

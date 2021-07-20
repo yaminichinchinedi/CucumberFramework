@@ -112,7 +112,7 @@ public class CSRHomePageSteps extends TestBase{
 		    homePage.clickBillingServiceInfoLink();
 		   }
 	@Then("^User clicks on Optum Pay Solutions link on CSR HomePage$")
-	public void user_clicks_on_Optum_Pay_Solutions_link_on_CSR_HomePage() throws Throwable {
+	public void UserClicksOnOptumPaySolutionsLinkOnCSRHomePage() throws Throwable {
 		homePage.clickOptmPaySolnLink();
 	}
 		
