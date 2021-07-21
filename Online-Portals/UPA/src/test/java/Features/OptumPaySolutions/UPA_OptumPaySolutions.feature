@@ -448,3 +448,17 @@ Examples:
     	|  credentials    |	 	userType    | 	portalAccess    |	searchCriteria   				| tinType		|
       |     PROV_Admin  | 	PROV			  |			Premium 		  |  wthAccuredFee        |	  VO			|    
 
+#Author: Sai
+@UPAUS3561591
+ Scenario Outline: Access Payments - Failed Payment Invoice UI - UPA
+  Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+  Then User clicks on "Invoices" tab
+  Then User hover over purple dots
+  
+  Examples:
+    	|    credentials        |	 	   userType    | 	portalAccess    |		searchCriteria   	| tinType		| 
+      |     PROV_Admin       	| 			 PROV		   |		Premium		    |  	 FailedInvoice  	|	  AO			| 
+      
+  

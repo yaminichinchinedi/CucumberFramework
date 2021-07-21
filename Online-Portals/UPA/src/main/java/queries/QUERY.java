@@ -280,6 +280,14 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 				"AND ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\r\n" + 
 				"AND ep.ENRL_STS_CD='A'\r\n" + 
 				"AND dfi.INVC_TOT_AMT < 0 AND dfi.INVC_STS = 'IR'\r\n";
+		public final static String TIN_WITH_FAILED_INVOICE="SELECT dfi.PROV_TIN_NBR as PROV_TAX_ID_NBR , dfi.INVC_NBR as INVC_NBR , dfi.BANK_ACCT_NBR as BANK_ACCT_NBR FROM ole.DEBIT_FEE_INVCE dfi, OLE.ENROLLED_PROVIDER ep, ole.PRODUCT_SELECTION ps, ole.PRODUCT_CONFIGURATION pc WHERE\r\n" +
+				"pc.GROUP_NM=ps.PRTL_PRDCT_SELECTED_GRP_NM\r\n" + 
+				"AND dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR \r\n" + 
+				"AND ep.PAY_METH_TYP_CD='{$tinType}'\r\n" + 
+				"AND ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\r\n" + 
+				"AND ep.ENRL_STS_CD='A'\r\n" + 
+				"AND dfi.INVC_STS = 'FP'\r\n" +
+				"order by INVC_NBR desc";
 		
 		 public static final String INVOICE_SEARCH = "SELECT dfi.Prov_Tin_Nbr, dfi.BILL_CYC_STRT_DT, dfi.BILL_CYC_END_DT, dfi.INVC_TOT_AMT, dfi.INVC_NBR as INVC_NBR, dfi.INVC_STS, dfi.PAID_DATE, dfi.PAID_BY_USER, dfi.CONFIRM_NBR\r\n" + 
 			  		"FROM OLE.DEBIT_FEE_INVCE dfi\r\n" + 
@@ -341,21 +349,22 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
  				"    ORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY";
 
 
-	public static final String TINAboveZeroFee = "    SELECT\n" +
+	public static final String TINAboveZeroFee = "SELECT\n" +
 			"\tdfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR\n" +
 			"FROM\n" +
 			"\tole.DEBIT_FEE_ACCRD dfi,\n" +
 			"\tOLE.ENROLLED_PROVIDER ep,\n" +
 			"\tOLE.PRODUCT_SELECTION ps,\n" +
 			"\tOLE.DEBIT_FEE_ADJUSTMENT dfa\n" +
-			"\tWHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR\tAND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'\tAND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\n" +
+			"\tWHERE dfi.PROV_TIN_NBR = ep.PROV_TIN_NBR AND dfa.PROV_TIN_NBR = dfi.PROV_TIN_NBR and dfi.PROV_TIN_NBR = ps.PROV_TIN_NBR\tAND ps.PRTL_PRDCT_SELECTED_GRP_NM = 'Premium'\tAND ps.PRTL_PRDCT_SELECTED_STS_CD = 'A'\n" +
 			"\tAND ep.ENRL_STS_CD = 'A'\n" +
 			"\tAND ps.PRTL_PRDCT_REC_STS_CD ='PS'\n" +
 			"\tAND dfi.DBT_FEE_ACCRD_AMT > 0 \n" +
 			"\tAND ((DATE(ADJ_REQ_ON) != CURRENT_DATE OR DATE(ADJ_REQ_ON) != (CURRENT_DATE - 1 DAY)) \n" +
-			"    OR (ADJ_COMP_DTTM IS NOT NULL or FULL_ADJ_IND != 'Y' ))\n" +
-			"    AND SETL_DT  <= CURRENT_DATE\n" +
+			"\tAND (ADJ_COMP_DTTM IS NOT NULL or FULL_ADJ_IND != 'Y' ))\n" +
+			"\tAND SETL_DT  <= CURRENT_DATE\n" +
 			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur";
+
 
 	public static final String TINEqualZeroFee_ProcessFeesInProgress = "SELECT\n" +
 			"dfi.PROV_TIN_NBR AS PROV_TAX_ID_NBR\n" +
@@ -383,5 +392,30 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"and a.PAYR_KEY_ID = d.PAYR_KEY_ID AND d.PRI_PAYR_ID  in (SELECT CONCAT ('1',SUB_PAYR_ID) AS PRI_PAYR_ID FROM OLE.SUB_PAYER p WHERE PAYR_835_ID='VPAY5' AND SUBPAYR_835_PRT_STS_OVR {$nullStat} AND SUBPAYR_EPRA_PRT_STS_OVR IS NULL)\r\n" +
 			"order by CONSL_PAY_NBR desc\r\n"+
 			"fetch first row only";
+	public static final String WAIVE_FULL_AMOUNT = "Select PROV_TIN_NBR,sum(Total_DBT_Fee) as Total_Full_DBT_Fee from(\n"+
+			"\tSelect PROV_TIN_NBR,Sum(DBT_FEE_ACCRD_AMT) as Total_DBT_Fee from OLE.DEBIT_FEE_ACCRD DFA\n"+ 
+			"\tgroup by PROV_TIN_NBR,SETL_DT\n"+
+			"\thaving SETL_DT Between CURRENT_DATE-(DAY(CURRENT_DATE)-1) and LAST_DAY(CURRENT_DATE)  and PROV_TIN_NBR = $ReplaceTINNumber$) as t group by PROV_TIN_NBR";
+
+
+	public static final String WAIVE_PARTIAL_AMOUNT = "Select PROV_TIN_NBR,Sum(DBT_FEE_ACCRD_AMT) as Total_Partial_DBT_Fee from OLE.DEBIT_FEE_ACCRD DFA \n"+
+	"\tgroup by PROV_TIN_NBR,SETL_DT \n"+
+	"\thaving SETL_DT < CURRENT_DATE and SETL_DT >=CURRENT_DATE-(DAY(CURRENT_DATE)-1) and Sum(DBT_FEE_ACCRD_AMT)>0 and PROV_TIN_NBR in \n"+
+	"\t(Select PROV_TIN_NBR from OLE.DEBIT_FEE_ACCRD DFA \n"+
+	"\tgroup by PROV_TIN_NBR,SETL_DT \n"+
+	"\thaving SETL_DT > CURRENT_DATE and SETL_DT <= LAST_DAY(CURRENT_DATE) and Sum(DBT_FEE_ACCRD_AMT)>0)";
+	public static final String DBT_FEE_OTH_FEES = "WITH LSTFLDPYMT AS (SELECT * FROM OLE.DEBIT_FEE_OTH_FEES dfof WHERE dfof.CREAT_DTTM = (SELECT MAX(dfof2.CREAT_DTTM)\n"+
+			"FROM OLE.DEBIT_FEE_OTH_FEES dfof2\n"+
+			"WHERE dfof2.DBT_FEE_INVC_KEY_ID = dfof.DBT_FEE_INVC_KEY_ID)\n"+
+			"ORDER BY CREAT_DTTM)\n"+
+			"SELECT dfi.DBT_FEE_INVC_KEY_ID, dfi.BILL_CYC_STRT_DT, dfi.BILL_CYC_END_DT, dfi.INVC_TOT_AMT,dfi.BANK_ACCT_NBR, dfi.INVC_NBR,\n"+
+			"cast(dfi.INVC_STS as VARCHAR(2)), dfi.PAID_DATE, dfi.PAID_BY_USER, dfi.CONFIRM_NBR, pu.FST_NM, pu.LST_NM, lst.RET_DT, lst.RET_REAS_DESC\n"+
+			"FROM OLE.DEBIT_FEE_INVCE dfi\n"+
+			"LEFT JOIN OLE.PORTAL_USER pu ON pu.PORTAL_USER_ID = dfi.PAID_BY_USER\n"+
+			"LEFT JOIN LSTFLDPYMT lst ON dfi.DBT_FEE_INVC_KEY_ID = lst.DBT_FEE_INVC_KEY_ID AND dfi.PROV_TIN_NBR = lst.PROV_TIN_NBR\n"+
+			"WHERE dfi.INVC_TYP = 'PPP' AND dfi.INVC_STS != 'IC' AND dfi.PROV_TIN_NBR = '{$tin}'\n"+
+			"ORDER BY dfi.BILL_CYC_STRT_DT DESC, dfi.BILL_CYC_END_DT DESC FETCH FIRST 1 ROW ONLY WITH UR";
+
+
 }
 

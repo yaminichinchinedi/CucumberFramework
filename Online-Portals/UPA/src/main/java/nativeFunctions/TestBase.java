@@ -131,8 +131,8 @@ public class TestBase extends ReporterClass {
 		else if (System.getProperty("env").equals("Test2"))
 			urlHelper("Test2");
 
-		else if (System.getProperty("env").equals("IMPL"))
-			urlHelper("IMPL");
+		else if (System.getProperty("env").equals("IMPL2"))//Piyush
+			urlHelper("IMPL2");//Piyush
 	}
 
 	public static TestBase getInstance() {
