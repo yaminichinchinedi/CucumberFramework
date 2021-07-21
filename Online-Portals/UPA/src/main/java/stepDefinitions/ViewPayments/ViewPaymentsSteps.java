@@ -399,6 +399,11 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_clicks_on_greyed_out_area_and_verify_popup_text_for_for(String credentials, String portalAccess) throws Throwable {
     	viewPayment.clickGreyedOut().verifyPageTextFor(credentials, portalAccess);// 
     }
+    @Then("^Validate (\\d+),ePRA links are enabled/disabled based on Search criteria and click on (\\d+) if enabled to get it downloaded$")
+    public void validate_ePRA_links_are_enabled_disabled_based_on_Search_criteria_and_click_on_if_enabled_to_get_it_downloaded(int arg1, int arg2) throws Throwable {
+    	viewPayment.verify835EPRA();
+    }
+    
 }
 
 

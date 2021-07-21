@@ -373,5 +373,15 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"    OR (ADJ_COMP_DTTM IS NOT NULL or FULL_ADJ_IND != 'Y' ))\n" +
 			"    AND ps.PRTL_PRDCT_REC_STS_CD ='PS'\n" +
 			"\tORDER BY dfi.PROC_DT DESC FETCH FIRST 1 ROWS ONLY WITH ur";
+	
+	public final static String VAPY_TIN_835_EPRA_Visiblity="select A.CONSL_PAY_NBR, A.DSPL_CONSL_PAY_NBR , c.UCONSL_PAY_NBR, d.PAYR_KEY_ID,d.PRI_PAYR_ID,d.SEC_PAYR_ID,d.PAYR_NM,PAYR_TIN,A.PROV_KEY_ID,\r\n" + 
+			"B.PROV_TAX_ID_NBR,b.PROV_NM,A.SETL_DT,A.CONSL_AMT,A.PAY_METH_CD, A.PROC_DTTM, a.PROC_CTL_ID,c.UCONSL_PROC_IND,c.UCONSL_CMPLN_IND,\r\n" + 
+			"c.ORIG_BPR01_CD\r\n" + 
+			"from pp063.consolidated_payment a, pp063.provider b, pp063.UNCONSOLIDATED_PAYMENT c,pp063.PAYOR d\r\n" + 
+			"where a.prov_key_id = b.prov_key_id\r\n" + 
+			"and c.consl_pay_nbr = a.CONSL_PAY_NBR\r\n" +
+			"and a.PAYR_KEY_ID = d.PAYR_KEY_ID AND d.PRI_PAYR_ID  in (SELECT CONCAT ('1',SUB_PAYR_ID) AS PRI_PAYR_ID FROM OLE.SUB_PAYER p WHERE PAYR_835_ID='VPAY5' AND SUBPAYR_835_PRT_STS_OVR {$nullStat} AND SUBPAYR_EPRA_PRT_STS_OVR IS NULL)\r\n" +
+			"order by CONSL_PAY_NBR desc\r\n"+
+			"fetch first row only";
 }
 

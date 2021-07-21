@@ -296,6 +296,29 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 			|    PAY_Admin    | 	   PAY	 	  |	Last 6-9 months 	|		 Premium		|		AO		|	Show All				|	Last 6-9 months   | 
       |    PAY_Gen		  | 	   PAY		  |	Last 9-13 months 	|		 Premium		|		AO		|	Show All				|	Last 9-13 months	|
 		
-             
+      @UPAUS3690873
+      Scenario Outline: Vpay 835 and epra link visiblity for Prov      
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then Validate 835,ePRA links are enabled/disabled based on Search criteria and click on 835 if enabled to get it downloaded
+ 		Examples:
+      |    credentials  |  userType 	|		   	searchCriteria					  |	portalAccess	| tinType	|	
+      |   PROV_Admin	  | 		PROV		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
+      |   PROV_Gen  	  | 		PROV		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
+      |   PROV_Admin	  | 		PROV		|	vpay_835_disabled_ePRA_disabled  |		 Premium		|		AO		|	
+      |   PROV_Gen  	  | 		PROV		|	vpay_835_disabled_ePRA_disabled  |		 Premium		|		AO		|	
+     
+      @UPAUS3690873
+       Scenario Outline: Vpay 835 and epra link visiblity  for BS and Payer     
+       Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+		When Click on View Payments Link for UPA
+		Then User Enters tin and click on search button for "<userType>".
+		Then Validate 835,ePRA links are enabled/disabled based on Search criteria and click on 835 if enabled to get it downloaded
+ 		Examples:
+      |    credentials  |  userType 	|		   	searchCriteria					  |	portalAccess	| tinType	|	
+      |   BS_Admin	    | 		BS		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
+      |   PAY_Admin  	  | 		PAY		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
       
-			
+      

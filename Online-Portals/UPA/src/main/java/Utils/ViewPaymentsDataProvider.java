@@ -1209,7 +1209,17 @@ public class ViewPaymentsDataProvider {
 
 		if (searchCriteria.contains("NofeeSearchTIN"))
 			sqlRowNo = 1631;
+		
+		if (searchCriteria.contains("ePRA_disabled")) {
 
+			 if(searchCriteria.equalsIgnoreCase("vpay_835_disabled_ePRA_disabled"))
+				 testConfig.putRunTimeProperty("nullStat", "= 'N' ");
+			 if(searchCriteria.equalsIgnoreCase("vpay_835_enabled_ePRA_disabled"))
+				 testConfig.putRunTimeProperty("nullStat", "IS NULL");
+			 
+				query=QUERY.VAPY_TIN_835_EPRA_Visiblity;
+			
+		}
 		if (!payType.equalsIgnoreCase("medicalPayment")) {
 			Log.Comment("Getting tin for  " + searchCriteria);
 			Map tinNumbers = null;
@@ -1419,4 +1429,7 @@ public class ViewPaymentsDataProvider {
 		} else
 			return testConfig.getRunTimeProperty("provTinNo");
 	}
+	
+	
+	
 }
