@@ -133,7 +133,7 @@ Feature: Create Enrollment Home Page Validations
         	|    Super          |  AO  		|			AlphaNumericString  |
         	|    Super          |  VO   	|			SpecialCharacters   |
         				
-    			
+   #Author: Shalini Mahavratayajula    			
  @UPAUS2952537AO						      
 	Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators AO enrollment
   Given User navigates to UPA Sys Test application
@@ -160,7 +160,7 @@ Feature: Create Enrollment Home Page Validations
           |    Super          |busNameNAndAddrN | 
  
                 	    
- 
+   #Author: Shalini Mahavratayajula 
  @UPAUS2952537VO							      
 	Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
   Given User navigates to UPA Sys Test application
