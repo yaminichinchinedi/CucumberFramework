@@ -178,7 +178,7 @@ Feature: Create Enrollment Home Page Validations
   And Validate OrgInfo Indicators are saved in Database on Enrollment Page
   And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
 		
-	   Examples:
+	  Examples:
 
           |   credentials     | checkAutoPopulate|
           |    Super          |busNameYAndAddrY |
@@ -186,3 +186,4 @@ Feature: Create Enrollment Home Page Validations
           |    Super          |busNameNAndAddrY |
           |    Super          |busNameNAndAddrN | 
  
+            

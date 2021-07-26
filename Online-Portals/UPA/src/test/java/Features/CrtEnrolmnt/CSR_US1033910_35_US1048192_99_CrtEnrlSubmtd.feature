@@ -186,7 +186,7 @@ Feature:Create Enrollment Home Page Validations
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
     And Validate OrgInfo Indicators are saved in Database on Enrollment Page
  
-    Examples:
+     Examples:
 
           |   credentials     |  tinType   |userType| checkAutoPopulate|
           |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
@@ -194,3 +194,5 @@ Feature:Create Enrollment Home Page Validations
           |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
           |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |
       
+          
+ 	
