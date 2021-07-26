@@ -1086,6 +1086,10 @@ public class ViewPaymentsDataProvider {
 			sqlRowNo = 1514;
 			break;
 
+		case "FullPartialTin":
+			query = QUERY.WAIVE_PARTIAL_AMOUNT;
+			
+			break;
 		case "TinForFeeSearchRefund":
 			String pastDateForFeeRefund = Helper.getDateBeforeOrAfterDays(-59, "YYYY-MM-dd"); // This date should be
 																								// lesser than or equal
@@ -1165,6 +1169,10 @@ public class ViewPaymentsDataProvider {
 			query=QUERY.TIN_WITH_REFUND_INVOICE;
 		}
 		
+		if(searchCriteria.contains("FailedInvoice")){
+			query=QUERY.TIN_WITH_FAILED_INVOICE;
+		}
+		
 		if(searchCriteria.contains("TIN_WITH_WAVIE")){
 
 			query=QUERY.TIN_WITH_WAVIE;
@@ -1209,7 +1217,17 @@ public class ViewPaymentsDataProvider {
 
 		if (searchCriteria.contains("NofeeSearchTIN"))
 			sqlRowNo = 1631;
+		
+		if (searchCriteria.contains("ePRA_disabled")) {
 
+			 if(searchCriteria.equalsIgnoreCase("vpay_835_disabled_ePRA_disabled"))
+				 testConfig.putRunTimeProperty("nullStat", "= 'N' ");
+			 if(searchCriteria.equalsIgnoreCase("vpay_835_enabled_ePRA_disabled"))
+				 testConfig.putRunTimeProperty("nullStat", "IS NULL");
+			 
+				query=QUERY.VAPY_TIN_835_EPRA_Visiblity;
+			
+		}
 		if (!payType.equalsIgnoreCase("medicalPayment")) {
 			Log.Comment("Getting tin for  " + searchCriteria);
 			Map tinNumbers = null;
@@ -1225,6 +1243,25 @@ public class ViewPaymentsDataProvider {
 				if (searchCriteria.equalsIgnoreCase("TinForFeeSearchRefund")) {
 					testConfig.putRunTimeProperty("invoiceNumber", tinNumbers.get("INVOICE_NBR").toString());
 					testConfig.putRunTimeProperty("paymentNumber", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+				}
+				
+				
+				if(searchCriteria.equalsIgnoreCase("FullPartialTin"))
+				{
+					String Full_query = QUERY.WAIVE_FULL_AMOUNT;
+					Full_query = Full_query.replace("$ReplaceTINNumber$", testConfig.getRunTimeProperty("tin"));
+					
+					Map<String, String> FullTinNumbers = DataBase.executeSelectQuery(testConfig, Full_query, 1);
+					try {
+						Log.Comment("Tin retreived from query for " + FullTinNumbers.get("PROV_TIN_NBR").toString());
+						testConfig.putRunTimeProperty("tin", FullTinNumbers.get("PROV_TIN_NBR").toString());
+						testConfig.putRunTimeProperty("Total_Full_DBT_Fee", FullTinNumbers.get("TOTAL_FULL_DBT_FEE").toString());
+					}
+					catch (Exception e) {
+						testConfig.putRunTimeProperty("AlreadyFailed", "yes");
+						Log.FailWarning("No tin with payments from the above query, please execute the test case manually",	testConfig);
+					}
+
 				}
 
 				if (sqlRowNo == 1611 || query.contains(QUERY.PAYMENT_TIN_QUERY))
@@ -1419,4 +1456,7 @@ public class ViewPaymentsDataProvider {
 		} else
 			return testConfig.getRunTimeProperty("provTinNo");
 	}
+	
+	
+	
 }

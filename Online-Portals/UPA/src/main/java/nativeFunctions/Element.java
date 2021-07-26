@@ -495,7 +495,21 @@ import main.java.reporting.Log;
 		}
 	
 		
-	
+	public static String getTextPresent(WebElement element,String expectedText)
+	{
+		String actualText = null;
+		try{
+			actualText=element.getText().trim();
+		
+		}
+		catch(Exception e)
+		{
+			
+			Log.Fail("Exception occured" + '\n' + e);			
+		}
+		return actualText;
+		
+		}
 	
 	//Verifies element is not present on the page 
 	public static void verifyElementNotPresent(TestBase testConfig,String locatorType,String locatorValue,String elementName)

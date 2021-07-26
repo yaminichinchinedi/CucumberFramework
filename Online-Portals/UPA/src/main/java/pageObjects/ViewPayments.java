@@ -4537,4 +4537,65 @@ public ViewPayments verifyPayerRolePayments() throws IOException{
 		
 		 return this;
 	   } 
+	
+	public ViewPayments verify835EPRA() {
+		String actualPaymntNo="";
+		//String expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
+		//Log.Comment("Expected electronic payment number is: "+expectedPaymntNo);
+		boolean found=false;
+		WebElement link =null;
+		WebElement epraLink=null;
+		int totalNoOfPages=getNumberOfPages();		
+    	
+		ArrayList<String> tblHeader=new ArrayList<String>();
+		tblHeader=getHeadersFromResultTable();
+		int columnIndex=tblHeader.indexOf("835 / EPRA");
+		
+		for(int pageNo=1;pageNo<=totalNoOfPages;pageNo++)
+		 {  
+			//if(TestBase.driver.getPageSource().toString().contains(expectedPaymntNo)) 
+		     {
+		       for(int i=1;i<searchResultRows.size();i++)
+		        {
+		    	actualPaymntNo=searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+		    	actualPaymntNo=StringUtils.replace(actualPaymntNo, "\n", "");
+		    	   //if(actualPaymntNo.contains(expectedPaymntNo))
+		    	   {
+		    	//	found=true;
+		    	   	//epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
+		    	   	epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+		    	   
+//		    	    if(searchCriteria.equalsIgnoreCase("vpay_835_disabled_ePRA_disabled"))vpay_835_enabled_ePRA_disabled
+//						 testConfig.putRunTimeProperty("nullStat", "= 'N' ");
+//					 if(searchCriteria.equalsIgnoreCase("vpay_835_enabled_ePRA_disabled"))
+//						 testConfig.putRunTimeProperty("nullStat", "IS NULL");
+		    	   	
+		    	   if (	testConfig.getRunTimeProperty("nullStat").equalsIgnoreCase("IS NULL"))//i.e. vpay_835_enabled_ePRA_disabled
+		    	   {	Helper.compareEquals(testConfig, "835EPRA NA Comp", "835 | N/A", epraLink.getText());
+			    	   link = epraLink.findElement(By.tagName("a"));
+						Element.verifyElementPresent(link, "835 link is present");
+			    	   
+					    epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(2);
+					   
+					     if( epraLink.getText().toString().contains("N/A"))
+					    	Helper.compareEquals(testConfig, "EPRA", "N/A", epraLink.getText().toString());	
+					     link.click();//835 linked clicked
+				 	found=true;
+		    	   }
+		    	   else
+		    	   {
+                    Helper.compareEquals(testConfig, "835EPRA Comp", "N/A", epraLink.getText());
+	    		  found=true;
+		    	   }
+		    	   }
+		    	   if(found==true)break;
+		        }
+		     }
+			
+			//if(found==true)break;
+			gotoNextPage(pageNo, totalNoOfPages);
+		 }
+		return this;
+		
+	}
 }
