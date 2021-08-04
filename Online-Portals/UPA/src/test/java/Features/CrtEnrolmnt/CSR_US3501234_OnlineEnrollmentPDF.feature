@@ -40,3 +40,32 @@ Scenario Outline: CSR Create Online enrollment PDF for VO tin
 
          |   credentials     |
          |    Super          |
+         
+  #Author:Sai       
+  @CSRUS3563585_AO @CSR2021_PI03_04
+Scenario Outline: Fraud Prevention - Implement scrollbar for Orgname and address suggestions
+Given User navigates to CSR portal and enters "<credentials>" and login 
+Then User clicks on Create/Maintain Enrollment link on CSR HomePage 
+Then User Select User Type as "Provider" and enter unique TIN and click Search
+Then User select Yes button of TIN not enrolled page
+Then User select User Type Enrollment as "AO" and click continue button
+Then User fills "<BussinessName>" and "<streetName>" on organization information page
+ Examples:
+
+         |   credentials |BussinessName|streetName|
+         |    Super      |MAYO CLINIC  |1216      |	
+         |    Super      |KAISER			 |200       |
+         
+ @CSRUS3563585_VO @CSR2021_PI03_04   
+Scenario Outline: CSR Create Online enrollment PDF for VO tin		
+  Given User navigates to CSR portal and enters "<credentials>" and login
+	Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+	Then User Select User Type as "Provider" and enter unique TIN and click Search
+	Then User select Yes button of TIN not enrolled page
+	Then User select User Type Enrollment as "VO" and click continue button
+	Then User fills "<BussinessName>" and "<streetName>" on organization information page
+ Examples:
+
+         |   credentials |BussinessName|streetName|
+         |    Super      |MAYO CLINIC  |1216      |	
+         |    Super      |KAISER			 |200       |	
