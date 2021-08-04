@@ -106,6 +106,7 @@ public class MaintainEnrollment extends HomePage  {
  		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
+		Browser.wait(testConfig, 2);
 		Browser.verifyURL(testConfig, "/viewEnrollment.do");
 	}
 

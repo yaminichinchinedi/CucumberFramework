@@ -1,6 +1,6 @@
 #Author: sai
 Feature: UPA Maintain Enrollment
-@UPAUS3601470 @UPA2021_PI03_02
+@UPAUS3601470 @UPA2021_PI03_02 @UPAUS3694216
 Scenario Outline: Sunset AV - Provider Payment Method Update Email
  Given User navigates to UPA portal and enters "<credentials>" and login
  And  Clicks on Maintain Enrollment Tab
