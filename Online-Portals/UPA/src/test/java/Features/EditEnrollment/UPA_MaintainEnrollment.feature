@@ -13,3 +13,14 @@ Scenario Outline: Sunset AV - Provider Payment Method Update Email
       | credentials | userType | portalAccess | tinType | searchCriteria       |
       | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN |
       | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
+      
+      
+@UPAUS3601929_MaintainEnrollment
+Scenario Outline: Maintain Enrollment MFA Dialog Box Vlaidation
+ Given User navigates to UPA portal and enters "<credentials>" and login
+ And  Clicks on Maintain Enrollment Tab
+ Then User validates MFA Dialog Box Title, Message, Yes and NO buttons for Maintain Enrollment tab
+
+ Examples:
+      | credentials | 
+      | PROV_Admin  | 

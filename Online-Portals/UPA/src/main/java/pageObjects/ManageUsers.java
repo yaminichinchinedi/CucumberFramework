@@ -34,6 +34,7 @@ import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.nativeFunctions.Element;
 import main.java.reporting.Log;
 import main.java.reporting.Log;
@@ -283,16 +284,33 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(linkText="Home")
 	WebElement lnkHome;
 	
+	@FindBy(xpath="//div[@id='confirmRedirectToMFA']/h2")
+	WebElement mfaDialogBoxTitle;
+	
+	@FindBy(xpath="//div[@id='confirmRedirectToMFA']/p")
+	WebElement mfaDialogBoxMessage;
+	
+	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[1]")
+	WebElement mfaDialogBoxNoButton;
+	
+	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[2]")
+	WebElement mfaDialogBoxYesButton;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
 	
 	public ManageUsers(TestBase testConfig)
 	{
-		super(testConfig);
+		//super(testConfig);
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");	
+		//Element.expectedWait(lnkUserList, testConfig, "User List", "User List");
+		boolean flag = checkMFAflag();
+		if (flag==false)
+		{
+			Browser.verifyURL(testConfig, "/manageuser.do");
+		}
 
 	}
 	
@@ -2928,6 +2946,44 @@ public ManageUsers clickSpecificUserNametoedit(String userType) {
 	clickSpecificUserName(testConfig.getRunTimeProperty("username"));	
 	   return this;
 }
+
+/******
+ * Author: Mohammad Khalid
+ * This methods validates the title, message content, Yes and No buttons on the MFA Dialog Box
+ * *********/
+
+public ManageUsers validateMFADialogBoxContentMUtab()
+{
+	Helper.compareEquals(testConfig, "MFA Dialog Box Title", TestBase.contentMessages.getProperty("prov.mfadialogbox.title"), mfaDialogBoxTitle.getText().trim());
+	Helper.compareEquals(testConfig, "MFA Dialog Box Title", TestBase.contentMessages.getProperty("prov.mfadialogbox.messageContent"), mfaDialogBoxMessage.getText().trim());
+	
+	Element.verifyElementPresent(mfaDialogBoxNoButton, "No Button on MFA Dialog Box");
+	Element.verifyElementPresent(mfaDialogBoxYesButton, "Yes Button on MFA Dialog Box");
+	
+	return this;
+	
+}
+
+
+/******
+ * Author: Mohammad Khalid
+ * This methods checks for the MFA flag 
+ * *********/
+
+public boolean checkMFAflag()
+{
+	String query = QUERY.MFA_SWITCH_CHECK;
+	boolean mfaFlag = false;
+	String mfa_Proc_Data = null;
+	Map<String, String> results = DataBase.executeSelectQuery(testConfig, query, 1);
+	mfa_Proc_Data = (String) results.get("PROC_DATA");
+	if (mfa_Proc_Data.equals("Y"))
+	{
+		mfaFlag = true;
+	}
+	return mfaFlag;
+}
+
 		
 }
 

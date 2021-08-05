@@ -32,7 +32,7 @@ public class UPAHomePage extends HomePage {
 	private TestBase testConfig;
 	private ViewPaymentsDataProvider dataProvider;
 
-	@FindBy(xpath="//a[@id=\"tabManageusers\"]")
+	@FindBy(linkText="Manage Users")
 	WebElement lnkManageUsers;
 	
 	@FindBy(id="tabHome")
