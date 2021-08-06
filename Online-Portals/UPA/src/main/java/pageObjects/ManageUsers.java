@@ -20,6 +20,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.record.PageBreakRecord.Break;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -307,10 +308,8 @@ public class ManageUsers extends AddUserDetails
 		PageFactory.initElements(testConfig.driver, this);
 		//Element.expectedWait(lnkUserList, testConfig, "User List", "User List");
 		boolean flag = checkMFAflag();
-		if (flag==false)
-		{
-			Browser.verifyURL(testConfig, "/manageuser.do");
-		}
+		if (!flag)
+			Browser.verifyURL(testConfig, "/viewEnrollment.do");
 
 	}
 	
@@ -2976,11 +2975,9 @@ public boolean checkMFAflag()
 	boolean mfaFlag = false;
 	String mfa_Proc_Data = null;
 	Map<String, String> results = DataBase.executeSelectQuery(testConfig, query, 1);
-	mfa_Proc_Data = (String) results.get("PROC_DATA");
-	if (mfa_Proc_Data.equals("Y"))
-	{
+	mfa_Proc_Data = (String) results.get("PROC_DATA").trim();
+	if (StringUtils.equals(mfa_Proc_Data, "Y"))
 		mfaFlag = true;
-	}
 	return mfaFlag;
 }
 

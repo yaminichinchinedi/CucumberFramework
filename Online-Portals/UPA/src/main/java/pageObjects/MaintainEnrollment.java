@@ -8,6 +8,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
@@ -120,10 +121,8 @@ public class MaintainEnrollment extends HomePage  {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		boolean flag = checkMFAflag();
-		if (flag==false)
-		{
+		if (!flag)
 			Browser.verifyURL(testConfig, "/viewEnrollment.do");
-		}
 	}
 
 	
@@ -445,11 +444,9 @@ public boolean checkMFAflag()
 	boolean mfaFlag = false;
 	String mfa_Proc_Data = null;
 	Map<String, String> results = DataBase.executeSelectQuery(testConfig, query, 1);
-	mfa_Proc_Data = (String) results.get("PROC_DATA");
-	if (mfa_Proc_Data.equals("Y"))
-	{
+	mfa_Proc_Data = (String) results.get("PROC_DATA").trim();
+	if (StringUtils.equals(mfa_Proc_Data, "Y"))
 		mfaFlag = true;
-	}
 	return mfaFlag;
 }
 
