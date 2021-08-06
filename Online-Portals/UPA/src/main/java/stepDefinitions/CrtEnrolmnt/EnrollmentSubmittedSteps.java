@@ -1,5 +1,6 @@
 package main.java.stepDefinitions.CrtEnrolmnt;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.EnrollmentSubmitted;
@@ -47,5 +48,10 @@ public class EnrollmentSubmittedSteps extends TestBase{
 	@Then("^Also click on Print Enrollment form link download PDF and verify PDF data$")
 	public void also_click_on_Print_Enrollment_form_link_download_PDF_and_verify_PDF_data() throws Throwable {
 		enrollmentSubmitted.verifyPDFData();
+	}
+	
+	@And("^Validate OrgInfo Indicators are saved in Database on Enrollment Page$")
+	public void validate_OrgInfo__Indicators_are_saved_in_Database_on_Enrollment_Page() throws Throwable {
+		enrollmentSubmitted.validateOrgInfoIndicators();
 	}
 }

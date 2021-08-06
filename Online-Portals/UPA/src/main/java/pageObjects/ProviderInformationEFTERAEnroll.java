@@ -13,6 +13,7 @@ import org.openqa.selenium.support.Color;
 import main.java.nativeFunctions.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -96,6 +97,13 @@ public class ProviderInformationEFTERAEnroll {
 	@FindBy(name = "bsName")
 	WebElement bsName;
 
+	@FindBy(xpath = "(//ul[contains(@class,'autocomplete ')]/li[1]/div)[1]")
+	WebElement autoPopulateProviderNameList;
+
+	
+	@FindBy(xpath = "//ul[@id='ui-id-2']/li/div")
+	WebElement autoPopulateStreetList;
+	
 	@FindBy(xpath = "//tr[@class='subheadernormal'][3]//td//table//tr//td")
 	WebElement txtSecurity;
 
@@ -200,6 +208,13 @@ public class ProviderInformationEFTERAEnroll {
 
 	@FindBy(id = "provSpecialty")
 	WebElement prvSpeciallity;
+	
+	@FindBy(id = "ui-id-1")
+	WebElement BussinessScrollBar;
+	
+	@FindBy(id = "ui-id-2")
+	WebElement streetScrollBar;
+
 
 	EnrollmentInfo enrollmentInfoPageObj = EnrollmentInfo.getInstance();
 
@@ -836,5 +851,140 @@ public class ProviderInformationEFTERAEnroll {
 
 		
 	}
+
+	public void setOrgValues() {
+			Element.clickByJS(testConfig, rdoHospital, "Hospital/Facility radio button");
+		enrollmentInfoPageObj.setProvType("Hospital/Facility");
+		Element.click(chkOther, "Other sub checkbox");
+		enrollmentInfoPageObj.setMrktType("Other");
+	
+	}
+	
+	/** This method auto populates BusinessName(provName) and Business Address --- EPIM User stories
+	 * 
+	 * @return
+	 * @throws IOException
+	 * @throws InterruptedException 
+	 */
+	public ValidateEFTERAProviderInfo fillProviderOrgInfoWithAutoPopulatedInfo(String checkAutoPopulate) throws IOException  {
+		int rowNo = 1;
+		String provName = Helper.generateRandomAlphabetsString(5);
+		String streetName = Helper.generateRandomAlphabetsString(5);	
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		if (checkAutoPopulate.equals("busNameYAndAddrY")) {
+			provName = "MAY";
+			streetName = Helper.generateRandomAlphaNumericString(4);
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			Browser.wait(testConfig, 2);
+			Element.clickByJS(testConfig, autoPopulateProviderNameList, "Provider Name");
+			Browser.wait(testConfig, 2);
+			Element.enterData(street, streetName, "Enter street name as : " + streetName, "Street");
+			Browser.wait(testConfig, 3);
+			Element.clickByJS(testConfig, autoPopulateStreetList, "Street Name");
+			setOrgValues();
+			testConfig.putRunTimeProperty("BusinessNameInd", "Y");
+			testConfig.putRunTimeProperty("BusinessAddressInd", "Y");
+
+		} else if (checkAutoPopulate.equals("busNameYAndAddrN")) {
+			provName = "MAY";
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			Browser.wait(testConfig,2);	      
+			Element.clickByJS(testConfig,autoPopulateProviderNameList, "Provider Name");	
+			Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
+					"city");
+			Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
+					"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+			setOrgValues();
+			testConfig.putRunTimeProperty("BusinessNameInd", "Y");
+			testConfig.putRunTimeProperty("BusinessAddressInd", "N");
+
+		}else if(checkAutoPopulate.equals("busNameNAndAddrY")) {
+			 provName = "abc";
+			 streetName ="1234";
+			  Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			 setOrgValues();
+			  Browser.wait(testConfig,2);	      
+				Element.enterData(street, streetName, "Enter street name as : " + streetName,"Street");
+				Browser.wait(testConfig,2);	      
+	              Element.clickByJS(testConfig,autoPopulateStreetList, "Street Name");	
+			    testConfig.putRunTimeProperty("BusinessNameInd", "N");
+			      testConfig.putRunTimeProperty("BusinessAddressInd", "Y");
+
+		}else {
+			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
+			setOrgValues();
+			Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
+					"city");
+			Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
+					"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+			testConfig.putRunTimeProperty("BusinessNameInd", "N");
+			testConfig.putRunTimeProperty("BusinessAddressInd", "N");
+
+		}
+
+		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
+				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
+				"businessPhone1");
+		Element.enterData(businessPhone2, System.getProperty("BusinessPhone2"),
+				"Entered business phone2 in second textbox as : " + System.getProperty("BusinessPhone2"),
+				"businessPhone2");
+		Element.enterData(businessPhone3, System.getProperty("BusinessPhone3"),
+				"Entered business phone3 in third textbox as : " + System.getProperty("BusinessPhone3"),
+				"businessPhone3");
+		Element.enterData(businessPhoneExt, System.getProperty("BusinessPhoneExt"),
+				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
+				"businessPhoneExt");
+
+		enrollmentInfoPageObj.setBusinessName(provName);
+		enrollmentInfoPageObj.setStreet(streetName);
+		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
+		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
+		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
+		enrollmentInfoPageObj.setBusinessPhone1(System.getProperty("BusinessPhone1"));
+		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
+		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
+		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
+
+		Browser.wait(testConfig, 5);
+		if (enrollmentInfoPageObj.getEnrollType().equals("HO"))
+			// Same xpath has been used both for Continue and save changes button.
+			if (testConfig.driver.getCurrentUrl().contains("CSR"))
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"),
+						"Continue/Save Changes Button CSR");
+			else
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"),
+						"Continue/Save Changes Button");
+		else {
+			// Element.click(Element.findElement(testConfig, "xpath",
+			// "//*[@id='EFTERAregForm']/footer/a[1]"), "Continue/Save Changes Button");
+			if (testConfig.driver.getCurrentUrl().contains("CSR"))
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[2]/a[1]"),
+						"Continue/Save Changes Button CSR");
+			else
+				Element.click(Element.findElement(testConfig, "xpath", "//*[@id='EFTERAregForm']/div[3]/a[1]"),
+						"Continue/Save Changes Button");
+
+		}
+
+		return new ValidateEFTERAProviderInfo(testConfig);
+
+	}
+	public void fillBussinessandStreetInfo(String BussinessName, String streetName) {
+		Element.verifyElementPresent(providerName, "Business Name");
+		Element.enterData(providerName, BussinessName, "Enter Bussiness name as : " + BussinessName, "providerName");
+		Browser.wait(testConfig, 3);
+		Element.verifyElementPresent(BussinessScrollBar, "Scroll Bar");
+		Element.enterKeys(providerName, Keys.TAB, "TAB Key entering", "TAB Key");
+		Element.verifyElementPresent(street, "Street Name");
+		Element.verifyElementIsEnabled(street, "Street Name");
+		Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+		Browser.wait(testConfig, 3);
+		Element.verifyElementPresent(streetScrollBar, "Scroll Bar");
+	}
+
 
 }

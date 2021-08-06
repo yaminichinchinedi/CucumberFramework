@@ -141,5 +141,58 @@ Feature:Create Enrollment Home Page Validations
         	|    Super          |	VO		  	 | PROV   |    SpecialCharacters   |
         	
           	
-        	      
+   #Author: Shalini Mahavratayajula       	      
+@CSRUS2952537AO
+	Scenario Outline: CSRUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators AO enrollment
+   
+   	When ABN Validator Switch is updated to 'Y'
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+		Then User Select User Type as "<userType>" and enter unique TIN and click Search
+		Then User select Yes button of TIN not enrolled page
+		Then User select User Type Enrollment as "<tinType>" and click continue button
+		Then User sets business phone
+		Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
+		Then User fills all the information on Identify Administrators page and click continue
+		When RTI API server is up
+		Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+    And Validate OrgInfo Indicators are saved in Database on Enrollment Page
+   
+   Examples:
+
+          |   credentials     |  tinType   |userType| checkAutoPopulate|
+          |    Super          |	AO		  	 | PROV   |busNameYAndAddrY |
+          |    Super          |	AO		  	 | PROV   |busNameYAndAddrN |
+          |    Super          |	AO		  	 | PROV   |busNameNAndAddrY |
+          |    Super          |	AO		  	 | PROV   |busNameNAndAddrN |
+      
+          
+ 	   #Author: Shalini Mahavratayajula
+ 	@CSRUS2952537VO			      
+	Scenario Outline: CSRUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
+	
+		When ABN Validator Switch is updated to 'Y'
+		Given User navigates to CSR portal and enters "<credentials>" and login
+		Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+		Then User Select User Type as "<userType>" and enter unique TIN and click Search
+		Then User select Yes button of TIN not enrolled page
+		Then User select User Type Enrollment as "<tinType>" and click continue button 
+		Then User sets business phone
+		Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
+    Then User fills all the information on Identify Administrators page and click continue to W9
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+    And Validate OrgInfo Indicators are saved in Database on Enrollment Page
  
+     Examples:
+
+          |   credentials     |  tinType   |userType| checkAutoPopulate|
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameYAndAddrN |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrY |
+          |    Super          |	VO		  	 | PROV   |busNameNAndAddrN |
+      
+          
+ 	

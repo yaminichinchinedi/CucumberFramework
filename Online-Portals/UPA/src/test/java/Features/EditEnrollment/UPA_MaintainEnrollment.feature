@@ -1,6 +1,6 @@
 #Author: sai
 Feature: UPA Maintain Enrollment
-@UPAUS3601470 @UPA2021_PI03_02
+@UPAUS3601470 @UPA2021_PI03_02 @UPAUS3694216
 Scenario Outline: Sunset AV - Provider Payment Method Update Email
  Given User navigates to UPA portal and enters "<credentials>" and login
  And  Clicks on Maintain Enrollment Tab
@@ -15,12 +15,13 @@ Scenario Outline: Sunset AV - Provider Payment Method Update Email
       | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
       
       
-@UPAUS3601929_MaintainEnrollment
-Scenario Outline: Maintain Enrollment MFA Dialog Box Vlaidation
+ @UPAUS3601929_MaintainEnrollment
+ Scenario Outline: Maintain Enrollment MFA Dialog Box Vlaidation
  Given User navigates to UPA portal and enters "<credentials>" and login
  And  Clicks on Maintain Enrollment Tab
  Then User validates MFA Dialog Box Title, Message, Yes and NO buttons for Maintain Enrollment tab
 
  Examples:
       | credentials | 
-      | PROV_Admin  | 
+      | PROV_Admin  |
+

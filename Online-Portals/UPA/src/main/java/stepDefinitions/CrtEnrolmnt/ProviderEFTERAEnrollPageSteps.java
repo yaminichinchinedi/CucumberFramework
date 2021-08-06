@@ -244,5 +244,16 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 	if (TINStatus.equals("EnrolledActiveBSTIN"))
 		new ValidateEnrollmentTypePage(testConfig).verifyEnrolledActiveBSTIN();
 	}
-	
+
+	@Then("^User fills the auto populated information for BusinessNameAddress \"([^\"]*)\" and click on Continue$")
+	public void user_fills_auto_populated_information_and_click_on_Continue(String checkAutoPopulate) throws Throwable {
+		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
+		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfoWithAutoPopulatedInfo(checkAutoPopulate);
+	    
+	}
+	@Then("^User fills \"([^\"]*)\" and \"([^\"]*)\" on organization information page$")
+	public void user_fills_and_on_organization_information_page(String BussinessName, String streetName) throws Throwable {
+		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
+		providerEFTERAEnrollPage.fillBussinessandStreetInfo(BussinessName, streetName);
+	}
 }
