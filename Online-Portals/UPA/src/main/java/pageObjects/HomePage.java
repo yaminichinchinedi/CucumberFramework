@@ -48,10 +48,10 @@ public class HomePage extends LoginUPA {
 	@FindBy(id = "tabDataFiles")
 	WebElement paymentDataFilesTab;
 
-	@FindBy(id = "tabMntnEnrl")
+	@FindBy(linkText = "Maintain Enrollment")
 	WebElement maintainEnrlTab;
 	
-	@FindBy(id="tabManageusers")
+	@FindBy(linkText="Manage Users")
 	WebElement manageUsersTab;
 	
 	@FindBy(id="tabMyprofile")

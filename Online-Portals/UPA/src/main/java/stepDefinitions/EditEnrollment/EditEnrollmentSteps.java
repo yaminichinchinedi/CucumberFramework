@@ -224,7 +224,10 @@ public class EditEnrollmentSteps extends TestBase {
         editEnrollment.changePaymentMethod(tinType);
     }
 
-    
+    @Then("^User validates MFA Dialog Box Title, Message, Yes and NO buttons for Maintain Enrollment tab$")
+    public void user_validates_MFA_Dialog_Box_Title_Message_Yes_and_NO_buttons_for_Maintain_Enrollment_tab() throws Throwable {
+        maintainEnrollment.validateMFADialogBoxContentMEtab();
+    }
 
     
 

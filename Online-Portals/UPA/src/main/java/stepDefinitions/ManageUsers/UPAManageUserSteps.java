@@ -304,6 +304,11 @@ public class UPAManageUserSteps extends TestBase {
 	public void verifyManageUsersHeaderAndFooterTextValidation(String credentials, String portalAccess) {
 		manageUser.validatePageText(credentials, portalAccess);
 	}
+	
+	@Then("^User validates MFA Dialog Box Title, Message, Yes and NO buttons for Manage User tab$")
+	public void user_validates_MFA_Dialog_Box_Title_Message_Yes_and_NO_buttons_for_Manage_User_tab() throws Throwable {
+	    manageUser.validateMFADialogBoxContentMUtab();
+	}
 
 
 

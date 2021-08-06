@@ -71,7 +71,7 @@ Feature: UPA Manage User Functionality for Premium TIN
 
   #Author : Vinay Raghumanda
   #(vo is part of US3438484 )
-  @US3179215 @UPAUS3438484 
+  @US3179215 @UPAUS3438484_1
   Scenario Outline: Manage Users Page Text Validation
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -83,3 +83,14 @@ Feature: UPA Manage User Functionality for Premium TIN
       | PROV_Admin  | PROV     | Premium      | VO      | PremiumOrStandardTIN |
       | PROV_Admin  | PROV     | Standard     | AO      | PremiumOrStandardTIN |
       | BS_Admin    | BS       | Premium      | AO      | Last 60 days   |
+
+  #Author: Mohammad Khalid    
+  @UPAUS3601929_ManageUser
+  Scenario Outline: Manage Users MFA Dialog Box Validation
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    When Click on Manage User Link
+    Then User validates MFA Dialog Box Title, Message, Yes and NO buttons for Manage User tab
+    Examples:
+      | credentials |
+      | PROV_Admin  | 
+  
