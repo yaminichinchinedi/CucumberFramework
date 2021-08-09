@@ -351,6 +351,15 @@ public class UPAHomePage extends HomePage {
 		if(searchCriteria.contains("DOP")){
 			Helper.getPayerSchema(testConfig,"Last 90 days",userType);
 		}
+
+		if (userType.equalsIgnoreCase("PROV_Admin"))
+			testConfig.putRunTimeProperty("AccssLvl", "A");
+		if (userType.equalsIgnoreCase("PROV_Gen"))
+			testConfig.putRunTimeProperty("AccssLvl", "G");
+		if(userType.contains("_")) {
+			String id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
+			testConfig.putRunTimeProperty("id", id);
+		}
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);

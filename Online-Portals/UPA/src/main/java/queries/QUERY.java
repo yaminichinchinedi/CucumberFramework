@@ -426,4 +426,8 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	
 	public static final String MFA_SWITCH_CHECK = "SELECT * FROM ole.SYSTEM_CONFIGURATION WHERE PROC_CD = 'MFA_SWITCH'";
 
+	public static final String UNSECURE_GUEST_PAYMENT = "select \tdfi.PROV_TIN_NBR as PROV_TAX_ID_NBR, dfi.INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi \n" +
+			"where  dfi.INVC_STS in ('IR' , 'FP')\n" +
+			"order by dfi.LST_CHG_BY_DTTM desc\n" +
+			"fetch first row ONLY";
 }

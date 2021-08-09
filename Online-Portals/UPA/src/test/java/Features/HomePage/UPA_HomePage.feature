@@ -115,7 +115,7 @@ Feature:  UPA Home Page Functionality - Post Login
   #Author: Mohammad Khalid
   @UPAUS3415252_PostLogin
    Scenario Outline: Resource Tab dropdown Post Login
-		Given User navigates to UPA portal and enters "<userType>" and login
+    Given User navigates to UPA portal and enters "<userType>" and login
     When User hovers on the Resources DropDown
     Then User clicks on Cancellation Form and verifies the url is pdf
     Then user validates cancellation pdf form content under Post Login resources link
@@ -124,3 +124,20 @@ Feature:  UPA Home Page Functionality - Post Login
      Examples:
       |      userType       |   
       |      PROV_Admin     |
+
+
+
+
+ #Author : Burak Ucal
+  @US3775315
+  Scenario Outline: Unsecured Guest Payment Page
+    Given User navigates to UPA Sys Test application
+    And User clicks on Pay an invoice now
+    Then I validate the Title for Pay as a guest
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User enters tin and invoice number and clicks on continue button
+
+
+    Examples:
+      |userType     |portalAccess|searchCriteria| tinType|
+      |  PROV_Admin	|Premium     |UnpaidInvoice |	  AO |

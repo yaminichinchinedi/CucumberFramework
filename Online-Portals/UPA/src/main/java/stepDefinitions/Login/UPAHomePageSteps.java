@@ -6,22 +6,14 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.BenefitsOfOptumPay;
-import main.java.pageObjects.CSRHomePage;
-import main.java.pageObjects.HomePage;
-import main.java.pageObjects.HowToEnroll;
-import main.java.pageObjects.LoginCSR;
-import main.java.pageObjects.LoginUPA;
-import main.java.pageObjects.OptumIdLoginPage;
-import main.java.pageObjects.SearchRemittance;
-import main.java.pageObjects.SearchTinPageViewPayments;
-import main.java.pageObjects.UPAHomePage;
-import main.java.pageObjects.UPARegistrationPage;
+import main.java.pageObjects.*;
+import main.java.reporting.Log;
 
 public class UPAHomePageSteps extends TestBase {
 
 	UPAHomePage homePage = null;
 	LoginUPA loginPage = null;
+	UnsecureGuestPayment unsecureGuestPayment = new UnsecureGuestPayment(testConfig);
 	SearchTinPageViewPayments viewPaymentsTIN = new SearchTinPageViewPayments(testConfig);
 
 	@Given("^User navigates to UPA portal and enters \"([^\"]*)\" and login$")
@@ -45,7 +37,7 @@ public class UPAHomePageSteps extends TestBase {
 	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
 	public void user_fetch_tin_for_for_for_for_for_Portal_Experience(String userType, String searchCriteria,
 			String tinType, String portalAccess) throws Throwable {
-		homePage.fetchTin(userType, searchCriteria, tinType, portalAccess);
+		new UPAHomePage(testConfig).fetchTin(userType, searchCriteria, tinType, portalAccess);
 	}
 
 	@When("^Click on View Payments Link in UPA$")
@@ -172,7 +164,7 @@ public class UPAHomePageSteps extends TestBase {
 	public void user_clicks_on_Cancellation_Form_and_verifies_the_url_is_pdf() throws Throwable {
 		homePage.verifyCancellationFormLinkUnderResources();
 	}
-	
+
 	@Then("^user validates cancellation pdf form content under Post Login resources link$")
 	public void user_validates_cancellation_pdf_form_content_under_Post_Login_resources_link() throws Throwable {
 		homePage.verifyCancellationFormLinkPDFContentPostLogin();
@@ -278,4 +270,10 @@ public class UPAHomePageSteps extends TestBase {
 	public void user_clicks_on_Payment_Data_Files_Tab() throws Throwable {
 		homePage.clickPaymentDataFilesTab();
 	}
+
+	@And("User clicks on Pay an invoice now")
+	public void userClicksOnPayAnInvoiceNow() {
+		unsecureGuestPayment.clickPayInvoiceNow();
+	}
+
 }
