@@ -139,5 +139,5 @@ Feature:  UPA Home Page Functionality - Post Login
 
 
     Examples:
-      |userType        |portalAccess|searchCriteria| tinType|
+      |userType     |portalAccess|searchCriteria| tinType|
       |  PROV_Admin	|Premium     |UnpaidInvoice |	  AO |
