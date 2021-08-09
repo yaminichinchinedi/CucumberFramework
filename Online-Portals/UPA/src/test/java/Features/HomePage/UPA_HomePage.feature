@@ -135,7 +135,7 @@ Feature:  UPA Home Page Functionality - Post Login
     And User clicks on Pay an invoice now
     Then I validate the Title for Pay as a guest
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-    And User enters tin and invoice number and clicks on countiue button
+    And User enters tin and invoice number and clicks on continue button
 
 
     Examples:

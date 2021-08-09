@@ -15,7 +15,7 @@ public class UnsecureGuestPaymentSteps extends TestBase {
         unsecureGuestPayment.validatePayasAGuestTitle();
     }
 
-    @And("User enters tin and invoice number and clicks on countiue button")
+    @And("User enters tin and invoice number and clicks on continue button")
     public void userEntersTinAndInvoiceNumberAndClicksOnCountiueButton() {
         unsecureGuestPayment.enterLastFourTinandInvoiceNumberthenCLickContinue();
     }
