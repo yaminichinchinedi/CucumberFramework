@@ -29,18 +29,6 @@ public class UnsecureGuestPaymentSteps extends TestBase {
     public void userValidateProviderInfo() {
         unsecureGuestPayment.validateProviderInformation();
     }
-    @And("User enters routing and account number")
-    public void userEntersRoutingandAccountNumbers() {
-        unsecureGuestPayment.routingAndAccountNoInserter();
-    }
-    @And("User clicks on consent")
-    public void userClicksOnConsent() {
-        unsecureGuestPayment.userClicksOnConsent();
-    }
-    @And("User clicks on submit")
-    public void userUserClicksSubmit() {
-        unsecureGuestPayment.userUserClicksSubmit();
-    }
 
     
     
