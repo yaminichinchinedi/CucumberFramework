@@ -20,4 +20,16 @@ public class UnsecureGuestPaymentSteps extends TestBase {
         unsecureGuestPayment.enterLastFourTinandInvoiceNumberthenCLickContinue();
     }
 
+    @And("User enters name and email")
+    public void userEntersNameAndEmail() {
+        unsecureGuestPayment.enterNameAndEmail();
+    }
+
+    @And("User validates provider information")
+    public void userValidateProviderInfo() {
+        unsecureGuestPayment.validateProviderInformation();
+    }
+
+    
+    
 }

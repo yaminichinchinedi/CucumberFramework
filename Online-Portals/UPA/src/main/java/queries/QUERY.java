@@ -430,4 +430,6 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"where  dfi.INVC_STS in ('IR' , 'FP')\n" +
 			"order by dfi.LST_CHG_BY_DTTM desc\n" +
 			"fetch first row ONLY";
+	
+	public static final String PROVIDER_INFO="SELECT  * FROM ole.DEBIT_FEE_INVCE dfi WHERE  INVC_NBR ='{$invoiceNumber}'";
 }
