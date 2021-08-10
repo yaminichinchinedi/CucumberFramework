@@ -157,3 +157,19 @@ Feature:  UPA Home Page Functionality - Post Login
     Examples:
       |userType     |portalAccess|searchCriteria| tinType|
       |  PROV_Admin	|Premium     |UnpaidInvoice |	  AO |
+    #Author : Felix Gozuacik
+  @US3725135_Step3
+  Scenario Outline: Unsecured Guest Payment Page
+    Given User navigates to UPA Sys Test application
+    And User clicks on Pay an invoice now
+    Then I validate the Title for Pay as a guest
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User enters tin and invoice number and clicks on continue button
+    And User enters name and email
+    And User enters routing and account number
+    And User clicks on consent
+    And User clicks on submit
+
+    Examples:
+      |userType     |portalAccess|searchCriteria| tinType|
+      |  PROV_Admin	|Premium     |UnpaidInvoice |	  AO |
