@@ -2,18 +2,22 @@ package main.java.pageObjects;
 
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
+import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
 import org.apache.xmlbeans.impl.store.Query;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import static main.java.Utils.DataBase.DatabaseType.Stage2;
@@ -56,6 +60,58 @@ public class UnsecureGuestPayment {
 
     @FindBy(xpath = "//*[@id= 'payAsGuestForm']/article/h1")
     WebElement PayasaGuestTitle;
+
+    //div[@class='tile tile--fancy--dark mt-5 step bankInfo']/h3
+    @FindBy(xpath = "//h3[contains(.,'bank account')]")
+    WebElement Step3Title;
+
+    @FindBy(id = "refund_reason_selector")
+    WebElement AccountTypeDropdown;
+
+    @FindBy(xpath = "//span[contains(.,'Routing Number')]")
+    WebElement RoutingNumberText;
+
+    @FindBy(id = "routingNumber")
+    WebElement RoutingNumberInput;
+
+    @FindBy(xpath = "//input[@id='accountNumber']/../span")
+    WebElement AccountNumberText;
+
+    @FindBy(id = "accountNumber")
+    WebElement AccountNumberInput;
+
+    @FindBy(xpath = "//button[.='Cancel']")
+    WebElement BottomCancelButton;
+
+    @FindBy(xpath = "//button[.='Submit']")
+    WebElement BottomSubmitButton;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//th[1]")
+    WebElement InvoiceHeader;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//th[2]")
+    WebElement BillingPeriodHeader;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//th[3]")
+    WebElement AmountHeader;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//th[4]")
+    WebElement TINlast4Header;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//td[1]")
+    WebElement InvoiceValue;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//td[2]")
+    WebElement BillingPeriodValue;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//td[3]")
+    WebElement AmountValue;
+
+    @FindBy(xpath = "(//table[@class='w-100 invoiceTable providerInfo'])[1]//td[4]")
+    WebElement TINlast4Value;
+
+    @FindBy(xpath = "//input[@name='consent']")
+    WebElement consentCheckBox;
 
     private TestBase testConfig;
     public UnsecureGuestPayment(TestBase testConfig) {
@@ -112,5 +168,34 @@ public class UnsecureGuestPayment {
     	Helper.compareEquals(testConfig, "Invoice", providerInfo.get("INVC_NBR").toString(), actInvoice);
     	Helper.compareEquals(testConfig, "Invoice Amount", expInvoiceAmnt, actInvoiceAmount);
     	
+    }
+    public void routingAndAccountNoInserter()  {
+        int rowNo = 1;
+        TestDataReader data = null;
+        try {
+            data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            List<String> ValidRoutNos = data.GetAllColumnsData("FinancialInfo", "ValidRoutingNos");
+            String routingNumber = data.GetData(rowNo, "RoutingNumber");
+            String accountNumber = data.GetData(rowNo, "AccountNumber");
+            System.setProperty("routingNumber",routingNumber);
+            System.setProperty("accountNumber",accountNumber);
+            Element.fluentWait(testConfig,RoutingNumberInput,100,1,"Routing Input");
+            Element.enterData(RoutingNumberInput,routingNumber,"Routing Number","Routing Number Input");
+            Element.enterData(AccountNumberInput,accountNumber,"Account Number","Account number Input");
+            Element.click(testConfig,Step3Title,"title",3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void userClicksOnConsent() {
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='consent']"),10);
+        Element.click(testConfig,consentCheckBox,"consent checkbox",3);
+    }
+
+    public void userUserClicksSubmit() {
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//button[.='Submit']"),10);
+        Element.click(testConfig,BottomSubmitButton,"Submit Button",3);
     }
 }
