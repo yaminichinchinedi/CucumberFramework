@@ -432,4 +432,7 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"fetch first row ONLY";
 	
 	public static final String PROVIDER_INFO="SELECT  * FROM ole.DEBIT_FEE_INVCE dfi WHERE  INVC_NBR ='{$invoiceNumber}'";
+	
+	public static final String AuthorizedINFO_IND="SELECT AUTH_ENROLLER_PHONE_IND FROM ole.CONTACT c WHERE PROV_TIN_NBR = '{$tin}' AND CNTC_ROLE_CD = 'E'";
 }
+

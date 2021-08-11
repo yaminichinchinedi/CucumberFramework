@@ -54,4 +54,9 @@ public class EnrollmentSubmittedSteps extends TestBase{
 	public void validate_OrgInfo__Indicators_are_saved_in_Database_on_Enrollment_Page() throws Throwable {
 		enrollmentSubmitted.validateOrgInfoIndicators();
 	}
+	
+	@And("^Validate Authorized Enroller Indicators are saved in Database for Authorized Enroller info$")
+	public void validate_AuthorizedEnroller__Indicators_are_saved_in_Database_Authorized_Enroller_info() throws Throwable {
+		enrollmentSubmitted.validateAutorizedEnrolledIndicators();
+	}
 }

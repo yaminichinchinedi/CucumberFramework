@@ -95,7 +95,7 @@ import main.java.reporting.Log;
                 "rerun:target/cucumber-reports/rerun.txt"},
 		        dryRun=false,
 		        strict=true,
-		        tags={"@pbagdiya"}
+		        tags={"@FraudPB"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;

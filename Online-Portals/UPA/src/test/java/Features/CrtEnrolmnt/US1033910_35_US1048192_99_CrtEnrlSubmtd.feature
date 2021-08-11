@@ -1,8 +1,6 @@
 #Author: Rahul Krishna+
 Feature: Create Enrollment Home Page Validations 
-
 @UPAUS3610262 @UPA2021_PI02_IP
-
  Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -134,7 +132,7 @@ Feature: Create Enrollment Home Page Validations
         	|    Super          |  VO   	|			SpecialCharacters   |
         				
    #Author: Shalini Mahavratayajula    			
- @UPAUS2952537AO						      
+ @UPAUS2952537AO 						      
 	Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators AO enrollment
   Given User navigates to UPA Sys Test application
   When User Clicks on Enroll Now from the landing page
@@ -178,6 +176,62 @@ Feature: Create Enrollment Home Page Validations
   And Validate OrgInfo Indicators are saved in Database on Enrollment Page
   And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
 		
+	  Examples:
+
+          |   credentials     | checkAutoPopulate|
+          |    Super          |busNameYAndAddrY |
+          |    Super          |busNameYAndAddrN |
+          |    Super          |busNameNAndAddrY |
+          |    Super          |busNameNAndAddrN | 
+          
+          
+#Author: Piyush Bagdiya   			
+ @CSRUS2952532 @CSRUS3725611 @FraudPBB 						      
+	Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators AO enrollment
+  Given User navigates to UPA Sys Test application
+  When User Clicks on Enroll Now from the landing page
+	Then User clicks on Continue button of BeginEnrollment Page
+	Then User clicks on which option should i choose link and close the opened popup
+	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+		| Enrollment Type |
+	  |       AO        |			
+	Then User sets business phone
+	Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
+	Then User fills all the information on Identify Administrators page and click continue
+	Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
+  Then User uploads the WNine form and click continue
+  And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+  And Validate OrgInfo Indicators are saved in Database on Enrollment Page
+  And Validate Authorized Enroller Indicators are saved in Database for Authorized Enroller info
+
+     Examples:
+
+          |   credentials     | checkAutoPopulate|
+          |    Super          |busNameYAndAddrY |
+          |    Super          |busNameYAndAddrN |
+          |    Super          |busNameNAndAddrY |
+          |    Super          |busNameNAndAddrN | 
+ 
+                	    
+   #Author: Piyush Bagdiya 
+ @CSRUS2952532 @CSRUS3725611 @FraudPBB							      
+	Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
+  Given User navigates to UPA Sys Test application
+  When User Clicks on Enroll Now from the landing page
+	Then User clicks on Continue button of BeginEnrollment Page
+	Then User clicks on which option should i choose link and close the opened popup
+	Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+		| Enrollment Type |
+	  |       VO        |			
+	Then User sets business phone
+	Then User fills the auto populated information for BusinessNameAddress "<checkAutoPopulate>" and click on Continue	
+	Then User fills all the information on Identify Administrators page and click continue to W9
+	Then User uploads the WNine form and click continue
+	And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.  
+  And Validate OrgInfo Indicators are saved in Database on Enrollment Page
+  And Also Validates page content,Headers,Exit Enrollment button on Enrollment Submitted Page
+  And Validate Authorized Enroller Indicators are saved in Database for Authorized Enroller info
+  		
 	  Examples:
 
           |   credentials     | checkAutoPopulate|
