@@ -33,7 +33,9 @@ import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
+import org.apache.commons.lang3.StringUtils;
 
 public class EditEnrollment {
 	
@@ -431,11 +433,18 @@ public class EditEnrollment {
 	@FindBy(name="btnYes")
 	WebElement YesButton;
 	
+	@FindBy(name="Submit")
+	WebElement SubmitButton;
+	
 	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']")
 	WebElement popupTxt;
 		
 	@FindBy(xpath="//*[@id='chgPaymentMethodConfirmationModal']//div[2]")
 	WebElement popTxtVO;
+	
+	@FindBy(name="btnUpdBnkAcct")
+	WebElement btnBnkAccnt;
+	
 	
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
@@ -444,7 +453,7 @@ public class EditEnrollment {
 	String userEmailAdr = Helper.getUniqueEmailId();
 
 	private Boolean payerexist;
-
+	HashMap<Integer, HashMap<String, String>> PEPRecordsold;
 	public EditEnrollment(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -1195,13 +1204,89 @@ public class EditEnrollment {
 		return this;
 		
 	}
-	public EditEnrollment changePaymentMethod(String tinType) throws IOException {
 	
+	public EditEnrollment verifyDBupdates(String tinType,HashMap<Integer, HashMap<String, String>> PEPRecords) throws IOException {
+		
+		HashMap<Integer, HashMap<String, String>> PEPRecordsupdate=DataBase.executeSelectQueryALL(testConfig, QUERY.PEP_TABLES_RECORDS_FOR_TIN);
+		int recSize=PEPRecords.size();
+		for (int i=1;i<recSize;i++)
+		{
+		
+		if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "I")|| StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "A"))
+		{
+			//Inactive records will remain inactive
+			if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "I"))
+			Helper.compareEquals(testConfig,"Enroll Status", "I", PEPRecordsupdate.get(i).get("ENRL_STS_CD").trim());
+
+			//CHK,Active and changed by CSR will also be in Check
+			if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "A"))
+			{
+				if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_CD").trim(), "CHK") && 
+						PEPRecords.get(i).get("CURR_EDITING_USER_ID").trim().matches("^[a-zA-Z0-9]+$")
+						)
+				{
+					Helper.compareEquals(testConfig, "Pay Method ", "CHK", PEPRecordsupdate.get(i).get("PAY_METH_CD").trim());	
+				}		
+			
+			}
+			
+			if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "A"))
+			{
+				//VO 2 AO Conversion
+				if (StringUtils.equalsIgnoreCase(tinType, "VO") && 
+					StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_CD").trim(), "VCP")) 
+				{
+				Helper.compareEquals(testConfig,"Enroll Status", "N", PEPRecordsupdate.get(i).get("ENRL_STS_CD").trim());
+				Helper.compareEquals(testConfig, "Pay Method ", "ACH", PEPRecordsupdate.get(i).get("PAY_METH_CD").trim());	
+
+				}
+				//AO 2 VO conversion
+				if (StringUtils.equalsIgnoreCase(tinType, "AO") && 
+						StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_CD").trim(), "ACH")) 
+				{
+					//Payer who offer both ACH Only
+					if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_OFR_CD").trim(),"001") ||
+							StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_OFR_CD").trim(),"002") )
+					{
+				Helper.compareEquals(testConfig,"Enroll Status", "SI", PEPRecordsupdate.get(i).get("ENRL_STS_CD").trim());
+				Helper.compareEquals(testConfig, "Pay Method ", "CHK", PEPRecordsupdate.get(i).get("PAY_METH_CD").trim());	
+					}
+					//Payer who offer both ACH and VCP 
+					if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_OFR_CD").trim(),"004") ||
+							StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("PAY_METH_OFR_CD").trim(),"006") )
+					{
+				Helper.compareEquals(testConfig,"Enroll Status", "A", PEPRecordsupdate.get(i).get("ENRL_STS_CD").trim());
+				Helper.compareEquals(testConfig, "Pay Method ", "VCP", PEPRecordsupdate.get(i).get("PAY_METH_CD").trim());	
+					}	
+					
+				}	
+			}
+			
+			//For Rejected status,it will remain in Rejected status,and Method will be Check
+			if (StringUtils.equalsIgnoreCase(PEPRecords.get(i).get("ENRL_STS_CD").trim(), "R"))
+				{
+				
+				Helper.compareEquals(testConfig,"Enroll Status", "R", PEPRecordsupdate.get(i).get("ENRL_STS_CD").trim());
+				Helper.compareEquals(testConfig, "Pay Method ", "CHK", PEPRecordsupdate.get(i).get("PAY_METH_CD").trim());	
+				}
+			
+			
+		}
+			
+		}
+		
+		return this;
+	}
+	public EditEnrollment changePaymentMethod(String tinType) throws IOException {
+	//	verifyDBupdates(tinType);
+		HashMap<Integer, HashMap<String, String>> PEPRecords=DataBase.executeSelectQueryALL(testConfig, QUERY.PEP_TABLES_RECORDS_FOR_TIN);
+
 		if(tinType.equals("AO")) {
 			Element.click(VCP, "Change to VCP");
 			Helper.compareEquals(testConfig, "pop-up text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.popupText").trim(), popupTxt.getText().trim());
 			Element.click(YesBtn, "Yes button");
-			}
+			verifyDBupdates(tinType,PEPRecords);
+		}
 
 		else if (tinType.equals("VO")) {
 			int rowNo = 1;
@@ -1236,13 +1321,17 @@ public class EditEnrollment {
 			 Element.enterData(txtBoxEmail, firstProvEmailAdr, "Enter email:"+ " "+firstProvEmailAdr ,"email");
 			 Element.enterData(txtBoxVerifyEmail, firstProvEmailAdr, "Enter verify email:" + " "+firstProvEmailAdr ,"verify email");
 			 Element.click(btnContinue, "Continue button");
-		
+		     Browser.wait(testConfig, 3);
+		     
+		     if (StringUtils.equalsIgnoreCase(btnBnkAccnt.getText().trim(),"Add Bank Account"))
+			 {
+			Element.waitForPresenceOfElementLocated(testConfig, By.name("bankRoutTranNumber"), 5);	 
 			 Element.enterData(txtRoutingNo, routingNo, "Read from excel and Enter Routing Number", "routingNumber");
 			 Element.enterData(txtAccNo, accountNo, "Read from excel and Enter Account Number", "accountNumber");
-			 Element.enterData(txtBankCity, cityName,"Read from excel and Enter City name","finInstCity");
-			 Element.enterData(drpDwnBankState, stateName,"Select City from excel", "state");
+			// Element.enterData(txtBankCity, cityName,"Read from excel and Enter City name","finInstCity");
+			// Element.enterData(drpDwnBankState, stateName,"Select City from excel", "state");
 
-			 Element.enterData(txtZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
+			// Element.enterData(txtZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 			 Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 			 Browser.wait(testConfig, 2);
 			 testConfig.driver.switchTo().frame("myblvcframe");
@@ -1257,8 +1346,15 @@ public class EditEnrollment {
 			 Browser.wait(testConfig, 2);
 			 Element.click(YesButton, "yes button");
 			 Browser.wait(testConfig, 2);
-			 Element.click(btnFinishUPA, "Finish button");}
-		
+			 }
+			 Element.click(btnFinishUPA, "Finish button");
+		     Browser.wait(testConfig, 2);
+			 WebElement finalTxt=Element.findElement(testConfig, "xpath", "//*[contains(text(),'Please verify')]");
+			 if(finalTxt!=null)
+			 Element.click(SubmitButton, "Submit button");   
+			 }
+		     verifyDBupdates(tinType,PEPRecords);
+
 		return this;
 	}
 

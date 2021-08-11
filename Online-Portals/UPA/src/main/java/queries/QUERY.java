@@ -404,7 +404,8 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	"\thaving SETL_DT < CURRENT_DATE and SETL_DT >=CURRENT_DATE-(DAY(CURRENT_DATE)-1) and Sum(DBT_FEE_ACCRD_AMT)>0 and PROV_TIN_NBR in \n"+
 	"\t(Select PROV_TIN_NBR from OLE.DEBIT_FEE_ACCRD DFA \n"+
 	"\tgroup by PROV_TIN_NBR,SETL_DT \n"+
-	"\thaving SETL_DT > CURRENT_DATE and SETL_DT <= LAST_DAY(CURRENT_DATE) and Sum(DBT_FEE_ACCRD_AMT)>0)"+
+	"\thaving SETL_DT > CURRENT_DATE and SETL_DT <= LAST_DAY(CURRENT_DATE) and Sum(DBT_FEE_ACCRD_AMT)>0)";
+	public static final String DBT_FEE_OTH_FEES = "WITH LSTFLDPYMT AS (SELECT * FROM OLE.DEBIT_FEE_OTH_FEES dfof WHERE dfof.CREAT_DTTM = (SELECT MAX(dfof2.CREAT_DTTM)\n"+
 			"FROM OLE.DEBIT_FEE_OTH_FEES dfof2\n"+
 			"WHERE dfof2.DBT_FEE_INVC_KEY_ID = dfof.DBT_FEE_INVC_KEY_ID)\n"+
 			"ORDER BY CREAT_DTTM)\n"+
@@ -415,9 +416,23 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"LEFT JOIN LSTFLDPYMT lst ON dfi.DBT_FEE_INVC_KEY_ID = lst.DBT_FEE_INVC_KEY_ID AND dfi.PROV_TIN_NBR = lst.PROV_TIN_NBR\n"+
 			"WHERE dfi.INVC_TYP = 'PPP' AND dfi.INVC_STS != 'IC' AND dfi.PROV_TIN_NBR = '{$tin}'\n"+
 			"ORDER BY dfi.BILL_CYC_STRT_DT DESC, dfi.BILL_CYC_END_DT DESC FETCH FIRST 1 ROW ONLY WITH UR";
+	
+	public static final String PEP_TABLES_RECORDS_FOR_TIN = "SELECT pep.*,p.PAY_METH_OFR_CD FROM OLE.PAYER_ENROLLED_PROVIDER pep,OLE.PAYER p WHERE p.PAYR_835_ID =pep.PAYR_835_ID  \r\n" + 
+			"AND p.PAYR_ACTV_IND ='Y' \r\n" + 
+			"AND pep.PROV_TIN_NBR ='{$tin}' ";
 
 
-     public static final String ORGINFO_IND="SELECT ORG_NAME_IND, BUSINESS_PHONE_IND , BUSINESS_ADDR_IND FROM OLE.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='{$tin}'";
+	public static final String ORGINFO_IND="SELECT ORG_NAME_IND, BUSINESS_PHONE_IND , BUSINESS_ADDR_IND FROM OLE.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='{$tin}'";
+	
+	public static final String MFA_SWITCH_CHECK = "SELECT * FROM ole.SYSTEM_CONFIGURATION WHERE PROC_CD = 'MFA_SWITCH'";
 
-     public static final String AuthorizedINFO_IND="SELECT AUTH_ENROLLER_PHONE_IND FROM ole.CONTACT c WHERE PROV_TIN_NBR = '{$tin}' AND CNTC_ROLE_CD = 'E'";
+	public static final String UNSECURE_GUEST_PAYMENT = "select \tdfi.PROV_TIN_NBR as PROV_TAX_ID_NBR, dfi.INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi \n" +
+			"where  dfi.INVC_STS in ('IR' , 'FP')\n" +
+			"order by dfi.LST_CHG_BY_DTTM desc\n" +
+			"fetch first row ONLY";
+	
+	public static final String PROVIDER_INFO="SELECT  * FROM ole.DEBIT_FEE_INVCE dfi WHERE  INVC_NBR ='{$invoiceNumber}'";
+	
+	public static final String AuthorizedINFO_IND="SELECT AUTH_ENROLLER_PHONE_IND FROM ole.CONTACT c WHERE PROV_TIN_NBR = '{$tin}' AND CNTC_ROLE_CD = 'E'";
 }
+

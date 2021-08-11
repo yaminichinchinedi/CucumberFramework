@@ -251,4 +251,9 @@ public class ProviderEFTERAEnrollPageSteps extends TestBase {
 		validateEFTERAProviderInfo=providerEFTERAEnrollPage.fillProviderOrgInfoWithAutoPopulatedInfo(checkAutoPopulate);
 	    
 	}
+	@Then("^User fills \"([^\"]*)\" and \"([^\"]*)\" on organization information page$")
+	public void user_fills_and_on_organization_information_page(String BussinessName, String streetName) throws Throwable {
+		ProviderEFTERAEnrollPage providerEFTERAEnrollPage=new ProviderEFTERAEnrollPage(testConfig);
+		providerEFTERAEnrollPage.fillBussinessandStreetInfo(BussinessName, streetName);
+	}
 }

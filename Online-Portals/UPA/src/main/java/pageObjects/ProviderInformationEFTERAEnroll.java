@@ -13,6 +13,7 @@ import org.openqa.selenium.support.Color;
 import main.java.nativeFunctions.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -207,6 +208,13 @@ public class ProviderInformationEFTERAEnroll {
 
 	@FindBy(id = "provSpecialty")
 	WebElement prvSpeciallity;
+	
+	@FindBy(id = "ui-id-1")
+	WebElement BussinessScrollBar;
+	
+	@FindBy(id = "ui-id-2")
+	WebElement streetScrollBar;
+
 
 	EnrollmentInfo enrollmentInfoPageObj = EnrollmentInfo.getInstance();
 
@@ -964,6 +972,18 @@ public class ProviderInformationEFTERAEnroll {
 
 		return new ValidateEFTERAProviderInfo(testConfig);
 
+	}
+	public void fillBussinessandStreetInfo(String BussinessName, String streetName) {
+		Element.verifyElementPresent(providerName, "Business Name");
+		Element.enterData(providerName, BussinessName, "Enter Bussiness name as : " + BussinessName, "providerName");
+		Browser.wait(testConfig, 3);
+		Element.verifyElementPresent(BussinessScrollBar, "Scroll Bar");
+		Element.enterKeys(providerName, Keys.TAB, "TAB Key entering", "TAB Key");
+		Element.verifyElementPresent(street, "Street Name");
+		Element.verifyElementIsEnabled(street, "Street Name");
+		Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+		Browser.wait(testConfig, 3);
+		Element.verifyElementPresent(streetScrollBar, "Scroll Bar");
 	}
 
 

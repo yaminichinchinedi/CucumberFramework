@@ -8,6 +8,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
@@ -21,6 +22,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 public class MaintainEnrollment extends HomePage  {
@@ -100,13 +102,27 @@ public class MaintainEnrollment extends HomePage  {
        
    	@FindBy(xpath="//td[@align='right']//input[@value='  Edit  ']")
   	WebElement editButton;
+   	
+   	@FindBy(xpath="//div[@id='confirmRedirectToMFA']/h2")
+	WebElement mfaDialogBoxTitle;
+	
+	@FindBy(xpath="//div[@id='confirmRedirectToMFA']/p")
+	WebElement mfaDialogBoxMessage;
+	
+	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[1]")
+	WebElement mfaDialogBoxNoButton;
+	
+	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[2]")
+	WebElement mfaDialogBoxYesButton;
 	
  	public MaintainEnrollment(TestBase testConfig)
 	{
  		super(testConfig);
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		Browser.verifyURL(testConfig, "/viewEnrollment.do");
+		boolean flag = checkMFAflag();
+		if (!flag)
+			Browser.verifyURL(testConfig, "/viewEnrollment.do");
 	}
 
 	
@@ -396,6 +412,42 @@ public EditEnrollment clickEditButn()
         Element.click(btnEdit1, "Edit button");
         return new EditEnrollment(testConfig);
 
+}
+
+
+/******
+ * Author: Mohammad Khalid
+ * This methods validates the title, message content, Yes and No buttons on the MFA Dialog Box
+ * *********/
+
+public MaintainEnrollment validateMFADialogBoxContentMEtab()
+{
+	Helper.compareEquals(testConfig, "MFA Dialog Box Title", TestBase.contentMessages.getProperty("prov.mfadialogbox.title"), mfaDialogBoxTitle.getText().trim());
+	Helper.compareEquals(testConfig, "MFA Dialog Box Title", TestBase.contentMessages.getProperty("prov.mfadialogbox.messageContent"), mfaDialogBoxMessage.getText().trim());
+	
+	Element.verifyElementPresent(mfaDialogBoxNoButton, "No Button on MFA Dialog Box");
+	Element.verifyElementPresent(mfaDialogBoxYesButton, "Yes Button on MFA Dialog Box");
+	
+	return this;
+	
+}
+
+
+/******
+ * Author: Mohammad Khalid
+ * This methods checks for the MFA flag 
+ * *********/
+
+public boolean checkMFAflag()
+{
+	String query = QUERY.MFA_SWITCH_CHECK;
+	boolean mfaFlag = false;
+	String mfa_Proc_Data = null;
+	Map<String, String> results = DataBase.executeSelectQuery(testConfig, query, 1);
+	mfa_Proc_Data = (String) results.get("PROC_DATA").trim();
+	if (StringUtils.equals(mfa_Proc_Data, "Y"))
+		mfaFlag = true;
+	return mfaFlag;
 }
 
 }
