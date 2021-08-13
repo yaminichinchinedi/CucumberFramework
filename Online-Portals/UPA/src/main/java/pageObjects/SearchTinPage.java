@@ -7,6 +7,7 @@ import java.util.Map;
 import main.java.Utils.DataBase;
 import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
+import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
@@ -26,6 +27,7 @@ public class SearchTinPage {
 	@FindBy(id="payerdropdown")
 	WebElement drpDownPayer;
 	
+	
 //	@FindBy(id="taxNumber")
 //	WebElement txtboxTinNo;
 	
@@ -36,6 +38,12 @@ public class SearchTinPage {
 	@FindBy(name="btnSubmit")
 	List <WebElement> btnSearch;
 
+	@FindBy(name="taxIndNbr") 
+	WebElement txtboxTin;
+	
+	@FindBy(xpath = "//input[@value='Search']") 
+	WebElement btnSrch;
+	
 	private TestBase testConfig;
 	public SearchTinPage(TestBase testConfig) 
 	{
@@ -325,6 +333,29 @@ public class SearchTinPage {
 				testConfig.putRunTimeProperty("billing_service_id", tinDetails.get("BILLING_SERVICE_ID").toString());
 		return this;
 	}
-	
+	public void enterFetchedTIN(String userType){
+
+		switch(userType){
+	        case "BS":
+	        {   
+			   Element.selectByVisibleText(drpDownUserType, "Billing Service", "Billing Service dropdown");
+			   Element.clickByJS(testConfig,txtboxTin, "Enter TIN");
+			   Element.enterDataByJS(testConfig, txtboxTin, System.getProperty("tin"), "Enter TIN for BS");
+			   Browser.wait(testConfig, 2);
+			   Element.clickByJS(testConfig,btnSrch, "Click Search Button");
+			   Browser.waitForPageLoad(testConfig.driver);
+	  	       break;
+	        }  
+	       case "PROV":
+	       {
+			   Element.selectByVisibleText(drpDownUserType, "Provider", "Provider dropdown");
+			   Element.click(txtboxTin, "Enter TIN");
+			   Element.enterData(txtboxTin, System.getProperty("tin"), "Enter TIN for PROV", "Enter PROV TIN in CSR");
+			   Element.click(btnSrch, "Click Search Button");
+
+	  	       break;
+	        }
+		 }
+	}
 	
 }

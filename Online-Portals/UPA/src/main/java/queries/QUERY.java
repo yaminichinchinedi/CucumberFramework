@@ -425,5 +425,15 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	public static final String ORGINFO_IND="SELECT ORG_NAME_IND, BUSINESS_PHONE_IND , BUSINESS_ADDR_IND FROM OLE.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='{$tin}'";
 	
 	public static final String MFA_SWITCH_CHECK = "SELECT * FROM ole.SYSTEM_CONFIGURATION WHERE PROC_CD = 'MFA_SWITCH'";
-
+	public static final String PROV_TIN_WITH_ACTIVE_USER = "SELECT put.prov_tin_nbr as PROV_TAX_ID_NBR, pu.fst_nm, pu.lst_nm \r\n" + 
+			"FROM ole.portal_user pu\r\n" + 
+			"INNER JOIN ole.portal_user_tin put ON pu.portal_user_id=put.portal_user_id\r\n" + 
+			"WHERE pu.STS_CD='A' and pu.USER_TYP='P'ORDER BY LST_LOG_DTTM asc";
+   public static final String CHANGE_DESC_FOR_FRAUD="SELECT MOD_TYP_DESC FROM ole.MOD_TYP mt WHERE MOD_TYP_CD ='PUDF'";
+   public static final String  MOD_TYP_CD_PUHISTORY="SELECT  PUH.LST_CHG_BY_DTTM, PUH.LST_CHG_BY_ID, PUH.ACCESS_LVL, PUH.FST_NM ,PUH.LST_NM , PUH.USER_TYP,PUH.EMAIL_ADR_TXT,PUH.EMAIL_NTFY_IND,PUH.TEL_NBR,MT.MOD_TYP_DESC,PUH.MOD_TYP_CD\r\n" + 
+   		"      FROM OLE.PORTAL_USER_HISTORY PUH\r\n" + 
+   		"   LEFT JOIN OLE.MOD_TYP MT ON PUH.MOD_TYP_CD = MT.MOD_TYP_CD\r\n" + 
+   		"   WHERE PROV_TIN_NBR ='{$tin}'\r\n" + 
+   		"   order by lst_chg_by_dttm desc  FETCH FIRST 1 ROW ONLY";
+   public static final String GET_LAST_UPDATED_DATE="SELECT PROV_TIN_NBR ,LST_CHG_BY_DTTM FROM ole.PORTAL_USER_HISTORY puh2 WHERE STS_CD ='FD' ORDER BY LST_CHG_BY_DTTM DESC FETCH FIRST ROW ONLY";
 }

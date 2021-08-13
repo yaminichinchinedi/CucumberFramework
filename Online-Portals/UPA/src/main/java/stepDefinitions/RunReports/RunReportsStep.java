@@ -2,6 +2,7 @@
 package main.java.stepDefinitions.RunReports;
 
 import cucumber.api.PendingException;
+import main.java.pageObjects.ManageUsers;
 import main.java.pageObjects.RunReports;
 import main.java.pageObjects.SearchTinPage;
 import cucumber.api.java.en.Given;
@@ -96,4 +97,15 @@ public class RunReportsStep extends TestBase {
 		public void validates_that_each_column_is_sortable() throws Throwable {
 			runReports.validateSortColumn();
 		}
+		
+		@When("^User Inputs the date range as current date and tin$")
+		public void user_Inputs_the_date_range_as_current_date_and_tin() throws Throwable {
+		    runReports.enterDateRangeasCurrentAndTinForOrgUserHistory();
+		}
+		
+		@Then("^User verifies the field change description for the fraud user$")
+		public void user_verifies_the_field_change_description_for_the_fraud_user() throws Throwable {
+		    runReports.checkChangeDescForFraud();
+		}
+
 }

@@ -297,19 +297,31 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[2]")
 	WebElement mfaDialogBoxYesButton;
 	
+	@FindBy(xpath="//input[@value='Delete Fraud User']")
+	WebElement btnDltFraudUser;
+	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
 	
 	public ManageUsers(TestBase testConfig)
 	{
-		//super(testConfig);
+		if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR"))
+		{
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
-		//Element.expectedWait(lnkUserList, testConfig, "User List", "User List");
-		boolean flag = checkMFAflag();
-		if (!flag)
+		Element.expectedWait(lnkUserList, testConfig, "User List", "User List");
+		}
+		else if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("UPA"))
+		{
+			
+			this.testConfig=testConfig;
+			PageFactory.initElements(testConfig.driver, this);
+		    boolean flag = checkMFAflag();
+		    if (!flag)
 			Browser.verifyURL(testConfig, "/viewEnrollment.do");
+		}
+		
 
 	}
 	
@@ -2919,7 +2931,7 @@ public ManageUsers verifyModTypeCd(String userType, String value) {
 	}
 
 
-public void clickHome() {
+public  void clickHome() {
 	WebElement linkHome=testConfig.driver.findElement(By.linkText("Home"));
 	Element.clickByJS(testConfig, linkHome, "home link clicked");
 }
@@ -2981,6 +2993,13 @@ public boolean checkMFAflag()
 	return mfaFlag;
 }
 
-		
+public ManageUsers	deleteFraudUser() {
+	 String username= testConfig.getRunTimeProperty("last_name").toString() + "," +" " + testConfig.getRunTimeProperty("first_name").toString();
+	 testConfig.putRunTimeProperty("username", username);
+	 clickSpecificUserName(testConfig.getRunTimeProperty("username"));
+	 Element.clickByJS(testConfig,btnDltFraudUser, "Delete fraud Button");
+	 Element.clickByJS(testConfig,btnYes, "Yes button");
+	 return this;
+}
 }
 
