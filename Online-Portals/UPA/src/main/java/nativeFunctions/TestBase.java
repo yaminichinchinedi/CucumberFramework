@@ -346,7 +346,7 @@ public class TestBase extends ReporterClass {
 	public TestDataReader getCachedTestDataReaderObject(String sheetName) {
 		String path;
 		if(System.getProperty("OS")!=null)
-			path="//ConfigFiles//Config.properties";
+			path="//DataFiles//DataFile.xlsx";
 		else
 			path = getRunTimeProperty("DataFilePath");
 		if (sheetName.contains(".")) {
