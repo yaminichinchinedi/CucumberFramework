@@ -10,14 +10,22 @@ public class ExtentManager {
 
     public synchronized static ExtentReports getInstance() {
         if (extent == null)
-            createInstance(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html");
+        {
+        	if(System.getProperty("OS")!=null)
+                createInstance(System.getProperty("user.dir")+"//ExtentReports//ExtentReportResults.html");
+        	else       
+        		createInstance(System.getProperty("user.dir")+"\\ExtentReports\\ExtentReportResults.html");
+        }
 
         return extent;
     }
 
     public synchronized static ExtentReports createInstance(String fileName) {
         ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-        htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"\\ExtentReports\\extent-config.xml");
+        if(System.getProperty("OS")!=null)
+        	htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"//ExtentReports//extent-config.xml");
+        else
+        	htmlReporter.loadXMLConfig(System.getProperty("user.dir")+"\\ExtentReports\\extent-config.xml");
         htmlReporter.config().setReportName("Automation Report");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);

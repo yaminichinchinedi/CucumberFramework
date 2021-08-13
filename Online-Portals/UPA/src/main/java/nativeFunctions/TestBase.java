@@ -84,7 +84,12 @@ public class TestBase extends ReporterClass {
 	public TestBase() {
 
 		runtimeProperties = new Properties();
-		File file = new File(System.getProperty("user.dir") + "\\ConfigFiles\\Config.properties");
+		File file;
+		if(System.getProperty("OS")!=null)
+			file= new File(System.getProperty("user.dir") + "//ConfigFiles//Config.properties");
+		else
+			file= new File(System.getProperty("user.dir") + "\\ConfigFiles\\Config.properties");
+
 		FileInputStream fileInput = null;
 		this.softAssert = new SoftAssert();
 
@@ -104,7 +109,10 @@ public class TestBase extends ReporterClass {
 		FileReader reader = null;
 		contentMessages = null;
 		try {
-			reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
+			if(System.getProperty("OS")!=null)
+				reader = new FileReader(System.getProperty("user.dir") + "//src//test//resources//contentMessages.properties");
+			else
+				reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
 			contentMessages = new Properties();
 			contentMessages.load(reader);
 		} catch (IOException e) {
@@ -336,7 +344,11 @@ public class TestBase extends ReporterClass {
 	}
 
 	public TestDataReader getCachedTestDataReaderObject(String sheetName) {
-		String path = getRunTimeProperty("DataFilePath");
+		String path;
+		if(System.getProperty("OS")!=null)
+			path="//ConfigFiles//Config.properties";
+		else
+			path = getRunTimeProperty("DataFilePath");
 		if (sheetName.contains(".")) {
 			path = System.getProperty("user.dir") + getRunTimeProperty(sheetName.split("\\.")[0]);
 			sheetName = sheetName.split("\\.")[1];
