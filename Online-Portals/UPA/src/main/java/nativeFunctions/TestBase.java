@@ -269,6 +269,7 @@ public class TestBase extends ReporterClass {
 			Log.Comment("Execution environment is Saucelab");
 			switch (browserType) {
 			case "chrome":
+			case "Chrome":
 				driver = SetdriveronSauce(browserType);
 				break;
 			case "IE":
@@ -482,18 +483,18 @@ public class TestBase extends ReporterClass {
 			Log.Comment("Launched browser-- : " + Browser);
 		}
 		else if (Browser.equalsIgnoreCase("chrome")) {
-			
+			Log.Comment("Inside Set driver chrome: sauce labs");
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
-			caps = DesiredCapabilities.chrome();
-			
+			caps.setCapability("version", "91.0");
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			
 			try {
+				System.out.println("sauce lab url is :" + URL);
 				driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
+				System.out.println("Excetion whle launching driver" + e);
 				e.printStackTrace();
 			}
 
