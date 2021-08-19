@@ -139,8 +139,8 @@ public class TestBase extends ReporterClass {
 		else if (System.getProperty("env").equals("Test2"))
 			urlHelper("Test2");
 
-		else if (System.getProperty("env").equals("IMPL2"))//Piyush
-			urlHelper("IMPL2");//Piyush
+		else if (System.getProperty("env").equals("IMPL2"))
+			urlHelper("IMPL2");
 	}
 
 	public static TestBase getInstance() {
@@ -270,8 +270,7 @@ public class TestBase extends ReporterClass {
 			switch (browserType) {
 			case "chrome":
 			case "Chrome":
-				driver = SetdriveronSauce(browserType);
-				break;
+			case "Edge":
 			case "IE":
 				driver = SetdriveronSauce(browserType);
 				break;
@@ -463,13 +462,11 @@ public class TestBase extends ReporterClass {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "11.285");
-			//caps.setCapability("version", "latest");
-			//caps.setCapability("maxDuration", 3600);
 			caps.setCapability("name", "Remote File Upload Test");
 			caps = DesiredCapabilities.internetExplorer();
-
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			
 			try {
 				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
 				remoteWebDriver.setFileDetector(new LocalFileDetector());
@@ -491,17 +488,39 @@ public class TestBase extends ReporterClass {
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			
 			try {
-				System.out.println("sauce lab url is :" + URL);
 				driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {
-				System.out.println("Excetion whle launching driver" + e);
+				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
 			}
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			Log.Comment("Launched browser-- : " + Browser);
+			Log.Pass("Launched browser-- : " + Browser);
 		}
+		
+		else if (Browser.equalsIgnoreCase("Edge")) {
+			Log.Comment("Inside Set driver Edge: sauce labs");
+			
+			DesiredCapabilities caps = DesiredCapabilities.edge();
+			caps.setCapability("platform", "Windows 10");
+			caps.setCapability("version", "92.0");
+			caps.setCapability("parent-tunnel", "optumtest");
+			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			
+			try {
+				driver = new RemoteWebDriver(new URL(URL), caps);
+			} catch (MalformedURLException e) {
+				Log.Warning("Excetion whle launching driver" + e,testConfig);
+				e.printStackTrace();
+			}
+
+			driver.manage().deleteAllCookies();
+			driver.manage().window().maximize();
+			Log.Pass("Launched browser-- : " + Browser);
+		}
+		
+		
 
 		return driver;
 	}
