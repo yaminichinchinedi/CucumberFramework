@@ -521,7 +521,7 @@ public class TestBase extends ReporterClass {
 		}
 		
 		
-		runtimeProperties.setProperty("BrowserType",Browser);
+		System.setProperty("BrowserType",Browser);
 
 		return driver;
 	}
