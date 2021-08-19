@@ -496,7 +496,7 @@ public class TestBase extends ReporterClass {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			Log.Pass("Launched browser-- : " + Browser);
+			Log.Comment("Launched browser-- : " + Browser);
 		}
 		
 		else if (Browser.equalsIgnoreCase("Edge")) {
@@ -522,6 +522,7 @@ public class TestBase extends ReporterClass {
 		
 		
 		System.setProperty("BrowserType",Browser);
+		System.out.println("driver is ");
 
 		return driver;
 	}
