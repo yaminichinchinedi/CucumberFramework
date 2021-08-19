@@ -426,10 +426,9 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	
 	public static final String MFA_SWITCH_CHECK = "SELECT * FROM ole.SYSTEM_CONFIGURATION WHERE PROC_CD = 'MFA_SWITCH'";
 	public static final String PROV_TIN_WITH_ACTIVE_USER = "SELECT put.prov_tin_nbr as PROV_TAX_ID_NBR, pu.fst_nm, pu.lst_nm \r\n" + 
-			"FROM ole.portal_user pu\r\n" + 
-			"INNER JOIN ole.portal_user_tin put ON pu.portal_user_id=put.portal_user_id\r\n" + 
-			"WHERE pu.STS_CD='A' and pu.USER_TYP='P'ORDER BY LST_LOG_DTTM asc";
-   public static final String CHANGE_DESC_FOR_FRAUD="SELECT MOD_TYP_DESC FROM ole.MOD_TYP mt WHERE MOD_TYP_CD ='PUDF'";
+			"			FROM ole.portal_user pu \r\n" + 
+			"			INNER JOIN ole.portal_user_tin put ON pu.portal_user_id=put.portal_user_id\r\n" + 
+			"			WHERE pu.STS_CD='A' and pu.USER_TYP='P'and put.PROV_TIN_NBR !=' ' ORDER BY LST_LOG_DTTM asc";
    public static final String  MOD_TYP_CD_PUHISTORY="SELECT  PUH.LST_CHG_BY_DTTM, PUH.LST_CHG_BY_ID, PUH.ACCESS_LVL, PUH.FST_NM ,PUH.LST_NM , PUH.USER_TYP,PUH.EMAIL_ADR_TXT,PUH.EMAIL_NTFY_IND,PUH.TEL_NBR,MT.MOD_TYP_DESC,PUH.MOD_TYP_CD\r\n" + 
    		"      FROM OLE.PORTAL_USER_HISTORY PUH\r\n" + 
    		"   LEFT JOIN OLE.MOD_TYP MT ON PUH.MOD_TYP_CD = MT.MOD_TYP_CD\r\n" + 

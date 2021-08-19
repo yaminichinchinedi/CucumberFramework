@@ -1111,9 +1111,6 @@ public class ViewPaymentsDataProvider {
 		case "ProvTinWithActiveUser":
 		     query=QUERY.PROV_TIN_WITH_ACTIVE_USER;
 		     break;
-		case "ChangeDescForFraud":
-			 query=QUERY.CHANGE_DESC_FOR_FRAUD;
-			 break;
 		default:
 			Log.Comment("Payment Type " + searchCriteria + " not found");
 		}

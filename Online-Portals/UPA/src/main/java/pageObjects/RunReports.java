@@ -177,6 +177,9 @@ WebElement fromDate;
 @FindBy(xpath="//input[@name='toDate]")
 WebElement toDate;
 
+@FindBy(xpath="//a[contains(text(),'Last Changed Date/Time')]")
+WebElement LstChangedTime;
+
 private TestBase testConfig;
 private RunReports runReports;
 int sqlRowNo;
@@ -480,6 +483,7 @@ public void checkChangeDescForFraud()
 {
 	String query=QUERY.MOD_TYP_CD_PUHISTORY;
 	Map searchedData = DataBase.executeSelectQuery(testConfig, query, 1);
+	Element.clickByJS(testConfig,LstChangedTime, "clicks on LstChangedTime");
 	List< WebElement> reportTable=driver.findElements(By.xpath("//form[@id='reportForm']//table//tbody//tr[8]//td//tr//td//tr"));
 	Helper.compareEquals(testConfig, "mod typ desc", searchedData.get("MOD_TYP_DESC").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(10).getText());
 	
