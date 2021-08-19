@@ -128,7 +128,7 @@ public class LoginUPA {
 	public UPAHomePage doLoginUPA(String userType) throws InterruptedException {
 		setUserProperties(userType);
 		Element.click(clickUPASignIn, "Click On Sign In UPA");
-		
+		Element.fluentWait(testConfig, txtboxUserName, 5, 1, "ID");
 		if(!(txtboxUserName.isDisplayed() && txtboxPwd.isDisplayed()))
 			Element.fluentWait(testConfig, txtboxUserName, 100, 1, "Username field");
 		Element.clickByJS(testConfig, txtboxUserName, "UserName clicked");
