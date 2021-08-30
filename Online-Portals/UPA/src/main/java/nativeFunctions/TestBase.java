@@ -24,6 +24,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -190,7 +191,14 @@ public class TestBase extends ReporterClass {
 			case "chrome":
 			case "Chrome":
 				driver = initChromeDriver();
-				break;			
+				break;
+			case "Edge":
+			case "edge":
+				DesiredCapabilities caps2 = DesiredCapabilities.edge();
+				System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+"\\drivers\\msedgedriver.exe");
+				driver = new EdgeDriver(caps2);
+				driver.manage().window().maximize();
+				break;
 			case "IE":
 				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
 				caps1.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
