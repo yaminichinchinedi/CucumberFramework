@@ -517,7 +517,7 @@ public class TestBase extends ReporterClass {
 
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
-			Log.Pass("Launched browser-- : " + Browser);
+			Log.Comment("Launched browser-- : " + Browser);
 		}
 		
 		
