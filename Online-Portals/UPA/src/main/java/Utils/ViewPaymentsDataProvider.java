@@ -57,7 +57,7 @@ public class ViewPaymentsDataProvider {
 			sqlRowNo = 62;
 			insertQueryRowNo = 61;
 			insertPortalUserBSTIN = 1511;
-		} else if (userType.equals("PROV")) {
+		} else if (userType.equals("PROV")||userType.contains("PROV")) {
 			sqlRowNo = 28;
 			insertQueryRowNo = 24;
 		}
@@ -1164,6 +1164,10 @@ public class ViewPaymentsDataProvider {
 			query=QUERY.TIN_WITH_INVOICE;
 		}
 
+		if(searchCriteria.contains("UnpaidInvoice")){
+			query=QUERY.UNSECURE_GUEST_PAYMENT;
+		}
+
 		if(searchCriteria.contains("wthAccuredFee")){
 			query=QUERY.TIN_WITH_ACCRD_FEE;
 		}
@@ -1215,6 +1219,7 @@ public class ViewPaymentsDataProvider {
 				query=QUERY.TIN_NUMBER_ACCRUED_FEE_LESS_THAN_EQUAL_0;
 			
 		}
+
 		if (searchCriteria.contains("feeSearchPaymentNumber") || searchCriteria.contains("feeSearchInvoiceNumber")
 				|| searchCriteria.contains("feeSrchTINdetailsTabwthAllVal"))
 			sqlRowNo = 435;
@@ -1281,6 +1286,12 @@ public class ViewPaymentsDataProvider {
 					testConfig.putRunTimeProperty("CONSL_PAY_NBR", tinNumbers.get("CONSL_PAY_NBR").toString());
 					testConfig.putRunTimeProperty("setl_dt", tinNumbers.get("SETL_DT").toString());
 				}
+
+				if(searchCriteria.contains("UnpaidInvoice")){
+					testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVC_NBR").toString());
+
+				}
+
 				if (sqlRowNo == 435) {
 					testConfig.putRunTimeProperty("paymentNumber", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 					testConfig.putRunTimeProperty("invoiceNumber", tinNumbers.get("INVC_NBR").toString());

@@ -84,7 +84,12 @@ public class TestBase extends ReporterClass {
 	public TestBase() {
 
 		runtimeProperties = new Properties();
-		File file = new File(System.getProperty("user.dir") + "\\ConfigFiles\\Config.properties");
+		File file;
+		if(System.getProperty("OS")!=null)
+			file= new File(System.getProperty("user.dir") + "//ConfigFiles//Config.properties");
+		else
+			file= new File(System.getProperty("user.dir") + "\\ConfigFiles\\Config.properties");
+
 		FileInputStream fileInput = null;
 		this.softAssert = new SoftAssert();
 
@@ -104,7 +109,10 @@ public class TestBase extends ReporterClass {
 		FileReader reader = null;
 		contentMessages = null;
 		try {
-			reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
+			if(System.getProperty("OS")!=null)
+				reader = new FileReader(System.getProperty("user.dir") + "//src//test//resources//contentMessages.properties");
+			else
+				reader = new FileReader(System.getProperty("user.dir") + "\\src\\test\\resources\\contentMessages.properties");
 			contentMessages = new Properties();
 			contentMessages.load(reader);
 		} catch (IOException e) {
@@ -131,8 +139,8 @@ public class TestBase extends ReporterClass {
 		else if (System.getProperty("env").equals("Test2"))
 			urlHelper("Test2");
 
-		else if (System.getProperty("env").equals("IMPL2"))//Piyush
-			urlHelper("IMPL2");//Piyush
+		else if (System.getProperty("env").equals("IMPL2"))
+			urlHelper("IMPL2");
 	}
 
 	public static TestBase getInstance() {
@@ -261,8 +269,8 @@ public class TestBase extends ReporterClass {
 			Log.Comment("Execution environment is Saucelab");
 			switch (browserType) {
 			case "chrome":
-				driver = SetdriveronSauce(browserType);
-				break;
+			case "Chrome":
+			case "Edge":
 			case "IE":
 				driver = SetdriveronSauce(browserType);
 				break;
@@ -336,7 +344,11 @@ public class TestBase extends ReporterClass {
 	}
 
 	public TestDataReader getCachedTestDataReaderObject(String sheetName) {
-		String path = getRunTimeProperty("DataFilePath");
+		String path;
+		if(System.getProperty("OS")!=null)
+			path="//DataFiles//DataFile.xlsx";
+		else
+			path = getRunTimeProperty("DataFilePath");
 		if (sheetName.contains(".")) {
 			path = System.getProperty("user.dir") + getRunTimeProperty(sheetName.split("\\.")[0]);
 			sheetName = sheetName.split("\\.")[1];
@@ -450,13 +462,11 @@ public class TestBase extends ReporterClass {
 			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "11.285");
-			//caps.setCapability("version", "latest");
-			//caps.setCapability("maxDuration", 3600);
 			caps.setCapability("name", "Remote File Upload Test");
 			caps = DesiredCapabilities.internetExplorer();
-
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			
 			try {
 				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
 				remoteWebDriver.setFileDetector(new LocalFileDetector());
@@ -470,18 +480,17 @@ public class TestBase extends ReporterClass {
 			Log.Comment("Launched browser-- : " + Browser);
 		}
 		else if (Browser.equalsIgnoreCase("chrome")) {
-			
+			Log.Comment("Inside Set driver chrome: sauce labs");
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
-			caps = DesiredCapabilities.chrome();
-			
+			caps.setCapability("version", "91.0");
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			
 			try {
 				driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
+				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
 			}
 
@@ -489,6 +498,31 @@ public class TestBase extends ReporterClass {
 			driver.manage().window().maximize();
 			Log.Comment("Launched browser-- : " + Browser);
 		}
+		
+		else if (Browser.equalsIgnoreCase("Edge")) {
+			Log.Comment("Inside Set driver Edge: sauce labs");
+			
+			DesiredCapabilities caps = DesiredCapabilities.edge();
+			caps.setCapability("platform", "Windows 10");
+			caps.setCapability("version", "92.0");
+			caps.setCapability("parent-tunnel", "optumtest");
+			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			
+			try {
+				driver = new RemoteWebDriver(new URL(URL), caps);
+			} catch (MalformedURLException e) {
+				Log.Warning("Excetion whle launching driver" + e,testConfig);
+				e.printStackTrace();
+			}
+
+			driver.manage().deleteAllCookies();
+			driver.manage().window().maximize();
+			Log.Comment("Launched browser-- : " + Browser);
+		}
+		
+		
+		System.setProperty("BrowserType",Browser);
+		System.out.println("driver is ");
 
 		return driver;
 	}

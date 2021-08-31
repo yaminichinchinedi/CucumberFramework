@@ -1,3 +1,4 @@
+
 package main.java.queries;
 
 public class QUERY {
@@ -446,4 +447,5 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
    		"   order by lst_chg_by_dttm desc  FETCH FIRST 1 ROW ONLY";
    public static final String GET_LAST_UPDATED_DATE="SELECT PROV_TIN_NBR ,LST_CHG_BY_DTTM FROM ole.PORTAL_USER_HISTORY puh2 WHERE STS_CD ='FD' ORDER BY LST_CHG_BY_DTTM DESC FETCH FIRST ROW ONLY";
 }
+
 

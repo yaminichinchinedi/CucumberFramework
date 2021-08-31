@@ -190,6 +190,18 @@ public class EnrollmentSubmitted  {
 		return this;
 	}
 	
+	public EnrollmentSubmitted validateAutorizedEnrolledIndicators() throws IOException
+	{
+		
+		testConfig.putRunTimeProperty("tin",enrollmentInfoPageObj.getTin());
+		Map<String,String> orgInfo=DataBase.executeSelectQuery(testConfig, QUERY.AuthorizedINFO_IND, 1);	
+			
+		//Organization Info Indicators are set to 'Y' If the values are auto populated else it is 'N'		
+		Helper.compareEquals(testConfig, "AUTH_ENROLLER_PHONE_IND","N", orgInfo.get("AUTH_ENROLLER_PHONE_IND"));
+		
+		return this;
+	}
+	
 	public void verifyPDFData() throws IOException
 	{
 		if(enrollmentInfoPageObj.getEnrollType().equals("HO"))
