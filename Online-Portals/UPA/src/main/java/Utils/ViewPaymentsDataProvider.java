@@ -1107,6 +1107,10 @@ public class ViewPaymentsDataProvider {
 		case "New Enroll WithinTrial and Paid":
 			query = QUERY.NEW_ENROLL_WITHIN_TRIAL_AND_PAID_NOTPAID;
 			break;
+			
+		case "ProvTinWithActiveUser":
+		     query=QUERY.PROV_TIN_WITH_ACTIVE_USER;
+		     break;
 		default:
 			Log.Comment("Payment Type " + searchCriteria + " not found");
 		}
@@ -1250,7 +1254,12 @@ public class ViewPaymentsDataProvider {
 					testConfig.putRunTimeProperty("paymentNumber", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 				}
 				
-				
+				if(searchCriteria.equalsIgnoreCase("ProvTinWithActiveUser")) {
+					testConfig.putRunTimeProperty("first_name", tinNumbers.get("FST_NM").toString());
+					testConfig.putRunTimeProperty("last_name", tinNumbers.get("LST_NM").toString());
+
+
+				}
 				if(searchCriteria.equalsIgnoreCase("FullPartialTin"))
 				{
 					String Full_query = QUERY.WAIVE_FULL_AMOUNT;
