@@ -425,6 +425,16 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	public static final String ORGINFO_IND="SELECT ORG_NAME_IND, BUSINESS_PHONE_IND , BUSINESS_ADDR_IND FROM OLE.ENROLLED_PROVIDER WHERE PROV_TIN_NBR ='{$tin}'";
 	
 	public static final String MFA_SWITCH_CHECK = "SELECT * FROM ole.SYSTEM_CONFIGURATION WHERE PROC_CD = 'MFA_SWITCH'";
+
+	public static final String UNSECURE_GUEST_PAYMENT = "select \tdfi.PROV_TIN_NBR as PROV_TAX_ID_NBR, dfi.INVC_NBR FROM ole.DEBIT_FEE_INVCE dfi \n" +
+			"where  dfi.INVC_STS in ('IR' , 'FP')\n" +
+			"order by dfi.LST_CHG_BY_DTTM desc\n" +
+			"fetch first row ONLY";
+	
+	public static final String PROVIDER_INFO="SELECT  * FROM ole.DEBIT_FEE_INVCE dfi WHERE  INVC_NBR ='{$invoiceNumber}'";
+	
+	public static final String AuthorizedINFO_IND="SELECT AUTH_ENROLLER_PHONE_IND FROM ole.CONTACT c WHERE PROV_TIN_NBR = '{$tin}' AND CNTC_ROLE_CD = 'E'";
+	
 	public static final String PROV_TIN_WITH_ACTIVE_USER = "SELECT put.prov_tin_nbr as PROV_TAX_ID_NBR, pu.fst_nm, pu.lst_nm \r\n" + 
 			"			FROM ole.portal_user pu \r\n" + 
 			"			INNER JOIN ole.portal_user_tin put ON pu.portal_user_id=put.portal_user_id\r\n" + 
@@ -436,3 +446,4 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
    		"   order by lst_chg_by_dttm desc  FETCH FIRST 1 ROW ONLY";
    public static final String GET_LAST_UPDATED_DATE="SELECT PROV_TIN_NBR ,LST_CHG_BY_DTTM FROM ole.PORTAL_USER_HISTORY puh2 WHERE STS_CD ='FD' ORDER BY LST_CHG_BY_DTTM DESC FETCH FIRST ROW ONLY";
 }
+
