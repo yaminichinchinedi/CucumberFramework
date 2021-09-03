@@ -96,10 +96,7 @@ import org.openqa.selenium.Keys;
 import main.java.reporting.Log;
 import main.java.pageObjects.LoginCSR;
 import main.java.pageObjects.SearchRemittanceSearchCriteria;
-
-
-
-
+import main.java.queries.QUERY;
 import main.java.nativeFunctions.TestBase;
 public class RunReports extends TestBase{
 	
@@ -173,6 +170,18 @@ WebElement linkHome;
 
 @FindBy(xpath="//input[@value='DebitFee']")
 WebElement radioCstmTINRtReport;
+
+@FindBy(xpath="//input[@name='fromDate']")
+WebElement fromDate;
+
+@FindBy(xpath="//input[@name='toDate]")
+WebElement toDate;
+
+@FindBy(xpath="//a[contains(text(),'Last Changed Date/Time')]")
+WebElement LstChangedTime;
+
+@FindBy(xpath="//form[@id='reportForm']//table//tbody//tr[8]//td//tr//td//tr")
+List<WebElement> reportTable;
 
 private TestBase testConfig;
 private RunReports runReports;
@@ -462,6 +471,23 @@ public RunReports validateSortColumn() throws IOException{
 	}
 	return this;
 }
-
-
+public void enterDateRangeasCurrentAndTinForOrgUserHistory()
+{      	   
+	   String query=QUERY.GET_LAST_UPDATED_DATE;
+	   Map SearchedDate=DataBase.executeSelectQuery(testConfig,query, 1);
+	   String dateTemp=SearchedDate.get("LST_CHG_BY_DTTM").toString().trim().substring(0,10).replace('-', '/');
+	   dateTemp=Helper.changeDateFormat(testConfig, dateTemp, "yyyy/mm/dd", "mm/dd/yyyy");
+	   Element.enterDataByJS(testConfig,txtFromDate , dateTemp , "Enter From date");
+	   Element.enterDataByJS(testConfig,txtToDate , dateTemp , "Enter To date  ");
+	   Element.enterDataByJS(testConfig ,txtTin,testConfig.getRunTimeProperty("tin").toString().trim(), "Enter Tin ");
+       clickViewReportButton();
+}
+public void checkChangeDescForFraud()
+{
+	String query=QUERY.MOD_TYP_CD_PUHISTORY;
+	Map searchedData = DataBase.executeSelectQuery(testConfig, query, 1);
+	Element.clickByJS(testConfig,LstChangedTime, "clicks on LstChangedTime");
+	Helper.compareEquals(testConfig, "mod typ desc", searchedData.get("MOD_TYP_DESC").toString().trim(), reportTable.get(1).findElements(By.tagName("td")).get(10).getText());
+	
+}
 }

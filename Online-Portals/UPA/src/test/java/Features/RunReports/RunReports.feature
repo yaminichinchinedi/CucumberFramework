@@ -133,3 +133,23 @@ Feature: CSR Run Reports Feature
     Examples: 
       | credentials |
       | Super       |
+      
+      
+   @CSRUS3458065
+   Scenario Outline: Verify the change description field in Organization History Report for fraud users
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.  
+    When  User clicks on Manage Users link
+    Then  User Enters tin and click on search button for "<userType>" on CSR Manage Users page.
+    And   User deletes the fraud user
+    And   User Clicks on CSR home link
+    And   User clicks on Run Reports link
+    When  User clicks on Organization User History
+    And User Inputs the date range as current date and tin
+    Then User verifies the field change description for the fraud user
+    
+    
+	  
+	  Examples:
+        |    userType      |   credentials     |  searchCriteria        | 
+        |      PROV        |      Super        | ProvTinWithActiveUser  |

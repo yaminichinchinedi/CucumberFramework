@@ -4,6 +4,7 @@ import cucumber.api.java.en.Then;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.ManageUsers;
+import main.java.pageObjects.RunReports;
 import main.java.pageObjects.SearchTinPage;
 
 public class CSRManageUserSteps extends TestBase {
@@ -246,4 +247,23 @@ public class CSRManageUserSteps extends TestBase {
     	manageUsers.verifyModTypeCd(userType,"PCN");
         manageUsers.clickHome();
   } 	
+  
+
+	@Then("^User Enters tin and click on search button for \"([^\"]*)\" on CSR Manage Users page\\.$")
+	public void user_Enters_tin_and_click_on_search_button_for_on_CSR_Manage_Users_page(String userType) throws Throwable {
+		searchPage. enterFetchedTIN(userType);
+	}
+	@Then("^User deletes the fraud user$")
+	public void user_deletes_the_fraud_user() throws Throwable {
+		ManageUsers manageUsers=new ManageUsers(testConfig);
+		manageUsers.deleteFraudUser();
+	    
+	}
+	@Then("^User Clicks on CSR home link$")
+	public void user_Clicks_on_CSR_home_link() throws Throwable {
+		ManageUsers manageUsers=new ManageUsers(testConfig);
+		manageUsers.clickHome();
+	}
+
+
 }
