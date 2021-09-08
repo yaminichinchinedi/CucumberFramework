@@ -142,6 +142,10 @@ public class TestBase extends ReporterClass {
 
 		else if (System.getProperty("env").equals("IMPL2"))
 			urlHelper("IMPL2");
+		
+		else if (System.getProperty("env").equals("CloudDev"))
+			urlHelper("CloudDev");
+		
 	}
 
 	public static TestBase getInstance() {

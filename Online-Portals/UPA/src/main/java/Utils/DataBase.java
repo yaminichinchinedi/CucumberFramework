@@ -29,7 +29,7 @@ public class DataBase
 	
 	public enum DatabaseType
 	{
-		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test1(6),Test2(7),IMPL2(8);
+		IMPL(1),Stage(2), PROD(3),Stage2(4),Automation(5), Test1(6),Test2(7),IMPL2(8), CloudDev(9);
 
 	  public final int values;
 	  
@@ -162,6 +162,9 @@ public class DataBase
          else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
         	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);  
        
+         else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.CloudDev);
+		
       else
 	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
@@ -197,7 +200,10 @@ public class DataBase
     	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Test2);
 		
          else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
-        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);  
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2); 
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.CloudDev);
        
       else
 	  return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
@@ -255,6 +261,8 @@ public class DataBase
 	        dbType=DatabaseType.PROD;
 	        else if (System.getProperty("Database").equalsIgnoreCase("Automation"))
 		        dbType=DatabaseType.Automation;
+	        else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))
+		        dbType=DatabaseType.CloudDev;
 	        else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
 		        dbType=DatabaseType.IMPL2;
 	        else
@@ -410,6 +418,9 @@ public class DataBase
          else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
              return executeSelectQuery(testConfig,DatabaseType.IMPL2,sqlRow);
     
+         else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))
+             return executeSelectQuery(testConfig,DatabaseType.CloudDev,sqlRow);
+		
          else
 	     return executeSelectQuery(testConfig,DatabaseType.IMPL,sqlRow); 
 }
@@ -434,6 +445,9 @@ public class DataBase
 		
          else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
              return executeSelectQuery(testConfig,DatabaseType.IMPL2,selectQuery);
+		
+         else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))
+             return executeSelectQuery(testConfig,DatabaseType.CloudDev,selectQuery);
          else
 	     return executeSelectQuery(testConfig,DatabaseType.IMPL,selectQuery); 
 }
@@ -783,7 +797,12 @@ public class DataBase
 				userName = testConfig.getRunTimeProperty("AutomationDBUsername");
 				password = testConfig.getRunTimeProperty("AutomationDBPassword");
 				break;
-			
+			case CloudDev:
+				connectString = testConfig.getRunTimeProperty("CloudDevDBConnectionString");
+				Log.Comment("Connecting to CloudDev DB:-" + connectString);
+				userName = testConfig.getRunTimeProperty("CloudDevDBUsername");
+				password = testConfig.getRunTimeProperty("CloudDevDBPassword");
+				break;
 			default:
 				break;
 			}
@@ -956,22 +975,20 @@ public class DataBase
 		Log.Comment("Executing the query - '" + selectQuery + "'", testConfig);
 		
 		
-		if(System.getProperty("Database").equalsIgnoreCase("Stage"))
-		{
+		if(System.getProperty("Database").equalsIgnoreCase("Stage"))		
           return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage);
-		}
-		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))
-         {
-	    return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
-         }
-         else if (System.getProperty("Database").equalsIgnoreCase("PROD"))
-         {
-	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
-       }
-         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))
-         {
-	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);
-       }
+		
+		 else if (System.getProperty("Database").equalsIgnoreCase("Stage2"))        
+			 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.Stage2);
+         
+         else if (System.getProperty("Database").equalsIgnoreCase("PROD"))         
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.PROD);
+       
+         else if (System.getProperty("Database").equalsIgnoreCase("IMPL2"))         
+        	 return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL2);
+       
+         else if (System.getProperty("Database").equalsIgnoreCase("CloudDev"))         
+      	   return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.CloudDev);
     else
 	return executeSelectQuery(testConfig, selectQuery, rowNumber, DatabaseType.IMPL); 
 }
