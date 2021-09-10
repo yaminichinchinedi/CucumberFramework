@@ -705,7 +705,7 @@ public class Helper
 		if(argPeriod.contains("4-6"))
 		include91stAnd92ndDayInt = 2;
 
-		Date toDate = addMonths(currentDate, -Integer.parseInt(periods[0]));
+		Date toDate = addMonths(currentDate, -(Integer.parseInt(periods[0])-1));
 		Date fromDate = addMonths(currentDate, -Integer.parseInt(periods[1]));
 		Integer endPeriod = getNumberOfDays(toDate, currentDate)-include91stAnd92ndDayInt;
 		Integer startPeriod = getNumberOfDays(fromDate, currentDate);

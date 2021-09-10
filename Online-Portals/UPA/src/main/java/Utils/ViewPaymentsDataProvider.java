@@ -1248,7 +1248,11 @@ public class ViewPaymentsDataProvider {
 				Log.Comment("Tin retreived from query for " + searchCriteria + " is : "
 						+ tinNumbers.get("PROV_TAX_ID_NBR").toString());
 				testConfig.putRunTimeProperty("tin", tinNumbers.get("PROV_TAX_ID_NBR").toString());
-
+				
+				if (searchCriteria.equalsIgnoreCase("Last 60 days")) {
+					testConfig.putRunTimeProperty("dsp_consl_pay_nbr", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
+					testConfig.putRunTimeProperty("consl_pay_nbr", tinNumbers.get("CONSL_PAY_NBR").toString());
+				}
 				if (searchCriteria.equalsIgnoreCase("TinForFeeSearchRefund")) {
 					testConfig.putRunTimeProperty("invoiceNumber", tinNumbers.get("INVOICE_NBR").toString());
 					testConfig.putRunTimeProperty("paymentNumber", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
