@@ -1283,11 +1283,6 @@ public class ViewPaymentsDataProvider {
 
 				}
 
-				if(searchCriteria.contains("InvoiceReady")){
-					testConfig.putRunTimeProperty("invoiceNumber",tinNumbers.get("INVC_NBR").toString());
-
-				}
-
 				if (sqlRowNo == 435) {
 					testConfig.putRunTimeProperty("paymentNumber", tinNumbers.get("DSPL_CONSL_PAY_NBR").toString());
 					testConfig.putRunTimeProperty("invoiceNumber", tinNumbers.get("INVC_NBR").toString());
