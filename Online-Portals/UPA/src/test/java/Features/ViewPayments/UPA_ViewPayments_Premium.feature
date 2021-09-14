@@ -23,6 +23,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
       |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
       |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
+		
  			
  		#Author: AMIT
  		@UPAViewPayments_US2783429 @OctRelease @UPA_ViewPaymentStable
@@ -210,34 +211,37 @@ Feature: UPA ViewPayments Functionality for Premium TIN
 			
 			
 		#Author: Marsha
-		@UPAViewPaymentsFeeAmtCol_Prov_premium    @US3106945
+		@UPAViewPaymentsFeeAmtCol_Prov_premium    @US3106945 
 		Scenario Outline: View Payments - Fee Amount Column for Premium TIN Provider
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is displayed.
 		Then Click on print Payment Summary button.
 		Then Validate Fee Amount column is displayed.
 
 			Examples:
-      |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	
-      |   PROV_Admin	  | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
-      |   PROV_Gen	    | 		PROV		|	Last 30 days		 |		 Premium		|		AO		|	
+      |    credentials  |  userType 	|		searchCriteria     |	portalAccess	| tinType	|archivefilter|quicksearchfilter|filterpayments|	
+      |   PROV_Admin	  | 		PROV		|	Last 9-13 months		 |		 Premium		|		AO		|			New			|Last 9-13 months	|		Show All	 |
+      |   PROV_Gen	    | 		PROV		|	Last 9-13 months		 |		 Premium		|		AO		|			New			|Last 9-13 months	|		Show All	 |
+
 
 		#Author: Marsha
-		@UPAViewPaymentsFeeAmtCol_BS_premium   @US3106945
+		@UPAViewPaymentsFeeAmtCol_BS_premium   @US3106945 
  		Scenario Outline: View Payments - Fee Amount Column for Premium TIN BS
     Given User navigates to UPA portal and enters "<credentials>" and login
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then User Enters tin and click on search button for "<userType>".
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is displayed.
 		Then Click on print Payment Summary button.
 		Then Validate Fee Amount column is displayed.
      Examples:
-    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria   | tinType		|
-             |       BS_Admin        | 			 BS			    	  |			Premium		  	|  Last 30 days    |   AO	 			|
-             |       BS_Gen          | 			 BS		    			|			Premium		  	|  Last 30 days    | 	 AO	  	  |
+    				 |    credentials        |	 	 userType  			  | 	portalAccess    |	searchCriteria       | tinType		|archivefilter|quicksearchfilter|filterpayments|
+             |       BS_Admin        | 			 BS			    	  |			Premium		  	|  Last 9-13 months    |   AO	 			|	New			|Last 9-13 months	|		Show All	 |
+             |       BS_Gen          | 			 BS		    			|			Premium		  	|  Last 9-13 months    | 	 AO	  	  |	New			|Last 9-13 months	|		Show All	 |
              
                 
       #Author: AMIT 

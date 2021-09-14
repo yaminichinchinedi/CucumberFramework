@@ -368,7 +368,8 @@ public class UPAHomePage extends HomePage {
 			{
 			   case "PROV": 
 				 WebElement homeTab = Element.findElement(testConfig, "id", "tabHome");
-				 List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
+				   Element.waitForPresenceOfElementLocated(testConfig, By.id("taxIndNbrId"),5);
+				   List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
 	
 				 String Enrolledtin = tin + " - Enrolled";
 				 if ((!tinList.contains(Enrolledtin))) 

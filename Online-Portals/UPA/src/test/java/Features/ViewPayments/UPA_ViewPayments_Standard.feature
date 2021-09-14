@@ -143,18 +143,19 @@ Examples:
 
 
 		#Author: Marsha
-		@UPAViewPaymentsFeeAmtCol_Prov_std   @US3106945
+		@UPAViewPaymentsFeeAmtCol_Prov_std   @US3106945 
 		Scenario Outline: View Payments - Fee Amount Column for Standard TIN for Prov
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is not displayed.
 		Then Click on print Payment Summary button.
 		Then Validate Fee Amount column is not displayed.
 			Examples:
-	 					 |    credentials        |	 	 userType  			  	| 	portalAccess      |	searchCriteria   | tinType		|
-             |       PROV_Admin      | 			 PROV			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
-             |       PROV_Gen        | 			 PROV		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |
+	 					 |    credentials        |	 	 userType  			  	| 	portalAccess      |	   searchCriteria    | tinType		|archivefilter|quicksearchfilter|filterpayments|	
+             |       PROV_Admin      | 			 PROV			    	  |			Standard		  	|  Last 9-13 months    |   AO	 			|			New			|Last 9-13 months	|		Show All	 |
+             |       PROV_Gen        | 			 PROV		    			|			Standard		  	|  Last 9-13 months    | 	 AO	  	  |			New			|Last 9-13 months	|		Show All	 |
              
 		#Author: Marsha		
 		@UPAViewPaymentsFeeAmtCol_BS_std   @US3106945
@@ -163,13 +164,14 @@ Examples:
 		And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then User Enters tin and click on search button for "<userType>".
+		Then Set search filters for "<archivefilter>" having "<quicksearchfilter>" With "<filterpayments>"
 		Then Validate Fee Amount column is not displayed.
 		Then Click on print Payment Summary button.
 		Then Validate Fee Amount column is not displayed.
      Examples:
-    				 |    credentials        |	 	 userType  			  | 	portalAccess      |	searchCriteria   | tinType		|
-             |       BS_Admin        | 			 BS			    	  |			Standard		  	|  Last 30 days    |   AO	 			|
-             |       BS_Gen          | 			 BS		    			|			Standard		  	|  Last 30 days    | 	 AO	  	  |
+    				 |    credentials        |	 	 userType  			  | 	portalAccess      |	   searchCriteria    | tinType		|archivefilter|quicksearchfilter|filterpayments|
+             |       BS_Admin        | 			 BS			    	  |			Standard		  	|  Last 9-13 months    |   AO	 			|			New			|Last 9-13 months	|		Show All	 |
+             |       BS_Gen          | 			 BS		    			|			Standard		  	|  Last 9-13 months    | 	 AO	  	  |			New			|Last 9-13 months	|		Show All	 |
              
              
      @UPAUS3438484 	 

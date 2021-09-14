@@ -934,7 +934,7 @@ public void verifyFailedPaymentPopUp()
 		Browser.waitForLoad(testConfig.driver);
 		Element.waitForPresenceOfElementLocated(testConfig, By.id("archiveFilterType"), 60);
 		WebElement checkArchiveFilter=Element.findElement(testConfig, "id", "archiveFilterType");
-		if(checkArchiveFilter!=null)
+		if(checkArchiveFilter!=null && checkArchiveFilter.isEnabled())
         {
         	Element.selectByVisibleText(drpDwnArchiveFilter,Archivefilter, Archivefilter + " " +" from Payment Status dropdown");
         	Browser.waitForLoad(testConfig.driver);
