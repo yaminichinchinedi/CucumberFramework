@@ -10,10 +10,13 @@ import main.java.queries.QUERY;
 import main.java.reporting.Log;
 import org.apache.xmlbeans.impl.store.Query;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +35,10 @@ public class UnsecureGuestPayment {
 
     @FindBy(id = "invoiceNbr")
     WebElement invoiceNumber;
-    
+
+    @FindBy(xpath = "//body/main[1]/form[1]/article[1]/div[3]/h3[1]")
+    WebElement contactInformation;
+
     @FindBy(id = "firstName")
     WebElement firstName;
 
@@ -41,8 +47,14 @@ public class UnsecureGuestPayment {
 
     @FindBy(id = "email")
     WebElement email;
-    
-    @FindBy(xpath = "//span[contains(@class,'tinNumberText')]")
+
+    @FindBy(id = "title")
+    WebElement title;
+
+    @FindBy(id = "phone")
+    WebElement phone;
+
+    @FindBy(xpath = "//span[contains(@class,'fullTinNumberText')]")
     WebElement tinNumber;
 
     @FindBy(xpath = "//span[contains(@class,'organizationText')]")
@@ -114,6 +126,7 @@ public class UnsecureGuestPayment {
     WebElement consentCheckBox;
 
     private TestBase testConfig;
+    Actions builder = new Actions (testConfig.driver);
     public UnsecureGuestPayment(TestBase testConfig) {
         this.testConfig=testConfig;
         PageFactory.initElements(testConfig.driver, this);
@@ -136,19 +149,26 @@ public class UnsecureGuestPayment {
          String InvoiceNumber = testConfig.getRunTimeProperty("invoiceNumber");
          String tinLast4 = tin.substring(tin.length()-4);
          Element.enterData(EnterLast4TinInput,tinLast4, "last4TinInput", "provTinNbrlast4");
-         Element.enterData(invoiceNumber, InvoiceNumber, "InvoiceNumber", "invoiceNumberInput" );
+         Element.enterData(invoiceNumber, InvoiceNumber, "InvoiceNumber", "invoiceNumberInput");
+         builder.sendKeys(Keys.TAB).build().perform();
          Element.fluentWait(testConfig,Continue,100, 1, "Continue Button");
          Element.click(Continue, "Continue Button");
 
     }
     
-    public void enterNameAndEmail() {
+    public void enterContactInformation() {
+          String verifyStep2Title = "Step 2: Enter your contact information";
+          Element.verifyTextPresent(contactInformation,verifyStep2Title);
           String randomFirstName=Helper.generateRandomAlphabetsString(8);
           String randomlastName=Helper.generateRandomAlphabetsString(6);
+          String randomTitle = Helper.generateRandomAlphabetsString(60);
+          long phoneNumber = Helper.generateRandomNumber(12);
           String randomEmail=randomFirstName+"@optum.com";
     	 Element.enterData(firstName,randomFirstName, "FirstName", "FirstName");
     	 Element.enterData(lastName,randomlastName, "LastName", "LastName");
     	 Element.enterData(email,randomEmail, "Email", "Email");
+    	 Element.enterData(title,randomTitle, "Job title", "Job title");
+    	 Element.enterData(phone, String.valueOf(phoneNumber),"Phone number", "Phone number");
     }
     
     public void validateProviderInformation() {
@@ -163,7 +183,7 @@ public class UnsecureGuestPayment {
     	String expTin=providerInfo.get("PROV_TIN_NBR").toString();
     	String expInvoiceAmnt=providerInfo.get("INVC_TOT_AMT").toString().replace(",", "");
     	expInvoiceAmnt=String.format("%.0f",Double.valueOf(expInvoiceAmnt));
-    	Helper.compareEquals(testConfig, "Tin Number", expTin.substring(expTin.length()-4), actTin);
+    	Helper.compareEquals(testConfig, "Tin Number", expTin, actTin);
     	Helper.compareEquals(testConfig, "Organization", providerInfo.get("ORG_NM").toString(), actOrgName);
     	Helper.compareEquals(testConfig, "Invoice", providerInfo.get("INVC_NBR").toString(), actInvoice);
     	Helper.compareEquals(testConfig, "Invoice Amount", expInvoiceAmnt, actInvoiceAmount);

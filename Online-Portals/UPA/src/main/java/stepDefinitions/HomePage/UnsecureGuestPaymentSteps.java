@@ -22,7 +22,7 @@ public class UnsecureGuestPaymentSteps extends TestBase {
 
     @And("User enters name and email")
     public void userEntersNameAndEmail() {
-        unsecureGuestPayment.enterNameAndEmail();
+        unsecureGuestPayment.enterContactInformation();
     }
 
     @And("User validates provider information")
