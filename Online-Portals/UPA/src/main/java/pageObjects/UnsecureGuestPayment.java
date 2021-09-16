@@ -16,7 +16,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import javax.swing.*;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ public class UnsecureGuestPayment {
     @FindBy(id = "invoiceNbr")
     WebElement invoiceNumber;
 
-    @FindBy(xpath = "//body/main[1]/form[1]/article[1]/div[3]/h3[1]")
+    @FindBy(xpath = "//*[@id='payAsGuestForm']/article/div[3]/h3")
     WebElement contactInformation;
 
     @FindBy(id = "firstName")
@@ -157,18 +157,18 @@ public class UnsecureGuestPayment {
     }
     
     public void enterContactInformation() {
-          String verifyStep2Title = "Step 2: Enter your contact information";
-          Element.verifyTextPresent(contactInformation,verifyStep2Title);
-          String randomFirstName=Helper.generateRandomAlphabetsString(8);
-          String randomlastName=Helper.generateRandomAlphabetsString(6);
-          String randomTitle = Helper.generateRandomAlphabetsString(60);
-          long phoneNumber = Helper.generateRandomNumber(12);
-          String randomEmail=randomFirstName+"@optum.com";
-    	 Element.enterData(firstName,randomFirstName, "FirstName", "FirstName");
-    	 Element.enterData(lastName,randomlastName, "LastName", "LastName");
-    	 Element.enterData(email,randomEmail, "Email", "Email");
-    	 Element.enterData(title,randomTitle, "Job title", "Job title");
-    	 Element.enterData(phone, String.valueOf(phoneNumber),"Phone number", "Phone number");
+        String verifyStep2Title = "Step 2: Enter your contact information";
+        Element.verifyTextPresent(contactInformation,verifyStep2Title);
+        String randomFirstName=Helper.generateRandomAlphabetsString(8);
+        String randomlastName=Helper.generateRandomAlphabetsString(6);
+        String randomTitle = Helper.generateRandomAlphabetsString(60);
+        long phoneNumber = Helper.generateRandomNumber(12);
+        String randomEmail=randomFirstName+"@optum.com";
+        Element.enterData(firstName,randomFirstName, "FirstName", "FirstName");
+        Element.enterData(lastName,randomlastName, "LastName", "LastName");
+        Element.enterData(email,randomEmail, "Email", "Email");
+        Element.enterData(title,randomTitle, "Job title", "Job title");
+        Element.enterData(phone, String.valueOf(phoneNumber),"Phone number", "Phone number");
     }
     
     public void validateProviderInformation() {

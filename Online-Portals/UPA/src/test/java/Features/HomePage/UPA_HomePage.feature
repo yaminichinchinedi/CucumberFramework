@@ -137,7 +137,7 @@ Feature:  UPA Home Page Functionality - Post Login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User enters tin and invoice number and clicks on continue button
     And User validates provider information
-    And User enters name and email
+    And User enters contact information
 
 
     Examples:
