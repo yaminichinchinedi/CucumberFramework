@@ -36,7 +36,7 @@ public class UnsecureGuestPayment {
     @FindBy(id = "invoiceNbr")
     WebElement invoiceNumber;
 
-    @FindBy(xpath = "//*[@id='payAsGuestForm']/article/div[3]/h3")
+    @FindBy(xpath = "//form[@id='payAsGuestForm']/article/div[3]/h3")
     WebElement contactInformation;
 
     @FindBy(id = "firstName")
