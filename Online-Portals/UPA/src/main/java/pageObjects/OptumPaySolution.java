@@ -638,10 +638,10 @@ public class OptumPaySolution {
   	@FindBy(xpath = "//span[contains(text(),'Total amount:')]//ancestor::span[2]")
   	WebElement TotalAmountText;
   	
-  	@FindBy(id="recurringPaymentWelcomeButton")
+  	@FindBy(css="input.btn-primary.rounded")
   	WebElement recPaybut;
   	
-  	@FindBy(xpath="/html/body/div[9]/div[3]/div/button[2]/span") 
+  	@FindBy(xpath="/html/body/div[3]/div[3]/div/button[2]/span") 
     WebElement contButton;
   	
   	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")

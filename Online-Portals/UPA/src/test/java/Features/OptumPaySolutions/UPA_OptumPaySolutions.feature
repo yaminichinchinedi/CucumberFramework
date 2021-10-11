@@ -476,4 +476,22 @@ Examples:
   
   Examples:
     	|    credentials        |	 	   userType    | 	portalAccess    |		searchCriteria   	    | tinType		| 
-      |     PROV_Admin       	| 			 PROV		   |		Premium		    |  	PostTrial and Paid  	|	  AO			| 
+      |     PROV_Admin       	| 			 PROV		   |		Premium		    |  	TinWithoutRecurrPay  	|	  AO			| 
+      
+      
+   @UPAUS3918104_BS
+   Scenario Outline: Access Payments -Recurring ACH debit Payments for BS User
+   Given User navigates to UPA portal and enters "<credentials>" and login
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And User clicks on Optum Pay Solutions tab
+  Then User Enters tin for OPS and click on search button for "<userType>".
+  Then User clicks on "Invoices" tab
+  Then User clicks on Set up recurring payments button
+  Then User clicks on Continue button of welcome to recurring payments
+  Then User selects Tins from the TIN grid,clicks one of radio button of one Available ACH debit options and Clicks on Assign Account button
+  Then verifies that in TIN grid  Account ending and Pay type columns are populated with selected ACH debit options
+  
+  
+  Examples:
+    	|    credentials        |	 	   userType    | 	portalAccess    |		searchCriteria   	    | tinType		| 
+      |     BS_Admin        	| 			 BS 		   |		Premium		    |  	TinWithoutRecurrPay  	|	  AO			|    
