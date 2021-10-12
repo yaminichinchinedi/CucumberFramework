@@ -497,6 +497,45 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 
 	
 	
+
+	@And("User clicks on recurring payment")
+	public void userClicksOnRecurringPayment() {
+	optumPaySol.clickRecurringPayments();
+	}
+
+	@And("Resets or sets the payments")
+	public void resetsOrSetsThePayments() {
+		optumPaySol.resetsOrSetsThePayments();
+	}
+
+	@And("Sets all payers as primary banking account")
+	public void setsAllPayersAsPrimaryBankingAccount() {
+	optumPaySol.setsAllPayersAsPrimaryBankingAccount();
+	}
+
+	@And("User does click on recurring payment step two continue button")
+	public void userDoesClickOnRecurringPaymentStepTwoContinueButton() {
+		optumPaySol.userClicksOnRecurringPaymentStepTwoContinueButton();
+	}
+	@And("User clicks checkboxes aand submit button on step three")
+	public void userClicksCheckboxesAandSubmitButtonOnStepThree() {
+	optumPaySol.userClicksCheckboxesAandSubmitButtonOnStepThree();
+	}
+	@Then("User validates the primary bank account entries in the DB")
+	public void userValidatesThePrimaryBankAccountEntriesInTheDB() {
+	optumPaySol.userValidatesThePrimaryBankAccountEntriesInTheDB();
+	}
+
+
+	@And("Sets all payers as alternating bank account")
+	public void setsAllPayersAsAlternatingBankAccount() {
+	optumPaySol.setAlternateBankAccount();
+	}
+
+	@Then("User validates the alternate bank account entries in the DB")
+	public void userValidatesTheAlternateBankAccountEntriesInTheDB() {
+	optumPaySol.userValidatesTheAlternateBankAccountEntriesInTheDB();
+	}
 }
 
 
