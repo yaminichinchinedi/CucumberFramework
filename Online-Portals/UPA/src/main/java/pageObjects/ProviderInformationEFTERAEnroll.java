@@ -257,6 +257,10 @@ public class ProviderInformationEFTERAEnroll {
 		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
 		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
 				"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+		
+		// Skipping business phone assertions for BS enrollment as its not applicable
+		if (!enrollmentInfoPageObj.getEnrollType().equals("BS")) {
+		
 		Element.enterData(businessPhone1,System.getProperty("BusinessPhone1"),
 				"Entered business phone1 in first textbox as : " + System.getProperty("BusinessPhone1"),
 				"businessPhone1");
@@ -269,7 +273,7 @@ public class ProviderInformationEFTERAEnroll {
 		Element.enterData(businessPhoneExt, System.getProperty("BusinessPhoneExt"),
 				"Entered business phone ext in textbox as : " + System.getProperty("BusinessPhoneExt"),
 				"businessPhoneExt");
-
+		}
 
 
 		enrollmentInfoPageObj.setBusinessName(provName);
@@ -277,11 +281,14 @@ public class ProviderInformationEFTERAEnroll {
 		enrollmentInfoPageObj.setCity(data.GetData(rowNo, "City"));
 		enrollmentInfoPageObj.setStateName(data.GetData(rowNo, "State"));
 		enrollmentInfoPageObj.setZipCode(data.GetData(rowNo, "ZipCode"));
+		
+		// Skipping business phone entry for BS enrollment as its not applicable
+		if (!enrollmentInfoPageObj.getEnrollType().equals("BS")) {
 		enrollmentInfoPageObj.setBusinessPhone1(System.getProperty("BusinessPhone1"));
 		enrollmentInfoPageObj.setBusinessPhone2(System.getProperty("BusinessPhone2"));
 		enrollmentInfoPageObj.setBusinessPhone3(System.getProperty("BusinessPhone3"));
 		enrollmentInfoPageObj.setBusinessPhoneExt(System.getProperty("BusinessPhoneExt"));
-		
+		}
 		// Element.click(chkOther, "Other sub checkbox");
 
 		// Element.click(btnContinue, "Continue button");
@@ -431,9 +438,20 @@ public class ProviderInformationEFTERAEnroll {
 		return this;
 	}
 
-	public ProviderInformationEFTERAEnroll fillBusinessName(String name) {
+	public ProviderInformationEFTERAEnroll fillBusinessName(String name) throws IOException {
+		int rowNo = 1;
 		Element.enterData(providerName, name, "Enter Business Name as : " + name, "Business Name");
 		enrollmentInfoPageObj.setBusinessName(name);
+		String streetName = Helper.generateRandomAlphabetsString(5);
+		TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		
+		Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+		Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
+				"city");
+		Element.selectVisibleText(drpDwnState, data.GetData(rowNo, "State"), "Enter state name");
+		Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
+				"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+		
 		return this;
 	}
 
@@ -791,38 +809,42 @@ public class ProviderInformationEFTERAEnroll {
 		int sqlRowNo = 173;
 		HashMap<Integer, HashMap<String, String>> pageData = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 
-		Helper.compareEquals(testConfig, "Header", pageData.get(1).get("TEXT_VAL"), pageHeader.getText());
+		Helper.compareEquals(testConfig, "Header", pageData.get(2).get("TEXT_VAL"), pageHeader.getText());
 		Helper.compareEquals(testConfig, "Business Info Text",
-				pageData.get(17).get("TEXT_VAL").toString() + "() " + pageData.get(16).get("TEXT_VAL").toString(),
+				pageData.get(18).get("TEXT_VAL").toString() + "() " + pageData.get(17).get("TEXT_VAL").toString(),
 				txtBusinessOrgInfo.getText());
-		Helper.compareEquals(testConfig, "Business Name", pageData.get(15).get("TEXT_VAL").toString(),
+		Helper.compareEquals(testConfig, "Business Name", pageData.get(16).get("TEXT_VAL").toString(),
 				lblBusinessName.getText());
 		Helper.compareEquals(testConfig, "Page Content ID",
-				pageData.get(12).get("TEXT_VAL").replace("<br>", "").replace(" Avoid", "Avoid").toString(),
+				pageData.get(13).get("TEXT_VAL").replace("<br>", "").replace(" Avoid", "Avoid").toString(),
 				txtTaxIdInfo.getText().replace("\n", ""));
-		Helper.compareEquals(testConfig, "Business Address", pageData.get(10).get("TEXT_VAL").toString(),
+		Helper.compareEquals(testConfig, "Business Address", pageData.get(11).get("TEXT_VAL").toString(),
 				lblBusinessAddress.getText());
-		Helper.compareEquals(testConfig, "Street", pageData.get(14).get("TEXT_VAL").toString(), lblStreet.getText());
-		Helper.compareEquals(testConfig, "City", pageData.get(13).get("TEXT_VAL").toString(), lblCity.getText());
-		Helper.compareEquals(testConfig, "State", pageData.get(9).get("TEXT_VAL").toString(), lblState.getText());
-		Helper.compareEquals(testConfig, "Zip", pageData.get(8).get("TEXT_VAL").toString(), lblZip.getText());
+		Helper.compareEquals(testConfig, "Street", pageData.get(15).get("TEXT_VAL").toString(), lblStreet.getText());
+		Helper.compareEquals(testConfig, "City", pageData.get(14).get("TEXT_VAL").toString(), lblCity.getText());
+		Helper.compareEquals(testConfig, "State", pageData.get(10).get("TEXT_VAL").toString(), lblState.getText());
+		Helper.compareEquals(testConfig, "Zip", pageData.get(9).get("TEXT_VAL").toString(), lblZip.getText());
 		Helper.compareEquals(testConfig, "Business Address Text",
-				pageData.get(11).get("CLOBVAL").replace("<strong>", "").replace("</strong>", "").toString(),
+				pageData.get(12).get("CLOBVAL").replace("<strong>", "").replace("</strong>", "").toString(),
 				txtBusinessAddress.getText());
-		Helper.compareEquals(testConfig, "Provider Header", pageData.get(7).get("TEXT_VAL"), provHeader.getText());
-		Helper.compareEquals(testConfig, "Provider SubHeader", pageData.get(6).get("TEXT_VAL"),
+		Helper.compareEquals(testConfig, "Provider Header", pageData.get(8).get("TEXT_VAL"), provHeader.getText());
+		Helper.compareEquals(testConfig, "Provider SubHeader", pageData.get(7).get("TEXT_VAL"),
 				provSubHeader.getText());
-		Helper.compareEquals(testConfig, "Provider Federal Text", pageData.get(5).get("TEXT_VAL").toString(),
+		Helper.compareEquals(testConfig, "Provider Federal Text", pageData.get(6).get("TEXT_VAL").toString(),
 				txtProvFederalInfo.getText());
-		Helper.compareEquals(testConfig, "NPI text", pageData.get(4).get("TEXT_VAL").toString(), txtNPI.getText());
+		Helper.compareEquals(testConfig, "NPI text", pageData.get(5).get("TEXT_VAL").toString(), txtNPI.getText());
 
 		sqlRowNo = 177;
 		testConfig.putRunTimeProperty("mktTyp", "PT");
 		HashMap<Integer, HashMap<String, String>> contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		Helper.compareEquals(testConfig, "Provider Type",
-				pageData.get(3).get("TEXT_VAL") + "\n" + contentTbl.get(1).get("MKT_TYP_DESC") + "\n"
-						+ contentTbl.get(3).get("MKT_TYP_DESC") + "\n" + contentTbl.get(2).get("MKT_TYP_DESC"),
-				prvType.getText());
+//		Helper.compareEquals(testConfig, "Provider Type",
+//				 "Provider Type"+"\n"+contentTbl.get(1).get("MKT_TYP_DESC")
+//						+ contentTbl.get(3).get("MKT_TYP_DESC") + contentTbl.get(4).get("MKT_TYP_DESC") + contentTbl.get(5).get("MKT_TYP_DESC") + contentTbl.get(2).get("MKT_TYP_DESC"),
+//				prvType.getText());
+		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(1).get("MKT_TYP_DESC"), prvType.getText());
+		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(2).get("MKT_TYP_DESC"), prvType.getText());
+		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(3).get("MKT_TYP_DESC"), prvType.getText());
+		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(4).get("MKT_TYP_DESC"), prvType.getText());
 
 		testConfig.putRunTimeProperty("mktTyp", "PR");
 		contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
@@ -831,15 +853,20 @@ public class ProviderInformationEFTERAEnroll {
 		// //contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(4).get("MKT_TYP_DESC")+"\n"+contentTbl.get(5).get("MKT_TYP_DESC")+"\n"+contentTbl.get(6).get("MKT_TYP_DESC"),prvSpeciallity.getText());
 		// contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(4).get("MKT_TYP_DESC")+"\n"+contentTbl.get(5).get("MKT_TYP_DESC")+"\n"+contentTbl.get(6).get("MKT_TYP_DESC")+"\n"+contentTbl.get(7).get("MKT_TYP_DESC")+"\n"+contentTbl.get(8).get("MKT_TYP_DESC"),prvSpeciallity.getText());
 		//
-		String data = "";
+//		String data = "";
+//		for (int i = 1; i <= contentTbl.size(); i++) {
+//			if (i == contentTbl.size())
+//				data = data + contentTbl.get(i).get("MKT_TYP_DESC");
+//			else
+//				data = data + contentTbl.get(i).get("MKT_TYP_DESC") + "\n";
+//		}
+//		Helper.compareEquals(testConfig, "Provider Type Speciality", pageData.get(2).get("TEXT_VAL") + "\n" + data,
+//				prvSpeciallity.getText());
+//		
+		
 		for (int i = 1; i <= contentTbl.size(); i++) {
-			if (i == contentTbl.size())
-				data = data + contentTbl.get(i).get("MKT_TYP_DESC");
-			else
-				data = data + contentTbl.get(i).get("MKT_TYP_DESC") + "\n";
+			Helper.compareContains(testConfig, "Provider Type Speciality", contentTbl.get(i).get("MKT_TYP_DESC"), prvSpeciallity.getText());
 		}
-		Helper.compareEquals(testConfig, "Provider Type Speciality", pageData.get(2).get("TEXT_VAL") + "\n" + data,
-				prvSpeciallity.getText());
 
 		return this;
 	}
@@ -867,6 +894,8 @@ public class ProviderInformationEFTERAEnroll {
 	 * @throws InterruptedException 
 	 */
 	public ValidateEFTERAProviderInfo fillProviderOrgInfoWithAutoPopulatedInfo(String checkAutoPopulate) throws IOException  {
+		
+		
 		int rowNo = 1;
 		String provName = Helper.generateRandomAlphabetsString(5);
 		String streetName = Helper.generateRandomAlphabetsString(5);	
@@ -969,7 +998,7 @@ public class ProviderInformationEFTERAEnroll {
 						"Continue/Save Changes Button");
 
 		}
-
+		
 		return new ValidateEFTERAProviderInfo(testConfig);
 
 	}
@@ -985,6 +1014,9 @@ public class ProviderInformationEFTERAEnroll {
 		Browser.wait(testConfig, 3);
 		Element.verifyElementPresent(streetScrollBar, "Scroll Bar");
 	}
+	
+	
+	
 
-
+	
 }

@@ -83,23 +83,23 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	@Then("^User validates various input field by giving blank input and clicking continue button\\.$")
 	public void user_validates_various_input_field_by_giving_blank_input_and_clicking_continue_button() throws Throwable {
 		financialInstitutionNPI.fillInsufficientFinancialInstInfoForNPI("NpiNumber").clickContinueNPI()
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstName")
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstStreet")
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstCity")
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstState")
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstZipCode")
-							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("PhoneNo")
+							   //.clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstName")
+							   //.clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstStreet")
+//							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstCity")
+//							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstState")
+//							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstZipCode")
+//							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("PhoneNo")
 							   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstroutingNo")
 							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstaccountNo")
-							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")
-							  .fillInsufficientFinancialInstInfoForNPI("NonPdfUpload")
+//							  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")
+//							  .fillInsufficientFinancialInstInfoForNPI("NonPdfUpload")
 							   ;
 	}
 	
 	@Then("^User validates various input field by giving nonnumeric data input and clicking continue button\\.$")
 	public void user_validates_various_input_field_by_giving_nonnumeric_data_input_and_clicking_continue_button() throws Throwable {
 		financialInstitutionNPI.fillInsufficientFinancialInstInfoForNPI("NonNumericNPI")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericPhone")
+		   //.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericPhone")
 		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericroutingNo")
 		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericAccountNo");
 		
@@ -151,12 +151,12 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	@Then("^User validates various input field by giving blank input and clicking Save Changes button\\.$")
 	public void user_validates_various_input_field_by_giving_blank_input_and_clicking_Save_Changes_button() throws Throwable {
 		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NpiNumber").clickContinueNPI()
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstName")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstStreet")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstCity")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstState")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstZipCode")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("PhoneNo")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstName")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstStreet")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstCity")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstState")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstZipCode")
+//		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("PhoneNo")
 		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstroutingNo")
 		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstaccountNo")
 		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")

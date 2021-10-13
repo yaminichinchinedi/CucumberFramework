@@ -49,6 +49,7 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	
 	@Then("^User clicks on hyperlink how do i manage multiple NPI bank accounts$")
 	public void user_clicks_on_hyperlink_how_do_i_manage_multiple_NPI_bank_accounts() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA();
 		financialInstitutionInfoPage.clickFINMngNPIAcc();
 	}
 
@@ -96,12 +97,14 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	
 	@Then("^User fills all the information and upload non accepted file format and clicks on continue$")
 	public void user_fills_all_the_information_and_upload_non_accepted_file_format_and_clicks_on_continue() throws Throwable {
+		//financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA();
 		financialInstitutionInfoPage.fillFinancialInstWrngInfo("uploadFile");
 	}
 	
 	@Then("^User fills all the information on Financial Institution Information page and click continue NPI$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_and_click_continue_NPI() throws Throwable {
-		financialInstitutionInfoPage.fillFinancialInstInfo().clickYestoNPI().clickContinueNPI();
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickYestoNPI().clickContinueNPI();
+		//financialInstitutionInfoPage.fillFinancialInstInfo().clickYestoNPI().clickContinueNPI();
 	}
 	@Then("^Users clears the RTN No fill the new RTN No and validate the details and click on Save changes button$")
 	public void users_clears_the_RTN_No_fill_the_new_RTN_No_and_validate_the_details_and_click_on_Save_changes_button() throws Throwable {
@@ -110,6 +113,11 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	@Then("^User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator_Click_YES_to_NPI_and_click_continue() throws Throwable {
 		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickYestoNPI().clickContinueNPI();
+	}
+	
+	@Then("^User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator_Click_YES_to_NPI() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickYestoNPI();
 	}
 	@Then("^User fills all the information on Financial Institution Information page for ABA Validator and click continue$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_and_click_continue_NPI() throws Throwable {

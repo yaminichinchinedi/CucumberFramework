@@ -24,6 +24,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.aventstack.extentreports.configuration.Config;
+
 import main.java.reporting.Log;
 
 import java.util.*;
@@ -50,13 +52,22 @@ public class BeginEnrollment {
 	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
-	WebElement dwnldAchGuide;
+//	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
+//	WebElement dwnldAchGuide;
 	
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[2]")
+	@FindBy(xpath="//a[text()='Download ACH/Direct Deposit Enrollment Guide']")
+	WebElement dwnldAchGuide;
+		
+//	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[2]")
+//	WebElement dwnldVcpGuide;
+//		
+	@FindBy(xpath="//a[text()='Download VCP Enrollment Guide']")
 	WebElement dwnldVcpGuide;
 	
-	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[6]/a[1]")
+//	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[6]/a[1]")
+//	WebElement dwnldBSGuide;
+	
+	@FindBy(xpath="//a[text()='Download Billing Service Enrollment Guide']")
 	WebElement dwnldBSGuide;
 	
 	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/div/div/span[2]")
@@ -156,11 +167,13 @@ public class BeginEnrollment {
 	public void validateBeginEnrollment() {
 		String expectedURL = "beginEnrollment.do";
 		Browser.verifyURL(testConfig, expectedURL);
+		Browser.browserRefresh(testConfig);
+		Browser.wait(testConfig, 2);
 		Element.verifyElementPresent(dwnldAchGuide, "Download ACH Enrollment Guide");
 		Element.verifyElementPresent(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Element.verifyElementPresent(dwnldBSGuide, "Download Billing Service Enrollment Guide");
-		Element.verifyElementPresent(aboutEPS, "To get started, please let us know how you heard about EPS?");
-		Element.verifyTextPresent(rdoHealthPlanCommunication, "Health plan communication");
+//		Element.verifyElementPresent(aboutEPS, "To get started, please let us know how you heard about EPS?");
+//		Element.verifyTextPresent(rdoHealthPlanCommunication, "Health plan communication");
 	}
 	
 	public BeginEnrollmentContinue selectOtherToValidateErrorMessage() {
@@ -206,15 +219,18 @@ public class BeginEnrollment {
 	public void validateUserIsAbleToDwnldEnrlmntPdf() {
 		validateBeginEnrollment();
 		Element.click(dwnldAchGuide, "Download ACH Enrollment Guide");
-		String handle =Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_ACH_v6.pdf"); 
+		String hand1 = testConfig.driver.getWindowHandle();
+		Browser.switchToNewWindow(testConfig); 
 
-		Browser.switchToNewWindow(testConfig, "beginEnrollment.do");
+		Browser.switchToParentWindow(testConfig, hand1);
 		Element.click(dwnldVcpGuide, "Download VCP Enrollment Guide");
-		Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_VCP_v6.pdf");
-		Browser.switchToParentWindow(testConfig, handle);
+		Browser.switchToNewWindow(testConfig);
+		
+		Browser.switchToParentWindow(testConfig, hand1);
 		Element.click(dwnldBSGuide, "Download Billing Service Enrollment Guide");
-		String window =Browser.switchToNewWindow(testConfig, "OptumPay_Enrollment_guide_Billing_Services_v4.pdf");
-		Browser.switchToParentWindow(testConfig, window);
+		String window =Browser.switchToNewWindow(testConfig);
+		
+		Browser.switchToParentWindow(testConfig, hand1);
 		}
 	
 	public void validateBeginEnrollmentQuestions() throws IOException {
@@ -334,11 +350,11 @@ public class BeginEnrollment {
 		Helper.compareEquals(testConfig, " Title", hdrTitle.getText(), dataTest.get(30).get("TEXT_VAL"));
 		Browser.wait(testConfig, 2);
 		
-		Helper.compareContains(testConfig, "Paragraph 1", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(2).getText(), dataTest.get(7).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Paragraph 2", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(3).getText().replaceAll("[^a-zA-Z0.5%] ", " ").trim(), dataTest.get(6).get("TEXT_VAL").replaceAll("[&#;12346789]","").trim());
-		Helper.compareContains(testConfig, "Paragraph 3", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(4).getText().replaceAll("[^a-zA-Z0.5%() ]", "").trim(), dataTest.get(5).get("TEXT_VAL").replaceAll("[&#;12346789]","").trim());
-		Helper.compareContains(testConfig, "Paragraph 4", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(5).getText().trim(), dataTest.get(4).get("TEXT_VAL").replace("strong", "").replaceAll("[</>]", "").trim());
-		Helper.compareContains(testConfig, "Paragraph 5", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(6).getText(), dataTest.get(2).get("CLOBVALFROM"));
+		Helper.compareContains(testConfig, "Paragraph 1", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(2).getText(), dataTest.get(4).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Paragraph 2", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(3).getText().trim(),dataTest.get(2).get("CLOBVALFROM"));
+		Helper.compareContains(testConfig, "Paragraph 3", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(4).getText().trim(), dataTest.get(22).get("TEXT_VAL")+"\n"+"   "+dataTest.get(21).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Paragraph 4", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(5).getText().trim(), dataTest.get(20).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Paragraph 5", Element.findElements(testConfig, "css", "#EFTERAenrForm > div p").get(6).getText(),dataTest.get(6).get("TEXT_VAL").replaceAll("[&#;12346789]","").trim() );
 
 		
 		

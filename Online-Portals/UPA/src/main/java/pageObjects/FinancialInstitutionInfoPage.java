@@ -113,6 +113,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	
 	@FindBy(partialLinkText= "How do I manage multiple NPI bank")
 	WebElement lnkNPIBnk;
+		
+	@FindBy(xpath="//label[@class='sm label-NPI-bank-acct']//following-sibling::a")
+	WebElement ManageNPIAccount;
 	
 	@FindBy(linkText="CLOSE TIP")
 	WebElement btnCloseTIP;
@@ -493,6 +496,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  enrollmentInfoPageObj.setFinState(finState[1]);
 		  enrollmentInfoPageObj.setFinZip(finZip);
 		  enrollmentInfoPageObj.setFinPhoneNo(finPhone);
+		  enrollmentInfoPageObj.setNpi(null);
 		 }
 		  else
 			  Log.Fail("Please proceed with valid RTN");
@@ -512,11 +516,11 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 			 financialInstStreet = Helper.generateRandomAlphabetsString(5);
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
-		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
-		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
-        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
-		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
-		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
+//		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
+//		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
+//        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
+//		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
+//		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
 		
 		int rowNo=1;
 		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
@@ -525,18 +529,19 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  String zipCode =data.GetData(rowNo, "ZipCode");
 		  String routingNo =data.GetData(rowNo, "RoutingNumber");
 		  String accountNo =data.GetData(rowNo, "AccountNumber");
-		  Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
-		  Element.selectVisibleText(finInstState, stateName,"Select City from excel");
-		  if (inpType.equals("Zip"))
-		  Element.enterData(finInstZip1, Long.toString(Helper.generateRandomNumber(5)),"Random Zip No","finInstZip1");
-		  else
-		  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
+		 // Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
+		  //Element.selectVisibleText(finInstState, stateName,"Select City from excel");
+		  //if (inpType.equals("Zip"))
+		  //Element.enterData(finInstZip1, Long.toString(Helper.generateRandomNumber(5)),"Random Zip No","finInstZip1");
+		  //else
+		  //Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  //Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
 		
 		  Browser.wait(testConfig, 2);
 			Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
+			Browser.wait(testConfig, 3);
 			enrollmentInfoPageObj.setFinDocCode("BL");
 			Browser.waitForLoad(testConfig.driver);
 			if (inpType.equals("uploadFile"))
@@ -563,7 +568,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 			String expectedText="PO Boxes are not accepted";
 		Log.Comment("Verifying Error Msg is displayed for Street");
 		Element.verifyTextPresent(Element.findElement(testConfig,"xpath","//input[@name='finInstTinStreet']//following-sibling::p"), expectedText);
-	   }
+	   } 
 		if (inpType.equals("uploadFile"))
 		{
 		String expectedText="File Format must be 'PDF', 'JPEG', 'GIF' or 'PNG'";
@@ -589,8 +594,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	}
 	public void clickFINMngNPIAcc()
 	{
+		//label[@class='sm label-NPI-bank-acct']//following-sibling::a
 	
-	Element.click(lnkNPIBnk, "Manage Multiple NPI Bank Account ");
+	Element.click(ManageNPIAccount, "Manage Multiple NPI Bank Account ");
 	Browser.wait(testConfig, 1);
 	Element.click(btnCloseTIP, "Close TIP Button");
 	}
@@ -681,6 +687,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		int i=1;
 			while(i<10){
 			String xpath="//form[@id=\"EFTERAregForm\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/"+"li"+"["+i+"]"+"/a";
+			By.xpath("//form[@id=\\\"EFTERAregForm\\\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/\"+\"li\"+\"[\"+i+\"]\"+\"/a");
 			 
 			if (Element.findElement(testConfig, "xpath", xpath).getTagName().equals("a"))
 			{
@@ -751,10 +758,13 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//*[@id='div2']/section/fieldset/h1")).getText(), dataTest.get(53).get("TEXT_VAL"));
 		Helper.compareContains(testConfig, "Finantial Institution Informatioon", dataTest.get(50).get("TEXT_VAL"),(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/p[1]")).getText());
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(32).get("TEXT_VAL"));
-		String text=(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/p[2]")).getText();
+		//String text=(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/p[2]")).getText();
+		String text=(Element.findElement(testConfig, "xpath", "//div[@id='div2']//p[2]")).getText();
+		
 		int endIndex=text.indexOf(":");
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text.substring(0, endIndex+1) , dataTest.get(31).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[2]/strong")).getText(), dataTest.get(51).get("TEXT_VAL"));
+//		text=Element.findElement(testConfig, "xpath", "//div[@id='bankDetailpre']//h4/strong").getText();
+//		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text, dataTest.get(51).get("TEXT_VAL"));
 		
 //		Helper.compareEquals(testConfig, "Finantial Institution Name", (finInstName.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(22).get("TEXT_VAL"));
 //		
@@ -1001,10 +1011,11 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     	
     	//clearFinsInstInfoFields();
     	Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
+    	uploadBankLetterPdfWithAcceptance();
     	//fillFinancialInstInfo();
-    	Browser.verifyURL(testConfig, "uploadefterafile.do?fromreview=y");
+    	//Browser.verifyURL(testConfig, "uploadefterafile.do?fromreview=y");
     	Element.click(saveChanges, "Save Changes Button");
-    	Browser.verifyURL(testConfig, "validateEFTERAFinancialInfo.do?fromReview=Y");
+    	Browser.verifyURL(testConfig, "validateefterafinancialinfortn.do?fromreview=y");
     	
     }
     
