@@ -1199,7 +1199,11 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.NOTZERO_DEBIT_FEE;
 		}
+		if(searchCriteria.contains("TinWithoutRecurrPay")){
 
+			query=QUERY.TIN_WITHOUT_RECURR_PAY;
+		}
+		
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
 				testConfig.putRunTimeProperty("invcAmt", "=0");

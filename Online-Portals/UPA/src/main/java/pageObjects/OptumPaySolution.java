@@ -638,7 +638,22 @@ public class OptumPaySolution {
   	@FindBy(xpath = "//span[contains(text(),'Total amount:')]//ancestor::span[2]")
   	WebElement TotalAmountText;
   	
-    //Added by Mohammad Khalid
+  	@FindBy(css="input.btn-primary.rounded")
+  	WebElement recPaybut;
+  	
+  	@FindBy(xpath="/html/body/div[3]/div[3]/div/button[2]/span") 
+    WebElement contButton;
+  	
+  	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")
+    List <WebElement>  tinChkbox;
+  	
+  	@FindBy(name="payment_type")
+  	WebElement payType;
+  	
+  	@FindBy(css="input.btn.btn-primary.mb-0.assign-account-btn")
+  	WebElement assignAccnt;
+  	
+  	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
     String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready";
@@ -2632,5 +2647,28 @@ public class OptumPaySolution {
     	Helper.compareEquals(testConfig, "Confirmation",Db.get("CONFIRM_NBR").toString().trim(),ConfirmationTxt.substring(1).trim());
     	 DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy","yyyy-dd-mm");
          Helper.compareEquals(testConfig, "Date Paid", Db.get("PAID_DATE").substring(0,10).trim(),DatePaid.substring(0,10).trim());
+    }
+    public OptumPaySolution clickRecPay() {
+    	Element.click(recPaybut, "Set Up recurring payments button");
+    	return this;
+    }
+   
+    public OptumPaySolution clicContinuebutofRecPay() {
+    	Element.click(contButton, "Continue button of welcome page");
+    	return this;
+    }
+    public OptumPaySolution clickTinchkboxes() {
+    	Element.click(Element.findElement(testConfig, "linkText", "Deselect all"),"Deselect check box");
+    	Element.click(tinChkbox.get(0).findElement(By.xpath("./td[1]")), "first TIN selected of the grid");
+    	Element.click(payType,"Primary bank account TIN radio button");
+    	Element.click(assignAccnt,"Assign account");
+     	
+    	return this;
+    }
+    
+    public OptumPaySolution validateTINgridpopulation() {
+    	tinChkbox.get(0).findElement(By.xpath("./td[4]")).getText();
+    	tinChkbox.get(0).findElement(By.xpath("./td[5]")).getText();
+    	return this;
     }
 }

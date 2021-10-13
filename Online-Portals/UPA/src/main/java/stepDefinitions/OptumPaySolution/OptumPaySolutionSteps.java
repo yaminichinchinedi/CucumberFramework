@@ -472,6 +472,31 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_hover_over_purple_dots() throws Throwable {
 	    optumPaySol.hoveroverpurpledots();
 	}
+	
+	
+	@Then("^User clicks on Set up recurring payments button$")
+	public void user_clicks_on_Set_up_recurring_payments_button() throws Throwable {
+		optumPaySol.clickRecPay();
+	}
+
+	@Then("^User clicks on Continue button of welcome to recurring payments$")
+	public void user_clicks_on_Continue_button_of_welcome_to_recurring_payments() throws Throwable {
+		optumPaySol.clicContinuebutofRecPay();
+	}
+
+	@Then("^User selects Tins from the TIN grid,clicks one of radio button of one Available ACH debit options and Clicks on Assign Account button$")
+	public void user_selects_Tins_from_the_TIN_grid_clicks_one_of_radio_button_of_one_Available_ACH_debit_options_and_Clicks_on_Assign_Account_button() throws Throwable {
+		optumPaySol.clickTinchkboxes();
+	}
+
+	@Then("^verifies that in TIN grid  Account ending and Pay type columns are populated with selected ACH debit options$")
+	public void verifies_that_in_TIN_grid_Account_ending_and_Pay_type_columns_are_populated_with_selected_ACH_debit_options() throws Throwable {
+		optumPaySol.validateTINgridpopulation();
+	}
+
+
+	
+	
 }
 
 
