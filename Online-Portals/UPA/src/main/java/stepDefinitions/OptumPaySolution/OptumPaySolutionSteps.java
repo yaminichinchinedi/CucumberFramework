@@ -498,10 +498,6 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	
 	
 
-	@And("User clicks on recurring payment")
-	public void userClicksOnRecurringPayment() {
-	optumPaySol.clickRecurringPayments();
-	}
 
 	@And("Resets or sets the payments")
 	public void resetsOrSetsThePayments() {

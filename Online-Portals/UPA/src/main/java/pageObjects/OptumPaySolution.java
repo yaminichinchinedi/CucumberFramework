@@ -42,6 +42,8 @@ import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
+import javax.management.Query;
+
 public class OptumPaySolution {
 
     @FindBy(xpath = "//div[contains(text(),'Provider Name')]")
@@ -2675,12 +2677,6 @@ public class OptumPaySolution {
          Helper.compareEquals(testConfig, "Date Paid", Db.get("PAID_DATE").substring(0,10).trim(),DatePaid.substring(0,10).trim());
     }
 
-    public void clickRecurringPayments() {
-		    Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),15);
-		    Element.click(recurringPaymentWelcomeButton, "Recurring payment button");
-		    Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//span[.='Continue']"),15);
-		    Element.click(RecurringWelcomeContinueButton, "recurring welcome continue button");
-    }
 
     public void resetsOrSetsThePayments() {
         Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
@@ -2740,16 +2736,13 @@ public class OptumPaySolution {
     }
 
     public void userValidatesThePrimaryBankAccountEntriesInTheDB() {
-        String TIN = System.getProperty("tin");
-        String query ="SELECT pd.LST_CHG_BY_ID, pd.LST_CHG_BY_DTTM, pba.PROV_TIN_NBR , pd.RECR_PAY_SET_IND , pd.LST_CHG_BY_DTTM, pd.LST_CHG_BY_PRTL_ID FROM ole.PAYMENT_DESIGNATION pd LEFT JOIN ole.PROVIDER_BANKING_ACCOUNT pba ON pba.PROV_BNK_ACCT_ID = pd.PROV_BNK_ACCT_ID\n" +
-                "WHERE pba.PROV_TIN_NBR = '"+TIN+"' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y'ORDER BY pd.LST_CHG_BY_DTTM  DESC with ur";
-        Map data = DataBase.executeSelectQuery(testConfig, query, 1);
+
+        Map data = DataBase.executeSelectQuery(testConfig, QUERY.readPrimarnyBankAccountLog, 1);
         Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
         Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
         Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
         Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
-        query = "SELECT * FROM ole.PAYMENT_DESIGNATION_HISTORY pdh WHERE PROV_TIN_NBR  ='"+TIN+"' ORDER BY pdh.LST_CHG_BY_DTTM DESC WITH ur";
-        data = DataBase.executeSelectQuery(testConfig, query, 1);
+        data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
         Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
 
 
@@ -2785,17 +2778,12 @@ public class OptumPaySolution {
     }
 
     public void userValidatesTheAlternateBankAccountEntriesInTheDB() {
-        String TIN = System.getProperty("tin");
-        String query ="SELECT pd.LST_CHG_BY_ID, pd.LST_CHG_BY_DTTM,PAYR_TIN_NBR , pd.RECR_PAY_SET_IND , pd.LST_CHG_BY_PRTL_ID  FROM ole.PAYMENT_DESIGNATION pd\n" +
-                "LEFT JOIN ole.PROV_ALTERNATE_BANKING_ACCOUNT paba ON paba.PROV_ALT_BNK_ACCT_ID = pd.PROV_ALT_BNK_ACCT_ID\n" +
-                "WHERE paba.PROV_TIN_NBR = '"+TIN+"' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
-        Map data = DataBase.executeSelectQuery(testConfig, query, 1);
+        Map data = DataBase.executeSelectQuery(testConfig, QUERY.readAlternateBankAccountLog, 1);
         Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
         Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
         Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
         Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
-        query = "SELECT * FROM ole.PAYMENT_DESIGNATION_HISTORY pdh WHERE PROV_TIN_NBR  ='"+TIN+"' ORDER BY pdh.LST_CHG_BY_DTTM DESC WITH ur";
-        data = DataBase.executeSelectQuery(testConfig, query, 1);
+        data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
         Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
     }
 

@@ -468,7 +468,8 @@ Feature: - Optum Pay Solutions
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User clicks on Optum Pay Solutions tab
     Then User clicks on "Invoices" tab
-    And User clicks on recurring payment
+    Then User clicks on Set up recurring payments button
+    Then User clicks on Continue button of welcome to recurring payments
     And Resets or sets the payments
 
     Examples:
@@ -482,7 +483,8 @@ Feature: - Optum Pay Solutions
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User clicks on Optum Pay Solutions tab
     Then User clicks on "Invoices" tab
-    And User clicks on recurring payment
+    Then User clicks on Set up recurring payments button
+    Then User clicks on Continue button of welcome to recurring payments
     And Sets all payers as primary banking account
     And User does click on recurring payment step two continue button
     And User clicks checkboxes aand submit button on step three
@@ -499,7 +501,8 @@ Feature: - Optum Pay Solutions
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User clicks on Optum Pay Solutions tab
     Then User clicks on "Invoices" tab
-    And User clicks on recurring payment
+    Then User clicks on Set up recurring payments button
+    Then User clicks on Continue button of welcome to recurring payments
     And Sets all payers as alternating bank account
     And User does click on recurring payment step two continue button
     And User clicks checkboxes aand submit button on step three
