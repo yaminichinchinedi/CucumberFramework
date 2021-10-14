@@ -258,7 +258,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
-		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		System.out.println("***************************************"+System.getProperty("user.dir")+"*****************************");
+		System.out.println("***************************************"+testConfig.getRunTimeProperty("PdfPath")+"*****************************");
+		//Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
 	}
 	
