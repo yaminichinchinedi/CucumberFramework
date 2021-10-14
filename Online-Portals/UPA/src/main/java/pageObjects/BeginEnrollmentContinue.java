@@ -78,7 +78,7 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='enrollmentClassificationModal']/div[1]/div[3]/a")
 	WebElement closeTip1;
 
-	@FindBy(xpath="//*[@id='vcpModal']/div[1]") 
+	@FindBy(xpath="//div[@id='vcpModal']/div[1]") 
 	WebElement boxVCP;
 
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[2]")

@@ -516,11 +516,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 			 financialInstStreet = Helper.generateRandomAlphabetsString(5);
 		String phNo = Long.toString(Helper.generateRandomNumber(3));
 		String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
-//		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
-//		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
-//        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
-//		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
-//		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
 		
 		int rowNo=1;
 		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
@@ -529,15 +524,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  String zipCode =data.GetData(rowNo, "ZipCode");
 		  String routingNo =data.GetData(rowNo, "RoutingNumber");
 		  String accountNo =data.GetData(rowNo, "AccountNumber");
-		 // Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
-		  //Element.selectVisibleText(finInstState, stateName,"Select City from excel");
-		  //if (inpType.equals("Zip"))
-		  //Element.enterData(finInstZip1, Long.toString(Helper.generateRandomNumber(5)),"Random Zip No","finInstZip1");
-		  //else
-		  //Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
+	
 		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-		  //Element.clickByJS(testConfig,rdoNPIYes , "YES NPI");
+		  
 		
 		  Browser.wait(testConfig, 2);
 			Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
@@ -686,9 +676,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		ArrayList <String> webErrNamesText=new ArrayList<String>();
 		int i=1;
 			while(i<10){
-			String xpath="//form[@id=\"EFTERAregForm\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/"+"li"+"["+i+"]"+"/a";
-			By.xpath("//form[@id=\\\"EFTERAregForm\\\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/\"+\"li\"+\"[\"+i+\"]\"+\"/a");
-			 
+			String xpath="//form[@id=\"EFTERAregForm\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/"+"li"+"["+i+"]"+"/a";	 
 			if (Element.findElement(testConfig, "xpath", xpath).getTagName().equals("a"))
 			{
 			webErrNamesText.add(Element.findElement(testConfig, "xpath", xpath).getText());
@@ -758,36 +746,11 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//*[@id='div2']/section/fieldset/h1")).getText(), dataTest.get(53).get("TEXT_VAL"));
 		Helper.compareContains(testConfig, "Finantial Institution Informatioon", dataTest.get(50).get("TEXT_VAL"),(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/p[1]")).getText());
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(32).get("TEXT_VAL"));
-		//String text=(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[1]/fieldset[1]/p[2]")).getText();
-		String text=(Element.findElement(testConfig, "xpath", "//div[@id='div2']//p[2]")).getText();
-		
+		String text=(Element.findElement(testConfig, "xpath", "//div[@id='div2']//p[2]")).getText();	
 		int endIndex=text.indexOf(":");
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text.substring(0, endIndex+1) , dataTest.get(31).get("TEXT_VAL"));
-//		text=Element.findElement(testConfig, "xpath", "//div[@id='bankDetailpre']//h4/strong").getText();
-//		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text, dataTest.get(51).get("TEXT_VAL"));
-		
-//		Helper.compareEquals(testConfig, "Finantial Institution Name", (finInstName.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(22).get("TEXT_VAL"));
-//		
-//		Helper.compareEquals(testConfig, "Finantial Institution Street", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinStreet']/label")).getText(), dataTest.get(44).get("TEXT_VAL"));
-//		//div[@id="finInstTinStreet"]/label
-//		Helper.compareEquals(testConfig, "Finantial Institution City", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinCity']/label")).getText(), dataTest.get(43).get("TEXT_VAL"));
-//		
-//		Helper.compareEquals(testConfig, "Finantial Institution State", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinState']/label")).getText(), dataTest.get(42).get("TEXT_VAL"));
-//		Helper.compareEquals(testConfig, "Finantial Institution Zip Code", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinZip1']/legend")).getText(), dataTest.get(41).get("TEXT_VAL"));
-//		
-//		Helper.compareEquals(testConfig, "Finantial Institution Phone", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinPhone1']/legend")).getText(), dataTest.get(40).get("TEXT_VAL"));
-//		
-		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinRoutNum']/div/label")).getText(), dataTest.get(38).get("TEXT_VAL"));
-		
+		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text.substring(0, endIndex+1) , dataTest.get(31).get("TEXT_VAL"));	
+		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinRoutNum']/div/label")).getText(), dataTest.get(38).get("TEXT_VAL"));		
 		Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
-		
-		//Helper.compareEquals(testConfig, "Finantial Institution Ac no", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctNum']/label")).getText(), dataTest.get(37).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution Type of Ac", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinAcctType']/div/p[1]/label")).getText(), dataTest.get(35).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[2]/section[2]/fieldset/div[4]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (Element.findElement(testConfig, "xpath", "//div[@id='secondportiontohide']/div[2]/p[1]/label")).getText(), dataTest.get(21).get("TEXT_VAL"));
-
-		//Helper.compareEquals(testConfig, "Finantial Institution Msg File", (Element.findElement(testConfig, "xpath", "//div[@id='uploadVC']/p")).getText(), dataTest.get(17).get("TEXT_VAL")+dataTest.get(15).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution NPI bank AC", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinNpiAcctYorN']/div/p[1]/label")).getText(), dataTest.get(14).get("TEXT_VAL"));
 	
 		  return this;
 	}
@@ -1012,8 +975,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
     	//clearFinsInstInfoFields();
     	Element.clickByJS(testConfig, editVoidedCheck, "EDIT");
     	uploadBankLetterPdfWithAcceptance();
-    	//fillFinancialInstInfo();
-    	//Browser.verifyURL(testConfig, "uploadefterafile.do?fromreview=y");
     	Element.click(saveChanges, "Save Changes Button");
     	Browser.verifyURL(testConfig, "validateefterafinancialinfortn.do?fromreview=y");
     	

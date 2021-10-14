@@ -52,20 +52,11 @@ public class BeginEnrollment {
 	@FindBy(linkText="CONTINUE")
 	WebElement btnContinue;
 	
-//	@FindBy(xpath="//*[@id='EFTERAenrForm']/div[1]/p[5]/a[1]")
-//	WebElement dwnldAchGuide;
-	
 	@FindBy(xpath="//a[text()='Download ACH/Direct Deposit Enrollment Guide']")
 	WebElement dwnldAchGuide;
-		
-//	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[5]/a[2]")
-//	WebElement dwnldVcpGuide;
-//		
+			
 	@FindBy(xpath="//a[text()='Download VCP Enrollment Guide']")
 	WebElement dwnldVcpGuide;
-	
-//	@FindBy(xpath=".//*[@id='EFTERAenrForm']/div[1]/p[6]/a[1]")
-//	WebElement dwnldBSGuide;
 	
 	@FindBy(xpath="//a[text()='Download Billing Service Enrollment Guide']")
 	WebElement dwnldBSGuide;
@@ -168,12 +159,9 @@ public class BeginEnrollment {
 		String expectedURL = "beginEnrollment.do";
 		Browser.verifyURL(testConfig, expectedURL);
 		Browser.browserRefresh(testConfig);
-		Browser.wait(testConfig, 2);
 		Element.verifyElementPresent(dwnldAchGuide, "Download ACH Enrollment Guide");
 		Element.verifyElementPresent(dwnldVcpGuide, "Download VCP Enrollment Guide");
 		Element.verifyElementPresent(dwnldBSGuide, "Download Billing Service Enrollment Guide");
-//		Element.verifyElementPresent(aboutEPS, "To get started, please let us know how you heard about EPS?");
-//		Element.verifyTextPresent(rdoHealthPlanCommunication, "Health plan communication");
 	}
 	
 	public BeginEnrollmentContinue selectOtherToValidateErrorMessage() {

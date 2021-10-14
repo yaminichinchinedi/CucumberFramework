@@ -837,36 +837,22 @@ public class ProviderInformationEFTERAEnroll {
 		sqlRowNo = 177;
 		testConfig.putRunTimeProperty("mktTyp", "PT");
 		HashMap<Integer, HashMap<String, String>> contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-//		Helper.compareEquals(testConfig, "Provider Type",
-//				 "Provider Type"+"\n"+contentTbl.get(1).get("MKT_TYP_DESC")
-//						+ contentTbl.get(3).get("MKT_TYP_DESC") + contentTbl.get(4).get("MKT_TYP_DESC") + contentTbl.get(5).get("MKT_TYP_DESC") + contentTbl.get(2).get("MKT_TYP_DESC"),
-//				prvType.getText());
-		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(1).get("MKT_TYP_DESC"), prvType.getText());
-		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(2).get("MKT_TYP_DESC"), prvType.getText());
-		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(3).get("MKT_TYP_DESC"), prvType.getText());
-		Helper.compareContains(testConfig, "Provider Type", contentTbl.get(4).get("MKT_TYP_DESC"), prvType.getText());
-
+		Helper.compareEquals(testConfig, "Provider Type",
+				 "Provider Type"+"\n"+contentTbl.get(1).get("MKT_TYP_DESC").trim()+"\n"
+						+ contentTbl.get(3).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(4).get("MKT_TYP_DESC").trim()+"\n" +contentTbl.get(5).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(2).get("MKT_TYP_DESC").trim(),
+				prvType.getText());
 		testConfig.putRunTimeProperty("mktTyp", "PR");
 		contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		// Helper.compareEquals(testConfig, "Provider Type Speciality",
-		// pageData.get(2).get("TEXT_VAL")+"\n"+contentTbl.get(1).get("MKT_TYP_DESC")+"\n"+contentTbl.get(2).get("MKT_TYP_DESC")+"\n"+
-		// //contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(4).get("MKT_TYP_DESC")+"\n"+contentTbl.get(5).get("MKT_TYP_DESC")+"\n"+contentTbl.get(6).get("MKT_TYP_DESC"),prvSpeciallity.getText());
-		// contentTbl.get(3).get("MKT_TYP_DESC")+"\n"+contentTbl.get(4).get("MKT_TYP_DESC")+"\n"+contentTbl.get(5).get("MKT_TYP_DESC")+"\n"+contentTbl.get(6).get("MKT_TYP_DESC")+"\n"+contentTbl.get(7).get("MKT_TYP_DESC")+"\n"+contentTbl.get(8).get("MKT_TYP_DESC"),prvSpeciallity.getText());
-		//
-//		String data = "";
-//		for (int i = 1; i <= contentTbl.size(); i++) {
-//			if (i == contentTbl.size())
-//				data = data + contentTbl.get(i).get("MKT_TYP_DESC");
-//			else
-//				data = data + contentTbl.get(i).get("MKT_TYP_DESC") + "\n";
-//		}
-//		Helper.compareEquals(testConfig, "Provider Type Speciality", pageData.get(2).get("TEXT_VAL") + "\n" + data,
-//				prvSpeciallity.getText());
-//		
 		
+		String data = "";
 		for (int i = 1; i <= contentTbl.size(); i++) {
-			Helper.compareContains(testConfig, "Provider Type Speciality", contentTbl.get(i).get("MKT_TYP_DESC"), prvSpeciallity.getText());
+			if (i == contentTbl.size())
+				data = data + contentTbl.get(i).get("MKT_TYP_DESC").trim();
+			else
+				data = data + contentTbl.get(i).get("MKT_TYP_DESC").trim() + "\n";
 		}
+		Helper.compareEquals(testConfig, "Provider Type Speciality", pageData.get(3).get("TEXT_VAL") + "\n" + data,
+				prvSpeciallity.getText());
 
 		return this;
 	}
