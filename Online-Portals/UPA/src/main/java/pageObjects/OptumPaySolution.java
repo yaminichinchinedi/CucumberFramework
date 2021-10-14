@@ -2789,11 +2789,13 @@ public class OptumPaySolution {
 
 
     public OptumPaySolution clickRecPay() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
     	Element.click(recPaybut, "Set Up recurring payments button");
     	return this;
     }
 
     public OptumPaySolution clicContinuebutofRecPay() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//span[.='Continue']"),5);
     	Element.click(contButton, "Continue button of welcome page");
     	return this;
     }
