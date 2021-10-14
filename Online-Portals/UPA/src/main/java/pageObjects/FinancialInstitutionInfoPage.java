@@ -261,8 +261,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		System.out.println("***************************************"+System.getProperty("user.dir")+"*****************************");
 		System.out.println("***************************************"+testConfig.getRunTimeProperty("PdfPath")+"*****************************");
 		//Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
-		Element.enterData(btnBrowse,"/home/jenkins/workspace/CucumberAutomation_RegressionJob/Online-Portals/UPA/DataFiles/EPSEnrollmentInstructions.pdf","Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		//Element.enterData(btnBrowse,"/home/jenkins/workspace/CucumberAutomation_RegressionJob/Online-Portals/UPA/DataFiles/EPSEnrollmentInstructions.pdf","Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		Element.enterDataByJS(testConfig, btnBrowse, System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
+		
 	}
 	
 	public void fillFinancialInstInfoFromExcel() throws IOException 
