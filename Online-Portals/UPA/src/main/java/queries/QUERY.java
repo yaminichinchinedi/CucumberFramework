@@ -462,7 +462,13 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
    		"LEFT JOIN ole.ENROLLED_PROVIDER ep  ON pba.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
    		"WHERE  pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' AND pba.PROV_TIN_NBR IS NOT null\r\n" + 
    		"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A' ) with ur fetch first row only";
-   
+
+	public static final String readPrimarnyBankAccountLog ="SELECT pd.LST_CHG_BY_ID, pd.LST_CHG_BY_DTTM, pba.PROV_TIN_NBR , pd.RECR_PAY_SET_IND , pd.LST_CHG_BY_DTTM, pd.LST_CHG_BY_PRTL_ID FROM ole.PAYMENT_DESIGNATION pd LEFT JOIN ole.PROVIDER_BANKING_ACCOUNT pba ON pba.PROV_BNK_ACCT_ID = pd.PROV_BNK_ACCT_ID\n" +
+			"WHERE pba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y'ORDER BY pd.LST_CHG_BY_DTTM  DESC with ur";
+	public static final String readPaymentDesignationHistoryFortheTIN = "SELECT * FROM ole.PAYMENT_DESIGNATION_HISTORY pdh WHERE PROV_TIN_NBR  ='{$tin}' ORDER BY pdh.LST_CHG_BY_DTTM DESC WITH ur";
+	public static final String readAlternateBankAccountLog ="SELECT pd.LST_CHG_BY_ID, pd.LST_CHG_BY_DTTM,PAYR_TIN_NBR , pd.RECR_PAY_SET_IND , pd.LST_CHG_BY_PRTL_ID  FROM ole.PAYMENT_DESIGNATION pd\n" +
+			"LEFT JOIN ole.PROV_ALTERNATE_BANKING_ACCOUNT paba ON paba.PROV_ALT_BNK_ACCT_ID = pd.PROV_ALT_BNK_ACCT_ID\n" +
+			"WHERE paba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
 }
 
 
