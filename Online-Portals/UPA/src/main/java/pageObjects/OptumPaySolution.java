@@ -42,7 +42,6 @@ import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
-import javax.management.Query;
 
 public class OptumPaySolution {
 
@@ -2679,13 +2678,13 @@ public class OptumPaySolution {
 
 
     public void resetsOrSetsThePayments() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
         Helper.compareEquals(testConfig,"Deselect all title", Element.getTextPresent(ResetOrSelectAllBtn,"Deselect all"),"Deselect all");
         Element.verifyElementIsEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
         Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
         Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
         Element.click(AssignAccountBtn,"AssignAccountBtn");
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
         Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
         Element.verifyElementNotEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
         Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
@@ -2715,20 +2714,20 @@ public class OptumPaySolution {
     }
 
     public void setsAllPayersAsPrimaryBankingAccount() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
         Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
         Element.click(AssignAccountBtn,"AssignAccountBtn");
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
         Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
     }
 
     public void userClicksOnRecurringPaymentStepTwoContinueButton() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("(//input[@value='Continue'])[2]"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("(//input[@value='Continue'])[2]"),5);
         Element.click(RecurringPaymentStep2Continue,"RecurringPaymentStep2Continue");
     }
 
     public void userClicksCheckboxesAandSubmitButtonOnStepThree() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Submit ']"),15);
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Submit ']"),5);
         Element.click(RecurringPaymentStep3Checkbox1,"RecurringPaymentStep3Checkbox1");
         Element.click(RecurringPaymentStep3Checkbox2,"RecurringPaymentStep3Checkbox2");
         Element.waitForElementTobeClickAble(testConfig,RecurringPaymentStep3Submit,10);
@@ -2768,7 +2767,7 @@ public class OptumPaySolution {
             Element.click(testConfig.driver.findElement(By.xpath("//input[@data-paymenttype='alternate']")),"Alternate BankAccountforTinRadioBtn");
             Element.waitForElementTobeClickAble(testConfig,AssignAccountBtn,10);
             Element.click(AssignAccountBtn,"AssignAccountBtn");
-            Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),15);
+            Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
             Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
 
         } catch (IOException e) {
