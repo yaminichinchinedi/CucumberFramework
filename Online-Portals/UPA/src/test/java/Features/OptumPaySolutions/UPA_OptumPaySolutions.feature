@@ -471,6 +471,7 @@ Feature: - Optum Pay Solutions
     Then User clicks on Set up recurring payments button
     Then User clicks on Continue button of welcome to recurring payments
     And Resets or sets the payments
+    
 
     Examples:
       | credentials | userType | portalAccess | searchCriteria      | tinType |
@@ -512,8 +513,8 @@ Feature: - Optum Pay Solutions
       | credentials | userType | portalAccess | searchCriteria                              | tinType |
       | PROV_Admin  | PROV     | Premium      | TinWithoutRecurrPay                         | AO      |
 
-  @UPAUS3918104
-  Scenario Outline: Access Payments -Recurring ACH debit Payments
+  @UPAUS3918104  @UPAUS3794633
+  Scenario Outline: Access Payments -Recurring ACH debit Payments and Setup Review Selections
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User clicks on Optum Pay Solutions tab
@@ -522,6 +523,7 @@ Feature: - Optum Pay Solutions
     Then User clicks on Continue button of welcome to recurring payments
     Then User selects Tins from the TIN grid,clicks one of radio button of one Available ACH debit options and Clicks on Assign Account button
     Then verifies that in TIN grid  Account ending and Pay type columns are populated with selected ACH debit options
+    Then verifies Recurring Payments Setup Review Selections
 
 
     Examples:
@@ -529,8 +531,8 @@ Feature: - Optum Pay Solutions
       | PROV_Admin  | PROV     | Premium      | TinWithoutRecurrPay | AO      |
 
 
-  @UPAUS3918104_BS
-  Scenario Outline: Access Payments -Recurring ACH debit Payments for BS User
+  @UPAUS3918104_BS  @UPAUS3794633_BS
+  Scenario Outline: Access Payments -Recurring ACH debit Payments and Setup Review Selections for BS User
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And User clicks on Optum Pay Solutions tab
@@ -540,6 +542,7 @@ Feature: - Optum Pay Solutions
     Then User clicks on Continue button of welcome to recurring payments
     Then User selects Tins from the TIN grid,clicks one of radio button of one Available ACH debit options and Clicks on Assign Account button
     Then verifies that in TIN grid  Account ending and Pay type columns are populated with selected ACH debit options
+    Then verifies Recurring Payments Setup Review Selections
 
 
     Examples:

@@ -532,6 +532,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void userValidatesTheAlternateBankAccountEntriesInTheDB() {
 	optumPaySol.userValidatesTheAlternateBankAccountEntriesInTheDB();
 	}
+	@Then("^verifies Recurring Payments Setup Review Selections$")
+	public void verifies_Recurring_Payments_Setup_Review_Selections() throws Throwable {
+		optumPaySol.ReviewSelection();
+	}
 }
 
 

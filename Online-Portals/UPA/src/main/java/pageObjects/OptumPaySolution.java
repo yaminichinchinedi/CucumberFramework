@@ -679,6 +679,41 @@ public class OptumPaySolution {
     WebElement RecurringPaymentStep3Checkbox2;
     @FindBy(xpath = "//input[@value='Submit ']")
     WebElement RecurringPaymentStep3Submit;
+    @FindBy(linkText = "Reset all")
+    WebElement Reset;
+  	
+  	@FindBy(xpath="//span[contains(text(),'Continue')]") 
+    WebElement continueBtn;
+  	
+  	@FindBy(css="input.btn-primary.rounded.continue-btn")
+  	WebElement continuebutton;
+  	
+  	@FindBy(xpath="//span[contains(text(),'1')]")
+    WebElement	SelectPayment;
+  	
+  	@FindBy(xpath="//h4[contains(text(),'Review and confirm your selections below')]")
+    WebElement ReviewSelection;
+  	
+  	@FindBy(css="input.btn-primary.rounded.continueRecurringPayment")
+  	WebElement continueRecurringPayment;
+  
+  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[1]/input")
+    WebElement Backbtn;
+  
+  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[2]/input[1]")
+    WebElement	Cancelbtn;
+  	
+  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[2]/ul/li[2]/h4/a")
+    WebElement	ReviewSelectionlink;
+  	
+  	@FindBy(xpath="//*[@id='cancelRecurringPaymentModal']/div/p[1]")
+    WebElement	title;
+  	
+  	@FindBy(xpath="//p[contains(text(),'By leaving this page, this will clear all your sel')]")
+    WebElement	messagecontent;
+  	 
+  	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[1]")
+    WebElement	cancelpopup;
 
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
@@ -2811,5 +2846,32 @@ public class OptumPaySolution {
     	tinChkbox.get(0).findElement(By.xpath("./td[4]")).getText();
     	tinChkbox.get(0).findElement(By.xpath("./td[5]")).getText();
     	return this;
+    }
+    public OptumPaySolution ReviewSelection() {
+    	Browser.wait(testConfig,2);
+     	Element.click(Element.findElement(testConfig, "linkText", "Select all"),"Select check box");
+     	Element.click(payType,"Primary bank account TIN radio button");
+    	Element.click(assignAccnt,"Assign account");
+    	
+    	Element.click(continuebutton, "Continue Button");
+    	Browser.wait(testConfig,2);
+    	Element.verifyTextPresent(ReviewSelection, "Review and confirm your selections below");
+        Element.verifyElementIsEnabled(continueRecurringPayment, "Continue Recurring Payment button");
+    	Element.verifyElementIsEnabled(Cancelbtn, "Cancel Button");
+    	Element.verifyElementIsEnabled(Backbtn, "Back button");
+  
+    	Element.click(Cancelbtn, "Cancel Button");
+    	Browser.wait(testConfig, 2);
+    	Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.title").trim(), title.getText().trim());
+    	Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.messageContent").trim(), messagecontent.getText().trim());
+    	Element.click(cancelpopup, "Close");
+    	Element.click(continueRecurringPayment, "Continue button");
+    	Element.verifyElementPresent(ReviewSelectionlink, "Review selection");
+    	Element.click(ReviewSelectionlink, "Review selection");
+    	Browser.wait(testConfig, 2);
+    	Element.verifyElementPresent(SelectPayment, "Select payment method");
+    	Element.click(SelectPayment, "Select payment method");
+		return this;
+    	
     }
 }
