@@ -262,7 +262,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		
 
 		
-		File file = new File(testConfig.getRunTimeProperty("DataFile"));
+		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"));
     	Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
 		
 		
