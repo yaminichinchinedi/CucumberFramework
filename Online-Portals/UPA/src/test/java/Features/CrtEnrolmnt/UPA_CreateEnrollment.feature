@@ -143,7 +143,7 @@ Feature: UPA Create Enrollment Validations
       | credentials |
       | Super       |
 
-  @TC-9 
+ 
   Scenario: US1033935 Create Enrollment AO Enrollment Submitted page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -274,7 +274,8 @@ Feature: UPA Create Enrollment Validations
       | Super       | busNameNAndAddrY  |
       | Super       | busNameNAndAddrN  |
 
-  #Author: Piyush Bagdiya
+  #Author: Piyush Bagdiya 
+ 
   @CSRUS2952532 @CSRUS3725611 @FraudPBB @TC-16
   Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
     Given User navigates to UPA Sys Test application
@@ -296,7 +297,7 @@ Feature: UPA Create Enrollment Validations
 
   ##################### 4.  US1048061_CrtEnrlBSIdtfyAdmn    #######################################
   #TS_001
-  @UPASanity
+  @UPASanity 
   Scenario: TS_00001_Upon selection of Continue from the TIN eligibility status page, user navigates to the Organization Information page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -636,7 +637,6 @@ Feature: UPA Create Enrollment Validations
     And Validates Invalid Data Error Messages for Email Address on Review and Submit Page
 
   ####################### 7. US1064240CrtEnrlBSEmailExist #############################
- 
   Scenario: US1064240_Create Enrollment_BS_existing Email entry
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -936,7 +936,6 @@ Feature: UPA Create Enrollment Validations
     Then User validates the Type of account as Checking by default and can be change to Saving
 
   #TS_008
-  
   Scenario: Validates the Supporting doc as Void Check and Bank Letter
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -992,7 +991,7 @@ Feature: UPA Create Enrollment Validations
     Then User validates the NPI Bank account as No by default and can be change to Yes
 
   #TS_012 #TS_013
-   @Test-01
+   
   Scenario Outline: Validating the Headers content
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1217,6 +1216,7 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on continue button of FII NPI page and validtes the error messages.
 
   # TS_019
+  
   Scenario: TS_0019_Validate the error message when no data entered for National Provider Identifier on NPI FII page.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2426,6 +2426,7 @@ Feature: UPA Create Enrollment Validations
     Then User validateds multiple Edit option on Review and Submit Page
     Then User click back button on Review and Submit Page
     And clicks back button on Upload WNine Page.
+    Then User fills all the information on NPI page for ABA Validator
     Then User clicks on hyperlink 'how do i manage multiple NPI bank accounts?'
 
   #TS_11 is not present
