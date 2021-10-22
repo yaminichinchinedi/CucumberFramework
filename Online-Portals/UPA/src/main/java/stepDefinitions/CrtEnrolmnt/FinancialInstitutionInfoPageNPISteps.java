@@ -58,6 +58,10 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 		financialInstitutionNPI.uploadBankLetterPdfWithAcceptance();
 	}
 	
+	@Then("^User fills all the information on NPI page for ABA Validator$")
+	public void User_fills_all_the_information_on_NPI_page_for_ABA_Validator() throws Throwable {
+		financialInstitutionNPI.fillFinancialInstInfoFromExcelABANPI();
+	}
 	@Then("^User clicks on hyperlink 'how do i manage multiple NPI bank accounts\\?'$")
 	public void user_clicks_on_hyperlink_how_do_i_manage_multiple_NPI_bank_accounts() throws Throwable {
 		financialInstitutionNPI.clickFINMngNPIAcc();
@@ -124,7 +128,7 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	}
 	@Then("^User fills all the information on Financial Institution Information NPI page and click Save Changes$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_NPI_page_and_click_Save_Changes() throws Throwable {
-		financialInstitutionNPI.clickEditlink().fillFinancialInstInfoForNPI().clickContinueNPI(); 
+		financialInstitutionNPI.clickEditlink().fillFinancialInstInfoForNPI().clickSaveChanges(); 
 	}
 	
 	@Then("^User validates the Cancel Changes and Save changes buttons,click on Cancel Changes button$")
@@ -143,19 +147,19 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 	
 	@Then("^User validates various input field by giving blank input and clicking Save Changes button\\.$")
 	public void user_validates_various_input_field_by_giving_blank_input_and_clicking_Save_Changes_button() throws Throwable {
-		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NpiNumber").clickContinueNPI()
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstroutingNo")
-		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("financialInstaccountNo")
-		  .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NofileUpload")
+		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPIAndClickOnSaveChanges("NpiNumber")
+		   .fillInsufficientFinancialInstInfoForNPIAndClickOnSaveChanges("financialInstroutingNo")
+		  .fillInsufficientFinancialInstInfoForNPIAndClickOnSaveChanges("financialInstaccountNo")
+		  .fillInsufficientFinancialInstInfoForNPIAndClickOnSaveChanges("NofileUpload")
 		   ;
 	}
 
 	@Then("^User validates various input field by giving nonnumeric data input and clicking Save Changes button\\.$")
 	public void user_validates_various_input_field_by_giving_nonnumeric_data_input_and_clicking_Save_Changes_button() throws Throwable {
-		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericNPI")
-			.clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericPhone")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericroutingNo")
-		   .clickEditlink().fillInsufficientFinancialInstInfoForNPI("NonNumericAccountNo");
+		financialInstitutionNPI.clickEditlink().fillInsufficientFinancialInstInfoForNPIandClickOnSaveChanges("NonNumericNPI")
+		.fillInsufficientFinancialInstInfoForNPIandClickOnSaveChanges("NonNumericAccountNo")   
+		.fillInsufficientFinancialInstInfoForNPIandClickOnSaveChanges("NonNumericroutingNo")
+		   ;
 		  
 	}
 

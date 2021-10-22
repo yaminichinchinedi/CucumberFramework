@@ -123,6 +123,17 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickContinue();
 
 	}
+	@Then("^User fills all the information on Financial Institution Information page for ABA Validator$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator() throws Throwable {
+		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA();
+
+	}
+	
+	@Then("^User fills all the information on Financial Institution Information page for Routing And AccountNumber$")
+	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_Routing_And_AccountNumber() throws Throwable {
+		financialInstitutionInfoPage.fillRoutingAndAccountNumberOnFinanacePage();
+
+	}
 	@Then("^User fills all the information on Financial Institution Information page for ABA Validator and click continue AV$")
 	public void user_fills_all_the_information_on_Financial_Institution_Information_page_for_ABA_Validator_and_click_continue_AV() throws Throwable {
 		financialInstitutionInfoPage.fillFinancialInstInfoFromExcelABA().clickContinueAV();

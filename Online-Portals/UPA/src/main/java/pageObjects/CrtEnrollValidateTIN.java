@@ -66,9 +66,7 @@ public class CrtEnrollValidateTIN {
 	}
 	
 	public ProviderEFTERAEnrollPage clickEnrolUsrTyp(String enrollmentPaymentType){
-		enrollmentInfoObj.setEnrollType("HO");
-		
-		
+		enrollmentInfoObj.setEnrollType("HO");	
 		switch (enrollmentPaymentType)
 		{
 		case "AO":
@@ -93,7 +91,7 @@ public class CrtEnrollValidateTIN {
 			break;
 
 		default:
-			Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				 
+			Log.Comment("Unidentified Enrollment Method" + ":" + " " + enrollmentPaymentType);				
 		}
 
 		

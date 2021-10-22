@@ -214,6 +214,11 @@ public class ProviderInformationEFTERAEnroll {
 	
 	@FindBy(id = "ui-id-2")
 	WebElement streetScrollBar;
+	
+	@FindBy(xpath = "//h2[text()='Provider Identifiers Information']")
+	WebElement ProviderIdentifiersInformation;
+	
+	
 
 
 	EnrollmentInfo enrollmentInfoPageObj = EnrollmentInfo.getInstance();
@@ -561,6 +566,8 @@ public class ProviderInformationEFTERAEnroll {
 	public ProviderInformationEFTERAEnroll validateBillingService(String field, String data, String ButtonType)
 			throws IOException {
 		WebElement ele = null;
+		Browser.wait(testConfig, 2);
+		fillBillingServiceInfo(field);
 		switch (field) {
 		case "BSName":
 			if (enrollmentInfoPageObj.getEnrollType().equals("BS")) {
@@ -572,6 +579,7 @@ public class ProviderInformationEFTERAEnroll {
 			}
 			break;
 		case "Street":
+			Element.clearData(street, "street");
 			Element.enterData(street, data, "Enter street name as : " + data, "street");
 			ele = street;
 			break;
@@ -592,8 +600,6 @@ public class ProviderInformationEFTERAEnroll {
 			ele = npi;
 			break;
 		}
-		fillBillingServiceInfo(field);
-
 		if (ButtonType.equalsIgnoreCase("CONTINUE"))
 			Element.click(btnContinue, "Continue button");
 
@@ -603,7 +609,7 @@ public class ProviderInformationEFTERAEnroll {
 			Helper.compareEquals(testConfig, "Cancel Button Disabled", "true", btnCancel.getAttribute("disabled"));
 			// Element.verifyElementVisiblity(btnCancel, "Cancel Button");
 		}
-		verifyBSError(ele);
+		verifyBSError(ele,field);
 		return this;
 
 	}
@@ -619,8 +625,9 @@ public class ProviderInformationEFTERAEnroll {
 				Element.enterData(bsName, provName, "Enter provider name as :" + provName, "providerName");
 			else
 				Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
-		if (!field.equals("Street"))
+		if (!field.equals("Street")) {
 			Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
+		}
 		if (!field.equals("City"))
 			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),
 					"city");
@@ -629,30 +636,32 @@ public class ProviderInformationEFTERAEnroll {
 		if (!field.equals("ZipCode"))
 			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
 					"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
+		
+		Element.click(ProviderIdentifiersInformation, "Provider Identifiers Information");
 
 		return this;
 	}
 
-	public void verifyBSError(WebElement element) {
-		if (element.equals(zipCode1)) {
+	public void verifyBSError(WebElement element, String field) {
+		if (field.equals("ZipCode")) {
 			if (error.getText().contains("Data"))
 				Element.verifyTextPresent(error, "Invalid Data");
 			else
 				Element.verifyTextPresent(error, "Invalid for City/State");
-		} else if (element.equals(bsName)) {
+		} else if (field.equals("BSName")) {
 			if (error.getText().contains("Special"))
 				Element.verifyTextPresent(error, "Special characters not allowed");
-		} else if (element.equals(city)) {
+		} else if (field.equals("City")) {
 			if (error.getText().contains("Special"))
 				Element.verifyTextPresent(error, "Special characters not allowed");
-		} else if (element.equals(street)) {
+		} else if (field.equals("Street")) {
 			if (error.getText().contains("Special"))
 				Element.verifyTextPresent(error, "Special characters not allowed");
 			else if (error.getText().contains("P.O."))
 				Element.verifyTextPresent(error, "P.O. Boxes are not accepted");
 			else
 				Element.verifyTextPresent(error, "PO Boxes are not accepted");
-		} else if (element.equals(npi))
+		} else if (field.equals("NPI"))
 			Element.verifyTextPresent(error, "Enter a valid 10 digit NPI");
 		else
 			Element.verifyTextPresent(error, "Special characters not allowed");

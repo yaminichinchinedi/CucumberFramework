@@ -201,16 +201,16 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(linkText="CLOSE TIP") 
 	WebElement lnkClosTip;
 	
-	@FindBy(xpath="//section//form/div[3]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container help-modal fixed-modal']/div")
 	List<WebElement> divFrqncyPopUp;
 	
 	@FindBy(xpath="//section//form/a")
 	WebElement lnkClrAdmnInfo;
 	
-	@FindBy(xpath="//section//form/div[5]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container fixed-modal']/div")
 	List<WebElement> divClrInfo;
 	
-	@FindBy(xpath="//section//form/div[4]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container exit-modal fixed-modal']/div")
 	List<WebElement> divCnclEnrlmnt;
 		
 	@FindBy(name="btnCancel")
@@ -302,7 +302,7 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(xpath = "//*[@id='EFTERAenrBSForm']/section/fieldset/div[7]/div/div/div/div/div[2]/label")
 	WebElement btnNoOnExsistingEmailPageBS;
 	
-	@FindBy(xpath="//*[@id='EFTERAregForm']/div[5]/div[1]")
+	@FindBy(xpath="//div[@class='modal-container fixed-modal']")
 	WebElement divClrAdminInfo;
 	
 	@FindBy(linkText="NO")
@@ -847,7 +847,6 @@ public class ValidateEFTERAProviderInfo {
 	
 	public  ValidateEFTERAProviderInfo fillProvMailComp(String inputType)
 	{	
-		
 		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
 		if (inputType.equals("Secondary"))
 		{
@@ -1254,7 +1253,13 @@ public class ValidateEFTERAProviderInfo {
 		Browser.verifyURL(testConfig, "registrationsignin");
 		return this;
 	}
-	
+	public ValidateEFTERAProviderInfo clickYesCancelEnrlmntForCSR()
+	{
+		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
+		Element.click(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0), "clicked Yes");
+		Browser.verifyURL(testConfig, "viewWelcome.do");
+		return this;
+	}
 	
 	public ValidateEFTERAProviderInfo verifyContentWithUXDS()
 	{

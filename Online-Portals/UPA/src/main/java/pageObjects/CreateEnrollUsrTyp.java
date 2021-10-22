@@ -1,6 +1,7 @@
 package main.java.pageObjects;
 
 import main.java.Utils.Helper;
+import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
@@ -17,7 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class CreateEnrollUsrTyp {
 		private TestBase testConfig;
-	
+		EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
 	@FindBy(css="#userTypeSelection")
 	WebElement usrTyp;
 	
@@ -45,6 +46,7 @@ public class CreateEnrollUsrTyp {
 			Element.selectByIndex(usrTyp, 2, "BS User Type");
 		
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
+		enrollmentInfoPageObj.setTin(tinNumber);
 		Element.enterData(usrTIN, tinNumber, "Tin Number", "TIN");
 		testConfig.putRunTimeProperty("EnrolTin", tinNumber);
 		Element.clickByJS(testConfig, srchButtn, "Search Button");

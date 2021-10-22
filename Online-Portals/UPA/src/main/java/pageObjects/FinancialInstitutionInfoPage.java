@@ -261,9 +261,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Browser.waitForLoad(testConfig.driver);
 		System.out.println("***************************************"+System.getProperty("user.dir")+"*****************************");
 		System.out.println("***************************************"+testConfig.getRunTimeProperty("PdfPath")+"*****************************");
-		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"));
-		Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
-		//Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+//		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"));
+//		Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
+		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		//Element.enterData(btnBrowse,"/home/jenkins/workspace/CucumberAutomation_RegressionJob/Online-Portals/UPA/DataFiles/EPSEnrollmentInstructions.pdf","Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		//Element.enterDataByJS(testConfig, btnBrowse, System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
@@ -437,6 +437,25 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	return this;
 	}
 	
+	
+	public FinancialInstitutionInfoPage fillRoutingAndAccountNumberOnFinanacePage() throws IOException 
+	{
+		int rowNo=1;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  List<String>ValidRoutNos=data.GetAllColumnsData("FinancialInfo","ValidRoutingNos");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		  if( ValidRoutNos.contains(routingNo))
+		  {   
+		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum"); 
+		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
+		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
+		  }
+		  else
+			  Log.Fail("Please proceed with valid RTN");
+		  return this;
+	}
 	public FinancialInstitutionInfoPage fillFinancialInstInfoFromExcelABA() throws IOException 
 	{
 	  
@@ -448,6 +467,7 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  String accountNo =data.GetData(rowNo, "AccountNumber");
 		  if( ValidRoutNos.contains(routingNo))
 		  {  
+
 		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  //finInstAcctNum.sendKeys(Keys.TAB);
@@ -536,7 +556,6 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  
-		
 		  Browser.wait(testConfig, 2);
 			Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 			Browser.wait(testConfig, 3);
@@ -653,50 +672,13 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Browser.wait(testConfig, 2);
 		
 		Element.click(btnYes, "YES Button of PopUp");
-		Browser.verifyURL(testConfig, "registrationSignIn.do");
 	}
 	public void verifyErrors()
 	{
-		Element.clickByJS(testConfig, btnContinue, "Continue");
-		ArrayList <String> errNames=new ArrayList<String>();
-		errNames.add("- Financial Institution Information - Financial Institution / Bank Name");
-		errNames.add("- Financial Institution Information - Street");
-		errNames.add("- Financial Institution Information - City");
-		errNames.add("- Financial Institution Information - State");
-		errNames.add("- Financial Institution Information - Zip");
-		errNames.add("- Financial Institution Information - Phone");
-		errNames.add("- Financial Institution Information - Financial Institution Routing Number");
-		errNames.add("- Financial Institution Information - Provider's Account Number with Financial Institution");
-		errNames.add("- Financial Institution Information - Upload Voided Check/Bank Letter");
-		
-		
-		ArrayList <String> expectedURLs=new ArrayList<String>(); 
-		expectedURLs.add("finInstTinNameId");
-		expectedURLs.add("finInstTinStreet");
-		expectedURLs.add("finInstTinCity");
-		expectedURLs.add("finInstTinState");
-		expectedURLs.add("finInstTinZip1");
-		expectedURLs.add("finInstTinPhone1");
-		expectedURLs.add("finInstTinRoutNum");
-		expectedURLs.add("finInstTinAcctNum");
-		expectedURLs.add("msgFile");
-		
-		ArrayList <String> webErrNamesText=new ArrayList<String>();
-		int i=1;
-			while(i<10){
-			String xpath="//form[@id=\"EFTERAregForm\"]/div[2]/section[1]/fieldset[1]/legend/div/ul/"+"li"+"["+i+"]"+"/a";	 
-			if (Element.findElement(testConfig, "xpath", xpath).getTagName().equals("a"))
-			{
-			webErrNamesText.add(Element.findElement(testConfig, "xpath", xpath).getText());
-			Element.findElement(testConfig, "xpath", xpath).click();
-			Browser.verifyURL(testConfig, expectedURLs.get(i-1));
-			xpath=null;
-			i++;
-			}
-			}
-		
-		Helper.compareEquals(testConfig, "", errNames, webErrNamesText);
-	   verifyErrorMessages();
+		Element.clickByJS(testConfig, btnContinue, "Continue");	
+		Helper.compareEquals(testConfig, "Verifying errors", "- Financial Institution Information - Financial Institution Routing Number", Element.findElement(testConfig, "xpath", "(//div [@class='error']//a)[1]").getText());
+		Helper.compareEquals(testConfig, "Verifying errors", "- Financial Institution Information - Provider's Account Number with Financial Institution", Element.findElement(testConfig, "xpath", "(//div [@class='error']//a)[2]").getText());
+		Helper.compareEquals(testConfig, "Verifying errors", "- Financial Institution Information - Upload Voided Check/Bank Letter", Element.findElement(testConfig, "xpath", "(//div [@class='error']//a)[3]").getText());
 	}
 	public void verifyErrorMessages()
 	{
@@ -752,9 +734,9 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//*[@id='div2']/section/fieldset/h1")).getText(), dataTest.get(53).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Finantial Institution Informatioon", dataTest.get(50).get("TEXT_VAL"),(Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/p[1]")).getText());
-		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/div[3]/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(32).get("TEXT_VAL"));
-		String text=(Element.findElement(testConfig, "xpath", "//div[@id='div2']//p[2]")).getText();	
+		Helper.compareContains(testConfig, "Finantial Institution Informatioon", dataTest.get(50).get("TEXT_VAL"),(Element.findElement(testConfig, "xpath", "//div[@id='headingAlertForRtn']//following-sibling::p")).getText());
+		Helper.compareEquals(testConfig, "Finantial Institution Informatioon", (Element.findElement(testConfig, "xpath", "//div[@id='headingAlertForRtn']//following-sibling::h4")).getText(), dataTest.get(32).get("TEXT_VAL"));
+		String text=(Element.findElement(testConfig, "xpath", "//div[@id='headingAlertForRtn']//following-sibling::p[2]")).getText();	
 		int endIndex=text.indexOf(":");
 		Helper.compareEquals(testConfig, "Finantial Institution Informatioon",text.substring(0, endIndex+1) , dataTest.get(31).get("TEXT_VAL"));	
 		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (Element.findElement(testConfig, "xpath", "//div[@id='finInstTinRoutNum']/div/label")).getText(), dataTest.get(38).get("TEXT_VAL"));		
