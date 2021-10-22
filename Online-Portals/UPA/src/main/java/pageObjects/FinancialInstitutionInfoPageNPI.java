@@ -645,7 +645,7 @@ public class FinancialInstitutionInfoPageNPI{
 		  else
 			  Log.Fail("Please proceed with valid RTN");
 		 
-	   Element.click(btnContinueSavChng, "Save Changes Button");
+	   Element.click(btnSavChng, "Save Changes Button");
 
 		return this;
     }
