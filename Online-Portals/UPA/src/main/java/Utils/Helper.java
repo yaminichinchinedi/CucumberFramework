@@ -1773,7 +1773,6 @@ return previousDate.getTime();
 	
 	public static void purgeDirectory(File dir)
 	{
-		if(!dir.listFiles().equals(null))
 	    for (File file: dir.listFiles()) {
 	        if (file.isFile()) 
 	        	//purgeDirectory(file);
@@ -1807,7 +1806,8 @@ return previousDate.getTime();
 	public static boolean PDFDownloadVerification(TestBase testConfig,WebElement elt,String namOfElement,String downloadedFile)
 	{
 		boolean isDownloaded=true;
-		String filedir=System.getProperty("user.dir")+"\\Downloads";
+		//String filedir=System.getProperty("user.dir")+"\\Downloads";
+		String filedir=System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 		File fileDirectory=new File(filedir);
 		System.out.println("*******************************"+fileDirectory.getAbsoluteFile());
 		purgeDirectory( fileDirectory.getAbsoluteFile());
