@@ -259,13 +259,18 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
 		enrollmentInfoPageObj.setFinDocCode("BL");
 		Browser.waitForLoad(testConfig.driver);
-		System.out.println("***************************************"+System.getProperty("user.dir")+"*****************************");
-		System.out.println("***************************************"+testConfig.getRunTimeProperty("PdfPath")+"*****************************");
-//		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"));
-//		Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
-		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
-		//Element.enterData(btnBrowse,"/home/jenkins/workspace/CucumberAutomation_RegressionJob/Online-Portals/UPA/DataFiles/EPSEnrollmentInstructions.pdf","Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
-		//Element.enterDataByJS(testConfig, btnBrowse, System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		
+
+		
+		File file = new File(testConfig.getRunTimeProperty("DataFile"));
+    	Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
+		
+		
+		
+		//Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
+		
+		
+		
 		Browser.wait(testConfig,2);
 		
 	}

@@ -119,7 +119,7 @@ Feature: UPA Create Enrollment Validations
       | credentials |
       | Super       |
 
-  @TC-8 @UPAUS3610262 @UPA2021_PI02_IP
+  @TC-8 @UPAUS3610262
   Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
