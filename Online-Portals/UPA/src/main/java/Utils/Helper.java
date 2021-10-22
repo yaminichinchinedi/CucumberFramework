@@ -1784,7 +1784,7 @@ return previousDate.getTime();
 	public static boolean isFileExist(File dir,String fileName)
 	{
 		boolean retun1=false;
-		
+		if(!dir.listFiles().equals(null))
 		for (File file: dir.listFiles()) {
 	        if (file.getName().equals(fileName))
 	        {
@@ -1808,6 +1808,7 @@ return previousDate.getTime();
 		boolean isDownloaded=true;
 		String filedir=System.getProperty("user.dir")+"\\Downloads";
 		File fileDirectory=new File(filedir);
+		System.out.println("*******************************"+fileDirectory.getAbsoluteFile());
 		purgeDirectory( fileDirectory.getAbsoluteFile());
 		Element.clickByJS(testConfig, elt,downloadedFile);
 		int i=0;
