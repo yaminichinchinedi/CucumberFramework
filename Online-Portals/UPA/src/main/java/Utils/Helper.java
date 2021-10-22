@@ -1808,7 +1808,7 @@ return previousDate.getTime();
 		boolean isDownloaded=true;
 		String filedir=System.getProperty("user.dir")+"\\Downloads";
 		File fileDirectory=new File(filedir);
-		purgeDirectory( fileDirectory);
+		purgeDirectory( fileDirectory.getAbsoluteFile());
 		Element.clickByJS(testConfig, elt,downloadedFile);
 		int i=0;
 		while(! isFileExist(fileDirectory,downloadedFile))
