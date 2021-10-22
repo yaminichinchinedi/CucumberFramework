@@ -1773,6 +1773,7 @@ return previousDate.getTime();
 	
 	public static void purgeDirectory(File dir)
 	{
+		if(!dir.listFiles().equals(null))
 	    for (File file: dir.listFiles()) {
 	        if (file.isFile()) 
 	        	//purgeDirectory(file);
@@ -1784,7 +1785,7 @@ return previousDate.getTime();
 	public static boolean isFileExist(File dir,String fileName)
 	{
 		boolean retun1=false;
-		if(!dir.listFiles().equals(null))
+		
 		for (File file: dir.listFiles()) {
 	        if (file.getName().equals(fileName))
 	        {
