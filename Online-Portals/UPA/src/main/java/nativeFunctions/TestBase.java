@@ -505,7 +505,7 @@ public class TestBase extends ReporterClass {
 				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
 			}
-
+			((ChromeDriver) driver).setFileDetector(new LocalFileDetector());
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
 			Log.Comment("Launched browser-- : " + Browser);

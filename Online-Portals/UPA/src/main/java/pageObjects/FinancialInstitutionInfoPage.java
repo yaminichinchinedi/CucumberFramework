@@ -262,10 +262,10 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		
 
 		
-//		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"));
-//    	Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
+		File file = new File(System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"));
+    	Element.enterData(btnBrowse, file.getAbsolutePath(), file.getAbsolutePath(), "btnBrowse");
 		
-		Element.enterData(btnBrowse, "//UPA/DataFiles/EPSEnrollmentInstructions.pdf", "//UPA/DataFiles/EPSEnrollmentInstructions.pdf", "btnBrowse");
+		//Element.enterData(btnBrowse, "//UPA/DataFiles/EPSEnrollmentInstructions.pdf", "//UPA/DataFiles/EPSEnrollmentInstructions.pdf", "btnBrowse");
 		
 		//Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		
