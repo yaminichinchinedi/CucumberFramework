@@ -42,6 +42,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
+
 public class OptumPaySolution {
 
     @FindBy(xpath = "//div[contains(text(),'Provider Name')]")
@@ -640,19 +641,45 @@ public class OptumPaySolution {
   	
   	@FindBy(css="input.btn-primary.rounded")
   	WebElement recPaybut;
-  	
-  	@FindBy(xpath="/html/body/div[3]/div[3]/div/button[2]/span") 
+
+  	@FindBy(xpath="/html/body/div[3]/div[3]/div/button[2]/span")
     WebElement contButton;
-  	
+
   	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")
     List <WebElement>  tinChkbox;
-  	
+
   	@FindBy(name="payment_type")
   	WebElement payType;
-  	
+
   	@FindBy(css="input.btn.btn-primary.mb-0.assign-account-btn")
   	WebElement assignAccnt;
-  	
+    @FindBy(xpath = "//input[@value='Set up recurring payments']")
+    WebElement recurringPaymentWelcomeButton;
+    @FindBy(xpath = "//span[.='Continue']")
+    WebElement RecurringWelcomeContinueButton;
+    @FindBy(xpath = "//input[@name='payment_type']")
+    WebElement PrimanryBankAccountforTinRadioBtn;
+    @FindBy(xpath = "//input[@value='Assign account']")
+    WebElement AssignAccountBtn;
+    @FindBy(xpath = "//th[@class='text-center pb-0 border-none sorting_disabled'][1]")
+    WebElement ResetOrSelectAllBtn;
+    @FindBy(xpath = "//span[.='Cancel']")
+    WebElement RecurringPaymentPopupCancelButton;
+    @FindBy(xpath = "//span[.='Continue']")
+    WebElement RecurringPaymentPopupContinueButton;
+    @FindBy(xpath = "//button[@class='ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close']")
+    WebElement RecurringPaymentPopupX_Button;
+    @FindBy(xpath = "(//input[@value='Continue'])[1]")
+    WebElement RecurringPaymentStep1Continue;
+    @FindBy(xpath = "(//input[@value='Continue'])[2]")
+    WebElement RecurringPaymentStep2Continue;
+    @FindBy(xpath = "//input[@name='confirmation']")
+    WebElement RecurringPaymentStep3Checkbox1;
+    @FindBy(xpath = "//input[@name='authorization']")
+    WebElement RecurringPaymentStep3Checkbox2;
+    @FindBy(xpath = "//input[@value='Submit ']")
+    WebElement RecurringPaymentStep3Submit;
+
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -2648,12 +2675,126 @@ public class OptumPaySolution {
     	 DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy","yyyy-dd-mm");
          Helper.compareEquals(testConfig, "Date Paid", Db.get("PAID_DATE").substring(0,10).trim(),DatePaid.substring(0,10).trim());
     }
+
+
+    public void resetsOrSetsThePayments() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
+        Helper.compareEquals(testConfig,"Deselect all title", Element.getTextPresent(ResetOrSelectAllBtn,"Deselect all"),"Deselect all");
+        Element.verifyElementIsEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
+        Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
+        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn,"AssignAccountBtn");
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
+        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
+        Element.verifyElementNotEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
+        Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
+        Element.click(ResetOrSelectAllBtn,"Reset all button");
+        Helper.compareEquals(testConfig,"Are you sure popup", Element.getTextPresent(testConfig.getDriver().findElement(By.xpath("//div[@class='resetRpMessage']/p[1]")), "Are you sure?"),"Are you sure?");
+        Element.verifyElementIsEnabled(RecurringPaymentPopupCancelButton,"RecurringPaymentPopupCancelButton");
+        Element.click(RecurringPaymentPopupCancelButton,"RecurringPaymentPopupCancelButton");
+        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
+
+        Element.click(ResetOrSelectAllBtn,"Reset all button");
+        Element.click(RecurringPaymentPopupX_Button,"RecurringPaymentPopupXButton");
+        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
+
+        Element.click(ResetOrSelectAllBtn,"Reset all button");
+        Element.click(RecurringPaymentPopupContinueButton,"RecurringPaymentPopupContinueButton");
+        Helper.compareEquals(testConfig,"Select all title", Element.getTextPresent(ResetOrSelectAllBtn,"Select all"),"Select all");
+        Element.click(ResetOrSelectAllBtn,"Select all");
+        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn,"AssignAccountBtn");
+
+        int rows = Element.findElements(testConfig,"xpath","(//table[@id='recurring-payment-table'])[1]/tbody/tr").size();
+        if(rows >1 ){
+            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr["+(rows-1)+"]/td[1]")),"Last row reset button" );
+        }else if (rows == 1){
+            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr[1]/td[1]")),"Last row reset button" );
+        }
+    }
+
+    public void setsAllPayersAsPrimaryBankingAccount() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
+        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn,"AssignAccountBtn");
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
+        Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
+    }
+
+    public void userClicksOnRecurringPaymentStepTwoContinueButton() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("(//input[@value='Continue'])[2]"),5);
+        Element.click(RecurringPaymentStep2Continue,"RecurringPaymentStep2Continue");
+    }
+
+    public void userClicksCheckboxesAandSubmitButtonOnStepThree() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Submit ']"),5);
+        Element.click(RecurringPaymentStep3Checkbox1,"RecurringPaymentStep3Checkbox1");
+        Element.click(RecurringPaymentStep3Checkbox2,"RecurringPaymentStep3Checkbox2");
+        Element.waitForElementTobeClickAble(testConfig,RecurringPaymentStep3Submit,10);
+        Element.click(RecurringPaymentStep3Submit,"RecurringPaymentStep3Submit");
+    }
+
+    public void userValidatesThePrimaryBankAccountEntriesInTheDB() {
+
+        Map data = DataBase.executeSelectQuery(testConfig, QUERY.readPrimarnyBankAccountLog, 1);
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
+        data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+
+
+    }
+
+    public void setAlternateBankAccount() {
+        int rowNo = 1;
+        TestDataReader data = null;
+        try {
+            data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            List<String> ValidRoutNos = data.GetAllColumnsData("FinancialInfo", "ValidRoutingNos");
+            String routingNumber = data.GetData(rowNo, "RoutingNumber");
+            String accountNumber = data.GetData(rowNo, "AccountNumber");
+            System.setProperty("routingNumber",routingNumber);
+            System.setProperty("accountNumber",accountNumber);
+            Element.click(testConfig,testConfig.getDriver().findElement(By.id("addAlternateBankAccountButton")),"Add alternate bank button", 10 );
+            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='routingNbr']")),routingNumber,"Routing number", "Routing number input");
+            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='accountNbr']")),accountNumber,"Account number", "Account number input");
+            Element.click(testConfig,testConfig.getDriver().findElement(By.xpath("//p[contains(.,'Financial Institution Information')]")),"tab out", 10 );
+            WebElement addAltBankAccountBtn = testConfig.driver.findElement(By.xpath("//button[@class='btn-primary rounded addBankAccount ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']"));
+            Element.waitForElementTobeClickAble(testConfig,addAltBankAccountBtn,10);
+            Element.click(testConfig,addAltBankAccountBtn,"Add alternate bank account button", 10);
+            Element.click(testConfig.driver.findElement(By.xpath("//input[@data-paymenttype='alternate']")),"Alternate BankAccountforTinRadioBtn");
+            Element.waitForElementTobeClickAble(testConfig,AssignAccountBtn,10);
+            Element.click(AssignAccountBtn,"AssignAccountBtn");
+            Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
+            Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.Comment("Possible errors: ABA validator down, button xpath changed, bank info excel changed");
+        }
+    }
+
+    public void userValidatesTheAlternateBankAccountEntriesInTheDB() {
+        Map data = DataBase.executeSelectQuery(testConfig, QUERY.readAlternateBankAccountLog, 1);
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
+        data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+    }
+
+
     public OptumPaySolution clickRecPay() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
     	Element.click(recPaybut, "Set Up recurring payments button");
     	return this;
     }
-   
+
     public OptumPaySolution clicContinuebutofRecPay() {
+        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//span[.='Continue']"),5);
     	Element.click(contButton, "Continue button of welcome page");
     	return this;
     }
@@ -2662,10 +2803,10 @@ public class OptumPaySolution {
     	Element.click(tinChkbox.get(0).findElement(By.xpath("./td[1]")), "first TIN selected of the grid");
     	Element.click(payType,"Primary bank account TIN radio button");
     	Element.click(assignAccnt,"Assign account");
-     	
+
     	return this;
     }
-    
+
     public OptumPaySolution validateTINgridpopulation() {
     	tinChkbox.get(0).findElement(By.xpath("./td[4]")).getText();
     	tinChkbox.get(0).findElement(By.xpath("./td[5]")).getText();
