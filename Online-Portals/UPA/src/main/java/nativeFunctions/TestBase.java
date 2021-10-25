@@ -495,9 +495,15 @@ public class TestBase extends ReporterClass {
 			Log.Comment("Inside Set driver chrome: sauce labs");
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
-			caps.setCapability("version", "91.0");
+			caps.setCapability("version", "94.0");
+			caps.setCapability("screenResolution", "1920x1080");
+			caps.setCapability("maxDuration", 10800);
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
+			if (System.getenv("JOB_NAME") == null)
+				caps.setCapability("build", "OptumPay" + "_Automation");
+			else
+				caps.setCapability("build", System.getenv("JOB_NAME") + "__" + System.getenv("BUILD_NUMBER"));
 			
 			try {
 				
