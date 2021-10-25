@@ -636,9 +636,7 @@ public class ProviderInformationEFTERAEnroll {
 		if (!field.equals("ZipCode"))
 			Element.enterData(zipCode1, data.GetData(rowNo, "ZipCode"),
 					"Entered zip code in first textbox as" + data.GetData(rowNo, "ZipCode"), "zipCode1");
-		
-		Element.click(ProviderIdentifiersInformation, "Provider Identifiers Information");
-
+	
 		return this;
 	}
 
