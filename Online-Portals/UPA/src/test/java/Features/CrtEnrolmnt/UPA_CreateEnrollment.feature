@@ -3,7 +3,7 @@
 Feature: UPA Create Enrollment Validations
 
   #1 ###########################  US1023501_US1350108_PreEnrolledTIN   ##############################
-  @TC-1 
+  @TC-1
   Scenario Outline: US1023501_Test Cases for PreEnrolled Tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -17,7 +17,7 @@ Feature: UPA Create Enrollment Validations
       | AO             | EnrolledInactiveAndBlockStatusTIN  |
       | AO             | EnrolledActiveStatusTIN            |
 
-  @TC-2 
+  @TC-2
   Scenario Outline: US1350108_Test Cases for PreEnrolled Tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -30,7 +30,7 @@ Feature: UPA Create Enrollment Validations
       | AO             | InactiveUnBlockedTIN |
       | VO             | TINNotEnrolled       |
 
-  @TC-3 
+  @TC-3
   Scenario Outline: US1350108_Test Cases for Not Enrolled Tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -53,7 +53,7 @@ Feature: UPA Create Enrollment Validations
       | AO             | TINNotEnrolled |
 
   #2 ####################### US1033480_CrtEnrlFooter ##################################
-  @TC-5 
+  @TC-5
   Scenario: US1033480_Create Enrollment- AO - Footer Information
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -143,7 +143,6 @@ Feature: UPA Create Enrollment Validations
       | credentials |
       | Super       |
 
- 
   Scenario: US1033935 Create Enrollment AO Enrollment Submitted page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -151,7 +150,7 @@ Feature: UPA Create Enrollment Validations
     Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
       | Enrollment Type |
       | AO              |
-     Then User sets business phone
+    Then User sets business phone
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
@@ -274,8 +273,7 @@ Feature: UPA Create Enrollment Validations
       | Super       | busNameNAndAddrY  |
       | Super       | busNameNAndAddrN  |
 
-  #Author: Piyush Bagdiya 
- 
+  #Author: Piyush Bagdiya
   @CSRUS2952532 @CSRUS3725611 @FraudPBB @TC-16
   Scenario Outline: UPAUS2952537 Create Enrollment validate OrgInfo OrgName BusinessAddr BusinessPhone Indicators VO enrollment
     Given User navigates to UPA Sys Test application
@@ -297,7 +295,7 @@ Feature: UPA Create Enrollment Validations
 
   ##################### 4.  US1048061_CrtEnrlBSIdtfyAdmn    #######################################
   #TS_001
-  @UPASanity 
+  @UPASanity
   Scenario: TS_00001_Upon selection of Continue from the TIN eligibility status page, user navigates to the Organization Information page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -488,7 +486,7 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on link Federal W9 Form here,validates its content
 
   ############################# 6. US1048094_CrtEnrlBSRevSubmit ############################
-  @UPASanity 
+  @UPASanity
   Scenario: TS01/TS02_Create Enrollment_BS_Review and Submit page_Header
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -501,7 +499,7 @@ Feature: UPA Create Enrollment Validations
     Then User uploads the WNine form and click continue
     And Vaidates Headers in Review and Submit page
 
-  @UPASanity 
+  @UPASanity
   Scenario: TS03_Create Enrollment_BS_Review and Submit page_Edit button
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -717,7 +715,7 @@ Feature: UPA Create Enrollment Validations
       | BSName, Street, City ,ZipCode | blank           |
 
   #######################  10. US1202167_CrtEnrlBeginEnrlmnt #########################
-  @TC-19 
+  @TC-19
   Scenario Outline: US1202167_Create Enrollment Which option should i choose link
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -729,7 +727,7 @@ Feature: UPA Create Enrollment Validations
 
     Examples: 
       | Enrollment Type |
-  #    | AV              |
+      #    | AV              |
       | VO              |
 
   @TC-20
@@ -859,7 +857,7 @@ Feature: UPA Create Enrollment Validations
 
   ################ 12. US1247813_CrtEnrlmntFII ######################################################
   #TS_001
-  @UPASanity 
+  @UPASanity
   Scenario: Fills the relevent Info with AO Enroll Typ
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -894,7 +892,7 @@ Feature: UPA Create Enrollment Validations
   #  Then User fills all the information  and click on Continue
   #  Then User fills all the information on Identify Administrators page and click continue
   #TS_005 -- TODO
-  @UPASanity 
+  @UPASanity
   Scenario: Checking UI Content matches with DB
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -907,8 +905,7 @@ Feature: UPA Create Enrollment Validations
     Then User fills all the information on Identify Administrators page and click continue
     Then It is Validated that Financial Institution Information page text is content managed
 
-  #TS_006 
-  
+  #TS_006
   Scenario: Clicking FI Routing no
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -920,9 +917,8 @@ Feature: UPA Create Enrollment Validations
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     Then User clicks the link where can i find a finantial intitution's routing no
- 
-  #TS_007 
-  
+
+  #TS_007
   Scenario: Validates the Type of Account
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -949,7 +945,6 @@ Feature: UPA Create Enrollment Validations
     Then User validates the supporting document as Voided Check by default and can be change to Bank letter
 
   #TS_009
-  
   Scenario: Browsing the Supporting docs
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -963,7 +958,6 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on browse and upload its supporting document
 
   #TS_010
-  
   Scenario: Clicking on multiple NRI bank accounts
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -977,7 +971,6 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on hyperlink how do i manage multiple NPI bank accounts
 
   #TS_011
-  
   Scenario: Validates the NPI Bank Account
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -991,7 +984,6 @@ Feature: UPA Create Enrollment Validations
     Then User validates the NPI Bank account as No by default and can be change to Yes
 
   #TS_012 #TS_013
-   
   Scenario Outline: Validating the Headers content
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1008,7 +1000,6 @@ Feature: UPA Create Enrollment Validations
 
   # |		 AV			 	|
   #TS_014 #TS_015
-
   Scenario Outline: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1024,50 +1015,48 @@ Feature: UPA Create Enrollment Validations
       | AO             |
 
   #    |			 AV					|
-  
-   # All these test cases has been commented because FII - ABA validator implimentation
+  # All these test cases has been commented because FII - ABA validator implimentation
   #TS_016 #TS_017 #TS_018
   #
   #Scenario: Validating the Error on click of Continue button of FII page
-    #Given User navigates to UPA Sys Test application
-    #When User Clicks on Enroll Now from the landing page
-    #Then User clicks on Continue button of BeginEnrollment Page
-    #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      #| Enrollment Type |
-      #| AO              |
-    #Then User sets business phone
-    #Then User fills all the information  and click on Continue
-    #Then User fills all the information on Identify Administrators page and click continue
-    #Then User clicks on continue button of FII page and validtes the error messages
-#
+  #Given User navigates to UPA Sys Test application
+  #When User Clicks on Enroll Now from the landing page
+  #Then User clicks on Continue button of BeginEnrollment Page
+  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+  #| Enrollment Type |
+  #| AO              |
+  #Then User sets business phone
+  #Then User fills all the information  and click on Continue
+  #Then User fills all the information on Identify Administrators page and click continue
+  #Then User clicks on continue button of FII page and validtes the error messages
+  #
   #TS_019
   #
   #Scenario: Validating that PO Boxes are not accepted in Street field of FII Page
-    #Given User navigates to UPA Sys Test application
-    #When User Clicks on Enroll Now from the landing page
-    #Then User clicks on Continue button of BeginEnrollment Page
-    #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      #| Enrollment Type |
-      #| AO              |
-    #Then User sets business phone
-    #Then User fills all the information  and click on Continue
-    #Then User fills all the information on Identify Administrators page and click continue
-    #Then User fills all the information and PO Box no in Street field and clicks on continue
-#
+  #Given User navigates to UPA Sys Test application
+  #When User Clicks on Enroll Now from the landing page
+  #Then User clicks on Continue button of BeginEnrollment Page
+  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+  #| Enrollment Type |
+  #| AO              |
+  #Then User sets business phone
+  #Then User fills all the information  and click on Continue
+  #Then User fills all the information on Identify Administrators page and click continue
+  #Then User fills all the information and PO Box no in Street field and clicks on continue
+  #
   #TS_020
   #
   #Scenario: Validating that Invalid Zip Code is not accepted
-    #Given User navigates to UPA Sys Test application
-    #When User Clicks on Enroll Now from the landing page
-    #Then User clicks on Continue button of BeginEnrollment Page
-    #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      #| Enrollment Type |
-      #| AO              |
-    #Then User sets business phone
-    #Then User fills all the information  and click on Continue
-    #Then User fills all the information on Identify Administrators page and click continue
-    #Then User fills all the information and invalid Zip code for corresponding City and clicks on continue
-
+  #Given User navigates to UPA Sys Test application
+  #When User Clicks on Enroll Now from the landing page
+  #Then User clicks on Continue button of BeginEnrollment Page
+  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
+  #| Enrollment Type |
+  #| AO              |
+  #Then User sets business phone
+  #Then User fills all the information  and click on Continue
+  #Then User fills all the information on Identify Administrators page and click continue
+  #Then User fills all the information and invalid Zip code for corresponding City and clicks on continue
   #TS_021
   Scenario: Validating that non accepted file format not uploaded
     Given User navigates to UPA Sys Test application
@@ -1216,7 +1205,6 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on continue button of FII NPI page and validtes the error messages.
 
   # TS_019
-  
   Scenario: TS_0019_Validate the error message when no data entered for National Provider Identifier on NPI FII page.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1287,7 +1275,7 @@ Feature: UPA Create Enrollment Validations
   #Then User fills duplicate Information on NPI Page.
   ########################################### 14. US1248704_EditOrgInfoOnReviewSbmtPage ###################
   #TS_001#TS_04#TS_005 #TS_06#TS_07#TS_08
-  @UPASanity 
+  @UPASanity
   Scenario: Fills the relevant Info with AO Enroll Typ
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1421,7 +1409,6 @@ Feature: UPA Create Enrollment Validations
   #    And Validate the Headers on Identify Admin Page.
   #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
   #TS19
-  
   Scenario: Fills the relevent Info with VO Enroll Typ
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1618,7 +1605,6 @@ Feature: UPA Create Enrollment Validations
   # And User validates fiels are editables on Financial Institution Information page
   #  And Validates Headers on Financial Information page
   #TS_014 015 is covered in US1463317 TS_015
-  
   Scenario: TS_0013/16/17/19/20/21/24/27/30/32_Validate Missing data error message for Financial Institution Information fields.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2583,7 +2569,6 @@ Feature: UPA Create Enrollment Validations
 
   ############################################################ 25 US3501234_OnlineEnrollmentPDF ####################################################
   @UPAUS3501234 @UPA2021_PI03_01
- 
   Scenario: UPA Online enrollment PDF for AO tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2615,7 +2600,7 @@ Feature: UPA Create Enrollment Validations
     And Also click on Print Enrollment page,download PDF and validates all the information from PDF page
 
   #Author:Sai
-  @UPAUS3563585_AO @UPA2021_PI03_04 
+  @UPAUS3563585_AO @UPA2021_PI03_04
   Scenario Outline: Fraud Prevention - Implement scrollbar for Orgname and address suggestions
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2646,7 +2631,7 @@ Feature: UPA Create Enrollment Validations
       | KAISER        |        200 |
 
   ########################################################## VCPEnableCrtEnrlmnt #################################################
-  @UPAUS2764491  
+  @UPAUS2764491
   Scenario: Fills the relevent Info with VO Enroll Typ
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2662,7 +2647,7 @@ Feature: UPA Create Enrollment Validations
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.
 
   ######################################### US3056650_CrtEnrlRvwSbmtTnc ##########################################################
-  @UPAUS3056650_Tnc_AO 
+  @UPAUS3056650_Tnc_AO
   Scenario: UPA Create Enrollment Terms and Conditions pdf for AO tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2677,7 +2662,7 @@ Feature: UPA Create Enrollment Validations
     Then User uploads the WNine form and click continue
     And Vaidates Terms and condition Pdf download
 
-  @UPAUS3056650_Tnc_VO  
+  @UPAUS3056650_Tnc_VO
   Scenario: UPA Create Enrollment Terms and Conditions pdf for VO tin
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -2726,6 +2711,7 @@ Feature: UPA Create Enrollment Validations
     Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
     Then User fills NPI No and other information with Incorrect/Improper/Null RTN No on Financial Institution Information NPI page for ABA Validator
     And All the validations are performed for Incorrect information with editable RTN No
+
   @NPIfailure
   Scenario: ABN Validators Financial Institution Information -NPI Level ReValidations
     When ABN Validator Switch is set as 'Y'
