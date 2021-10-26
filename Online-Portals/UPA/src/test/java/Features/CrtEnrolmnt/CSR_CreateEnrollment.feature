@@ -3,6 +3,7 @@
 Feature: CSR Create Enrollment Validations
 
   ################################## 1. CSR_US1033480_CrtEnrlFooter ###########################################################
+  
   Scenario Outline: US1033480_Create Enrollment- AO - Footer Information
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -19,7 +20,6 @@ Feature: CSR Create Enrollment Validations
     Then Validate the Footer Information on this page
     Then User fills all the information on Identify Administrators page and click continue
     Then Validate the Footer Information on this page
-    #Need to check ABA Validator or Normal flow
     Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then Validate the Footer Information on this page
     Then User uploads the WNine form and click continue
@@ -32,7 +32,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ###################################2. CSR_US1033910_35_US1048192_99_CrtEnrlSubmtd ############################################
-  @CSRUS3610262 @CSR2021_PI02_IP
+  @CSRUS3610262 @CSR2021_PI02_IP 
   Scenario Outline: US1033910/US2952500 Create Enrollment HO Financial Institution Information Continue from Identify Administrators page AO enrollment
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -43,7 +43,6 @@ Feature: CSR Create Enrollment Validations
     Then User sets business phone
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
-    #Need to check ABA Validator or Normal flow
     When RTI API server is up
     Then User fills all the information on Financial Institution Information page for ABA Validator and click continue
     Then User uploads the WNine form and click continue
@@ -1771,7 +1770,6 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
-  @Test-011
   Scenario Outline: ABN Validators Financial Institution Information AO -Org Level Review and Submit
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1791,6 +1789,57 @@ Feature: CSR Create Enrollment Validations
     Then Click on Edit on financial Institution Section and validate user navigates to Financial Institution Information Page
     Then Users clears the RTN No fill the new RTN No and validate the details and click on Save changes button
     And Validate the changes are reflected on Review and Submit Page.
+
+    Examples: 
+      | credentials |
+      | Super       |
+
+  #|    RW             |
+  ############################################# 17 CSR_US1202167_CrtEnrlCSRVldtns ##################################
+  Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+    Then User Select User Type as "Provider" and enter unique TIN and click Search
+    Then User select NO button of TIN not enrolled page and validate that it is on CSR home page
+
+    Examples: 
+      | credentials |
+      | Super       |
+
+  Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+    Then User Select User Type as "Billing Service" and enter unique TIN and click Search
+    Then User navigates to TIN not enrolled page and check Return to CSR Welcome page button displayed
+    Then clicks on Return to CSR Welcome page button and navigate to CSR Home page
+
+    Examples: 
+      | credentials |
+      | Super       |
+
+  Scenario Outline: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+    Then User Select User Type as "Provider" and enter unique TIN and click Search
+    Then User select Yes button of TIN not enrolled page
+    Then User select User Type Enrollment as "VO" and click continue button
+    Then User sets business phone
+    Then User fills all the information  and click on Continue
+    Then User fills all the information on Identify Administrators page and click continue to W9
+    Then User uploads the WNine form and click continue
+    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.
+    And Validate Data is saved in Database on Enrollment Page.
+
+    Examples: 
+      | credentials |
+      | Super       |
+
+  
+  Scenario Outline: Create Enrollment TIN Entry Error Message Validation
+    When ABN Validator Switch is set as 'Y'
+    Given User navigates to CSR portal and enters "<credentials>" and login
+    Then User clicks on Create/Maintain Enrollment link on CSR HomePage
+    Then User Select User Type as "Provider" and validates various messgaes by Entering null,less than 9 char,Alphanumeric char,Specia char in TIN
 
     Examples: 
       | credentials |

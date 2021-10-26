@@ -51,6 +51,11 @@ public class CrtEnrollValidateTIN {
 	@FindBy(xpath="//tr[@id='showcontcanButton']/td/input[2]")
 	WebElement cancelButton;
 	
+	@FindBy(xpath="//input[@value='Return to CSR Welcome Page']")
+	WebElement ReturnToCSRWelcomePage;
+	
+	
+	
 	EnrollmentInfo enrollmentInfoObj=EnrollmentInfo.getInstance();
 
 	public CrtEnrollValidateTIN(TestBase testConfig) 
@@ -58,12 +63,41 @@ public class CrtEnrollValidateTIN {
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		Browser.verifyURL(testConfig, "validateTIN.do");
+		
 	}
 	
-	public CrtEnrollValidateTIN clickYesButton(){
-	Element.clickByJS(testConfig, yesButton, "Yes Button");	
-	return this;
+	public CrtEnrollValidateTIN(TestBase testConfig, String Usertype) 
+	{
+		this.testConfig=testConfig;
+		PageFactory.initElements(testConfig.driver, this);
+		if(Usertype.equalsIgnoreCase("Billing Service"))
+		Browser.verifyURL(testConfig, "enrollmentbsuserselection.do");
+		
 	}
+	
+	public CSRHomePage clickNoButton(){
+	Element.clickByJS(testConfig, noButton, "No Button");	
+	return new CSRHomePage(testConfig);
+
+	}
+	
+	public CrtEnrollValidateTIN validateReturnToHome(){
+		//Element.clickByJS(testConfig, ReturnToCSRWelcomePage, "Return To CSR Welcome Page Button");	
+		Element.verifyElementPresent(ReturnToCSRWelcomePage, "Return To CSR Welcome Page Button displayed");
+		return this;
+
+		}
+	
+	public CSRHomePage ClcikOnReturnToHome(){
+		Element.clickByJS(testConfig, ReturnToCSRWelcomePage, "Return To CSR Welcome Page Button");	
+		return new CSRHomePage(testConfig);
+
+		}
+	
+	public CrtEnrollValidateTIN clickYesButton(){
+		Element.clickByJS(testConfig, yesButton, "Yes Button");	
+		return this;
+		}
 	
 	public ProviderEFTERAEnrollPage clickEnrolUsrTyp(String enrollmentPaymentType){
 		enrollmentInfoObj.setEnrollType("HO");	
