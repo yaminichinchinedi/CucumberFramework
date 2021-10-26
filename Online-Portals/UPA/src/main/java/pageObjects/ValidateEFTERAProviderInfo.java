@@ -1328,7 +1328,7 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(11).get("TEXT_VAL")+" () "+dataTest.get(12).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("p")).get(2).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(13).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(3).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(14).get("TEXT_VAL")+"\n"+dataTest.get(15).get("TEXT_VAL")+"\n"+dataTest.get(16).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(1).getText());
-		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("TEXT_VAL")), pageForm.get(0).findElements(By.tagName("fieldset")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+(dataTest.get(18).get("TEXT_VAL")).trim()), (pageForm.get(0).findElements(By.tagName("fieldset")).get(1).getText()).trim());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(19).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(20).get("CLOBVAL")+" "+dataTest.get(21).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("fieldset")).get(2).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("TEXT_VAL")+"\n"+dataTest.get(23).get("TEXT_VAL")+"\n"+dataTest.get(24).get("CLOBVAL")+"\n"+
 				dataTest.get(25).get("TEXT_VAL")+" "+dataTest.get(26).get("TEXT_VAL")+" "+dataTest.get(27).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(11).getText());	
@@ -1336,7 +1336,7 @@ public class ValidateEFTERAProviderInfo {
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(1).get("TEXT_VAL")+" () "+dataTest.get(2).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("p")).get(0).getText());	
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(28).get("CLOBVAL"), pageForm.get(1).findElements(By.tagName("p")).get(1).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(14).get("TEXT_VAL")+"\n"+dataTest.get(15).get("TEXT_VAL")+"\n"+dataTest.get(16).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(0).getText());
-		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("TEXT_VAL")), pageForm.get(1).findElements(By.tagName("fieldset")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("TEXT_VAL")).trim(), pageForm.get(1).findElements(By.tagName("fieldset")).get(1).getText().trim());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(19).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(20).get("CLOBVAL")+" "+dataTest.get(21).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("fieldset")).get(2).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("TEXT_VAL")+"\n"+dataTest.get(23).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(13).getText());
 		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(24).get("CLOBVAL")+"\n"+dataTest.get(25).get("TEXT_VAL")+" "+dataTest.get(26).get("TEXT_VAL")+" "+dataTest.get(27).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(17).getText());
