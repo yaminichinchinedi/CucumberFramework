@@ -761,7 +761,7 @@ Feature: UPA Create Enrollment Validations
     Then User also validats captcha Error by turning ON and OFF captcha
 
   ##############################  11. US1247779_IdentifyAdminVldtn ###########################
-  @TC-22 @UPACreateEnroltest @UPAFailure
+  @TC-22 @UPACreateEnroltest
   Scenario: US1247779 Identify Admin page content,llinks validations
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1083,7 +1083,7 @@ Feature: UPA Create Enrollment Validations
 
   ##################################### 13. US1247822_CrtEnrlFIINPI ################################################
   #TS_001
-  @UPASanity @UPACreateEnroltest
+  @UPASanity @UPACreateEnroltest @UPAFailure
   Scenario: TS_0001_Validate the navigation upon selection of Continue from Financial Institution Information page.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1098,7 +1098,7 @@ Feature: UPA Create Enrollment Validations
     Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
 
   #TS_003
-  @UPASanity @UPACreateEnroltest
+  @UPASanity @UPACreateEnroltest @UPAFailure
   Scenario: TS_0003_Validate the content of the Add NPI Bank Account page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1113,7 +1113,7 @@ Feature: UPA Create Enrollment Validations
     Then User Validates UI content with DataBase enrties.
 
   #TS_004 
-  @UPACreateEnroltest
+  @UPACreateEnroltest @UPAFailure
   Scenario: TS_0004_Validate the Where can I find a financial institution routing number link.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1128,7 +1128,7 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on hyperlink 'where can I find a finantial Institution's routing number?'.
 
   #TC_5,#TC_6,#TC_9
-  @UPACreateEnroltest
+  @UPACreateEnroltest 
   Scenario: TS_0005_Validate the default Type of Account TS_0006 Supporting documentation TS_0009 NPI bank account.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1191,7 +1191,7 @@ Feature: UPA Create Enrollment Validations
 
   #     |			 AV					|
   #TS_013 #TS_014 #TS_015 #TS_016 #TS_017 --TODO
-  @UPACreateEnroltest
+  @UPACreateEnroltest @UPAFailure
   Scenario: TS_0013_0014_15_16_17_Validate the content of the Pop Up box upon click of Cancel Enrollment button also different buttons
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1207,7 +1207,7 @@ Feature: UPA Create Enrollment Validations
     Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking.
 
   #TS_018
-  @UPACreateEnroltest
+  @UPACreateEnroltest @UPAFailure
   Scenario: TS_0018_Validate the error validations upon clicking Continue button on NPI Financial Information Page.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1222,7 +1222,7 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on continue button of FII NPI page and validtes the error messages.
 
   # TS_019
-  @UPACreateEnroltest
+  @UPACreateEnroltest @UPAFailure
   Scenario: TS_0019_Validate the error message when no data entered for National Provider Identifier on NPI FII page.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
