@@ -761,7 +761,7 @@ Feature: UPA Create Enrollment Validations
     Then User also validats captcha Error by turning ON and OFF captcha
 
   ##############################  11. US1247779_IdentifyAdminVldtn ###########################
-  @TC-22 @UPACreateEnroltest @Test-0111
+  @TC-22 @UPACreateEnroltest @UPAFailure
   Scenario: US1247779 Identify Admin page content,llinks validations
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1128,7 +1128,7 @@ Feature: UPA Create Enrollment Validations
     Then User clicks on hyperlink 'where can I find a finantial Institution's routing number?'.
 
   #TC_5,#TC_6,#TC_9
-  @UPACreateEnroltest @Test-0111
+  @UPACreateEnroltest
   Scenario: TS_0005_Validate the default Type of Account TS_0006 Supporting documentation TS_0009 NPI bank account.
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
