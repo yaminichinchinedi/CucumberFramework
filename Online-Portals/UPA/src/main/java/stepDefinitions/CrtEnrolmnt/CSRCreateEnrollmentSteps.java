@@ -71,7 +71,6 @@ public class CSRCreateEnrollmentSteps extends TestBase {
 	
 	@Then("^User navigates to TIN not enrolled page and check Return to CSR Welcome page button displayed$")
 	public void User_navigates_to_TIN_not_enrolled_page_and_check_Return_to_CSR_Welcome_page_button_displayed() throws Throwable {
-		//validateTIN=new CrtEnrollValidateTIN(testConfig);
 		Browser.wait(testConfig, 3);
 		 validateTIN.validateReturnToHome();
 	}

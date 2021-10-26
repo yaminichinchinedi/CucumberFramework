@@ -31,10 +31,6 @@ public class CreateEnrollUsrTyp {
 	@FindBy(xpath="//tr[@id='errorMessage']/td")
 	WebElement CSRTINErrorMessage;
 	
-	
-	
-	//tr[@id='errorMessage']/td
-	
 	public CreateEnrollUsrTyp(TestBase testConfig) 
 	{
 		this.testConfig=testConfig;
@@ -45,11 +41,9 @@ public class CreateEnrollUsrTyp {
 	{
 		if (userType.equals("Provider")) {
 		Browser.wait(testConfig, 5);
-		//Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
 		Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		}
 		if (userType.equals("Billing Service")) {
-			//Element.selectByVisibleText(usrTyp, "Provider", "Click on Provider");
 			Element.selectByIndex(usrTyp, 2, "BS User Type");
 		}
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
