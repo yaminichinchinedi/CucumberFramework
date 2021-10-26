@@ -846,7 +846,7 @@ public class ProviderInformationEFTERAEnroll {
 		HashMap<Integer, HashMap<String, String>> contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		Helper.compareEquals(testConfig, "Provider Type",
 				 "Provider Type"+"\n"+contentTbl.get(1).get("MKT_TYP_DESC").trim()+"\n"
-						+ contentTbl.get(3).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(4).get("MKT_TYP_DESC").trim()+"\n" +contentTbl.get(5).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(2).get("MKT_TYP_DESC").trim(),
+						+ contentTbl.get(3).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(4).get("MKT_TYP_DESC").trim()+"\n" +contentTbl.get(5).get("MKT_TYP_DESC").trim()+"\n" +contentTbl.get(6).get("MKT_TYP_DESC").trim()+"\n" + contentTbl.get(2).get("MKT_TYP_DESC").trim(),
 				prvType.getText());
 		testConfig.putRunTimeProperty("mktTyp", "PR");
 		contentTbl = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
