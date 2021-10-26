@@ -223,7 +223,6 @@ public class ReviewAndSubmit {
 	{
 		
 		Helper.compareEquals(testConfig, "Organisation Name", enrollmentInfoPageObj.getBusinessName(),BSNameOrgInfo.getText());
-		//Helper.compareEquals(testConfig, "Org Address", enrollmentInfoPageObj.getStreet()+"\n"+enrollmentInfoPageObj.getCity()+", "+enrollmentInfoPageObj.getStateName()+"\n"+enrollmentInfoPageObj.getZipCode(),BSAddOrgInfo.getText());	
 		Helper.compareEquals(testConfig, "Tin",enrollmentInfoPageObj.getTin() ,tinOrgInfo.getText());
 		Helper.compareEquals(testConfig, "Provider Type",enrollmentInfoPageObj.getProvType() ,provTypOrgInfo.getText());
 		Helper.compareEquals(testConfig, "Market Type",enrollmentInfoPageObj.getMrktType() ,mrktTypOrgInfo.getText());

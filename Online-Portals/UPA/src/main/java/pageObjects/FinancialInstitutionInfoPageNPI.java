@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
@@ -13,10 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-
-import com.aventstack.extentreports.configuration.Config;
-
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
@@ -282,7 +277,6 @@ public class FinancialInstitutionInfoPageNPI{
 		  Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
 		  Browser.wait(testConfig, 2);
 		  if(!npiNumber.equalsIgnoreCase("")) {
-    	  //Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  Browser.wait(testConfig, 2);
 		  Element.enterDataByJS(testConfig, finInstRoutNum, routingNo, "finInstRoutNum");
 		  Browser.wait(testConfig, 2); 
@@ -302,7 +296,7 @@ public class FinancialInstitutionInfoPageNPI{
 			else{}
 		}
 			else
-		//uploadBankLetterPdfWithAcceptance();
+		
 		Element.click(Element.findElement(testConfig, "xpath", "//strong[text()='Account Information']"), "Account Information");
 		Browser.wait(testConfig, 2);
 		clickContinueNPI();
@@ -412,7 +406,6 @@ public class FinancialInstitutionInfoPageNPI{
 		  Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
 		  Browser.wait(testConfig, 2);
 		  if(!npiNumber.equalsIgnoreCase("")) {
-    	  //Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  Browser.wait(testConfig, 2);
 		  Element.enterDataByJS(testConfig, finInstRoutNum, routingNo, "finInstRoutNum");
 		  Browser.wait(testConfig, 2); 
@@ -432,7 +425,7 @@ public class FinancialInstitutionInfoPageNPI{
 			else{}
 		}
 			else
-		//uploadBankLetterPdfWithAcceptance();
+		
 		Element.click(Element.findElement(testConfig, "xpath", "//strong[text()='Account Information']"), "Account Information");
 		Browser.wait(testConfig, 2);
 		clickSaveChanges();
@@ -801,8 +794,7 @@ public class FinancialInstitutionInfoPageNPI{
 		
 		Browser.wait(testConfig, 2);
 		Element.clickByJS(testConfig,bnkLetter, "Bank Letter radio button");
-		Browser.wait(testConfig, 2);
-		//enrollmentInfoPageObj.setFinDocCode("BL");
+		Browser.wait(testConfig, 2);	
 		Browser.waitForLoad(testConfig.driver);
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
@@ -1026,8 +1018,9 @@ public class FinancialInstitutionInfoPageNPI{
 		Element.click(btnSavChng, "SAVE CHANGES Button");
 		Browser.wait(testConfig, 2);
 		Element.verifyElementNotEnabled(btnCancChng, "Cancel Changes Button");
-		Element.enterData(finInstNPINo, "8233018557", "Valid data for finInstNPINo", "finInstNPINo");
-		enrollmentInfoPageObj.setNpi("8233018557");
+		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		Element.enterData(finInstNPINo, npiNumber, "Valid data for finInstNPINo", "finInstNPINo");
+		enrollmentInfoPageObj.setNpi(npiNumber);
 		Element.click(btnSavChng, "SAVE CHANGES Button");
 	}
 	

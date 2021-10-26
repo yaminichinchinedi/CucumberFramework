@@ -1809,7 +1809,6 @@ return previousDate.getTime();
 		//String filedir=System.getProperty("user.dir")+"\\Downloads";
 		String filedir=System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 		File fileDirectory=new File(filedir);
-		System.out.println("*******************************"+fileDirectory.getAbsoluteFile());
 		purgeDirectory( fileDirectory.getAbsoluteFile());
 		Element.clickByJS(testConfig, elt,downloadedFile);
 		int i=0;

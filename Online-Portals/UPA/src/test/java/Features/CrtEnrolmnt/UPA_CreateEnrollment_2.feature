@@ -1328,7 +1328,6 @@ Feature: UPA Create Enrollment Validations part2
     Then User clicks on hyperlink 'where can I find a finantial Institution's routing number?'.
 
   #TS_10
-  @UPAFailure
   Scenario: TS_0010_Validate Pop up message to be displayed on selecting How do I manage multiple NPI bank accounts Link
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page

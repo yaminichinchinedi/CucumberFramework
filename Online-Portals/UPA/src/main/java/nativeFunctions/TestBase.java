@@ -510,7 +510,6 @@ public class TestBase extends ReporterClass {
 				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
 				remoteWebDriver.setFileDetector(new LocalFileDetector());
 				driver=remoteWebDriver;
-				//driver = new RemoteWebDriver(new URL(URL), caps);
 			} catch (MalformedURLException e) {
 				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
