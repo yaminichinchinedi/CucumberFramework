@@ -547,7 +547,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Submit button is enabled when Terms & conditions is clicked
-@UPACreateEnroltest
+
   Scenario: TS07_Create Enrollment_BS_Review and Submit page_Cancel_Back_Submit buttons
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -559,7 +559,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Cancel Enrollment, Back and Submit Enrollment options display
-@UPACreateEnroltest
+
   Scenario: TS08_Create Enrollment_BS_Review and Submit page_Back functionality
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -571,7 +571,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Back button functionality
-@UPACreateEnroltest
+
   Scenario: TS09/TS010/TS011_Create Enrollment_BS_Review and Submit page_Cancel Enrollment Popup
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -583,7 +583,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     Then Validate Cancel Enrollment popup
-@UPACreateEnroltest
+
   Scenario: TS25_Create Enrollment_BS_Review and Submit page_Confirm Data
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -597,7 +597,7 @@ Feature: UPA Create Enrollment Validations part1
     #And Validates the Data saved in Database on submit of Enrollment
     Then Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.
     And Validate Data is saved in Database on Enrollment Page.
-@UPACreateEnroltest
+
   Scenario: TS012/TS013/TS014_Create Enrollment_BS_Review and Submit page_Error Messaging_Hyperlink Display
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -609,7 +609,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Error Messages on Review and Submit Page
-@UPACreateEnroltest
+
   Scenario: TS015-TS020_Create Enrollment_BS_Review and Submit page_Error Messaging_First Name_Last Name_Telephone_No Data
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -621,7 +621,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Invalid Data Error Messages on Review and Submit Page
-@UPACreateEnroltest 
+
   Scenario: TS021-TS024_Create Enrollment_BS_Review and Submit page_Error Messaging_Email_Invalid Data
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -635,7 +635,6 @@ Feature: UPA Create Enrollment Validations part1
     And Validates Invalid Data Error Messages for Email Address on Review and Submit Page
 
   ####################### 7. US1064240CrtEnrlBSEmailExist #############################
- @UPACreateEnroltest
   Scenario: US1064240_Create Enrollment_BS_existing Email entry
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -647,7 +646,7 @@ Feature: UPA Create Enrollment Validations part1
     Then Validates all the headers from the Identify Administrators page
     Then User fills all fields with existing Primary Email on Identify Admin page click continue button and validates all the data from DB
     Then click on Yes to continue with same email address,Click on NO with different email address
-@UPACreateEnroltest
+
   Scenario: US1064240_Create Enrollment_BS_existing Email,Identify Admin Header validation
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -661,7 +660,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User fills all fields with existing both primary and Secondary Email on Identify Admin page click continue validates all the content from DB
 
   ############################ 8. US1099702_CrtEnrlBSFooter ############
-  @UPASanity @UPACreateEnroltest
+  @UPASanity
   Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -680,7 +679,6 @@ Feature: UPA Create Enrollment Validations part1
     Then Validate the Footer Information on this page
 
   ########################### 9. US1177082_CrtEnrlBSEdtRvwSbmt ############################
- @UPACreateEnroltest 
   Scenario: US1177082_Create Enrollment_BS_Edit Review and Submit
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -694,7 +692,7 @@ Feature: UPA Create Enrollment Validations part1
     And User clicks on  Edit Link of Billing Service Information section of Review and Submit page and validates its content from database
     Then User validate headers of Billing Service Information page
     Then User Validates Save changes and Cancel Changes button presence and its functionality
-@UPACreateEnroltest
+
   Scenario Outline: US1177082_Create Enrollment_BS_Edit Review and Submit
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -717,7 +715,7 @@ Feature: UPA Create Enrollment Validations part1
       | BSName, Street, City ,ZipCode | blank           |
 
   #######################  10. US1202167_CrtEnrlBeginEnrlmnt #########################
-  @TC-19 @UPACreateEnroltest
+  @TC-19
   Scenario Outline: US1202167_Create Enrollment Which option should i choose link
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -732,7 +730,7 @@ Feature: UPA Create Enrollment Validations part1
       #    | AV              |
       | VO              |
 
-  @TC-20 @UPACreateEnroltest
+  @TC-20
   Scenario: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -747,7 +745,7 @@ Feature: UPA Create Enrollment Validations part1
     And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.
     And Validate Data is saved in Database on Enrollment Page.
 
-  @TC-21 @UPACreateEnroltest
+  @TC-21
   Scenario: Create Enrollment TIN Entry Error Message Validation
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -761,7 +759,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User also validats captcha Error by turning ON and OFF captcha
 
   ##############################  11. US1247779_IdentifyAdminVldtn ###########################
-  @TC-22 @UPACreateEnroltest
+  @TC-22
   Scenario: US1247779 Identify Admin page content,llinks validations
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -776,7 +774,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User clicks on CLEAR ADMINISTRATOR INFORMATION link verify its content and YES/NO functionality
     Then Clicks on Continue to validate all the Error Messages
 
-  @TC-23 @UPACreateEnroltest
+  @TC-23
   Scenario: US1247779 Identify Admin page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -789,7 +787,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User fills mobileNo and checks its enabilty/disability of Identify Admin Page
     Then User checks its Back and continue button functionality
     Then User Clicks on Cancel Enrollment,verify its content and YES/NO button functionality
-@UPACreateEnroltest @UPACreateEnroltest
+
   Scenario Outline: US1247779 Identify Admin page
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -802,7 +800,7 @@ Feature: UPA Create Enrollment Validations part1
       | EnrollmentType |
       | AO             |
       | VO             |
-@UPACreateEnroltest
+
   Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -821,7 +819,7 @@ Feature: UPA Create Enrollment Validations part1
       | email                                             | Incorrect             |
       | First Name, Middle Name ,Last Name                | Alphanumeric          |
       | First Name, Middle Name, Last Name                | Special Char          |
-@UPACreateEnroltest
+
   Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -837,7 +835,7 @@ Feature: UPA Create Enrollment Validations part1
       | InputField |
       | Primary    |
       | Secondary  |
-@UPACreateEnroltest
+
   Scenario Outline: US1247779 Identify Admin page Primary Information Error Messages
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -859,7 +857,7 @@ Feature: UPA Create Enrollment Validations part1
 
   ################ 12. US1247813_CrtEnrlmntFII ######################################################
   #TS_001
-  @UPASanity @UPACreateEnroltest
+  @UPASanity
   Scenario: Fills the relevent Info with AO Enroll Typ
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -894,7 +892,7 @@ Feature: UPA Create Enrollment Validations part1
   #  Then User fills all the information  and click on Continue
   #  Then User fills all the information on Identify Administrators page and click continue
   #TS_005 -- TODO
-  @UPASanity @UPACreateEnroltest
+  @UPASanity
   Scenario: Checking UI Content matches with DB
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -907,8 +905,7 @@ Feature: UPA Create Enrollment Validations part1
     Then User fills all the information on Identify Administrators page and click continue
     Then It is Validated that Financial Institution Information page text is content managed
 
-  #TS_006 
-  @UPACreateEnroltest
+  #TS_006
   Scenario: Clicking FI Routing no
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -922,7 +919,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User clicks the link where can i find a finantial intitution's routing no
 
   #TS_007
-  @UPACreateEnroltest
   Scenario: Validates the Type of Account
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -936,7 +932,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User validates the Type of account as Checking by default and can be change to Saving
 
   #TS_008
-  @UPACreateEnroltest
   Scenario: Validates the Supporting doc as Void Check and Bank Letter
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -950,7 +945,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User validates the supporting document as Voided Check by default and can be change to Bank letter
 
   #TS_009
-  @UPACreateEnroltest
   Scenario: Browsing the Supporting docs
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -964,7 +958,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User clicks on browse and upload its supporting document
 
   #TS_010
-  @UPACreateEnroltest
   Scenario: Clicking on multiple NRI bank accounts
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -978,7 +971,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User clicks on hyperlink how do i manage multiple NPI bank accounts
 
   #TS_011
-  @UPACreateEnroltest
   Scenario: Validates the NPI Bank Account
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -992,7 +984,6 @@ Feature: UPA Create Enrollment Validations part1
     Then User validates the NPI Bank account as No by default and can be change to Yes
 
   #TS_012 #TS_013
-  @UPACreateEnroltest
   Scenario Outline: Validating the Headers content
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1009,7 +1000,6 @@ Feature: UPA Create Enrollment Validations part1
 
   # |		 AV			 	|
   #TS_014 #TS_015
-  @UPACreateEnroltest
   Scenario Outline: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1068,7 +1058,6 @@ Feature: UPA Create Enrollment Validations part1
   #Then User fills all the information on Identify Administrators page and click continue
   #Then User fills all the information and invalid Zip code for corresponding City and clicks on continue
   #TS_021
-  @UPACreateEnroltest
   Scenario: Validating that non accepted file format not uploaded
     Given User navigates to UPA Sys Test application
     When User Clicks on Enroll Now from the landing page
@@ -1080,5 +1069,3 @@ Feature: UPA Create Enrollment Validations part1
     Then User fills all the information  and click on Continue
     Then User fills all the information on Identify Administrators page and click continue
     Then User fills all the information and upload non accepted file format and clicks on continue
-
- 
