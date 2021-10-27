@@ -219,5 +219,10 @@ public class CSRHomePage {
 		return new SearchTinPagePaymentDataFiles(testConfig);
 		
 	}
+	public CSRHomePage validateCSRHomepage() {
+		
+		Browser.verifyURL(testConfig, "viewwelcome.do");
+		return this;
+	}
 
 }

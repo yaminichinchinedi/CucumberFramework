@@ -78,6 +78,8 @@ public  class EnrollmentInfo {
 	protected String finAcntNo;
 	protected String finPhoneNo;
 	protected String finDocCode;
+	protected String NPIfinRoutingNo;
+	protected String NPIfinAcntNo;
 	
 	//W9
 	protected String w9DocCode;
@@ -184,6 +186,14 @@ public  class EnrollmentInfo {
 
 	public void setFinAcntNo(String finAcntNo) {
 		this.finAcntNo = finAcntNo;
+	}
+	
+	public void setFinNPIAcntNo(String NPIfinAcntNo) {
+		this.NPIfinAcntNo = NPIfinAcntNo;
+	}
+	
+	public void setFinNPIRoutingNo(String NPIfinRoutingNo) {
+		this.NPIfinRoutingNo = NPIfinRoutingNo;
 	}
 
 	public String getFinPhoneNo() {

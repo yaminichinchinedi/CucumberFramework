@@ -355,8 +355,11 @@ public class ValidateEnrollmentTypePage {
 	} 
 
 	public ValidateEnrollmentTypePage verifyW9Form() throws IOException
-	{
+	{   
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
 		Element.click(w9FormLink, "W9 Form Link");
+		Browser.switchToNewWindow(testConfig);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 		return this;
 	} 
 

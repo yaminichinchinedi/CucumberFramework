@@ -314,6 +314,11 @@ public class ValidateEFTERAProviderInfoSteps extends TestBase {
 	public void user_Clicks_on_Cancel_Enrollment_verify_its_content_and_YES_NO_button_functionality() throws Throwable {
 		valdtEFETRAProvInfo.clickCancelEnrlmnt().clickNoCancelEnrlmnt().clickYesCancelEnrlmnt();
 	}
+	
+	@Then("^User Clicks on Cancel Enrollment,verify its content and YES/NO button functionality for CSR$")
+	public void user_Clicks_on_Cancel_Enrollment_verify_its_content_and_YES_NO_button_functionality_for_CSR() throws Throwable {
+		valdtEFETRAProvInfo.clickCancelEnrlmnt().clickNoCancelEnrlmnt().clickYesCancelEnrlmntForCSR();
+	}
 
 	@Then("^User fills  all data but different email and Retype email for \"([^\"]*)\" and validate Error messages$")
 	public void user_fills_all_data_but_different_email_and_Retype_email_for_and_validate_Error_messages(

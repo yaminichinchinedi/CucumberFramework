@@ -1806,9 +1806,10 @@ return previousDate.getTime();
 	public static boolean PDFDownloadVerification(TestBase testConfig,WebElement elt,String namOfElement,String downloadedFile)
 	{
 		boolean isDownloaded=true;
-		String filedir=System.getProperty("user.dir")+"\\Downloads";
+		//String filedir=System.getProperty("user.dir")+"\\Downloads";
+		String filedir=System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 		File fileDirectory=new File(filedir);
-		purgeDirectory( fileDirectory);
+		purgeDirectory( fileDirectory.getAbsoluteFile());
 		Element.clickByJS(testConfig, elt,downloadedFile);
 		int i=0;
 		while(! isFileExist(fileDirectory,downloadedFile))

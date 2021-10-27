@@ -506,12 +506,14 @@ public class TestBase extends ReporterClass {
 				caps.setCapability("build", System.getenv("JOB_NAME") + "__" + System.getenv("BUILD_NUMBER"));
 			
 			try {
-				driver = new RemoteWebDriver(new URL(URL), caps);
+				
+				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
+				remoteWebDriver.setFileDetector(new LocalFileDetector());
+				driver=remoteWebDriver;
 			} catch (MalformedURLException e) {
 				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
 			}
-
 			driver.manage().deleteAllCookies();
 			driver.manage().window().maximize();
 			Log.Comment("Launched browser-- : " + Browser);

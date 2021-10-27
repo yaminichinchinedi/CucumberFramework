@@ -78,7 +78,7 @@ public class BeginEnrollmentContinue {
 	@FindBy(xpath=".//*[@id='enrollmentClassificationModal']/div[1]/div[3]/a")
 	WebElement closeTip1;
 
-	@FindBy(xpath="//.[@id='vcpModal']/div[1]") 
+	@FindBy(xpath="//div[@id='vcpModal']/div[1]") 
 	WebElement boxVCP;
 
 	@FindBy(xpath=".//*[@id='vcpModal']/div[1]/div[3]/a[2]")
@@ -537,9 +537,9 @@ public class BeginEnrollmentContinue {
 		int sqlRowNo=107;
 		HashMap<Integer,HashMap<String,String>> pageData=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		
-		Helper.compareEquals(testConfig, "CANCEL ENROLLMENT POPUP BOX", pageData.get(14).get("TEXT_VAL")+"\n"+
-		pageData.get(15).get("TEXT_VAL")+"\n"+pageData.get(16).get("TEXT_VAL")+"\n"+
-		pageData.get(18).get("TEXT_VAL").toUpperCase()+" "+pageData.get(17).get("TEXT_VAL").toUpperCase(),		
+		Helper.compareEquals(testConfig, "CANCEL ENROLLMENT POPUP BOX", pageData.get(12).get("TEXT_VAL")+"\n"+
+		pageData.get(13).get("TEXT_VAL")+"\n"+pageData.get(14).get("TEXT_VAL")+"\n"+
+		pageData.get(16).get("TEXT_VAL").toUpperCase()+" "+pageData.get(15).get("TEXT_VAL").toUpperCase(),		
 		popUpCnclEnrlmnt.getText());
 		return this;
 	}
