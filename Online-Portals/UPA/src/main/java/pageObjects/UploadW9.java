@@ -61,11 +61,14 @@ public class UploadW9 {
 			expectedURL = "/validateEFTERAProviderContact";
 		else if(enrollmentInfoObj.getTinIdentifier().equals("AV"))
 			expectedURL="/UploadW9EFTERAEnroll";
-		else if(enrollmentInfoObj.getTinIdentifier().equals("AO"))
-			if(enrollmentInfoObj.getNpi() != null)
+		else if(enrollmentInfoObj.getTinIdentifier().equals("AO")) {
+			if(enrollmentInfoObj.getNpi() != null) {
 				expectedURL="/validateEFTERAFinancialInfoNPIRtn";
-			else
+			}
+			else {
 				expectedURL="/validateEFTERAFinancialInfoRtn";
+			}
+		}
 		else
 			expectedURL="/validateBillingServiceContacts";
 		

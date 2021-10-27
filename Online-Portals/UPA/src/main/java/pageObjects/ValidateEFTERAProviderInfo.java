@@ -201,16 +201,16 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(linkText="CLOSE TIP") 
 	WebElement lnkClosTip;
 	
-	@FindBy(xpath="//section//form/div[3]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container help-modal fixed-modal']/div")
 	List<WebElement> divFrqncyPopUp;
 	
 	@FindBy(xpath="//section//form/a")
 	WebElement lnkClrAdmnInfo;
 	
-	@FindBy(xpath="//section//form/div[5]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container fixed-modal']/div")
 	List<WebElement> divClrInfo;
 	
-	@FindBy(xpath="//section//form/div[4]/div[1]/div")
+	@FindBy(xpath="//div[@class='modal-container exit-modal fixed-modal']/div")
 	List<WebElement> divCnclEnrlmnt;
 		
 	@FindBy(name="btnCancel")
@@ -302,7 +302,7 @@ public class ValidateEFTERAProviderInfo {
 	@FindBy(xpath = "//*[@id='EFTERAenrBSForm']/section/fieldset/div[7]/div/div/div/div/div[2]/label")
 	WebElement btnNoOnExsistingEmailPageBS;
 	
-	@FindBy(xpath="//*[@id='EFTERAregForm']/div[5]/div[1]")
+	@FindBy(xpath="//div[@class='modal-container fixed-modal']")
 	WebElement divClrAdminInfo;
 	
 	@FindBy(linkText="NO")
@@ -847,7 +847,6 @@ public class ValidateEFTERAProviderInfo {
 	
 	public  ValidateEFTERAProviderInfo fillProvMailComp(String inputType)
 	{	
-		
 		ArrayList <WebElement> tmpProv=new ArrayList<WebElement>();
 		if (inputType.equals("Secondary"))
 		{
@@ -1181,9 +1180,9 @@ public class ValidateEFTERAProviderInfo {
 		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
 		Element.click(lnkAlertFrequency, "Alert frequency Link");
 		Element.verifyElementPresent(lnkClosTip, "Alert frequency PopUp");
-		Helper.compareContains(testConfig, "Alert Pop Up Heading",divFrqncyPopUp.get(0).findElement(By.tagName("h4")).getText(),pageData.get(32).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(1).findElement(By.tagName("p")).getText(),pageData.get(33).get("CLOBVAL").trim().replace("\n", "").replaceAll("( )+", " "));
-		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(2).findElement(By.tagName("a")).getText(),pageData.get(34).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Alert Pop Up Heading",divFrqncyPopUp.get(0).findElement(By.tagName("h4")).getText(),pageData.get(34).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(1).findElement(By.tagName("p")).getText(),pageData.get(35).get("CLOBVAL").trim().replace("\n", "").replaceAll("( )+", " "));
+		Helper.compareContains(testConfig, "Alert Pop Up Paragraph",divFrqncyPopUp.get(2).findElement(By.tagName("a")).getText(),pageData.get(36).get("TEXT_VAL").toUpperCase());
 		Element.click(lnkClosTip, "Close TIP on Pop Up");
 		Element.verifyElementNotPresent(lnkClosTip, "Alert frequency PopUp");
 		return this;
@@ -1193,11 +1192,11 @@ public class ValidateEFTERAProviderInfo {
 	{
 		Element.click(lnkClrAdmnInfo, "Clear Administrator Information");
 		Element.verifyElementPresent(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
-		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(0).findElement(By.tagName("h4")).getText(),pageData.get(39).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(40).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(41).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(37).get("TEXT_VAL").toUpperCase());
-		Helper.compareContains(testConfig, "Clear Administrator Pop Up Footer",divClrInfo.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(38).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Heading",divClrInfo.get(0).findElement(By.tagName("h4")).getText(),pageData.get(41).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(42).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(43).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Body",divClrInfo.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Clear Administrator Pop Up Footer",divClrInfo.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
 		Element.click(divClrInfo.get(2).findElements(By.tagName("a")).get(1), "NO");
 		if(firstProvFName.getAttribute("value").equalsIgnoreCase(""))
 			Log.Fail("Failed Verification of functionality upon selection of No button");
@@ -1231,11 +1230,11 @@ public class ValidateEFTERAProviderInfo {
 		pageData=DataBase.executeSelectQueryALL(testConfig, sqlRow);
 		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
 		Element.verifyElementPresent(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1), "Clear Info PopUp");
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(0).findElement(By.tagName("h4")).getText(),pageData.get(35).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(0).findElement(By.tagName("h4")).getText(),pageData.get(37).get("TEXT_VAL"));
 		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(1).findElements(By.tagName("p")).get(0).getText(),pageData.get(47).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(36).get("TEXT_VAL"));
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(37).get("TEXT_VAL").toUpperCase());
-		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(38).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(1).findElements(By.tagName("p")).get(1).getText(),pageData.get(38).get("TEXT_VAL"));
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0).getText(),pageData.get(39).get("TEXT_VAL").toUpperCase());
+		Helper.compareContains(testConfig, "Cancel Enrlment Pop Up Heading",divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(1).getText(),pageData.get(40).get("TEXT_VAL").toUpperCase());
 		
 		return this;
 	}
@@ -1254,7 +1253,13 @@ public class ValidateEFTERAProviderInfo {
 		Browser.verifyURL(testConfig, "registrationsignin");
 		return this;
 	}
-	
+	public ValidateEFTERAProviderInfo clickYesCancelEnrlmntForCSR()
+	{
+		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
+		Element.click(divCnclEnrlmnt.get(2).findElements(By.tagName("a")).get(0), "clicked Yes");
+		Browser.verifyURL(testConfig, "viewWelcome.do");
+		return this;
+	}
 	
 	public ValidateEFTERAProviderInfo verifyContentWithUXDS()
 	{
@@ -1315,41 +1320,41 @@ public class ValidateEFTERAProviderInfo {
 		
 		pageForm=Element.findElements(testConfig, "xpath", "//*[@id='EFTERAregForm']/section");
 		
-		Helper.compareEquals(testConfig, "Heading", dataTest.get(1).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h1")).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(2).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(0).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(3).get("TEXT_VAL")+"\n"+dataTest.get(4).get("TEXT_VAL")+"\n"+dataTest.get(5).get("TEXT_VAL")+"\n"+dataTest.get(6).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(0).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(7).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(1).getText());
-		Helper.compareEquals(testConfig, "Heading", dataTest.get(10).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h4")).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(8).get("TEXT_VAL")+" () "+dataTest.get(9).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("p")).get(2).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(11).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(3).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(12).get("TEXT_VAL")+"\n"+dataTest.get(13).get("TEXT_VAL")+"\n"+dataTest.get(14).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(1).getText());
-		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(15).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(16).get("TEXT_VAL")), pageForm.get(0).findElements(By.tagName("fieldset")).get(1).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("CLOBVAL")+" "+dataTest.get(19).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("fieldset")).get(2).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(20).get("TEXT_VAL")+"\n"+dataTest.get(21).get("TEXT_VAL")+"\n"+dataTest.get(22).get("CLOBVAL")+"\n"+
-				dataTest.get(23).get("TEXT_VAL")+" "+dataTest.get(24).get("TEXT_VAL")+" "+dataTest.get(25).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(11).getText());
-		Helper.compareEquals(testConfig, "Heading", dataTest.get(44).get("TEXT_VAL"), pageForm.get(1).findElement(By.tagName("h4")).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(45).get("TEXT_VAL")+" () "+dataTest.get(46).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("p")).get(0).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(26).get("CLOBVAL"), pageForm.get(1).findElements(By.tagName("p")).get(1).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(12).get("TEXT_VAL")+"\n"+dataTest.get(13).get("TEXT_VAL")+"\n"+dataTest.get(14).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(0).getText());
-		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(15).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(16).get("TEXT_VAL")), pageForm.get(1).findElements(By.tagName("fieldset")).get(1).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("CLOBVAL")+" "+dataTest.get(19).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("fieldset")).get(2).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(20).get("TEXT_VAL")+"\n"+dataTest.get(21).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(13).getText());
-		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("CLOBVAL")+"\n"+dataTest.get(23).get("TEXT_VAL")+" "+dataTest.get(24).get("TEXT_VAL")+" "+dataTest.get(25).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(17).getText());
-		Helper.compareEquals(testConfig, "Clear Administrator Btn", dataTest.get(27).get("TEXT_VAL"), btnCrlAdmnInfo.getText());
-		Helper.compareEquals(testConfig, "Back Button", dataTest.get(42).get("TEXT_VAL").toLowerCase(), btnBack.getText().toLowerCase());
-		Helper.compareEquals(testConfig, "Continue Button", dataTest.get(43).get("TEXT_VAL").toLowerCase(), btnContinue.getText().toLowerCase());
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(4).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h1")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(5).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(6).get("TEXT_VAL")+"\n"+dataTest.get(7).get("TEXT_VAL")+"\n"+dataTest.get(8).get("TEXT_VAL")+"\n"+dataTest.get(9).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(10).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(1).getText());
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(3).get("TEXT_VAL"), pageForm.get(0).findElement(By.tagName("h4")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(11).get("TEXT_VAL")+" () "+dataTest.get(12).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("p")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(13).get("CLOBVAL"), pageForm.get(0).findElements(By.tagName("p")).get(3).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(14).get("TEXT_VAL")+"\n"+dataTest.get(15).get("TEXT_VAL")+"\n"+dataTest.get(16).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+(dataTest.get(18)).get("TEXT_VAL")), (pageForm.get(0).findElements(By.tagName("fieldset")).get(1).getText()));
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(19).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(20).get("CLOBVAL")+" "+dataTest.get(21).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("fieldset")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("TEXT_VAL")+"\n"+dataTest.get(23).get("TEXT_VAL")+"\n"+dataTest.get(24).get("CLOBVAL")+"\n"+
+				dataTest.get(25).get("TEXT_VAL")+" "+dataTest.get(26).get("TEXT_VAL")+" "+dataTest.get(27).get("TEXT_VAL"), pageForm.get(0).findElements(By.tagName("div")).get(11).getText());	
+		Helper.compareEquals(testConfig, "Heading", dataTest.get(46).get("TEXT_VAL"), pageForm.get(1).findElement(By.tagName("h4")).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(1).get("TEXT_VAL")+" () "+dataTest.get(2).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("p")).get(0).getText());	
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(28).get("CLOBVAL"), pageForm.get(1).findElements(By.tagName("p")).get(1).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(14).get("TEXT_VAL")+"\n"+dataTest.get(15).get("TEXT_VAL")+"\n"+dataTest.get(16).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(0).getText());
+		Helper.compareEquals(testConfig, "Paragraph", (dataTest.get(17).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(18).get("TEXT_VAL")).trim(), pageForm.get(1).findElements(By.tagName("fieldset")).get(1).getText().trim());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(19).get("TEXT_VAL")+"\n"+"–"+"\n"+"–"+"\n"+dataTest.get(20).get("CLOBVAL")+" "+dataTest.get(21).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("fieldset")).get(2).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(22).get("TEXT_VAL")+"\n"+dataTest.get(23).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(13).getText());
+		Helper.compareEquals(testConfig, "Paragraph", dataTest.get(24).get("CLOBVAL")+"\n"+dataTest.get(25).get("TEXT_VAL")+" "+dataTest.get(26).get("TEXT_VAL")+" "+dataTest.get(27).get("TEXT_VAL"), pageForm.get(1).findElements(By.tagName("div")).get(17).getText());
+		Helper.compareEquals(testConfig, "Clear Administrator Btn", dataTest.get(29).get("TEXT_VAL"), btnCrlAdmnInfo.getText());
+		Helper.compareEquals(testConfig, "Back Button", dataTest.get(44).get("TEXT_VAL").toLowerCase(), btnBack.getText().toLowerCase());
+		Helper.compareEquals(testConfig, "Continue Button", dataTest.get(45).get("TEXT_VAL").toLowerCase(), btnContinue.getText().toLowerCase());
 		Element.click(btnCrlAdmnInfo, "Clear Administrator Information");
-		Helper.compareEquals(testConfig, "Clear Administrator Information Div", dataTest.get(39).get("TEXT_VAL")+"\n"+dataTest.get(40).get("TEXT_VAL")+"\n"+dataTest.get(41).get("TEXT_VAL")+"\n"+dataTest.get(37).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(38).get("TEXT_VAL").toUpperCase(), divClrAdminInfo.getText());
+		Helper.compareEquals(testConfig, "Clear Administrator Information Div", dataTest.get(41).get("TEXT_VAL")+"\n"+dataTest.get(42).get("TEXT_VAL")+"\n"+dataTest.get(43).get("TEXT_VAL")+"\n"+dataTest.get(39).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(40).get("TEXT_VAL").toUpperCase(), divClrAdminInfo.getText());
 		Element.click(btnNo, "No Button Clicked");
 		Element.click(lnkAlertFrequency, "Alert Frequency Button");
-		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(32).get("TEXT_VAL"), divFrqncyPopUp.get(0).getText());
-		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(33).get("CLOBVAL").replace("\n", " ").trim().replaceAll("( )+", " "), divFrqncyPopUp.get(1).getText());
-		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(34).get("TEXT_VAL").toUpperCase(), divFrqncyPopUp.get(2).getText());
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(34).get("TEXT_VAL"), divFrqncyPopUp.get(0).getText());
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(35).get("CLOBVAL").replace("\n", " ").trim().replaceAll("( )+", " "), divFrqncyPopUp.get(1).getText());
+		Helper.compareEquals(testConfig, "Alert Frequency Pop Up", dataTest.get(36).get("TEXT_VAL").toUpperCase(), divFrqncyPopUp.get(2).getText());
 		Element.click(lnkClosTip, "Close Tip");
 		Element.click(btnCnclEnrlmnt, "Cancel Enrollment");
-		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(35).get("TEXT_VAL"), divCnclEnrlmnt.get(0).getText());
-		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(47).get("TEXT_VAL")+"\n"+dataTest.get(36).get("TEXT_VAL"), divCnclEnrlmnt.get(1).getText());
-		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up",dataTest.get(37).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(38).get("TEXT_VAL").toUpperCase(), divCnclEnrlmnt.get(2).getText());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(37).get("TEXT_VAL"), divCnclEnrlmnt.get(0).getText());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up", dataTest.get(47).get("TEXT_VAL")+"\n"+dataTest.get(38).get("TEXT_VAL"), divCnclEnrlmnt.get(1).getText());
+		Helper.compareEquals(testConfig, "Cancel Enrollment Pop Up",dataTest.get(39).get("TEXT_VAL").toUpperCase()+" "+dataTest.get(40).get("TEXT_VAL").toUpperCase(), divCnclEnrlmnt.get(2).getText());
 		sqlRowNo=168;
 		Map cancelData=DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		Helper.compareEquals(testConfig, "Cancel Button", cancelData.get("TEXT_VAL").toString().toLowerCase(), btnCnclEnrlmnt.getText().toLowerCase());
@@ -1586,13 +1591,11 @@ public class ValidateEFTERAProviderInfo {
 	}
 	
 	public void valiDateButtons()
-	{
-		String continueBut=Element.findElement(testConfig, "xpath", "//a[@class='button--primary enrollment-container-footer__btn-margin float-right']").getText();
-		String backBut=Element.findElement(testConfig, "xpath", "//a[@class='button--secondary enrollment-container-footer__btn-margin float-right']").getText();
-		String cancelEnrol=Element.findElement(testConfig, "xpath", "//a[@class='button--primary-hover float-right cancel-activation']").getText();
-		Helper.compareContains(testConfig, "Continue Button", "CONTINUE", continueBut);
-		Helper.compareContains(testConfig, "Back Button", "BACK", backBut);
-		Helper.compareContains(testConfig, "Cancel Enrollment Button", "CANCEL ENROLLMENT", cancelEnrol);
+	{  
+	   btnContinue.isDisplayed();
+	   btnCnclEnrlmnt.isDisplayed();
+	   btnBack.isDisplayed();
+	  
 	}
 	
 	public ValidateEFTERAProviderInfo verifyEditables()
@@ -1993,7 +1996,7 @@ public class ValidateEFTERAProviderInfo {
 		
 		int sqlRowNo=166;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-		String expectedText=dataTest.get(40).get("TEXT_VAL");
+		String expectedText=dataTest.get(41).get("TEXT_VAL");
 		pageForm=Element.findElements(testConfig, "xpath", "//form[@id='EFTERAregForm']/section");
 		String actualText=Element.findElement(testConfig, "xpath", "//form[@id='EFTERAenrBSForm']/div[5]/div[1]/div[1]/h4").getText();
         Helper.compareEquals(testConfig, "Comparision of Clear Admin Header", expectedText, actualText);

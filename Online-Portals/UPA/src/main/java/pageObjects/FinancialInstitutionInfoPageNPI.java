@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriverException;
@@ -13,8 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-
 import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
@@ -80,9 +77,11 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(id="no")
 	WebElement rdoNPINo;
 
-	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/a[1]")
-	//@FindBy(xpath="//a[contains(text(),'Continue')]")
+	@FindBy(xpath="//a[contains(text(),'Continue')]")
 	WebElement btnContinueSavChng;
+	
+	@FindBy(linkText = "SAVE CHANGES")
+	WebElement btnSavChng;
 	
 	@FindBy(xpath="//tr[4]/td/table/tbody/tr/td[2]")
 	WebElement txtSecurity;
@@ -124,7 +123,7 @@ public class FinancialInstitutionInfoPageNPI{
 	@FindBy(linkText="CANCEL ENROLLMENT")
 	WebElement btnCancEnroll;
 	
-	@FindBy(xpath="//form[@id='EFTERAregForm']/div[5]/input")
+	@FindBy(xpath="//input[@name='btnCancel']")
 	WebElement btnCancChng;
 	
 	@FindBy(linkText="YES")
@@ -135,6 +134,9 @@ public class FinancialInstitutionInfoPageNPI{
 	
 	@FindBy(name = "npiFile")
 	WebElement finInstNPIFile;
+	
+	@FindBy(xpath="//div[@id='finInstRoutingNPI']//input[@name='finInstRoutingNPI']")
+	WebElement finInstRoutNumNPI;
 	
 	protected TestBase testConfig;
 	EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
@@ -159,46 +161,20 @@ public class FinancialInstitutionInfoPageNPI{
 		
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/legend/h1")).getText(), dataTest.get(38).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/p[1]")).getText(), dataTest.get(37).get("TEXT_VAL")+dataTest.get(36).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/div[1]")).getText(), dataTest.get(35).get("CLOBVAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//div[@class='note-blue']")).getText(), dataTest.get(35).get("CLOBVAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/h4[1]/strong")).getText(), dataTest.get(34).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/div[2]/div/p/span")).getText(), dataTest.get(33).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Information NPI", (Element.findElement(testConfig, "xpath", "//span[@class=\"gray-txt\"]")).getText(), dataTest.get(33).get("TEXT_VAL"));
 		
 		Helper.compareEquals(testConfig, "Finantial Institution Name", (finInstNPINo.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(32).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information for your NPI", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[1]/div[3]/h4/strong")).getText(), dataTest.get(31).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Information for your NPI", (Element.findElement(testConfig, "xpath", "//div[@class=\"margin-bottom\"]/h4")).getText(), dataTest.get(31).get("TEXT_VAL"));
 		
-		Helper.compareEquals(testConfig, "Finantial Institution Bank Name", (finInstName.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(30).get("TEXT_VAL"));
-		//Helper.compareEquals(testConfig, "Finantial Institution address", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/h4/strong")).getText(), dataTest.get(29).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution address", (Element.findElement(testConfig, "xpath", "//div[@id='div1']/fieldset/h4/strong")).getText(), dataTest.get(29).get("TEXT_VAL"));
-
-		
-		//Helper.compareEquals(testConfig, "Finantial Institution Information address Text", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[1]/fieldset[2]/p")).getText(), dataTest.get(28).get("TEXT_VAL")+"\n"+dataTest.get(27).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Information address Text", (Element.findElement(testConfig, "xpath", "//*[@id='div1']/fieldset/p")).getText(), dataTest.get(28).get("TEXT_VAL")+"\n"+dataTest.get(27).get("TEXT_VAL"));
-
-		Helper.compareEquals(testConfig, "Finantial Institution Street", (finInstStreet.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(26).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution City", (finInstCity.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(25).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution State", (finInstState.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(24).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution State", finInstState.getText().substring(0, 12), dataTest.get(23).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Zip Code", (finInstZip1.findElement(By.xpath(".//preceding::legend[1]"))).getText(), dataTest.get(22).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Phone", (finInstPhone1.findElement(By.xpath(".//preceding::legend[1]"))).getText(), dataTest.get(21).get("TEXT_VAL"));
+		Helper.compareEquals(testConfig, "Finantial Institution Bank Name", (finInstName.findElement(By.xpath("//preceding::label[1]"))).getText(), dataTest.get(32).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution AC Information", (Element.findElement(testConfig, "xpath", "//form[@id='EFTERAregForm']/section[2]/fieldset/h4/strong")).getText(), dataTest.get(20).get("TEXT_VAL"));
 
-		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (finInstRoutNum.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(19).get("TEXT_VAL"));
-		
-
-		
+		Helper.compareEquals(testConfig, "Finantial Institution Routing No", (finInstRoutNum.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(19).get("TEXT_VAL"));	
 		Helper.compareEquals(testConfig, "Finantial Institution Ac No", (finInstAcctNum.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(18).get("TEXT_VAL"));
 		Helper.compareEquals(testConfig, "Finantial Institution Hyperlink Text", txtFIIRoutNo.getText(), dataTest.get(17).get("TEXT_VAL"));
-		
-		Helper.compareEquals(testConfig, "Finantial Institution Typ of AC", (chkAcnt.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(16).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Typ of Checking", (chkAcnt.findElement(By.xpath(".//following::label[1]"))).getText(), dataTest.get(15).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Typ of Saving", (chkAcnt.findElement(By.xpath(".//following::label[2]"))).getText(), dataTest.get(14).get("TEXT_VAL"));
-		
-		Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (voidChk.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(13).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution Voided Check", (rdoNPIYes.findElement(By.xpath(".//preceding::label[1]"))).getText(), dataTest.get(5).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution NPI Add Bnk Ac yes", (rdoNPIYes.findElement(By.xpath(".//following::label[1]"))).getText(), dataTest.get(4).get("TEXT_VAL"));
-		Helper.compareEquals(testConfig, "Finantial Institution NPI Add Bnk Ac No", (rdoNPIYes.findElement(By.xpath(".//following::label[2]"))).getText(), dataTest.get(3).get("TEXT_VAL"));
-		  return this;
+		 return this;
 	}
 	
 	public UploadW9 clickContinue() {
@@ -215,7 +191,8 @@ public class FinancialInstitutionInfoPageNPI{
 		Browser.waitTillSpecificPageIsLoaded(testConfig, testConfig.getDriver().getTitle());
 		WebElement editlink=Element.findElement(testConfig, "linkText", "EDIT");
 	
-	//if(editlink.isDisplayed())
+	int i = Element.findElements(testConfig, "linkText", "EDIT").size();
+	if(i>0)
 		editlink.click();
 	return this;
 	}
@@ -297,22 +274,14 @@ public class FinancialInstitutionInfoPageNPI{
 				accountNo=NonNumericData;	
 				break;
 		}
-		Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
-//		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
-//		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
-//        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
-//		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
-//		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-//		enrollmentInfoPageObj.setFinInstName(financialInstName);
-//		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
-//		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
-
-		
-//		  Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
-//		  Element.selectVisibleText(finInstState, stateName,"Select City from excel");
-//		  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
-//		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
-//		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
+		  Browser.wait(testConfig, 2);
+		  if(!npiNumber.equalsIgnoreCase("")) {
+		  Browser.wait(testConfig, 2);
+		  Element.enterDataByJS(testConfig, finInstRoutNum, routingNo, "finInstRoutNum");
+		  Browser.wait(testConfig, 2); 
+		  Element.enterDataByJS(testConfig, finInstAcctNum, accountNo, "finInstAcctNum");
+		  }
 		Browser.wait(testConfig, 2);
 		if (InputField.equalsIgnoreCase("NofileUpload")||InputField.equalsIgnoreCase("NonPdfUpload") )
 		{
@@ -327,9 +296,140 @@ public class FinancialInstitutionInfoPageNPI{
 			else{}
 		}
 			else
-		uploadBankLetterPdfWithAcceptance();
 		
+		Element.click(Element.findElement(testConfig, "xpath", "//strong[text()='Account Information']"), "Account Information");
+		Browser.wait(testConfig, 2);
 		clickContinueNPI();
+		Browser.wait(testConfig, 2);
+		verifyErrorMessage(InputField);
+		return this;
+	}
+	
+	public FinancialInstitutionInfoPageNPI fillInsufficientFinancialInstInfoForNPIandClickOnSaveChanges(String InputField) throws IOException
+	{
+		
+		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		 int rowNo=15;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		 String NonNumericData= Helper.generateRandomAlphabetsString(4);
+		switch(InputField)
+		{
+		case "NpiNumber":
+			npiNumber="";
+			break;
+		case "NonNumericNPI":
+			npiNumber=NonNumericData;	
+			break;
+		case "SameNPI&TIN":
+			npiNumber=enrollmentInfoPageObj.getTin();
+			break;
+			case "financialInstroutingNo":
+				routingNo="";
+				break;	
+			case "NonNumericroutingNo":
+				routingNo=NonNumericData;	
+				break;	
+			case "financialInstaccountNo":
+				accountNo="";
+				break;
+			case "NonNumericAccountNo":
+				accountNo=NonNumericData;	
+				break;
+		}
+		  Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
+		  Browser.wait(testConfig, 2);
+		  if(!npiNumber.equalsIgnoreCase("")) {
+    	  //Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  Browser.wait(testConfig, 2);
+		  Element.enterDataByJS(testConfig, finInstRoutNum, routingNo, "finInstRoutNum");
+		  Browser.wait(testConfig, 2); 
+		  Element.enterDataByJS(testConfig, finInstAcctNum, accountNo, "finInstAcctNum");
+		  }
+		Browser.wait(testConfig, 2);
+		if (InputField.equalsIgnoreCase("NofileUpload")||InputField.equalsIgnoreCase("NonPdfUpload") )
+		{
+			if (InputField.equalsIgnoreCase("NonPdfUpload"))
+			{
+			Browser.wait(testConfig, 2);
+			Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
+			Browser.waitForLoad(testConfig.driver);
+			Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"),"Entered path of data file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"), "btnBrowse");
+			Browser.wait(testConfig,2);
+		}
+			else{}
+		}
+			else
+		//uploadBankLetterPdfWithAcceptance();
+		Element.click(Element.findElement(testConfig, "xpath", "//strong[text()='Account Information']"), "Account Information");
+		Browser.wait(testConfig, 2);
+		clickSaveChanges();
+		Browser.wait(testConfig, 2);
+		verifyErrorMessage(InputField);
+		return this;
+	}
+	
+	public FinancialInstitutionInfoPageNPI fillInsufficientFinancialInstInfoForNPIAndClickOnSaveChanges(String InputField) throws IOException
+	{
+		
+		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		 int rowNo=15;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =data.GetData(rowNo, "AccountNumber");
+		 String NonNumericData= Helper.generateRandomAlphabetsString(4);
+		switch(InputField)
+		{
+		case "NpiNumber":
+			npiNumber="";
+			break;
+		case "NonNumericNPI":
+			npiNumber=NonNumericData;	
+			break;
+		case "SameNPI&TIN":
+			npiNumber=enrollmentInfoPageObj.getTin();
+			break;	
+			case "financialInstroutingNo":
+				routingNo="";
+				break;	
+			case "NonNumericroutingNo":
+				routingNo=NonNumericData;	
+				break;	
+			case "financialInstaccountNo":
+				accountNo="";
+				break;
+			case "NonNumericAccountNo":
+				accountNo=NonNumericData;	
+				break;
+		}
+		  Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstNPINo");
+		  Browser.wait(testConfig, 2);
+		  if(!npiNumber.equalsIgnoreCase("")) {
+		  Browser.wait(testConfig, 2);
+		  Element.enterDataByJS(testConfig, finInstRoutNum, routingNo, "finInstRoutNum");
+		  Browser.wait(testConfig, 2); 
+		  Element.enterDataByJS(testConfig, finInstAcctNum, accountNo, "finInstAcctNum");
+		  }
+		Browser.wait(testConfig, 2);
+		if (InputField.equalsIgnoreCase("NofileUpload")||InputField.equalsIgnoreCase("NonPdfUpload") )
+		{
+			if (InputField.equalsIgnoreCase("NonPdfUpload"))
+			{
+			Browser.wait(testConfig, 2);
+			Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
+			Browser.waitForLoad(testConfig.driver);
+			Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"),"Entered path of data file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("DataFile"), "btnBrowse");
+			Browser.wait(testConfig,2);
+		}
+			else{}
+		}
+			else
+		
+		Element.click(Element.findElement(testConfig, "xpath", "//strong[text()='Account Information']"), "Account Information");
+		Browser.wait(testConfig, 2);
+		clickSaveChanges();
+		Browser.wait(testConfig, 2);
 		verifyErrorMessage(InputField);
 		return this;
 	}
@@ -538,7 +638,7 @@ public class FinancialInstitutionInfoPageNPI{
 		  else
 			  Log.Fail("Please proceed with valid RTN");
 		 
-	   Element.click(btnContinueSavChng, "Save Changes Button");
+	   Element.click(btnSavChng, "Save Changes Button");
 
 		return this;
     }
@@ -610,13 +710,14 @@ public class FinancialInstitutionInfoPageNPI{
 		  int rowNo=15;
 		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
 		  List<String>ValidRoutNos=data.GetAllColumnsData("FinancialInfo","ValidRoutingNos");
-		  String routingNo =data.GetData(rowNo, "RoutingNumber");
-		  String accountNo =data.GetData(rowNo, "AccountNumber");
-		  if( ValidRoutNos.contains(routingNo))
+		  String NPIroutingNo =data.GetData(rowNo, "RoutingNumber");
+		  String NPIaccountNo =data.GetData(rowNo, "AccountNumber");
+		  if( ValidRoutNos.contains(NPIroutingNo))
 		  {  
-		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
-		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  Element.enterData(finInstRoutNum, NPIroutingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  Element.enterData(finInstAcctNum, NPIaccountNo,"Read from excel and Enter Account Number","finInstAcctNum");
 		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
+
 		  Browser.wait(testConfig, 2);
 		  //Check for the API down message "Service is down, please try again."
 		  Element.waitForPresenceOfElementLocated(testConfig,By.id("bankDetailp"), 60);
@@ -661,8 +762,8 @@ public class FinancialInstitutionInfoPageNPI{
 		 }
 		  uploadBankLetterPdfWithAcceptance();
 		  enrollmentInfoPageObj.setNpi(npiNumber);
-		  enrollmentInfoPageObj.setFinAcntNo(accountNo);
-		  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
+		  enrollmentInfoPageObj.setFinNPIAcntNo(NPIaccountNo);
+		  enrollmentInfoPageObj.setFinNPIRoutingNo(NPIroutingNo);
 		  enrollmentInfoPageObj.setFinInstName(UIBankDetails.get(0));
 		 }
 		  else
@@ -675,22 +776,6 @@ public class FinancialInstitutionInfoPageNPI{
 	public FinancialInstitutionInfoPageNPI fillFinancialInstInfoForNPI() throws IOException
 	{
 		String expectedText="To help ensure the security of your account, you must enter a physical address for your financial institution. PO Boxes are not allowed.";
-	//	Element.verifyTextPresent(txtSecurity, expectedText);
-		String financialInstName = Helper.generateRandomAlphabetsString(4);
-		String financialInstStreet = Helper.generateRandomAlphabetsString(5);
-		String phNo = Long.toString(Helper.generateRandomNumber(3));
-		String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
-		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
-		Element.enterData(finInstNPINo,npiNumber ,"Enter financial Institution name","finInstName");
-		Element.enterData(finInstName, financialInstName,"Enter financial Institution name","finInstName");
-		Element.enterData(finInstStreet, financialInstStreet,"Enter financial Institution street","finInstStreet");
-        Element.enterData(finInstPhone1, phNo,"Entered first three digits of phone number","finInstPhone1");
-		Element.enterData(finInstPhone2, phNo,"Entered second three digits of phone number","finInstPhone2");
-		Element.enterData(finInstPhone3, phNoLstField,"Entered last four digits of phone number","finInstPhone3");
-		enrollmentInfoPageObj.setFinInstName(financialInstName);
-		enrollmentInfoPageObj.setFinPhoneNo(phNo+phNo+phNoLstField);
-		enrollmentInfoPageObj.setFinStreet(financialInstStreet);
-		enrollmentInfoPageObj.setNpi(npiNumber);
 		fillFinancialInstInfoFromExcel();
 		Browser.wait(testConfig, 2);
 		uploadBankLetterPdfWithAcceptance();
@@ -708,8 +793,8 @@ public class FinancialInstitutionInfoPageNPI{
 		//Element.verifyTextPresent(txtSecurity2,expectedText);
 		
 		Browser.wait(testConfig, 2);
-		Element.clickByJS(testConfig,rdoBankLetter, "Bank Letter radio button");
-//		enrollmentInfoPageObj.setFinDocCode("BL");
+		Element.clickByJS(testConfig,bnkLetter, "Bank Letter radio button");
+		Browser.wait(testConfig, 2);	
 		Browser.waitForLoad(testConfig.driver);
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"),"Entered path of pdf as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("PdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
@@ -724,18 +809,10 @@ public class FinancialInstitutionInfoPageNPI{
 	  String zipCode =data.GetData(rowNo, "ZipCode");
 	  String routingNo =data.GetData(rowNo, "RoutingNumber");
 	  String accountNo =data.GetData(rowNo, "AccountNumber");
-	  Element.enterData(finInstCity, cityName,"Read from excel and Enter City name","finInstCity");
-	  Element.selectVisibleText(finInstState, stateName,"Select City from excel");
-	  Element.enterData(finInstZip1, zipCode,"Read from excel and Enter Zip 1","finInstZip1");
 	  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
 	  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
-//	  enrollmentInfoPageObj.setFinState(stateName);
-//	  enrollmentInfoPageObj.setFinCity(cityName);
-//	  enrollmentInfoPageObj.setFinZip(zipCode);
-//	  enrollmentInfoPageObj.setFinAcntNo(accountNo);
-//	  enrollmentInfoPageObj.setFinRoutingNo(routingNo);
-//	  Element.enterData(element, data, description, namOfElement);
-    }
+	  
+	}
 	
 	public void clickFIIRoutingNumNPI()
 	{
@@ -826,7 +903,10 @@ public class FinancialInstitutionInfoPageNPI{
 		Browser.wait(testConfig, 2);
 		
 		Element.click(btnYes, "YES Button of PopUp");
+		if(testConfig.getRunTimeProperty("testSuite").equalsIgnoreCase("UPA"))
 		Browser.verifyURL(testConfig, "registrationSignIn.do");
+		else if(testConfig.getRunTimeProperty("testSuite").equalsIgnoreCase("CSR"))
+			Browser.verifyURL(testConfig, "viewwelcome.do");
 	}
 	
 	
@@ -917,7 +997,7 @@ public class FinancialInstitutionInfoPageNPI{
 	
 	public void verifyChangeButtons()
 	{
-		Element.verifyElementPresent(btnContinueSavChng, "Save Changes Button");
+		Element.verifyElementPresent(btnSavChng, "Save Changes Button");
 		
 		Element.verifyElementPresent(btnCancChng, "Cancel Changes Button");
 		
@@ -930,17 +1010,18 @@ public class FinancialInstitutionInfoPageNPI{
 		Element.enterData(btnBrowse,System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"),"Entered path of another pdf file as : " + System.getProperty("user.dir")+testConfig.getRunTimeProperty("AnotherPdfPath"), "btnBrowse");
 		Browser.wait(testConfig,2);
 		Element.verifyElementNotEnabled(btnCancChng, "Cancel Changes Button");
-		Element.click(btnContinueSavChng, "Save Changes Button");
+		Element.click(btnSavChng, "Save Changes Button");
 		}
 	public void validateInvaidInfo()
 	{
-		Element.enterData(finInstName, "&min*", "Special Char in FII-NPI name", "finInstName");
-		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
+		Element.enterData(finInstNPINo, "&min*", "Special Char in FII-NPI number", "finInstNPINo");
+		Element.click(btnSavChng, "SAVE CHANGES Button");
 		Browser.wait(testConfig, 2);
 		Element.verifyElementNotEnabled(btnCancChng, "Cancel Changes Button");
-		Element.enterData(finInstName, "QWERTY", "Valid data for Fin Institution", "finInstName");
-		enrollmentInfoPageObj.setFinInstName("QWERTY");
-		Element.click(btnContinueSavChng, "SAVE CHANGES Button");
+		String npiNumber=Long.toString(Helper.generateRandomNumber(10));
+		Element.enterData(finInstNPINo, npiNumber, "Valid data for finInstNPINo", "finInstNPINo");
+		enrollmentInfoPageObj.setNpi(npiNumber);
+		Element.click(btnSavChng, "SAVE CHANGES Button");
 	}
 	
 	public void verifyEditable(){
@@ -949,6 +1030,8 @@ public class FinancialInstitutionInfoPageNPI{
 	}
 	
 	public void clickSaveChanges() {
-		Element.clickByJS(testConfig, btnContinueSavChng, "CONTINUE");
+		Element.clickByJS(testConfig, btnSavChng, "SAVE CHANGES");
+			
 	}
+	
 }

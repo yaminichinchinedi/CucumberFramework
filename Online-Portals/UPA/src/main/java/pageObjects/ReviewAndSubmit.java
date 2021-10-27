@@ -19,6 +19,8 @@ import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import com.aventstack.extentreports.configuration.Config;
+
 public class ReviewAndSubmit {
 	@FindBy(xpath=".//*[@id='EFTERAenrBSForm']//div[4]/div[1]/label")
 	WebElement chkAcceptance;
@@ -219,8 +221,8 @@ public class ReviewAndSubmit {
 	
 	public ReviewAndSubmit verifyOrgInfo()
 	{
+		
 		Helper.compareEquals(testConfig, "Organisation Name", enrollmentInfoPageObj.getBusinessName(),BSNameOrgInfo.getText());
-		Helper.compareEquals(testConfig, "Org Address", enrollmentInfoPageObj.getStreet()+"\n"+enrollmentInfoPageObj.getCity()+", "+enrollmentInfoPageObj.getStateName()+"\n"+enrollmentInfoPageObj.getZipCode(),BSAddOrgInfo.getText());
 		Helper.compareEquals(testConfig, "Tin",enrollmentInfoPageObj.getTin() ,tinOrgInfo.getText());
 		Helper.compareEquals(testConfig, "Provider Type",enrollmentInfoPageObj.getProvType() ,provTypOrgInfo.getText());
 		Helper.compareEquals(testConfig, "Market Type",enrollmentInfoPageObj.getMrktType() ,mrktTypOrgInfo.getText());
@@ -296,17 +298,20 @@ public class ReviewAndSubmit {
 			  Element.verifyElementPresent(identifyedtlnk,"EDIT");
 			  Element.verifyElementPresent(finInfoEdit,"EDIT");
 		  }
+		  
 		  return this;
 	  }
 	  
 	  public ReviewAndSubmit verifyTermConditionPdfDownl() {
 		  
 		  Element.verifyElementPresent(termsAndConditionsLink, "Download Terms and Conditions");
+		  String parentwindowhandle=testConfig.driver.getWindowHandle();
 		  Element.click(termsAndConditionsLink, "Download Terms and Conditions");
 		  if(enrollmentInfoPageObj.getEnrollType().equals("BS")) 
 			  Browser.switchToNewWindow(testConfig, "f_optum%20pay%20billing%20agent_terms%20and%20conditions.pdf");  
 	      else
 		  Browser.switchToNewWindow(testConfig, "Optum%20Pay%20Provider%20Terms%20and%20Conditions%20Agreement.pdf");
+		  Browser.switchToParentWindow( testConfig,  parentwindowhandle);
 		  return this;
 		  
 	  }

@@ -80,6 +80,10 @@ if( (testConfig.driver.getCurrentUrl().toLowerCase().contains("providerefteraenr
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("validatebsbillingserviceinfo")) ||
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterafinancialinfortn.do")) ||
 (testConfig.driver.getCurrentUrl().toLowerCase().contains("beginenrollment.do")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("providerinformationefteraenroll")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefteraprovidercontact")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterauploadw9.do")) ||
+(testConfig.driver.getCurrentUrl().toLowerCase().contains("validateefterasubmit.do")) ||
 (System.getProperty("Application").contains("UPA"))
 )
 {

@@ -16,6 +16,7 @@ import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.TestBase;
 import main.java.pageObjects.BeginEnrollment;
 import main.java.pageObjects.BeginEnrollmentContinue;
+import main.java.pageObjects.CSRHomePage;
 import main.java.pageObjects.CreateEnrollUsrTyp;
 import main.java.pageObjects.CreateMaintainEnrollment;
 import main.java.pageObjects.CrtEnrollValidateTIN;
@@ -40,16 +41,45 @@ public class CSRCreateEnrollmentSteps extends TestBase {
 	@Then("^User Select User Type as \"([^\"]*)\" and enter unique TIN and click Search$")
 	public void user_Select_User_Type_as_and_enter_unique_TIN_and_click_Search(String userType) throws Throwable {
 		
-		usrTyp.selectUserType(userType);
+		 validateTIN = usrTyp.selectUserType(userType);
 		
 
 	}
+	
+	@Then("^User Select User Type as \"([^\"]*)\" and validates various messgaes by Entering null,less than 9 char,Alphanumeric char,Specia char in TIN$")
+	public void User_Select_User_Type_and_validates_various_messgaes_by_Entering_null_less_than_9_char_Alphanumeric_char_Specia_char_in_TIN(String userType) throws Throwable {
+		
+		  usrTyp.validatingErrorMessageForInCorrectTINNumber(userType);
+		
 
+	}
+	
 	@Then("^User select Yes button of TIN not enrolled page$")
 	public void user_select_Yes_button_of_TIN_not_enrolled_page() throws Throwable {
 		validateTIN=new CrtEnrollValidateTIN(testConfig);
 		Browser.wait(testConfig, 3);
 		validateTIN.clickYesButton();
+	}
+	
+	@Then("^User select NO button of TIN not enrolled page and validate that it is on CSR home page$")
+	public void User_select_NO_button_of_TIN_not_enrolled_page_and_validate_that_it_is_on_CSR_home_page() throws Throwable {
+		validateTIN=new CrtEnrollValidateTIN(testConfig);
+		Browser.wait(testConfig, 3);
+		CSRHomePage CSRHome = validateTIN.clickNoButton();
+		CSRHome.validateCSRHomepage();
+	}
+	
+	@Then("^User navigates to TIN not enrolled page and check Return to CSR Welcome page button displayed$")
+	public void User_navigates_to_TIN_not_enrolled_page_and_check_Return_to_CSR_Welcome_page_button_displayed() throws Throwable {
+		Browser.wait(testConfig, 3);
+		 validateTIN.validateReturnToHome();
+	}
+	
+	@Then("^clicks on Return to CSR Welcome page button and navigate to CSR Home page$")
+	public void clicks_on_Return_to_CSR_Welcome_page_button_and_navigate_to_CSR_Home_page() throws Throwable {
+		
+		CSRHomePage CSRHome = validateTIN.ClcikOnReturnToHome();
+		CSRHome.validateCSRHomepage();
 	}
 
 	@Then("^User select User Type Enrollment as \"([^\"]*)\" and click continue button$")
