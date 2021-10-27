@@ -714,7 +714,25 @@ public class OptumPaySolution {
   	 
   	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[1]")
     WebElement	cancelpopup;
-
+  	
+  	@FindBy(id = "manageRecurringPaymentsButton")
+    WebElement Managepaymethods;
+  
+  	@FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[2]/p")
+    WebElement	unassignedtins;
+  	
+  	@FindBy(linkText = "Setup recurring payments")
+    WebElement Setuprecurringpayments;
+  	
+  
+  	@FindBy(xpath="//*[@id='recurringPaymentWelcomeModal']/p[1]")
+    WebElement	Welcomepopupheader;
+  
+  	@FindBy(xpath="//*[@id='recurringPaymentWelcomeModal']/p[2]")
+    WebElement	Welcomepopupparagraph;
+  	
+  	@FindBy(xpath="//span[contains(text(),'Cancel')]")
+    WebElement	cancelbutton;
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -2872,6 +2890,21 @@ public class OptumPaySolution {
     	Element.verifyElementPresent(SelectPayment, "Select payment method");
     	Element.click(SelectPayment, "Select payment method");
 		return this;
+    	
+    }
+    public OptumPaySolution Setuprecurringpayments() {
+    	Element.click(Managepaymethods, "Manage pay methods");
+    	Browser.wait(testConfig, 2);
+    	Helper.compareEquals(testConfig, "Text",TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.UnassignedTins.message"), unassignedtins.getText().trim());
+    	Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
+    	Element.click(Setuprecurringpayments, "Setup recurring payments");
+    	Browser.wait(testConfig, 2);
+    	Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.title").trim(), Welcomepopupheader.getText().trim());
+    	Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.messageContent").trim(), Welcomepopupparagraph.getText().trim());
+    	Element.verifyElementIsEnabled(contButton, "continue button"); 
+    	Element.verifyElementIsEnabled(cancelbutton, "Cancel button");
+    	Element.click(contButton, "continue button");
+    	return this;
     	
     }
 }

@@ -536,6 +536,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void verifies_Recurring_Payments_Setup_Review_Selections() throws Throwable {
 		optumPaySol.ReviewSelection();
 	}
+	@Then("^User clicks on Manage pay methods button on invoices tab$")
+	public void user_clicks_on_Manage_pay_methods_button_on_invoices_tab() throws Throwable {
+	   optumPaySol.Setuprecurringpayments();
+	}
 }
 
 

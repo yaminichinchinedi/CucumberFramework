@@ -548,3 +548,29 @@ Feature: - Optum Pay Solutions
     Examples:
       | credentials | userType | portalAccess | searchCriteria      | tinType |
       | BS_Admin    | BS       | Premium      | TinWithoutRecurrPay | AO      |
+      
+  @UPAUS3935938
+  Scenario Outline:   Access Payments - 4 Setup recurring payments 
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User clicks on "Invoices" tab
+    Then User clicks on Manage pay methods button on invoices tab
+    	
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria   | tinType |
+      | PROV_Admin  | PROV     | Premium      | TinWithRecurrPay | AO      |
+      
+  @UPAUS3935938_BS
+  Scenario Outline:   Access Payments - 4 Setup recurring payments 
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    Then User clicks on "Invoices" tab
+    Then User clicks on Manage pay methods button on invoices tab
+    	
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria   | tinType |
+      | BS_Admin    | BS       | Premium      | TinWithRecurrPay | AO      |
+    
