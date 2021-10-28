@@ -462,6 +462,21 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
    		"LEFT JOIN ole.ENROLLED_PROVIDER ep  ON pba.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
    		"WHERE  pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' AND pba.PROV_TIN_NBR IS NOT null\r\n" + 
    		"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A' ) with ur fetch first row only";
+   public static final String TIN_WITH_RECURR_PAY= "select ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps \r\n" + 
+	   		"where ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}' and ps.PRTL_PRDCT_REC_STS_CD='PS' and ps.PRTL_PRDCT_SELECTED_STS_CD='A'\r\n" + 
+	   		"AND ps.PROV_TIN_NBR  in (\r\n" + 
+	   		"\r\n" + 
+	   		"SELECT  paba.PROV_TIN_NBR  FROM ole.PAYMENT_DESIGNATION pd\r\n" + 
+	   		"LEFT JOIN ole.PROV_ALTERNATE_BANKING_ACCOUNT paba ON paba.PROV_ALT_BNK_ACCT_ID = pd.PROV_ALT_BNK_ACCT_ID\r\n" + 
+	   		"LEFT JOIN ole.ENROLLED_PROVIDER ep  ON paba.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
+	   		"WHERE  pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' AND  paba.PROV_TIN_NBR IS NOT null\r\n" + 
+	   		"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A'\r\n" + 
+	   		"UNION\r\n" + 
+	   		"SELECT  pba.PROV_TIN_NBR  FROM ole.PAYMENT_DESIGNATION pd \r\n" + 
+	   		"LEFT JOIN ole.PROVIDER_BANKING_ACCOUNT pba ON pba.PROV_BNK_ACCT_ID = pd.PROV_BNK_ACCT_ID\r\n" + 
+	   		"LEFT JOIN ole.ENROLLED_PROVIDER ep  ON pba.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
+	   		"WHERE  pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' AND pba.PROV_TIN_NBR IS NOT null\r\n" + 
+	   		"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A' ) with ur fetch first row only";
 
 	public static final String readPrimarnyBankAccountLog ="SELECT pd.LST_CHG_BY_ID, pd.LST_CHG_BY_DTTM, pba.PROV_TIN_NBR , pd.RECR_PAY_SET_IND , pd.LST_CHG_BY_DTTM, pd.LST_CHG_BY_PRTL_ID FROM ole.PAYMENT_DESIGNATION pd LEFT JOIN ole.PROVIDER_BANKING_ACCOUNT pba ON pba.PROV_BNK_ACCT_ID = pd.PROV_BNK_ACCT_ID\n" +
 			"WHERE pba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y'ORDER BY pd.LST_CHG_BY_DTTM  DESC with ur";

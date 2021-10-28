@@ -1203,6 +1203,10 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.TIN_WITHOUT_RECURR_PAY;
 		}
+		if(searchCriteria.contains("TinWithRecurrPay")){
+
+			query=QUERY.TIN_WITH_RECURR_PAY;
+		}
 		
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
