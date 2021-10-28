@@ -1,9 +1,14 @@
 package main.java.pageObjects;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import main.java.Utils.DataBase;
 import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
@@ -73,6 +78,8 @@ public class HowToEnroll {
 	WebElement fourthParagraphAfterLastCheckMark;
 	
 	private TestBase testConfig;
+	static Map data=null;
+	int sqlRowNo;
 	
 	public HowToEnroll(TestBase testConfig) {
 		this.testConfig=testConfig;
@@ -275,4 +282,53 @@ public class HowToEnroll {
 		
 			
 	}
+	
+	public void verifyHowToEnrollpage() {
+		
+		verifyHowToEnrollPage();
+		verifyHowtoEnrollPara();
+		verifyEnrollmentInstructions();
+		
+	}
+	
+	public void verifyHowToEnrollpageWithDataBase() throws IOException {
+		sqlRowNo=1515;
+		HashMap<Integer, HashMap<String, String>> pageData = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);	
+		
+		Helper.compareEquals(testConfig, "Street",pageData.get(16).get("CLOBVAL").toString().trim().substring(3, pageData.get(16).get("CLOBVAL").toString().trim().length()-4)+"\n"+
+				                                  pageData.get(17).get("CLOBVAL").toString().trim().substring(3, pageData.get(17).get("CLOBVAL").toString().trim().length()-4)+"\n"+
+				                                  pageData.get(18).get("CLOBVAL").toString().trim().substring(3, pageData.get(18).get("CLOBVAL").toString().trim().length()-4)+"\n"+
+				                                  pageData.get(19).get("CLOBVAL").toString().trim().substring(3, pageData.get(19).get("CLOBVAL").toString().trim().length()-4), Element.findElement(testConfig, "xpath", "//form[@id='signInForm']/article/ul").getText().trim());
+		
+		Helper.compareEquals(testConfig, "Street",pageData.get(2).get("CLOBVAL").toString().trim()+"\n"+
+                                                  pageData.get(3).get("CLOBVAL").toString().trim(), Element.findElement(testConfig, "xpath", "//form[@id='signInForm']/article/ul[2]").getText().trim());
+
+		Helper.compareEquals(testConfig, "Street",pageData.get(4).get("CLOBVAL").toString().trim()+" "+
+				                                  pageData.get(5).get("CLOBVAL").toString().trim()+" "+
+                                                  pageData.get(6).get("CLOBVAL").toString().trim(), Element.findElement(testConfig, "xpath", "(//ul[@class='tile margin-bottom-alpha'][2])/following-sibling::p").getText().trim());
+		
+		Helper.compareEquals(testConfig, "Street",pageData.get(7).get("CLOBVAL").toString().trim().substring(3, pageData.get(7).get("CLOBVAL").toString().trim().length()-4)
+                                                                                                  , Element.findElement(testConfig, "xpath", "((//ul[@class='tile margin-bottom-alpha'][2])/following-sibling::p)[3]").getText().trim());
+
+		Helper.compareEquals(testConfig, "Street",pageData.get(8).get("CLOBVAL").toString().trim().substring(3, pageData.get(8).get("CLOBVAL").toString().trim().length()-4)
+                , Element.findElement(testConfig, "xpath", "((//ul[@class='tile margin-bottom-alpha'][2])/following-sibling::p)[6]").getText().trim());
+		
+		Helper.compareEquals(testConfig, "Street",pageData.get(9).get("CLOBVAL").toString().trim().substring(3, 17)+"rd"+pageData.get(9).get("CLOBVAL").toString().trim().substring(30, pageData.get(9).get("CLOBVAL").toString().trim().length()-4)
+                , Element.findElement(testConfig, "xpath", "((//ul[@class='tile margin-bottom-alpha'][2])/following-sibling::p)[9]").getText().trim());// To print work "3rd" correctly..string trimmed
+
+		Helper.compareEquals(testConfig, "Street",pageData.get(11).get("CLOBVAL").toString().trim(), Element.findElement(testConfig, "xpath", "//p[@flex='gutters']/span[2]").getText().trim());
+
+
+	}
+	
+	public void navigateToBegineEnrollpage() {
+		
+		Element.click(enrollNowBtn, "Enroll now button");
+		Browser.wait(testConfig, 1);
+		Browser.verifyURL(testConfig, "beginEnrollment.do");
+		
+	}
+	
+	
+	
 }
