@@ -13,6 +13,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 public class HowToEnroll {
@@ -292,9 +293,7 @@ public class HowToEnroll {
 	}
 	
 	public void verifyHowToEnrollpageWithDataBase() throws IOException {
-		sqlRowNo=1515;
-		HashMap<Integer, HashMap<String, String>> pageData = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);	
-		
+		HashMap<Integer, HashMap<String, String>> pageData = DataBase.executeSelectQueryALL(testConfig, QUERY.How_To_Enroll_Page );	
 		Helper.compareEquals(testConfig, "Street",pageData.get(16).get("CLOBVAL").toString().trim().substring(3, pageData.get(16).get("CLOBVAL").toString().trim().length()-4)+"\n"+
 				                                  pageData.get(17).get("CLOBVAL").toString().trim().substring(3, pageData.get(17).get("CLOBVAL").toString().trim().length()-4)+"\n"+
 				                                  pageData.get(18).get("CLOBVAL").toString().trim().substring(3, pageData.get(18).get("CLOBVAL").toString().trim().length()-4)+"\n"+
