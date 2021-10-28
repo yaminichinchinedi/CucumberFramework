@@ -432,8 +432,8 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 	{
 		int sqlRowNo=1613;
 		HashMap<Integer,HashMap<String,String>> dataTest=DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
-	String HeaderUI=Element.findElement(testConfig, "xpath", "//*[@id='headingAlertForRtn']").getText();
-		
+		Browser.wait(testConfig, 2);
+	String HeaderUI=Element.findElement(testConfig, "xpath", "//*[@id='headingAlertForRtn']").getText();	
 	Helper.compareContains(testConfig, "Header title1", dataTest.get(1).get("TEXT_VAL"), HeaderUI);
 	Helper.compareContains(testConfig, "Header title2", dataTest.get(2).get("TEXT_VAL"), HeaderUI);
     Helper.compareContains(testConfig, "Header title3", dataTest.get(3).get("TEXT_VAL"), HeaderUI);

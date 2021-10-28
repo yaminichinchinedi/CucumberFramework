@@ -22,7 +22,10 @@ public class UPARegistrationPage extends TestBase{
 	@FindBy(partialLinkText="ENROLL NOW")
 	private WebElement lnkEnrollNow;
 	
-	@FindBy(linkText="Home")
+	@FindBy(xpath ="//a[contains(@href,'Alternative payment routing - user guide.pdf')]")
+	private WebElement AlternativePaymentButton;
+	
+	@FindBy(xpath="//a[text()='Home']")
 	private WebElement lnkHeaderHome;
 	
 
@@ -125,8 +128,6 @@ public class UPARegistrationPage extends TestBase{
 	{
 		String expectedURL="How To Enroll";
 		Browser.wait(testConfig, 2);
-		lnkHeaderHowtoEnroll=Element.findElement(testConfig, "linkText", "How to Enroll");
-		Element.clickByJS(testConfig,lnkHeaderHowtoEnroll,"How to enroll");
 		Element.click(lnkHeaderHowtoEnroll,"How to enroll");
 		Browser.waitTillSpecificPageIsLoaded(testConfig,expectedURL);
 		Helper.compareContains(testConfig, "Browser URL", expectedURL.replace(" " , ""), Browser.getURL(testConfig));
@@ -139,7 +140,13 @@ public class UPARegistrationPage extends TestBase{
 		Browser.waitTillSpecificPageIsLoaded(testConfig, "FAQS");
 		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
 	}
-
+	public void clickAndVerifyHeaderResources()
+	{
+		String expectedURL="/epsFaqs.do";
+		Element.click(lnkHeaderReources,"Header Resources");
+		Browser.waitTillSpecificPageIsLoaded(testConfig, "Resources");
+		Helper.compareContains(testConfig, "Browser URL", expectedURL, Browser.getURL(testConfig));
+	}
 		
 	public BeginEnrollment clickEnrollNow()
 	{
@@ -166,7 +173,7 @@ public class UPARegistrationPage extends TestBase{
 		clickAndVerifyOptumLogo();
 		clickAndVerifyHeaderHowToEnroll();
 		clickAndVerifyHeaderBenefitsOfEPS();
-		clickAndVerifyHeaderFAQs();
+		clickAndVerifyHeaderResources();
 		clickAndVerifyHeaderHome();
 		
 		
@@ -331,5 +338,27 @@ public class UPARegistrationPage extends TestBase{
 		this.clickAndVerifyOptumPaySavingsCalculator();
 	}
 		
+	public void verifyBenefitsOfOptumPayAndEnrollNowButtons() {
+		
+		Element.verifyElementPresent(lnkEnrollNow, "ENROLL Now");
+		
+		Element.verifyElementPresent(lnkHeaderBenefitsofOptumPay, "Benefits of Optum Pay");
+	}
+	
+	public void navigatingAlternativePaymentSection() {
+		String expectedURL ="Alternative%20payment%20routing%20-%20user%20guide.pdf";
+		String parentwindowhandle=testConfig.driver.getWindowHandle();
+		Element.click(AlternativePaymentButton,"Alternative Payment Guide");
+		Browser.waitForPageLoad(driver);
+		Browser.switchToNewWindow(testConfig);
+		Browser.verifyURL(testConfig, expectedURL);
+		Browser.switchToParentWindow( testConfig,  parentwindowhandle);
+		
+	}
+	
+	public void navigateToHowToEnrollTab() {
+		
+	}
+
 
 }

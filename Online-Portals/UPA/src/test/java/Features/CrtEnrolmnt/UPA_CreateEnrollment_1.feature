@@ -1,6 +1,49 @@
 #Author: your.email@your.domain.com
 @UPACreateEnrollment @UPACreateEnrollPart1
 Feature: UPA Create Enrollment Validations part1
+###########################  Create Enrollment Home Page Validations   ##############################
+Scenario: Test Cases for Home pages
+    Given User navigates to UPA Sys Test application
+    Then User validates that Enroll Now and Benefits of Optum pay button are there
+    Then User validates all headers links Benefits of Optum Pay,How to Enroll,Optum Finantial Logo
+    Then User clicks on Alternative payments routing options and validates the navigation
+  Scenario: Test Cases for How to Enroll
+    Given User navigates to UPA Sys Test application
+    When User Clicks on How to Enroll link section of homepage
+    Then User validates Enroll Now button,PDFs for AO,BS and VO,and Footer of this page
+    Then User also validates the How to Enroll page content with database
+    Then User Clicks on Enroll Now button and navigates to BeginEnrollment Page
+
+  Scenario: Test Cases for FAQS section
+    Given User navigates to UPA Sys Test application
+    When User clicks on Resources section of homepage
+    Then User validates Guides and Forms and Documents section
+    Then Validate the Footer Information on this page
+
+  #   Scenario: US1348562/US1348529_Test Cases for Begin your Enrollment page
+  #   Given User navigates to UPA Sys Test application
+  #    Then User Clicks on Enroll Now from the landing page and verify page content from databse
+  #    Then User also verify survey questions and answer from Survery table
+  #    Then user clicks on continue button without any entry and validates error message
+  #    Then select Other option from of how you heard option,click continue and validate error message
+  #    Then User also checks for the entered text limit is 50
+  #    When User clicks on Cancel Enrollment button a popup appears verify its content
+  #    Then User clicks on Yes to cancel the Enrollment and No to continue the Enrollment
+  #    Then User is able to download the Enrollment PDFs
+  #    Then Select any how you heard option and click continue to validte the BeginEnrollmentContinue page navigation
+  #
+  @UPAFailure
+  Scenario Outline: US1048015_Test Cases for BS Tins
+    Given User navigates to UPA Sys Test application
+    When User Clicks on Enroll Now from the landing page
+    Then User clicks on Continue button of BeginEnrollment Page
+    Then Select "<EnrollmentType>" and "<TINStatus>" clicks Continue button and vaidate enrolledTIN Message and its content from DB
+
+    Examples: 
+      | EnrollmentType | TINStatus           |
+      | BS             | PreEnrolledBSTIN    |
+      | BS             | EnrolledActiveBSTIN |
+
 
   #1 ###########################  US1023501_US1350108_PreEnrolledTIN   ##############################
   @TC-1
@@ -633,439 +676,3 @@ Feature: UPA Create Enrollment Validations part1
     Then User navigates to Identity Administrators page and fill all fields and click on continue button
     Then User uploads the WNine form and click continue
     And Validates Invalid Data Error Messages for Email Address on Review and Submit Page
-
-  ####################### 7. US1064240CrtEnrlBSEmailExist #############################
-  Scenario: US1064240_Create Enrollment_BS_existing Email entry
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | BS              |
-    Then User navigates to Billing service information page and fill all fields and click on continue button
-    Then Validates all the headers from the Identify Administrators page
-    Then User fills all fields with existing Primary Email on Identify Admin page click continue button and validates all the data from DB
-    Then click on Yes to continue with same email address,Click on NO with different email address
-
-  Scenario: US1064240_Create Enrollment_BS_existing Email,Identify Admin Header validation
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | BS              |
-    Then User navigates to Billing service information page and fill all fields and click on continue button
-    Then Validates all the headers from the Identify Administrators page
-    Then User fills all fields with existing Secondary Email on Identify Admin page click continue button
-    Then User fills all fields with existing both primary and Secondary Email on Identify Admin page click continue validates all the content from DB
-
-  ############################ 8. US1099702_CrtEnrlBSFooter ############
-  @UPASanity
-  Scenario: TS01/TS02/TS03_Create Enrollment- Billing Service - Footer Information
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then Validate the Footer Information on this page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Validate the Footer Information on this page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | BS              |
-    Then Validate the Footer Information on this page
-    Then User navigates to Billing service information page and fill all fields and click on continue button
-    Then Validate the Footer Information on this page
-    Then User navigates to Identity Administrators page and fill all fields and click on continue button
-    Then Validate the Footer Information on this page
-    Then User uploads the WNine form and click continue
-    Then Validate the Footer Information on this page
-
-  ########################### 9. US1177082_CrtEnrlBSEdtRvwSbmt ############################
-  Scenario: US1177082_Create Enrollment_BS_Edit Review and Submit
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | BS              |
-    Then User navigates to Billing service information page and fill all fields and click on continue button
-    Then User navigates to Identity Administrators page and fill all fields and click on continue button
-    Then User uploads the WNine form and click continue
-    And User clicks on  Edit Link of Billing Service Information section of Review and Submit page and validates its content from database
-    Then User validate headers of Billing Service Information page
-    Then User Validates Save changes and Cancel Changes button presence and its functionality
-
-  Scenario Outline: US1177082_Create Enrollment_BS_Edit Review and Submit
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | BS              |
-    Then User navigates to Billing service information page and fill all fields and click on continue button
-    Then User navigates to Identity Administrators page and fill all fields and click on continue button
-    Then User uploads the WNine form and click continue
-    And User clicks on  Edit Link of Billing Service Information section of Review and Submit page and validates its content from database
-    Then User fills  information on Edit Billing Service Informatin with "<InputField>" and "<dataFormat>" and validate Error messages
-
-    Examples: 
-      | InputField                    | dataFormat      |
-      | BSName, Street, City          | Special Char    |
-      | Street                        | Post Box No     |
-      | ZipCode                       | Invalid ZipCode |
-      | ZipCode                       | Alphanumeric    |
-      | BSName, Street, City ,ZipCode | blank           |
-
-  #######################  10. US1202167_CrtEnrlBeginEnrlmnt #########################
-  @TC-19
-  Scenario Outline: US1202167_Create Enrollment Which option should i choose link
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then User clicks on which option should i choose link,validates its content and close the opened popup
-    Then User validates on Clicking on Change link,beside of Enrollment type
-    Then Select "<Enrollment Type>" and verifies popup content,and button fuctionality for Cancel and I Agree button
-    Then User clicks on Cancel Enrollment button and verify YES/NO button functionality
-
-    Examples: 
-      | Enrollment Type |
-      #    | AV              |
-      | VO              |
-
-  @TC-20
-  Scenario: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | VO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue to W9
-    Then User uploads the WNine form and click continue
-    And Fill Authorize Enrollers Info and click on submit button on Review and Submit Page.
-    And Validate Data is saved in Database on Enrollment Page.
-
-  @TC-21
-  Scenario: Create Enrollment TIN Entry Error Message Validation
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    # Then User Select a How you heard option and  click on Continue button
-    Then User clicks on which option should i choose link,validates its content and close the opened popup
-    Then User validates on Clicking on Change link,beside of Enrollment type
-    Then Select Enrollment Type as Enrollment Type and validates various messgaes by Entering null,less than 9 char,Alphanumeric char,Specia char in TIN
-      | Enrollment Type |
-      | AO              |
-    Then User also validats captcha Error by turning ON and OFF captcha
-
-  ##############################  11. US1247779_IdentifyAdminVldtn ###########################
-  @TC-22
-  Scenario: US1247779 Identify Admin page content,llinks validations
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User validates the page content of Identify Admin page
-    Then User clicks on Learn about alert frequency link validates its content and close it
-    Then User clicks on CLEAR ADMINISTRATOR INFORMATION link verify its content and YES/NO functionality
-    Then Clicks on Continue to validate all the Error Messages
-
-  @TC-23
-  Scenario: US1247779 Identify Admin page
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills mobileNo and checks its enabilty/disability of Identify Admin Page
-    Then User checks its Back and continue button functionality
-    Then User Clicks on Cancel Enrollment,verify its content and YES/NO button functionality
-
-  Scenario Outline: US1247779 Identify Admin page
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then user selects as "<EnrollmentType>" and  Clicks continue button of Enrollment TIN Eligible page
-    Then User fills all the information  and click on Continue
-    Then Validates all the headers from the Identify Administrators page
-
-    Examples: 
-      | EnrollmentType |
-      | AO             |
-      | VO             |
-
-  Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills  primary info. and in Secondary info. enter "<InputField>" and "<dataFormat>" and validate Error messages
-
-    Examples: 
-      | InputField                                        | dataFormat            |
-      | First Name, Last Name, Email, RetypeEmail, Tel No | blank                 |
-      | Tel No                                            | Incomplete,nonNumeric |
-      | email                                             | Incorrect             |
-      | First Name, Middle Name ,Last Name                | Alphanumeric          |
-      | First Name, Middle Name, Last Name                | Special Char          |
-
-  Scenario Outline: US1247779 Identify Admin page Secondary Information Error Message
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills  all data but different email and Retype email for "<InputField>" and validate Error messages
-
-    Examples: 
-      | InputField |
-      | Primary    |
-      | Secondary  |
-
-  Scenario Outline: US1247779 Identify Admin page Primary Information Error Messages
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills  primary information with "<InputField>" and "<dataFormat>" and validate Error messages
-
-    Examples: 
-      | InputField                                        | dataFormat            |
-      | First Name, Last Name, Email, RetypeEmail, Tel No | blank                 |
-      | Tel No                                            | Incomplete,nonNumeric |
-      | email                                             | Incorrect             |
-      | First Name, Middle Name ,Last Name                | Alphanumeric          |
-      | First Name, Middle Name, Last Name                | Special Char          |
-
-  ################ 12. US1247813_CrtEnrlmntFII ######################################################
-  #TS_001
-  @UPASanity
-  Scenario: Fills the relevent Info with AO Enroll Typ
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-
-  #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
-  #TS_002
-  #  Scenario: Fills the relevent Info with AV Enroll Typ
-  #    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #												   | Enrollment Type |
-  #												   | 			AV        |
-  #    Then User fills all the information  and click on Continue
-  #    Then User fills all the information on Identify Administrators page and click continue
-  #TS_003
-  #  Scenario: Fills the relevent Info with VO Enroll Typ
-  #    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #											      | Enrollment Type |
-  #											      |      VO         |
-  #    Then User fills all the information  and click on Continue
-  #    Then User fills all the information on Identify Administrators page and click continue
-  #TS_004
-  #Scenario: Checking UI Content matches with UXDS Page
-  #  Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #									      | Enrollment Type |
-  #									      |       AO        |
-  #  Then User fills all the information  and click on Continue
-  #  Then User fills all the information on Identify Administrators page and click continue
-  #TS_005 -- TODO
-  @UPASanity
-  Scenario: Checking UI Content matches with DB
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then It is Validated that Financial Institution Information page text is content managed
-
-  #TS_006
-  Scenario: Clicking FI Routing no
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User clicks the link where can i find a finantial intitution's routing no
-
-  #TS_007
-  Scenario: Validates the Type of Account
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User validates the Type of account as Checking by default and can be change to Saving
-
-  #TS_008
-  Scenario: Validates the Supporting doc as Void Check and Bank Letter
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User validates the supporting document as Voided Check by default and can be change to Bank letter
-
-  #TS_009
-  Scenario: Browsing the Supporting docs
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User clicks on browse and upload its supporting document
-
-  #TS_010
-  Scenario: Clicking on multiple NRI bank accounts
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User clicks on hyperlink how do i manage multiple NPI bank accounts
-
-  #TS_011
-  Scenario: Validates the NPI Bank Account
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User validates the NPI Bank account as No by default and can be change to Yes
-
-  #TS_012 #TS_013
-  Scenario Outline: Validating the Headers content
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then user selects as "<EnrollmentType>" and  Clicks continue button of Enrollment TIN Eligible page
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then Validate all the Headers from FII page in case of AO and AV Enrollment type
-
-    Examples: 
-      | EnrollmentType |
-      | AO             |
-
-  # |		 AV			 	|
-  #TS_014 #TS_015
-  Scenario Outline: Validation of buttons Cancel Enrollment, Back and Continue for AV and AO enrollment
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then user selects as "<EnrollmentType>" and  Clicks continue button of Enrollment TIN Eligible page
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User validates and clicks buttons Back,Cancel Enrollment,Continue are on the FII page
-
-    Examples: 
-      | EnrollmentType |
-      | AO             |
-
-  #    |			 AV					|
-  # All these test cases has been commented because FII - ABA validator implimentation
-  #TS_016 #TS_017 #TS_018
-  #
-  #Scenario: Validating the Error on click of Continue button of FII page
-  #Given User navigates to UPA Sys Test application
-  #When User Clicks on Enroll Now from the landing page
-  #Then User clicks on Continue button of BeginEnrollment Page
-  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #| Enrollment Type |
-  #| AO              |
-  #Then User sets business phone
-  #Then User fills all the information  and click on Continue
-  #Then User fills all the information on Identify Administrators page and click continue
-  #Then User clicks on continue button of FII page and validtes the error messages
-  #
-  #TS_019
-  #
-  #Scenario: Validating that PO Boxes are not accepted in Street field of FII Page
-  #Given User navigates to UPA Sys Test application
-  #When User Clicks on Enroll Now from the landing page
-  #Then User clicks on Continue button of BeginEnrollment Page
-  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #| Enrollment Type |
-  #| AO              |
-  #Then User sets business phone
-  #Then User fills all the information  and click on Continue
-  #Then User fills all the information on Identify Administrators page and click continue
-  #Then User fills all the information and PO Box no in Street field and clicks on continue
-  #
-  #TS_020
-  #
-  #Scenario: Validating that Invalid Zip Code is not accepted
-  #Given User navigates to UPA Sys Test application
-  #When User Clicks on Enroll Now from the landing page
-  #Then User clicks on Continue button of BeginEnrollment Page
-  #Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-  #| Enrollment Type |
-  #| AO              |
-  #Then User sets business phone
-  #Then User fills all the information  and click on Continue
-  #Then User fills all the information on Identify Administrators page and click continue
-  #Then User fills all the information and invalid Zip code for corresponding City and clicks on continue
-  #TS_021
-  Scenario: Validating that non accepted file format not uploaded
-    Given User navigates to UPA Sys Test application
-    When User Clicks on Enroll Now from the landing page
-    Then User clicks on Continue button of BeginEnrollment Page
-    Then Select Enrollment Type and  Clicks continue button of Enrollment TIN Eligible page
-      | Enrollment Type |
-      | AO              |
-    Then User sets business phone
-    Then User fills all the information  and click on Continue
-    Then User fills all the information on Identify Administrators page and click continue
-    Then User fills all the information and upload non accepted file format and clicks on continue
