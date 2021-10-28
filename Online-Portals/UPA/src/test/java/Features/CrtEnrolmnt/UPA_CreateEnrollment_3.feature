@@ -1,5 +1,5 @@
 #Author: your.email@your.domain.com
-@UPACreateEnrollment @UPACreateEnrollPart2
+@UPACreateEnrollment @UPACreateEnrollPart3
 Feature: UPA Create Enrollment Validations part2
 
  ############################# 15. US1248819_EditAdminOnReviewSbmt ###################
