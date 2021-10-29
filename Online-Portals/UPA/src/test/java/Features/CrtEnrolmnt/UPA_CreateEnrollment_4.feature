@@ -1,5 +1,5 @@
 #Author: your.email@your.domain.com
-@UPACreateEnrollment @UPACreateEnrollPart2
+@UPACreateEnrollment @UPACreateEnrollPart4
 Feature: UPA Create Enrollment Validations part4
  ############################ 19 US1348624_BS_EnrlType  ############################################################
   #TS01#TS02#TS011
