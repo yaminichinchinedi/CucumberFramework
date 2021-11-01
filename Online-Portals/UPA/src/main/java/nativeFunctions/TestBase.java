@@ -19,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.Description;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -202,6 +204,9 @@ public class TestBase extends ReporterClass {
 				System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+"\\drivers\\msedgedriver.exe");
 				driver = new EdgeDriver(caps2);
 				driver.manage().window().maximize();
+				driver.manage().deleteAllCookies();
+				driver.get("edge://settings/clearBrowserData");
+				driver.findElement(By.id("clear-now")).sendKeys(Keys.ENTER);
 				break;
 			case "IE":
 				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
@@ -449,7 +454,7 @@ public class TestBase extends ReporterClass {
 		 endReporting();
 	}*/
 		
-	@AfterTest
+	//@AfterTest
 	public void tearDown() {
 		 Browser.closeBrowser(testConfig);		 
 
@@ -457,7 +462,7 @@ public class TestBase extends ReporterClass {
 
 	@BeforeClass()
 	public void init() {
-		initializeData();
+		//initializeData();
 	}
 
 	public void initializeData() {
