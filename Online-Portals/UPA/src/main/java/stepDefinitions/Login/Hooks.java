@@ -23,7 +23,7 @@ public class Hooks extends TestBase{
 		initializeData();
 	}
 
-	@After(order=1)
+	@After
 	public void afterhook(Scenario scn) 
 	 {
 		try {
@@ -55,13 +55,8 @@ public class Hooks extends TestBase{
 		}
 		}
         
-        
+        tearDown();
 		//endTest(scn);
 	 }
-	
-	@After(order=2)
-	public void cl() {
-		tearDown();
-	}
 	
 }

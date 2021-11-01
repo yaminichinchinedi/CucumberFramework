@@ -2,7 +2,7 @@
 @tag @CSRCreateEnrollStab
 Feature: CSR Create Enrollment Validations
   ################################## 1. CSR_US1033480_CrtEnrlFooter ###########################################################
-  @CSRtest
+  @CSRtest1
   Scenario Outline: US1033480_Create Enrollment- AO - Footer Information
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login

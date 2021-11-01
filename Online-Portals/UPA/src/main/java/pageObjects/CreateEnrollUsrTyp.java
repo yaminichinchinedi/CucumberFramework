@@ -39,7 +39,7 @@ public class CreateEnrollUsrTyp {
 	
 	public CrtEnrollValidateTIN selectUserType(String userType )
 	{
-		if (userType.equals("Provider")) {
+		if (userType.equals("Provider")||userType.equalsIgnoreCase("PROV")) {
 		Browser.wait(testConfig, 5);
 		Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		}
