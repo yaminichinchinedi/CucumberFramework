@@ -534,7 +534,9 @@ public class TestBase extends ReporterClass {
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			
 			try {
-				driver = new RemoteWebDriver(new URL(URL), caps);
+				RemoteWebDriver remoteWebDriver = new RemoteWebDriver(new URL(URL), caps);
+				remoteWebDriver.setFileDetector(new LocalFileDetector());
+				driver=remoteWebDriver;
 			} catch (MalformedURLException e) {
 				Log.Warning("Excetion whle launching driver" + e,testConfig);
 				e.printStackTrace();
