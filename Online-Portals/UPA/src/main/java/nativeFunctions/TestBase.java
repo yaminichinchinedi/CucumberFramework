@@ -454,7 +454,7 @@ public class TestBase extends ReporterClass {
 		 endReporting();
 	}*/
 		
-	//@AfterTest
+	@AfterTest
 	public void tearDown() {
 		 Browser.closeBrowser(testConfig);		 
 
@@ -462,7 +462,7 @@ public class TestBase extends ReporterClass {
 
 	@BeforeClass()
 	public void init() {
-		//initializeData();
+		initializeData();
 	}
 
 	public void initializeData() {
