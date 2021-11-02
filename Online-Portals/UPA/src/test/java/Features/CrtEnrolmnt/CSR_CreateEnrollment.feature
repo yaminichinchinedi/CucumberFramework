@@ -515,7 +515,7 @@ Feature: CSR Create Enrollment Validations
 
   ##################################6 CSR_US1247822_CrtEnrlFIINPI #######################################################
   #TS_001
-  @CreateEnrollment @US1248704 @BothCSRUPAScenarios @UPARegression @UPASanity
+  @CreateEnrollment @US1248704 @BothCSRUPAScenarios @UPARegression @UPASanity @CSRtest1
   Scenario: TS_0001_Validate the navigation upon selection of Continue from Financial Institution Information page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -531,7 +531,7 @@ Feature: CSR Create Enrollment Validations
     Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
 
   #TS_003
-  @UPASanity
+  @UPASanity @CSRtest1
   Scenario: TS_0003_Validate the content of the Add NPI Bank Account page
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -546,7 +546,8 @@ Feature: CSR Create Enrollment Validations
     Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
     Then User Validates UI content with DataBase enrties.
 
-  #TS_004
+  #TS_004 
+  @CSRtest1
   Scenario: TS_0004_Validate the Where can I find a financial institution routing number link.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -562,6 +563,7 @@ Feature: CSR Create Enrollment Validations
     Then User clicks on hyperlink 'where can I find a finantial Institution's routing number?'.
 
   #TC_5,#TC_6,#TC_9
+  @CSRtest1
   Scenario: TS_0005_Validate the default Type of Account TS_0006 Supporting documentation TS_0009 NPI bank account.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -577,6 +579,7 @@ Feature: CSR Create Enrollment Validations
     Then User validates the various default input like Typ of account,Supporting doc,NPI Bank Account and it can be changed.
 
   #TS_007
+  @CSRtest1
   Scenario: TS_0007_Validate the User is required to upload supporting documentation to their online enrollment for NPI.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -592,6 +595,7 @@ Feature: CSR Create Enrollment Validations
     Then User clicks on browse and upload its supporting document on NPI Page.
 
   #TS_008 #TS_010
+  @CSRtest1
   Scenario: TS_0008_TS_0010_Validate How do I manage multiple NPI bank accounts link presents and add multiple user
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -608,7 +612,7 @@ Feature: CSR Create Enrollment Validations
     Then User clicks on hyperlink 'how do i manage multiple NPI bank accounts?'
 
   #TS_11,#TS_12
-  @Retest11
+  @Retest11 @CSRtest1
   Scenario: TS_0011_TS_012_Validate the headers on Identify Administrator page for AO and AV TIN.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -624,6 +628,7 @@ Feature: CSR Create Enrollment Validations
     Then Validate all the Headers from FII page in case of AO and AV Enrollment type
 
   #TS_013 #TS_014 #TS_015 #TS_016 #TS_017
+  @CSRtest1
   Scenario: TS_0013_0014_15_16_17_Validate the content of the Pop Up box upon click of Cancel Enrollment button also different buttons
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -640,6 +645,7 @@ Feature: CSR Create Enrollment Validations
     Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking.
 
   #TS_018
+  @CSRtest1
   Scenario: TS_0018_Validate the error validations upon clicking Continue button on NPI Financial Information Page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -655,6 +661,7 @@ Feature: CSR Create Enrollment Validations
     Then User clicks on continue button of FII NPI page and validtes the error messages.
 
   #TS_019
+  @CSRtest1
   Scenario: TS_0019_Validate the error message when no data entered for National Provider Identifier on NPI FII page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -670,6 +677,7 @@ Feature: CSR Create Enrollment Validations
     Then User validates various input field by giving blank input and clicking continue button.
 
   #TS_020 to 28,37,38
+  @CSRtest1
   Scenario: TS_0020_to_0028_37_38 Validate the error message when non-numeric data entered.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -685,6 +693,7 @@ Feature: CSR Create Enrollment Validations
     Then User validates various input field by giving nonnumeric data input and clicking continue button.
 
   #TS_035
+  @CSRtest1
   Scenario: TS_0035_Validate the error message when Account Number is same as TIN Account Number on NPI FII page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -700,6 +709,7 @@ Feature: CSR Create Enrollment Validations
     Then User validates error messages when  TIN no and NPI no are same.
 
   #TS_036(Pending,Needs clarity on test case)
+  @CSRtest1
   Scenario: TS_0036_Validate the error message when National Provider Identifier duplicate entry on NPI FII page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -716,7 +726,7 @@ Feature: CSR Create Enrollment Validations
   #Then User fills duplicate Information on NPI Page.
   ################################## 7. CSR_US1248704_EditOrgInfoOnReviewSbmtPage ##########################
   #TS_001#TS_04#TS_005 #TS_06#TS_07#TS_08
-  @UPASanity
+  @UPASanity @CSRtest1
   Scenario: Fills the relevant Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "Super" and login
@@ -738,7 +748,7 @@ Feature: CSR Create Enrollment Validations
     And Validate User is  redirected to Review and Submit Page and No changes are saved.
 
   #TS_013 #TS_015-TS_18
-  @UPASanity
+  @UPASanity @CSRtest1
   Scenario Outline: Fills the relevant Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -760,7 +770,8 @@ Feature: CSR Create Enrollment Validations
       | credentials |
       | Super       |
 
-  #TS_011#TS_012 #TS_014
+  #TS_011#TS_012 #TS_014 
+  @CSRtest1
   Scenario Outline: Fills the relevant Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -782,6 +793,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_019#TS_20
+  @CSRtest1
   Scenario Outline: Fills the relevant Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -805,7 +817,7 @@ Feature: CSR Create Enrollment Validations
 
   ######################################## 8.CSR_US1248819_EditAdminOnReviewSbmt #######################
   #TS01, TS02, TS04, TS05, TS06,TS07,TS08,TS09,TS10,TS11,TS12,TS17,TS36,TS37
-  @UPASanity
+  @UPASanity @CSRtest1
   Scenario Outline: Fills the relevent Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -832,6 +844,7 @@ Feature: CSR Create Enrollment Validations
 
   #Changes made by Rahul on 26Fen2020 for F419963 - Create Enrollment ACP Hide requirement validation.AV and VO option hiddenon screen
   #TS19
+  @CSRtest1
   Scenario Outline: Fills the relevent Info with VO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -851,6 +864,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS21-TS29,TS31,TS32,TS33,TS35,TS38-TS46,TS48,TS49,TS50,TS52,TS54
+  @CSRtest1
   Scenario Outline: Fills the relevent Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -873,6 +887,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS53
+  @CSRtest1
   Scenario Outline: Fills the relevent Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -894,6 +909,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ################################## 9. CSR_US1248921_CrtEnrlFinInsRevSub #################################
+  @CSRtest1
   Scenario Outline: TS_0001_Validate Edit Option next to each field on Review and Submit page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -912,7 +928,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0002_Validate the navigation upon selection of Edit button next to  Financial Information section on Review and Submit page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -932,7 +948,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0006_Validate the data on Financial Information  page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -953,7 +969,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0007_Validate the navigation upon selection of Cancel changes.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -975,7 +991,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0008_Validate the popup on selecting Where can I find a financial institution s routing number.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -996,7 +1012,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0009_Validate User is able to update or re-upload enrollment information within the page
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1018,7 +1034,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0010_Validate Pop up message to be displayed on selecting How do I manage multiple NPI bank accounts  Link
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1039,7 +1055,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0011_Validate the headers on Financial Information page for AO TIN.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1062,6 +1078,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_014 015 is covered in US1463317 TS_015
+  @CSRtest1
   Scenario Outline: TS_0013/16/17/19/20/21/24/27/30/32_Validate Missing data error message for Financial Institution Information fields.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1082,7 +1099,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0018/23/29_Validate the error validations upon Entering PO Box in Street Name Field..
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1103,7 +1120,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0022/26/28/31/34_Validate Invalid Error Messages for Financial Institution Information Page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1124,7 +1141,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0025_Validate the error validations upon no data for  Telephone number.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1145,7 +1162,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_33/35_Upon correcting errors and selecting Save Changes again, updated information is saved and displays on Review and Submit page
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1168,7 +1185,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest1
   Scenario Outline: TS_0036_Validate on edit of different voided check or bank letter, the Cancel Changes button gets disabled.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1191,6 +1208,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ##################################### 10. CSR_US1351172CrtEnrlAOEmailExist   ###############################
+  @CSRtest2
   Scenario Outline: US1351172_Create Enrollment_AO_duplicate Primary_Email
     Given User navigates to CSR portal and enters "Super" and login
     When ABN Validator Switch is set as 'Y'
@@ -1213,7 +1231,7 @@ Feature: CSR Create Enrollment Validations
       | Secondary           | N    |
       | PrimaryAndSecondary | Y    |
       | PrimaryAndSecondary | N    |
-
+@CSRtest2
   Scenario Outline: US1351172_Create Enrollment_AO_duplicate Primary_Email
     Given User navigates to CSR portal and enters "Super" and login
     When ABN Validator Switch is set as 'Y'
@@ -1233,6 +1251,7 @@ Feature: CSR Create Enrollment Validations
 
   ######################################## 11. CSR_US1425410_SelectPayMeths ######################################
   #TS03
+  @CSRtest2
   Scenario Outline: Fills the relevent Info with VO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1249,6 +1268,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS04
+  @CSRtest2
   Scenario Outline: Fills the relevent Info with AO Enroll Typ
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1267,7 +1287,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ######################################12. CSR_US1463317_CrtEnrlmntRvwSmtNPI #################################################
-  @CreateEnrollment @US1463317 @BothCSRUPAScenarios @UPARegression
+  @CreateEnrollment @US1463317 @BothCSRUPAScenarios @UPARegression @CSRtest2
   Scenario Outline: TS_0001/003_Validate Edit and Remove option Option next to each field on Review and Submit page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1287,7 +1307,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest2
   Scenario Outline: TS_02/09/34_Validate navigation of click Edit button on NPI section and content on Review and Submit page
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1313,6 +1333,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_004
+  @CSRtest2
   Scenario Outline: TS_0004 Validate Upon selection of Remove the NPI information is deleted and the bank letter or voided check removed.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1336,6 +1357,7 @@ Feature: CSR Create Enrollment Validations
 
   #TS_005 depricated
   #TS_06,07
+  @CSRtest2
   Scenario Outline: TS_0006/007_Validate the buttons on the page and Navigatin on click of Cancel changes Button.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1360,6 +1382,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_08
+  @CSRtest2
   Scenario Outline: TS_0008_Validate the popup on selecting Where can I find a financial institution s routing number
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1384,6 +1407,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_10
+  @CSRtest2
   Scenario Outline: TS_0010_Validate Pop up message to be displayed on selecting How do I manage multiple NPI bank accounts Link
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1409,6 +1433,7 @@ Feature: CSR Create Enrollment Validations
 
   #TS_11 is not present
   #TS_12
+  @CSRtest2
   Scenario Outline: TS_0012_Validate Headers for AO Enrollment Type
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1434,6 +1459,7 @@ Feature: CSR Create Enrollment Validations
 
   #TS_15_blank
   #@US1463317
+  @CSRtest2
   Scenario Outline: TS_15/17/18/20/21/22/23/28/31/33_Validate the Error message by giving blank input
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1458,6 +1484,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_NonNumeric
+  @CSRtest2
   Scenario Outline: TS_16/23/26/32_Validate the Error message by nonnumeric input
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1482,6 +1509,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_035A and 035B
+  @CSRtest2
   Scenario Outline: TS_0035A/35B_Disablinb of Cancel Changes button and with valid info changes are in Review and Submit Page.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1507,6 +1535,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #TS_036
+  @CSRtest2
   Scenario Outline: TS_0036_Validate on edit of different voided check or bank letter, the Cancel Changes button gets disabled.
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1532,7 +1561,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ################################## 13. CSR_US3501234_OnlineEnrollmentPDF #######################################
-  @CSRUS3501234_AO @CSR2021_PI03_01
+  @CSRUS3501234_AO @CSR2021_PI03_01 @CSRtest2
   Scenario Outline: CSR Create Online enrollment PDF for AO tin
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1551,7 +1580,7 @@ Feature: CSR Create Enrollment Validations
       | credentials |
       | Super       |
 
-  @CSRUS3501234_VO @CSR2021_PI03_01
+  @CSRUS3501234_VO @CSR2021_PI03_01 @CSRtest2
   Scenario Outline: CSR Create Online enrollment PDF for VO tin
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1571,7 +1600,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #Author:Sai
-  @CSRUS3563585_AO @CSR2021_PI03_04
+  @CSRUS3563585_AO @CSR2021_PI03_04 @CSRtest2
   Scenario Outline: Fraud Prevention - Implement scrollbar for Orgname and address suggestions
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1585,7 +1614,7 @@ Feature: CSR Create Enrollment Validations
       | Super       | MAYO CLINIC   |       1216 |
       | Super       | KAISER        |        200 |
 
-  @CSRUS3563585_VO @CSR2021_PI03_04
+  @CSRUS3563585_VO @CSR2021_PI03_04 @CSRtest2
   Scenario Outline: CSR Create Online enrollment PDF for VO tin
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1601,7 +1630,7 @@ Feature: CSR Create Enrollment Validations
 
   ################################14 US1132023_EnrollmntRedesign #######################
   #TC_01,02,03,04
-  @CSRCreateEnrollment @BothCSRUPAScenarios @CSRRegression @US1132023 @CSRSanity
+  @CSRCreateEnrollment @BothCSRUPAScenarios @CSRRegression @US1132023 @CSRSanity @CSRtest2
   Scenario: Enrollment Redesign-Surver Response Reporting for CSR
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -1611,6 +1640,7 @@ Feature: CSR Create Enrollment Validations
     And click on Submit button without any input
 
   #TC_05,06
+  @CSRtest2
   Scenario: Enrollment Redesign-Surver Response Reporting for CSR
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -1624,6 +1654,7 @@ Feature: CSR Create Enrollment Validations
     Then Error Message FromDate can not exceed ToDate should be displayed
 
   #TC_07,08,09,10
+  @CSRtest2
   Scenario Outline: Enrollment Redesign-Verify Excel file generation
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -1641,6 +1672,7 @@ Feature: CSR Create Enrollment Validations
       | 13 Months |
 
   #TC_11
+  @CSRtest2
   Scenario: Enrollment Redesign-No data error message generation
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -1651,7 +1683,7 @@ Feature: CSR Create Enrollment Validations
     Then If No data fetched then Error message: Your Search Return No Data returned
 
   ########################### 15 ABAValidatorCSR_NPILevel ####################################################
-  @CSRCreateEnrollmentTest
+  @CSRCreateEnrollmentTest @CSRtest2
   Scenario Outline: ABN Validators Financial Institution Information AO -NPI Level Validations
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1674,6 +1706,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
+  @CSRtest2
   Scenario Outline: ABN Validators Financial Institution Information AO -Error Messages Validations
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1694,6 +1727,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
+  @CSRtest2
   Scenario Outline: ABN Validators Financial Institution Information AO-NPI Level ReValidations
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1718,6 +1752,7 @@ Feature: CSR Create Enrollment Validations
 
   #|    RW             |
   ######################################### 16 ABAValidatorCSR_OrgLevel ################################
+  @CSRtest2
   Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1738,6 +1773,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
+  @CSRtest2
   Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Error Messages Validation
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1757,6 +1793,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
+  @CSRtest2
   Scenario Outline: ABN Validators Financial Institution Information AO-Error message Revalidations
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1780,6 +1817,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   #|    RW             |
+  @CSRtest2
   Scenario Outline: ABN Validators Financial Institution Information AO -Org Level Review and Submit
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
@@ -1806,6 +1844,7 @@ Feature: CSR Create Enrollment Validations
 
   #|    RW             |
   ############################################# 17 CSR_US1202167_CrtEnrlCSRVldtns ##################################
+  @CSRtest2
   Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1815,7 +1854,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest2
   Scenario Outline: Create Enrollment-CSR- RTN API Request/Response- Format Bank Info
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1826,7 +1865,7 @@ Feature: CSR Create Enrollment Validations
     Examples: 
       | credentials |
       | Super       |
-
+@CSRtest2
   Scenario Outline: Create Enrollment HO Financial Institution Information Continue from Identify Administrators page VO enrollment
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1844,7 +1883,7 @@ Feature: CSR Create Enrollment Validations
       | credentials |
       | Super       |
 
-  
+  @CSRtest2
   Scenario Outline: Create Enrollment TIN Entry Error Message Validation
     When ABN Validator Switch is set as 'Y'
     Given User navigates to CSR portal and enters "<credentials>" and login
