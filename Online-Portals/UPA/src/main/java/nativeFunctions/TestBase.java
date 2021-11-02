@@ -454,9 +454,9 @@ public class TestBase extends ReporterClass {
 		 endReporting();
 	}*/
 		
-	@AfterTest
+	//@AfterTest
 	public void tearDown() {
-		// Browser.closeBrowser(testConfig);		 
+		 Browser.closeBrowser(testConfig);		 
 
 	}
 
