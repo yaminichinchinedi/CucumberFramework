@@ -72,11 +72,10 @@ public class FinancialInstitutionInfoPageNPISteps extends TestBase{
 		financialInstitutionNPI.fillFinancialInstInfoForNPI().clickNPIYes().clickContinueNPI();
 	}
 	
-	
 
-	@Then("^User validates functionality of different buttons like Back,cancel enrollment,Continue\\(Yes/No on Continue\\) by clicking\\.$")
-	public void user_validates_functionality_of_different_buttons_like_Back_cancel_enrollment_Continue_Yes_No_on_Continue_by_clicking() throws Throwable {
-	 	financialInstitutionNPI.verifyButtons();
+	@Then("^User validates functionality of different buttons like Back,cancel enrollment,Continue\\(Yes/No on Continue\\) by clicking on \"([^\"]*)\" portal.$")
+	public void user_validates_functionality_of_different_buttons_like_Back_cancel_enrollment_Continue_Yes_No_on_Continue_by_clicking(String Portal) throws Throwable {
+	 	financialInstitutionNPI.verifyButtons(Portal);
 	}
 	
 	@Then("^User clicks on continue button of FII NPI page and validtes the error messages\\.$")

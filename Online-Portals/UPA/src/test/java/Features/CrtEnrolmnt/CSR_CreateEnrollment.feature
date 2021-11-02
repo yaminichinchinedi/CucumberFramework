@@ -642,7 +642,7 @@ Feature: CSR Create Enrollment Validations
     When RTI API server is up
     Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
     Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
-    Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking.
+    Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking on "CSR" portal.
 
   #TS_018
   @CSRtest1

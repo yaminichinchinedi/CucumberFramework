@@ -456,13 +456,13 @@ public class TestBase extends ReporterClass {
 		
 	@AfterTest
 	public void tearDown() {
-		 Browser.closeBrowser(testConfig);		 
+		// Browser.closeBrowser(testConfig);		 
 
 	}
 
 	@BeforeClass()
 	public void init() {
-		initializeData();
+		//initializeData();
 	}
 
 	public void initializeData() {
