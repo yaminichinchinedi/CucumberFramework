@@ -1666,8 +1666,8 @@ Feature: CSR Create Enrollment Validations
 
     Examples: 
       | duration  |
-      | Random    |
-      | 1 Month   |
+      #| Random    |
+      #| 1 Month   |
       | 12 Months |
       | 13 Months |
 

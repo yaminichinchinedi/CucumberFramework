@@ -242,7 +242,6 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 	sbmtButtn.click();
 	Browser.wait(testConfig, 10);
 	
-	System.out.println("**************************************"+Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return No Data.']").size());
 	if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return No Data.']").size()==0)) {	
 		
 	
@@ -265,7 +264,7 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 		//Set the String to Enter
 		  
 		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
-		  StringSelection stringSelection = new StringSelection(fileDirectory+"\\EmployeeServey_1.xls");
+		  StringSelection stringSelection = new StringSelection(fileDirectory+"EmployeeServey_1.xls");
 		//Copy the String to Clipboard
 		  clipboard.setContents(stringSelection, null);
 		  Browser.wait(testConfig, 5);
@@ -291,7 +290,7 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 //	 System.out.println("Value of Response Id is:"+responseid);
 	
 	Browser.wait(testConfig, 20);
-	String downloadFullFile=fileDirectory+"\\EmployeeServey_1.xls";
+	String downloadFullFile=fileDirectory+"EmployeeServey_1.xls";
 	String sheetName="Enrollment Survey";
 	 testConfig.cacheTestDataReaderObject(testConfig,sheetName,downloadFullFile);
 	}
