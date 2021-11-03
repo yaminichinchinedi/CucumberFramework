@@ -292,7 +292,7 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 //	 System.out.println("Value of Response Id is:"+responseid);
 	
 	Browser.wait(testConfig, 20);
-	String downloadFullFile=fileDirectory.getAbsolutePath()+"//EmployeeServey_1.xls";
+	String downloadFullFile=fileDirectory.getAbsolutePath()+"//Enrollment Survey Results.xls";
 	String sheetName="Enrollment Survey";
 	 testConfig.cacheTestDataReaderObject(testConfig,sheetName,downloadFullFile);
 	}

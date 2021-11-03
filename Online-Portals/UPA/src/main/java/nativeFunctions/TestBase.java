@@ -314,9 +314,9 @@ public class TestBase extends ReporterClass {
 		Log.Comment("Launching Google Chrome..");
 		System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
 		String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
-        File downpath = new File(downloadFilepath);
+
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-		chromePrefs.put("download.default_directory", downpath.getAbsolutePath());
+		chromePrefs.put("download.default_directory", downloadFilepath);
 		ChromeOptions options = new ChromeOptions();
 		options.setExperimentalOption("prefs", chromePrefs);
 
@@ -498,14 +498,6 @@ public class TestBase extends ReporterClass {
 		}
 		else if (Browser.equalsIgnoreCase("chrome")) {
 			Log.Comment("Inside Set driver chrome: sauce labs");
-			
-			String downloadFilepath = System.getProperty("user.dir") + "//Downloads";
-	        File downpath = new File(downloadFilepath);
-			HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
-			chromePrefs.put("download.default_directory", downpath.getAbsolutePath());
-			ChromeOptions options = new ChromeOptions();
-			options.setExperimentalOption("prefs", chromePrefs);
-			
 			DesiredCapabilities caps = DesiredCapabilities.chrome();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "94.0");
