@@ -250,37 +250,39 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 	
 	File fileDirectory=new File(downloadFilepath);
 	fileDirectory.getAbsolutePath();
-	Helper.purgeDirectory(fileDirectory);
-	try{
-	Robot robot= new Robot();
-	robot.keyPress(KeyEvent.VK_TAB);
-	robot.keyRelease(KeyEvent.VK_TAB);
-	robot.keyPress(KeyEvent.VK_TAB);
-	robot.keyRelease(KeyEvent.VK_TAB);
-	robot.keyPress(KeyEvent.VK_ENTER);
-	robot.keyRelease(KeyEvent.VK_ENTER);
-
-		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		//Set the String to Enter
-		  
-		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
-		  StringSelection stringSelection = new StringSelection(fileDirectory.getAbsolutePath()+"//EmployeeServey_1.xls");
-		//Copy the String to Clipboard
-		  clipboard.setContents(stringSelection, null);
-		  Browser.wait(testConfig, 5);
-		//Use Robot class instance to simulate CTRL+C and CTRL+V key events :
-		  robot.keyPress(KeyEvent.VK_CONTROL);
-		  robot.keyPress(KeyEvent.VK_V);
-		  robot.keyRelease(KeyEvent.VK_V);
-		  robot.keyRelease(KeyEvent.VK_CONTROL);
-		//Simulate Enter key event
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
+//	Helper.purgeDirectory(fileDirectory);
+	
+//Below commented is for IE browser	
+//	try{
+//	Robot robot= new Robot();
+//	robot.keyPress(KeyEvent.VK_TAB);
+//	robot.keyRelease(KeyEvent.VK_TAB);
+//	robot.keyPress(KeyEvent.VK_TAB);
+//	robot.keyRelease(KeyEvent.VK_TAB);
+//	robot.keyPress(KeyEvent.VK_ENTER);
+//	robot.keyRelease(KeyEvent.VK_ENTER);
+//
+//		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//		//Set the String to Enter
+//		  
+//		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
+//		  StringSelection stringSelection = new StringSelection(fileDirectory.getAbsolutePath()+"//EmployeeServey_1.xls");
+//		//Copy the String to Clipboard
+//		  clipboard.setContents(stringSelection, null);
+//		  Browser.wait(testConfig, 5);
+//		//Use Robot class instance to simulate CTRL+C and CTRL+V key events :
+//		  robot.keyPress(KeyEvent.VK_CONTROL);
+//		  robot.keyPress(KeyEvent.VK_V);
+//		  robot.keyRelease(KeyEvent.VK_V);
+//		  robot.keyRelease(KeyEvent.VK_CONTROL);
+//		//Simulate Enter key event
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
+//	}
+//	catch(Exception e)
+//	{
+//		e.printStackTrace();
+//	}
 //	Browser.wait(testConfig, 35);
 //	int rowNo=1;
 //	testConfig.cacheTestDataReaderObject("Enrollment Survey", downloadFilepath+"\\EmployeeServey_1.xlsx");

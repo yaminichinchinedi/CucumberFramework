@@ -1561,7 +1561,7 @@ Feature: CSR Create Enrollment Validations
       | Super       |
 
   ################################## 13. CSR_US3501234_OnlineEnrollmentPDF #######################################
-  @CSRUS3501234_AO @CSR2021_PI03_01 @CSRtest2
+  @CSRUS3501234_AO @CSR2021_PI03_01 @CSRtest2 
   Scenario Outline: CSR Create Online enrollment PDF for AO tin
     Given User navigates to CSR portal and enters "<credentials>" and login
     Then User clicks on Create/Maintain Enrollment link on CSR HomePage
@@ -1654,7 +1654,7 @@ Feature: CSR Create Enrollment Validations
     Then Error Message FromDate can not exceed ToDate should be displayed
 
   #TC_07,08,09,10
-  @CSRtest2 @CSRtest02
+  @CSRtest2 @test02 @CSRtest02
   Scenario Outline: Enrollment Redesign-Verify Excel file generation
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -1662,14 +1662,14 @@ Feature: CSR Create Enrollment Validations
     And User select Enrollment Survey Results option and verifies To and From Date fiels are present
     Then User verifies Submit button on the page
     Then Choose dates "<duration>" from calenders,click submit button,verifies SurveyResponse.xlx files opened
-    #Then Verifies all the fields from excel file and database by running query
+   # Then Verifies all the fields from excel file and database by running query
 
     Examples: 
       | duration  |
       #| Random    |
       #| 1 Month   |
       | 12 Months |
-      | 13 Months |
+      #| 13 Months |
 
   #TC_11
   @CSRtest2
