@@ -1654,7 +1654,7 @@ Feature: CSR Create Enrollment Validations
     Then Error Message FromDate can not exceed ToDate should be displayed
 
   #TC_07,08,09,10
-  @CSRtest2 @test02 @CSRtest02
+  @CSRtest2 
   Scenario Outline: Enrollment Redesign-Verify Excel file generation
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link

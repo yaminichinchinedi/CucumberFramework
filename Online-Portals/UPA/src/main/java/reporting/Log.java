@@ -139,7 +139,7 @@ public  class Log extends ExtentTestManager {
 		
     public synchronized static void failure(String message)
 	 {
-			testConfig.putRunTimeProperty("AlreadyFailed","yes");
+			//testConfig.putRunTimeProperty("AlreadyFailed","yes");
 			//For displaying in console
 			printToScreen(message);
 			PageInfo(testConfig,message);
