@@ -880,7 +880,7 @@ public class FinancialInstitutionInfoPageNPI{
 		return new FinancialInstitutionInfoPageNPI(testConfig);
 	}
 	
-	public void verifyButtons()
+	public void verifyButtons(String PortalType)
 	{
 		Element.verifyElementPresent(btnContinueSavChng, "Continue Button");
 		Element.verifyElementPresent(btnBack, "Back Button");
@@ -903,9 +903,9 @@ public class FinancialInstitutionInfoPageNPI{
 		Browser.wait(testConfig, 2);
 		
 		Element.click(btnYes, "YES Button of PopUp");
-		if(testConfig.getRunTimeProperty("testSuite").equalsIgnoreCase("UPA"))
+		if(PortalType.equalsIgnoreCase("UPA"))
 		Browser.verifyURL(testConfig, "registrationSignIn.do");
-		else if(testConfig.getRunTimeProperty("testSuite").equalsIgnoreCase("CSR"))
+		else if(PortalType.equalsIgnoreCase("CSR"))
 			Browser.verifyURL(testConfig, "viewwelcome.do");
 	}
 	

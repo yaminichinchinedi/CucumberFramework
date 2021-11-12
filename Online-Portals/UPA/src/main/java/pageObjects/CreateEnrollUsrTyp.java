@@ -39,7 +39,7 @@ public class CreateEnrollUsrTyp {
 	
 	public CrtEnrollValidateTIN selectUserType(String userType )
 	{
-		if (userType.equals("Provider")) {
+		if (userType.equals("Provider")||userType.equalsIgnoreCase("PROV")) {
 		Browser.wait(testConfig, 5);
 		Element.selectByIndex(usrTyp, 1, "Provider User Type");
 		}
@@ -48,7 +48,8 @@ public class CreateEnrollUsrTyp {
 		}
 		String tinNumber=Integer.toString(Helper.getUniqueTinNumber());
 		enrollmentInfoPageObj.setTin(tinNumber);
-		Element.enterData(usrTIN, tinNumber, "Tin Number", "TIN");
+		Browser.wait(testConfig, 1);
+		Element.enterData(usrTIN, tinNumber, tinNumber, "TIN");
 		testConfig.putRunTimeProperty("EnrolTin", tinNumber);
 		Element.clickByJS(testConfig, srchButtn, "Search Button");
 		Browser.wait(testConfig, 8);

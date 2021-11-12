@@ -20,6 +20,7 @@ public class Hooks extends TestBase{
 	public void BeforeScenario(Scenario scn)
 	{
 		setupTestMethod(scn);
+		initializeData();
 	}
 
 	@After
@@ -53,6 +54,8 @@ public class Hooks extends TestBase{
 			}
 		}
 		}
+        tearDown();
 		//endTest(scn);
 	 }
+	
 }

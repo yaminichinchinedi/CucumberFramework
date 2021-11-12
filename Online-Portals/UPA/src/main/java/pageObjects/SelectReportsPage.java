@@ -241,39 +241,48 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 	
 	sbmtButtn.click();
 	Browser.wait(testConfig, 10);
-	String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
+	
+	if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return No Data.']").size()==0)) {	
+		
+	
+	//String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
+	String downloadFilepath = System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
+	
 	File fileDirectory=new File(downloadFilepath);
-	Helper.purgeDirectory(fileDirectory);
-	try{
-	Robot robot= new Robot();
-	robot.keyPress(KeyEvent.VK_TAB);
-	robot.keyRelease(KeyEvent.VK_TAB);
-	robot.keyPress(KeyEvent.VK_TAB);
-	robot.keyRelease(KeyEvent.VK_TAB);
-	robot.keyPress(KeyEvent.VK_ENTER);
-	robot.keyRelease(KeyEvent.VK_ENTER);
-
-		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		//Set the String to Enter
-		  
-		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
-		  StringSelection stringSelection = new StringSelection(downloadFilepath+"\\EmployeeServey_1.xls");
-		//Copy the String to Clipboard
-		  clipboard.setContents(stringSelection, null);
-		  Browser.wait(testConfig, 5);
-		//Use Robot class instance to simulate CTRL+C and CTRL+V key events :
-		  robot.keyPress(KeyEvent.VK_CONTROL);
-		  robot.keyPress(KeyEvent.VK_V);
-		  robot.keyRelease(KeyEvent.VK_V);
-		  robot.keyRelease(KeyEvent.VK_CONTROL);
-		//Simulate Enter key event
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
-	}
-	catch(Exception e)
-	{
-		e.printStackTrace();
-	}
+	fileDirectory.getAbsolutePath();
+//	Helper.purgeDirectory(fileDirectory);
+	
+//Below commented is for IE browser	
+//	try{
+//	Robot robot= new Robot();
+//	robot.keyPress(KeyEvent.VK_TAB);
+//	robot.keyRelease(KeyEvent.VK_TAB);
+//	robot.keyPress(KeyEvent.VK_TAB);
+//	robot.keyRelease(KeyEvent.VK_TAB);
+//	robot.keyPress(KeyEvent.VK_ENTER);
+//	robot.keyRelease(KeyEvent.VK_ENTER);
+//
+//		  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+//		//Set the String to Enter
+//		  
+//		  //StringSelection stringSelection = new StringSelection("C:\\Users\\rkrish38\\Documents\\EmployeeServey_1.xls");
+//		  StringSelection stringSelection = new StringSelection(fileDirectory.getAbsolutePath()+"//EmployeeServey_1.xls");
+//		//Copy the String to Clipboard
+//		  clipboard.setContents(stringSelection, null);
+//		  Browser.wait(testConfig, 5);
+//		//Use Robot class instance to simulate CTRL+C and CTRL+V key events :
+//		  robot.keyPress(KeyEvent.VK_CONTROL);
+//		  robot.keyPress(KeyEvent.VK_V);
+//		  robot.keyRelease(KeyEvent.VK_V);
+//		  robot.keyRelease(KeyEvent.VK_CONTROL);
+//		//Simulate Enter key event
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
+//	}
+//	catch(Exception e)
+//	{
+//		e.printStackTrace();
+//	}
 //	Browser.wait(testConfig, 35);
 //	int rowNo=1;
 //	testConfig.cacheTestDataReaderObject("Enrollment Survey", downloadFilepath+"\\EmployeeServey_1.xlsx");
@@ -283,9 +292,10 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 //	 System.out.println("Value of Response Id is:"+responseid);
 	
 	Browser.wait(testConfig, 20);
-	String downloadFullFile=downloadFilepath+"\\EmployeeServey_1.xls";
+	String downloadFullFile=fileDirectory.getAbsolutePath()+"//Enrollment Survey Results.xls";
 	String sheetName="Enrollment Survey";
 	 testConfig.cacheTestDataReaderObject(testConfig,sheetName,downloadFullFile);
+	}
 	
 }
 
