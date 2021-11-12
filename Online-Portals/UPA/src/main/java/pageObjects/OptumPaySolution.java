@@ -642,7 +642,7 @@ public class OptumPaySolution {
   	@FindBy(css="input.btn-primary.rounded")
   	WebElement recPaybut;
 
-  	@FindBy(xpath="/html/body/div[3]/div[3]/div/button[2]/span")
+  	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[2]/span")
     WebElement contButton;
 
   	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")
@@ -712,7 +712,7 @@ public class OptumPaySolution {
   	@FindBy(xpath="//p[contains(text(),'By leaving this page, this will clear all your sel')]")
     WebElement	messagecontent;
   	 
-  	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[1]")
+  	@FindBy(xpath="/html/body/div[5]/div[3]/div/button[1]")
     WebElement	cancelpopup;
   	
   	@FindBy(id = "manageRecurringPaymentsButton")
@@ -721,8 +721,9 @@ public class OptumPaySolution {
   	@FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[2]/p")
     WebElement	unassignedtins;
   	
-  	@FindBy(linkText = "Setup recurring payments")
-    WebElement Setuprecurringpayments;
+  	//@FindBy(linkText = "Setup recurring payments")
+  	@FindBy(xpath = "//input[@onclick='openRpWelcomePopup();']")
+  	WebElement Setuprecurringpayments;
   	
   
   	@FindBy(xpath="//*[@id='recurringPaymentWelcomeModal']/p[1]")
@@ -2841,8 +2842,10 @@ public class OptumPaySolution {
 
 
     public OptumPaySolution clickRecPay() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
-    	Element.click(recPaybut, "Set Up recurring payments button");
+       // Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
+    	//Element.click(recPaybut, "Set Up recurring payments button");
+    	Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
+    	Element.click(Setuprecurringpayments, "Setup recurring payments");
     	return this;
     }
 
