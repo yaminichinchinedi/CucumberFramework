@@ -3,10 +3,10 @@
 Feature: UPA ViewPayments Functionality for Premium TIN
 
   	#Author: AMIT
-  	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable
+  	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable @UPATEST01
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
-        And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
 		When Click on View Payments Link for UPA
 		Then Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for "<portalAccess>".		
 		Then Validate Active/Archived Payments filter for "<userType>" is relabeled to Payment Status and has default value as New and dropdown have other status options for "<portalAccess>".
@@ -21,7 +21,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
  		Examples:
       |    credentials  |  userType 	|		searchCriteria |	portalAccess	| tinType	|	filterpayments	|	quicksearchfilter	| archivefilter 			|key															|	value	 	|
       |   PROV_Admin	  | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR|	N|
-      |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
+  #    |   PROV_Gen	    | 		PROV		|	Last 9-13 months |		 Premium		|		AO		|	Show All				|	Last 9-13 months	| 			New		  |ACTIVE_ARCHIVE_PAYMENTS_INDICATOR| N|
 		
 		
  			
@@ -47,7 +47,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
  			 
 		
 		#Author: AMIT
-		@UPAViewPayments_US2908669 @UPA_ViewPaymentStable
+		@UPAViewPayments_US2908669 @UPA_ViewPaymentStable 
  		Scenario Outline: Access Payments - View Payments - Provider Premium
  		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
