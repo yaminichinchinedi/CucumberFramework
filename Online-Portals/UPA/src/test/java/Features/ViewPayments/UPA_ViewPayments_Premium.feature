@@ -3,7 +3,7 @@
 Feature: UPA ViewPayments Functionality for Premium TIN
 
   	#Author: AMIT
-  	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable @UPATEST01
+  	    @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable 
 		Scenario Outline: Access Payments - View Payments - Provider Premium
 		Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
