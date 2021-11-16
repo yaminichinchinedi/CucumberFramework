@@ -4,10 +4,10 @@ Feature: View Payments Provider Admin
 
   #TF41850
   #TC002
-  @UPA_PROV_ViewPayments_TC002 @UPATEST01
+  @UPA_PROV_ViewPayments_TC002 
   Scenario Outline: Validation of TIN's latest payments
     Given User navigates to UPA portal and enters "<credentials>" and login
-    # Then Select the TIN for UPA Portal for "<timeperiod>"
+    Then Select the TIN for UPA Portal for "<timeperiod>"
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
     And Set FISL Parameters "<key>" and "<value>"
     When Click on View Payments Link for UPA
@@ -19,7 +19,7 @@ Feature: View Payments Provider Admin
       | credentials | userType | searchCriteria       | portalAccess | tinType | key                 | value |
       | PROV_Admin  | PROV     | generalPayment30Days | Premium      | AO      | TAX_IDENTIFIER_TYPE | ALL   |
 
-  @UPA_PROV_ViewPayments_TC006-TC011 @UPATEST01  
+  @UPA_PROV_ViewPayments_TC006-TC011   
   Scenario Outline: Validation of TIN's latest payments and Quick Search Filter
     Given User navigates to UPA portal and enters "<credentials>" and login
     #   Then Select the TIN for UPA Portal for "<timeperiod>"
@@ -35,7 +35,7 @@ Feature: View Payments Provider Admin
       | credentials | userType | searchCriteria   | portalAccess | tinType | quicksearchfilter | filterpayments | key                 | value |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Last 9-13 months  | Show All       | TAX_IDENTIFIER_TYPE | ALL   |
 
-  @UPA_PROV_ViewPayments_TC005 @UPATEST01
+  @UPA_PROV_ViewPayments_TC005 
   Scenario Outline: Validation of TIN's latest NPI Only payments and Quick Search Filter
     Given User navigates to UPA portal and enters "<credentials>" and login
    # Then Select the TIN for UPA Portal for "<timeperiod>"
@@ -62,7 +62,7 @@ Feature: View Payments Provider Admin
       | PROV_Admin  | PROV     | generalPaymentForNPI_6-9months  | Last 6-9 months   | NPI Only       | Show All      | TAX_IDENTIFIER_TYPE | NPI   |AO|Premium|
       | PROV_Admin  | PROV     | generalPaymentForNPI_9-13months | Last 9-13 months  | NPI Only       | Show All      | TAX_IDENTIFIER_TYPE | NPI   |AO|Premium|
 
-  @UPA_PROV_ViewPayments_TC004 @UPATEST01
+  @UPA_PROV_ViewPayments_TC004
   Scenario Outline: Validation of TIN's latest TIN Only payments and Quick Search Filter
     Given User navigates to UPA portal and enters "<credentials>" and login
     #Then Select the TIN for UPA Portal for "<timeperiod>"
