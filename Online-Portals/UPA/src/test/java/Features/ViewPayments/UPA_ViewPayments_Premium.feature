@@ -3,7 +3,7 @@
 Feature: UPA ViewPayments Functionality for Premium TIN
 
   #Author: AMIT
-  @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable @UPATEST01
+  @UPAViewPayments_US2793429 @OctRelease @UPA_ViewPaymentStable 
   Scenario Outline: Access Payments - View Payments - Provider Premium
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -76,7 +76,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
       | BS_Gen      | BS       | Last 9-13 months | Premium      | AO      | Show All       | Last 9-13 months  | New           | ACTIVE_ARCHIVE_PAYMENTS_INDICATOR | N     |
 
   #Author: Amit
-  @UPAViewPayments_US2973009 @NovRelease @UPA_ViewPaymentStable
+  @UPAViewPayments_US2973009 @NovRelease @UPA_ViewPaymentStable 
   Scenario Outline: Access Payments - View Payments - Provider Premium
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -93,20 +93,20 @@ Feature: UPA ViewPayments Functionality for Premium TIN
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Last 9-13 months  | New           |
       | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Last 30 days      | New           |
 
-  # @UPAUS2955416
-  #	Scenario Outline: Access Payments - View Payments - Header Page Text
-  # Given User navigates to UPA portal and enters "<credentials>" and login
-  # And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
-  #	When Click on View Payments Link for UPA
-  #  And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
-  #   Examples:
-  #           |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
-  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
-  #           |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 	|	  AO			|
-  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
-  #           |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
-  #           |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
-  #           |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
+   @UPAUS2955416 @UPATEST01
+  	Scenario Outline: Access Payments - View Payments - Header Page Text
+   Given User navigates to UPA portal and enters "<credentials>" and login
+   And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  	When Click on View Payments Link for UPA
+    And User verifies different  messages based on "<credentials>", "<Trial Status>" and "<Paid option>"
+     Examples:
+             |    credentials          |	 	      userType    | 	portalAccess    |				searchCriteria   	| tinType		|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  WithinTrial and Paid 	|	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium			  |  WithinTrial and Paid 	|	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and Paid 		|	  AO			|
+             |       PROV_Admin        | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
+             |       PROV_Gen          | 			 PROV			    	|			Premium		  	|  PostTrial and NotPaid 	|	  VO			|
   @UPAUS3015574
   Scenario Outline: Access Payments - View Payments - PPRA link for Prov
     Given User navigates to UPA portal and enters "<credentials>" and login
@@ -121,7 +121,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
       | PROV_Admin  | PROV     | Premium      | Last 60 days   | AO      | Show All       | Last 60 days      | New           |
       | PROV_Gen    | PROV     | Premium      | Last 60 days   | AO      | Show All       | Last 60 days      | New           |
 
-  @UPAUS3015574
+  @UPAUS3015574 
   Scenario Outline: Access Payments - View Payments - PPRA link for BS
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -253,7 +253,7 @@ Feature: UPA ViewPayments Functionality for Premium TIN
       | PAY_Gen     | PAY      | Last 9-13 months | Premium      | AO      | Show All       | Last 9-13 months  |
 
   #Author: AMIT
-  @UPA_ViewPaymentPayer_2 @UPA_ViewPaymentStable @UPA_ViewPaymentPremium 
+  @UPA_ViewPaymentPayer_2 @UPA_ViewPaymentStable @UPA_ViewPaymentPremium  
   Scenario Outline: Access Payments - View Payments - Provider Premium
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
