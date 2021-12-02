@@ -436,6 +436,7 @@ Feature: CSR Create Enrollment Validations part3
     Then Error Message FromDate can not exceed ToDate should be displayed
 
   #TC_07,08,09,10
+  @CSRTEST01
   Scenario Outline: Enrollment Redesign-Verify Excel file generation
     Given User navigates to CSR portal and enters "Super" and login
     Then User clicks on Common Reports link
@@ -447,11 +448,11 @@ Feature: CSR Create Enrollment Validations part3
     # Then Verifies all the fields from excel file and database by running query
     Examples: 
       | duration |
-      | Random   |
-      | 1 Month  |
-
-  #| 12 Months |
-  #| 13 Months |
+    #  | Random   |
+    # | 1 Month  |
+      | 12 Months |
+     #| 13 Months |
+ 
   #TC_11
   Scenario: Enrollment Redesign-No data error message generation
     Given User navigates to CSR portal and enters "Super" and login
