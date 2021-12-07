@@ -500,3 +500,22 @@ Examples:
 	
 	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
 	         |    Super       |	FailedInvoice	   |  AO 	 |	Premium		 |	PROV	|
+	         
+@CSRUS3949310
+Scenario Outline: Access Payments - 8.1 - Unpaid Invoices flow - Super CSR - Ability to view the Invoice adjustments page 
+      Given User navigates to CSR portal and enters "<credentials>" and login
+      Then User clicks on Optum Pay Solutions link on CSR HomePage
+      And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+      Then User Enters tin for OPS and click on search button for "<userType>".
+      Then user validates unpaid invoices flow in Adjustment tab
+      
+      
+      
+      
+      
+      Examples:
+	
+	         |   credentials  | searchCriteria       |tinType|portalAccess |userType|
+	         |    Super       |	 ValidInvoice    |  AO 	 |	Premium		 |	PROV	|
+
+     

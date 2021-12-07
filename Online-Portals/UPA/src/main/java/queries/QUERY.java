@@ -486,6 +486,9 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"WHERE paba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
 	
 	public static final String How_To_Enroll_Page = "Select  cast(CLOB_VAL as varchar(32000)) as clobval,TEXT_VAL  from ole.CONTENT where CONT_NM like '%How to Enroll%'";
+	public static final String RECURR_PAY_Status  ="SELECT RECR_PAY_SET_IND FROM  ole.PAYMENT_DESIGNATION pd WHERE pd.PROV_BNK_ACCT_ID IN \r\n" + 
+			                                        "(SELECT pbah.PROV_BNK_ACCT_ID FROM ole.PROVIDER_BANKING_ACCOUNT_HISTORY pbah  WHERE pbah.PROV_TIN_NBR='{$tin}')";
+	
 }
 
 

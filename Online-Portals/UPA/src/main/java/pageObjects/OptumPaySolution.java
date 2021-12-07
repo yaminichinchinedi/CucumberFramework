@@ -19,6 +19,8 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+import javax.management.Query;
+
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -733,6 +735,58 @@ public class OptumPaySolution {
   	
   	@FindBy(xpath="//span[contains(text(),'Cancel')]")
     WebElement	cancelbutton;
+  	
+  	@FindBy(linkText="Select all")
+  	WebElement selectall;
+  	
+  	@FindBy(xpath = "//input[@class='btn-primary rounded payInvoices']")
+  	WebElement btnPayInvoice;
+  	
+  	@FindBy(xpath="//h3[contains(text(),'Thank you. Your invoice payments are now complete.')]")
+  	WebElement confirmationmsg1;
+  	
+  	@FindBy(xpath="//p[contains(text(),'Please allow up to 3 business days to process.')]")
+  	WebElement confirmationmsg2;
+  	
+  	@FindBy(xpath="//input[@value='Return to invoices']")
+  	WebElement btnReturntoInvoices;
+  	
+  	@FindBy(xpath="//a[contains(text(),'Adjustments')]")
+  	WebElement adjustment;
+  	
+  	@FindBy(xpath="//input[@value='unPaid']")
+  	WebElement btnunPaidInvoices;
+  	
+  	
+  	@FindBy(xpath="//input[@class='btn-primary rounded creditInvoices']")
+  	WebElement btncreditInvoices;
+  	
+  	@FindBy(xpath="//span[contains(text(),'Complete the steps below to adjust invoice(s) assoc')]")
+  	WebElement confirmationtxt;
+  	
+  	@FindBy(xpath="//input[@name='refundAction']")
+  	WebElement btnCreditInvoice;
+  	
+  	@FindBy(xpath="//label[contains(text(),'Credit invoice and create a new invoice')]")
+  	WebElement btnCreditInvoiceandCreateanewInvoice;
+  	
+  	@FindBy(xpath="//input[@class='btn btn-primary large-btn w-100 assign-btn']")
+  	WebElement btnApplytoSelectedInvoices;
+  	
+  	@FindBy(xpath="//input[@value='Continue']")
+  	WebElement btnContinue;
+  	
+  	@FindBy(xpath="//input[@value='Cancel']")
+  	WebElement btnCancel;
+  	
+  	
+  	
+  	@FindBy(xpath="//thead/tr[1]/th[1]/a[1]")
+  	WebElement deselectAll;
+  	
+  	@FindBy(xpath="//select[@name='selectedReason']")
+  	WebElement reasonCode;
+  	
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -2907,4 +2961,73 @@ public class OptumPaySolution {
     	return this;
     	
     }
+    public OptumPaySolution payInvoice() {
+    	Element.click(selectall,"select all");
+    	Element.click(btnPayInvoice,"Pay Invoice");
+    	Element.click(payType,"Primary bank account TIN radio button");
+    	Element.click(assignAccnt,"Assign account");
+    	Element.click(RecurringPaymentStep1Continue, "continue button");
+    	Element.click(RecurringPaymentStep2Continue, "continue button");
+    	Element.click(RecurringPaymentStep3Checkbox1, "AcceptTermsCheckbox1");
+    	Element.click(RecurringPaymentStep3Checkbox2, "AcceptTermsCheckbox1");
+    	Element.click(RecurringPaymentStep3Submit, "submit button");
+    	return this;
+    	
+    	
+    }
+    
+    public OptumPaySolution validateConfirmationScreen() {
+    	String query=QUERY.RECURR_PAY_Status;
+    	Map SearchedData = DataBase.executeSelectQuery(testConfig, query, 1);
+    	System.out.println(SearchedData);
+    	Element.verifyTextPresent(confirmationmsg1, "Thank you. Your invoice payments are now complete");
+    	Element.verifyTextPresent(confirmationmsg2, "Please allow up to 3 business days to process");
+    	if(SearchedData.get("RECR_PAY_SET_IND").toString().equals("N"))
+    	{
+    		Element.verifyElementPresent(recPaybut, "Set up Recurring Payment");
+    	}
+    	
+    	Element.verifyElementIsEnabled(btnReturntoInvoices,"Return to Invoices button");
+    	Element.click(btnReturntoInvoices,"Return to Invoices button");
+    	Browser.verifyURL(testConfig,"OPSInvoices.do?method=index");
+    	return this;
+    }
+    public OptumPaySolution validateUnpaidInvoiceFlow() {
+    	Element.click(adjustment, "Adjustment tab");
+    	Element.click(btnunPaidInvoices, "unPaidInvoices"); 
+    	Element.click(selectall,"select all");
+    	Element.click(btncreditInvoices,"Credit Invoices");
+    	Browser.verifyURL(testConfig,"OPSAdjustments.do?method=index&isRefundInvoicesFlow=true&creditInvoices=true");
+    	Element.verifyTextPresent(confirmationtxt, "Complete the steps below to adjust invoice(s) associated to");  	
+    	return this;
+    }
+    
+    public OptumPaySolution validateSelectedInvoicesTable() {
+    	List<WebElement> tableHeads1 = Element.findElements(testConfig, "xpath", "//tbody/tr[2]/td[1]/div[1]/form[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]");
+    	List<String> expectedTableHeads1 = new ArrayList<>();
+    	
+        expectedTableHeads1.add(0, "Deselect all");
+        expectedTableHeads1.add(1, "Invoice");
+        expectedTableHeads1.add(2, "Amount");
+        expectedTableHeads1.add(3, "Reason code");
+        expectedTableHeads1.add(4, "Credit action");
+        String expectedHeaders = String.join(" ",expectedTableHeads1);
+        System.out.println(expectedHeaders);
+        String actualTableHeads1 = tableHeads1.get(0).getText().trim(); 
+        Helper.compareEquals(testConfig, "Selected Invoices grid", expectedHeaders, actualTableHeads1);
+        Element.verifyElementIsEnabled(deselectAll, "Deselect All");
+    	return this;
+    }
+    
+    public OptumPaySolution validateAdjustmentdetailsSection()
+    {     
+    	Element.verifyElementIsEnabled(reasonCode, "Reasoncode");
+    	Element.verifyElementNotEnabled(btnCreditInvoice, "Credit Invoice");
+    	Element.verifyElementNotEnabled(btnApplytoSelectedInvoices,"Apply to Selected Invoices");
+    	Element.verifyElementIsEnabled(btnCancel,"Cancel");
+    	Element.verifyElementNotEnabled(btnContinue, "Continue");
+    	
+    	return this;
+    }
+    
 }

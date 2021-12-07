@@ -573,4 +573,22 @@ Feature: - Optum Pay Solutions
     Examples:
       | credentials | userType | portalAccess | searchCriteria   | tinType |
       | BS_Admin    | BS       | Premium      | TinWithRecurrPay | AO      |
+      
+      
+      
+    @UPAUS3887807
+    Scenario Outline: Access Payments- 5 Final Confirmation Screen 
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User clicks on "Invoices" tab
+    Then User selects the unpaid invoice 
+    Then user verifies the confirmation screen
+    
+    
+    
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria       | tinType |
+      | PROV_Admin  | PROV     | Premium      | ValidInvoice | AO      |
+    
     
