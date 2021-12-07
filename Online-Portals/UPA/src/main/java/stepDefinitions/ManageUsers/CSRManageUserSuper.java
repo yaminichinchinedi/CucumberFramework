@@ -22,23 +22,6 @@ public class CSRManageUserSuper extends TestBase {
 		manageUsers = searchTInPage.doSearch(userType);
 	}
 
-	@Then("^User should be navigated to manage user page for the selected \"([^\\\"]*)\"$")
-	public void user_should_be_navigated_to_manage_user_page(String userType) throws Throwable {
-		String title = "";
-		switch (userType) {
-		case "PAY":
-			title+="Manage Payer Users";
-			break;
-		case "PROV":
-			title+="Manage Users";
-			break;
-		case "BS":
-			title+="Secure User- Manage Users";
-			break;
-		}
-		Helper.compareEquals(testConfig, "Comparing Manage user page title for different users", title, driver.getTitle());
-	}
-
 	@Then("^User verifies the UI for selected \"([^\"]*)\"$")
 	public void user_verifies_the_UI_for_selected(String userType) throws Throwable {
 		manageUsers.verifyCsrManageUserUI(userType);

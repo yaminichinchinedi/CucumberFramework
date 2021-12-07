@@ -5,24 +5,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import main.java.Utils.DataBase;
-import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
-import main.java.Utils.TestDataReader;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
 public class AddUserDetails {
-
 
 	@FindBy(name="fname")
 	WebElement firstName;
@@ -41,7 +36,6 @@ public class AddUserDetails {
 
 	@FindBy(name="email")
 	WebElement email;
-
 
 	@FindBy(name="addTincsr")
 	WebElement addTinTxtbox;
@@ -130,7 +124,6 @@ public class AddUserDetails {
 	@FindBy(css=".rowDark>td>select")
 	WebElement drpDwnTinAccessLvl;
 
-
 	@FindBy(xpath="//div[@id='flow']//tbody//a")
 	List <WebElement> userNames;
 
@@ -162,27 +155,16 @@ public class AddUserDetails {
 	String phNo = Long.toString(Helper.generateRandomNumber(3));
 	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
 	String extensionNo = Long.toString(Helper.generateRandomNumber(5));
-
 	String userEmailAdr=Helper.getUniqueEmailId();
-
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
 	static final String MiddleNameTxt=Helper.generateRandomAlphabetsString(1);
 
-
 	public AddUserDetails(TestBase testConfig) {
 		// TODO Auto-generated constructor stub
-
 		this.testConfig=testConfig;
 		PageFactory.initElements(testConfig.driver, this);
 		testConfig.driver.findElement(By.name("fname"));
 		Element.expectedWait(firstName, testConfig, "First Name textbox", "First Name textbox");
-
-	}
-
-	//Creating Default constructor
-	public AddUserDetails() 
-	{	
-		//Element.verifyElementPresent(firstName, "First Name textbox");
 	}
 
 	public AddUserDetails fillNewUserInfo()
@@ -252,7 +234,6 @@ public class AddUserDetails {
 		return this;
 	}
 
-
 	public AddUserDetails selectTinAccessLvl(String accessLevel)
 	{
 		List <WebElement> accessLvls=testConfig.driver.findElements(By.xpath("//select[not(contains(@id,'accessLevel'))]/parent::td//select"));
@@ -271,23 +252,21 @@ public class AddUserDetails {
 
 	public String  addTinCSR(int sqlNo)
 	{
-		Map tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
+		Map<String, String> tinNo=DataBase.executeSelectQuery(testConfig, sqlNo, 1);
 		Element.enterData(addTinTxtbox,tinNo.get("PROV_TIN_NBR").toString(), "Enter tin number : " + tinNo.get("PROV_TIN_NBR").toString() ,"add Tin");
 		testConfig.putRunTimeProperty("tin", tinNo.get("PROV_TIN_NBR").toString());
 		clickAddTin();
 		return tinNo.get("PROV_TIN_NBR").toString();
 	}
 
-
 	public String selectAndAddTin(int sqlRow)
 	{
-		Map tinNoToBeSelected=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
+		Map<String, String> tinNoToBeSelected=DataBase.executeSelectQuery(testConfig, sqlRow, 1);
 		Element.selectByValue(drpDwnSelectTin, tinNoToBeSelected.get("PROV_TIN_NBR").toString(), "select tin as " + tinNoToBeSelected.get("PROV_TIN_NBR").toString());
 		Browser.waitForLoad(testConfig.driver);
 		clickAddTin();
 		return tinNoToBeSelected.get("PROV_TIN_NBR").toString();
 	}
-
 
 	public ManageUsers verifyDetailsOfNewUser(String userType)
 	{
@@ -306,7 +285,6 @@ public class AddUserDetails {
 		if(userType.equalsIgnoreCase("BS") || userType.equalsIgnoreCase("PAY"))
 		{
 			portalUser = DataBase.executeSelectQuery(testConfig,QUERY.BS_OR_PAY_PORTAL_USER, 1);
-
 		}
 		else if(userType.equalsIgnoreCase("PROV"))
 		{
@@ -316,14 +294,11 @@ public class AddUserDetails {
 
 		String userEmailAdr = System.getProperty("userEmailAdr");
 		String firstName = System.getProperty("firstName");
-
 		Browser.wait(testConfig, 3);
 		Helper.compareEquals(testConfig, "Comparing First Name", portalUser.get("FST_NM"), firstName);
 		Helper.compareEquals(testConfig, "Comparing Last Name", portalUser.get("LST_NM"), firstName);
 		Helper.compareEquals(testConfig, "Comparing Email Address", portalUser.get("EMAIL_ADR_TXT"), userEmailAdr.trim());
-
 		return new ManageUsers(testConfig);
-
 	}
 
 	public String convertStatusType(String DBUserType)
@@ -338,20 +313,13 @@ public class AddUserDetails {
 
 		default:
 			return "Incorrect user type";
-
-
 		}
 	}
-
-
-
-
 	public void verifyAssociatedTins() throws IOException
 	{
 		int sqlRowNo = 8;
 		ArrayList<String> tinsListFromDB = new ArrayList<String>();
 		List<String> tinsListFromUI = new ArrayList<String>();
-
 		HashMap<Integer, HashMap<String, String>> associatedTins = DataBase.executeSelectQueryALL(testConfig, sqlRowNo);
 		for (int i = 1; i <= associatedTins.size(); i++) {
 			tinsListFromDB.add(associatedTins.get(i).get("PROV_TIN_NBR"));
@@ -362,7 +330,6 @@ public class AddUserDetails {
 			String tin[] = tinNo.split("-");
 			newListFromUI.add(tin[0].trim());
 		}
-
 		Log.Comment("List of tins from UI is :" + '\n' + newListFromUI, "Green");
 		Log.Comment("List of tins from DB is :" + '\n' + tinsListFromDB, "Green");
 
@@ -377,14 +344,12 @@ public class AddUserDetails {
 			}
 		}
 	}
+	
 	public void verifyErrorMessages() throws IOException
 	{
-
 		int sqlRowNo=6;
 		Map enrolledProviderTable = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 		String existingEmailAdr=enrolledProviderTable.get("EMAIL_ADR_TXT").toString().toLowerCase().trim();
-
-
 		//Leave all fields blank and click Save
 		Element.click(btnSave, "Save button");
 
@@ -419,12 +384,9 @@ public class AddUserDetails {
 		Element.verifyTextPresent(errorExtension, "Invalid Extension");
 		Element.verifyTextPresent(errorEmail, "Invalid Email Address");
 		Element.verifyTextPresent(errorRetypeEmail, "Invalid Retype Email Address");
-
 		Browser.wait(testConfig, 2);
 
 		//Verify phone number field Allows 10 digits (Mandatory) 
-
-
 		Element.enterData(phoneNum, phNo, "Enter Phone number in field 1 as:" + " "+phNo,"phoneNum");
 		Element.enterData(phoneNum1, phNo, "Enter Phone number in field 2 as:" +" "+phNo,"phoneNum1");
 		Element.enterData(phoneNum2, phNo, "Enter Phone number in field 3 as:" + " "+phNo ,"phoneNum2");
@@ -437,9 +399,7 @@ public class AddUserDetails {
 		{
 			Log.Pass("Middle name allowing only one character which is :" + " " + firstNameTxt.charAt(0) );
 		}
-
 		Element.click(btnSave, "Save button");
-
 		Element.verifyTextPresent(errorPhone, "Invalid Phone Number");
 
 		//Verify Duplicate email is not allowed
@@ -457,15 +417,13 @@ public class AddUserDetails {
 		Element.click(btnSave, "Save button");
 		String expString="Confirm Existing User";
 		Element.verifyTextPresent(exitingUserText,expString);
-
 		//verifyAssociatedTins();
-
 	}
 
 	public ManageUsers VerifyDetailsOfUser(String userType)
 	{
 		int sqlRowNo=0;
-		Map portalUser=null;
+		Map<String, String> portalUser=null;
 		{
 			if(userType.equalsIgnoreCase("PROV")){
 				sqlRowNo=400;
@@ -486,11 +444,8 @@ public class AddUserDetails {
 				Log.Fail("Exception occured : " + e);
 			}
 		}
-
 		return new ManageUsers(testConfig);
-
 	}
-
 
 	public AddUserDetails clickAsscociateNoButton()
 	{
@@ -590,5 +545,4 @@ public class AddUserDetails {
 		Helper.compareEquals(testConfig, "last name", lastName.getAttribute("value"),  portalUserDetails.get("LST_NM"));
 		return new ManageUsers(testConfig);
 	}
-
 }

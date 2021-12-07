@@ -3,17 +3,6 @@
 @CSRManageUsers @CSRRegression @CSRManageUsersSuperUser
 Feature: CSR Manage User Functionality for super user
 	
-  Scenario Outline: Verify super user login as provider/payer/billing service
-  	Given User navigates to CSR portal and enters "<credentials>" and login
-    When User clicks on Manage Users link 
-    And selects "<userType>" from dropdown, enters tin on Search Tin Page for the selected usertype and clicks on search button
-    Then User should be navigated to manage user page for the selected "<userType>"
-		Examples:
-		     |    userType     |   credentials   |  
-		     |      PROV       |      Super      |
-		     |      PAY        |      Super      |
-		     |      BS	       |      Super      |
-	
 	Scenario Outline: Manage User page UI validation for provider/payer/billing service
 		Given User navigates to CSR portal and enters "<credentials>" and login
     When User clicks on Manage Users link 
@@ -39,7 +28,6 @@ Feature: CSR Manage User Functionality for super user
      |      PAY        |      Super      |	Administrator   |			 No          |       No               |
      |      BS	       |      Super      |  Administrator   |      No          |       Yes              |
      |      BS	       |      Super      |  Administrator   |      No          |       No               |
- 
 
   Scenario Outline: Manage User- Edit and Save functionality  for provider/payer/billing service
 		Given User navigates to CSR portal and enters "<credentials>" and login
