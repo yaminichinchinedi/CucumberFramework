@@ -486,6 +486,21 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"WHERE paba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
 	
 	public static final String How_To_Enroll_Page = "Select  cast(CLOB_VAL as varchar(32000)) as clobval,TEXT_VAL  from ole.CONTENT where CONT_NM like '%How to Enroll%'";
+	public static final String ACTIVE_PROV_WITH_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.portal_user_tin put \r\n" + 
+			"on pu.PORTAL_USER_ID=put.PORTAL_USER_ID join ole.ENROLLED_PROVIDER ep on put.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
+			"where pu.STS_CD = 'A' and put.PROV_TIN_NBR <> '' and put.PROV_TIN_NBR is not null and ep.ENRL_STS_CD='A' Fetch FIRST ROW ONLY";
+	public static final String ACTIVE_PAYER_WITH_SUBPAYER_AND_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.PORTAL_USER_PAYER_TIN pupt \r\n" + 
+			"on pu.PORTAL_USER_ID=pupt.PORTAL_USER_ID join ole.Payer p on p.PAYR_TIN_NBR=pupt.PAYR_TIN_NBR join ole.SUB_PAYER sp\r\n" + 
+			"on sp.PAYR_TIN_NBR=pupt.PAYR_TIN_NBR where pu.STS_CD = 'A' and p.PAYR_ACTV_IND='Y' Fetch FIRST ROW ONLY";
+	public static final String ACTIVE_BS_WITH_ASSOCIATED_PROVIDER_AND_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.PORTAL_USER_BS_TIN pubt \r\n" + 
+			"on pu.PORTAL_USER_ID=pubt.PORTAL_USER_ID join OLE.BILLING_SERVICE bs on pubt.BILLING_SERVICE_ID=bs.BILLING_SERVICE_ID join ole.billing_service_provider bsp\r\n" + 
+			"on bs.BILLING_SERVICE_ID=bsp.BILLING_SERVICE_ID where pu.STS_CD='A' and bs.ENRL_STS_CD='A' Fetch FIRST ROW ONLY";
+	public static final String BS_OR_PAY_PORTAL_USER = "select * from  OLE.PORTAL_USER p where p.EMAIL_ADR_TXT='{$email}'";
+	public static final String PROV_PORTAL_USER = "select * from OLE.PORTAL_USER p join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL join "
+			+ "OLE.portal_user_tin pt on p.PORTAL_USER_ID=pt.PORTAL_USER_ID join OLE.enrolled_provider ep on ep.PROV_TIN_NBR=pt.PROV_TIN_NBR "
+			+ "where p.EMAIL_ADR_TXT='{$email}' and pv.PAY_PROC_CD_DESC='User Type Code'";
+	public static final String PORTAL_USER_DETAILS = "select * from ole.portal_user where portal_user_id='{$portalUserID}'";
+
 }
 
 

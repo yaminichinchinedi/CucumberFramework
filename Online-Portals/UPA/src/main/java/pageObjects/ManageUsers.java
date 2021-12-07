@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -64,6 +65,9 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@value='Add User']")
 	WebElement btnAddUser;
 	
+	@FindBy(xpath="//input[@value='Unlink Optum ID']")
+	WebElement btnUnlinkOptumId;
+	
 	
 	@FindBy(xpath="//span[@class='noTooltipIcon wrapperTooltip']")
 	WebElement btnAddUserdisabled;
@@ -103,6 +107,9 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(name="verifyEmail")
 	WebElement verifyEmail;
 	
+	@FindBy(id="addTincsr")
+	WebElement txtboxTin;
+	
 	@FindBy(xpath="//input[@value='Search']")
 	WebElement btnSearch;
 	
@@ -119,11 +126,26 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="//input[@value='Delete User']")
 	WebElement btnDelete;
 	
+	@FindBy(xpath="//input[@value='Delete Fraud User']")
+	WebElement btnDltFraudUser;
+	
+	@FindBy(id="viewfrauduser")
+	WebElement chkboxFraudUser;
+	
+	@FindBy(id="viewpurgeduser")
+	WebElement chkboxPurgedUser;
+	
 	@FindBy(id="notu")
 	WebElement lnkNotYou;
 	
 	@FindBy(css="input[value='Cancel']")
 	WebElement btnCancel;
+	
+	@FindBy(xpath="//th[text()='Provider Name']//ancestor::table[2]")
+	WebElement userDetailsTableForProviderOrBS;
+	
+	@FindBy(xpath="//th[text()='Sub Payer Name ']//ancestor::table[2]")
+	WebElement userDetailsTableForPayer;
 	
 	@FindBy(xpath="//div[@id='flow']//tbody//a")
 	List <WebElement> userNames;
@@ -260,6 +282,10 @@ public class ManageUsers extends AddUserDetails
 	
 	@FindBy(xpath="//div[@class='manageUsers__userListTable_rows']/table/tbody/tr[1]/td") 
 	WebElement usernameUI;
+
+	@FindBy(xpath="//a[contains(text(), 'User List')]//ancestor::table[1]//tr") 
+	List<WebElement> userList;
+	
 	
 	@FindBy(xpath="//input[@value=' Save ']") 
 	WebElement savebtn;
@@ -297,15 +323,13 @@ public class ManageUsers extends AddUserDetails
 	@FindBy(xpath="(//div[@class='ui-dialog-buttonset']/button)[2]")
 	WebElement mfaDialogBoxYesButton;
 	
-	@FindBy(xpath="//input[@value='Delete Fraud User']")
-	WebElement btnDltFraudUser;
-	
 	private TestBase testConfig;
 	LoginCSR csrPage;
 	
 	
 	public ManageUsers(TestBase testConfig)
 	{
+		super(testConfig);
 		if(testConfig.getRunTimeProperty("App").equalsIgnoreCase("CSR"))
 		{
 		this.testConfig=testConfig;
@@ -524,37 +548,33 @@ public class ManageUsers extends AddUserDetails
 	 * displayed in user list in left nav
 	 */
 	
-	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig) throws InterruptedException
+	public ArrayList<String> getListOfAllUsersFromUI(TestBase testConfig)
 	{  
-		List <WebElement> userNames=null;
-		ArrayList<String> UsersListUI1=new ArrayList<String>();
-		ArrayList<String> UsersListUI=new ArrayList<String>();
+		List <WebElement> userNamesElementsList=null;
+		LinkedHashSet<String> userNamesList = new LinkedHashSet<>();
 		try{
-			userNames=testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
-			
-			
-		   }
+			userNamesElementsList=TestBase.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
+
+
+		}
 		catch(Exception e){
 			Log.Comment("Finding user List again");
-			userNames=testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
-			
-		   }
-	   
+			userNamesElementsList=testConfig.driver.findElements(By.xpath("//div[@class='manageUsers__userListTable_rows']/table/tbody/tr"));
+
+		}
+
 		try{
-		for(WebElement userName:userNames)
-		 { 
-			UsersListUI1.add(userName.getText().toString().toUpperCase().trim());
-			
-		 }
-		
-		UsersListUI = removeDuplicates(UsersListUI1); 
-		
+			for(WebElement userName:userNamesElementsList)
+			{ 
+				userNamesList.add(userName.getText().toString().toUpperCase().trim());
+
+			}		
 		}
 		catch(Exception e)
 		{
 			Log.Comment("Exception occured : " +  e);
 		}
-		return UsersListUI;			
+		return new ArrayList<String>(userNamesList);			
 	}
 	
 	public void deleteAndVerifyUserIsDeleted() throws InterruptedException
@@ -615,36 +635,20 @@ public class ManageUsers extends AddUserDetails
 	 * which is associated with the logged in tin 
 	 * i.e. the tin that you selected on Home Page 
 	 */
-	public String getActiveUser(String userType) {
-		int sqlRowNo = 10;
-		String result = "";
+	public String getActiveUser(Map<String, String> tinAndUserDetails) {
+		String activeUser = "";
 
-		if (userType.equalsIgnoreCase("PROV"))
-			sqlRowNo = 10;
-		// sqlRowNo=415;
-
-		else if (userType.equalsIgnoreCase("BS"))
-			sqlRowNo = 18;
-		else if (userType.equalsIgnoreCase("PAY"))
-			// sqlRowNo=19;
-			sqlRowNo = 401;
-
-		// Find an Active User associated with logged in Provider Tin number
-		Map enrolledProvider = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
-
-		if (null == enrolledProvider)
+		if (null == tinAndUserDetails)
 			Log.Fail("No active user available in Database for " + testConfig.getRunTimeProperty("tin") + '\n'
 					+ "Please execute the test case manually");
-
 		else {
-			testConfig.putRunTimeProperty("user", enrolledProvider.get("USERNAME").toString());
-			String activeUser = enrolledProvider.get("LST_NM").toString().toUpperCase() + "," + " "
-					+ enrolledProvider.get("FST_NM").toString().toUpperCase();
+			testConfig.putRunTimeProperty("user", tinAndUserDetails.get("USERNAME").toString());
+			activeUser = tinAndUserDetails.get("LST_NM").toString().toUpperCase() + "," + " "
+					+ tinAndUserDetails.get("FST_NM").toString().toUpperCase();
 			Log.Comment("Active user returned is :" + " " + activeUser);
-			testConfig.putRunTimeProperty("activeUserID", enrolledProvider.get("SSO_ID").toString());
-			result = activeUser;
+			testConfig.putRunTimeProperty("activeUserID", tinAndUserDetails.get("SSO_ID").toString());
 		}
-		return result;
+		return activeUser;
 	}
 	
 	/**
@@ -1377,10 +1381,8 @@ public class ManageUsers extends AddUserDetails
 	
 	public String getFirstLastName()
 	{
-		int sqlRowNo=13;
-		Map portalUserData = DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-		return portalUserData.get("FST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("LST_NM").toString().toUpperCase();
-		
+		Map<String, String> portalUserData = DataBase.executeSelectQuery(testConfig,QUERY.BS_OR_PAY_PORTAL_USER, 1);
+		return portalUserData.get("FST_NM").toString().toUpperCase() + "," +" " + portalUserData.get("LST_NM").toString().toUpperCase();		
 	}
 	
 	/**
@@ -2408,7 +2410,7 @@ public class ManageUsers extends AddUserDetails
 		int sqlRowNo = 423;
 		Map Searchedtin = DataBase.executeSelectQuery(testConfig, sqlRowNo, 1);
 		String tin1 = Searchedtin.get("PROV_TIN_NBR").toString().trim();
-		Element.enterData(addTin, tin1, "Associate to tin", "addTin");
+		Element.enterData(addTinTxtbox, tin1, "Associate to tin", "addTin");
 		clickAddTin();
 		testConfig.putRunTimeProperty("tin1", tin1);
 		return this;
@@ -2768,26 +2770,26 @@ public void removetinadded()
 			
 		}
 		
-		 public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) 
-		    { 
-		  
-		        // Create a new ArrayList 
-		        ArrayList<T> newList = new ArrayList<T>(); 
-		  
-		        // Traverse through the first list 
-		        for (T element : list) { 
-		  
-		            // If this element is not present in newList 
-		            // then add it 
-		            if (!newList.contains(element)) { 
-		  
-		                newList.add(element); 
-		            } 
-		        } 
-		  
-		        // return the new list 
-		        return newList; 
-		    } 
+//		 public static <T> ArrayList<T> removeDuplicates(ArrayList<T> list) 
+//		    { 
+//		  
+//		        // Create a new ArrayList 
+//		        ArrayList<T> newList = new ArrayList<T>(); 
+//		  
+//		        // Traverse through the first list 
+//		        for (T element : list) { 
+//		  
+//		            // If this element is not present in newList 
+//		            // then add it 
+//		            if (!newList.contains(element)) { 
+//		  
+//		                newList.add(element); 
+//		            } 
+//		        } 
+//		  
+//		        // return the new list 
+//		        return newList; 
+//		    } 
 
 
 		public void verifyFooterMessageOnManageUsers() {
@@ -3001,5 +3003,70 @@ public ManageUsers	deleteFraudUser() {
 	 Element.clickByJS(testConfig,btnYes, "Yes button");
 	 return this;
 }
+
+public ManageUsers selectActiveUser(String userName)
+{
+   for(WebElement element : userList) {
+	   String uname = element.getText().trim();
+	   if(uname.equalsIgnoreCase(userName)) {
+		   Element.click(element.findElement(By.tagName("a")), "User name web element");
+		   if(txtStatus.getText().contains("Active")) {
+			   break;
+		   }
+	   }
+   }
+   return new ManageUsers(testConfig);
+}
+
+public void verifyCsrManageUserUI(String userType)
+{
+	Log.Comment("Verifying Elements for CSR Manage User Page");
+	selectActiveUser(testConfig.getRunTimeProperty("userName"));
+	Element.verifyElementPresent(lnkUserList,"User list");
+	Element.verifyElementPresent(btnUnlinkOptumId,"Unlink optum Id button");
+	Element.verifyElementPresent(btnAddUser,"Add user button");
+	Element.verifyElementPresent(btnRsndRegEmail,"Resend registration mail button");
+	Element.verifyElementPresent(fname,"First name textbox");
+	Element.verifyElementPresent(middleName,"Middle name textbox");
+	Element.verifyElementPresent(lname,"Last name textbox");
+	Element.verifyElementPresent(phoneNum,"Phone number1 textbox");
+	Element.verifyElementPresent(phoneNum1,"Phone number2 textbox");
+	Element.verifyElementPresent(phoneNum2,"Phone number3 textbox");
+	Element.verifyElementPresent(extension,"Extension number textbox");
+	Element.verifyElementPresent(email,"Email Id textbox");
+	Element.verifyElementPresent(verifyEmail,"Retype email Id textbox");
+	
+	switch (userType) {
+	case "PROV":
+		Element.verifyElementPresent(btnDltFraudUser,"Delete fraud user button");
+		Element.verifyElementPresent(chkboxFraudUser,"View fraud user checkbox");
+		Element.verifyElementPresent(chkBoxProvPurge,"View purged user checkbox for provider");
+		Element.verifyElementPresent(txtboxTin,"Tin number texbox");
+		Element.verifyElementPresent(btnSearch,"Tin search button");
+		Element.verifyElementPresent(btnAddTINNPI,"Add TIN/NPI button");
+		Element.verifyElementPresent(userDetailsTableForProviderOrBS,"User details table for provider");
+		break;
+	case "PAY":
+		Element.verifyElementPresent(subPayerRadiobtnYes,"Sub payer radio button as Yes");
+		Element.verifyElementPresent(subPayerRadiobtnNo,"Sub payer radio button as No");
+		Element.verifyElementPresent(userDetailsTableForPayer,"User details table for payer");
+		Element.verifyElementPresent(chkBoxPurgedUser,"View purged user checkbox for provider");
+		break;
+	case "BS":
+		Element.verifyElementPresent(drpDwnBSaccessLvl,"Dropdown for access level BS");
+		Element.verifyElementPresent(associateBSYesButton,"Associate Billing Service Users to all Providers as Yes radio button");
+		Element.verifyElementPresent(associateBSNoButton,"Associate Billing Service Users to all Providers as No radio button");
+		Element.clickByJS(testConfig,associateBSNoButton, "Clicking on associate BS no btton");
+		Element.verifyElementPresent(addProviderAssociation,"Add Provider Association textbox");
+		Element.verifyElementPresent(addTinAssociationButton,"Add Tin association button");
+		Element.verifyElementPresent(userDetailsTableForProviderOrBS,"User details table for BS");
+		Element.verifyElementPresent(chkBoxPurgedUserBS,"View purged user checkbox for provider");
+		break;
+	}
+	Element.verifyElementPresent(btnSave,"Save button");
+	Element.verifyElementPresent(btnCancel,"Cancel button");
+	Element.verifyElementPresent(btnDelete,"Delete user button");
+}
+
 }
 
