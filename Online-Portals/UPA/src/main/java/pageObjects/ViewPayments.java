@@ -1,6 +1,6 @@
 package main.java.pageObjects;
 
-import static org.junit.Assert.assertTrue;
+
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -4526,11 +4526,11 @@ public void verifyMaximumRecords() {
 	int recordcount = Integer.parseInt(totalRecordsFromFISL);
 	
 	if(recordcount>=30) {
-		assertTrue(paymentcount==30);
+		Assert.assertTrue(paymentcount==30);
 	}
 	
 	if(recordcount<=30) {
-		assertTrue(paymentcount==recordcount);
+		Assert.assertTrue(paymentcount==recordcount);
 	}
 	
 	
