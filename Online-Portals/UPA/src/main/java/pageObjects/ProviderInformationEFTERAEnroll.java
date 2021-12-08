@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.bcel.generic.LNEG;
+
 import org.openqa.selenium.support.Color;
 
 import main.java.nativeFunctions.*;
@@ -897,7 +897,7 @@ public class ProviderInformationEFTERAEnroll {
 			provName = "MAY";
 			streetName = Helper.generateRandomAlphaNumericString(4);
 			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
-			Browser.wait(testConfig, 2);
+			Element.waitForElementTobeClickAble(testConfig, autoPopulateProviderNameList, 4);
 			Element.clickByJS(testConfig, autoPopulateProviderNameList, "Provider Name");
 			Browser.wait(testConfig, 2);
 			Element.enterData(street, streetName, "Enter street name as : " + streetName, "Street");
@@ -910,7 +910,7 @@ public class ProviderInformationEFTERAEnroll {
 		} else if (checkAutoPopulate.equals("busNameYAndAddrN")) {
 			provName = "MAY";
 			Element.enterData(providerName, provName, "Enter provider name as :" + provName, "providerName");
-			Browser.wait(testConfig,2);	      
+			Element.waitForElementTobeClickAble(testConfig, autoPopulateProviderNameList, 4);      
 			Element.clickByJS(testConfig,autoPopulateProviderNameList, "Provider Name");	
 			Element.enterData(street, streetName, "Enter street name as : " + streetName, "street");
 			Element.enterData(city, data.GetData(rowNo, "City"), "Enter city name as :" + data.GetData(rowNo, "City"),

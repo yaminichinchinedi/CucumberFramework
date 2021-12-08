@@ -1483,8 +1483,17 @@ public class ViewPaymentsDataProvider {
 				Log.FailWarning("No tin with payments from the above query, please execute the test case manually",
 						testConfig);
 			}
-
-			return tinNumbers.get("PROV_TAX_ID_NBR").toString();
+			 
+			try {
+				
+			      return tinNumbers.get("PROV_TAX_ID_NBR").toString();
+			 }
+			
+			catch (NullPointerException e) {
+				
+				 return null;
+				 
+		        }
 		} else
 			return testConfig.getRunTimeProperty("provTinNo");
 	}

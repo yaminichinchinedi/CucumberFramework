@@ -11,6 +11,7 @@ import main.java.reporting.Log;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.FindBy;
@@ -55,12 +56,13 @@ protected TestBase testbase;
 			//profile.setPreference("plugin.scan.Acrobat", "999.0");
 			//profile.setPreference("plugin.scan.plid.all", false);
 			
-			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+			FirefoxOptions capabilities = new FirefoxOptions();
 			//capabilities.setCapability("firefox_binary","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 			capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+			
 
 			capabilities.setCapability("marionette", true); 
-			capabilities.setCapability (FirefoxDriver.PROFILE, profile);
+			capabilities.setProfile(profile);
 			
 			WebDriver driver = new FirefoxDriver(capabilities);
 			driver.manage().window().maximize();

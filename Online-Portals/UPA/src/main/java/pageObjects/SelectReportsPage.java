@@ -57,21 +57,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
- 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -238,19 +225,18 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 	Browser.wait(testConfig, 2);
 	Element.enterData(toDt, toDate, "To Date","Date field ToDate");
 	Browser.wait(testConfig, 2);
+    String downloadFilepath = System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 	
+	File fileDirectory=new File(downloadFilepath);
+	fileDirectory.mkdir();
+	Helper.purgeDirectory(fileDirectory);
 	sbmtButtn.click();
 	Browser.wait(testConfig, 10);
 	
-	if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return No Data.']").size()==0)) {	
+if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return No Data.']").size()==0)) {	
 		
 	
-	//String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
-	String downloadFilepath = System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 	
-	File fileDirectory=new File(downloadFilepath);
-	fileDirectory.getAbsolutePath();
-//	Helper.purgeDirectory(fileDirectory);
 	
 //Below commented is for IE browser	
 //	try{
@@ -292,12 +278,17 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
 //	 System.out.println("Value of Response Id is:"+responseid);
 	
 	Browser.wait(testConfig, 20);
-	String downloadFullFile=fileDirectory.getAbsolutePath()+"//Enrollment Survey Results.xls";
-	String sheetName="Enrollment Survey";
-	 testConfig.cacheTestDataReaderObject(testConfig,sheetName,downloadFullFile);
+
+	String downloadFullFile=fileDirectory.getAbsolutePath()+"\\Enrollment Survey Results.xls";
+
+	fileDirectory = new File(downloadFullFile);
+	fileDirectory.exists();
+	
+	
 	}
 	
 }
+
 
 public void enterDateswithNoData(){
 	

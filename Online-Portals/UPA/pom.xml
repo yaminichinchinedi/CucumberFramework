@@ -16,6 +16,7 @@
 
 		<plugins>		
 			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
@@ -196,30 +197,38 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-server</artifactId>
-			<version>3.4.0</version>
+			<version>4.0.0-alpha-2</version>
 		</dependency>
-
+	
 
 <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-ie-driver -->
 <dependency>
     <groupId>org.seleniumhq.selenium</groupId>
     <artifactId>selenium-ie-driver</artifactId>
-    <version>3.4.0</version>
+    <version>4.0.0</version>
 </dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-chrome-driver</artifactId>
-			<version>3.4.0</version>
+			<version>4.0.0</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-firefox-driver</artifactId>
-			<version>3.4.0</version>
+			<version>4.0.0</version>
 		</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
+<dependency>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-support</artifactId>
+    <version>4.0.0</version>
+</dependency>
+
 
 		<dependency>
 			<groupId>velocity</groupId>
@@ -319,7 +328,7 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.4.0</version>
+			<version>4.0.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/fontbox -->
 

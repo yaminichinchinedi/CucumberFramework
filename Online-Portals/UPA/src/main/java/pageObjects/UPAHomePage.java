@@ -186,8 +186,7 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkLogout;
 	@FindBy(className="slide__messageBox")
 	List<WebElement> imageTiles;
-	@FindBy(className="slide video")
-	List<WebElement> videoTiles;
+
 	@FindBy(className="carousel__nav__label")
 	List<WebElement> carouselNav;	
 
@@ -360,6 +359,7 @@ public class UPAHomePage extends HomePage {
 			String id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
 			testConfig.putRunTimeProperty("id", id);
 		}
+		
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);

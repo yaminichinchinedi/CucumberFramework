@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,9 +28,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
@@ -184,7 +187,9 @@ public class TestBase extends ReporterClass {
 
 	private void setDriver(String browserType)
 	{
+		
 		String Execution_Env;
+		
 		if (System.getProperty("Executionin") == null)
 			Execution_Env = runtimeProperties.getProperty("AutomationExecution");
 		 else 
@@ -192,7 +197,7 @@ public class TestBase extends ReporterClass {
 		
 		if (Execution_Env.equalsIgnoreCase("Local"))
 		{
-			DesiredCapabilities caps ;
+			//DesiredCapabilities caps ;
 			switch (browserType) {
 			case "chrome":
 			case "Chrome":
@@ -200,30 +205,36 @@ public class TestBase extends ReporterClass {
 				break;
 			case "Edge":
 			case "edge":
-				DesiredCapabilities caps2 = DesiredCapabilities.edge();
+				
 				System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+"\\drivers\\msedgedriver.exe");
-				driver = new EdgeDriver(caps2);
+				String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
+				Map<String, Object> prefs = new HashMap<String, Object>();                                                       
+			    prefs.put("download.default_directory",downloadFilepath);                         
+			    EdgeOptions op=new EdgeOptions();
+			    op.setExperimentalOption("prefs", prefs);
+				
+				driver = new EdgeDriver(op);
 				driver.manage().window().maximize();
 				driver.manage().deleteAllCookies();
 				driver.get("edge://settings/clearBrowserData");
 				driver.findElement(By.id("clear-now")).sendKeys(Keys.ENTER);
 				break;
 			case "IE":
-				DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
-				caps1.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
-				caps1.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
-				caps1.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
-				caps1.setCapability(InternetExplorerDriver.UNEXPECTED_ALERT_BEHAVIOR, "accept");
-				caps1.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, true);
-	            caps1.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION,true);
-	            caps1.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
-	            caps1.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
-	            caps1.setCapability("disable-popup-blocking", true);
-	            caps1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+				InternetExplorerOptions options = new InternetExplorerOptions();
+				
+				//DesiredCapabilities caps1 = DesiredCapabilities.internetExplorer();
+				options.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,true);
+				options.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
+				options.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true); 
+				options.setCapability(InternetExplorerDriver.IE_ENSURE_CLEAN_SESSION,true);
+				options.setCapability(InternetExplorerDriver.NATIVE_EVENTS,false);
+				options.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
+				options.setCapability("disable-popup-blocking", true);
+				options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+				options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
 	            
 	            System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
-	            driver = new InternetExplorerDriver(caps1);
+	            driver = new InternetExplorerDriver(options);
 				driver.manage().window().maximize();
 				
 				break;
@@ -233,7 +244,7 @@ public class TestBase extends ReporterClass {
 					driver = initChromeDriver();
 				else if(System.getProperty("Application").contains("CSR"))
 				{
-					caps = DesiredCapabilities.internetExplorer();
+					InternetExplorerOptions caps = new InternetExplorerOptions();
 					caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 					caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
 					caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
@@ -257,7 +268,7 @@ public class TestBase extends ReporterClass {
 			
 				else if(System.getProperty("Application").contains("CSR"))
 				{
-					caps = DesiredCapabilities.internetExplorer();
+					InternetExplorerOptions caps = new InternetExplorerOptions();
 					caps.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
 					caps.setCapability(InternetExplorerDriver.IGNORE_ZOOM_SETTING, true);
 					caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
@@ -276,8 +287,9 @@ public class TestBase extends ReporterClass {
 				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
 				driver = initChromeDriver();
 			}
-			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+			driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		}
 		
 		else 
@@ -476,11 +488,10 @@ public class TestBase extends ReporterClass {
 		String URL = "http://" + DEFAULT_SAUCE_USER + ":" + DEFAULT_SAUCE_ACCESSKEY + "@ondemand.saucelabs.com:80/wd/hub";
 
 		if (Browser.equalsIgnoreCase("IE")) {
-			DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
+			InternetExplorerOptions caps = new InternetExplorerOptions();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "11.285");
 			caps.setCapability("name", "Remote File Upload Test");
-			caps = DesiredCapabilities.internetExplorer();
 			caps.setCapability("parent-tunnel", "optumtest");
 			caps.setCapability("tunnelIdentifier", "Optum-Stage");
 			
@@ -498,7 +509,7 @@ public class TestBase extends ReporterClass {
 		}
 		else if (Browser.equalsIgnoreCase("chrome")) {
 			Log.Comment("Inside Set driver chrome: sauce labs");
-			DesiredCapabilities caps = DesiredCapabilities.chrome();
+			ChromeOptions caps = new ChromeOptions();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "94.0");
 			caps.setCapability("screenResolution", "1920x1080");
@@ -526,8 +537,11 @@ public class TestBase extends ReporterClass {
 		
 		else if (Browser.equalsIgnoreCase("Edge")) {
 			Log.Comment("Inside Set driver Edge: sauce labs");
-			
-			DesiredCapabilities caps = DesiredCapabilities.edge();
+			String downloadFilepath = System.getProperty("user.dir") + "\\Downloads";
+			EdgeOptions caps=new EdgeOptions();
+			Map<String, Object> prefs = new HashMap<String, Object>();
+			prefs.put("download.default_directory",downloadFilepath); 
+			caps.setExperimentalOption("prefs", prefs);
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "92.0");
 			caps.setCapability("parent-tunnel", "optumtest");

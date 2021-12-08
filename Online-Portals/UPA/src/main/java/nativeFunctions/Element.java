@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-//import junit.framework.Assert;
-import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -903,8 +902,9 @@ public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElem
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)
 {
 	try{
-		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
-    .pollingEvery(pollingTime, TimeUnit.SECONDS) 			
+		 Duration DurationTime = Duration.ofSeconds(timeOut);
+		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(DurationTime) 			
+    .pollingEvery(DurationTime) 			
 	.ignoring(NoSuchElementException.class);
 	wait.until(ExpectedConditions.visibilityOf(element));
 	

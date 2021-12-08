@@ -62,6 +62,8 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.clickViewPaymentsTab();
     }
     
+  
+    
     @Then("^Validate Payment Number Hyper Link in UPA$")
     public void validate_Payment_Number_Hyper_Link_in_UPA() throws Throwable {
     	viewPayment.verifyPayNumHypherLinkClaimDtlUPA();
@@ -200,9 +202,9 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyMktType(mktTypeFilter);
     }
     
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for \"([^\"]*)\"\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
+    @Then("^Verify Quick Search dropdown and its default value$")
+    public void Verify_Quick_Search_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyQuickSrchFilterOptions();
     }
     
 //    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
@@ -230,7 +232,7 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_user_is_able_to_change_the_value_of_Payment_Status_column() throws Throwable {
        viewPayment.verifyPaymentStatusColumnDropdwn();
     }
-
+ 
     @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
     public void validate_ePRA_and_Payer_PRA_are_enabled(int arg1) throws Throwable {
       viewPayment.verify835EPRAlink();
@@ -258,12 +260,12 @@ public class ViewPaymentsSteps extends TestBase {
     }
     @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
+    	viewPayment.verifyQuickSrchFilterOptions();
     }
 
-    @Then("^Validate Active/Archived Payments filter for \"([^\"]*)\" is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType, String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
+    @Then("^Verify Payment Status dropdown and its default value for \"([^\"]*)\"\\ TIN$")
+    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
+    	viewPayment.verifyPaymentStatusFilter(portalAccess);
     }
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
@@ -403,6 +405,61 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_ePRA_links_are_enabled_disabled_based_on_Search_criteria_and_click_on_if_enabled_to_get_it_downloaded(int arg1, int arg2) throws Throwable {
     	viewPayment.verify835EPRA();
     }
+    
+    @Then("^Verify UI of view payment for \"([^\"]*)\" of TIN  for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void VerifyUIofViewPaymentScreen(String userType, String portalAccess, String TINtype) {
+        viewPayment.viewPaymentUIVerification(userType, portalAccess,TINtype);
+    }
+    
+    @Then("^Verify Filter Payments dropdown and its default value$")
+    public void Verify_Filter_Payments_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyFilterPaymentsOptions();
+    }
+    
+    @Then("^Verify Market Type dropdown and its default value$")
+    public void Verify_Market_Type_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyFilterPaymentsOptions();
+    }
+    
+    @Then("^User set filters for \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" on view payments screen$")
+    public void set_search_filters_view_Payments(String QuickSearch, String FilterPayments, String MarketType,String PaymentStatus) throws Throwable {
+    	viewPayment.setSearchFiltersOnViewPaymentPage(QuickSearch,FilterPayments,MarketType,PaymentStatus);
+    }
+    
+    @Then("^User validate columns for the \"([^\"]*)\" with \"([^\"]*)\" for the \"([^\"]*)\" TIN$")
+    public void User_validates_columns_the_TIN_based_on_TIN_accessType_and_UserType(String Tintype,String userType, String portalAccess) throws Throwable {
+    	viewPayment.verifyColumnPresent("Payer")
+    	.verifyColumnPresent("Payment Date")
+    	.verifyColumnPresent("NPI")
+    	.verifyColumnPresent("Payment Number")
+    	.verifyColumnPresent("Proxy Number")
+    	.verifyColumnPresent("Amount")
+    	.verifyColumnPresent("Claim Count")
+    	.verifyColumnPresent("ACH Trace Number")
+    	.verifyColumnPresent("Redemption Date")
+    	.verifyColumnPresent("Payment Status");
+    	
+    	if(!(portalAccess.equalsIgnoreCase("standard")||Tintype.equalsIgnoreCase("VO"))) {
+    	   viewPayment.verifyColumnPresent("Fee Amount");
+    	}
+    	
+    	if((portalAccess.equalsIgnoreCase("standard")||Tintype.equalsIgnoreCase("VO"))) {
+     	   viewPayment.verifyColumnIsNotPresent("Fee Amount");
+     	}
+    }
+    
+    @Then("^Verify results should be in chronological order and maximum record should be 30$")
+    public void Verify_results_should_be_in_chronological_order() throws Throwable {
+    	viewPayment.verifyResultsInChronologicalOrder();
+    	viewPayment.verifyMaximumRecords();
+    	 	
+    }
+    
+    @Then("^Click on print payment summary button and verify print summary page$")
+    public void Click_on_print_payment_summary_button_and_verify_print_summary_page() throws Throwable {
+    	viewPayment.clickPrintPaymentBtn().verifyPrintPaymentSummaryPage(); 	 	
+    }
+    
     
 }
 
