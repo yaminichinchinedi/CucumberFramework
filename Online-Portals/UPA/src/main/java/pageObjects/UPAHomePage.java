@@ -374,7 +374,9 @@ public class UPAHomePage extends HomePage {
 				 String Enrolledtin = tin + " - Enrolled";
 				 if ((!tinList.contains(Enrolledtin))) 
 				 {
-					Element.click(homeTab, "home Tab");
+					 if (! searchCriteria.equalsIgnoreCase("TinWithRecurrPay and exemption") || 
+						   searchCriteria.equalsIgnoreCase("TinWithRecurrPay and No exemption") )
+					 Element.click(homeTab, "home Tab");
 					Browser.waitForLoad(testConfig.driver);
 					Browser.wait(testConfig, 2);
 					Element.fluentWait(testConfig, prvdrTIN, 60, 1, "Tin dropdown");
@@ -743,6 +745,18 @@ public class UPAHomePage extends HomePage {
 		expectedPDFContent = Helper.readPDF(exPDFPath);
 		
 		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
+	}
+	public UPAHomePage validatePopUpbuttons() {
+		List<WebElement> noOfButtons=Element.findElements(testConfig, "xpath", "//p[@class='mt-3']/input");
+		
+		if (noOfButtons.size()==3)
+		{
+		Helper.compareContains(testConfig, "buttons", "Setup Recurring Payment", noOfButtons.get(0).getText());	
+		Helper.compareContains(testConfig, "buttons", "Continue to basic", noOfButtons.get(1).getText());	
+		Helper.compareContains(testConfig, "buttons", "Review unpaid invoices", noOfButtons.get(2).getText());	
+
+		}
+		return this;
 	}
 }
 

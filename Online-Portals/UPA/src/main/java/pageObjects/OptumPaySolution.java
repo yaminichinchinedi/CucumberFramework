@@ -2910,4 +2910,28 @@ public class OptumPaySolution {
     	return this;
     	
     }
+    public OptumPaySolution validateRecurrDashboard() {
+    	
+		//Browser.browserRefresh(testConfig);
+    	//TinWithRecurrPay and exemption
+    	WebElement recurHeader=Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div");
+    	if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and No exemption"))
+    	{
+    		if (recurHeader==null)
+    		Log.Comment("Recurring Payments exemption dashboard is not present.");	
+    	}
+    	else if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and exemption")) {	
+    		
+    		String recurrHeader=recurHeader.getText();
+		
+		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Recurring payments exemption", recurrHeader);
+		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Status", recurrHeader);
+		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Setup by", recurrHeader);
+		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Activation date" , recurrHeader);
+		Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div/div[2]/div[4]"), "Review invoices button");
+		DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
+    	}
+		return this;
+    	
+    }
 }

@@ -275,5 +275,8 @@ public class UPAHomePageSteps extends TestBase {
 	public void userClicksOnPayAnInvoiceNow() {
 		unsecureGuestPayment.clickPayInvoiceNow();
 	}
-
+	@Then("^User validates that (\\d+) buttons are present on popup \"([^\"]*)\",\"([^\"]*)\" and \"([^\"]*)\"$")
+	public void user_validates_that_buttons_are_present_on_popup_and(int arg1, String arg2, String arg3, String arg4) throws Throwable {
+		homePage.validatePopUpbuttons();
+	}
 }

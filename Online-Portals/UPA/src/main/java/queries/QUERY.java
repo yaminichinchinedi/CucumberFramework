@@ -486,6 +486,14 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"WHERE paba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
 	
 	public static final String How_To_Enroll_Page = "Select  cast(CLOB_VAL as varchar(32000)) as clobval,TEXT_VAL  from ole.CONTENT where CONT_NM like '%How to Enroll%'";
+	
+	public static final String exemptedTin="SELECT PROV_TIN_NBR FROM ole.ENROLLED_PROV_EXEMPT_STATUS epes";
+	public static final String insertExemptTin="INSERT INTO OLE.ENROLLED_PROV_EXEMPT_STATUS (PROV_TIN_NBR, TIN_EXEMPT_INDICATOR, EXEMPT_REAS_CD, CREAT_DTTM, CREAT_BY_ID, LST_CHG_BY_DTTM, LST_CHG_BY_ID)\r\n"+
+	                         "VALUES('{$tin}', 'Y', 'OR', sysdate, 'vashok3', sysdate, 'vashok3')";
+	public static final String deleteExemptedTin="delete from OLE.ENROLLED_PROV_EXEMPT_STATUS where TIN_EXEMPT_INDICATOR='Y' and PROV_TIN_NBR  ='{$tin}' ";
+	public static final String TinWithRecurrPayNoexemption= TIN_WITH_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+	public static final String TinWithoutRecurrPayNoexemption= TIN_WITHOUT_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+
 }
 
 
