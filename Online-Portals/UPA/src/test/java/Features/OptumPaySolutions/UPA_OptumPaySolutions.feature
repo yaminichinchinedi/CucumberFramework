@@ -577,8 +577,8 @@ Feature: - Optum Pay Solutions
     
     
     
-     @US4088247
-    
+     
+    @UPAUS4088247
   Scenario Outline: Setting alternate bank account on recurring payments page UPA
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -589,7 +589,7 @@ Feature: - Optum Pay Solutions
       | PROV_Admin  | PROV     | Premium      | TinWithoutRecurrPay and No exemption            | AO      | 
       | BS_Admin    | BS       | Premium      | TinWithoutRecurrPay and No exemption					  | AO      |
     
-     @US4088247    
+     @UPAUS4088247    
     Scenario Outline: Setting alternate bank account on recurring payments page UPA
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -600,7 +600,7 @@ Feature: - Optum Pay Solutions
       | credentials | userType | portalAccess | searchCriteria                           | tinType |
       | PROV_Admin  | PROV     | Premium      | TinWithRecurrPay and No exemption        | AO      |    
       
-     @US4088247 
+     @UPAUS4088247 
      Scenario Outline: Setting alternate bank account on recurring payments page UPA
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -613,7 +613,7 @@ Feature: - Optum Pay Solutions
       | BS_Admin    | BS       | Premium      | TinWithRecurrPay and No exemption				 | AO      | 
       
 
-      @US4088247
+      @UPAUS4088247
      Scenario Outline: Setting alternate bank account on recurring payments page UPA
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
@@ -625,7 +625,7 @@ Feature: - Optum Pay Solutions
       | PROV_Admin  | PROV     | Premium      | TinWithRecurrPay and exemption        | AO      |    
       
       
-       @US4088247
+       @UPAUS4088247
        Scenario Outline: Setting alternate bank account on recurring payments page UPA
     Given User navigates to UPA portal and enters "<credentials>" and login
     And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
