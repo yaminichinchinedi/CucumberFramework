@@ -548,7 +548,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_validates_that_Recurring_Payment_exemption_is_not_present_on_the_OPS_dashboard() throws Throwable {
 		optumPaySol.validateRecurrDashboard();
 	}
-	
+
+	@Then("User validates if request and remove exemption section is displayed accordingly")
+	public void userValidatesIfRequestAndRemoveExemptionSectionIsDisplayedAccordingly() {
+	optumPaySol.exemptionSectionValidatorCSR_RO_RW();
+	}
 }
 
 

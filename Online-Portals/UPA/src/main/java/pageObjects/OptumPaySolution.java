@@ -734,6 +734,11 @@ public class OptumPaySolution {
   	
   	@FindBy(xpath="//span[contains(text(),'Cancel')]")
     WebElement	cancelbutton;
+  	@FindBy(xpath="//input[@value='Remove exemption']")
+    WebElement	removeExemptionBtn;
+  	@FindBy(xpath="//input[@value='Request exemption']")
+    WebElement	requestExemptionBtn;
+
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -2908,7 +2913,6 @@ public class OptumPaySolution {
     	Element.verifyElementIsEnabled(cancelbutton, "Cancel button");
     	Element.click(contButton, "continue button");
     	return this;
-    	
     }
     public OptumPaySolution validateRecurrDashboard() {
     	
@@ -2933,5 +2937,19 @@ public class OptumPaySolution {
     	}
 		return this;
     	
+    }
+
+    public void exemptionSectionValidatorCSR_RO_RW() {
+        try {
+            if (requestExemptionBtn.isDisplayed()) {
+                Element.verifyElementNotEnabled(requestExemptionBtn, "Request Exemption btn");
+            }
+        }catch(NoSuchElementException e){
+         if(removeExemptionBtn.isDisplayed()){
+            Element.verifyElementNotEnabled(removeExemptionBtn,"removeExemptionBtn");
+            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Status: ']"),"status text");
+            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Setup by: ']"),"setUpByText");
+            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Activation date:  ']"),"activation date text");
+        }}
     }
 }
