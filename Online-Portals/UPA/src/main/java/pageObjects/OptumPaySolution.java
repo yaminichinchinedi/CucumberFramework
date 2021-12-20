@@ -420,7 +420,7 @@ public class OptumPaySolution {
     WebElement popUpACHPaymentModal;
     @FindBy(xpath = "//input[@value='Pay Now']")
     WebElement payNow;
-  
+
     @FindBy(xpath = "//*[@id=\"optum-pay-invoices\"]/div/div[4]/div/table/tbody/tr[1]/td[4]/input")
     WebElement payNowCSR;
 
@@ -554,105 +554,104 @@ public class OptumPaySolution {
 
     @FindBy(xpath = "//select[@id='waiveFeeReason']")
     WebElement waiveFeeReasonDropdown;
-    
-   
-    @FindBy(xpath = "//*[@id=\"optum-pay-invoices\"]/div/div[4]/div/table/tbody/tr/td[6]/span[2]") 
+
+
+    @FindBy(xpath = "//*[@id=\"optum-pay-invoices\"]/div/div[4]/div/table/tbody/tr/td[6]/span[2]")
     WebElement purpledots;
-     
+
     @FindBy(xpath = "//div[@class='invoiceToolTip alert-warning row justify-content-between']")
     WebElement purplebox;
-  
+
     @FindBy(xpath = "//*[@id=\"optum-pay-invoices-tabs\"]/div[1]/div")
     WebElement purpleboxCSR;
-  
+
     @FindBy(xpath = "//span[@class='paymentlbl']")
     WebElement paymentlabel;
-  
+
     @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[1]")
     WebElement paymentlabelCSR;
-    
+
     @FindBy(xpath = "//p[@class='paymentlbl mt-0 mb-0' and text()='Reason: ']")
     WebElement Reason;
-  
+
     @FindBy(xpath = "//p[@class='mt-0 mb-2' and text()='Reason: ']")
     WebElement ReasonCSR;
-    
+
     @FindBy(xpath = "//p[@class='paymentlbl mt-0 mb-0' and text()='Date Returned: ']")
     WebElement ReturnDate;
-  
+
     @FindBy(xpath = "//p[@class='mt-0 mb-2' and text()='Date returned: ']")
     WebElement ReturnDateCSR;
-  
+
     @FindBy(xpath = "//p[@class='paymentlbl mt-0 mb-0'][1]/strong")
     WebElement ReasonDesp;
-    
+
     @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[2]/strong")
     WebElement ReasonDespCSR;
-    
+
     @FindBy(xpath = "//span[@class='wrapperTooltip ellipsisTooltip']")
     WebElement Confirmhover;
-  
+
     @FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div/table/tbody/tr[1]/td[6]/span[1]")
     WebElement ConfirmhoverCSR;
 
     @FindBy(xpath = "//p[@class='paymentlbl mt-0 mb-0'][2]/strong")
     WebElement date;
-  
+
     @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[3]/strong")
     WebElement dateCSR;
     @FindBy(xpath = "//*[@id=\"optum-pay-invoices\"]/div/div[4]/div/table/tbody/tr[2]/td[6]/div/div/strong")
     WebElement BnkAccNo;
-  
+
     @FindBy(xpath = "//*[@id='ui-id-1']/div")
     WebElement hovermsg;
-  
+
     @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/strong")
     WebElement ACCNTNUM;
     @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[1]/strong")
     WebElement ACCNTNUMCSR;
-    
 
-  
-  	@FindBy(xpath = "//*[contains(text(),'Select option to waive fees')]")
-  	WebElement SelectOptionWaiveFeesPage;
-  	
-  	@FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'This field is required.')]")
-  	WebElement ThisIsRequiredFieldErrorMessage;
 
-  	
-  	@FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'Maximum character limit is 150')]")
-  	WebElement MaximumCharacterLimitIs150ErrorMessage;
+    @FindBy(xpath = "//*[contains(text(),'Select option to waive fees')]")
+    WebElement SelectOptionWaiveFeesPage;
 
-  
-  	@FindBy(xpath = "//textarea[@id='reasonText']")
-  	WebElement SelectOptionreasonText;
+    @FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'This field is required.')]")
+    WebElement ThisIsRequiredFieldErrorMessage;
 
-  
-  	@FindBy(xpath = "//input[@id='partialAmount']")
-  	WebElement EnterPartialAmountText;
 
-  
-  	@FindBy(xpath = "//input[@id='partialAmount']/following-sibling::label")
-  	WebElement PartialAmountErrorMessage;
+    @FindBy(xpath = "//label[@id='reasonText-error' and contains(text(),'Maximum character limit is 150')]")
+    WebElement MaximumCharacterLimitIs150ErrorMessage;
 
- 
-  	@FindBy(xpath = "//span[contains(text(),'Total amount:')]//ancestor::span[2]")
-  	WebElement TotalAmountText;
-  	
-  	@FindBy(css="input.btn-primary.rounded")
-  	WebElement recPaybut;
 
-  	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[2]/span")
+    @FindBy(xpath = "//textarea[@id='reasonText']")
+    WebElement SelectOptionreasonText;
+
+
+    @FindBy(xpath = "//input[@id='partialAmount']")
+    WebElement EnterPartialAmountText;
+
+
+    @FindBy(xpath = "//input[@id='partialAmount']/following-sibling::label")
+    WebElement PartialAmountErrorMessage;
+
+
+    @FindBy(xpath = "//span[contains(text(),'Total amount:')]//ancestor::span[2]")
+    WebElement TotalAmountText;
+
+    @FindBy(css = "input.btn-primary.rounded")
+    WebElement recPaybut;
+
+    @FindBy(xpath = "/html/body/div[4]/div[3]/div/button[2]/span")
     WebElement contButton;
 
-  	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")
-    List <WebElement>  tinChkbox;
+    @FindBy(xpath = "//table[@id=\"recurring-payment-table\"]/tbody/tr")
+    List<WebElement> tinChkbox;
 
-  	@FindBy(name="payment_type")
-  	WebElement payType;
+    @FindBy(name = "payment_type")
+    WebElement payType;
 
-  	@FindBy(css="input.btn.btn-primary.mb-0.assign-account-btn")
-  	WebElement assignAccnt;
+    @FindBy(css = "input.btn.btn-primary.mb-0.assign-account-btn")
+    WebElement assignAccnt;
     @FindBy(xpath = "//input[@value='Set up recurring payments']")
     WebElement recurringPaymentWelcomeButton;
     @FindBy(xpath = "//span[.='Continue']")
@@ -681,65 +680,65 @@ public class OptumPaySolution {
     WebElement RecurringPaymentStep3Submit;
     @FindBy(linkText = "Reset all")
     WebElement Reset;
-  	
-  	@FindBy(xpath="//span[contains(text(),'Continue')]") 
-    WebElement continueBtn;
-  	
-  	@FindBy(css="input.btn-primary.rounded.continue-btn")
-  	WebElement continuebutton;
-  	
-  	@FindBy(xpath="//span[contains(text(),'1')]")
-    WebElement	SelectPayment;
-  	
-  	@FindBy(xpath="//h4[contains(text(),'Review and confirm your selections below')]")
-    WebElement ReviewSelection;
-  	
-  	@FindBy(css="input.btn-primary.rounded.continueRecurringPayment")
-  	WebElement continueRecurringPayment;
-  
-  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[1]/input")
-    WebElement Backbtn;
-  
-  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[2]/input[1]")
-    WebElement	Cancelbtn;
-  	
-  	@FindBy(xpath="//*[@id='optum-pay-invoices']/div/div[2]/ul/li[2]/h4/a")
-    WebElement	ReviewSelectionlink;
-  	
-  	@FindBy(xpath="//*[@id='cancelRecurringPaymentModal']/div/p[1]")
-    WebElement	title;
-  	
-  	@FindBy(xpath="//p[contains(text(),'By leaving this page, this will clear all your sel')]")
-    WebElement	messagecontent;
-  	 
-  	@FindBy(xpath="/html/body/div[5]/div[3]/div/button[1]")
-    WebElement	cancelpopup;
-  	
-  	@FindBy(id = "manageRecurringPaymentsButton")
-    WebElement Managepaymethods;
-  
-  	@FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[2]/p")
-    WebElement	unassignedtins;
-  	
-  	//@FindBy(linkText = "Setup recurring payments")
-  	@FindBy(xpath = "//input[@onclick='openRpWelcomePopup();']")
-  	WebElement Setuprecurringpayments;
-  	
-  
-  	@FindBy(xpath="//*[@id='recurringPaymentWelcomeModal']/p[1]")
-    WebElement	Welcomepopupheader;
-  
-  	@FindBy(xpath="//*[@id='recurringPaymentWelcomeModal']/p[2]")
-    WebElement	Welcomepopupparagraph;
-  	
-  	@FindBy(xpath="//span[contains(text(),'Cancel')]")
-    WebElement	cancelbutton;
-  	@FindBy(xpath="//input[@value='Remove exemption']")
-    WebElement	removeExemptionBtn;
-  	@FindBy(xpath="//input[@value='Request exemption']")
-    WebElement	requestExemptionBtn;
 
-  	//Added by Mohammad Khalid
+    @FindBy(xpath = "//span[contains(text(),'Continue')]")
+    WebElement continueBtn;
+
+    @FindBy(css = "input.btn-primary.rounded.continue-btn")
+    WebElement continuebutton;
+
+    @FindBy(xpath = "//span[contains(text(),'1')]")
+    WebElement SelectPayment;
+
+    @FindBy(xpath = "//h4[contains(text(),'Review and confirm your selections below')]")
+    WebElement ReviewSelection;
+
+    @FindBy(css = "input.btn-primary.rounded.continueRecurringPayment")
+    WebElement continueRecurringPayment;
+
+    @FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[1]/input")
+    WebElement Backbtn;
+
+    @FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[4]/div[4]/div[2]/input[1]")
+    WebElement Cancelbtn;
+
+    @FindBy(xpath = "//*[@id='optum-pay-invoices']/div/div[2]/ul/li[2]/h4/a")
+    WebElement ReviewSelectionlink;
+
+    @FindBy(xpath = "//*[@id='cancelRecurringPaymentModal']/div/p[1]")
+    WebElement title;
+
+    @FindBy(xpath = "//p[contains(text(),'By leaving this page, this will clear all your sel')]")
+    WebElement messagecontent;
+
+    @FindBy(xpath = "/html/body/div[5]/div[3]/div/button[1]")
+    WebElement cancelpopup;
+
+    @FindBy(id = "manageRecurringPaymentsButton")
+    WebElement Managepaymethods;
+
+    @FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[2]/p")
+    WebElement unassignedtins;
+
+    //@FindBy(linkText = "Setup recurring payments")
+    @FindBy(xpath = "//input[@onclick='openRpWelcomePopup();']")
+    WebElement Setuprecurringpayments;
+
+
+    @FindBy(xpath = "//*[@id='recurringPaymentWelcomeModal']/p[1]")
+    WebElement Welcomepopupheader;
+
+    @FindBy(xpath = "//*[@id='recurringPaymentWelcomeModal']/p[2]")
+    WebElement Welcomepopupparagraph;
+
+    @FindBy(xpath = "//span[contains(text(),'Cancel')]")
+    WebElement cancelbutton;
+    @FindBy(xpath = "//input[@value='Remove exemption']")
+    WebElement removeExemptionBtn;
+    @FindBy(xpath = "//input[@value='Request exemption']")
+    WebElement requestExemptionBtn;
+
+    //Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
     String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready";
@@ -2338,9 +2337,9 @@ public class OptumPaySolution {
 
         float accruedFee = Float.valueOf(accruedFeeMonthValue);
         if (accruedFee > 0.00) {
-        	
+
             Element.click(waiveFeeButton, "Waive Fee Button");
-            
+
         }
 
     }
@@ -2413,291 +2412,294 @@ public class OptumPaySolution {
     }
 
     public void waiveFeeButtonClick() {
-        Element.click(wavieBtn,"Waive Fee Button");
+        Element.click(wavieBtn, "Waive Fee Button");
     }
 
     public void partialDisabledAndFullSelectedAndOptionsGivenAndFullAmountShownVerifier() {
-        Element.verifyElementIsChecked(preselRadioBtn,"Waive total amount radio button");
-        Element.verifyElementNotEnabled(partialRadioBtn,"Waive partial amount radio button");
+        Element.verifyElementIsChecked(preselRadioBtn, "Waive total amount radio button");
+        Element.verifyElementNotEnabled(partialRadioBtn, "Waive partial amount radio button");
         String amountStr = totAmtWavie.getText();
         String amountStr2 = txtModalWaiveFee.getText();
-        amountStr = amountStr.substring(amountStr.indexOf("$") +1 , amountStr.indexOf("$") +5);
-        amountStr2 = amountStr2.substring(amountStr2.indexOf("$") +1 , amountStr2.indexOf("$") +5);
-        Helper.compareEquals(testConfig,"amounts in messages", amountStr,amountStr2);
-        ArrayList<String> dropdownOptionsActual = (ArrayList)Element.getAllOptionsInSelect(testConfig,waiveFeeReasonDropdown);
-        ArrayList<String> dropdownOptionsExpected = new ArrayList<>(Arrays.asList("Select reason",  "UHC Requested",               "Provider Meets Criteria for Large Volume" ,"Other" ));
-        Helper.compareEquals(testConfig,"Dropdown options: Expected Vs Actual", dropdownOptionsExpected,dropdownOptionsActual);
-        Element.verifyElementIsEnabled(cancelButton,"Cancel Button");
-        Element.verifyElementNotEnabled(continueButton,"Continue Button");
+        amountStr = amountStr.substring(amountStr.indexOf("$") + 1, amountStr.indexOf("$") + 5);
+        amountStr2 = amountStr2.substring(amountStr2.indexOf("$") + 1, amountStr2.indexOf("$") + 5);
+        Helper.compareEquals(testConfig, "amounts in messages", amountStr, amountStr2);
+        ArrayList<String> dropdownOptionsActual = (ArrayList) Element.getAllOptionsInSelect(testConfig, waiveFeeReasonDropdown);
+        ArrayList<String> dropdownOptionsExpected = new ArrayList<>(Arrays.asList("Select reason", "UHC Requested", "Provider Meets Criteria for Large Volume", "Other"));
+        Helper.compareEquals(testConfig, "Dropdown options: Expected Vs Actual", dropdownOptionsExpected, dropdownOptionsActual);
+        Element.verifyElementIsEnabled(cancelButton, "Cancel Button");
+        Element.verifyElementNotEnabled(continueButton, "Continue Button");
     }
-    
-    
-   /**
-    * Verify Waive Fee button is enabled
-    * @author piyush bagdiya
-    */
+
+
+    /**
+     * Verify Waive Fee button is enabled
+     *
+     * @author piyush bagdiya
+     */
     public void verifyWaiveFee() {
 
-		Element.verifyElementPresent(waiveFeeButton, "Select Option to waive fees window is closed, waive Fee Button is present");
-			//Element.click(waiveFeeButton, "Waive Fee Button");
-	//	}
+        Element.verifyElementPresent(waiveFeeButton, "Select Option to waive fees window is closed, waive Fee Button is present");
+        //Element.click(waiveFeeButton, "Waive Fee Button");
+        //	}
 
-	}
+    }
 
-/**
- * This function is to verify Waive Fees Window
- * @author piyush bagdiya
- */
-	public void verifyWaiveFeesWindow() {
+    /**
+     * This function is to verify Waive Fees Window
+     *
+     * @author piyush bagdiya
+     */
+    public void verifyWaiveFeesWindow() {
 
 
-		//Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
-		Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
-		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
+        //Element.verifyElementNotEnabled(waiveFeeButton, "Waive Fee Button");
+        Element.verifyElementPresent(SelectOptionWaiveFeesPage, "Select option to waive fees");
+        List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
 		/*for(String option : options)
 		{
 			System.out.println(option); 
 		}*/
 
-	}
+    }
 
 
-	
-	/**Click on Home Link
-	 * @author piyush bagdiya
-	 */
-		public void clickOnHomeLink() {
+    /**
+     * Click on Home Link
+     *
+     * @author piyush bagdiya
+     */
+    public void clickOnHomeLink() {
 
-	Element.click(testConfig, lnkHome, "Home", 3);
-		}
-	/** Verify Total amount present on waive full and waive partial screen
-	 * @author piyush bagdiya
-	 */
-	public void verifyWaivefullAndPartialAmount() {
+        Element.click(testConfig, lnkHome, "Home", 3);
+    }
 
-		String TotalAmount;
-		TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
-		TotalAmount = TotalAmount.substring(15);
-		Helper.compareEquals(testConfig, "Total for Waive Full amount which is sum of processed and settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Full_DBT_Fee"), TotalAmount);
+    /**
+     * Verify Total amount present on waive full and waive partial screen
+     *
+     * @author piyush bagdiya
+     */
+    public void verifyWaivefullAndPartialAmount() {
 
-		Element.click(partialRadioBtn, "Waive Partial Radio button");
+        String TotalAmount;
+        TotalAmount = Element.getTextPresent(TotalAmountText, "Total Amount Text");
+        TotalAmount = TotalAmount.substring(15);
+        Helper.compareEquals(testConfig, "Total for Waive Full amount which is sum of processed and settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Full_DBT_Fee"), TotalAmount);
 
-		TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
-		TotalAmount = TotalAmount.substring(15);
-		Helper.compareEquals(testConfig, "Total for Waive Partail amount which is Settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Partial_DBT_Fee"), TotalAmount);	
+        Element.click(partialRadioBtn, "Waive Partial Radio button");
 
-		}
-	
+        TotalAmount = Element.getTextPresent(TotalAmountText, "Total Amount Text");
+        TotalAmount = TotalAmount.substring(15);
+        Helper.compareEquals(testConfig, "Total for Waive Partail amount which is Settled amount from OLE.DEBIT_FEE_ACCRD table", testConfig.getRunTimeProperty("Total_Partial_DBT_Fee"), TotalAmount);
 
-/**
- * This functions is to verify dropdown options for reason
- * @param reason contains dropdown options present
- * @author piyush bagdiya
- */
-	public void verifySelectDropdownOptions(String reason) {
+    }
 
 
-		
-		List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
-		for(String option : options)
-		{
-			if(!(option.contains("Select reason")))
-			Helper.compareContains(testConfig, "Reason Drop down option", option,reason);
-		}
-
-	}
-	
-	/**
-	 * This function select waive fee reason from downdown
-	 * @param reason is the option to select from dropdown
-	 * @author piyush bagdiya
-	 */
-	public void selectWaivedFeeReasonOnly(String reason) {
-		Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee: "+reason);
-
-	}
-
-	/**
-	 * This function Verify selected reason text option 
-	 * @author piyush bagdiya
-	 */
-		public void verifySelectOptionReasonText() {
-			Map objAttribute;
-			Element.verifyElementPresent(SelectOptionreasonText, "Select Option reason Text for Other reason");
-			objAttribute = Element.getAllAttributes(testConfig, SelectOptionreasonText, "Select Option reason Text for Other reason");
-			String strDefault = (String) objAttribute.get("placeholder");
-			if(strDefault !=null) {				
-				Helper.compareEquals(testConfig, "Static Message for reason", "Max 150 characters", strDefault);
-			}
-
-			//Max 150 characters
-		}
-
-		/**
-		 * This function Verify positive scenario message for mandatory fields
-		 * @author piyush bagdiya
-		 * @param ReasonText is the error message to verify
-		 */
-		public void verifyPositiveScenarioForMessage(String ReasonText) {
-			int intStringLength = ReasonText.length();
-			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
-			Element.verifyElementPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is present before entering data");
-			Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length "+intStringLength);
-
-			Element.verifyElementNotPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is not present after entering data");
-
-		}
-
-		/**
-		 * This function Verify negative scenario message for mandatory fields
-		 * @author piyush bagdiya
-		 * @param ReasonText is the error message to verify
-		 */
-		public void verifyNegativeScenarioForMessage(String ReasonText) {
-			int intStringLength = ReasonText.length();
-			Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
-			Element.verifyElementNotPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is not present before entering message of length "+intStringLength);
-
-			Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length "+intStringLength);
-
-			Element.verifyElementPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is appeared after entering message of length "+intStringLength);
-
-		}
+    /**
+     * This functions is to verify dropdown options for reason
+     *
+     * @param reason contains dropdown options present
+     * @author piyush bagdiya
+     */
+    public void verifySelectDropdownOptions(String reason) {
 
 
-		/**
-		 * Verify continue button is Enabled
-		 * @author piyush bagdiya
-		 */
-		public void verifyContinueEnable()
-		{
-			Element.click(waivedFeeReason, "Reason Drop down");
-			Helper.compareEquals(testConfig, "Waive Continue Button is enabled", true, wavieContBtn.isEnabled());
-		}
+        List<String> options = Element.getAllOptionsInSelect(testConfig, waivedFeeReason);
+        for (String option : options) {
+            if (!(option.contains("Select reason")))
+                Helper.compareContains(testConfig, "Reason Drop down option", option, reason);
+        }
 
-		/**
-		 * This function select waive partial amount
-		 * @author piyush bagdiya
-		 */
-		public void selectWaivePartailAmount()
-		{
-			Element.click(partialRadioBtn, "Waive Partial Radio button");
+    }
 
-		}
-		/**
-		 * This function verifies Enter Partial Amount Text Box
-		 * @author piyush bagdiya
-		 */
-		public void verifyEnterPartialDollarAmount(){
-			Element.verifyElementPresent(EnterPartialAmountText, "Enter Partial Amount Text Box");
-		}
-		/**
-		 * Enter partial amount and verify different scenarios
-		 * @param ErrorMessage_Expacted contains the error message
-		 * @param ScenarioType it contains positive and negative scenario
-		 * @author piyush bagdiya
-		 */
-		public void enterPartialAmount(String ErrorMessage_Expacted,String ScenarioType)
-		{
-			String TotalAmount;
-			TotalAmount = Element.getTextPresent(TotalAmountText,"Total Amount Text");
-			TotalAmount = TotalAmount.substring(15);
-			double dblTotalAmount = Double.parseDouble(TotalAmount);
+    /**
+     * This function select waive fee reason from downdown
+     *
+     * @param reason is the option to select from dropdown
+     * @author piyush bagdiya
+     */
+    public void selectWaivedFeeReasonOnly(String reason) {
+        Element.selectByVisibleText(waivedFeeReason, reason, "reason for waived fee: " + reason);
 
+    }
 
-			if(ScenarioType.equalsIgnoreCase("PositiveMessage"))
-			{
-				dblTotalAmount = dblTotalAmount/2;
-				String ValueToEnter = String.valueOf(dblTotalAmount);
-				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+    /**
+     * This function Verify selected reason text option
+     *
+     * @author piyush bagdiya
+     */
+    public void verifySelectOptionReasonText() {
+        Map objAttribute;
+        Element.verifyElementPresent(SelectOptionreasonText, "Select Option reason Text for Other reason");
+        objAttribute = Element.getAllAttributes(testConfig, SelectOptionreasonText, "Select Option reason Text for Other reason");
+        String strDefault = (String) objAttribute.get("placeholder");
+        if (strDefault != null) {
+            Helper.compareEquals(testConfig, "Static Message for reason", "Max 150 characters", strDefault);
+        }
 
-				if(ErrorMessage.equalsIgnoreCase("")) {
-					Log.Pass("No error message for Valid amount", ErrorMessage, ErrorMessage);
-				}
-				else {
-					Log.Fail("Received unexpected error message for valid amount", ErrorMessage, ErrorMessage);
-				}
-			}	
-			else if(ScenarioType.equalsIgnoreCase("NegativeMessage")) {
-				dblTotalAmount = dblTotalAmount+10;
-				String ValueToEnter = String.valueOf(dblTotalAmount);
-				Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+        //Max 150 characters
+    }
 
-			if(ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
-				Log.Pass("Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
-			}
-			else {
-				Log.Fail("Did not Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
-			}
-			}else if(ScenarioType.equalsIgnoreCase("NegativeValue"))
-			{
-				Element.enterData(EnterPartialAmountText, "-1", "Enter data" + "-1" + "in Partial Amount Text Box", "Partial Amount Text Box");
-				String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+    /**
+     * This function Verify positive scenario message for mandatory fields
+     *
+     * @param ReasonText is the error message to verify
+     * @author piyush bagdiya
+     */
+    public void verifyPositiveScenarioForMessage(String ReasonText) {
+        int intStringLength = ReasonText.length();
+        Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
+        Element.verifyElementPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is present before entering data");
+        Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length " + intStringLength);
 
-				Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
+        Element.verifyElementNotPresent(ThisIsRequiredFieldErrorMessage, "This Is Required Field Error Message is not present after entering data");
 
-			
-			Element.enterData(EnterPartialAmountText, "0", "Enter data" + "0" + "in Partial Amount Text Box", "Partial Amount Text Box");
-			ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage,"Partial Amount Error Message");
+    }
 
-			Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
-			
-			}
+    /**
+     * This function Verify negative scenario message for mandatory fields
+     *
+     * @param ReasonText is the error message to verify
+     * @author piyush bagdiya
+     */
+    public void verifyNegativeScenarioForMessage(String ReasonText) {
+        int intStringLength = ReasonText.length();
+        Element.verifyElementPresent(SelectOptionreasonText, "Reason Text for Other option");
+        Element.verifyElementNotPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is not present before entering message of length " + intStringLength);
+
+        Element.enterData(SelectOptionreasonText, ReasonText, "Enter reason text in other option", "Reason Text for Other option of length " + intStringLength);
+
+        Element.verifyElementPresent(MaximumCharacterLimitIs150ErrorMessage, "Maximum Character limit is 150 is appeared after entering message of length " + intStringLength);
+
+    }
 
 
-		}
+    /**
+     * Verify continue button is Enabled
+     *
+     * @author piyush bagdiya
+     */
+    public void verifyContinueEnable() {
+        Element.click(waivedFeeReason, "Reason Drop down");
+        Helper.compareEquals(testConfig, "Waive Continue Button is enabled", true, wavieContBtn.isEnabled());
+    }
+
+    /**
+     * This function select waive partial amount
+     *
+     * @author piyush bagdiya
+     */
+    public void selectWaivePartailAmount() {
+        Element.click(partialRadioBtn, "Waive Partial Radio button");
+
+    }
+
+    /**
+     * This function verifies Enter Partial Amount Text Box
+     *
+     * @author piyush bagdiya
+     */
+    public void verifyEnterPartialDollarAmount() {
+        Element.verifyElementPresent(EnterPartialAmountText, "Enter Partial Amount Text Box");
+    }
+
+    /**
+     * Enter partial amount and verify different scenarios
+     *
+     * @param ErrorMessage_Expacted contains the error message
+     * @param ScenarioType          it contains positive and negative scenario
+     * @author piyush bagdiya
+     */
+    public void enterPartialAmount(String ErrorMessage_Expacted, String ScenarioType) {
+        String TotalAmount;
+        TotalAmount = Element.getTextPresent(TotalAmountText, "Total Amount Text");
+        TotalAmount = TotalAmount.substring(15);
+        double dblTotalAmount = Double.parseDouble(TotalAmount);
 
 
+        if (ScenarioType.equalsIgnoreCase("PositiveMessage")) {
+            dblTotalAmount = dblTotalAmount / 2;
+            String ValueToEnter = String.valueOf(dblTotalAmount);
+            Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
+            String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage, "Partial Amount Error Message");
 
+            if (ErrorMessage.equalsIgnoreCase("")) {
+                Log.Pass("No error message for Valid amount", ErrorMessage, ErrorMessage);
+            } else {
+                Log.Fail("Received unexpected error message for valid amount", ErrorMessage, ErrorMessage);
+            }
+        } else if (ScenarioType.equalsIgnoreCase("NegativeMessage")) {
+            dblTotalAmount = dblTotalAmount + 10;
+            String ValueToEnter = String.valueOf(dblTotalAmount);
+            Element.enterData(EnterPartialAmountText, ValueToEnter, "Enter data" + ValueToEnter + "in Partial Amount Text Box", "Partial Amount Text Box");
+            String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage, "Partial Amount Error Message");
+
+            if (ErrorMessage.equalsIgnoreCase(ErrorMessage_Expacted)) {
+                Log.Pass("Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+            } else {
+                Log.Fail("Did not Received expected error message for excceding amount", ErrorMessage, ErrorMessage);
+            }
+        } else if (ScenarioType.equalsIgnoreCase("NegativeValue")) {
+            Element.enterData(EnterPartialAmountText, "-1", "Enter data" + "-1" + "in Partial Amount Text Box", "Partial Amount Text Box");
+            String ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage, "Partial Amount Error Message");
+
+            Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
+
+
+            Element.enterData(EnterPartialAmountText, "0", "Enter data" + "0" + "in Partial Amount Text Box", "Partial Amount Text Box");
+            ErrorMessage = Element.getTextPresent(PartialAmountErrorMessage, "Partial Amount Error Message");
+
+            Helper.compareContains(testConfig, "Expected error message for excceding amount", ErrorMessage_Expacted, ErrorMessage);
+
+        }
+
+
+    }
 
 
     public void hoveroverpurpledots() throws Exception {
-    	
-    	if (System.getProperty("Application").contains("UPA")) {
-    	Element.verifyElementPresent(purplebox, "purple box");
-    	Element.verifyElementPresent(paymentlabel, "payment  label");
-    	
-    	Helper.compareEquals(testConfig, "Payment label", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpleboxText").trim(), paymentlabel.getText());
-    	Element.verifyElementPresent(Reason, "reason ");
-    	Element.verifyElementPresent(ReturnDate, "Return-date");
-    	Element.mouseHoverByJS(testConfig, purpledots, "purple dots");
-        Browser.wait(testConfig, 2);
-    	
-    	Helper.compareEquals(testConfig, "purple hover text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpledothoverText").trim(), hovermsg.getText().trim());
-    	Element.mouseHoverByJS(testConfig, Confirmhover, "confirmation hover");
-    	Browser.wait(testConfig, 2);
-    	verifyContentsFromDB();
-    	Element.verifyElementIsEnabled(payNow, "Pay Now Button");
-    	Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
-    	Browser.wait(testConfig, 2);
-    	int rowNo = 1;
-        TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
-        String routingNo = data.GetData(rowNo, "RoutingNumber");
-        String accountNo = data.GetData(rowNo, "AccountNumber");
-        Element.enterData(routingNumber, routingNo, "Read from excel and Enter Routing Number: "+routingNo, "routingNumber");
-        Element.enterData(accountNumber, accountNo, "Read from excel and Enter Account Number: "+accountNo, "accountNumber");
-        Element.enterKeys(accountNumber, Keys.TAB, "TAB Key entering", "TAB Key");
-        Element.enterKeys(accountNumber, Keys.SPACE, "SPACE Key entering", "TAB Key");
-        Browser.wait(testConfig, 2);
-        Element.clickByJS(testConfig, optumPayDebitAuthCheckBox, "Optum Pay Debit Auth CheckBox");
-        Helper.compareEquals(testConfig, "Submit Button is enabled", true, submitButton.isEnabled());
-        Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
-        Browser.wait(testConfig, 2);
-        Element.clickByJS(testConfig, closeBtn, "Close Button");
-        verifyupdatedConfirmation();
-    	}
-        else {
-        	Browser.wait(testConfig, 4);
-        	Element.verifyElementPresent(purpleboxCSR, "purple box CSR");
-        	Browser.wait(testConfig, 3);
-        	Element.verifyElementPresent(paymentlabelCSR, "payment  label CSR");
-        	String paymentlabelCSR = Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[1]").getText();
-        	Helper.compareEquals(testConfig, "Payment label", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpleboxText").trim(), paymentlabelCSR.substring(0, 68));
-        	Element.verifyElementPresent(ReasonCSR, "reason ");
-        	Element.verifyElementPresent(ReturnDateCSR, "Return-date");
-        	Element.mouseHoverByJS(testConfig, purpledots, "purple dots");	
+
+        if (System.getProperty("Application").contains("UPA")) {
+            Element.verifyElementPresent(purplebox, "purple box");
+            Element.verifyElementPresent(paymentlabel, "payment  label");
+
+            Helper.compareEquals(testConfig, "Payment label", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpleboxText").trim(), paymentlabel.getText());
+            Element.verifyElementPresent(Reason, "reason ");
+            Element.verifyElementPresent(ReturnDate, "Return-date");
+            Element.mouseHoverByJS(testConfig, purpledots, "purple dots");
+            Browser.wait(testConfig, 2);
+
+            Helper.compareEquals(testConfig, "purple hover text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpledothoverText").trim(), hovermsg.getText().trim());
+            Element.mouseHoverByJS(testConfig, Confirmhover, "confirmation hover");
+            Browser.wait(testConfig, 2);
+            verifyContentsFromDB();
+            Element.verifyElementIsEnabled(payNow, "Pay Now Button");
+            Element.clickByJS(testConfig, payNow, "Pay Now Button clicked");
+            Browser.wait(testConfig, 2);
+            int rowNo = 1;
+            TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            String routingNo = data.GetData(rowNo, "RoutingNumber");
+            String accountNo = data.GetData(rowNo, "AccountNumber");
+            Element.enterData(routingNumber, routingNo, "Read from excel and Enter Routing Number: " + routingNo, "routingNumber");
+            Element.enterData(accountNumber, accountNo, "Read from excel and Enter Account Number: " + accountNo, "accountNumber");
+            Element.enterKeys(accountNumber, Keys.TAB, "TAB Key entering", "TAB Key");
+            Element.enterKeys(accountNumber, Keys.SPACE, "SPACE Key entering", "TAB Key");
+            Browser.wait(testConfig, 2);
+            Element.clickByJS(testConfig, optumPayDebitAuthCheckBox, "Optum Pay Debit Auth CheckBox");
+            Helper.compareEquals(testConfig, "Submit Button is enabled", true, submitButton.isEnabled());
+            Element.clickByJS(testConfig, btnSubmitModalACHpayment, "Submit Button");
+            Browser.wait(testConfig, 2);
+            Element.clickByJS(testConfig, closeBtn, "Close Button");
+            verifyupdatedConfirmation();
+        } else {
+            Browser.wait(testConfig, 4);
+            Element.verifyElementPresent(purpleboxCSR, "purple box CSR");
+            Browser.wait(testConfig, 3);
+            Element.verifyElementPresent(paymentlabelCSR, "payment  label CSR");
+            String paymentlabelCSR = Element.findElement(testConfig, "xpath", "//*[@id='optum-pay-invoices-tabs']/div[1]/div/div/p[1]").getText();
+            Helper.compareEquals(testConfig, "Payment label", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpleboxText").trim(), paymentlabelCSR.substring(0, 68));
+            Element.verifyElementPresent(ReasonCSR, "reason ");
+            Element.verifyElementPresent(ReturnDateCSR, "Return-date");
+            Element.mouseHoverByJS(testConfig, purpledots, "purple dots");
             Browser.wait(testConfig, 3);
             Helper.compareEquals(testConfig, "purple hover text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.invoicesOptumPaySolutions.purpledothoverText").trim(), hovermsg.getText().trim());
             Element.mouseHoverByJS(testConfig, ConfirmhoverCSR, "confirmation hover CSR");
@@ -2705,103 +2707,106 @@ public class OptumPaySolution {
             Element.verifyElementNotEnabled(payNowCSR, "Pay Now button");
             verifyContentsFromDB();
         }
-    	
-    } 
-    public void verifyContentsFromDB() throws Exception {
-    	String DatePaid = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-2']/div/p[1]/span").getText();
-    	String ConfirmationTxt = Element.findElement(testConfig, "xpath", "//*[@id=\"ui-id-2\"]/div/p[2]/span").getText();
-    	Map<String, String> DbtTable = DataBase.executeSelectQuery(testConfig, QUERY.DBT_FEE_OTH_FEES, 1);
-    	Helper.compareEquals(testConfig, "Confirmation",DbtTable.get("CONFIRM_NBR").toString().trim(),ConfirmationTxt.substring(1).trim());
-    	
-    	if (System.getProperty("Application").contains("UPA")) {
-    		Helper.compareEquals(testConfig, "Bank Account Number", DbtTable.get("BANK_ACCT_NBR").substring(6).trim(),ACCNTNUM.getText().substring(3));
-    		Helper.compareEquals(testConfig, "Return Date",DbtTable.get("RET_DT").toString().trim(),date.getText().trim());
-    		Helper.compareEquals(testConfig, "Reason",DbtTable.get("RET_REAS_DESC").toString().trim(),ReasonDesp.getText().trim());}
-    	else {
-    		Helper.compareEquals(testConfig, "Bank Account Number", DbtTable.get("BANK_ACCT_NBR").substring(6).trim(),ACCNTNUMCSR.getText().substring(3));
-    		Helper.compareEquals(testConfig, "Reason",DbtTable.get("RET_REAS_DESC").toString().trim(),ReasonDespCSR.getText().trim());
-    		Helper.compareEquals(testConfig, "Return Date",DbtTable.get("RET_DT").toString().trim(),dateCSR.getText().trim());}
-        DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy","yyyy-dd-mm");
-        Helper.compareEquals(testConfig, "Date Paid", DbtTable.get("PAID_DATE").substring(0,10).trim(),DatePaid.substring(0,10).trim());
 
     }
+
+    public void verifyContentsFromDB() throws Exception {
+        String DatePaid = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-2']/div/p[1]/span").getText();
+        String ConfirmationTxt = Element.findElement(testConfig, "xpath", "//*[@id=\"ui-id-2\"]/div/p[2]/span").getText();
+        Map<String, String> DbtTable = DataBase.executeSelectQuery(testConfig, QUERY.DBT_FEE_OTH_FEES, 1);
+        Helper.compareEquals(testConfig, "Confirmation", DbtTable.get("CONFIRM_NBR").toString().trim(), ConfirmationTxt.substring(1).trim());
+
+        if (System.getProperty("Application").contains("UPA")) {
+            Helper.compareEquals(testConfig, "Bank Account Number", DbtTable.get("BANK_ACCT_NBR").substring(6).trim(), ACCNTNUM.getText().substring(3));
+            Helper.compareEquals(testConfig, "Return Date", DbtTable.get("RET_DT").toString().trim(), date.getText().trim());
+            Helper.compareEquals(testConfig, "Reason", DbtTable.get("RET_REAS_DESC").toString().trim(), ReasonDesp.getText().trim());
+        } else {
+            Helper.compareEquals(testConfig, "Bank Account Number", DbtTable.get("BANK_ACCT_NBR").substring(6).trim(), ACCNTNUMCSR.getText().substring(3));
+            Helper.compareEquals(testConfig, "Reason", DbtTable.get("RET_REAS_DESC").toString().trim(), ReasonDespCSR.getText().trim());
+            Helper.compareEquals(testConfig, "Return Date", DbtTable.get("RET_DT").toString().trim(), dateCSR.getText().trim());
+        }
+        DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy", "yyyy-dd-mm");
+        Helper.compareEquals(testConfig, "Date Paid", DbtTable.get("PAID_DATE").substring(0, 10).trim(), DatePaid.substring(0, 10).trim());
+
+    }
+
     public void verifyupdatedConfirmation() throws Exception {
-    	Element.mouseHoverByJS(testConfig, Confirmhover, "confirmation hover");
-    	String DatePaid = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-1']/div/p[1]/span").getText();
-    	String ConfirmationTxt = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-1']/div/p[2]/span").getText();
-    	Map<String, String> Db = DataBase.executeSelectQuery(testConfig, QUERY.DBT_FEE_OTH_FEES, 1);
-    	Helper.compareEquals(testConfig, "Confirmation",Db.get("CONFIRM_NBR").toString().trim(),ConfirmationTxt.substring(1).trim());
-    	 DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy","yyyy-dd-mm");
-         Helper.compareEquals(testConfig, "Date Paid", Db.get("PAID_DATE").substring(0,10).trim(),DatePaid.substring(0,10).trim());
+        Element.mouseHoverByJS(testConfig, Confirmhover, "confirmation hover");
+        String DatePaid = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-1']/div/p[1]/span").getText();
+        String ConfirmationTxt = Element.findElement(testConfig, "xpath", "//*[@id='ui-id-1']/div/p[2]/span").getText();
+        Map<String, String> Db = DataBase.executeSelectQuery(testConfig, QUERY.DBT_FEE_OTH_FEES, 1);
+        Helper.compareEquals(testConfig, "Confirmation", Db.get("CONFIRM_NBR").toString().trim(), ConfirmationTxt.substring(1).trim());
+        DatePaid = Helper.changeDateFormat(DatePaid, "dd/mm/yyyy", "yyyy-dd-mm");
+        Helper.compareEquals(testConfig, "Date Paid", Db.get("PAID_DATE").substring(0, 10).trim(), DatePaid.substring(0, 10).trim());
     }
 
 
     public void resetsOrSetsThePayments() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
-        Helper.compareEquals(testConfig,"Deselect all title", Element.getTextPresent(ResetOrSelectAllBtn,"Deselect all"),"Deselect all");
-        Element.verifyElementIsEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
-        Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
-        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
-        Element.click(AssignAccountBtn,"AssignAccountBtn");
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
-        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
-        Element.verifyElementNotEnabled(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
-        Element.verifyElementNotEnabled(AssignAccountBtn,"AssignAccountBtn");
-        Element.click(ResetOrSelectAllBtn,"Reset all button");
-        Helper.compareEquals(testConfig,"Are you sure popup", Element.getTextPresent(testConfig.getDriver().findElement(By.xpath("//div[@class='resetRpMessage']/p[1]")), "Are you sure?"),"Are you sure?");
-        Element.verifyElementIsEnabled(RecurringPaymentPopupCancelButton,"RecurringPaymentPopupCancelButton");
-        Element.click(RecurringPaymentPopupCancelButton,"RecurringPaymentPopupCancelButton");
-        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='payment_type']"), 5);
+        Helper.compareEquals(testConfig, "Deselect all title", Element.getTextPresent(ResetOrSelectAllBtn, "Deselect all"), "Deselect all");
+        Element.verifyElementIsEnabled(PrimanryBankAccountforTinRadioBtn, "PrimanryBankAccountforTinRadioBtn");
+        Element.verifyElementNotEnabled(AssignAccountBtn, "AssignAccountBtn");
+        Element.click(PrimanryBankAccountforTinRadioBtn, "PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn, "AssignAccountBtn");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='payment_type']"), 5);
+        Helper.compareEquals(testConfig, "Reset all title", Element.getTextPresent(ResetOrSelectAllBtn, "Reset all"), "Reset all");
+        Element.verifyElementNotEnabled(PrimanryBankAccountforTinRadioBtn, "PrimanryBankAccountforTinRadioBtn");
+        Element.verifyElementNotEnabled(AssignAccountBtn, "AssignAccountBtn");
+        Element.click(ResetOrSelectAllBtn, "Reset all button");
+        Helper.compareEquals(testConfig, "Are you sure popup", Element.getTextPresent(testConfig.getDriver().findElement(By.xpath("//div[@class='resetRpMessage']/p[1]")), "Are you sure?"), "Are you sure?");
+        Element.verifyElementIsEnabled(RecurringPaymentPopupCancelButton, "RecurringPaymentPopupCancelButton");
+        Element.click(RecurringPaymentPopupCancelButton, "RecurringPaymentPopupCancelButton");
+        Helper.compareEquals(testConfig, "Reset all title", Element.getTextPresent(ResetOrSelectAllBtn, "Reset all"), "Reset all");
 
-        Element.click(ResetOrSelectAllBtn,"Reset all button");
-        Element.click(RecurringPaymentPopupX_Button,"RecurringPaymentPopupXButton");
-        Helper.compareEquals(testConfig,"Reset all title", Element.getTextPresent(ResetOrSelectAllBtn,"Reset all"),"Reset all");
+        Element.click(ResetOrSelectAllBtn, "Reset all button");
+        Element.click(RecurringPaymentPopupX_Button, "RecurringPaymentPopupXButton");
+        Helper.compareEquals(testConfig, "Reset all title", Element.getTextPresent(ResetOrSelectAllBtn, "Reset all"), "Reset all");
 
-        Element.click(ResetOrSelectAllBtn,"Reset all button");
-        Element.click(RecurringPaymentPopupContinueButton,"RecurringPaymentPopupContinueButton");
-        Helper.compareEquals(testConfig,"Select all title", Element.getTextPresent(ResetOrSelectAllBtn,"Select all"),"Select all");
-        Element.click(ResetOrSelectAllBtn,"Select all");
-        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
-        Element.click(AssignAccountBtn,"AssignAccountBtn");
+        Element.click(ResetOrSelectAllBtn, "Reset all button");
+        Element.click(RecurringPaymentPopupContinueButton, "RecurringPaymentPopupContinueButton");
+        Helper.compareEquals(testConfig, "Select all title", Element.getTextPresent(ResetOrSelectAllBtn, "Select all"), "Select all");
+        Element.click(ResetOrSelectAllBtn, "Select all");
+        Element.click(PrimanryBankAccountforTinRadioBtn, "PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn, "AssignAccountBtn");
 
-        int rows = Element.findElements(testConfig,"xpath","(//table[@id='recurring-payment-table'])[1]/tbody/tr").size();
-        if(rows >1 ){
-            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr["+(rows-1)+"]/td[1]")),"Last row reset button" );
-        }else if (rows == 1){
-            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr[1]/td[1]")),"Last row reset button" );
+        int rows = Element.findElements(testConfig, "xpath", "(//table[@id='recurring-payment-table'])[1]/tbody/tr").size();
+        if (rows > 1) {
+            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr[" + (rows - 1) + "]/td[1]")), "Last row reset button");
+        } else if (rows == 1) {
+            Element.click(testConfig.driver.findElement(By.xpath("(//table[@id='recurring-payment-table'])[1]/tbody/tr[1]/td[1]")), "Last row reset button");
         }
     }
 
     public void setsAllPayersAsPrimaryBankingAccount() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
-        Element.click(PrimanryBankAccountforTinRadioBtn,"PrimanryBankAccountforTinRadioBtn");
-        Element.click(AssignAccountBtn,"AssignAccountBtn");
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
-        Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='payment_type']"), 5);
+        Element.click(PrimanryBankAccountforTinRadioBtn, "PrimanryBankAccountforTinRadioBtn");
+        Element.click(AssignAccountBtn, "AssignAccountBtn");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='payment_type']"), 5);
+        Element.click(RecurringPaymentStep1Continue, "RecurringPaymentStep1Continue");
     }
 
     public void userClicksOnRecurringPaymentStepTwoContinueButton() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("(//input[@value='Continue'])[2]"),5);
-        Element.click(RecurringPaymentStep2Continue,"RecurringPaymentStep2Continue");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("(//input[@value='Continue'])[2]"), 5);
+        Element.click(RecurringPaymentStep2Continue, "RecurringPaymentStep2Continue");
     }
 
     public void userClicksCheckboxesAandSubmitButtonOnStepThree() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Submit ']"),5);
-        Element.click(RecurringPaymentStep3Checkbox1,"RecurringPaymentStep3Checkbox1");
-        Element.click(RecurringPaymentStep3Checkbox2,"RecurringPaymentStep3Checkbox2");
-        Element.waitForElementTobeClickAble(testConfig,RecurringPaymentStep3Submit,10);
-        Element.click(RecurringPaymentStep3Submit,"RecurringPaymentStep3Submit");
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@value='Submit ']"), 5);
+        Element.click(RecurringPaymentStep3Checkbox1, "RecurringPaymentStep3Checkbox1");
+        Element.click(RecurringPaymentStep3Checkbox2, "RecurringPaymentStep3Checkbox2");
+        Element.waitForElementTobeClickAble(testConfig, RecurringPaymentStep3Submit, 10);
+        Element.click(RecurringPaymentStep3Submit, "RecurringPaymentStep3Submit");
     }
 
     public void userValidatesThePrimaryBankAccountEntriesInTheDB() {
 
         Map data = DataBase.executeSelectQuery(testConfig, QUERY.readPrimarnyBankAccountLog, 1);
-        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
-        Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
-        Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
-        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0, 10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate last changed by id", false, data.get("LST_CHG_BY_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate last changed by portal id", false, data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y", data.get("RECR_PAY_SET_IND").toString().trim());
         data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
-        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0, 10), Helper.getCurrentDate("YYYY-MM-dd").toString());
 
 
     }
@@ -2814,20 +2819,20 @@ public class OptumPaySolution {
             List<String> ValidRoutNos = data.GetAllColumnsData("FinancialInfo", "ValidRoutingNos");
             String routingNumber = data.GetData(rowNo, "RoutingNumber");
             String accountNumber = data.GetData(rowNo, "AccountNumber");
-            System.setProperty("routingNumber",routingNumber);
-            System.setProperty("accountNumber",accountNumber);
-            Element.click(testConfig,testConfig.getDriver().findElement(By.id("addAlternateBankAccountButton")),"Add alternate bank button", 10 );
-            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='routingNbr']")),routingNumber,"Routing number", "Routing number input");
-            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='accountNbr']")),accountNumber,"Account number", "Account number input");
-            Element.click(testConfig,testConfig.getDriver().findElement(By.xpath("//p[contains(.,'Financial Institution Information')]")),"tab out", 10 );
+            System.setProperty("routingNumber", routingNumber);
+            System.setProperty("accountNumber", accountNumber);
+            Element.click(testConfig, testConfig.getDriver().findElement(By.id("addAlternateBankAccountButton")), "Add alternate bank button", 10);
+            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='routingNbr']")), routingNumber, "Routing number", "Routing number input");
+            Element.enterData(testConfig.getDriver().findElement(By.xpath("//input[@name='accountNbr']")), accountNumber, "Account number", "Account number input");
+            Element.click(testConfig, testConfig.getDriver().findElement(By.xpath("//p[contains(.,'Financial Institution Information')]")), "tab out", 10);
             WebElement addAltBankAccountBtn = testConfig.driver.findElement(By.xpath("//button[@class='btn-primary rounded addBankAccount ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only']"));
-            Element.waitForElementTobeClickAble(testConfig,addAltBankAccountBtn,10);
-            Element.click(testConfig,addAltBankAccountBtn,"Add alternate bank account button", 10);
-            Element.click(testConfig.driver.findElement(By.xpath("//input[@data-paymenttype='alternate']")),"Alternate BankAccountforTinRadioBtn");
-            Element.waitForElementTobeClickAble(testConfig,AssignAccountBtn,10);
-            Element.click(AssignAccountBtn,"AssignAccountBtn");
-            Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@name='payment_type']"),5);
-            Element.click(RecurringPaymentStep1Continue,"RecurringPaymentStep1Continue");
+            Element.waitForElementTobeClickAble(testConfig, addAltBankAccountBtn, 10);
+            Element.click(testConfig, addAltBankAccountBtn, "Add alternate bank account button", 10);
+            Element.click(testConfig.driver.findElement(By.xpath("//input[@data-paymenttype='alternate']")), "Alternate BankAccountforTinRadioBtn");
+            Element.waitForElementTobeClickAble(testConfig, AssignAccountBtn, 10);
+            Element.click(AssignAccountBtn, "AssignAccountBtn");
+            Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//input[@name='payment_type']"), 5);
+            Element.click(RecurringPaymentStep1Continue, "RecurringPaymentStep1Continue");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -2837,119 +2842,124 @@ public class OptumPaySolution {
 
     public void userValidatesTheAlternateBankAccountEntriesInTheDB() {
         Map data = DataBase.executeSelectQuery(testConfig, QUERY.readAlternateBankAccountLog, 1);
-        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
-        Helper.compareEquals(testConfig, "validate last changed by id", false,  data.get("LST_CHG_BY_ID").toString().isEmpty());
-        Helper.compareEquals(testConfig, "validate last changed by portal id", false,  data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
-        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y",  data.get("RECR_PAY_SET_IND").toString().trim());
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0, 10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate last changed by id", false, data.get("LST_CHG_BY_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate last changed by portal id", false, data.get("LST_CHG_BY_PRTL_ID").toString().isEmpty());
+        Helper.compareEquals(testConfig, "validate recurring pay set index", "Y", data.get("RECR_PAY_SET_IND").toString().trim());
         data = DataBase.executeSelectQuery(testConfig, QUERY.readPaymentDesignationHistoryFortheTIN, 1);
-        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0,10), Helper.getCurrentDate("YYYY-MM-dd").toString());
+        Helper.compareEquals(testConfig, "validate dates", data.get("LST_CHG_BY_DTTM").toString().substring(0, 10), Helper.getCurrentDate("YYYY-MM-dd").toString());
     }
 
 
     public OptumPaySolution clickRecPay() {
-       // Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
-    	//Element.click(recPaybut, "Set Up recurring payments button");
-    	Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
-    	Element.click(Setuprecurringpayments, "Setup recurring payments");
-    	return this;
+        // Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//input[@value='Set up recurring payments']"),5);
+        //Element.click(recPaybut, "Set Up recurring payments button");
+        Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
+        Element.click(Setuprecurringpayments, "Setup recurring payments");
+        return this;
     }
 
     public OptumPaySolution clicContinuebutofRecPay() {
-        Element.waitForPresenceOfElementLocated(testConfig,By.xpath("//span[.='Continue']"),5);
-    	Element.click(contButton, "Continue button of welcome page");
-    	return this;
+        Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//span[.='Continue']"), 5);
+        Element.click(contButton, "Continue button of welcome page");
+        return this;
     }
-    public OptumPaySolution clickTinchkboxes() {
-    	Element.click(Element.findElement(testConfig, "linkText", "Deselect all"),"Deselect check box");
-    	Element.click(tinChkbox.get(0).findElement(By.xpath("./td[1]")), "first TIN selected of the grid");
-    	Element.click(payType,"Primary bank account TIN radio button");
-    	Element.click(assignAccnt,"Assign account");
 
-    	return this;
+    public OptumPaySolution clickTinchkboxes() {
+        Element.click(Element.findElement(testConfig, "linkText", "Deselect all"), "Deselect check box");
+        Element.click(tinChkbox.get(0).findElement(By.xpath("./td[1]")), "first TIN selected of the grid");
+        Element.click(payType, "Primary bank account TIN radio button");
+        Element.click(assignAccnt, "Assign account");
+
+        return this;
     }
 
     public OptumPaySolution validateTINgridpopulation() {
-    	tinChkbox.get(0).findElement(By.xpath("./td[4]")).getText();
-    	tinChkbox.get(0).findElement(By.xpath("./td[5]")).getText();
-    	return this;
+        tinChkbox.get(0).findElement(By.xpath("./td[4]")).getText();
+        tinChkbox.get(0).findElement(By.xpath("./td[5]")).getText();
+        return this;
     }
+
     public OptumPaySolution ReviewSelection() {
-    	Browser.wait(testConfig,2);
-     	Element.click(Element.findElement(testConfig, "linkText", "Select all"),"Select check box");
-     	Element.click(payType,"Primary bank account TIN radio button");
-    	Element.click(assignAccnt,"Assign account");
-    	
-    	Element.click(continuebutton, "Continue Button");
-    	Browser.wait(testConfig,2);
-    	Element.verifyTextPresent(ReviewSelection, "Review and confirm your selections below");
+        Browser.wait(testConfig, 2);
+        Element.click(Element.findElement(testConfig, "linkText", "Select all"), "Select check box");
+        Element.click(payType, "Primary bank account TIN radio button");
+        Element.click(assignAccnt, "Assign account");
+
+        Element.click(continuebutton, "Continue Button");
+        Browser.wait(testConfig, 2);
+        Element.verifyTextPresent(ReviewSelection, "Review and confirm your selections below");
         Element.verifyElementIsEnabled(continueRecurringPayment, "Continue Recurring Payment button");
-    	Element.verifyElementIsEnabled(Cancelbtn, "Cancel Button");
-    	Element.verifyElementIsEnabled(Backbtn, "Back button");
-  
-    	Element.click(Cancelbtn, "Cancel Button");
-    	Browser.wait(testConfig, 2);
-    	Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.title").trim(), title.getText().trim());
-    	Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.messageContent").trim(), messagecontent.getText().trim());
-    	Element.click(cancelpopup, "Close");
-    	Element.click(continueRecurringPayment, "Continue button");
-    	Element.verifyElementPresent(ReviewSelectionlink, "Review selection");
-    	Element.click(ReviewSelectionlink, "Review selection");
-    	Browser.wait(testConfig, 2);
-    	Element.verifyElementPresent(SelectPayment, "Select payment method");
-    	Element.click(SelectPayment, "Select payment method");
-		return this;
-    	
+        Element.verifyElementIsEnabled(Cancelbtn, "Cancel Button");
+        Element.verifyElementIsEnabled(Backbtn, "Back button");
+
+        Element.click(Cancelbtn, "Cancel Button");
+        Browser.wait(testConfig, 2);
+        Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.title").trim(), title.getText().trim());
+        Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Recurringpaymentpopup.messageContent").trim(), messagecontent.getText().trim());
+        Element.click(cancelpopup, "Close");
+        Element.click(continueRecurringPayment, "Continue button");
+        Element.verifyElementPresent(ReviewSelectionlink, "Review selection");
+        Element.click(ReviewSelectionlink, "Review selection");
+        Browser.wait(testConfig, 2);
+        Element.verifyElementPresent(SelectPayment, "Select payment method");
+        Element.click(SelectPayment, "Select payment method");
+        return this;
+
     }
+
     public OptumPaySolution Setuprecurringpayments() {
-    	Element.click(Managepaymethods, "Manage pay methods");
-    	Browser.wait(testConfig, 2);
-    	Helper.compareEquals(testConfig, "Text",TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.UnassignedTins.message"), unassignedtins.getText().trim());
-    	Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
-    	Element.click(Setuprecurringpayments, "Setup recurring payments");
-    	Browser.wait(testConfig, 2);
-    	Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.title").trim(), Welcomepopupheader.getText().trim());
-    	Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.messageContent").trim(), Welcomepopupparagraph.getText().trim());
-    	Element.verifyElementIsEnabled(contButton, "continue button"); 
-    	Element.verifyElementIsEnabled(cancelbutton, "Cancel button");
-    	Element.click(contButton, "continue button");
-    	return this;
+        Element.click(Managepaymethods, "Manage pay methods");
+        Browser.wait(testConfig, 2);
+        Helper.compareEquals(testConfig, "Text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.UnassignedTins.message"), unassignedtins.getText().trim());
+        Element.verifyElementPresent(Setuprecurringpayments, "Setup recurring payments");
+        Element.click(Setuprecurringpayments, "Setup recurring payments");
+        Browser.wait(testConfig, 2);
+        Helper.compareEquals(testConfig, "Header text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.title").trim(), Welcomepopupheader.getText().trim());
+        Helper.compareEquals(testConfig, "paragraph text", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optunPaySolution.Welcomepopup.messageContent").trim(), Welcomepopupparagraph.getText().trim());
+        Element.verifyElementIsEnabled(contButton, "continue button");
+        Element.verifyElementIsEnabled(cancelbutton, "Cancel button");
+        Element.click(contButton, "continue button");
+        return this;
     }
+
     public OptumPaySolution validateRecurrDashboard() {
-    	
-		//Browser.browserRefresh(testConfig);
-    	//TinWithRecurrPay and exemption
-    	WebElement recurHeader=Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div");
-    	if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and No exemption"))
-    	{
-    		if (recurHeader==null)
-    		Log.Comment("Recurring Payments exemption dashboard is not present.");	
-    	}
-    	else if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and exemption")) {	
-    		
-    		String recurrHeader=recurHeader.getText();
-		
-		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Recurring payments exemption", recurrHeader);
-		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Status", recurrHeader);
-		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Setup by", recurrHeader);
-		Helper.compareContains(testConfig, "Recurr Pay dashboard comparision","Activation date" , recurrHeader);
-		Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div/div[2]/div[4]"), "Review invoices button");
-		DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
-    	}
-		return this;
-    	
+
+        //Browser.browserRefresh(testConfig);
+        //TinWithRecurrPay and exemption
+        WebElement recurHeader = Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div");
+        if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and No exemption")) {
+            if (recurHeader == null)
+                Log.Comment("Recurring Payments exemption dashboard is not present.");
+        } else if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and exemption")) {
+
+            String recurrHeader = recurHeader.getText();
+
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Recurring payments exemption", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Status", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Setup by", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Activation date", recurrHeader);
+            Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div/div[2]/div[4]"), "Review invoices button");
+            DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
+        }
+        return this;
+
     }
 
     public void exemptionSectionValidatorCSR_RO_RW() {
-        try {
-            if (requestExemptionBtn.isDisplayed()) {
+        List<WebElement> removeOrRequestExemotionBtns = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        for (WebElement each : removeOrRequestExemotionBtns) {
+            if (each.getAttribute("value").contains("Request")) {
+                Element.verifyElementPresent(requestExemptionBtn, "Request Exemption btn");
                 Element.verifyElementNotEnabled(requestExemptionBtn, "Request Exemption btn");
+            } else if (each.getAttribute("value").contains("Remove")) {
+                Element.verifyElementPresent(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementNotEnabled(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Status: ']"), "status text");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Setup by: ']"), "setUpByText");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Activation date:  ']"), "activation date text");
             }
-        }catch(NoSuchElementException e){
-         if(removeExemptionBtn.isDisplayed()){
-            Element.verifyElementNotEnabled(removeExemptionBtn,"removeExemptionBtn");
-            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Status: ']"),"status text");
-            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Setup by: ']"),"setUpByText");
-            Element.verifyElementPresent(Element.findElement(testConfig,"xpath","//span[.='Activation date:  ']"),"activation date text");
-        }}
+
+        }
     }
 }
