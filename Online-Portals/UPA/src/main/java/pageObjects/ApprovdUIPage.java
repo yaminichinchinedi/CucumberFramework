@@ -1,17 +1,14 @@
 package main.java.pageObjects;
 
-import java.io.IOException;
 import java.util.List;
 
 import main.java.nativeFunctions.Browser;
-import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.FindBy;
