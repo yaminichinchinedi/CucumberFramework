@@ -329,4 +329,16 @@ public class RemittanceDetailSteps extends TestBase {
 	public void userEntersTINForCheckNumber() {
 		remitDetail.enterTINForCheckNumber();
 	}
+	
+	@And("User navigate to search Remittance Detail page and verify content")
+	public void User_navigate_to_search_Remittance_Detail_page_and_verify_content() throws Exception {
+		remitDetail.verifyingClaimDetailsforRequiredPayemnt();
+	}
+	
+	@Then("^Validate Download, Print, Return buttons in Remit Page when user navigated from view paymemnts$")
+	public void validate_Download_Print_Return_buttons_in_Remit_Page_from_view_Payments() throws Throwable {
+	    
+		remitDetail.verifyButtonOnRemittanceDetailsPageNavigatedFromViewPayments();
+	}
+	
 }

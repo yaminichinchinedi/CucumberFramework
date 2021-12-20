@@ -56,13 +56,13 @@ protected TestBase testbase;
 			//profile.setPreference("plugin.scan.Acrobat", "999.0");
 			//profile.setPreference("plugin.scan.plid.all", false);
 			
-			FirefoxOptions capabilities = new FirefoxOptions();
+			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 			//capabilities.setCapability("firefox_binary","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 			capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
 			
 
 			capabilities.setCapability("marionette", true); 
-			capabilities.setProfile(profile);
+			capabilities.setCapability (FirefoxDriver.PROFILE, profile);
 			
 			WebDriver driver = new FirefoxDriver(capabilities);
 			driver.manage().window().maximize();

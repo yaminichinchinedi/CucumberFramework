@@ -19,7 +19,7 @@ import org.openqa.selenium.support.PageFactory;
 public class CreateEnrollUsrTyp {
 		private TestBase testConfig;
 		EnrollmentInfo enrollmentInfoPageObj=EnrollmentInfo.getInstance();
-	@FindBy(css="#userTypeSelection")
+	@FindBy(id="userTypeSelection")
 	WebElement usrTyp;
 	
 	@FindBy(id="taxNumber")

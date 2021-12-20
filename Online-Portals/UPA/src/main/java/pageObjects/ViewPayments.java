@@ -300,19 +300,30 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	@FindBy(xpath = "//input[@name='Submit']") 
 	WebElement PrintButton;
 	
+	@FindBy(xpath = "//select[@property='paymentArchiveValue']") 
+	WebElement PaymentStatusDrpdwn;
+	
 	
 	
 
 	
 	Map dataRequiredForSearch;
 	public SearchRemittance searchRemittance;
-	private TestBase testConfig = TestBase.getInstance();
-	String totalRecordsFromFISL;
+	protected TestBase testConfig = TestBase.getInstance();
+	public String totalRecordsFromFISL;
 	public ValidateEnrollmentTypePage validateEnrollmentType;
 	String[] expectedOptions = { "Last 30 days", "Last 60 days", "Last 90 days", "Last 4-6 months", "Last 6-9 months",
 			"Last 9-13 months" };
 	PaymentSummaryFislService service = null;
-
+	EpsPaymentsSummarySearchResponse searchResponse; 
+	static String PaymentNumber = null;
+	static String PaymentDate = null;
+	static String Amount = null;
+	static String NPI = null;
+	
+	
+	
+	
 	public ViewPayments(TestBase testConfig) {
 		this.testConfig = testConfig;
 		PageFactory.initElements(testConfig.driver, this);
@@ -934,9 +945,9 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 
 	public void verifyDefaultSearchRecordCount()
 			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
-		if (!getRecordCountFromFISL().equalsIgnoreCase("0"))
+		if (!getRecordCountFromFISL("Last 30 days","show all", "show all", "New").equalsIgnoreCase("0"))
 			Helper.compareEquals(testConfig, "Record count from FISL and UI where FISL for 30 days (by default) : ",
-					getRecordCountFromFISL(), getRecordCountFromUI());
+					getRecordCountFromFISL("Last 30 days","show all", "show all", "New"), getRecordCountFromUI());
 		else
 			Element.verifyTextPresent(errorMsg, "No payments have been made to this Organization");
 	}
@@ -1346,13 +1357,12 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	 * @throws JSONException
 	 */
 
-	public ViewPayments verifySearchResultsWithFilters(String filterPayments, String quickSearchFilter,
-			String Archivefilter, String MktTypeFilter) throws IOException, InterruptedException, JAXBException,
+	public ViewPayments verifySearchResultsWithFilters(String QuickSearch, String FilterPayments, String MarketType, 
+			String PaymentStatus) throws IOException, InterruptedException, JAXBException,
 			SAXException, ParserConfigurationException, ParseException, JSONException {
-		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch, FilterPayments, MarketType, PaymentStatus);
 		 totalRecordsFromFISL = String.valueOf(searchResponse.getData().getTotalCount());
-
-		if (!totalRecordsFromFISL.equalsIgnoreCase("0")) {
+		 if (!totalRecordsFromFISL.equalsIgnoreCase("0")) {
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :", totalRecordsFromFISL,
 					getRecordCountFromUI());
 			Helper.compareMaps(testConfig, "Payments Details Comparison", getPaymentDetailsFromFISL(searchResponse),
@@ -1363,9 +1373,10 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		return this;
 	}
 
-	public String getRecordCountFromFISL()
+	public String getRecordCountFromFISL(String QuickSearch, String FilterPayments, String MarketType, 
+			String PaymentStatus)
 			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
-		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch, FilterPayments, MarketType, PaymentStatus);
 		return String.valueOf(responseFromFISL.getData().getTotalCount());
 	}
 
@@ -1625,38 +1636,43 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	 * @throws JSONException
 	 */
 
-	public ViewPayments verifyZeroDollarPayments(String expectedPaymentType)
+	public ViewPayments verifyZeroDollarPayments(String QuickSearch, String FilterPayments, String MarketType,String PaymentStatus)
 			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
-		String archiveFilter = "Show All";
 		String actualPaymntNo = "";
 		String ZeroDollar = "$0.00";
-		String dateToValidate = getPaymentNoDetails(expectedPaymentType).get("setlDate");
-
-		setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, archiveFilter);
+		
 
 		// FISL Response
-		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch,FilterPayments,MarketType,PaymentStatus);
 		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getData()
 				.getEpsConsolidatedClaimPaymentSummaries();
+		totalRecordsFromFISL = String.valueOf(responseFromFISL.getData().getTotalCount());
+		int paycount = 	Integer.parseInt(totalRecordsFromFISL);
 
+		for(int i=0;i<paycount;i++) {
+			System.out.println(payments[i].getTotalAmount().toString());
+			if(payments[i].getTotalAmount().toString().equals("0.0")) {
+				
+					PaymentNumber = payments[i].getDisplayConsolidatedPaymentNumber();
+					break;
+			}
+		}
+			
+		
 		int totalNoOfPages = getNumberOfPages();
-
+		
 		OUTERLOOP: for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
 			for (int i = 1; i < searchResultRows.size(); i++) {
 				String paymentAmountUI = searchResultRows.get(i).findElements(By.tagName("td")).get(5).getText();
 				actualPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				actualPaymntNo = StringUtils.replace(actualPaymntNo, "\n", "");
 
-				if (payments[i - 1].getDisplayConsolidatedPaymentNumber().equals(actualPaymntNo)
+				if (PaymentNumber.equals(actualPaymntNo)
 						&& paymentAmountUI.equalsIgnoreCase(ZeroDollar)) {
 					String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();
-					if (paymentTypeUI.equalsIgnoreCase(expectedPaymentType))
-						Log.Pass("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
-					else
-						Log.Fail("Expected and Actual Payment Type", expectedPaymentType, paymentTypeUI);
-
-					Helper.compareContains(testConfig, "Zero dollar amount for above payment No: ", ZeroDollar,
-							paymentAmountUI);
+					
+					Assert.assertEquals(ZeroDollar, paymentAmountUI, "Payment No: "+ PaymentNumber +"is ZeroDollar paymenyt number");
+					
 					break OUTERLOOP;
 				}
 			}
@@ -1726,7 +1742,8 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		return this;
 	}
 
-	public Object getFISLResponse()
+	public Object getFISLResponse(String QuickSearch, String FilterPayments, String MarketType, 
+			String PaymentStatus)
 			throws JAXBException, IOException, SAXException, ParserConfigurationException, JSONException {
 		Object request = null;
 		String[] pay_835_id;
@@ -1749,10 +1766,26 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		parameterMap.setComparator("Equals");
 		parameterMapList.add(parameterMap);
 
-		if (null != testConfig.getRunTimeProperty("key")) {
+		if (!PaymentStatus.equalsIgnoreCase("show all")) {
 			parameterMap = new ParameterMap();
-			parameterMap.setKey(testConfig.getRunTimeProperty("key"));
-			parameterMap.setValue(testConfig.getRunTimeProperty("value"));
+			parameterMap.setKey("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR");
+			parameterMap.setValue(keyValueForPaymentStatus(PaymentStatus));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+		}
+		
+		if (!MarketType.equalsIgnoreCase("show all")) {
+			parameterMap = new ParameterMap();
+			parameterMap.setKey("MARKET_TYPE");
+			parameterMap.setValue(keyValueForMarketType(MarketType));
+			parameterMap.setComparator("Equals");
+			parameterMapList.add(parameterMap);
+		}
+		
+		if (!FilterPayments.equalsIgnoreCase("show all")) {
+			parameterMap = new ParameterMap();
+			parameterMap.setKey("TAX_IDENTIFIER_TYPE");
+			parameterMap.setValue(keyValueForFilterPayments(FilterPayments));
 			parameterMap.setComparator("Equals");
 			parameterMapList.add(parameterMap);
 		}
@@ -2919,7 +2952,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		setSearchFilters(archiveFilter, getQuickSearchFilterCriteria(dateToValidate), archiveFilter, marketType);
 
 		// FISL Response
-		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		EpsPaymentsSummarySearchResponse responseFromFISL = (EpsPaymentsSummarySearchResponse) getFISLResponse(marketType, marketType, marketType, marketType);
 		EpsConsolidatedClaimPaymentSummaries[] payments = responseFromFISL.getData()
 				.getEpsConsolidatedClaimPaymentSummaries();
 		Log.Comment("Total no.of payments with " + marketType + "filter are  :"
@@ -3459,7 +3492,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 			ParserConfigurationException, ParseException, JSONException {
 		String parentWin = Browser.switchToNewWindow(testConfig);
 		PrintButton.isDisplayed();
-		EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse();
+		//EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch, FilterPayments, MarketType, PaymentStatus);
 		Helper.compareMaps(testConfig, "Payments Details Comparison", getPaymentDetailsFromFISL(searchResponse),
 				getPaymentDetailsFromUI());
 		Browser.switchToParentWindow(testConfig, parentWin);
@@ -4386,9 +4419,6 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 
 	public ViewPayments verify835EPRA() {
 		String actualPaymntNo = "";
-		// String
-		// expectedPaymntNo=testConfig.getRunTimeProperty("ELECTRONIC_PAYMENT_NUMBER");
-		// Log.Comment("Expected electronic payment number is: "+expectedPaymntNo);
 		boolean found = false;
 		WebElement link = null;
 		WebElement epraLink = null;
@@ -4409,7 +4439,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 						// found=true;
 						// epraLink=searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex).findElements(By.tagName("td")).get(0);
 						epraLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
-
+						
 						// if(searchCriteria.equalsIgnoreCase("vpay_835_disabled_ePRA_disabled"))vpay_835_enabled_ePRA_disabled
 						// testConfig.putRunTimeProperty("nullStat", "= 'N' ");
 						// if(searchCriteria.equalsIgnoreCase("vpay_835_enabled_ePRA_disabled"))
@@ -4535,4 +4565,220 @@ public void verifyMaximumRecords() {
 	
 	
 }
+
+public String keyValueForMarketType(String MrkType) {
+	
+	if(MrkType.equalsIgnoreCase("medical"))
+		return "M";
+	else if(MrkType.equalsIgnoreCase("dental"))
+		return "D";
+	else 
+	return null;
+	
+}
+
+public String keyValueForPaymentStatus(String PaymntType) {
+	
+	if(PaymntType.equalsIgnoreCase("new"))
+		return "N";
+	else if(PaymntType.equalsIgnoreCase("pending"))
+		return "P";
+	else if(PaymntType.equalsIgnoreCase("closed"))
+		return "Y";
+	else
+	return null;
+	
+}
+
+public String keyValueForFilterPayments(String PaymntType) {
+	
+	if(PaymntType.equalsIgnoreCase("TIN Only"))
+		return "TIN";
+	else if(PaymntType.equalsIgnoreCase("NPI Only"))
+		return "NPI";
+	else 
+	return null;
+	
+}
+
+public void changingPaymentStatus(String currentStatus, String UpdatedStatus) {
+	
+	btnSave.getAttribute("disabled").equalsIgnoreCase("disabled");
+	Browser.waitForLoad(testConfig.driver);
+	
+	PaymentNumber = paymentNo1.getText();
+	
+	Element.selectByVisibleText(PaymentStatusDrpdwn, UpdatedStatus, "Updating status to "+UpdatedStatus);
+	Browser.waitForLoad(testConfig.driver);
+	Element.waitForElementTobeClickAble(testConfig, btnSave, 3);
+	btnSave.click();
+	Browser.waitForLoad(TestBase.driver);
+	
+}
+
+public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
+	testConfig.putRunTimeProperty("PaymentNumber",PaymentNumber );
+	Map<String, String> PayNumStatus = DataBase.executeSelectQuery(testConfig, QUERY.PaymentStatus, 1);
+	System.out.println(PayNumStatus);
+	PayNumStatus.get("DSPL_CONSL_PAY_NBR").equalsIgnoreCase("PaymentNumber");
+	PayNumStatus.get("ARCHV_IND").equalsIgnoreCase("P");
+	
+}
+
+	public ViewPayments downloadRequiredFile(String fileType) {
+		boolean found = false;
+		WebElement link = null;
+		WebElement epraLink = null;
+		int totalNoOfPages = getNumberOfPages();
+
+		ArrayList<String> tblHeader = new ArrayList<String>();
+		tblHeader = getHeadersFromResultTable();
+		int columnIndex = tblHeader.indexOf("835 / EPRA");
+
+		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
+
+			for (int i = 1; i < searchResultRows.size(); i++) {
+				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
+
+				epraLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+				String epraLinktext = StringUtils.replace(epraLink.getText(), "\n", "");
+
+				switch (fileType) {
+
+				case "835file":
+					if (epraLinktext.equalsIgnoreCase("835 |PDF")) {
+						link = epraLink.findElement(By.tagName("a"));
+						Element.verifyElementPresent(link, "835 link is present");
+						link.click();// 835 linked clicked
+						found = true;
+					}
+					break;
+				case "EPRAExistingPDF":
+					if (epraLinktext.equalsIgnoreCase("835 |")) {
+
+						link = epraLink.findElements(By.tagName("a")).get(2);
+						Element.verifyElementPresent(link, "pdf link is present");
+						link.click();
+						Browser.wait(testConfig, 5);
+						found = true;
+					}
+					break;
+				case "EPRAGeneration":
+					if (epraLinktext.equalsIgnoreCase("835 |PDF")) {
+
+						link = epraLink.findElements(By.tagName("a")).get(1);
+						Element.verifyElementPresent(link, "pdf link is present");
+						link.click();
+						found = true;
+					}
+					break;
+					
+				case "EPRAGenGivenPayNum":
+					if (Element.findElements(testConfig, "xpath", "(//a[contains(@href,'"+PaymentNumber+"')])/img").size()>0) {
+						Browser.browserRefresh(testConfig);
+						WebElement EPRApdfLink = Element.findElement(testConfig, "xpath", "(//a[contains(@href,'"+PaymentNumber+"')])/img");
+						EPRApdfLink.isDisplayed();
+						EPRApdfLink.click();
+						Browser.wait(testConfig, 5);
+						found = true;
+					}
+					break;
+				}
+
+				if (found == true)
+					break;
+			}
+
+			if (found == true) {
+				break;
+			}
+
+			gotoNextPage(pageNo, totalNoOfPages);
+		}
+		return this;
+
+	}
+
+	public void getNonZeroPaynumber() {
+
+		boolean found = false;
+
+		WebElement ClaimAmountLink = null;
+		int totalNoOfPages = getNumberOfPages();
+
+		ArrayList<String> tblHeader = new ArrayList<String>();
+		tblHeader = getHeadersFromResultTable();
+		int columnIndex = tblHeader.indexOf("Amount");
+
+		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
+
+			for (int i = 1; i < searchResultRows.size(); i++) {
+				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
+
+				ClaimAmountLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+				String ClaimAmount = ClaimAmountLink.getText();
+	
+				if (!ClaimAmount.equalsIgnoreCase("$0.00")) {
+					found = true;
+					break;
+				}
+			}
+
+			if (found == true) {
+				break;
+			}
+			
+			gotoNextPage(pageNo, totalNoOfPages);
+		}
+		
+		
+		
+	}
+	
+	public void openingPayment() {
+		
+		PaymentDate = getColumnValueforpaynum(PaymentNumber,"Payment Date");
+		Amount = getColumnValueforpaynum(PaymentNumber,"Amount");
+		NPI = getColumnValueforpaynum(PaymentNumber,"NPI");
+		
+		Element.findElement(testConfig, "xpath", "//a[contains(@href,'" + PaymentNumber + "')]").click();
+		Browser.waitForPageLoad(testConfig.driver);
+	}
+	
+	public String getColumnValueforpaynum(String payNum, String column) {
+		boolean found = false;
+		WebElement columnvalueLink = null;
+		String columnvalue = null;
+		int totalNoOfPages = getNumberOfPages();
+
+		ArrayList<String> tblHeader = new ArrayList<String>();
+		tblHeader = getHeadersFromResultTable();
+		int columnIndex = tblHeader.indexOf(column);
+
+		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
+
+			for (int i = 1; i < searchResultRows.size(); i++) {
+
+				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
+				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
+
+				columnvalueLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
+
+				if (payNum.equalsIgnoreCase(PaymentNumber)) {
+					columnvalue = columnvalueLink.getText();
+					found = true;
+					break;
+				}
+			}
+
+			if (found == true)
+				break;
+			gotoNextPage(pageNo, totalNoOfPages);
+		}
+
+		return columnvalue;
+	}
+	
 }

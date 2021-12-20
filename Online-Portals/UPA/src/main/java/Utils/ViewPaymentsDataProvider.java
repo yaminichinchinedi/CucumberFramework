@@ -1484,16 +1484,8 @@ public class ViewPaymentsDataProvider {
 						testConfig);
 			}
 			 
-			try {
-				
-			      return tinNumbers.get("PROV_TAX_ID_NBR").toString();
-			 }
+			 return tinNumbers.get("PROV_TAX_ID_NBR").toString();
 			
-			catch (NullPointerException e) {
-				
-				 return null;
-				 
-		        }
 		} else
 			return testConfig.getRunTimeProperty("provTinNo");
 	}

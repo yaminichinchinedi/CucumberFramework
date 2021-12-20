@@ -186,6 +186,11 @@ public class RemittanceDetail {
     @FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
 	@FindBy(xpath = "//*[contains(text(),'Note: Above information provided by the member']") WebElement noteMsg;
 	@FindBy(xpath = "//*[contains(text(),'technical difficulties')]") WebElement errorPageUI;
+	
+	@FindBy(xpath = "//p[starts-with(text(),'Payment Date')]") WebElement paymentDateOnRem;
+    @FindBy(xpath = "//p[contains(text(),'Payment Type:')]") WebElement paymentTypeOnRem;
+	@FindBy(xpath = "//p[contains(text(),'Payment Number')]") WebElement paymentNumberOnRem;
+	@FindBy(xpath = "//p[contains(text(),'NPI')]") WebElement NPIOnRem;
 
 	 @FindBy(id="paymentNbrTypeSelection")	
 	 WebElement paymentNumberType;
@@ -193,6 +198,11 @@ public class RemittanceDetail {
 	 WebElement paymentNumberSearchRemit;
 	 @FindBy(name="searchRemittance")
 	 WebElement btnSearchRemittance;
+	 
+	 @FindBy(xpath = "//input[@value='Print Request' and @type='button']") 
+	 WebElement PrintRequest;
+	 
+	 
 	
 	private ViewPaymentsDataProvider dataProvider;
 	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();	
@@ -200,6 +210,7 @@ public class RemittanceDetail {
 	EpsClaimsRequest epsClaimsRequest = new EpsClaimsRequest();
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
+	
 	
 	private TestBase testConfig;
 	
@@ -7271,6 +7282,40 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         Element.enterData(enterTIN, prov_TAX_ID_NBR, "Enter tin number as " + prov_TAX_ID_NBR, "tinNumber");
         Element.click(searchBtn, "Search");
     }
+	
+	public void verifyingClaimDetailsforRequiredPayemnt() throws Exception {
+		
+		paymentDateOnRem.getText().contains(ViewPayments.PaymentDate);
+		paymentNumberOnRem.getText().contains(ViewPayments.PaymentNumber);
+		paidPrvdr.getText().contains(ViewPayments.Amount);
+		if(ViewPayments.Amount.equals("$0.00"))
+			paymentTypeOnRem.getText().equalsIgnoreCase("Zero Dollar");
+		else if(testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")){
+			paymentTypeOnRem.getText().equalsIgnoreCase("ACH");
+		}
+		if(!ViewPayments.NPI.equals(null)) {
+			NPIOnRem.getText().equalsIgnoreCase(ViewPayments.NPI);
+		}
+		
+		
+	}
+	
+	public void verifyButtonOnRemittanceDetailsPageNavigatedFromViewPayments() throws Exception
+	{
+		 Boolean downloadBtn = download.isDisplayed();
+		 Helper.compareEquals(testConfig, "Download Button", true, downloadBtn);
+		 
+	     Boolean printBtnPayerUI = PrintRequest.isDisplayed();
+	     Helper.compareEquals(testConfig, "Print Page Button", true, printBtnPayerUI);
+	     
+	     Boolean returnBtnUI = returnBtn.isDisplayed();
+	     Helper.compareEquals(testConfig, "Return to Payment Summary Button", true, returnBtnUI);
+	     
+	}
+	
+	
+	
+	
 }
 	
 	

@@ -1820,12 +1820,13 @@ return previousDate.getTime();
 				isDownloaded=false;
 				Log.Fail(downloadedFile+" File not downloaded");
 				break;
-			}
-			else
-			{
+			    }
+			
+			if(isFileExist(fileDirectory,downloadedFile)) {
 				Log.Pass(downloadedFile + "File is downloaded successfully" );
 				break;
-			}
+				}
+			
 		}
 		return isDownloaded;
 		
