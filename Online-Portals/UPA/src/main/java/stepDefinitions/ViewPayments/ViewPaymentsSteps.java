@@ -482,7 +482,7 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.clickPrintPaymentBtn().verifyPrintPaymentSummaryPage(); 	 	
     }
     
-    @Then("^User change the status of payment from \"([^\"]*)\" to \"([^\"]*)\"$")
+    @Then("^User change the status of payment from \"([^\"]*)\" to \"([^\"]*)\" and verify the DB$")
     public void User_changing_the_status_of_payment(String currentStatus, String UpdatedStatus) throws Throwable {
     	viewPayment.changingPaymentStatus(currentStatus, UpdatedStatus);
     	viewPayment.verifyPaymentStatusUpdatedInDB(UpdatedStatus);

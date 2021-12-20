@@ -40,11 +40,11 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Admin  | PROV     | Last 4-6 months  | Premium      | AO      | Show All       | Show All   | Show All      |
       | PROV_Admin  | PROV     | Last 6-9 months  | Premium      | AO      | Show All       | Show All   | Show All      |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Show All      |
-      | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Medical    | Show All      |
-      | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Dental     | Show All      |
-      | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Show All   | New           |
-      | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Show All   | Pending       |
-      | PROV_Admin  | PROV     | Last 30 days     | Premium      | AO      | Show All       | Show All   | Closed        |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Medical    | Show All      |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Dental     | Show All      |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | New           |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Pending       |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | NPI Only       | Show All   | Show All      |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | TIN Only       | Show All   | Show All      |
 
@@ -54,7 +54,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     And Click on View Payments Link for UPA
     And Provider select the TIN on view payments page
     Then User set filters for "<QuickSearch>", "<FilterPayments>", "<MarketType>", "<PaymentStatus>" on view payments screen
-    And User change the status of payment from "<PaymentStatus>" to "<UpdatedPaymentStatus>"
+    And User change the status of payment from "<PaymentStatus>" to "<UpdatedPaymentStatus>" and verify the DB
 
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus | UpdatedPaymentStatus |
