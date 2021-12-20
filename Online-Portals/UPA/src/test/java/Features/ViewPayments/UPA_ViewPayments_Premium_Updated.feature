@@ -17,9 +17,8 @@ Feature: UPA ViewPayments Functionality for Premium TINs
 
     Examples: 
       | credentials | userType | QuickSearch  | portalAccess | tinType | PaymentStatus | FilterPayments |
-      | PROV_Admin  | PROV     | Last 30 days | Premium      | AO      | Show All      | Show All       |
-
-  # | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All      | Show All       |
+      
   Scenario Outline: UPA_Provider admin _View payment functionality verification for different search criteria
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
