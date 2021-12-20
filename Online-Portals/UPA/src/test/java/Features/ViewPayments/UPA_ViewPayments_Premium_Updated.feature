@@ -1,4 +1,5 @@
 #Author: chandaka_srinu@optum.com
+@UPA_ViewPayments_Premium_Stabilization
 Feature: UPA ViewPayments Functionality for Premium TINs
 
   Scenario Outline: UPA_Provider admin _View payment UI validation for ACH-Premium-TIN
