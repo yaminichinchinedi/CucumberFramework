@@ -903,8 +903,8 @@ public static void fluentWait(TestBase testConfig,WebElement element,int timeOut
 {
 	try{
 		 Duration DurationTime = Duration.ofSeconds(timeOut);
-		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(DurationTime) 			
-    .pollingEvery(DurationTime) 			
+		 FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
+				 .pollingEvery(pollingTime, TimeUnit.SECONDS) 	 			
 	.ignoring(NoSuchElementException.class);
 	wait.until(ExpectedConditions.visibilityOf(element));
 	
