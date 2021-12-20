@@ -574,3 +574,67 @@ Feature: - Optum Pay Solutions
       | credentials | userType | portalAccess | searchCriteria   | tinType |
       | BS_Admin    | BS       | Premium      | TinWithRecurrPay | AO      |
     
+    
+    
+    
+     
+    @UPAUS4088247
+  Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User validates that 3 buttons are present on popup "Setup Recurring Payment","Continue to basic" and "Review unpaid invoices"
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                                  | tinType |
+      | PROV_Admin  | PROV     | Premium      | TinWithoutRecurrPay and No exemption            | AO      | 
+      | BS_Admin    | BS       | Premium      | TinWithoutRecurrPay and No exemption					  | AO      |
+    
+     @UPAUS4088247    
+    Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    And User validates that Recurring Payment exemption is not present on the OPS dashboard 
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                           | tinType |
+      | PROV_Admin  | PROV     | Premium      | TinWithRecurrPay and No exemption        | AO      |    
+      
+     @UPAUS4088247 
+     Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    And User validates that Recurring Payment exemption is not present on the OPS dashboard 
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                           | tinType |
+      | BS_Admin    | BS       | Premium      | TinWithRecurrPay and No exemption				 | AO      | 
+      
+
+      @UPAUS4088247
+     Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    And User validates that Recurring Payment exemption is present with and Status,setupby,Activation date and enabled Review invoices button  
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                        | tinType |
+      | PROV_Admin  | PROV     | Premium      | TinWithRecurrPay and exemption        | AO      |    
+      
+      
+       @UPAUS4088247
+       Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User Enters tin for OPS and click on search button for "<userType>".
+    And User validates that Recurring Payment exemption is present with and Status,setupby,Activation date and enabled Review invoices button  
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                        | tinType |
+      | BS_Admin    | BS       | Premium      | TinWithRecurrPay and exemption				| AO      |  
+      
+ 

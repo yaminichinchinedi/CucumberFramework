@@ -1243,8 +1243,14 @@ public class ViewPaymentsDataProvider {
 				 testConfig.putRunTimeProperty("nullStat", "IS NULL");
 			 
 				query=QUERY.VAPY_TIN_835_EPRA_Visiblity;
-			
 		}
+		if (searchCriteria.contains("TinWithRecurrPay and No exemption")) {
+			query=QUERY.TinWithRecurrPayNoexemption;
+		}
+		if (searchCriteria.contains("TinWithoutRecurrPay and No exemption")) {
+			query=QUERY.TinWithoutRecurrPayNoexemption;
+		}
+		
 		if (!payType.equalsIgnoreCase("medicalPayment")) {
 			Log.Comment("Getting tin for  " + searchCriteria);
 			Map tinNumbers = null;
@@ -1475,7 +1481,13 @@ public class ViewPaymentsDataProvider {
 				{
 				    System.setProperty("tin", tinNumbers.get("PROV_TIN_NBR").toString());
 				}
+				if (searchCriteria.equalsIgnoreCase("TinWithRecurrPay and exemption"))
 
+				{
+					DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
+					DataBase.executeInsertQuery(testConfig, QUERY.insertExemptTin);
+				}
+				
 			}
 
 			catch (Exception e) {

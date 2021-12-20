@@ -375,6 +375,34 @@ public class UPAHomePage extends HomePage {
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);
 		testConfig.putRunTimeProperty("searchCriteria", searchCriteria);
+
+		switch (userType)
+			{
+			   case "PROV": 
+				 WebElement homeTab = Element.findElement(testConfig, "id", "tabHome");
+				   Element.waitForPresenceOfElementLocated(testConfig, By.id("taxIndNbrId"),5);
+				   List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
+	
+				 String Enrolledtin = tin + " - Enrolled";
+				 if ((!tinList.contains(Enrolledtin))) 
+				 {
+					 if (! searchCriteria.equalsIgnoreCase("TinWithRecurrPay and exemption") || 
+						   searchCriteria.equalsIgnoreCase("TinWithRecurrPay and No exemption") )
+					 Element.click(homeTab, "home Tab");
+					Browser.waitForLoad(testConfig.driver);
+					Browser.wait(testConfig, 2);
+					Element.fluentWait(testConfig, prvdrTIN, 60, 1, "Tin dropdown");
+				 }
+				Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
+				break;
+			case "BS": 
+				Log.Comment("Tin fetched as per search criteria is : "+tin);
+				break;
+			case "Payer": 
+				Log.Comment("Tin fetched as per search criteria is : "+tin);
+				break;
+			}
+
 		return this;
 	}
 
@@ -730,6 +758,18 @@ public class UPAHomePage extends HomePage {
 		expectedPDFContent = Helper.readPDF(exPDFPath);
 		
 		Helper.compareEquals(testConfig, "The Cancellation Form PDF", expectedPDFContent, actualPDFContent);
+	}
+	public UPAHomePage validatePopUpbuttons() {
+		List<WebElement> noOfButtons=Element.findElements(testConfig, "xpath", "//p[@class='mt-3']/input");
+		
+		if (noOfButtons.size()==3)
+		{
+		Helper.compareContains(testConfig, "buttons", "Setup Recurring Payment", noOfButtons.get(0).getText());	
+		Helper.compareContains(testConfig, "buttons", "Continue to basic", noOfButtons.get(1).getText());	
+		Helper.compareContains(testConfig, "buttons", "Review unpaid invoices", noOfButtons.get(2).getText());	
+
+		}
+		return this;
 	}
 }
 

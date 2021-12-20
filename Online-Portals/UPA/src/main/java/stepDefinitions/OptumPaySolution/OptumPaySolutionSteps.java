@@ -540,6 +540,15 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_clicks_on_Manage_pay_methods_button_on_invoices_tab() throws Throwable {
 	   optumPaySol.Setuprecurringpayments();
 	}
+	@Then("^User validates that Recurring Payment exemption is present with and Status,setupby,Activation date and enabled Review invoices button$")
+	public void user_validates_that_Recurring_Payment_exemption_is_present_with_and_Status_setupby_Activation_date_and_enabled_Review_invoices_button() throws Throwable {
+		optumPaySol.validateRecurrDashboard();
+	}
+	@Then("^User validates that Recurring Payment exemption is not present on the OPS dashboard$")
+	public void user_validates_that_Recurring_Payment_exemption_is_not_present_on_the_OPS_dashboard() throws Throwable {
+		optumPaySol.validateRecurrDashboard();
+	}
+	
 }
 
 
