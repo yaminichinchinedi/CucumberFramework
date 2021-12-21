@@ -7293,7 +7293,7 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		else if(testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")){
 			paymentTypeOnRem.getText().equalsIgnoreCase("ACH");
 		}
-		if(!ViewPayments.NPI.equals(null)) {
+		if(!ViewPayments.NPI.equals("")) {
 			NPIOnRem.getText().equalsIgnoreCase(ViewPayments.NPI);
 		}
 		

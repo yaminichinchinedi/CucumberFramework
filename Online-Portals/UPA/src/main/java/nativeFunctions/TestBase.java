@@ -12,6 +12,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -170,6 +171,7 @@ public class TestBase extends ReporterClass {
 			case "edge":
 				DesiredCapabilities caps2 = DesiredCapabilities.edge();
 				System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+"\\drivers\\msedgedriver.exe");
+				driver = new EdgeDriver(caps2);
 				driver.manage().window().maximize();
 				driver.manage().deleteAllCookies();
 				driver.get("edge://settings/clearBrowserData");

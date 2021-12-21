@@ -18,7 +18,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch  | portalAccess | tinType | PaymentStatus | FilterPayments |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All      | Show All       |
-      
+     
   Scenario Outline: UPA_Provider admin _View payment functionality verification for different search criteria
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -46,7 +46,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | NPI Only       | Show All   | Show All      |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | TIN Only       | Show All   | Show All      |
-
+ 
   Scenario Outline: UPA_Provider admin_Verify User able to update the Payment Status for ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -94,7 +94,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Show All      |
 
-  @CSRTEST01
+  
   Scenario Outline: UPA_Provider admin_Verify Content for the Zero doller payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -105,7 +105,6 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     And User Click on the payment number
     And User navigate to search Remittance Detail page and verify content
     And Validate Download, Print, Return buttons in Remit Page when user navigated from view paymemnts
-    And User clicks on print request button present on Remittance Detail screen.
 
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |

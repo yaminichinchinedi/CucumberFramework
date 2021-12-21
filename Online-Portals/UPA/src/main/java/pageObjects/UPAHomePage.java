@@ -361,7 +361,7 @@ public class UPAHomePage extends HomePage {
 		}
 		if(PaymentStatus.equalsIgnoreCase("pending"))
 			testConfig.putRunTimeProperty("PayStatus", "P");
-		if(PaymentStatus.equalsIgnoreCase("closed"))
+		else if(PaymentStatus.equalsIgnoreCase("closed"))
 			testConfig.putRunTimeProperty("PayStatus", "Y");
 		else
 			testConfig.putRunTimeProperty("PayStatus", "N");

@@ -228,7 +228,6 @@ public void validtSurveyResponseFile(String inpTyp) throws IOException{
     String downloadFilepath = System.getProperty("user.dir")+testConfig.getRunTimeProperty("Dwnldfloderpath");
 	
 	File fileDirectory=new File(downloadFilepath);
-	fileDirectory.mkdir();
 	Helper.purgeDirectory(fileDirectory);
 	sbmtButtn.click();
 	Browser.wait(testConfig, 10);
@@ -279,12 +278,26 @@ if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return
 	
 	Browser.wait(testConfig, 20);
 
+	
 	String downloadFullFile=fileDirectory.getAbsolutePath()+"\\Enrollment Survey Results.xls";
-
-	fileDirectory = new File(downloadFullFile);
-	fileDirectory.exists();
 	
+	if(testConfig.getRunTimeProperty("AutomationExecution").equalsIgnoreCase("local")){
+		
+		String downpath = downloadFullFile.substring(9);
+		int i = downpath.indexOf("\\");
+		downpath = downloadFullFile.substring(0, i+9);
+		downpath = downpath+"\\Downloads";
+		downloadFullFile = downpath+"\\Enrollment Survey Results.xls";
+		
+	}
+	else if(testConfig.getRunTimeProperty("AutomationExecution").equalsIgnoreCase("saucelabs")) {
+		downloadFullFile = "C://Users//Administrator//Downloads//Enrollment Survey Results.xls";
+		System.out.println("****"+downloadFullFile);
+	}
 	
+	fileDirectory = new File(downloadFullFile);	
+	System.out.println("***"+fileDirectory);
+	Assert.assertTrue(fileDirectory.exists());
 	}
 	
 }

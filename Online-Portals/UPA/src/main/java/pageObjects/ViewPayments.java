@@ -4617,6 +4617,7 @@ public void changingPaymentStatus(String currentStatus, String UpdatedStatus) {
 }
 
 public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
+	PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
 	testConfig.putRunTimeProperty("PaymentNumber",PaymentNumber );
 	Map<String, String> PayNumStatus = DataBase.executeSelectQuery(testConfig, QUERY.PaymentStatus, 1);
 	System.out.println(PayNumStatus);
@@ -4668,7 +4669,7 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 					if (epraLinktext.equalsIgnoreCase("835 |PDF")) {
 
 						link = epraLink.findElements(By.tagName("a")).get(1);
-						Element.verifyElementPresent(link, "pdf link is present");
+						Element.verifyElementPresent(link, "pdf link");
 						link.click();
 						found = true;
 					}
@@ -4705,22 +4706,30 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 		boolean found = false;
 
 		WebElement ClaimAmountLink = null;
+		WebElement epraLink = null;
 		int totalNoOfPages = getNumberOfPages();
 
 		ArrayList<String> tblHeader = new ArrayList<String>();
 		tblHeader = getHeadersFromResultTable();
 		int columnIndex = tblHeader.indexOf("Amount");
+		int columnIndex2 = tblHeader.indexOf("835 / EPRA");
+		
+		
 
 		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
 
 			for (int i = 1; i < searchResultRows.size(); i++) {
+				
+				epraLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex2);
+				String epraLinktext = StringUtils.replace(epraLink.getText(), "\n", "");
+				
 				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
 
 				ClaimAmountLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 				String ClaimAmount = ClaimAmountLink.getText();
 	
-				if (!ClaimAmount.equalsIgnoreCase("$0.00")) {
+				if (!ClaimAmount.equalsIgnoreCase("$0.00") && epraLinktext.equalsIgnoreCase("835 |PDF")) {
 					found = true;
 					break;
 				}
