@@ -500,3 +500,20 @@ Examples:
 	
 	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
 	         |    Super       |	FailedInvoice	   |  AO 	 |	Premium		 |	PROV	|
+
+    #Author: Felix
+      @US3964348
+      Scenario Outline: Access Payments - Failed Payment Invoice UI
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+        Then User validates if request and remove exemption section is displayed accordingly
+
+        Examples:
+
+          | credentials | searchCriteria                    | tinType | portalAccess | userType |
+          | RW          | TinWithRecurrPay and No exemption | AO      | Premium      | PROV     |
+          | RO          | TinWithRecurrPay and No exemption | AO      | Premium      | PROV     |
+          | RW          | TinWithRecurrPay and exemption    | AO      | Premium      | PROV     |
+          | RO          | TinWithRecurrPay and exemption    | AO      | Premium      | PROV     |
