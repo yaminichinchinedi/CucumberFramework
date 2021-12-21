@@ -290,7 +290,7 @@ if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return
 		downloadFullFile = downpath+"\\Enrollment Survey Results.xls";
 		
 	}
-	else if(testConfig.getRunTimeProperty("AutomationExecution").equalsIgnoreCase("saucelabs")) {
+	else  {
 		downloadFullFile = "C://Users//Administrator//Downloads//Enrollment Survey Results.xls";
 		System.out.println("****"+downloadFullFile);
 	}
