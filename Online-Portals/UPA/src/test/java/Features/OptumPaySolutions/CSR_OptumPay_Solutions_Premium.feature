@@ -517,3 +517,23 @@ Examples:
           | RO          | TinWithRecurrPay and No exemption | AO      | Premium      | PROV     |
           | RW          | TinWithRecurrPay and exemption    | AO      | Premium      | PROV     |
           | RO          | TinWithRecurrPay and exemption    | AO      | Premium      | PROV     |
+
+       #Author: Felix
+      @US4098395
+      Scenario Outline: Access Payments - Failed Payment Invoice UI
+        Given User navigates to CSR portal and enters "<credentials>" and login
+        And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+        Then User clicks on Optum Pay Solutions link on CSR HomePage
+        Then User Enters tin for OPS and click on search button for "<userType>".
+        Then User validates if exemption section is not displayed for basic and VO
+
+        Examples:
+
+          | credentials | searchCriteria       | tinType | portalAccess | userType |
+          | Super       | PremiumOrStandardTIN | AO      | Standard     | PROV     |
+          | RO          | PremiumOrStandardTIN | AO      | Standard     | PROV     |
+          | RW          | PremiumOrStandardTIN | AO      | Standard     | PROV     |
+          | Super       | PremiumOrStandardTIN | VO      | Premium      | PROV     |
+          | RO          | PremiumOrStandardTIN | VO      | Premium      | PROV     |
+          | RW          | PremiumOrStandardTIN | VO      | Premium      | PROV     |
+

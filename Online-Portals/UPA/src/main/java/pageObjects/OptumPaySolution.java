@@ -2962,4 +2962,14 @@ public class OptumPaySolution {
 
         }
     }
+
+    public void basic_VO_TinExemptionValidator() {
+        List<WebElement> RequestExemptionsection = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        if(RequestExemptionsection.isEmpty()) {
+            Log.Comment("Validated: User does not see the exemption section");
+            Helper.compareEquals(testConfig,"exemption section ",true,RequestExemptionsection.isEmpty());
+        }else {
+            Log.Comment("FAILED: User DOES see the exemption section");
+        }
+    }
 }
