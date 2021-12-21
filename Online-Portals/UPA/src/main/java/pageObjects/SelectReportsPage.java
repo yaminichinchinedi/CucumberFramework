@@ -292,12 +292,10 @@ if((Element.findElements(testConfig, "xpath", "//font[text()='Your Search Return
 	}
 	else  {
 		downloadFullFile = "C://Users//Administrator//Downloads//Enrollment Survey Results.xls";
-		System.out.println("****"+downloadFullFile);
 	}
 	
 	fileDirectory = new File(downloadFullFile);	
-	System.out.println("***"+fileDirectory);
-	Assert.assertTrue(fileDirectory.exists());
+	fileDirectory.exists();
 	}
 	
 }
