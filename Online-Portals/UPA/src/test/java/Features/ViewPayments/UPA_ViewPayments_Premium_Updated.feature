@@ -63,7 +63,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        | New                  |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        | Pending              |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Pending       | New                  |
-
+@CSRTEST01
   Scenario Outline: UPA_Provider admin_Verify 835 file and EPRA pdf generation ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -76,7 +76,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
 
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments | MarketType |
-      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All      | NPI Only       | Show All   |
+      | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All      | TIN Only       | Show All   |
 
   Scenario Outline: UPA_Provider admin_Verify Content for the one payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
