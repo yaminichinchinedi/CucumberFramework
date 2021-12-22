@@ -1,6 +1,5 @@
 package main.java.nativeFunctions;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -11,8 +10,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-//import junit.framework.Assert;
-import net.sourceforge.htmlunit.corejs.javascript.ast.CatchClause;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -28,12 +25,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import com.sun.mail.iap.Argument;
 
 import main.java.Utils.Helper;
-import main.java.reporting.Log;
 import main.java.reporting.Log;
 
  public class Element {
@@ -903,8 +897,9 @@ public static void waitForElementWhileRefreshBrowser(TestBase testConfig,WebElem
 public static void fluentWait(TestBase testConfig,WebElement element,int timeOut, int pollingTime,String nameOfElement)
 {
 	try{
-		FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
-    .pollingEvery(pollingTime, TimeUnit.SECONDS) 			
+
+		 FluentWait<WebDriver> wait=new FluentWait<WebDriver>(testConfig.driver).withTimeout(timeOut, TimeUnit.SECONDS) 			
+				 .pollingEvery(pollingTime, TimeUnit.SECONDS) 	 			
 	.ignoring(NoSuchElementException.class);
 	wait.until(ExpectedConditions.visibilityOf(element));
 	
