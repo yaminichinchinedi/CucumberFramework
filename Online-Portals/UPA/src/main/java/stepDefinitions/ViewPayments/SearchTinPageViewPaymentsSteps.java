@@ -13,6 +13,11 @@ public class SearchTinPageViewPaymentsSteps extends TestBase {
 	public void user_Enters_tin_and_click_on_search_button_for(String userType) throws Throwable {
 		viewPaymentsTIN.enterTinAndSrch(userType);
 	}
+    
+    @Then("Provider select the TIN on view payments page$")
+	public void User_select_the_TIN_on_view_payments_page() throws Throwable {
+		viewPaymentsTIN.SelectingTinOnViewPaymentPage();
+	}
 }
 
 

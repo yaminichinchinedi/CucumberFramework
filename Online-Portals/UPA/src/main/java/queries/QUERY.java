@@ -10,11 +10,11 @@ public class QUERY {
 			"p.prov_tax_id_nbr=ps.prov_tin_nbr  join OLE.PROC_CTL PC on\r\n"+
 			"cp.PROC_CTL_ID= pc.PROC_CTL_ID join ole.enrolled_provider ep on\r\n"+
 			"ps.prov_tin_nbr=ep.prov_tin_nbr where \r\n"+
-			"cp.setl_dt between '{$fromDate}' and '{$toDate}' and (cp.ARCHV_IND is null or cp.ARCHV_IND='N')\r\n"+
+			"cp.setl_dt between '{$fromDate}' and '{$toDate}' and (cp.ARCHV_IND='{$PayStatus}')\r\n"+
 			"and ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}'\r\n"+
 			"and ps.PRTL_PRDCT_SELECTED_STS_CD='A' \r\n"+
 			"and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A'\r\n"+
-			"AND PC.EXTRACT_STS_CD = 'C'\r\n";
+			"AND PC.EXTRACT_STS_CD = 'C' {$isNPI}\r\n";
 		
 public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_USER pu INNER JOIN OLE.PORTAL_USER_PAYER_TIN pt on pu.PORTAL_USER_ID = pt.PORTAL_USER_ID INNER JOIN OLE.PAYER py ON pt.PAYR_TIN_NBR = py.PAYR_TIN_NBR WHERE pu.SSO_ID='{$id}'";
 		public final static String PAST_DUE_ACCRUED_FEE="SELECT  SUM(dba.DBT_FEE_ACCRD_AMT) as DBT_FEE_ACCRD_AMT  FROM OLE.DEBIT_FEE_ACCRD dba WHERE  dba.prov_tin_nbr='{$tin}' and dba.SETL_DT> current date -day(current date) -1 days and dba.SETL_DT <= last_day(current date) and dba.SETL_DT <= current date and DBT_FEE_ACCRD_STS in ('FA' ,'FZ')";
@@ -487,12 +487,15 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	
 	public static final String How_To_Enroll_Page = "Select  cast(CLOB_VAL as varchar(32000)) as clobval,TEXT_VAL  from ole.CONTENT where CONT_NM like '%How to Enroll%'";
 	
+	public static final String PaymentStatus = "SELECT ARCHV_IND, DSPL_CONSL_PAY_NBR FROM PP008.CONSOLIDATED_PAYMENT WHERE DSPL_CONSL_PAY_NBR = '{$PaymentNumber}'";
+
 	public static final String exemptedTin="SELECT PROV_TIN_NBR FROM ole.ENROLLED_PROV_EXEMPT_STATUS epes";
 	public static final String insertExemptTin="INSERT INTO OLE.ENROLLED_PROV_EXEMPT_STATUS (PROV_TIN_NBR, TIN_EXEMPT_INDICATOR, EXEMPT_REAS_CD, CREAT_DTTM, CREAT_BY_ID, LST_CHG_BY_DTTM, LST_CHG_BY_ID)\r\n"+
 	                         "VALUES('{$tin}', 'Y', 'OR', sysdate, 'vashok3', sysdate, 'vashok3')";
 	public static final String deleteExemptedTin="delete from OLE.ENROLLED_PROV_EXEMPT_STATUS where TIN_EXEMPT_INDICATOR='Y' and PROV_TIN_NBR  ='{$tin}' ";
 	public static final String TinWithRecurrPayNoexemption= TIN_WITH_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
 	public static final String TinWithoutRecurrPayNoexemption= TIN_WITHOUT_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+
 
 }
 

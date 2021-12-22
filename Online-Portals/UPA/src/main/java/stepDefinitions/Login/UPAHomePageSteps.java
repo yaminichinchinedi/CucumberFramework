@@ -34,12 +34,18 @@ public class UPAHomePageSteps extends TestBase {
 		loginPage.doLoginUPAActivateAccount(userType);
 	}
 
-	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	@Given("^User fetches the tin for the \"([^\"]*)\" with search combination \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" and \"([^\"]*)\"$")
 	public void user_fetch_tin_for_for_for_for_for_Portal_Experience(String userType, String searchCriteria,
-			String tinType, String portalAccess) throws Throwable {
-		new UPAHomePage(testConfig).fetchTin(userType, searchCriteria, tinType, portalAccess);
+			String tinType, String portalAccess, String PaymentStatus, String FilterPayments) throws Throwable {
+		new UPAHomePage(testConfig).fetchTin(userType, searchCriteria, tinType, portalAccess,PaymentStatus, FilterPayments);
 	}
 
+	@Given("^User fetch tin for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for \"([^\"]*)\" for Portal Experience\\.$")
+	public void user_fetch_tin_for_for_for_for_for_Portal_Experience1(String userType, String searchCriteria,
+			String tinType, String portalAccess) throws Throwable {
+		new UPAHomePage(testConfig).fetchTin(userType, searchCriteria, tinType, portalAccess,searchCriteria, searchCriteria);
+	}
+	
 	@When("^Click on View Payments Link in UPA$")
 	public void click_on_View_Payments_Link_in_UPA() throws Throwable {
 		homePage.clickViewPaymentsLinkUPA();
