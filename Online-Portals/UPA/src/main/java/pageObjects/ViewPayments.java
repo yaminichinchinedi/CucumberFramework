@@ -290,12 +290,6 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 
 	@FindBy(xpath = "(//a[@class='pageNo' and contains(text(),'Next')])[1]")
 	WebElement nextLink_SR;
-
-	@FindBy(xpath = "//select[@id='taxIndNbrId']") 
-	WebElement prvdrTIN;
-	
-	@FindBy(xpath = "//p[contains(text(),'Payment Status')]") 
-	WebElement PaymStatLable;
 	
 	@FindBy(xpath = "//input[@name='Submit']") 
 	WebElement PrintButton;
@@ -3135,7 +3129,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 
 	public ViewPayments verifyPaymentStatusFilter(String portalAccess) {
 		
-		String label = PaymStatLable.getText().trim();
+		String label = lblPaymentStatusProv.getText().trim();
 		Helper.compareEquals(testConfig, "Payment Status filter label", "Payment Status", label);
 		Element.verifyElementPresent(drpDwnArchiveFilter, "Payment Status");
 
@@ -4478,7 +4472,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	
 	public void viewPaymentUIVerification(String userType, String portalAccess, String TINtype) {
 		
-		Element.verifyElementPresent(prvdrTIN, "TIN Dropdown field present");
+		Element.verifyElementPresent(drpDwnTin, "TIN Dropdown field present");
 		
 		
 	}

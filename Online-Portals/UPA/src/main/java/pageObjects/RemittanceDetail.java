@@ -2,39 +2,21 @@ package main.java.pageObjects;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.Map.Entry;
-
+import org.apache.commons.lang3.StringUtils;
 import main.java.queries.QUERY;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
-
 import main.java.reporting.Log;
 
-import com.mysql.jdbc.StringUtils;
-
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsRequest;
@@ -51,11 +33,6 @@ import main.java.fislServices.ReadTagsfromFISLResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.stepDefinitions.Login.CSRHomePageSteps;
-import main.java.stepDefinitions.RemittanceDetail.RemittanceDetailSteps;
-import main.java.stepDefinitions.ViewPayments.SearchTinPageViewPaymentsSteps;
-import main.java.pageObjects.CSRHomePage;
-import main.java.pageObjects.HomePage;
 import main.java.api.manage.EpsPaymentsSearch.EpsRemittanceDetailHelper;	
 import main.java.api.pojo.epsRemittanceDetail.response.EPSClaimsResponseUI;	
 import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsResponse;
@@ -7288,12 +7265,13 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
 		paymentDateOnRem.getText().contains(ViewPayments.PaymentDate);
 		paymentNumberOnRem.getText().contains(ViewPayments.PaymentNumber);
 		paidPrvdr.getText().contains(ViewPayments.Amount);
-		if(ViewPayments.Amount.equals("$0.00"))
+
+		if(StringUtils.equalsIgnoreCase(ViewPayments.Amount, "$0.00"))
 			paymentTypeOnRem.getText().equalsIgnoreCase("Zero Dollar");
 		else if(testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")){
 			paymentTypeOnRem.getText().equalsIgnoreCase("ACH");
 		}
-		if(!ViewPayments.NPI.equals("")) {
+		if(!StringUtils.equalsIgnoreCase(ViewPayments.NPI, "")) {
 			NPIOnRem.getText().equalsIgnoreCase(ViewPayments.NPI);
 		}
 		
