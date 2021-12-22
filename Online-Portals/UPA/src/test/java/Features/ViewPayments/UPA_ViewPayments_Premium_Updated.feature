@@ -104,8 +104,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     And Get Zero Dollar Payments for "<QuickSearch>", "<FilterPayments>", "<MarketType>", "<PaymentStatus>" criteria
     And User Click on the payment number
     And User navigate to search Remittance Detail page and verify content
-    And Validate Download, Print, Return buttons in Remit Page when user navigated from view paymemnts
-
+    
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | New           |
