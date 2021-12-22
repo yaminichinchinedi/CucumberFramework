@@ -367,10 +367,10 @@ public class UPAHomePage extends HomePage {
 			testConfig.putRunTimeProperty("PayStatus", "N");
 		if(FilterPayments.equalsIgnoreCase("NPI Only"))
 			testConfig.putRunTimeProperty("isNPI", "AND PROV_NPI_NBR IS NOT NULL");
-		if(FilterPayments.equalsIgnoreCase("TIN Only"))
+		else if(FilterPayments.equalsIgnoreCase("TIN Only"))
 			testConfig.putRunTimeProperty("isNPI", "AND PROV_NPI_NBR IS NULL");
-		if(FilterPayments.equalsIgnoreCase("show all"))
-				testConfig.putRunTimeProperty("isNPI", "");
+		else
+			testConfig.putRunTimeProperty("isNPI", "");
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);
