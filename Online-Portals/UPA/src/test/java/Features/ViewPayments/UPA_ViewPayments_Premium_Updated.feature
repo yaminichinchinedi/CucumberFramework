@@ -1,7 +1,7 @@
 #Author: chandaka_srinu@optum.com
 @UPA_ViewPayments_Premium_Stabilization
 Feature: UPA ViewPayments Functionality for Premium TINs
-
+@UPAtest001
   Scenario Outline: UPA_Provider admin _View payment UI validation for ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
