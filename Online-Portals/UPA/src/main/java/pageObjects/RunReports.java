@@ -32,15 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -49,10 +42,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
-import java.util.List;
-
-
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
 import main.java.Utils.Helper;
@@ -63,9 +52,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
@@ -77,14 +63,7 @@ import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 import main.java.nativeFunctions.Element;
 import main.java.Utils.DataBase;
-import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
-import main.java.nativeFunctions.Element;
-import main.java.nativeFunctions.TestBase;
-import main.java.reporting.Log;
-import main.java.reporting.Log;
-
-import com.gargoylesoftware.htmlunit.javascript.host.Console;
 import com.mysql.jdbc.StringUtils;
 
 import cucumber.api.java.it.Date;
@@ -93,11 +72,9 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
-import main.java.reporting.Log;
 import main.java.pageObjects.LoginCSR;
 import main.java.pageObjects.SearchRemittanceSearchCriteria;
 import main.java.queries.QUERY;
-import main.java.nativeFunctions.TestBase;
 public class RunReports extends TestBase{
 	
 @FindBy(xpath="//input[@value='hipaaErrorSummaryReport']")

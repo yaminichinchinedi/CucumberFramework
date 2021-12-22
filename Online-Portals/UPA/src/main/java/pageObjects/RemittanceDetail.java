@@ -2,39 +2,21 @@ package main.java.pageObjects;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.Map.Entry;
-
+import org.apache.commons.lang3.StringUtils;
 import main.java.queries.QUERY;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Reporter;
-
 import main.java.reporting.Log;
 
-import com.mysql.jdbc.StringUtils;
-
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsRequest;
@@ -51,11 +33,6 @@ import main.java.fislServices.ReadTagsfromFISLResponse;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
-import main.java.stepDefinitions.Login.CSRHomePageSteps;
-import main.java.stepDefinitions.RemittanceDetail.RemittanceDetailSteps;
-import main.java.stepDefinitions.ViewPayments.SearchTinPageViewPaymentsSteps;
-import main.java.pageObjects.CSRHomePage;
-import main.java.pageObjects.HomePage;
 import main.java.api.manage.EpsPaymentsSearch.EpsRemittanceDetailHelper;	
 import main.java.api.pojo.epsRemittanceDetail.response.EPSClaimsResponseUI;	
 import main.java.api.pojo.epsRemittanceDetail.response.EpsClaimsResponse;
@@ -186,6 +163,11 @@ public class RemittanceDetail {
     @FindBy(xpath = "//input[@value='Search']") WebElement submitBtn;
 	@FindBy(xpath = "//*[contains(text(),'Note: Above information provided by the member']") WebElement noteMsg;
 	@FindBy(xpath = "//*[contains(text(),'technical difficulties')]") WebElement errorPageUI;
+	
+	@FindBy(xpath = "//p[starts-with(text(),'Payment Date')]") WebElement paymentDateOnRem;
+    @FindBy(xpath = "//p[contains(text(),'Payment Type:')]") WebElement paymentTypeOnRem;
+	@FindBy(xpath = "//p[contains(text(),'Payment Number')]") WebElement paymentNumberOnRem;
+	@FindBy(xpath = "//p[contains(text(),'NPI')]") WebElement NPIOnRem;
 
 	 @FindBy(id="paymentNbrTypeSelection")	
 	 WebElement paymentNumberType;
@@ -193,6 +175,11 @@ public class RemittanceDetail {
 	 WebElement paymentNumberSearchRemit;
 	 @FindBy(name="searchRemittance")
 	 WebElement btnSearchRemittance;
+	 
+	 @FindBy(xpath = "//input[@value='Print Request' and @type='button']") 
+	 WebElement PrintRequest;
+	 
+	 
 	
 	private ViewPaymentsDataProvider dataProvider;
 	EpsRemittanceDetailHelper epsRemittanceDetailHelper = new EpsRemittanceDetailHelper();	
@@ -200,6 +187,7 @@ public class RemittanceDetail {
 	EpsClaimsRequest epsClaimsRequest = new EpsClaimsRequest();
 	List<String> actual=new ArrayList<String>();
 	List<String> expected=new ArrayList<String>();
+	
 	
 	private TestBase testConfig;
 	
@@ -7271,6 +7259,41 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
         Element.enterData(enterTIN, prov_TAX_ID_NBR, "Enter tin number as " + prov_TAX_ID_NBR, "tinNumber");
         Element.click(searchBtn, "Search");
     }
+	
+	public void verifyingClaimDetailsforRequiredPayemnt() throws Exception {
+		
+		paymentDateOnRem.getText().contains(ViewPayments.PaymentDate);
+		paymentNumberOnRem.getText().contains(ViewPayments.PaymentNumber);
+		paidPrvdr.getText().contains(ViewPayments.Amount);
+
+		if(StringUtils.equalsIgnoreCase(ViewPayments.Amount, "$0.00"))
+			paymentTypeOnRem.getText().equalsIgnoreCase("Zero Dollar");
+		else if(testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")){
+			paymentTypeOnRem.getText().equalsIgnoreCase("ACH");
+		}
+		if(!StringUtils.equalsIgnoreCase(ViewPayments.NPI, "")) {
+			NPIOnRem.getText().equalsIgnoreCase(ViewPayments.NPI);
+		}
+		
+		
+	}
+	
+	public void verifyButtonOnRemittanceDetailsPageNavigatedFromViewPayments() throws Exception
+	{
+		 Boolean downloadBtn = download.isDisplayed();
+		 Helper.compareEquals(testConfig, "Download Button", true, downloadBtn);
+		 
+	     Boolean printBtnPayerUI = PrintRequest.isDisplayed();
+	     Helper.compareEquals(testConfig, "Print Page Button", true, printBtnPayerUI);
+	     
+	     Boolean returnBtnUI = returnBtn.isDisplayed();
+	     Helper.compareEquals(testConfig, "Return to Payment Summary Button", true, returnBtnUI);
+	     
+	}
+	
+	
+	
+	
 }
 	
 	

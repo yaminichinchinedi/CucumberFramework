@@ -21,7 +21,6 @@ import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.queries.QUERY;
 import main.java.reporting.Log;
-import net.sourceforge.htmlunit.corejs.javascript.regexp.SubString;
 
 
 

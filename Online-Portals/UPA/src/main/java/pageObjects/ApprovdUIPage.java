@@ -1,10 +1,8 @@
 package main.java.pageObjects;
 
-import java.io.IOException;
 import java.util.List;
 
 import main.java.nativeFunctions.Browser;
-import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
 import main.java.reporting.Log;
 
@@ -58,6 +56,7 @@ protected TestBase testbase;
 			DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 			//capabilities.setCapability("firefox_binary","C:\\Program Files\\Mozilla Firefox\\firefox.exe");
 			capabilities.setCapability("firefox_binary","C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+			
 
 			capabilities.setCapability("marionette", true); 
 			capabilities.setCapability (FirefoxDriver.PROFILE, profile);

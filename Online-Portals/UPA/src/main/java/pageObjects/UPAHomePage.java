@@ -186,8 +186,7 @@ public class UPAHomePage extends HomePage {
 	WebElement lnkLogout;
 	@FindBy(className="slide__messageBox")
 	List<WebElement> imageTiles;
-	@FindBy(className="slide video")
-	List<WebElement> videoTiles;
+
 	@FindBy(className="carousel__nav__label")
 	List<WebElement> carouselNav;	
 
@@ -345,7 +344,7 @@ public class UPAHomePage extends HomePage {
 		return this;
 	}
 	
-	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess) {
+	public UPAHomePage fetchTin(String userType,String searchCriteria, String tinType,String portalAccess, String PaymentStatus, String FilterPayments) {
 		if(searchCriteria.contains("days") || searchCriteria.contains("month"))
 			Helper.getPayerSchema(testConfig,searchCriteria,userType);	
 		if(searchCriteria.contains("DOP")){
@@ -360,10 +359,23 @@ public class UPAHomePage extends HomePage {
 			String id = testConfig.runtimeProperties.getProperty("UPA_" + "OptumID_" + userType + "_" + env);
 			testConfig.putRunTimeProperty("id", id);
 		}
+		if(PaymentStatus.equalsIgnoreCase("pending"))
+			testConfig.putRunTimeProperty("PayStatus", "P");
+		else if(PaymentStatus.equalsIgnoreCase("closed"))
+			testConfig.putRunTimeProperty("PayStatus", "Y");
+		else
+			testConfig.putRunTimeProperty("PayStatus", "N");
+		if(FilterPayments.equalsIgnoreCase("NPI Only"))
+			testConfig.putRunTimeProperty("isNPI", "AND PROV_NPI_NBR IS NOT NULL");
+		else if(FilterPayments.equalsIgnoreCase("TIN Only"))
+			testConfig.putRunTimeProperty("isNPI", "AND PROV_NPI_NBR IS NULL");
+		else
+			testConfig.putRunTimeProperty("isNPI", "");
 		String tin = getTin(userType,searchCriteria,tinType,portalAccess); 
 		System.setProperty("tin", tin);
 		testConfig.putRunTimeProperty("userType",userType);
 		testConfig.putRunTimeProperty("searchCriteria", searchCriteria);
+
 		switch (userType)
 			{
 			   case "PROV": 
@@ -390,6 +402,7 @@ public class UPAHomePage extends HomePage {
 				Log.Comment("Tin fetched as per search criteria is : "+tin);
 				break;
 			}
+
 		return this;
 	}
 
