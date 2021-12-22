@@ -637,4 +637,20 @@ Feature: - Optum Pay Solutions
       | credentials | userType | portalAccess | searchCriteria                        | tinType |
       | BS_Admin    | BS       | Premium      | TinWithRecurrPay and exemption				| AO      |  
       
+      
+         @UPAUS4053595
+  Scenario Outline: Setting alternate bank account on recurring payments page UPA
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    And User clicks on Optum Pay Solutions tab
+    Then User clicks on "Invoices" tab
+    Then User clicks on Set up recurring payments button
+    Then User clicks on Continue button of welcome to recurring payments
+    And Users enters same AC No and RTN No on popup of alternate bank ac and validate error message
+
+
+    Examples:
+      | credentials | userType | portalAccess | searchCriteria                              | tinType |
+      | PROV_Admin  | PROV     | Premium      | TinWithoutRecurrPay and No exemption        | AO      |
+      
  

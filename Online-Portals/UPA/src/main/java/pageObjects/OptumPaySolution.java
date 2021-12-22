@@ -642,7 +642,7 @@ public class OptumPaySolution {
   	@FindBy(css="input.btn-primary.rounded")
   	WebElement recPaybut;
 
-  	@FindBy(xpath="/html/body/div[4]/div[3]/div/button[2]/span")
+  	@FindBy(xpath="/html/body/div[5]/div[3]/div/button[2]/span")
     WebElement contButton;
 
   	@FindBy(xpath="//table[@id=\"recurring-payment-table\"]/tbody/tr")
@@ -721,8 +721,9 @@ public class OptumPaySolution {
   	@FindBy(xpath="//*[@id='optum-pay-invoices-tabs']/div[2]/p")
     WebElement	unassignedtins;
   	
-  	//@FindBy(linkText = "Setup recurring payments")
-  	@FindBy(xpath = "//input[@onclick='openRpWelcomePopup();']")
+  //	@FindBy(linkText = "Setup recurring payments")
+  //	@FindBy(xpath = "//input[@onclick='openRpWelcomePopup();']")
+  	@FindBy(css = "input.btn-primary.rounded")
   	WebElement Setuprecurringpayments;
   	
   
@@ -734,6 +735,9 @@ public class OptumPaySolution {
   	
   	@FindBy(xpath="//span[contains(text(),'Cancel')]")
     WebElement	cancelbutton;
+  	
+  	@FindBy(id="addAlternateBankAccountButton")
+  	WebElement altBnk;
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
@@ -2800,7 +2804,27 @@ public class OptumPaySolution {
 
 
     }
-
+    public void enterSameRoutingAndAccountNo()  {
+        int rowNo = 1;
+        TestDataReader data = null;
+        try {
+        	Element.click(altBnk, "Alternate Bank Ac");
+        	data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            String routingNumber = data.GetData(rowNo, "RoutingNumber");
+            String accountNumber = routingNumber;
+            WebElement rtnNo=Element.findElement(testConfig, "name", "routingNbr");
+            Element.enterData(rtnNo, routingNumber, "Routing No", "Routing no");
+            WebElement acNo=Element.findElement(testConfig, "name", "accountNbr");
+        	Element.enterData(acNo, accountNumber, "AC No", "AC no");
+        	Element.fluentWait(testConfig,rtnNo,100,1,"Routing Input");
+            Element.enterKeys(acNo, Keys.TAB, "Enter Tab Key", "Tab Key");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        String errorMsg=Element.findElement(testConfig, "id", "accountNbr-error").getText();
+        Helper.compareEquals(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
+     }
     public void setAlternateBankAccount() {
         int rowNo = 1;
         TestDataReader data = null;

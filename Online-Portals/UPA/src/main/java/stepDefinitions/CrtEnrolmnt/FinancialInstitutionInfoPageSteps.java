@@ -259,5 +259,8 @@ public class FinancialInstitutionInfoPageSteps extends TestBase {
 	public void user_give_alphanumeric_No_in_Telphone_no_fiels_and_click_on_save_changes_button() throws Throwable {
 		//financialInstitutionInfoPage.fillFIIwithNonNumericPhone();
 	}
-	
+	@Then("^Users enters same AC No and RTN No on Financial Institution Information page validate error message$")
+	public void users_enters_same_AC_No_and_RTN_No_on_Financial_Institution_Information_page_validate_error_message() throws Throwable {
+		financialInstitutionInfoPage.fillsameRTNACNo();
+	}
 }

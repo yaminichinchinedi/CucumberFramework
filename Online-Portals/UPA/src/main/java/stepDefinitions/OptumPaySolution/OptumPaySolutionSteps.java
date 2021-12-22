@@ -548,7 +548,10 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_validates_that_Recurring_Payment_exemption_is_not_present_on_the_OPS_dashboard() throws Throwable {
 		optumPaySol.validateRecurrDashboard();
 	}
-	
+	@Then("^Users enters same AC No and RTN No on popup of alternate bank ac and validate error message$")
+	public void users_enters_same_AC_No_and_RTN_No_on_popup_of_alternate_bank_ac_and_validate_error_message() throws Throwable {
+		optumPaySol.enterSameRoutingAndAccountNo();
+	}
 }
 
 

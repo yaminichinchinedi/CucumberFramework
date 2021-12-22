@@ -229,7 +229,10 @@ public class EditEnrollmentSteps extends TestBase {
         maintainEnrollment.validateMFADialogBoxContentMEtab();
     }
 
-    
+    @Then("^Users enters same AC No and RTN No on maintain Enrollment page and validate error message$")
+    public void users_enters_same_AC_No_and_RTN_No_on_maintain_Enrollment_page_and_validate_error_message() throws Throwable {
+    	editEnrollment.fillsameRTNACNo();
+    }
 
 
 }
