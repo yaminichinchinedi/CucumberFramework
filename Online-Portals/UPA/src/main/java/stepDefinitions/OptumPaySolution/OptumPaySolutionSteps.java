@@ -553,6 +553,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void userValidatesIfRequestAndRemoveExemptionSectionIsDisplayedAccordingly() {
 	optumPaySol.exemptionSectionValidatorCSR_RO_RW();
 	}
+
+	@Then("User validates if exemption section is not displayed for basic and VO")
+	public void userValidatesIfExemptionSectionIsNotDisplayedForBasicAndVO() {
+	optumPaySol.basic_VO_TinExemptionValidator();
+	}
 }
 
 
