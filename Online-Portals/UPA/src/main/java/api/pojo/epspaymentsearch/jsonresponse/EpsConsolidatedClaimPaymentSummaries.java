@@ -10,6 +10,7 @@ import main.java.api.pojo.epspaymentsearch.jsonresponse.summary.PayerSummary;
 import main.java.api.pojo.epspaymentsearch.jsonresponse.summary.ProviderSummary;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class EpsConsolidatedClaimPaymentSummaries {
@@ -47,10 +48,20 @@ public class EpsConsolidatedClaimPaymentSummaries {
     private PaymentStatusCode paymentStatusCode;
     private EpsPaymentStatusCode epsPaymentStatusCode;
     private UnconsolidatedPaymentDetails[] unconsolidatedPaymentDetails;
+    private List <String> originalBpr01s;
 
     public EpsConsolidatedClaimPaymentSummaries() {
     }
 
+    
+    public List<String> getoriginalBpr01s() {
+        return originalBpr01s;
+    }
+
+    public void setoriginalBpr01s(List<String> originalBpr01s) {
+        this.originalBpr01s = originalBpr01s;
+    }
+    
     public String getPaymentIdentifier() {
         return paymentIdentifier;
     }

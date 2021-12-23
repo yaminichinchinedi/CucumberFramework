@@ -1,15 +1,19 @@
 package main.java.stepDefinitions.ViewPayments;
 
+import com.cucumber.listener.Reporter;
+
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import main.java.nativeFunctions.TestBase;
-import main.java.pageObjects.RemittanceDetail;
-import main.java.pageObjects.SearchRemittance;
+import main.java.pageObjects.EPRAPDFGeneration;
 import main.java.pageObjects.ViewPayments;
 
 public class ViewPaymentsSteps extends TestBase {
                
     ViewPayments viewPayment = new ViewPayments(testConfig);
+    EPRAPDFGeneration EPRAPDFGeb = new EPRAPDFGeneration(testConfig);
+    
 
     @Then("^Validate all other columns in Show All State$")
      public void validate_all_other_columns_in_Show_All_State() throws Throwable {
@@ -59,8 +63,11 @@ public class ViewPaymentsSteps extends TestBase {
     
     @When("^Click on View Payments Link for UPA$")
     public void click_on_View_Payments_Link_for_UPA() throws Throwable {
+    	testConfig.putRunTimeProperty("page", "viewPaymentPage");
     	viewPayment.clickViewPaymentsTab();
     }
+    
+  
     
     @Then("^Validate Payment Number Hyper Link in UPA$")
     public void validate_Payment_Number_Hyper_Link_in_UPA() throws Throwable {
@@ -112,7 +119,7 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_verifies_zero_dollar_payments_for(String paymentType, String key, String value) throws Throwable {
     	testConfig.putRunTimeProperty("key", key);
 		testConfig.putRunTimeProperty("value", value);
-		viewPayment.verifyZeroDollarPayments(paymentType);
+		//viewPayment.verifyZeroDollarPayments(paymentType);
     }
 
     @Then("^User verifies hovering text in pop up for  \"([^\"]*)\" and \"([^\"]*)\" \"([^\"]*)\"$")
@@ -156,6 +163,12 @@ public class ViewPaymentsSteps extends TestBase {
     	
     }
     
+    @Then("^Verify Search Results With \"([^\"]*)\" for \"([^\"]*)\" With \"([^\"]*)\" and \"([^\"]*)\"$")
+    public void verify_Search_Results_With_for(String QuickSearch, String FilterPayments, String MarketType, String PaymentStatus) throws Throwable {
+    	viewPayment.verifySearchResultsWithFilters(QuickSearch, FilterPayments, MarketType, PaymentStatus);
+    	
+    }
+    
     @Then("^Verify Search Results for \"([^\"]*)\" having \"([^\"]*)\" With \"([^\"]*)\"$")
     public void verify_Search_Results_for_having_With(String filterPayments, String quickSearchFilter, String archiveFilter) throws Throwable {
         
@@ -191,7 +204,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Verify Zero Dollar Payments for \"([^\"]*)\"$")
     public void verify_Zero_Dollar_Payments_for(String paymentType) throws Throwable {
-    	viewPayment.verifyZeroDollarPayments(paymentType);
+    	//viewPayment.verifyZeroDollarPayments(paymentType);
     }
     
     @Then("^Verify Mkt Type for \"([^\"]*)\"$")
@@ -200,18 +213,18 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyMktType(mktTypeFilter);
     }
     
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and dropdown have other time period options for \"([^\"]*)\"\\.$")
-    public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_dropdown_have_other_time_period_options_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
+    @Then("^Verify Quick Search dropdown and its default value$")
+    public void Verify_Quick_Search_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyQuickSrchFilterOptions();
     }
     
-//    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
+//    @Then("^Validate Active/Archived Payments filter is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\".$")
 //    public void validate_Active_Archived_Payments_filter_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType,String portalAccess) throws Throwable {
 //    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
 //    }
 
 
-    @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page\\.$")
+    @Then("^Validate Claim Count column is present which appears as Hyperlink and on click redirects to Remittance Detail page.$")
     public void validate_Claim_Count_column_is_present_which_appears_as_Hyperlink_and_on_click_redirects_to_Remittance_Detail_page() throws Throwable {
         viewPayment.verifyClaimCountHyperlink("Claim Count","View Payments");
     }
@@ -230,14 +243,14 @@ public class ViewPaymentsSteps extends TestBase {
     public void validate_user_is_able_to_change_the_value_of_Payment_Status_column() throws Throwable {
        viewPayment.verifyPaymentStatusColumnDropdwn();
     }
-
-    @Then("^Validate (\\d+), ePRA and Payer PRA are enabled$")
+ 
+    @Then("^Validate (d+), ePRA and Payer PRA are enabled$")
     public void validate_ePRA_and_Payer_PRA_are_enabled(int arg1) throws Throwable {
       viewPayment.verify835EPRAlink();
     }
 
     
-    @Then("^Click on print Payment Summary button\\.$")
+    @Then("^Click on print Payment Summary button.$")
     public void click_on_print_Payment_Summary_button() throws Throwable {
         viewPayment.clickPrintPaymentBtn();
     }
@@ -251,31 +264,31 @@ public class ViewPaymentsSteps extends TestBase {
 		viewPayment.setSearchFiltersPayer(filterpayments, quicksearchfilter, filterpayments);
 	}
 
-    @Then("^Validate the data of Print Payment Summary page\\.$")
+    @Then("^Validate the data of Print Payment Summary page.$")
     public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
     	testConfig.putRunTimeProperty("page", "printPaymentSummary");
-    	 viewPayment.verifyPrintPaymentSummaryPage();
+    	// viewPayment.verifyPrintPaymentSummaryPage();
     }
-    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\"\\.$")
+    @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\".$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
-    	viewPayment.verifyQuickSrchFilterOptions(portalAccess);
+    	viewPayment.verifyQuickSrchFilterOptions();
     }
 
-    @Then("^Validate Active/Archived Payments filter for \"([^\"]*)\" is relabeled to Payment Status and has default value as New and dropdown have other status options for \"([^\"]*)\"\\.$")
-    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String userType, String portalAccess) throws Throwable {
-    	viewPayment.verifyPaymentStatusFilter(userType, portalAccess);
+    @Then("^Verify Payment Status dropdown and its default value for \"([^\"]*)\" TIN$")
+    public void validate_Active_Archived_Payments_filter_for_is_relabeled_to_Payment_Status_and_has_default_value_as_New_and_dropdown_have_other_status_options_for(String portalAccess) throws Throwable {
+    	viewPayment.verifyPaymentStatusFilter(portalAccess);
     }
     @Then("^Validate Archive/Save changes button is not there$")
     public void validate_Archive_Save_changes_button_is_not_there() throws Throwable {
     	viewPayment.verifySavArchbtnNotPresent();
     }
 
-	@Then("^Validate Save button is not displayed for \"([^\"]*)\"\\.$")
+	@Then("^Validate Save button is not displayed for \"([^\"]*)\".$")
 	public void validate_Save_button_is_not_displayed_for(String portalAccess) throws Throwable {
 		viewPayment.verifySaveBtnDisplay(portalAccess);
 	}
 
-    @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (\\d+)field as enabled\\.$")
+    @Then("^Validate Claim Count,ePRA,pPRA and Payment status fields appear with a gray box with value 'N/A'and (d+)field as enabled.$")
     public void validate_Claim_Count_ePRA_pPRA_and_Payment_status_fields_appear_with_a_gray_box_with_value_N_A_and_field_as_enabled(int arg1) throws Throwable {
         viewPayment.verifyColumnValuesNA();
         
@@ -300,38 +313,38 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.verifyNPI(paymentType);
     }
     
-    @Then("^User clicks on claim count grayed out column\\.$")
+    @Then("^User clicks on claim count grayed out column.$")
     public void user_clicks_on_claim_count_grayed_out_column() throws Throwable {
     	viewPayment.clickGrayedClaimCount();
     }
 
-	@Then("^User clicks on Get started button\\.$")
+	@Then("^User clicks on Get started button.$")
 	public void user_clicks_on_Get_started_button() throws Throwable {
 		viewPayment.clickGetStarted();
 	}
     
-	@Then("^User verifies the pop up for user type having access as \"([^\"]*)\"\\.$")
+	@Then("^User verifies the pop up for user type having access as \"([^\"]*)\".$")
 	public void user_verifies_the_pop_up_for_user_type_having_access_as(String userType) throws Throwable {
 		viewPayment.verifyPopUp(userType);
 	}
 
     
-    @Then("^User verifies bring more power to you pop up and click on I accept button\\.$")
+    @Then("^User verifies bring more power to you pop up and click on I accept button.$")
     public void user_verifies_bring_more_power_to_you_pop_up_and_click_on_I_accept_button() throws Throwable {
        viewPayment.verifyGetStartedModal();
     }
     
-    @Then("^User verifies the entry in product selection table with portal record status as PS\\.$")
+    @Then("^User verifies the entry in product selection table with portal record status as PS.$")
     public void user_verifies_the_entry_in_product_selection_table_with_portal_record_status_as_PS() throws Throwable {
        viewPayment.verifyPrdctSlctnTbl();
     }
     
-    @Then("^User click on cross to close the pop up\\.$")
+    @Then("^User click on cross to close the pop up.$")
     public void user_click_on_cross_to_close_the_pop_up() throws Throwable {
        viewPayment.clickCloseOnPopUp();
     }
     
-    @Then("^Click on Payment number and go to Remittance Detail screen\\.$")
+    @Then("^Click on Payment number and go to Remittance Detail screen.$")
     public void click_on_Payment_number_and_go_to_Remittance_Detail_screen() throws Throwable {
         viewPayment.clickPaymentNumber("View Payments");
     }
@@ -341,18 +354,18 @@ public class ViewPaymentsSteps extends TestBase {
     	viewPayment.validateSinglePaymentPageData();
     }
     
-    @Then("^Validate Fee Amount column is not displayed\\.$")
+    @Then("^Validate Fee Amount column is not displayed.$")
     public void validate_Fee_Amount_column_is_not_displayed() throws Throwable {
     	viewPayment.verifyColumnIsNotPresent("Fee Amount");
     }
     
 	
-	@Then("^Validate Fee Amount column is displayed\\.$")
+	@Then("^Validate Fee Amount column is displayed.$")
 	public void validate_Fee_Amount_column_is_displayed() throws Throwable {
 		viewPayment.verifyColumnPresent("Fee Amount");
 	}
 	
-	@Then("^Validate amount is displayed for payments present in debit fee rate table\\.$")
+	@Then("^Validate amount is displayed for payments present in debit fee rate table.$")
 	public void validate_amount_is_displayed_for_payments_present_in_debit_fee_rate_table() throws Throwable {
 		viewPayment.verifyFeeAmountDash();
 	}
@@ -372,7 +385,7 @@ public class ViewPaymentsSteps extends TestBase {
     }
     
     //Added by Mohammad Khalid
-    @Then("^Validate \"([^\"]*)\" column is displayed\\.$")
+    @Then("^Validate \"([^\"]*)\" column is displayed.$")
     public void validate_column_is_displayed(String columnName) throws Throwable 
     {
     	viewPayment.verifyColumnPresent(columnName);
@@ -399,10 +412,113 @@ public class ViewPaymentsSteps extends TestBase {
     public void user_clicks_on_greyed_out_area_and_verify_popup_text_for_for(String credentials, String portalAccess) throws Throwable {
     	viewPayment.clickGreyedOut().verifyPageTextFor(credentials, portalAccess);// 
     }
-    @Then("^Validate (\\d+),ePRA links are enabled/disabled based on Search criteria and click on (\\d+) if enabled to get it downloaded$")
+    @Then("^Validate (d+),ePRA links are enabled/disabled based on Search criteria and click on (d+) if enabled to get it downloaded$")
     public void validate_ePRA_links_are_enabled_disabled_based_on_Search_criteria_and_click_on_if_enabled_to_get_it_downloaded(int arg1, int arg2) throws Throwable {
     	viewPayment.verify835EPRA();
     }
+    
+    @Then("^Verify UI of view payment for \"([^\"]*)\" of TIN  for \"([^\"]*)\" for \"([^\"]*)\"$")
+    public void VerifyUIofViewPaymentScreen(String userType, String portalAccess, String TINtype) {
+        viewPayment.viewPaymentUIVerification(userType, portalAccess,TINtype);
+    }
+    
+    @Then("^Verify Filter Payments dropdown and its default value$")
+    public void Verify_Filter_Payments_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyFilterPaymentsOptions();
+    }
+    
+    @Then("^Verify Market Type dropdown and its default value$")
+    public void Verify_Market_Type_dropdown_and_its_default_value() throws Throwable {
+    	viewPayment.verifyFilterPaymentsOptions();
+    }
+    
+    @Then("^User set filters for \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" on view payments screen$")
+    public void set_search_filters_view_Payments(String QuickSearch, String FilterPayments, String MarketType,String PaymentStatus) throws Throwable {
+    	viewPayment.setSearchFiltersOnViewPaymentPage(QuickSearch,FilterPayments,MarketType,PaymentStatus);
+    }
+    
+    @Then("^Get Zero Dollar Payments for \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" criteria$")
+    public void verify_Zero_Dollar_Payments_for_required_criteria(String QuickSearch, String FilterPayments, String MarketType, String PaymentStatus) throws Throwable {
+    	viewPayment.verifyZeroDollarPayments(QuickSearch,FilterPayments,MarketType,PaymentStatus);
+    }
+    
+    @Then("^User validate columns for the \"([^\"]*)\" with \"([^\"]*)\" for the \"([^\"]*)\" TIN$")
+    public void User_validates_columns_the_TIN_based_on_TIN_accessType_and_UserType(String Tintype,String userType, String portalAccess) throws Throwable {
+    	if(viewPayment.totalRecordsFromFISL != null){
+    	viewPayment.verifyColumnPresent("Payer")
+    	.verifyColumnPresent("Payment Date")
+    	.verifyColumnPresent("NPI")
+    	.verifyColumnPresent("Payment Number")
+    	.verifyColumnPresent("Proxy Number")
+    	.verifyColumnPresent("Amount")
+    	.verifyColumnPresent("Claim Count")
+    	.verifyColumnPresent("ACH Trace Number")
+    	.verifyColumnPresent("Redemption Date")
+    	.verifyColumnPresent("Payment Status");
+    	
+    	if(!(portalAccess.equalsIgnoreCase("standard")||Tintype.equalsIgnoreCase("VO"))) {
+    	   viewPayment.verifyColumnPresent("Fee Amount");
+    	}
+    	
+    	if((portalAccess.equalsIgnoreCase("standard")||Tintype.equalsIgnoreCase("VO"))) {
+     	   viewPayment.verifyColumnIsNotPresent("Fee Amount");
+     	}
+    	}
+    	
+    }
+    
+    @Then("^Verify results should be in chronological order and maximum record should be 30$")
+    public void Verify_results_should_be_in_chronological_order() throws Throwable {
+    	
+    	if(viewPayment.totalRecordsFromFISL != null){
+    		viewPayment.verifyResultsInChronologicalOrder();
+    	    viewPayment.verifyMaximumRecords();
+    	}
+    }
+    
+    @Then("^Click on print payment summary button and verify print summary page$")
+    public void Click_on_print_payment_summary_button_and_verify_print_summary_page() throws Throwable {
+    	if(viewPayment.totalRecordsFromFISL != null)
+    	viewPayment.clickPrintPaymentBtn().verifyPrintPaymentSummaryPage(); 	 	
+    }
+    
+    @Then("^User change the status of payment from \"([^\"]*)\" to \"([^\"]*)\" and verify the DB$")
+    public void User_changing_the_status_of_payment(String currentStatus, String UpdatedStatus) throws Throwable {
+    	viewPayment.changingPaymentStatus(currentStatus, UpdatedStatus);
+    	viewPayment.verifyPaymentStatusUpdatedInDB(UpdatedStatus);
+    }
+    
+    @Then("^User download the 835 file for any of the payment$")
+    public void User_download_the_835_for_any_of_the_payment() throws Throwable {
+    	viewPayment.downloadRequiredFile("835file");
+    }
+    
+    @Then("^User download the already avilable EPRA pdf document for any of the payment$")
+    public void User_download_the_already_avilable_EPRA_pdf_document_for_any_of_the_payment() throws Throwable {
+ 
+    	viewPayment.downloadRequiredFile("EPRAExistingPDF");
+    }
+    
+    @Then("^User request the EPRA pdf document generation for any of the payment and download it$")
+    public void User_request_the_EPRA_pdf_document_generation_for_any_of_the_payment_and_download_it() throws Throwable {
+    	viewPayment.downloadRequiredFile("EPRAGeneration");
+    	EPRAPDFGeb.EPRAPDFGenration();
+    	viewPayment.downloadRequiredFile("EPRAGenGivenPayNum");
+    }
+    
+    @Then("^User get the payment number for which amount is non zero$")
+    public void User_get_on_payment_number_for_which_amount_is_non_zero() throws Throwable {
+ 
+    	viewPayment.getNonZeroPaynumber();
+    
+    	
+    }
+    
+
+	@And("User Click on the payment number")
+	public void User_Click_on_the_payment_number() throws Exception {
+		viewPayment.openingPayment();
+	}
     
 }
 

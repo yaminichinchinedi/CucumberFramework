@@ -323,6 +323,4 @@ Feature: UPA ViewPayments Functionality for Premium TIN
  		Examples:
       |    credentials  |  userType 	|		   	searchCriteria					  |	portalAccess	| tinType	|	
       |   BS_Admin	    | 		BS		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
-      |   PAY_Admin  	  | 		PAY		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|	
-      
-      
+      |   PAY_Admin  	  | 		PAY		|	vpay_835_enabled_ePRA_disabled  |		 Premium		|		AO		|

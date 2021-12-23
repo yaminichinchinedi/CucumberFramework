@@ -1,65 +1,32 @@
 package main.java.nativeFunctions;
 
 import java.io.*;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Executable;
 import java.lang.reflect.Method;
-import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.hamcrest.Description;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.IClass;
-import org.testng.ITestContext;
-import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import cucumber.api.Scenario;
-import main.java.Utils.CopyDir;
-import main.java.Utils.DataBase;
-import main.java.Utils.DataBase.DatabaseType;
 import main.java.Utils.Helper;
 import main.java.Utils.TestDataReader;
-import main.java.common.pojo.createEnrollment.EnrollmentInfo;
 import main.java.reporting.Log;
 import main.java.reporting.ReporterClass;
-import main.java.reporting.Log;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -184,7 +151,9 @@ public class TestBase extends ReporterClass {
 
 	private void setDriver(String browserType)
 	{
+		
 		String Execution_Env;
+		
 		if (System.getProperty("Executionin") == null)
 			Execution_Env = runtimeProperties.getProperty("AutomationExecution");
 		 else 
@@ -220,8 +189,7 @@ public class TestBase extends ReporterClass {
 	            caps1.setCapability(InternetExplorerDriver.ELEMENT_SCROLL_BEHAVIOR,true);
 	            caps1.setCapability("disable-popup-blocking", true);
 	            caps1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
-	            
+	            caps1.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);	            
 	            System.setProperty("webdriver.ie.driver",System.getProperty("user.dir")+"\\drivers\\IEDriverServer.exe");
 	            driver = new InternetExplorerDriver(caps1);
 				driver.manage().window().maximize();
@@ -276,6 +244,7 @@ public class TestBase extends ReporterClass {
 				Log.Comment("browser : " + browserType + " is invalid, launching Chrome by default");
 				driver = initChromeDriver();
 			}
+
 			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		}
@@ -526,7 +495,6 @@ public class TestBase extends ReporterClass {
 		
 		else if (Browser.equalsIgnoreCase("Edge")) {
 			Log.Comment("Inside Set driver Edge: sauce labs");
-			
 			DesiredCapabilities caps = DesiredCapabilities.edge();
 			caps.setCapability("platform", "Windows 10");
 			caps.setCapability("version", "92.0");

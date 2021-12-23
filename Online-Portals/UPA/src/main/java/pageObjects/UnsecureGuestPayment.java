@@ -218,4 +218,38 @@ public class UnsecureGuestPayment {
         Element.waitForPresenceOfElementLocated(testConfig, By.xpath("//button[.='Submit']"),10);
         Element.click(testConfig,BottomSubmitButton,"Submit Button",3);
     }
+    public void enterSameRoutingAndAccountNo()  {
+        int rowNo = 1;
+        TestDataReader data = null;
+        try {
+            data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            String routingNumber = data.GetData(rowNo, "RoutingNumber");
+            String accountNumber = routingNumber;
+
+            Element.fluentWait(testConfig,RoutingNumberInput,100,1,"Routing Input");
+            Element.enterData(RoutingNumberInput,routingNumber,"Routing Number","Routing Number Input");
+            Element.enterData(AccountNumberInput,accountNumber,"Account Number","Account number Input");
+            Element.click(testConfig,Step3Title,"title",3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        String errorMsg=Element.findElement(testConfig, "id", "accountNumber-error").getText();
+        Helper.compareEquals(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
+     }
+    public void enterContactInfo() {
+    	String fName=Helper.generateRandomAlphabetsString(5);
+    	String lName=Helper.generateRandomAlphabetsString(5);
+    	String jobTitle=Helper.generateRandomAlphabetsString(2);
+    	String phNo = Long.toString(Helper.generateRandomNumber(3));
+    	String phNoLstField = Long.toString(Helper.generateRandomNumber(4));
+    	String phoneNo=phNo+"-"+phNo+"-"+phNoLstField;
+    	String emailId=Helper.getUniqueEmailId();
+    	Element.enterData(firstName, fName, "First Name", "first name");
+    	Element.enterData(lastName, lName, "Last Name", "last name");
+    	Element.enterData(title, jobTitle, "Job Title", "job title");
+    	Element.enterData(phone, phoneNo, "phone number", "phone no");
+    	Element.enterData(email, emailId, "email Id", "email Id");
+
+    }
 }
