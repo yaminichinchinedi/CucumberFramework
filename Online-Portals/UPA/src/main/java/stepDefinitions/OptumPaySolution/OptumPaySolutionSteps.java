@@ -552,7 +552,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	@Then("^Users enters same AC No and RTN No on popup of alternate bank ac and validate error message$")
 	public void users_enters_same_AC_No_and_RTN_No_on_popup_of_alternate_bank_ac_and_validate_error_message() throws Throwable {
 		optumPaySol.enterSameRoutingAndAccountNo();
-
+	}
 
 	@Then("User validates if request and remove exemption section is displayed accordingly")
 	public void userValidatesIfRequestAndRemoveExemptionSectionIsDisplayedAccordingly() {
