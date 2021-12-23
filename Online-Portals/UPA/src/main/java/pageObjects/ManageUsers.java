@@ -1684,11 +1684,7 @@ public class ManageUsers extends AddUserDetails
 	}
 
 	public ManageUsers verifyAddUserBtnDisabled(){
-		try{
-			Helper.compareEquals(testConfig, "Add User button disabled", "true", btnAddUser.getAttribute("disabled"));
-		}catch(Exception e){
-			Log.Fail("User button is enabled");
-		}
+		Helper.compareEquals(testConfig, "Add User button disabled", "true", btnAddUser.getAttribute("disabled"));
 		return this;
 	}
 
@@ -1969,10 +1965,8 @@ public class ManageUsers extends AddUserDetails
 		}
 		else if(accessLevel.equalsIgnoreCase("Administrator"))
 			Log.Pass("User cannot be added with the deleted user's email ID since PROV/PAY Admin user cannot delete other admin user");
-
 		else
 			Log.Fail("The user's accessLevel is neither General nor Administrator");
-
 		return this;
 	}
 
