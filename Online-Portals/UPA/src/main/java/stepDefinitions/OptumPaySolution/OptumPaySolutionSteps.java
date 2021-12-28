@@ -549,6 +549,11 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 		optumPaySol.validateRecurrDashboard();
 	}
 
+	@Then("^Users enters same AC No and RTN No on popup of alternate bank ac and validate error message$")
+	public void users_enters_same_AC_No_and_RTN_No_on_popup_of_alternate_bank_ac_and_validate_error_message() throws Throwable {
+		optumPaySol.enterSameRoutingAndAccountNo();
+	}
+
 	@Then("User validates if request and remove exemption section is displayed accordingly")
 	public void userValidatesIfRequestAndRemoveExemptionSectionIsDisplayedAccordingly() {
 	optumPaySol.exemptionSectionValidatorCSR_RO_RW();
@@ -557,6 +562,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	@Then("User validates if exemption section is not displayed for basic and VO")
 	public void userValidatesIfExemptionSectionIsNotDisplayedForBasicAndVO() {
 	optumPaySol.basic_VO_TinExemptionValidator();
+
 	}
 }
 

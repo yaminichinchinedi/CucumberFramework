@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -445,6 +446,9 @@ public class EditEnrollment {
 	@FindBy(name="btnUpdBnkAcct")
 	WebElement btnBnkAccnt;
 	
+	@FindBy(xpath="//form[@id='enrollmentForm']/table/tbody/tr[1]/td/table/tbody/tr/td[2]/input[1]")
+	WebElement chngAddBnkDta;
+
 	
 	protected TestBase testConfig;
 	static final String firstNameTxt=Helper.generateRandomAlphabetsString(3);
@@ -778,15 +782,15 @@ public class EditEnrollment {
 	{
 		Element.click(btnChngBankData, "Change Banking Data");
 		Browser.verifyURL(testConfig, "viewUserInfoBankAccts.do");
-		Element.verifyElementPresent(txtBoxUserName, "User name textbox");
-		Element.verifyElementPresent(txtUpdateBankAcc, "Update Bank account Info Header");
+		Element.verifyElementPresent(txtBoxFName, "User name textbox");
+		//Element.verifyElementPresent(txtUpdateBankAcc, "Update Bank account Info Header");
 		return this;
 		
 	}
 	
 	public EditEnrollment fillDetails()
 	{
-		Element.enterData(txtBoxUserName, firstNameTxt+ Helper.getUniqueTinNumber(), "Enter Email address as:" + " " +userEmailAdr,"email");
+		//Element.enterData(txtBoxUserName, firstNameTxt+ Helper.getUniqueTinNumber(), "Enter Email address as:" + " " +userEmailAdr,"email");
         Element.enterData(txtBoxEmail, userEmailAdr, "Enter Email address as:" + " " +userEmailAdr,"email");
 		Element.enterData(txtBoxVerifyEmail, userEmailAdr, "Re type email address as :" +" "+userEmailAdr ,"verifyEmail");
 		Element.enterData(txtBoxFName, firstNameTxt, "Enter First Name as : " + firstNameTxt,"firstName");
@@ -1205,6 +1209,17 @@ public class EditEnrollment {
 		
 	}
 	
+	public EditEnrollment clickOnBankAccountTab() {
+		
+		Element.click(tabsMenu.findElements(By.tagName("li")).get(2), "Bank Account(s) tab");
+		return this;
+	}
+public EditEnrollment clickAddChangBankData() {
+		
+		Element.click(chngAddBnkDta, "Add/Change Bank data button");
+		return this;
+	} 
+	
 	public EditEnrollment verifyDBupdates(String tinType,HashMap<Integer, HashMap<String, String>> PEPRecords) throws IOException {
 		
 		HashMap<Integer, HashMap<String, String>> PEPRecordsupdate=DataBase.executeSelectQueryALL(testConfig, QUERY.PEP_TABLES_RECORDS_FOR_TIN);
@@ -1357,5 +1372,26 @@ public class EditEnrollment {
 
 		return this;
 	}
-
+	public EditEnrollment fillsameRTNACNo() throws IOException 
+	{
+	   int rowNo=1;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =routingNo;
+		  
+		  Element.enterData(txtRoutingNo, routingNo,"Read from excel and Enter Routing Number","txtRoutingNo");
+		  Browser.wait(testConfig, 4);
+		  Element.clearData(txtAccNo, "AC No field");
+		  Element.waitForElementTobeClickAble(testConfig, txtAccNo, 3);
+		  Element.enterData(txtAccNo, accountNo,"Read from excel and Enter Account Number","txtAccNo");
+		  Element.enterKeys(txtAccNo, Keys.TAB, "TAB Key entering", "TAB Key");
+		  Browser.wait(testConfig, 2);
+		  String errorMsg=Element.findElement(testConfig, "xpath", "//div[@id=\"bankAcctNumInvalidErrorTryAgain\"]/p[1]").getText();
+	        Helper.compareContains(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
+		
+			
+		 
+		
+		return this;
+    }
 }

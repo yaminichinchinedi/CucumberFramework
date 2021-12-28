@@ -10,6 +10,7 @@ import main.java.Utils.DataBase;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 public class CreateMaintainEnrollment {
@@ -70,8 +71,8 @@ public class CreateMaintainEnrollment {
 		{
 		  case "PROV" :
 		   {
-			   sqlRowNo=15;
-			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//			   sqlRowNo=15;
+			   Searchedtin=DataBase.executeSelectQuery(testConfig,QUERY.ACTIVE_PROV_WITH_ACTIVE_USER, 1);
 			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");

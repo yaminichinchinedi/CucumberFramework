@@ -294,5 +294,21 @@ Scenario Outline: Sunset AV - Provider Payment Method Update Email
       | credentials | 
       | PROV_Admin  |
 
-     
+ @UPAUS4053595
+Scenario Outline: Validation of error message when RTN No and AC No are same
+  Given User navigates to UPA portal and enters "<credentials>" and login
+  #And  Clicks on Maintain Enrollment Tab
+  And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+  And  Clicks on Maintain Enrollment Tab
+  And User clicks on Edit button
+  And   Clicks Bank Account Tab  
+  Then  Clicks Change Bank Data and fill details
+  And   Clicks Continue Bank 
+  And Users enters same AC No and RTN No on maintain Enrollment page and validate error message
+
+ Examples:
+      | credentials | userType | portalAccess | tinType | searchCriteria       |    
+      | PROV_Admin  | PROV     | Premium      | AO      | PremiumOrStandardTIN | 
+      
+      
      

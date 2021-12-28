@@ -34,4 +34,19 @@ Scenario Outline: Online enrollment PDF - Provider Edit
         |      Super        |    PROV       |   AV |      ACH      |          A             |   
         
 
+
+@CSRUS4053595
+Scenario Outline: Validation of error message when RTN No and AC No are same
+  Given User navigates to CSR portal and enters "<credentials>" and login
+	Then User clicks on Create/Maintain Enrollment link
+  Then User enters "<userType>" and active "<TIN>" based on "<payMethodCode>" and "<enrollmentStatusCode>"in Create/Maintain Enrollment page and navigate to edit enrollment page.
+  #Then User Edit organization information 
+  And  User Clicks Bank Account Tab 
+  And Users enters same AC No and RTN No on maintain Enrollment CSR page and validate error message
+  
+  Examples:
+
+        |   credentials     |    userType   |  TIN | payMethodCode |   enrollmentStatusCode |
+        |      Super        |    PROV       |   AO |      ACH      |          A             | 
+        
 	
