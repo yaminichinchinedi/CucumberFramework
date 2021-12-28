@@ -7261,18 +7261,17 @@ public void verifyRemittancePageDataUPAPayer() throws Exception
     }
 	
 	public void verifyingClaimDetailsforRequiredPayemnt() throws Exception {
+		Helper.compareContains(testConfig, "Payment Date", ViewPayments.PaymentDate, paymentDateOnRem.getText());
+		Helper.compareContains(testConfig, "Payment Number", ViewPayments.PaymentNumber, paymentNumberOnRem.getText());
+		Helper.compareContains(testConfig, "Claim amount", ViewPayments.Amount, paidPrvdr.getText());
 		
-		paymentDateOnRem.getText().contains(ViewPayments.PaymentDate);
-		paymentNumberOnRem.getText().contains(ViewPayments.PaymentNumber);
-		paidPrvdr.getText().contains(ViewPayments.Amount);
-
 		if(StringUtils.equalsIgnoreCase(ViewPayments.Amount, "$0.00"))
-			paymentTypeOnRem.getText().equalsIgnoreCase("Zero Dollar");
+			Helper.compareContains(testConfig, "Payment type", "Zero Dollar",paymentTypeOnRem.getText());
 		else if(testConfig.getRunTimeProperty("tinType").equalsIgnoreCase("AO")){
-			paymentTypeOnRem.getText().equalsIgnoreCase("ACH");
+			Helper.compareContains(testConfig, "Payment Type", "ACH", paymentTypeOnRem.getText());
 		}
 		if(!StringUtils.equalsIgnoreCase(ViewPayments.NPI, "")) {
-			NPIOnRem.getText().equalsIgnoreCase(ViewPayments.NPI);
+			Helper.compareContains(testConfig, "NPI Number", ViewPayments.NPI, NPIOnRem.getText());
 		}
 		
 		

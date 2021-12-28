@@ -48,7 +48,9 @@ public class EpsConsolidatedClaimPaymentSummaries {
     private PaymentStatusCode paymentStatusCode;
     private EpsPaymentStatusCode epsPaymentStatusCode;
     private UnconsolidatedPaymentDetails[] unconsolidatedPaymentDetails;
+    private epsConsolidatedClaimPaymentDetails[] epsConsolidatedClaimPaymentDetails;
     private List <String> originalBpr01s;
+    private String proxyIdentifier;
 
     public EpsConsolidatedClaimPaymentSummaries() {
     }
@@ -324,5 +326,21 @@ public class EpsConsolidatedClaimPaymentSummaries {
 
     public void setClaimDate(String claimDate) {
         this.claimDate = claimDate;
+    }
+    
+    public String getProxyIdentifier() {
+        return proxyIdentifier;
+    }
+
+    public void setProxyIdentifier(String proxyIdentifier) {
+        this.proxyIdentifier = proxyIdentifier;
+    }
+    
+    public epsConsolidatedClaimPaymentDetails[] getEpsConsolidatedClaimPaymentDetails() {
+        return epsConsolidatedClaimPaymentDetails;
+    }
+
+    public void setEpsConsolidatedClaimPaymentDetails(epsConsolidatedClaimPaymentDetails[] EpsConsolidatedClaimPaymentDetails) {
+        this.epsConsolidatedClaimPaymentDetails = EpsConsolidatedClaimPaymentDetails;
     }
 }

@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1738,14 +1739,14 @@ return previousDate.getTime();
 	
 	public static void compareMaps(TestBase testConfig,String what,Map<String, LinkedHashMap<String, String>> expected,Map<String, LinkedHashMap<String, String>> actual) 
 	{
-		try{
+		
+			
 		Set<String> expectedKeys = expected.keySet();	
 		for (String key : expectedKeys) 
 		{
-	    	 if(expected.get(key).keySet() != null)
-	    	  {
-	    		 if(expected.get(key).keySet().equals(actual.get(key).keySet()))
-	    		 { 
+	    	 
+	    		 
+	    			 	
 	    			Log.Comment("Verifying data for payment No : " + key);
 	    	        for (String expectedInternalKey : expected.get(key).keySet()) 
 	    		     {
@@ -1754,12 +1755,8 @@ return previousDate.getTime();
 	    	    	   else
 	    	    		   Log.Fail("Failed" + " " + what + "for " + " " + expectedInternalKey + '\n' + "Expected was :" + " " + expected.get(key).get(expectedInternalKey) + '\n' + "Actual is :" +" " +actual.get(key).get(expectedInternalKey));
 	    		      }
-	    		  }
-	    	  }
-		}
-	}	 
-		catch (Exception e) {
-			Log.Comment("Exception" + e);
+	    		  
+	    	  
 		}
 	}
 	
