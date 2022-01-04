@@ -500,8 +500,8 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			+ "OLE.portal_user_tin pt on p.PORTAL_USER_ID=pt.PORTAL_USER_ID join OLE.enrolled_provider ep on ep.PROV_TIN_NBR=pt.PROV_TIN_NBR "
 			+ "where p.EMAIL_ADR_TXT='{$email}' and pv.PAY_PROC_CD_DESC='User Type Code'";
 	public static final String PORTAL_USER_DETAILS = "select * from ole.portal_user where portal_user_id='{$portalUserID}'";	
-	public static final String PaymentStatus = "SELECT ARCHV_IND, DSPL_CONSL_PAY_NBR FROM PP008.CONSOLIDATED_PAYMENT WHERE DSPL_CONSL_PAY_NBR = '{$PaymentNumber}'";
-
+	public static final String PaymentStatus = "SELECT ARCHV_IND, DSPL_CONSL_PAY_NBR FROM {$PaymentSchema}.CONSOLIDATED_PAYMENT WHERE DSPL_CONSL_PAY_NBR = '{$PaymentNumber}'";
+	public static final String PaymentSchema = "SELECT PAYR_SCHM_NM FROM ole.SRCH_CONSOL_TBL sct WHERE CP_DSPL_CONSL_PAY_NBR = '{$PaymentNumber}'";                                           
 	public static final String exemptedTin="SELECT PROV_TIN_NBR FROM ole.ENROLLED_PROV_EXEMPT_STATUS epes";
 	public static final String insertExemptTin="INSERT INTO OLE.ENROLLED_PROV_EXEMPT_STATUS (PROV_TIN_NBR, TIN_EXEMPT_INDICATOR, EXEMPT_REAS_CD, CREAT_DTTM, CREAT_BY_ID, LST_CHG_BY_DTTM, LST_CHG_BY_ID)\r\n"+
 	                         "VALUES('{$tin}', 'Y', 'OR', sysdate, 'vashok3', sysdate, 'vashok3')";

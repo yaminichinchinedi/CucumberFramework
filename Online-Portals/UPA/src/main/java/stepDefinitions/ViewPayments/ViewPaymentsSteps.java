@@ -429,7 +429,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Verify Market Type dropdown and its default value$")
     public void Verify_Market_Type_dropdown_and_its_default_value() throws Throwable {
-    	viewPayment.verifyFilterPaymentsOptions();
+    	viewPayment.verifyMarketTypesOptions();
     }
     
     @Then("^User set filters for \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" on view payments screen$")
