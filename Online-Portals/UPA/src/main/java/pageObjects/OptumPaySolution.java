@@ -15,12 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
-import javax.management.Query;
-
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -2969,7 +2964,7 @@ public class OptumPaySolution {
     	Element.click(RecurringPaymentStep1Continue, "continue button");
     	Element.click(RecurringPaymentStep2Continue, "continue button");
     	Element.click(RecurringPaymentStep3Checkbox1, "AcceptTermsCheckbox1");
-    	Element.click(RecurringPaymentStep3Checkbox2, "AcceptTermsCheckbox1");
+    	Element.click(RecurringPaymentStep3Checkbox2, "AcceptTermsCheckbox2");
     	Element.click(RecurringPaymentStep3Submit, "submit button");
     	return this;
     	
@@ -2979,14 +2974,12 @@ public class OptumPaySolution {
     public OptumPaySolution validateConfirmationScreen() {
     	String query=QUERY.RECURR_PAY_Status;
     	Map SearchedData = DataBase.executeSelectQuery(testConfig, query, 1);
-    	System.out.println(SearchedData);
     	Element.verifyTextPresent(confirmationmsg1, "Thank you. Your invoice payments are now complete");
     	Element.verifyTextPresent(confirmationmsg2, "Please allow up to 3 business days to process");
-    	if(SearchedData.get("RECR_PAY_SET_IND").toString().equals("N"))
+    	if (StringUtils.equals(SearchedData.get("RECR_PAY_SET_IND").toString(), "N"))
     	{
     		Element.verifyElementPresent(recPaybut, "Set up Recurring Payment");
     	}
-    	
     	Element.verifyElementIsEnabled(btnReturntoInvoices,"Return to Invoices button");
     	Element.click(btnReturntoInvoices,"Return to Invoices button");
     	Browser.verifyURL(testConfig,"OPSInvoices.do?method=index");
@@ -3003,16 +2996,9 @@ public class OptumPaySolution {
     }
     
     public OptumPaySolution validateSelectedInvoicesTable() {
-    	List<WebElement> tableHeads1 = Element.findElements(testConfig, "xpath", "//tbody/tr[2]/td[1]/div[1]/form[1]/div[3]/div[1]/div[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/div[1]");
-    	List<String> expectedTableHeads1 = new ArrayList<>();
     	
-        expectedTableHeads1.add(0, "Deselect all");
-        expectedTableHeads1.add(1, "Invoice");
-        expectedTableHeads1.add(2, "Amount");
-        expectedTableHeads1.add(3, "Reason code");
-        expectedTableHeads1.add(4, "Credit action");
-        String expectedHeaders = String.join(" ",expectedTableHeads1);
-        System.out.println(expectedHeaders);
+    	List<WebElement> tableHeads1 = Element.findElements(testConfig, "xpath", "//div[4]/div[1]/div[1]/div[1]/div[1]/div[1]");
+    	String expectedHeaders="Deselect all Invoice Amount Reason code Credit action";
         String actualTableHeads1 = tableHeads1.get(0).getText().trim(); 
         Helper.compareEquals(testConfig, "Selected Invoices grid", expectedHeaders, actualTableHeads1);
         Element.verifyElementIsEnabled(deselectAll, "Deselect All");
