@@ -1381,8 +1381,6 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 					getRecordCountFromUI());
 			FISLResponce=	getPaymentDetailsFromFISL(searchResponse);
 			UIResponce=getPaymentDetailsFromUI();
-			System.out.println("FISLResponce"+FISLResponce);
-			System.out.println("UIResponce"+UIResponce);
 			Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponce,
 					UIResponce);
 			
@@ -4725,7 +4723,6 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 				case "EPRAGenGivenPayNum":
 					if (Element.findElements(testConfig, "xpath", "(//a[contains(@href,'"+PaymentNumber+"')])/img").size()>0) {
 						Browser.browserRefresh(testConfig);
-						System.out.println("Paynumber:"+PaymentNumber);
 						WebElement EPRApdfLink = Element.findElement(testConfig, "xpath", "(//a[contains(@href,'"+PaymentNumber+"')])/img");
 						EPRApdfLink.isDisplayed();
 						EPRApdfLink.click();
@@ -4778,10 +4775,6 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 
 				ClaimAmountLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 				String ClaimAmount = ClaimAmountLink.getText();
-				System.out.println(">>>>>>>PaymentNumber "+PaymentNumber);
-				System.out.println(">>>>>>>epraLinktext "+epraLinktext);
-				System.out.println(">>>>>>>ClaimAmount "+ClaimAmount);
-	
 				if (!ClaimAmount.equalsIgnoreCase("$0.00") && epraLinktext.equalsIgnoreCase("835 |PDF")) {
 					found = true;
 					break;
