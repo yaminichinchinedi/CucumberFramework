@@ -311,6 +311,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Admin  | PROV     | Last 9-13 months | Premium      | VO      | Show All       | Show All   | Show All      |
 
   ###################### 4. Provider General premium tin ##############################################
+  @UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment UI validation for ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -327,7 +328,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All      | Show All       |
-
+  @UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment functionality verification for different search criteria
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -355,7 +356,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | NPI Only       | Show All   | Show All      |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | TIN Only       | Show All   | Show All      |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify User able to update the Payment Status for ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -372,7 +373,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        | New                  |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Closed        | Pending              |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Pending       | New                  |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify 835 file and EPRA pdf generation ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -386,7 +387,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments | MarketType |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All      | TIN Only       | Show All   |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the one payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -404,7 +405,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Show All      |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the Zero doller payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -420,6 +421,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | AO      | Show All       | Show All   | Show All      |
 
   ###################### 5. Provider General standard tin ##############################################
+ @UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment UI validation for ACH-standard-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -436,7 +438,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments |
       | PROV_Gen    | PROV     | Last 9-13 months | Standard     | AO      | Show All      | Show All       |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment functionality verification for different search criteria for Standard tin
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -461,7 +463,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 4-6 months  | Standard     | AO      | Show All       | Dental     | Show All      |
       | PROV_Gen    | PROV     | Last 4-6 months  | Standard     | AO      | NPI Only       | Show All   | Show All      |
       | PROV_Gen    | PROV     | Last 4-6 months  | Standard     | AO      | TIN Only       | Show All   | Show All      |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify 835 file and EPRA pdf generation ACH-Standard-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -475,7 +477,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments | MarketType |
       | PROV_Gen    | PROV     | Last 9-13 months | Standard     | AO      | Show All      | Show All       | Show All   |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the one payment for ACH-Standard-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -493,7 +495,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch     | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |
       | PROV_Gen    | PROV     | Last 4-6 months | Standard     | AO      | Show All       | Show All   | Show All      |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the Zero doller payment for ACH-Standard-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -509,6 +511,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Standard     | AO      | Show All       | Show All   | Show All      |
 
   ###################### 6. Provider General VO tin ##############################################
+ @UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment UI validation for VCP-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -525,7 +528,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All      | Show All       |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General _View payment functionality verification for different search criteria
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -553,7 +556,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All       | Show All   | Closed        |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | NPI Only       | Show All   | Show All      |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | TIN Only       | Show All   | Show All      |
-@UPAtest001
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify User able to update the Payment Status for ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -571,6 +574,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All       | Show All   | Closed        | Pending              |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All       | Show All   | Pending       | New                  |
 
+ @UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify 835 file and EPRA pdf generation ACH-Premium-TIN
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -584,7 +588,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | PaymentStatus | FilterPayments | MarketType |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All      | Show All       | Show All   |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the one payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
@@ -602,7 +606,7 @@ Feature: UPA ViewPayments Functionality for Premium TINs
     Examples: 
       | credentials | userType | QuickSearch      | portalAccess | tinType | FilterPayments | MarketType | PaymentStatus |
       | PROV_Gen    | PROV     | Last 9-13 months | Premium      | VO      | Show All       | Show All   | Show All      |
-
+@UPAViewPayStab
   Scenario Outline: UPA_Provider General_Verify Content for the Zero doller payment for ACH-Premium-TIN  in Remittance Detail page
     Given User navigates to UPA portal and enters "<credentials>" and login
     When User fetches the tin for the "<userType>" with search combination "<QuickSearch>", "<tinType>", "<portalAccess>", "<PaymentStatus>" and "<FilterPayments>"
