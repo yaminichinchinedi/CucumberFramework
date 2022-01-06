@@ -551,9 +551,7 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	
 	@Then("^user validates unpaid invoices flow in Adjustment tab$")
 	public void user_validates_unpaid_invoices_flow_in_Adjustment_tab() throws Throwable {
-	    optumPaySol.validateUnpaidInvoiceFlow();
-	    optumPaySol.validateSelectedInvoicesTable();
-	    optumPaySol.validateAdjustmentdetailsSection();
+	    optumPaySol.validateUnpaidInvoiceFlow().validateSelectedInvoicesTable().validateAdjustmentdetailsSection();
 	}
 
 

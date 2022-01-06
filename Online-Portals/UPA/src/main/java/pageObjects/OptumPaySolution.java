@@ -738,10 +738,10 @@ public class OptumPaySolution {
   	WebElement btnPayInvoice;
   	
   	@FindBy(xpath="//h3[contains(text(),'Thank you. Your invoice payments are now complete.')]")
-  	WebElement confirmationmsg1;
+  	WebElement paymentConfirmationmsg1;
   	
   	@FindBy(xpath="//p[contains(text(),'Please allow up to 3 business days to process.')]")
-  	WebElement confirmationmsg2;
+  	WebElement paymentConfirmationmsg2;
   	
   	@FindBy(xpath="//input[@value='Return to invoices']")
   	WebElement btnReturntoInvoices;
@@ -757,7 +757,7 @@ public class OptumPaySolution {
   	WebElement btncreditInvoices;
   	
   	@FindBy(xpath="//span[contains(text(),'Complete the steps below to adjust invoice(s) assoc')]")
-  	WebElement confirmationtxt;
+  	WebElement confirmationTxtonInvoicesAdjustmentPage;
   	
   	@FindBy(xpath="//input[@name='refundAction']")
   	WebElement btnCreditInvoice;
@@ -768,8 +768,6 @@ public class OptumPaySolution {
   	@FindBy(xpath="//input[@class='btn btn-primary large-btn w-100 assign-btn']")
   	WebElement btnApplytoSelectedInvoices;
   	
-  	@FindBy(xpath="//input[@value='Continue']")
-  	WebElement btnContinue;
   	
   	@FindBy(xpath="//input[@value='Cancel']")
   	WebElement btnCancel;
@@ -781,6 +779,9 @@ public class OptumPaySolution {
   	
   	@FindBy(xpath="//select[@name='selectedReason']")
   	WebElement reasonCode;
+  	
+  	@FindBy(xpath="//div[4]/div[1]/div[1]/div[1]/div[1]/div[1]")
+  	List<WebElement> tableHeads1 ;
   	
   	//Added by Mohammad Khalid
     String headerTop1_Premium = "Important reminder:";
@@ -2974,15 +2975,15 @@ public class OptumPaySolution {
     public OptumPaySolution validateConfirmationScreen() {
     	String query=QUERY.RECURR_PAY_Status;
     	Map SearchedData = DataBase.executeSelectQuery(testConfig, query, 1);
-    	Element.verifyTextPresent(confirmationmsg1, "Thank you. Your invoice payments are now complete");
-    	Element.verifyTextPresent(confirmationmsg2, "Please allow up to 3 business days to process");
+    	Helper.compareEquals(testConfig, "Payment Confirmation Message1", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.PaymentConfirmationScreen.messagecontent1").trim(), paymentConfirmationmsg1.getText().trim());
+    	Helper.compareEquals(testConfig, "Payment Confirmation Message2", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.PaymentConfirmationScreen.messagecontent2").trim(), paymentConfirmationmsg2.getText().trim());
     	if (StringUtils.equals(SearchedData.get("RECR_PAY_SET_IND").toString(), "N"))
     	{
     		Element.verifyElementPresent(recPaybut, "Set up Recurring Payment");
     	}
     	Element.verifyElementIsEnabled(btnReturntoInvoices,"Return to Invoices button");
     	Element.click(btnReturntoInvoices,"Return to Invoices button");
-    	Browser.verifyURL(testConfig,"OPSInvoices.do?method=index");
+    	Browser.verifyURL(testConfig,"OPSInvoices.do?");
     	return this;
     }
     public OptumPaySolution validateUnpaidInvoiceFlow() {
@@ -2990,14 +2991,13 @@ public class OptumPaySolution {
     	Element.click(btnunPaidInvoices, "unPaidInvoices"); 
     	Element.click(selectall,"select all");
     	Element.click(btncreditInvoices,"Credit Invoices");
-    	Browser.verifyURL(testConfig,"OPSAdjustments.do?method=index&isRefundInvoicesFlow=true&creditInvoices=true");
-    	Element.verifyTextPresent(confirmationtxt, "Complete the steps below to adjust invoice(s) associated to");  	
+    	Browser.verifyURL(testConfig,"OPSAdjustments.do?");
+    	Element.verifyTextPresent(confirmationTxtonInvoicesAdjustmentPage, "Complete the steps below to adjust invoice(s) associated to");  	
     	return this;
     }
     
     public OptumPaySolution validateSelectedInvoicesTable() {
     	
-    	List<WebElement> tableHeads1 = Element.findElements(testConfig, "xpath", "//div[4]/div[1]/div[1]/div[1]/div[1]/div[1]");
     	String expectedHeaders="Deselect all Invoice Amount Reason code Credit action";
         String actualTableHeads1 = tableHeads1.get(0).getText().trim(); 
         Helper.compareEquals(testConfig, "Selected Invoices grid", expectedHeaders, actualTableHeads1);
@@ -3011,7 +3011,7 @@ public class OptumPaySolution {
     	Element.verifyElementNotEnabled(btnCreditInvoice, "Credit Invoice");
     	Element.verifyElementNotEnabled(btnApplytoSelectedInvoices,"Apply to Selected Invoices");
     	Element.verifyElementIsEnabled(btnCancel,"Cancel");
-    	Element.verifyElementNotEnabled(btnContinue, "Continue");
+    	Element.verifyElementNotEnabled(continuebutton, "Continue");
     	
     	return this;
     }
