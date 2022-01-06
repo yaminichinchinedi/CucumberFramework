@@ -564,6 +564,22 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	optumPaySol.basic_VO_TinExemptionValidator();
 
 	}
+
+	@Then("^User selects the unpaid invoice$")
+	public void user_selects_the_unpaid_invoice() throws Throwable {
+	    optumPaySol.payInvoice();
+	}
+	@Then("^user verifies the confirmation screen$")
+	public void user_verifies_the_confirmation_screen() throws Throwable {
+	    optumPaySol.validateConfirmationScreen();
+	}
+	
+	@Then("^user validates unpaid invoices flow in Adjustment tab$")
+	public void user_validates_unpaid_invoices_flow_in_Adjustment_tab() throws Throwable {
+	    optumPaySol.validateUnpaidInvoiceFlow().validateSelectedInvoicesTable().validateAdjustmentdetailsSection();
+	}
+
+
 }
 
 

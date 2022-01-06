@@ -15,10 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -707,7 +704,7 @@ public class OptumPaySolution {
     @FindBy(xpath = "//*[@id='cancelRecurringPaymentModal']/div/p[1]")
     WebElement title;
 
-    @FindBy(xpath = "//p[contains(text(),'By leaving this page, this�will clear all your sel')]")
+    @FindBy(xpath = "//p[contains(text(),'By leaving this page, this will clear all your sel')]")
     WebElement messagecontent;
 
     @FindBy(xpath = "/html/body/div[5]/div[3]/div/button[1]")
@@ -715,6 +712,7 @@ public class OptumPaySolution {
 
     @FindBy(id = "manageRecurringPaymentsButton")
     WebElement Managepaymethods;
+
 
 	@FindBy(xpath = "//*[@id='optum-pay-invoices-tabs']/div[2]/p")
     WebElement unassignedtins;
@@ -735,6 +733,7 @@ public class OptumPaySolution {
     WebElement cancelbutton;
 	
 	@FindBy(id="addAlternateBankAccountButton")
+
   	WebElement altBnk;
 	
     @FindBy(xpath = "//input[@value='Remove exemption']")
@@ -742,7 +741,61 @@ public class OptumPaySolution {
     @FindBy(xpath = "//input[@value='Request exemption']")
     WebElement requestExemptionBtn;
 
-    //Added by Mohammad Khalid
+  	
+  	@FindBy(linkText="Select all")
+  	WebElement selectall;
+  	
+  	@FindBy(xpath = "//input[@class='btn-primary rounded payInvoices']")
+  	WebElement btnPayInvoice;
+  	
+  	@FindBy(xpath="//h3[contains(text(),'Thank you. Your invoice payments are now complete.')]")
+  	WebElement paymentConfirmationmsg1;
+  	
+  	@FindBy(xpath="//p[contains(text(),'Please allow up to 3 business days to process.')]")
+  	WebElement paymentConfirmationmsg2;
+  	
+  	@FindBy(xpath="//input[@value='Return to invoices']")
+  	WebElement btnReturntoInvoices;
+  	
+  	@FindBy(xpath="//a[contains(text(),'Adjustments')]")
+  	WebElement adjustment;
+  	
+  	@FindBy(xpath="//input[@value='unPaid']")
+  	WebElement btnunPaidInvoices;
+  	
+  	
+  	@FindBy(xpath="//input[@class='btn-primary rounded creditInvoices']")
+  	WebElement btncreditInvoices;
+  	
+  	@FindBy(xpath="//span[contains(text(),'Complete the steps below to adjust invoice(s) assoc')]")
+  	WebElement confirmationTxtonInvoicesAdjustmentPage;
+  	
+  	@FindBy(xpath="//input[@name='refundAction']")
+  	WebElement btnCreditInvoice;
+  	
+  	@FindBy(xpath="//label[contains(text(),'Credit invoice and create a new invoice')]")
+  	WebElement btnCreditInvoiceandCreateanewInvoice;
+  	
+  	@FindBy(xpath="//input[@class='btn btn-primary large-btn w-100 assign-btn']")
+  	WebElement btnApplytoSelectedInvoices;
+  	
+  	
+  	@FindBy(xpath="//input[@value='Cancel']")
+  	WebElement btnCancel;
+  	
+  	
+  	
+  	@FindBy(xpath="//thead/tr[1]/th[1]/a[1]")
+  	WebElement deselectAll;
+  	
+  	@FindBy(xpath="//select[@name='selectedReason']")
+  	WebElement reasonCode;
+  	
+  	@FindBy(xpath="//div[4]/div[1]/div[1]/div[1]/div[1]/div[1]")
+  	List<WebElement> tableHeads1 ;
+  	
+  	//Added by Mohammad Khalid
+
     String headerTop1_Premium = "Important reminder:";
     String headerTop2_Premium = "Is your provider organization tax exempt?";
     String pageTextTop1_Premium = "You will receive an email notification when the monthly invoice is ready";
@@ -1076,7 +1129,7 @@ public class OptumPaySolution {
         for (WebElement title : titles)
             Element.mouseHoverByJS(testConfig, title, "title");
 
-        Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by mid�July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
+        Helper.compareEquals(testConfig, "Plan Type", "Providers will be billed monthly for any fees incurred the previous month. For example, fees accrued during the month of June will be invoiced by midï¿½July. Provider administrators will receive an email along with payment instructions and they can review the fees on the Invoices subtab.", hoverPlanType.getText().trim());
         Helper.compareEquals(testConfig, "Fees", "Per payment fees are calculated based on the total payment amount and will not exceed $2,000 per billing period for each organizational tax identification number (TIN). Any rate changes will be effective the following business day.", hoverRate.getText().trim());
         Helper.compareEquals(testConfig, "Rate", "To view individual per-\n" +
                 "payment fees, please visit\n" +
@@ -2814,6 +2867,7 @@ public class OptumPaySolution {
 
 
     }
+
     public void enterSameRoutingAndAccountNo()  {
         int rowNo = 1;
         TestDataReader data = null;
@@ -2835,6 +2889,7 @@ public class OptumPaySolution {
         String errorMsg=Element.findElement(testConfig, "id", "accountNbr-error").getText();
         Helper.compareEquals(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
      }
+
     public void setAlternateBankAccount() {
         int rowNo = 1;
         TestDataReader data = null;
@@ -2996,4 +3051,116 @@ public class OptumPaySolution {
             Log.Comment("FAILED: User DOES see the exemption section");
         }
     }
+    
+    public OptumPaySolution validateRecurrDashboard() {
+
+        //Browser.browserRefresh(testConfig);
+        //TinWithRecurrPay and exemption
+        WebElement recurHeader = Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div");
+        if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and No exemption")) {
+            if (recurHeader == null)
+                Log.Comment("Recurring Payments exemption dashboard is not present.");
+        } else if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and exemption")) {
+
+            String recurrHeader = recurHeader.getText();
+
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Recurring payments exemption", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Status", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Setup by", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Activation date", recurrHeader);
+            Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div/div[2]/div[4]"), "Review invoices button");
+            DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
+        }
+        return this;
+
+    }
+
+    public void exemptionSectionValidatorCSR_RO_RW() {
+        List<WebElement> removeOrRequestExemotionBtns = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        for (WebElement each : removeOrRequestExemotionBtns) {
+            if (each.getAttribute("value").contains("Request")) {
+                Element.verifyElementPresent(requestExemptionBtn, "Request Exemption btn");
+                Element.verifyElementNotEnabled(requestExemptionBtn, "Request Exemption btn");
+            } else if (each.getAttribute("value").contains("Remove")) {
+                Element.verifyElementPresent(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementNotEnabled(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Status: ']"), "status text");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Setup by: ']"), "setUpByText");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Activation date:  ']"), "activation date text");
+            }
+
+        }
+    }
+
+    public void basic_VO_TinExemptionValidator() {
+        List<WebElement> RequestExemptionsection = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        if(RequestExemptionsection.isEmpty()) {
+            Log.Comment("Validated: User does not see the exemption section");
+            Helper.compareEquals(testConfig,"exemption section ",true,RequestExemptionsection.isEmpty());
+        }else {
+            Log.Comment("FAILED: User DOES see the exemption section");
+        }
+    }
+
+    public OptumPaySolution payInvoice() {
+    	Element.click(selectall,"select all");
+    	Element.click(btnPayInvoice,"Pay Invoice");
+    	Element.click(payType,"Primary bank account TIN radio button");
+    	Element.click(assignAccnt,"Assign account");
+    	Element.click(RecurringPaymentStep1Continue, "continue button");
+    	Element.click(RecurringPaymentStep2Continue, "continue button");
+    	Element.click(RecurringPaymentStep3Checkbox1, "AcceptTermsCheckbox1");
+    	Element.click(RecurringPaymentStep3Checkbox2, "AcceptTermsCheckbox2");
+    	Element.click(RecurringPaymentStep3Submit, "submit button");
+    	return this;
+    	
+    	
+    }
+    
+    public OptumPaySolution validateConfirmationScreen() {
+    	String query=QUERY.RECURR_PAY_Status;
+    	Map SearchedData = DataBase.executeSelectQuery(testConfig, query, 1);
+    	Helper.compareEquals(testConfig, "Payment Confirmation Message1", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.PaymentConfirmationScreen.messagecontent1").trim(), paymentConfirmationmsg1.getText().trim());
+    	Helper.compareEquals(testConfig, "Payment Confirmation Message2", TestBase.contentMessages.getProperty("prov.admin.premium.ao.optumPaySolution.PaymentConfirmationScreen.messagecontent2").trim(), paymentConfirmationmsg2.getText().trim());
+    	if (StringUtils.equals(SearchedData.get("RECR_PAY_SET_IND").toString(), "N"))
+    	{
+    		Element.verifyElementPresent(recPaybut, "Set up Recurring Payment");
+    	}
+    	Element.verifyElementIsEnabled(btnReturntoInvoices,"Return to Invoices button");
+    	Element.click(btnReturntoInvoices,"Return to Invoices button");
+    	Browser.verifyURL(testConfig,"OPSInvoices.do?");
+    	return this;
+    }
+    public OptumPaySolution validateUnpaidInvoiceFlow() {
+    	Element.click(adjustment, "Adjustment tab");
+    	Element.click(btnunPaidInvoices, "unPaidInvoices"); 
+    	Element.click(selectall,"select all");
+    	Element.click(btncreditInvoices,"Credit Invoices");
+    	Browser.verifyURL(testConfig,"OPSAdjustments.do?");
+    	Element.verifyTextPresent(confirmationTxtonInvoicesAdjustmentPage, "Complete the steps below to adjust invoice(s) associated to");  	
+    	return this;
+    }
+    
+    public OptumPaySolution validateSelectedInvoicesTable() {
+    	
+    	String expectedHeaders="Deselect all Invoice Amount Reason code Credit action";
+        String actualTableHeads1 = tableHeads1.get(0).getText().trim(); 
+        Helper.compareEquals(testConfig, "Selected Invoices grid", expectedHeaders, actualTableHeads1);
+        Element.verifyElementIsEnabled(deselectAll, "Deselect All");
+    	return this;
+    }
+    
+    public OptumPaySolution validateAdjustmentdetailsSection()
+    {     
+    	Element.verifyElementIsEnabled(reasonCode, "Reasoncode");
+    	Element.verifyElementNotEnabled(btnCreditInvoice, "Credit Invoice");
+    	Element.verifyElementNotEnabled(btnApplytoSelectedInvoices,"Apply to Selected Invoices");
+    	Element.verifyElementIsEnabled(btnCancel,"Cancel");
+    	Element.verifyElementNotEnabled(continuebutton, "Continue");
+    	
+    	return this;
+    }
+    
+    
+    
 }
