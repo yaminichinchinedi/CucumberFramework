@@ -731,6 +731,14 @@ public class OptumPaySolution {
   	@FindBy(xpath="//span[contains(text(),'Cancel')]")
     WebElement	cancelbutton;
   	
+  	@FindBy(id="addAlternateBankAccountButton")
+  	WebElement altBnk;
+	
+    @FindBy(xpath = "//input[@value='Remove exemption']")
+    WebElement removeExemptionBtn;
+    @FindBy(xpath = "//input[@value='Request exemption']")
+    WebElement requestExemptionBtn;
+  	
   	@FindBy(linkText="Select all")
   	WebElement selectall;
   	
@@ -2849,6 +2857,28 @@ public class OptumPaySolution {
 
 
     }
+    
+    public void enterSameRoutingAndAccountNo()  {
+        int rowNo = 1;
+        TestDataReader data = null;
+        try {
+        	Element.click(altBnk, "Alternate Bank Ac");
+        	data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+            String routingNumber = data.GetData(rowNo, "RoutingNumber");
+            String accountNumber = routingNumber;
+            WebElement rtnNo=Element.findElement(testConfig, "name", "routingNbr");
+            Element.enterData(rtnNo, routingNumber, "Routing No", "Routing no");
+            WebElement acNo=Element.findElement(testConfig, "name", "accountNbr");
+        	Element.enterData(acNo, accountNumber, "AC No", "AC no");
+        	Element.fluentWait(testConfig,rtnNo,100,1,"Routing Input");
+            Element.enterKeys(acNo, Keys.TAB, "Enter Tab Key", "Tab Key");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        String errorMsg=Element.findElement(testConfig, "id", "accountNbr-error").getText();
+        Helper.compareEquals(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
+     }
 
     public void setAlternateBankAccount() {
         int rowNo = 1;
@@ -2957,6 +2987,57 @@ public class OptumPaySolution {
     	return this;
     	
     }
+    
+    public OptumPaySolution validateRecurrDashboard() {
+
+        //Browser.browserRefresh(testConfig);
+        //TinWithRecurrPay and exemption
+        WebElement recurHeader = Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div");
+        if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and No exemption")) {
+            if (recurHeader == null)
+                Log.Comment("Recurring Payments exemption dashboard is not present.");
+        } else if (testConfig.getRunTimeProperty("searchCriteria").equalsIgnoreCase("TinWithRecurrPay and exemption")) {
+
+            String recurrHeader = recurHeader.getText();
+
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Recurring payments exemption", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Status", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Setup by", recurrHeader);
+            Helper.compareContains(testConfig, "Recurr Pay dashboard comparision", "Activation date", recurrHeader);
+            Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//div[@id=\"optum-pay-options\"]/div/div[2]/div/div/div[2]/div[4]"), "Review invoices button");
+            DataBase.executeDeleteQuery(testConfig, QUERY.deleteExemptedTin);
+        }
+        return this;
+
+    }
+
+    public void exemptionSectionValidatorCSR_RO_RW() {
+        List<WebElement> removeOrRequestExemotionBtns = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        for (WebElement each : removeOrRequestExemotionBtns) {
+            if (each.getAttribute("value").contains("Request")) {
+                Element.verifyElementPresent(requestExemptionBtn, "Request Exemption btn");
+                Element.verifyElementNotEnabled(requestExemptionBtn, "Request Exemption btn");
+            } else if (each.getAttribute("value").contains("Remove")) {
+                Element.verifyElementPresent(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementNotEnabled(removeExemptionBtn, "removeExemptionBtn");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Status: ']"), "status text");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Setup by: ']"), "setUpByText");
+                Element.verifyElementPresent(Element.findElement(testConfig, "xpath", "//span[.='Activation date:  ']"), "activation date text");
+            }
+
+        }
+    }
+
+    public void basic_VO_TinExemptionValidator() {
+        List<WebElement> RequestExemptionsection = Element.findElements(testConfig, "xpath", "//div[@class='col']/input");
+        if(RequestExemptionsection.isEmpty()) {
+            Log.Comment("Validated: User does not see the exemption section");
+            Helper.compareEquals(testConfig,"exemption section ",true,RequestExemptionsection.isEmpty());
+        }else {
+            Log.Comment("FAILED: User DOES see the exemption section");
+        }
+    }
+
     public OptumPaySolution payInvoice() {
     	Element.click(selectall,"select all");
     	Element.click(btnPayInvoice,"Pay Invoice");
@@ -3015,5 +3096,7 @@ public class OptumPaySolution {
     	
     	return this;
     }
+    
+    
     
 }

@@ -486,6 +486,29 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 			"WHERE paba.PROV_TIN_NBR = '{$tin}' AND pd.PAY_DESG_ACTV_IND = 'Y' AND RECR_PAY_SET_IND = 'Y' ORDER BY pd.LST_CHG_BY_DTTM DESC with ur";
 	
 	public static final String How_To_Enroll_Page = "Select  cast(CLOB_VAL as varchar(32000)) as clobval,TEXT_VAL  from ole.CONTENT where CONT_NM like '%How to Enroll%'";
+	public static final String ACTIVE_PROV_WITH_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.portal_user_tin put \r\n" + 
+			"on pu.PORTAL_USER_ID=put.PORTAL_USER_ID join ole.ENROLLED_PROVIDER ep on put.PROV_TIN_NBR = ep.PROV_TIN_NBR\r\n" + 
+			"where pu.STS_CD = 'A' and put.PROV_TIN_NBR <> '' and put.PROV_TIN_NBR is not null and ep.ENRL_STS_CD='A' Fetch FIRST ROW ONLY";
+	public static final String ACTIVE_PAYER_WITH_SUBPAYER_AND_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.PORTAL_USER_PAYER_TIN pupt \r\n" + 
+			"on pu.PORTAL_USER_ID=pupt.PORTAL_USER_ID join ole.Payer p on p.PAYR_TIN_NBR=pupt.PAYR_TIN_NBR join ole.SUB_PAYER sp\r\n" + 
+			"on sp.PAYR_TIN_NBR=pupt.PAYR_TIN_NBR where pu.STS_CD = 'A' and p.PAYR_ACTV_IND='Y' Fetch FIRST ROW ONLY";
+	public static final String ACTIVE_BS_WITH_ASSOCIATED_PROVIDER_AND_ACTIVE_USER = "select * from OLE.PORTAL_USER pu join OLE.PORTAL_USER_BS_TIN pubt \r\n" + 
+			"on pu.PORTAL_USER_ID=pubt.PORTAL_USER_ID join OLE.BILLING_SERVICE bs on pubt.BILLING_SERVICE_ID=bs.BILLING_SERVICE_ID join ole.billing_service_provider bsp\r\n" + 
+			"on bs.BILLING_SERVICE_ID=bsp.BILLING_SERVICE_ID where pu.STS_CD='A' and bs.ENRL_STS_CD='A' Fetch FIRST ROW ONLY";
+	public static final String BS_OR_PAY_PORTAL_USER = "select * from  OLE.PORTAL_USER p where p.EMAIL_ADR_TXT='{$email}'";
+	public static final String PROV_PORTAL_USER = "select * from OLE.PORTAL_USER p join ole.pay_proc_val pv on p.USER_TYP=pv.PAY_PROC_ACPT_CD_VAL join "
+			+ "OLE.portal_user_tin pt on p.PORTAL_USER_ID=pt.PORTAL_USER_ID join OLE.enrolled_provider ep on ep.PROV_TIN_NBR=pt.PROV_TIN_NBR "
+			+ "where p.EMAIL_ADR_TXT='{$email}' and pv.PAY_PROC_CD_DESC='User Type Code'";
+	public static final String PORTAL_USER_DETAILS = "select * from ole.portal_user where portal_user_id='{$portalUserID}'";	
+	public static final String PaymentStatus = "SELECT ARCHV_IND, DSPL_CONSL_PAY_NBR FROM PP008.CONSOLIDATED_PAYMENT WHERE DSPL_CONSL_PAY_NBR = '{$PaymentNumber}'";
+
+	public static final String exemptedTin="SELECT PROV_TIN_NBR FROM ole.ENROLLED_PROV_EXEMPT_STATUS epes";
+	public static final String insertExemptTin="INSERT INTO OLE.ENROLLED_PROV_EXEMPT_STATUS (PROV_TIN_NBR, TIN_EXEMPT_INDICATOR, EXEMPT_REAS_CD, CREAT_DTTM, CREAT_BY_ID, LST_CHG_BY_DTTM, LST_CHG_BY_ID)\r\n"+
+	                         "VALUES('{$tin}', 'Y', 'OR', sysdate, 'vashok3', sysdate, 'vashok3')";
+	public static final String deleteExemptedTin="delete from OLE.ENROLLED_PROV_EXEMPT_STATUS where TIN_EXEMPT_INDICATOR='Y' and PROV_TIN_NBR  ='{$tin}' ";
+	public static final String TinWithRecurrPayNoexemption= TIN_WITH_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+	public static final String TinWithoutRecurrPayNoexemption= TIN_WITHOUT_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+	
 	public static final String RECURR_PAY_Status  ="SELECT RECR_PAY_SET_IND FROM  ole.PAYMENT_DESIGNATION pd WHERE pd.PROV_BNK_ACCT_ID IN \r\n" + 
 			                                        "(SELECT pbah.PROV_BNK_ACCT_ID FROM ole.PROVIDER_BANKING_ACCOUNT pbah  WHERE pbah.PROV_TIN_NBR='{$tin}')";
 	

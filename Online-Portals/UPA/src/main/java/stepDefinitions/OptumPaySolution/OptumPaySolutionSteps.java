@@ -540,6 +540,30 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_clicks_on_Manage_pay_methods_button_on_invoices_tab() throws Throwable {
 	   optumPaySol.Setuprecurringpayments();
 	}
+	@Then("^User validates that Recurring Payment exemption is present with and Status,setupby,Activation date and enabled Review invoices button$")
+	public void user_validates_that_Recurring_Payment_exemption_is_present_with_and_Status_setupby_Activation_date_and_enabled_Review_invoices_button() throws Throwable {
+		optumPaySol.validateRecurrDashboard();
+	}
+	@Then("^User validates that Recurring Payment exemption is not present on the OPS dashboard$")
+	public void user_validates_that_Recurring_Payment_exemption_is_not_present_on_the_OPS_dashboard() throws Throwable {
+		optumPaySol.validateRecurrDashboard();
+	}
+
+	@Then("^Users enters same AC No and RTN No on popup of alternate bank ac and validate error message$")
+	public void users_enters_same_AC_No_and_RTN_No_on_popup_of_alternate_bank_ac_and_validate_error_message() throws Throwable {
+		optumPaySol.enterSameRoutingAndAccountNo();
+	}
+
+	@Then("User validates if request and remove exemption section is displayed accordingly")
+	public void userValidatesIfRequestAndRemoveExemptionSectionIsDisplayedAccordingly() {
+	optumPaySol.exemptionSectionValidatorCSR_RO_RW();
+	}
+
+	@Then("User validates if exemption section is not displayed for basic and VO")
+	public void userValidatesIfExemptionSectionIsNotDisplayedForBasicAndVO() {
+	optumPaySol.basic_VO_TinExemptionValidator();
+
+	}
 	@Then("^User selects the unpaid invoice$")
 	public void user_selects_the_unpaid_invoice() throws Throwable {
 	    optumPaySol.payInvoice();
