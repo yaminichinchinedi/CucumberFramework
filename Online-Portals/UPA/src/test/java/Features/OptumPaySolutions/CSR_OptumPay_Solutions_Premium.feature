@@ -500,8 +500,10 @@ Examples:
 	
 	         |   credentials  | searchCriteria   |tinType|portalAccess |userType|
 	         |    Super       |	FailedInvoice	   |  AO 	 |	Premium		 |	PROV	|
-	         
-	         #Author: Felix
+
+
+    #Author: Felix
+
       @US3964348
       Scenario Outline: Access Payments - Failed Payment Invoice UI
         Given User navigates to CSR portal and enters "<credentials>" and login
@@ -536,6 +538,7 @@ Examples:
           | Super       | PremiumOrStandardTIN | VO      | Premium      | PROV     |
           | RO          | PremiumOrStandardTIN | VO      | Premium      | PROV     |
           | RW          | PremiumOrStandardTIN | VO      | Premium      | PROV     |
+
 	         
 @CSRUS3949310
 Scenario Outline: Access Payments - 8.1 - Unpaid Invoices flow - Super CSR - Ability to view the Invoice adjustments page 
@@ -554,4 +557,4 @@ Scenario Outline: Access Payments - 8.1 - Unpaid Invoices flow - Super CSR - Abi
 	         |   credentials  | searchCriteria       |tinType|portalAccess |userType|
 	         |    Super       |	 ValidInvoice    |  AO 	 |	Premium		 |	PROV	|
 
-     
+

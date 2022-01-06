@@ -1826,6 +1826,7 @@ return previousDate.getTime();
 				Log.Pass(downloadedFile + "File is downloaded successfully" );
 				break;
 			}
+			
 		}
 		return isDownloaded;
 		

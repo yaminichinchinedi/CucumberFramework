@@ -43,5 +43,17 @@ public class UnsecureGuestPaymentSteps extends TestBase {
     public void userUserClicksSubmit() {
         unsecureGuestPayment.userUserClicksSubmit();
     }
-    
+    @Then("^User enters name and email$")
+    public void user_enters_name_and_email() throws Throwable {
+    	unsecureGuestPayment.enterContactInfo();
+    }
+
+    @Then("^User enters same routing number and account number and validates error \"([^\"]*)\"$")
+    public void user_enters_same_routing_number_and_account_number_and_validates_error(String arg1) throws Throwable {
+    	unsecureGuestPayment.enterSameRoutingAndAccountNo();
+    }
+//    @And("User enters routing and account number")
+//    public void userEntersRoutingandAccountNumbers() {
+//        unsecureGuestPayment.enterSameRoutingAndAccountNo();
+//    } 
 }

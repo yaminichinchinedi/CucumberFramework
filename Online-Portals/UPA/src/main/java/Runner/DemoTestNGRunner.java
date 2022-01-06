@@ -95,12 +95,12 @@ import main.java.reporting.Log;
                 "rerun:target/cucumber-reports/rerun.txt"},
 		        dryRun=false,
 		        strict=true,
-		        tags={"@FraudPB"}
+		        tags={"@test02"}
 		)
 public class DemoTestNGRunner extends TestBase {
     private TestNGCucumberRunner testNGCucumberRunner;
    
-
+    
     @BeforeClass(alwaysRun = true)
     public void setUpClass() throws Exception {
     	//this.testConfig
@@ -116,27 +116,27 @@ public class DemoTestNGRunner extends TestBase {
     public Object[][] features() {
         return testNGCucumberRunner.provideFeatures();
     }
- 
+    
     @AfterSuite(alwaysRun = true)
     public void tearDownClass() throws Exception {
         testNGCucumberRunner.finish();
     }
     
     
-    @After
-    public void afterhook(Scenario scn) {
-
-    try {
-    if(scn.isFailed())
-    {
-    scn.write("Browser Type: " + runtimeProperties.getProperty("BrowserType"));
-    scn.write("Execution Environment: " + System.getProperty("env"));
-    final byte[] screenshot = ((TakesScreenshot) testConfig.driver).getScreenshotAs(OutputType.BYTES);	
-    // to embed screen shot to cucumber report :
-    scn.embed(screenshot, "image/png"); // ... and embed it in	
-    }
-
-    } catch (Exception e) {}
-
-    }
+//    @After
+//    public void afterhook(Scenario scn) {
+//
+//    try {
+//    if(scn.isFailed())
+//    {
+//    scn.write("Browser Type: " + runtimeProperties.getProperty("BrowserType"));
+//    scn.write("Execution Environment: " + System.getProperty("env"));
+//    final byte[] screenshot = ((TakesScreenshot) testConfig.driver).getScreenshotAs(OutputType.BYTES);	
+//    // to embed screen shot to cucumber report :
+//    scn.embed(screenshot, "image/png"); // ... and embed it in	
+//    }
+//
+//    } catch (Exception e) {}
+//    tearDown();
+//    }
 }

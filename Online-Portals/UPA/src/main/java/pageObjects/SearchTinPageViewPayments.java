@@ -1,5 +1,8 @@
 package main.java.pageObjects;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -66,6 +69,21 @@ public class SearchTinPageViewPayments {
 				Element.clickByJS(testConfig, submitBtn, "Search Button");
 				break;
 			}
+		return this;
+	}
+	
+	public SearchTinPageViewPayments SelectingTinOnViewPaymentPage(){
+		   Element.waitForPresenceOfElementLocated(testConfig, By.id("taxIndNbrId"),5);
+		   List<String> tinList = Element.getAllOptionsInSelect(testConfig, prvdrTIN);
+		   String  tin = System.getProperty("tin");
+		 String Enrolledtin = tin + " - Enrolled";
+		 if ((!tinList.contains(Enrolledtin))) 
+		 {
+			Browser.waitForLoad(testConfig.driver);
+			Browser.wait(testConfig, 2);
+			Element.fluentWait(testConfig, prvdrTIN, 60, 1, "Tin dropdown");
+		 }
+		Element.selectVisibleText(prvdrTIN, tin + " - Enrolled", "TIN Selection from Dropdown");
 		return this;
 	}
 

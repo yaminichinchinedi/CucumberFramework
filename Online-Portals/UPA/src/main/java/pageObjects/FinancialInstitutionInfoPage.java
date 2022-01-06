@@ -1014,5 +1014,30 @@ public class FinancialInstitutionInfoPage extends validateEFTERAFinancialInfo{
 		return this;
 	}
 	
-	
+	public FinancialInstitutionInfoPage fillsameRTNACNo() throws IOException 
+	{
+	  
+		  Helper.compareEquals(testConfig, "Continue Button", "true", btnContinue.getAttribute("disabled"));	  
+		  int rowNo=1;
+		  TestDataReader data = testConfig.cacheTestDataReaderObject("FinancialInfo");
+		  List<String>ValidRoutNos=data.GetAllColumnsData("FinancialInfo","ValidRoutingNos");
+		  String routingNo =data.GetData(rowNo, "RoutingNumber");
+		  String accountNo =routingNo;
+		  if( ValidRoutNos.contains(routingNo))
+		  {  
+
+		  Element.enterData(finInstRoutNum, routingNo,"Read from excel and Enter Routing Number","finInstRoutNum");
+		  Element.enterData(finInstAcctNum, accountNo,"Read from excel and Enter Account Number","finInstAcctNum");
+		  //finInstAcctNum.sendKeys(Keys.TAB);
+		  Element.enterKeys(finInstAcctNum, Keys.TAB, "TAB Key entering", "TAB Key");
+		  Browser.wait(testConfig, 2);											
+		  String errorMsg=Element.findElement(testConfig, "xpath", "//div[@id=\"bankAcctNumInvalidErrorTryAgain\"]/p[1]").getText();
+	        Helper.compareEquals(testConfig, "Error msg", TestBase.contentMessages.getProperty("errorMsg.sameACNoRTNNo"), errorMsg.trim());
+		 }
+		  else
+			  Log.Fail("Please proceed with valid RTN");
+		 
+		
+		return this;
+    }
 }

@@ -10,6 +10,7 @@ import main.java.Utils.Helper;
 import main.java.nativeFunctions.Browser;
 import main.java.nativeFunctions.Element;
 import main.java.nativeFunctions.TestBase;
+import main.java.queries.QUERY;
 import main.java.reporting.Log;
 
 import org.openqa.selenium.WebElement;
@@ -65,7 +66,7 @@ public class SearchTinPage {
 	public ManageUsers doSearch(String userType)
 	{
 		int sqlRowNo;
-		Map Searchedtin=null;
+		Map<String, String> tinAndUserDetails=null;
 		String tin="";
 		selectUserType(userType);
 		
@@ -76,16 +77,15 @@ public class SearchTinPage {
 			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
 			   {
 				   sqlRowNo=260;
-				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+				   tinAndUserDetails=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   }
 			   else
 			   {
-				   sqlRowNo=15;
-				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//				   sqlRowNo=15;
+				   tinAndUserDetails=DataBase.executeSelectQuery(testConfig,QUERY.ACTIVE_PROV_WITH_ACTIVE_USER, 1);
 			   }
 			   
-			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   tin=tinAndUserDetails.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterDataByJS(testConfig, txtboxTinNo.get(0), tin, "txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(0), "Clicked search button");
 			   break;
@@ -96,16 +96,15 @@ public class SearchTinPage {
 			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
 			   {
 				   sqlRowNo=261;
-				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-				   testConfig.putRunTimeProperty("portalUserID", Searchedtin.get("PORTAL_USER_ID").toString().trim());
+				   tinAndUserDetails=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
 			   }
 			   else
 			   {
-				   sqlRowNo=16;
-				   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+//				   sqlRowNo=16;
+				   tinAndUserDetails=DataBase.executeSelectQuery(testConfig,QUERY.ACTIVE_BS_WITH_ASSOCIATED_PROVIDER_AND_ACTIVE_USER, 1);
 			   }
 
-			   tin=Searchedtin.get("PROV_TAX_ID_NBR").toString().trim();
+			   tin=tinAndUserDetails.get("IDENTIFIER_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(1), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(2), "Clicked search button");
 			   break;
@@ -113,9 +112,9 @@ public class SearchTinPage {
 		   
 		  case "PAY" :
 		   {
-			   sqlRowNo=17;
-			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			   tin=Searchedtin.get("PAYR_DSPL_NM").toString().trim();
+//			   sqlRowNo=17;
+			   tinAndUserDetails=DataBase.executeSelectQuery(testConfig, QUERY.ACTIVE_PAYER_WITH_SUBPAYER_AND_ACTIVE_USER, 1);
+			   tin=tinAndUserDetails.get("PAYR_DSPL_NM").toString().trim();
 			   if("Purged".equalsIgnoreCase(testConfig.getRunTimeProperty("Purged")))
 				   Element.selectByVisibleText(drpDownPayer, "UMR", "Payer as : UMR" );
 			   else
@@ -127,8 +126,8 @@ public class SearchTinPage {
 		    case "PROVPUTIN" :
 		   {
 			   sqlRowNo=258;
-			   Searchedtin=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
-			   tin=Searchedtin.get("PROV_TIN_NBR").toString().trim();
+			   tinAndUserDetails=DataBase.executeSelectQuery(testConfig,sqlRowNo, 1);
+			   tin=tinAndUserDetails.get("PROV_TIN_NBR").toString().trim();
 			   Element.enterData(txtboxTinNo.get(0), tin,"Enter tin number as :" + " " + tin,"txtboxTinNo");
 			   Element.clickByJS(testConfig,btnSearch.get(1), "Clicked search button");
 			   break;
@@ -137,9 +136,11 @@ public class SearchTinPage {
 		   default:
 			   break;
 		}
-		
+		testConfig.putRunTimeProperty("portalUserID", tinAndUserDetails.get("PORTAL_USER_ID").toString().trim());
+		ManageUsers manageUsers = new ManageUsers(testConfig);
+		testConfig.putRunTimeProperty("userName", manageUsers.getActiveUser(tinAndUserDetails));
 		testConfig.putRunTimeProperty("tin", tin);
-		return new ManageUsers(testConfig);
+		return manageUsers;
 	}
 	
 		public ManageUsers doSearchPUTIN(String userType)

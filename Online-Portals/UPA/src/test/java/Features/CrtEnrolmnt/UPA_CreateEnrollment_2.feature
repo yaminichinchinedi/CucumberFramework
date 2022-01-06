@@ -555,7 +555,7 @@ Feature: UPA Create Enrollment Validations part2
     Then User fills all the information on Identify Administrators page and click continue
     Then User fills all the information on Financial Institution Information page for ABA Validator,Click YES to NPI and click continue
     Then User fills NPI No,RTN No and other information on Financial Institution Information NPI page and click continue.
-    Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking.
+    Then User validates functionality of different buttons like Back,cancel enrollment,Continue(Yes/No on Continue) by clicking on "UPA" portal.
 
   #TS_018
   Scenario: TS_0018_Validate the error validations upon clicking Continue button on NPI Financial Information Page.
