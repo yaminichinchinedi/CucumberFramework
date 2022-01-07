@@ -508,6 +508,10 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	public static final String deleteExemptedTin="delete from OLE.ENROLLED_PROV_EXEMPT_STATUS where TIN_EXEMPT_INDICATOR='Y' and PROV_TIN_NBR  ='{$tin}' ";
 	public static final String TinWithRecurrPayNoexemption= TIN_WITH_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
 	public static final String TinWithoutRecurrPayNoexemption= TIN_WITHOUT_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
+  public static final String RECURR_PAY_Status  ="SELECT RECR_PAY_SET_IND FROM  ole.PAYMENT_DESIGNATION pd WHERE pd.PROV_BNK_ACCT_ID IN \r\n" + 
+			                                        "(SELECT pbah.PROV_BNK_ACCT_ID FROM ole.PROVIDER_BANKING_ACCOUNT pbah  WHERE pbah.PROV_TIN_NBR='{$tin}')";
+	
+
 }
 
 
