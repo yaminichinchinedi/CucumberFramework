@@ -1439,12 +1439,20 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 					innerMap.put("Claim Count", "N/A");
 			else
 			innerMap.put("Claim Count", String.valueOf(payments[i].getClaimCountTotal()));
-			
-			if (payments[i].getTraceNumber() != null)
-				innerMap.put("ACH Trace Number", payments[i].getTraceNumber());
-			else
-				innerMap.put("ACH Trace Number", "");
-			
+			// Reading ACH Trace number for UPA portal
+			if (System.getProperty("Application").contains("UPA")) {
+			    if (payments[i].getTraceNumber() != null)
+				    innerMap.put("ACH Trace Number", payments[i].getTraceNumber());
+			    else
+				    innerMap.put("ACH Trace Number", "");
+			}
+			// Reading ACH Trace number for CSR portal
+			else {
+				 if (payments[i].getTraceNumber() != null)
+					innerMap.put("ACH/Payment Status", payments[i].getTraceNumber());
+				else
+					innerMap.put("ACH/Payment Status", "");
+			}
 			innerMap.put("Market Type", getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
 			
 			if(StringUtils.equalsIgnoreCase(testConfig.getRunTimeProperty("portalAccess"), "standard"))
