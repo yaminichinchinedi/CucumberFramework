@@ -315,8 +315,8 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	static String PaymentDate = null;
 	static String Amount = null;
 	static String NPI = null;
-	Map<String, LinkedHashMap<String, String>> FISLResponce = null;
-	Map<String, LinkedHashMap<String, String>> UIResponce= null;
+	Map<String, LinkedHashMap<String, String>> FISLResponse = null;
+	Map<String, LinkedHashMap<String, String>> UIResponse= null;
 	
 	
 	
@@ -1379,10 +1379,10 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		 if (!totalRecordsFromFISL.equalsIgnoreCase("0")) {
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :", totalRecordsFromFISL,
 					getRecordCountFromUI());
-			FISLResponce=	getPaymentDetailsFromFISL(searchResponse);
-			UIResponce=getPaymentDetailsFromUI();
-			Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponce,
-					UIResponce);
+			FISLResponse=	getPaymentDetailsFromFISL(searchResponse);
+			UIResponse=getPaymentDetailsFromUI();
+			Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponse,
+					UIResponse);
 			
 		} else
 			Element.verifyTextPresent(errorMsg, "No payments have been made to this Organization.");
@@ -3528,13 +3528,13 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		String parentWin = Browser.switchToNewWindow(testConfig);
 		Browser.waitForPageLoad(TestBase.driver);
 		PrintButton.isDisplayed();
-		//EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch, FilterPayments, MarketType, PaymentStatus);
-		if(FISLResponce.equals(null)) {
-			FISLResponce = getPaymentDetailsFromFISL(searchResponse);
+	//	FISLResponse was read already while verifying the View Payments screen, to avoid calling the FISL request multiple time written below if condition. 
+		if(FISLResponse.equals(null)) {
+			FISLResponse = getPaymentDetailsFromFISL(searchResponse);
 		}
-		UIResponce = getPaymentDetailsFromUI();
-		Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponce,
-				UIResponce);
+		UIResponse = getPaymentDetailsFromUI();
+		Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponse,
+				UIResponse);
 		Browser.switchToParentWindow(testConfig, parentWin);
 		return this;
 	}
@@ -4712,7 +4712,6 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 					break;
 				case "EPRAGeneration":
 					if (epraLinktext.equalsIgnoreCase("835 |PDF")) {
-                        System.out.println("Paynumber:"+PaymentNumber);
 						link = epraLink.findElements(By.tagName("a")).get(1);
 						Element.verifyElementPresent(link, "pdf link");
 						link.click();
