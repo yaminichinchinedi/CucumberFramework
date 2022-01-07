@@ -39,6 +39,7 @@ import main.java.queries.QUERY;
 
 import main.java.reporting.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.json.JSONException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -314,6 +315,8 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	static String PaymentDate = null;
 	static String Amount = null;
 	static String NPI = null;
+	Map<String, LinkedHashMap<String, String>> FISLResponse = null;
+	Map<String, LinkedHashMap<String, String>> UIResponse= null;
 	
 	
 	
@@ -1175,17 +1178,23 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		ArrayList<String> headers = getHeadersFromResultTable();
 
 		int totalNoOfPages = 1;// getNumberOfPages();
-
+		String payNum = null;
+		int totalNoOfRows;
 		Log.Comment("Fetching all payments From UI..");
 
 		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
-			if ("printPaymentSummary".equals(testConfig.getRunTimeProperty("page")))
+			if ("printPaymentSummary".equals(testConfig.getRunTimeProperty("page"))) {
 				Element.findElements(testConfig, "xpath", "//table//tr[2]/td/table//tr[4]/td/table//tr/td//tbody/tr");
-			else
+				totalNoOfRows = searchResultRows.size();
+				if(totalNoOfRows>=31)
+					totalNoOfRows=31;
+			}
+			else {
 				Element.findElements(testConfig, "xpath",
 						"//div[@id='view-payments'][2]/table/tbody/tr[2]/td/table/tbody/tr");
-
-			for (int i = 1; i < searchResultRows.size(); i++) {
+				totalNoOfRows = searchResultRows.size();
+			}
+			for (int i = 1; i < totalNoOfRows ; i++) {
 				innerMap = new LinkedHashMap<String, String>();
 
 				for (int j = 0; j < headers.size(); j++) {
@@ -1196,15 +1205,26 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 					else {
 						if (headers.get(j).equals("Payment Status")) {
 							try {
-								colVal = searchResultRows.get(i).findElements(By.tagName("td")).get(j + 4)
+								
+								colVal = searchResultRows.get(i)
 										.findElement(By.tagName("select"));
 							} catch (Exception e) {
 								colVal = searchResultRows.get(i).findElements(By.tagName("td")).get(j)
 										.findElement(By.tagName("select"));
 							}
 							details = Element.getFirstSelectedOption(testConfig, colVal, "text");
-						} else
-							details = searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
+						} 
+						else if(headers.get(j).equals("Payment Number")){
+						    payNum = searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
+							if(payNum.contains("Check"))
+							 payNum = payNum.substring(0, payNum.indexOf("Check"));
+							details =payNum;
+						}
+						else {
+						
+							 payNum =  searchResultRows.get(i).findElements(By.tagName("td")).get(j).getText();
+							details =payNum;
+						}
 					}
 					details = details.replace("\n", "");
 					innerMap.put(headers.get(j), details);
@@ -1224,7 +1244,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 				innerMap.remove("Updated Payment Dt");
 				innerMap.remove("Resend Payment");
 				innerMap.remove("Payer PRA");
-				outerMap.put(searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText().replace("\n", "")
+				outerMap.put(innerMap.get("Payment Number")
 						+ "_" + innerMap.get("Payment Date"), innerMap);
 			}
 
@@ -1359,8 +1379,11 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		 if (!totalRecordsFromFISL.equalsIgnoreCase("0")) {
 			Helper.compareEquals(testConfig, "Record Count from FISL and UI :", totalRecordsFromFISL,
 					getRecordCountFromUI());
-			Helper.compareMaps(testConfig, "Payments Details Comparison", getPaymentDetailsFromFISL(searchResponse),
-					getPaymentDetailsFromUI());
+			FISLResponse=	getPaymentDetailsFromFISL(searchResponse);
+			UIResponse=getPaymentDetailsFromUI();
+			Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponse,
+					UIResponse);
+			
 		} else
 			Element.verifyTextPresent(errorMsg, "No payments have been made to this Organization.");
 
@@ -1385,19 +1408,6 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 		for (int i = 0; i < payments.length; i++) {
 			innerMap = new LinkedHashMap<String, String>();
 
-			if (payments[i].getArchiveIndicator() == null
-					&& StringUtils.equals("N", testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR"))
-					|| StringUtils.equals("Show All",
-							testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
-				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
-			else if (StringUtils.equals(payments[i].getArchiveIndicator(),
-					testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
-				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
-			else if (StringUtils.equals("Show All", testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
-				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
-			else
-				continue;
-
 			try {
 				String setlDate = payments[i].getPaymentMadeOn();
 				innerMap.put("Payment Date", Helper
@@ -1413,6 +1423,8 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 				innerMap.put("NPI", payments[i].getNationalProviderIdentifier());
 			else
 				innerMap.put("NPI", "");
+			
+			
 			innerMap.put("Payment Number", payments[i].getDisplayConsolidatedPaymentNumber());
 
 			if (payments[i].getTotalAmount() == 0.0)
@@ -1422,12 +1434,42 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 				String amount = decimalFormat.format((payments[i].getTotalAmount()));
 				innerMap.put("Amount", "$" + amount);
 			}
-			innerMap.put("Claim Count", String.valueOf(payments[i].getClaimCountTotal()));
-			if (payments[i].getTraceNumber() != null)
-				innerMap.put("ACH/Payment Status", payments[i].getTraceNumber());
+			
+			if(StringUtils.equalsIgnoreCase(testConfig.getRunTimeProperty("portalAccess"), "standard"))
+					innerMap.put("Claim Count", "N/A");
 			else
-				innerMap.put("ACH/Payment Status", "");
+			innerMap.put("Claim Count", String.valueOf(payments[i].getClaimCountTotal()));
+			// Reading ACH Trace number for UPA portal
+			if (System.getProperty("Application").contains("UPA")) {
+			    if (payments[i].getTraceNumber() != null)
+				    innerMap.put("ACH Trace Number", payments[i].getTraceNumber());
+			    else
+				    innerMap.put("ACH Trace Number", "");
+			}
+			// Reading ACH Trace number for CSR portal
+			else {
+				 if (payments[i].getTraceNumber() != null)
+					innerMap.put("ACH/Payment Status", payments[i].getTraceNumber());
+				else
+					innerMap.put("ACH/Payment Status", "");
+			}
 			innerMap.put("Market Type", getDisplayMarketType(payments[i].getPaymentTypeIndicator()));
+			
+			if(StringUtils.equalsIgnoreCase(testConfig.getRunTimeProperty("portalAccess"), "standard"))
+					innerMap.put("Payment Status", "N/A");
+			else if (payments[i].getArchiveIndicator() == null
+					&& StringUtils.equals("N", testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR"))
+					|| StringUtils.equals("Show All",
+							testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
+				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
+			else if (StringUtils.equals(payments[i].getArchiveIndicator(),
+					testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
+				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
+			else if (StringUtils.equals("Show All", testConfig.getRunTimeProperty("ACTIVE_ARCHIVE_PAYMENTS_INDICATOR")))
+				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
+			else
+				innerMap.put("Payment Status", getDisplayPaymentStatus(payments[i].getArchiveIndicator()));
+
 			outerMap.put(innerMap.get("Payment Number") + "_" + innerMap.get("Payment Date"), innerMap);
 		}
 
@@ -1650,8 +1692,12 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 					PaymentNumber = payments[i].getDisplayConsolidatedPaymentNumber();
 					break;
 			}
-		}
 			
+		}
+		
+		if(PaymentNumber==null) {
+			Log.Fail(testConfig, "Zero doller payement not avilable for selectd TIN", true, false);
+		}
 		
 		int totalNoOfPages = getNumberOfPages();
 		
@@ -1660,13 +1706,15 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 				String paymentAmountUI = searchResultRows.get(i).findElements(By.tagName("td")).get(5).getText();
 				actualPaymntNo = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				actualPaymntNo = StringUtils.replace(actualPaymntNo, "\n", "");
-
+				
+				if(actualPaymntNo.contains("Check")) {
+					actualPaymntNo = actualPaymntNo.substring(0, actualPaymntNo.indexOf("Check"));
+				}
 				if (PaymentNumber.equals(actualPaymntNo)
 						&& paymentAmountUI.equalsIgnoreCase(ZeroDollar)) {
-					String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();
 					
+					String paymentTypeUI = searchResultRows.get(i).findElements(By.tagName("td")).get(6).getText();					
 					Assert.assertEquals(ZeroDollar, paymentAmountUI, "Payment No: "+ PaymentNumber +"is ZeroDollar paymenyt number");
-					
 					break OUTERLOOP;
 				}
 			}
@@ -1689,6 +1737,7 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 				Log.Warning("Could not find Zero dollar payment on any of the pages, please execute test case manually",
 						testConfig);
 		}
+	
 		return this;
 	}
 
@@ -3485,10 +3534,15 @@ public class ViewPayments extends ViewPaymentsDataProvider {
 	public ViewPayments verifyPrintPaymentSummaryPage() throws JAXBException, IOException, SAXException,
 			ParserConfigurationException, ParseException, JSONException {
 		String parentWin = Browser.switchToNewWindow(testConfig);
+		Browser.waitForPageLoad(TestBase.driver);
 		PrintButton.isDisplayed();
-		//EpsPaymentsSummarySearchResponse searchResponse = (EpsPaymentsSummarySearchResponse) getFISLResponse(QuickSearch, FilterPayments, MarketType, PaymentStatus);
-		Helper.compareMaps(testConfig, "Payments Details Comparison", getPaymentDetailsFromFISL(searchResponse),
-				getPaymentDetailsFromUI());
+	//	FISLResponse was read already while verifying the View Payments screen, to avoid calling the FISL request multiple time written below if condition. 
+		if(FISLResponse.equals(null)) {
+			FISLResponse = getPaymentDetailsFromFISL(searchResponse);
+		}
+		UIResponse = getPaymentDetailsFromUI();
+		Helper.compareMaps(testConfig, "Payments Details Comparison", FISLResponse,
+				UIResponse);
 		Browser.switchToParentWindow(testConfig, parentWin);
 		return this;
 	}
@@ -4486,7 +4540,7 @@ public ViewPayments verifyFilterPaymentsOptions() {
 		Helper.compareEquals(testConfig, "Default value of Quick Search filter", "Show All", defaultVal);
 	
 			List<String> drpDownOptionsUI = Element.getAllOptionsInSelect(testConfig, filterPaymentsDrpDwn);
-			Helper.compareEquals(testConfig, "Options of Quick Search Filter", filterPayments, drpDownOptionsUI);
+			Helper.compareEquals(testConfig, "Options of Filter Payments Options", filterPayments, drpDownOptionsUI);
 		
 		return this;
 	}
@@ -4496,12 +4550,12 @@ public ViewPayments verifyMarketTypesOptions() {
 	List<String> MaketTypeDrpDwnValues = new ArrayList<>(Arrays.asList("Show All", "CARES Act - Healthcare Relief Program", "Capitation",
 			"Dental", "HRA", "Medical","Other", "Patient Payments", "Pharmacy Payments and Rebates","Property and Casualty", "UHC West", "Various","Vision","Workers Compensation"));
 	
-	Element.verifyElementPresent(drpDwnMarketType, "Filter Payments");
+	Element.verifyElementPresent(drpDwnMarketType, "Market Type");
 	String defaultVal = Element.getFirstSelectedOption(testConfig, drpDwnMarketType, "text");
 	Helper.compareEquals(testConfig, "Default value of Quick Search filter", "Show All", defaultVal);
 
 		List<String> drpDownOptionsUI = Element.getAllOptionsInSelect(testConfig, drpDwnMarketType);
-		Helper.compareEquals(testConfig, "Options of Quick Search Filter", MaketTypeDrpDwnValues, drpDownOptionsUI);
+		Helper.compareEquals(testConfig, "Options of verify MarketTypes Options", MaketTypeDrpDwnValues, drpDownOptionsUI);
 	
 	return this;
 }
@@ -4601,6 +4655,8 @@ public void changingPaymentStatus(String currentStatus, String UpdatedStatus) {
 	Browser.waitForLoad(testConfig.driver);
 	
 	PaymentNumber = paymentNo1.getText();
+	if(PaymentNumber.contains("Check"))
+		PaymentNumber = PaymentNumber.substring(0, PaymentNumber.indexOf("Check"));
 	
 	Element.selectByVisibleText(PaymentStatusDrpdwn, UpdatedStatus, "Updating status to "+UpdatedStatus);
 	Browser.waitForLoad(testConfig.driver);
@@ -4613,10 +4669,10 @@ public void changingPaymentStatus(String currentStatus, String UpdatedStatus) {
 public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 	PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
 	testConfig.putRunTimeProperty("PaymentNumber",PaymentNumber );
+	testConfig.putRunTimeProperty("PaymentSchema",DataBase.executeSelectQuery(testConfig, QUERY.PaymentSchema, 1).get("PAYR_SCHM_NM").trim());
 	Map<String, String> PayNumStatus = DataBase.executeSelectQuery(testConfig, QUERY.PaymentStatus, 1);
-	System.out.println(PayNumStatus);
 	PayNumStatus.get("DSPL_CONSL_PAY_NBR").equalsIgnoreCase("PaymentNumber");
-	PayNumStatus.get("ARCHV_IND").equalsIgnoreCase("P");
+	Helper.compareEquals(testConfig, "Payment status", PayNumStatus.get("ARCHV_IND"), keyValueForPaymentStatus(UpdatedStatus));
 	
 }
 
@@ -4633,12 +4689,15 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 		for (int pageNo = 1; pageNo <= totalNoOfPages; pageNo++) {
 
 			for (int i = 1; i < searchResultRows.size(); i++) {
+				if(!fileType.equalsIgnoreCase("EPRAGenGivenPayNum")){
 				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
-
+				if(PaymentNumber.contains("Check"))
+					PaymentNumber = PaymentNumber.substring(0, PaymentNumber.indexOf("Check"));
+				}
 				epraLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 				String epraLinktext = StringUtils.replace(epraLink.getText(), "\n", "");
-
+				
 				switch (fileType) {
 
 				case "835file":
@@ -4653,7 +4712,7 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 					if (epraLinktext.equalsIgnoreCase("835 |")) {
 
 						link = epraLink.findElements(By.tagName("a")).get(2);
-						Element.verifyElementPresent(link, "pdf link is present");
+						Element.verifyElementPresent(link, "pdf icon is present");
 						link.click();
 						Browser.wait(testConfig, 5);
 						found = true;
@@ -4661,7 +4720,6 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 					break;
 				case "EPRAGeneration":
 					if (epraLinktext.equalsIgnoreCase("835 |PDF")) {
-
 						link = epraLink.findElements(By.tagName("a")).get(1);
 						Element.verifyElementPresent(link, "pdf link");
 						link.click();
@@ -4719,10 +4777,11 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 				
 				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
+				if(PaymentNumber.contains("Check"))
+					PaymentNumber = PaymentNumber.substring(0, PaymentNumber.indexOf("Check"));
 
 				ClaimAmountLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 				String ClaimAmount = ClaimAmountLink.getText();
-	
 				if (!ClaimAmount.equalsIgnoreCase("$0.00") && epraLinktext.equalsIgnoreCase("835 |PDF")) {
 					found = true;
 					break;
@@ -4741,7 +4800,6 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 	}
 	
 	public void openingPayment() {
-		
 		PaymentDate = getColumnValueforpaynum(PaymentNumber,"Payment Date");
 		Amount = getColumnValueforpaynum(PaymentNumber,"Amount");
 		NPI = getColumnValueforpaynum(PaymentNumber,"NPI");
@@ -4766,6 +4824,8 @@ public void verifyPaymentStatusUpdatedInDB(String UpdatedStatus) {
 
 				PaymentNumber = searchResultRows.get(i).findElements(By.tagName("td")).get(3).getText();
 				PaymentNumber = StringUtils.replace(PaymentNumber, "\n", "");
+				if(PaymentNumber.contains("Check"))
+					PaymentNumber = PaymentNumber.substring(0, PaymentNumber.indexOf("Check"));
 
 				columnvalueLink = searchResultRows.get(i).findElements(By.tagName("td")).get(columnIndex);
 

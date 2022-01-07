@@ -267,7 +267,7 @@ public class ViewPaymentsSteps extends TestBase {
     @Then("^Validate the data of Print Payment Summary page.$")
     public void validate_the_data_of_Print_Payment_Summary_page() throws Throwable {
     	testConfig.putRunTimeProperty("page", "printPaymentSummary");
-    	// viewPayment.verifyPrintPaymentSummaryPage();
+    	 viewPayment.verifyPrintPaymentSummaryPage();
     }
     @Then("^Validate default value of Quick Search filter displays Last thirty days option and it is greyed out for \"([^\"]*)\".$")
     public void validate_default_value_of_Quick_Search_filter_displays_Last_thirty_days_option_and_it_is_greyed_out_for(String portalAccess) throws Throwable {
@@ -429,7 +429,7 @@ public class ViewPaymentsSteps extends TestBase {
     
     @Then("^Verify Market Type dropdown and its default value$")
     public void Verify_Market_Type_dropdown_and_its_default_value() throws Throwable {
-    	viewPayment.verifyFilterPaymentsOptions();
+    	viewPayment.verifyMarketTypesOptions();
     }
     
     @Then("^User set filters for \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" on view payments screen$")
@@ -454,6 +454,9 @@ public class ViewPaymentsSteps extends TestBase {
     	.verifyColumnPresent("Claim Count")
     	.verifyColumnPresent("ACH Trace Number")
     	.verifyColumnPresent("Redemption Date")
+    	.verifyColumnPresent("Market Type")
+    	.verifyColumnPresent("835 / EPRA")
+    	.verifyColumnPresent("Payer PRA")
     	.verifyColumnPresent("Payment Status");
     	
     	if(!(portalAccess.equalsIgnoreCase("standard")||Tintype.equalsIgnoreCase("VO"))) {
