@@ -191,3 +191,15 @@ Feature:  UPA Home Page Functionality - Post Login
     Examples:
       |userType     |portalAccess|searchCriteria| tinType|
       |  PROV_Admin	|Premium     |UnpaidInvoice |	  AO |   
+      
+      
+      
+      @UPA4157043
+  Scenario Outline: Access Payments -  Premium Restrictions - Changes to account will be converted to basic popup
+    Given User navigates to UPA portal and enters "<credentials>" and login
+    And User fetch tin for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+    Then validates text and column TIN,Organisation,Effective date are displayed and close button is enabled.
+    Examples:
+      | credentials | userType | searchCriteria       | tinType     | portalAccess |
+      |   PROV_Gen  | PROV     | convertedBasicTIN  					  | 		AO      | Standard     |
+     

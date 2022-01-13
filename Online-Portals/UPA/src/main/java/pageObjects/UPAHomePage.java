@@ -771,5 +771,18 @@ public class UPAHomePage extends HomePage {
 		}
 		return this;
 	}
+	
+	public UPAHomePage validateBasicTinText() {
+		List<WebElement> divs=Element.findElements(testConfig, "xpath", "//div[@id=\"continueToBasicExecutedModal\"]/div");
+		String actual=divs.get(1).getText();
+		String expected=TestBase.contentMessages.getProperty("provandBS.gen.Standard.popup.text");
+		Helper.compareEquals(testConfig, "comparision between Actual UI and expect values:", expected, actual);
+		
+		String actualSetupText=divs.get(2).getText();
+		String expectedSetupText=TestBase.contentMessages.getProperty("provandBS.gen.Standard.popup.header.text");
+		Helper.compareEquals(testConfig, "comparision between Setup recurring Actual UI and expect values:", expectedSetupText, actualSetupText);
+		
+		return this;
+	}
 }
 

@@ -285,4 +285,8 @@ public class UPAHomePageSteps extends TestBase {
 	public void user_validates_that_buttons_are_present_on_popup_and(int arg1, String arg2, String arg3, String arg4) throws Throwable {
 		homePage.validatePopUpbuttons();
 	}
+	@Then("^validates text and column TIN,Organisation,Effective date are displayed and close button is enabled\\.$")
+	public void validates_text_and_column_TIN_Organisation_Effective_date_are_displayed_and_close_button_is_enabled() throws Throwable {
+		homePage.validateBasicTinText();
+	}
 }

@@ -508,9 +508,16 @@ public final static String PAYR_DETAILS_FOR_PAYR_USER="SELECT * from OLE.PORTAL_
 	public static final String deleteExemptedTin="delete from OLE.ENROLLED_PROV_EXEMPT_STATUS where TIN_EXEMPT_INDICATOR='Y' and PROV_TIN_NBR  ='{$tin}' ";
 	public static final String TinWithRecurrPayNoexemption= TIN_WITH_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
 	public static final String TinWithoutRecurrPayNoexemption= TIN_WITHOUT_RECURR_PAY.replace("with ur fetch first row only", "")+" minus "+exemptedTin ;
-  public static final String RECURR_PAY_Status  ="SELECT RECR_PAY_SET_IND FROM  ole.PAYMENT_DESIGNATION pd WHERE pd.PROV_BNK_ACCT_ID IN \r\n" + 
+   public static final String RECURR_PAY_Status  ="SELECT RECR_PAY_SET_IND FROM  ole.PAYMENT_DESIGNATION pd WHERE pd.PROV_BNK_ACCT_ID IN \r\n" + 
 			                                        "(SELECT pbah.PROV_BNK_ACCT_ID FROM ole.PROVIDER_BANKING_ACCOUNT pbah  WHERE pbah.PROV_TIN_NBR='{$tin}')";
-	
+   public static final String convertedBasic_Tin  = "SELECT ps.PROV_TIN_NBR as PROV_TAX_ID_NBR from ole.product_selection ps join ole.enrolled_provider ep \r\n"+
+		   "on ps.PROV_TIN_NBR=ep.PROV_TIN_NBR \r\n" + 
+   		"WHERE ps.PRTL_PRDCT_SELECTED_GRP_NM='{$portalAccess}' AND ps.PRTL_PRDCT_SELECTED_CD='F' AND ps.PRTL_PRDCT_SELECTED_STS_CD='P' AND ps.PRTL_PRDCT_REC_STS_CD='PS' \r\n"+
+		   "AND ps.PRTL_PRDCT_SELECT_EFF_DTTM -30 days < CURRENT date AND ps.PROV_TIN_NBR IN \r\n"+
+		   "(SELECT ps1.PROV_TIN_NBR FROM OLE.PRODUCT_SELECTION ps1 WHERE ps1.PRTL_PRDCT_SELECTED_GRP_NM='Premium' AND ps1.PRTL_PRDCT_SELECTED_CD='P' AND ps1.PRTL_PRDCT_SELECTED_STS_CD='A' AND ps1.PRTL_PRDCT_REC_STS_CD='PS' \r\n"+
+		   ")"+
+		   " and ep.PAY_METH_TYP_CD='{$tinType}' and ep.ENRL_STS_CD='A'\r\n" +
+		    " ORDER BY ps.PRTL_PRDCT_SELECT_EFF_DTTM DESC"+ENDQUERY_FETCH_FIRST_ROW;
 
 }
 

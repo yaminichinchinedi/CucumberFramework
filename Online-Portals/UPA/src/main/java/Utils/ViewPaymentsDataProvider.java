@@ -1250,7 +1250,9 @@ public class ViewPaymentsDataProvider {
 		if (searchCriteria.contains("TinWithoutRecurrPay and No exemption")) {
 			query=QUERY.TinWithoutRecurrPayNoexemption;
 		}
-		
+		if (searchCriteria.contains("convertedBasicTIN")) {
+			query=QUERY.convertedBasic_Tin;
+		}
 		if (!payType.equalsIgnoreCase("medicalPayment")) {
 			Log.Comment("Getting tin for  " + searchCriteria);
 			Map tinNumbers = null;
