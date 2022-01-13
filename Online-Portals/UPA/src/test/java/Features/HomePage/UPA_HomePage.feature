@@ -201,5 +201,6 @@ Feature:  UPA Home Page Functionality - Post Login
     Then validates text and column TIN,Organisation,Effective date are displayed and close button is enabled.
     Examples:
       | credentials | userType | searchCriteria       | tinType     | portalAccess |
-      |   PROV_Gen  | PROV     | convertedBasicTIN  					  | 		AO      | Standard     |
+      |   PROV_Gen  | PROV     | convertedBasicTIN    | 		AO      | Standard     |
+      |   BS_Gen    | BS       | convertedBasicTIN  	| 		AO      | Standard     |
      

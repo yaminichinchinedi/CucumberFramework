@@ -774,6 +774,8 @@ public class UPAHomePage extends HomePage {
 	
 	public UPAHomePage validateBasicTinText() {
 		List<WebElement> divs=Element.findElements(testConfig, "xpath", "//div[@id=\"continueToBasicExecutedModal\"]/div");
+		Helper.compareContains(testConfig, "column contains", "Effective date", divs.get(0).getText());
+		
 		String actual=divs.get(1).getText();
 		String expected=TestBase.contentMessages.getProperty("provandBS.gen.Standard.popup.text");
 		Helper.compareEquals(testConfig, "comparision between Actual UI and expect values:", expected, actual);
@@ -781,6 +783,10 @@ public class UPAHomePage extends HomePage {
 		String actualSetupText=divs.get(2).getText();
 		String expectedSetupText=TestBase.contentMessages.getProperty("provandBS.gen.Standard.popup.header.text");
 		Helper.compareEquals(testConfig, "comparision between Setup recurring Actual UI and expect values:", expectedSetupText, actualSetupText);
+		
+		WebElement close=Element.findElement(testConfig, "css", "button.btn-secondary.rounded.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-only");
+		Element.verifyElementIsEnabled(close,"close button");
+
 		
 		return this;
 	}
