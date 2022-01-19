@@ -578,6 +578,15 @@ public void verify_that_max_records_are_on_single_page_and_pagination_links_enab
 	public void user_validates_unpaid_invoices_flow_in_Adjustment_tab() throws Throwable {
 	    optumPaySol.validateUnpaidInvoiceFlow().validateSelectedInvoicesTable().validateAdjustmentdetailsSection();
 	}
+	@Then("^User clicks on Manage pay methods button on CSR Invoices Tab$")
+	public void user_clicks_on_Manage_pay_methods_button_on_CSR_Invoices_Tab() throws Throwable {
+	  optumPaySol.Managepaymethod();
+	}
+	@Then("^User validates the Alternate bank account information based \"([^\"]*)\"$")
+	public void user_validates_the_Alternate_bank_account_information_based(String credentials) throws Throwable {
+		optumPaySol.ReviewingAlternateBankAccountInformation(credentials);
+	    
+	}
 
 
 }
