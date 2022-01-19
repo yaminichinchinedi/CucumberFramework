@@ -794,6 +794,25 @@ public class OptumPaySolution {
   	@FindBy(xpath="//div[4]/div[1]/div[1]/div[1]/div[1]/div[1]")
   	List<WebElement> tableHeads1 ;
   	
+  
+  	@FindBy(xpath="//a[@class=\"accordion alternate-payment-box-title\"]")
+  	WebElement alternatebankaccounts;
+  	
+  	 @FindBy(linkText = "Remove bank account")
+     WebElement removeBankccountlink;
+  	 
+  	@FindBy(xpath="//input[@id='editRecurringPaymentsButton']")
+  	WebElement editRecurringPaymentsButton;
+  	
+  	@FindBy(xpath="//input[@value ='Back to invoices']")
+  	WebElement backToInvoicesButton;
+  	
+  	@FindBy(xpath="//*[@id='optum-pay-manage']/div/div[5]/div/div/div[1]/p[3]")
+  	WebElement AccntNumber;
+  	
+  	@FindBy(xpath="//*[@id='optum-pay-manage']/div/div[5]/div/div/div[1]/p[2]")
+  	WebElement RtnNumber;
+ 
   	//Added by Mohammad Khalid
 
     String headerTop1_Premium = "Important reminder:";
@@ -3112,7 +3131,32 @@ public class OptumPaySolution {
     	
     	return this;
     }
+    public OptumPaySolution Managepaymethod() {
+    	Element.click(Managepaymethods, "Manage pay methods");
+    	Browser.wait(testConfig, 2);
+		return this;
+    	
+    }
+    public void ReviewingAlternateBankAccountInformation(String credentials) throws Exception {
     
+    	if (credentials.equalsIgnoreCase("Super")){
+    	Element.click(alternatebankaccounts, "Alternate bank accounts");
+    	Element.verifyElementPresent(removeBankccountlink, "Remove bank account");
+    	Element.verifyElementIsEnabled(removeBankccountlink, "Remove bank account");
+    	verifyDBContents();
+    	Element.verifyElementIsEnabled(editRecurringPaymentsButton, "Edit Recurrng Payments Buttons");
+    	Element.verifyElementIsEnabled(backToInvoicesButton, "Back to Invoices button");
+    	} else {
+    		Element.click(alternatebankaccounts, "Alternate bank accounts");
+    		Element.verifyElementPresent(removeBankccountlink, "Remove bank account");
+    		Element.verifyElementNotEnabled(editRecurringPaymentsButton, "Edit Recurrng Payments Buttons");
+        	Element.verifyElementIsEnabled(backToInvoicesButton, "Back to Invoices button");
+    	}	
+    }	
     
-    
+    public void verifyDBContents() throws Exception {
+		Map<String, String> DbtTable = DataBase.executeSelectQuery(testConfig, QUERY.PrvoAlternateBankingAccount, 1);
+		Helper.compareEquals(testConfig, "Routing Number", DbtTable.get("RTE_TRNS_NBR").substring(0).trim(), RtnNumber.getText().substring(15));
+		Helper.compareEquals(testConfig, "Account Number", DbtTable.get("BNK_ACCT_NBR").substring(0).trim(), AccntNumber.getText().substring(15));
+    }    
 }

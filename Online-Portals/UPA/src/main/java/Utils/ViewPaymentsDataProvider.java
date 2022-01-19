@@ -1207,7 +1207,10 @@ public class ViewPaymentsDataProvider {
 
 			query=QUERY.TIN_WITH_RECURR_PAY;
 		}
-		
+		if(searchCriteria.contains("TinWithAlternateBankAccount")){
+
+			query=QUERY.TinWithAlternateBankAccount;
+		}
 		if (searchCriteria.contains("PastdueFee")) {
 			if (searchCriteria.equalsIgnoreCase("zeroPastdueFee"))
 				testConfig.putRunTimeProperty("invcAmt", "=0");

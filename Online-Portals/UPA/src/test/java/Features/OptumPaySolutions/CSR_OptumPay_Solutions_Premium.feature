@@ -557,4 +557,19 @@ Scenario Outline: Access Payments - 8.1 - Unpaid Invoices flow - Super CSR - Abi
 	         |   credentials  | searchCriteria       |tinType|portalAccess |userType|
 	         |    Super       |	 ValidInvoice    |  AO 	 |	Premium		 |	PROV	|
 
+@CSRUS3895025 
+Scenario Outline: Access Payments - Manage Recurring Payments - CSR 2 Reviewing Alternate bank account information
+			Given User navigates to CSR portal and enters "<credentials>" and login
+      And   User fetch tin on CSR for "<userType>" for "<searchCriteria>" for "<tinType>" for "<portalAccess>" for Portal Experience.
+      Then User clicks on Optum Pay Solutions link on CSR HomePage
+      Then User Enters tin for OPS and click on search button for "<userType>".
+      Then User clicks on "Invoices" tab
+      Then User clicks on Manage pay methods button on CSR Invoices Tab
+      Then User validates the Alternate bank account information based "<credentials>"
 
+      Examples:
+	
+	         |   credentials  | searchCriteria                 |tinType|portalAccess |userType|
+	         |    Super       |	TinWithAlternateBankAccount	   |  AO 	 |	Premium		 |	PROV	|
+	         |    RO          |	TinWithAlternateBankAccount	   |  AO 	 |	Premium		 |	PROV	|
+	         |    RW          |	TinWithAlternateBankAccount	   |  AO 	 |	Premium		 |	PROV	|
